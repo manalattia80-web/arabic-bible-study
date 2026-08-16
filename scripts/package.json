@@ -1,0 +1,21 @@
+{
+  "name": "arabic-bible-study-scripts",
+  "version": "1.0.0",
+  "description": "Data import scripts for Arabic AVD Bible Study App",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "import:strongs":    "node import-strongs.js",
+    "import:avd":        "node import-avd.js",
+    "import:hebrew-ot":  "node import-hebrew-ot.js",
+    "import:greek-nt":   "node import-greek-nt.js",
+    "import:all":        "npm run import:strongs && npm run import:avd && npm run import:hebrew-ot && npm run import:greek-nt"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.0",
+    "dotenv": "^16.4.5",
+    "node-fetch": "^3.3.2"
+  }
+}

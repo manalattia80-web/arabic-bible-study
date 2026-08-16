@@ -1,0 +1,154 @@
+/**
+ * src/routes/public/word-study.js
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Public endpoints for the Interlinear Word Study feature.
+ * No authentication required.
+ *
+ * Endpoints:
+ *   GET /api/v1/word-mappings?verse_id=uuid   — Interlinear table for a verse
+ *   GET /api/v1/strongs/:strongsId            — Strong's entry with AR translation
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+import { TTL } from '../../plugins/redis.js';
+
+export default async function wordStudyRoutes(fastify) {
+
+  // ── GET /word-mappings ───────────────────────────────────────────────────
+  /**
+   * Returns the full interlinear word table for a verse.
+   * Each row maps one Arabic word to its corresponding Hebrew/Greek word,
+   * with transliteration, Strong's number, morphology, and audio URL.
+   */
+  fastify.get('/word-mappings', {
+    schema: {
+      summary:     'Get word-by-word interlinear mapping for a verse',
+      querystring: {
+        type:     'object',
+        required: ['verse_id'],
+        properties: {
+          verse_id: { type: 'string', format: 'uuid' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { verse_id } = request.query;
+    const cacheKey     = `word-mappings:${verse_id}`;
+    const cached       = await fastify.cache.get(cacheKey);
+    if (cached) return { data: cached };
+
+    const { data, error } = await fastify.supabase
+      .from('word_mappings')
+      .select(`
+        id,
+        ar_word_position,
+        orig_word_position,
+        ar_word,
+        orig_word,
+        orig_word_lang,
+        orig_morphology,
+        transliteration_ar,
+        transliteration_lat,
+        strongs_id,
+        audio_url,
+        audio_duration_ms,
+        is_verified
+      `)
+      .eq('verse_id', verse_id)
+      .order('ar_word_position');
+
+    if (error) return reply.status(500).send({ error: error.message });
+
+    if (!data || data.length === 0) {
+      // Word mappings may not exist yet (admin hasn't aligned yet)
+      return {
+        data: [],
+        meta: {
+          verse_id,
+          message: 'Word mappings not yet available for this verse',
+        },
+      };
+    }
+
+    // Cache for 5 minutes (admin edits will invalidate)
+    await fastify.cache.set(cacheKey, data, TTL.VERSES);
+
+    return {
+      data,
+      meta: {
+        verse_id,
+        word_count:    data.length,
+        verified_count: data.filter(w => w.is_verified).length,
+      },
+    };
+  });
+
+  // ── GET /strongs/:strongsId ──────────────────────────────────────────────
+  /**
+   * Returns a Strong's dictionary entry with both English and Arabic definitions.
+   * strongsId examples: H1, H7225, G3056
+   */
+  fastify.get('/strongs/:strongsId', {
+    schema: {
+      summary: 'Get a Strong\'s dictionary entry with Arabic translation',
+      params:  {
+        type: 'object',
+        required: ['strongsId'],
+        properties: {
+          strongsId: { type: 'string', pattern: '^[HG]\\d+$' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { strongsId } = request.params;
+    const cacheKey      = `strongs:${strongsId}`;
+    const cached        = await fastify.cache.get(cacheKey);
+    if (cached) return { data: cached };
+
+    // Fetch Strong's entry + Arabic translation in one join
+    const { data: entry, error: entryError } = await fastify.supabase
+      .from('strongs_entries')
+      .select(`
+        strongs_id,
+        language,
+        original_word,
+        transliteration,
+        root_word,
+        pronunciation,
+        definition_en,
+        kjv_usage,
+        strongs_ar_translations (
+          definition_ar,
+          notes_ar,
+          is_verified
+        )
+      `)
+      .eq('strongs_id', strongsId)
+      .single();
+
+    if (entryError || !entry) {
+      return reply.status(404).send({
+        error:   'NotFound',
+        message: `Strong's entry ${strongsId} not found`,
+      });
+    }
+
+    // Flatten the nested Arabic translation
+    const result = {
+      strongs_id:      entry.strongs_id,
+      language:        entry.language,
+      original_word:   entry.original_word,
+      transliteration: entry.transliteration,
+      root_word:       entry.root_word,
+      pronunciation:   entry.pronunciation,
+      definition_en:   entry.definition_en,
+      kjv_usage:       entry.kjv_usage,
+      definition_ar:   entry.strongs_ar_translations?.definition_ar   ?? null,
+      notes_ar:        entry.strongs_ar_translations?.notes_ar         ?? null,
+      ar_is_verified:  entry.strongs_ar_translations?.is_verified      ?? false,
+    };
+
+    await fastify.cache.set(cacheKey, result, TTL.STRONGS);
+    return { data: result };
+  });
+}
