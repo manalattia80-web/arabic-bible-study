@@ -50,7 +50,7 @@ await fastify.register(cors, {
 
 // JWT
 await fastify.register(jwt, {
-  secret: process.env.JWT_SECRET,
+  secret: process.env.JWT_SECRET || 'fallback-secret-please-change-in-production',
   sign: { expiresIn: process.env.JWT_EXPIRY || '8h' },
 });
 
