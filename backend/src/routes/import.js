@@ -45,8 +45,8 @@ async function importStrongsTask(supabase) {
       strongs_id: item.strongId,
       language: item.language.toLowerCase() === 'hebrew' ? 'hebrew' : 'greek',
       original_word: item.originalWord,
-      transliteration: item.transliteration || null,
-      definition_en: item.root || null // Just storing root info if available
+      transliteration: item.transliteration || '',
+      definition_en: item.root || ''
     }));
 
     const translationsToInsert = batch.map(item => ({
