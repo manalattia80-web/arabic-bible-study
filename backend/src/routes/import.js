@@ -21,6 +21,28 @@ export default async function importRoutes(fastify, options) {
       return { status: 'Error', message: err.message, stack: err.stack };
     }
   });
+
+  fastify.get('/debug-sqlite', async (request, reply) => {
+    try {
+      const Database = (await import('better-sqlite3')).default;
+      const dbPath = path.join(__dirname, '..', '..', 'data', 'strongs.db');
+      const db = new Database(dbPath, { readonly: true });
+      
+      const tables = db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all();
+      
+      const schema = {};
+      for (const t of tables) {
+        schema[t.name] = {
+          columns: db.prepare(`PRAGMA table_info(${t.name})`).all(),
+          sample: db.prepare(`SELECT * FROM ${t.name} LIMIT 3`).all()
+        };
+      }
+      
+      return { status: 'Success', schema };
+    } catch (err) {
+      return { status: 'Error', message: err.message, stack: err.stack };
+    }
+  });
 }
 
 async function importStrongsTask(supabase) {
