@@ -57,8 +57,14 @@ class _BookListScreenState extends State<BookListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(testament?.nameAr ?? 'Books'),
-        subtitle: Text(testament?.nameEn ?? '', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(testament?.nameAr ?? 'Books'),
+            Text(testament?.nameEn ?? '', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+          ],
+        ),
       ),
       body: Column(
         children: [

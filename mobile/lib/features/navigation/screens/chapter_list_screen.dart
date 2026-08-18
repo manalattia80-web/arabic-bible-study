@@ -32,15 +32,20 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: book != null
-            ? Directionality(
-                textDirection: TextDirection.rtl,
-                child: Text(book.nameAr, style: AppTheme.arabicLabel(size: 18)),
-              )
-            : const Text('Chapters'),
-        subtitle: book != null
-            ? Text(book.nameEn, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary))
-            : null,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            book != null
+                ? Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Text(book.nameAr, style: AppTheme.arabicLabel(size: 18)),
+                  )
+                : const Text('Chapters'),
+            if (book != null)
+              Text(book.nameEn, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+          ],
+        ),
       ),
       body: nav.loading
           ? const Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2))

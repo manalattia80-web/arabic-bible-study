@@ -41,10 +41,16 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          verseNum > 0 ? 'Word Study · $chapterNum:$verseNum' : 'Word Study',
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              verseNum > 0 ? 'Word Study · $chapterNum:$verseNum' : 'Word Study',
+            ),
+            const Text('Tap any row for Strong\'s definition', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
+          ],
         ),
-        subtitle: const Text('Tap any row for Strong\'s definition', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
       ),
 
       body: CustomScrollView(
