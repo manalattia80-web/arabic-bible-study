@@ -261,32 +261,32 @@ ALTER TABLE audio_files             ENABLE ROW LEVEL SECURITY;
 ALTER TABLE audit_log               ENABLE ROW LEVEL SECURITY;
 
 -- Public read (Flutter app — anonymous users)
-CREATE POLICY IF NOT EXISTS "public_read_testaments"  ON testaments              FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "public_read_books"       ON books                   FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "public_read_chapters"    ON chapters                FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "public_read_verses"      ON verses                  FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "public_read_strongs"     ON strongs_entries         FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "public_read_strongs_ar"  ON strongs_ar_translations FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "public_read_word_maps"   ON word_mappings           FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "public_read_audio"       ON audio_files             FOR SELECT USING (true);
+CREATE POLICY "public_read_testaments"  ON testaments              FOR SELECT USING (true);
+CREATE POLICY "public_read_books"       ON books                   FOR SELECT USING (true);
+CREATE POLICY "public_read_chapters"    ON chapters                FOR SELECT USING (true);
+CREATE POLICY "public_read_verses"      ON verses                  FOR SELECT USING (true);
+CREATE POLICY "public_read_strongs"     ON strongs_entries         FOR SELECT USING (true);
+CREATE POLICY "public_read_strongs_ar"  ON strongs_ar_translations FOR SELECT USING (true);
+CREATE POLICY "public_read_word_maps"   ON word_mappings           FOR SELECT USING (true);
+CREATE POLICY "public_read_audio"       ON audio_files             FOR SELECT USING (true);
 
 -- Admin write (JWT role check)
-CREATE POLICY IF NOT EXISTS "admin_all_word_maps" ON word_mappings
+CREATE POLICY "admin_all_word_maps" ON word_mappings
     FOR ALL USING (
         auth.jwt() ->> 'role' IN ('super_admin', 'editor')
     );
 
-CREATE POLICY IF NOT EXISTS "admin_all_strongs_ar" ON strongs_ar_translations
+CREATE POLICY "admin_all_strongs_ar" ON strongs_ar_translations
     FOR ALL USING (
         auth.jwt() ->> 'role' IN ('super_admin', 'editor')
     );
 
-CREATE POLICY IF NOT EXISTS "admin_all_verses" ON verses
+CREATE POLICY "admin_all_verses" ON verses
     FOR ALL USING (
         auth.jwt() ->> 'role' IN ('super_admin', 'editor')
     );
 
-CREATE POLICY IF NOT EXISTS "admin_read_audit" ON audit_log
+CREATE POLICY "admin_read_audit" ON audit_log
     FOR SELECT USING (
         auth.jwt() ->> 'role' IN ('super_admin', 'editor', 'reviewer')
     );
