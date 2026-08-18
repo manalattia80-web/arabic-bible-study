@@ -11,6 +11,8 @@ import Fastify from 'fastify';
 import cors    from '@fastify/cors';
 import jwt     from '@fastify/jwt';
 
+console.log("DEBUG: Available Environment Variables Keys:", Object.keys(process.env));
+
 import supabasePlugin from './plugins/supabase.js';
 import redisPlugin    from './plugins/redis.js';
 import authHook       from './hooks/auth.js';
