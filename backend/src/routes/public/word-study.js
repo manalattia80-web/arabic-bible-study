@@ -70,11 +70,22 @@ export default async function wordStudyRoutes(fastify) {
       };
     }
 
+    // Sanitize nulls to empty strings to prevent Dart/Flutter type cast errors
+    const sanitizedData = data.map(item => ({
+      ...item,
+      orig_morphology:     item.orig_morphology     ?? '',
+      transliteration_ar:  item.transliteration_ar  ?? '',
+      transliteration_lat: item.transliteration_lat ?? '',
+      strongs_id:          item.strongs_id          ?? '',
+      audio_url:           item.audio_url           ?? '',
+      audio_duration_ms:   item.audio_duration_ms   ?? 0,
+    }));
+
     // Cache for 5 minutes (admin edits will invalidate)
-    await fastify.cache.set(cacheKey, data, TTL.VERSES);
+    await fastify.cache.set(cacheKey, sanitizedData, TTL.VERSES);
 
     return {
-      data,
+      data: sanitizedData,
       meta: {
         verse_id,
         word_count:    data.length,
