@@ -128,7 +128,7 @@ async function importBibleTask(supabase) {
           return {
             id: verseUuid, chapter_id: chapterUuid, book_id: bookId,
             chapter_num: chapterNum, verse_num: verseNum,
-            text_avd_ar: verseText, text_original: null,
+            text_avd_ar: verseText, text_original: '',
             text_original_lang: bookId <= 39 ? 'hebrew' : 'greek'
           };
         });
