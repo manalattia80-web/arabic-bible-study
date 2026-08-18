@@ -133,7 +133,11 @@ export default async function wordStudyRoutes(fastify) {
       });
     }
 
-    // Flatten the nested Arabic translation
+    // Flatten the nested Arabic translation safely (PostgREST might return array or object)
+    const trans = Array.isArray(entry.strongs_ar_translations)
+      ? entry.strongs_ar_translations[0]
+      : entry.strongs_ar_translations;
+
     const result = {
       strongs_id:      entry.strongs_id,
       language:        entry.language,
@@ -143,9 +147,9 @@ export default async function wordStudyRoutes(fastify) {
       pronunciation:   entry.pronunciation,
       definition_en:   entry.definition_en,
       kjv_usage:       entry.kjv_usage,
-      definition_ar:   entry.strongs_ar_translations?.definition_ar   ?? null,
-      notes_ar:        entry.strongs_ar_translations?.notes_ar         ?? null,
-      ar_is_verified:  entry.strongs_ar_translations?.is_verified      ?? false,
+      definition_ar:   trans?.definition_ar   ?? null,
+      notes_ar:        trans?.notes_ar        ?? null,
+      ar_is_verified:  trans?.is_verified     ?? false,
     };
 
     await fastify.cache.set(cacheKey, result, TTL.STRONGS);
