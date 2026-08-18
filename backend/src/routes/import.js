@@ -22,6 +22,12 @@ export default async function importRoutes(fastify, options) {
     }
   });
 
+  fastify.get('/import-mappings', async (request, reply) => {
+    // Run in background
+    importMappingsTask(fastify.supabase).catch(err => console.error('Mappings import failed:', err));
+    return { status: 'Mapping alignment started in background! Check Railway logs.' };
+  });
+
   fastify.get('/debug-sqlite', async (request, reply) => {
     try {
       const Database = (await import('better-sqlite3')).default;
@@ -43,6 +49,93 @@ export default async function importRoutes(fastify, options) {
       return { status: 'Error', message: err.message, stack: err.stack };
     }
   });
+}
+
+const BOOK_PREFIXES = [
+  "", "GEN", "EXO", "LEV", "NUM", "DEU", "JOS", "JDG", "RUT", "1SA", "2SA", "1KI", "2KI", "1CH", "2CH",
+  "EZR", "NEH", "EST", "JOB", "PSA", "PRO", "ECC", "SNG", "ISA", "JER", "LAM", "EZK", "DAN", "HOS",
+  "JOL", "AMO", "OBA", "JON", "MIC", "NAM", "HAB", "ZEP", "HAG", "ZEC", "MAL",
+  "MAT", "MRK", "LUK", "JHN", "ACT", "ROM", "1CO", "2CO", "GAL", "EPH", "PHP", "COL",
+  "1TH", "2TH", "1TI", "2TI", "TIT", "PHM", "HEB", "JAS", "1PE", "2PE", "1JN", "2JN", "3JN", "JUD", "REV"
+];
+
+async function importMappingsTask(supabase) {
+  console.log('🤖 Starting Smart Auto-Alignment Task...');
+  
+  const Database = (await import('better-sqlite3')).default;
+  const dbPath = path.join(__dirname, '..', '..', 'data', 'strongs.db');
+  const db = new Database(dbPath, { readonly: true });
+  
+  console.log('✅ Connected to strongs.db');
+  
+  // 1. Fetch all verses from Supabase
+  const { data: verses, error } = await supabase.from('verses').select('id, book_id, chapter_num, verse_num, text_avd_ar, text_original_lang');
+  if (error || !verses) throw new Error('Could not fetch verses from Supabase');
+  console.log(`✅ Fetched ${verses.length} verses to align.`);
+
+  let totalMapped = 0;
+  
+  // For each verse, extract words and align
+  for (let i = 0; i < verses.length; i++) {
+    const verse = verses[i];
+    const prefix = BOOK_PREFIXES[verse.book_id];
+    const legacyVerseId = `${prefix}.${verse.chapter_num}.${verse.verse_num}`;
+    
+    // Get all Strongs for this verse in legacy DB
+    const strongsRows = db.prepare(`SELECT strongId FROM avd_verse_strongs WHERE verseId = ?`).all(legacyVerseId);
+    const verseStrongs = strongsRows.map(r => r.strongId);
+    
+    if (verseStrongs.length === 0) continue;
+    
+    // Clean and split Arabic text
+    // Remove diacritics and punctuation for index matching
+    const cleanText = verse.text_avd_ar.replace(/[.,:;«»!؟?]/g, '');
+    const words = cleanText.split(/\s+/).filter(w => w.trim().length > 0);
+    
+    const mappings = [];
+    
+    // For each word in the verse
+    for (let pos = 0; pos < words.length; pos++) {
+      const arWord = words[pos];
+      
+      // Look up this exact word in arabic_strong_index to see if it maps to any of the Strongs in this verse
+      // We look for partial surface matches or exact
+      const indexRows = db.prepare(`SELECT strongId FROM arabic_strong_index WHERE surface = ?`).all(arWord);
+      
+      let matchedStrong = null;
+      for (const row of indexRows) {
+        if (verseStrongs.includes(row.strongId)) {
+          matchedStrong = row.strongId;
+          break;
+        }
+      }
+      
+      // We map it!
+      mappings.push({
+        verse_id: verse.id,
+        ar_word_position: pos + 1,
+        orig_word_position: pos + 1, // Assume 1-to-1 sequential for display
+        ar_word: arWord,
+        orig_word: matchedStrong ? matchedStrong : '---', // Display Strongs ID as placeholder for orig_word if we don't have it
+        orig_word_lang: verse.text_original_lang,
+        strongs_id: matchedStrong || null,
+        is_verified: false
+      });
+    }
+    
+    if (mappings.length > 0) {
+      const { error: insErr } = await supabase.from('word_mappings').upsert(mappings, { onConflict: 'verse_id, ar_word_position, orig_word_position' });
+      if (insErr) {
+        console.error(`Error inserting mapping for ${legacyVerseId}:`, insErr);
+      } else {
+        totalMapped++;
+      }
+    }
+    
+    if (i % 1000 === 0) console.log(`🔄 Aligned ${i} verses...`);
+  }
+  
+  console.log(`🎉 Auto-Alignment Complete! Mapped ${totalMapped} verses.`);
 }
 
 async function importStrongsTask(supabase) {
