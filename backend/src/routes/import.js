@@ -4,6 +4,61 @@ export default async function importRoutes(fastify, options) {
     importBibleTask(fastify.supabase).catch(err => console.error('Import failed:', err));
     return { status: 'Import started! Check Railway logs for progress.' };
   });
+
+  fastify.get('/import-strongs', async (request, reply) => {
+    importStrongsTask(fastify.supabase).catch(err => console.error('Import failed:', err));
+    return { status: 'Strongs Import started! Check Railway logs for progress.' };
+  });
+}
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+async function importStrongsTask(supabase) {
+  console.log('📖 Starting Strongs Dictionary Import...');
+  try {
+    const dataPath = path.join(__dirname, '..', '..', 'data', 'strongs_arabic.json');
+    const rawData = fs.readFileSync(dataPath, 'utf8');
+    const strongsData = JSON.parse(rawData);
+    console.log(`✅ Loaded ${strongsData.length} entries from JSON.`);
+
+    const BATCH_SIZE = 500;
+    
+    for (let i = 0; i < strongsData.length; i += BATCH_SIZE) {
+      const batch = strongsData.slice(i, i + BATCH_SIZE);
+      
+      const entriesToInsert = batch.map(item => ({
+        strongs_id: item.strongId,
+        language: item.language.toLowerCase() === 'hebrew' ? 'hebrew' : 'greek',
+        original_word: item.originalWord,
+        transliteration: item.transliteration || null,
+        definition_en: item.root || null // Just storing root info if available
+      }));
+
+      const translationsToInsert = batch.map(item => ({
+        strongs_id: item.strongId,
+        definition_ar: item.arabicMeaning || item.directArabicWord || '',
+        notes_ar: item.directArabicWord || null
+      })).filter(t => t.definition_ar);
+
+      const { error: eErr } = await supabase.from('strongs_entries').upsert(entriesToInsert, { onConflict: 'strongs_id' });
+      if (eErr) console.error(`Error inserting entries batch ${i}:`, eErr);
+
+      if (translationsToInsert.length > 0) {
+          const { error: tErr } = await supabase.from('strongs_ar_translations').upsert(translationsToInsert, { onConflict: 'strongs_id' });
+          if (tErr) console.error(`Error inserting translations batch ${i}:`, tErr);
+      }
+      
+      console.log(`✅ Processed ${i + batch.length} / ${strongsData.length} entries...`);
+    }
+    console.log('🎉 IMPORT COMPLETE! All Strongs definitions added.');
+  } catch (error) {
+    console.error('❌ Failed to import Strongs:', error);
+  }
 }
 
 async function importBibleTask(supabase) {
