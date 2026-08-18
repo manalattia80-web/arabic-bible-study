@@ -1,3 +1,10 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export default async function importRoutes(fastify, options) {
   fastify.get('/import-bible', async (request, reply) => {
     // Start background task so we don't timeout the HTTP request
@@ -15,13 +22,6 @@ export default async function importRoutes(fastify, options) {
     }
   });
 }
-
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 async function importStrongsTask(supabase) {
   console.log('📖 Starting Strongs Dictionary Import...');
