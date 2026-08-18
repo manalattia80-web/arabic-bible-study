@@ -19,6 +19,7 @@ import authHook       from './hooks/auth.js';
 import navigationRoutes from './routes/public/navigation.js';
 import wordStudyRoutes  from './routes/public/word-study.js';
 import searchRoutes     from './routes/public/search.js';
+import importRoutes     from './routes/import.js';
 
 // Admin routes
 import adminAuthRoutes         from './routes/admin/auth.js';
@@ -78,6 +79,7 @@ fastify.get('/health', async () => ({
 await fastify.register(navigationRoutes, { prefix: '/api/v1' });
 await fastify.register(wordStudyRoutes,  { prefix: '/api/v1' });
 await fastify.register(searchRoutes,     { prefix: '/api/v1/search' });
+await fastify.register(importRoutes,     { prefix: '/api/v1' });
 
 // ─── Admin routes (all require JWT) ──────────────────────────────────────────
 await fastify.register(adminAuthRoutes,        { prefix: '/api/v1/admin/auth' });

@@ -9,7 +9,8 @@
   },
   "scripts": {
     "dev":   "node --watch src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "import:bible": "node scripts/import_bible.js"
   },
   "dependencies": {
     "@fastify/cors":       "^9.0.1",
