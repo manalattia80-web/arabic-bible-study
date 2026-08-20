@@ -39,21 +39,7 @@ export default async function wordStudyRoutes(fastify) {
 
     const { data, error } = await fastify.supabase
       .from('word_mappings')
-      .select(`
-        id,
-        ar_word_position,
-        orig_word_position,
-        ar_word,
-        orig_word,
-        orig_word_lang,
-        orig_morphology,
-        transliteration_ar,
-        transliteration_lat,
-        strongs_id,
-        audio_url,
-        audio_duration_ms,
-        is_verified
-      `)
+      .select('*')
       .eq('verse_id', verse_id)
       .order('ar_word_position');
 
@@ -73,6 +59,8 @@ export default async function wordStudyRoutes(fastify) {
     // Sanitize nulls to empty strings to prevent Dart/Flutter type cast errors
     const sanitizedData = data.map(item => ({
       ...item,
+      verse_id:            item.verse_id            ?? '',
+      ar_word_normalized:  item.ar_word_normalized  ?? '',
       orig_morphology:     item.orig_morphology     ?? '',
       transliteration_ar:  item.transliteration_ar  ?? '',
       transliteration_lat: item.transliteration_lat ?? '',
