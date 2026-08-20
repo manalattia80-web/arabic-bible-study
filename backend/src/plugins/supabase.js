@@ -10,6 +10,8 @@
 import fp             from 'fastify-plugin';
 import { createClient } from '@supabase/supabase-js';
 
+import ws from 'ws';
+
 async function supabasePlugin(fastify) {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_KEY;
@@ -23,6 +25,9 @@ async function supabasePlugin(fastify) {
       autoRefreshToken: false,
       persistSession:   false,
     },
+    realtime: {
+      transport: ws
+    }
   });
 
   // Verify connection on startup
