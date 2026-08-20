@@ -101,8 +101,8 @@ export default async function wordStudyRoutes(fastify) {
   }, async (request, reply) => {
     const { strongsId } = request.params;
     const cacheKey      = `strongs:${strongsId}`;
-    const cached        = await fastify.cache.get(cacheKey);
-    if (cached) return { data: cached };
+    // const cached        = await fastify.cache.get(cacheKey);
+    // if (cached) return { data: cached };
 
     // Fetch Strong's entry + Arabic translation in one join
     const { data: entry, error: entryError } = await fastify.supabase
