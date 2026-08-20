@@ -146,8 +146,8 @@ export default async function wordStudyRoutes(fastify) {
       pronunciation:   entry.pronunciation,
       definition_en:   entry.definition_en,
       kjv_usage:       entry.kjv_usage,
-      definition_ar:   trans?.definition_ar   ?? null,
-      notes_ar:        trans?.notes_ar        ?? null,
+      definition_ar:   trans?.definition_ar   ? '\u200F' + trans.definition_ar : null,
+      notes_ar:        trans?.notes_ar        ? '\u200F' + trans.notes_ar      : null,
       ar_is_verified:  trans?.is_verified     ?? false,
     };
 
