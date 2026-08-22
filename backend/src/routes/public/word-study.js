@@ -114,10 +114,12 @@ export default async function wordStudyRoutes(fastify) {
         transliteration,
         root_word,
         pronunciation,
+        audio_url,
         definition_en,
         kjv_usage,
         strongs_ar_translations (
           definition_ar,
+          pronunciation_ar,
           notes_ar,
           is_verified
         )
@@ -144,9 +146,11 @@ export default async function wordStudyRoutes(fastify) {
       transliteration: entry.transliteration,
       root_word:       entry.root_word,
       pronunciation:   entry.pronunciation,
+      audio_url:       entry.audio_url,
       definition_en:   entry.definition_en,
       kjv_usage:       entry.kjv_usage,
       definition_ar:   trans?.definition_ar   ? '\u200F' + trans.definition_ar : null,
+      pronunciation_ar:trans?.pronunciation_ar? '\u200F' + trans.pronunciation_ar : null,
       notes_ar:        trans?.notes_ar        ? '\u200F' + trans.notes_ar      : null,
       ar_is_verified:  trans?.is_verified     ?? false,
     };
