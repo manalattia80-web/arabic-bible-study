@@ -49,7 +49,12 @@ class _AudioButtonState extends State<AudioButton> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isError) return const SizedBox.shrink();
+    if (_isError) {
+      return const IconButton(
+        icon: Icon(Icons.error_outline, color: Colors.red, size: 28),
+        onPressed: null,
+      );
+    }
 
     return IconButton(
       icon: Icon(_isPlaying ? Icons.pause_circle_filled : Icons.volume_up, 
