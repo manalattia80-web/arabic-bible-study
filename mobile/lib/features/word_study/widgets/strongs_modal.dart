@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
+import 'audio_button.dart';
 
 class StrongsModal extends StatelessWidget {
   final String strongsId;
@@ -127,7 +128,7 @@ class StrongsModal extends StatelessWidget {
                 ),
               ),
 
-              // Transliteration + Pronunciation
+              // Transliteration + Pronunciation + Audio
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
@@ -142,12 +143,25 @@ class StrongsModal extends StatelessWidget {
                         ),
                       ),
                       if (entry.pronunciation != null) ...[
-                        const Text(' · ', style: TextStyle(color: AppColors.textMuted)),
+                        const Text(' • ', style: TextStyle(color: AppColors.textMuted)),
                         Text(
                           entry.pronunciation!,
                           style: const TextStyle(color: AppColors.textMuted, fontSize: 14),
                         ),
                       ],
+                      if (entry.pronunciationAr != null) ...[
+                        const Text(' • ', style: TextStyle(color: AppColors.textMuted)),
+                        Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Text(
+                            entry.pronunciationAr!,
+                            style: AppTheme.arabicVerse(size: 16, color: AppColors.arabicText),
+                          ),
+                        ),
+                      ],
+                      const Spacer(),
+                      if (entry.audioUrl != null && entry.audioUrl!.isNotEmpty)
+                        AudioButton(url: entry.audioUrl!),
                     ],
                   ),
                 ),
