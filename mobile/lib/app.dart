@@ -66,9 +66,9 @@ class ArabicBibleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title:              'البحث الكتابي العربي',
+      title:              'Arabic Bible Study',
       debugShowCheckedModeBanner: false,
-      theme:              AppTheme.dark,
+      theme:              AppTheme.light,
       routerConfig:       _router,
       // Force LTR layout for the app shell; individual RTL widgets are handled locally
       builder: (context, child) => Directionality(

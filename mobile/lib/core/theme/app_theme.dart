@@ -9,15 +9,15 @@ import '../constants/app_colors.dart';
 class AppTheme {
   AppTheme._();
 
-  static ThemeData get dark {
-    final base = ThemeData.dark(useMaterial3: true);
+  static ThemeData get light {
+    final base = ThemeData.light(useMaterial3: true);
 
     return base.copyWith(
       scaffoldBackgroundColor: AppColors.bgBase,
 
-      colorScheme: const ColorScheme.dark(
+      colorScheme: const ColorScheme.light(
         primary:         AppColors.primary,
-        onPrimary:       Colors.black,
+        onPrimary:       Colors.white,
         secondary:       AppColors.info,
         onSecondary:     Colors.white,
         surface:         AppColors.bgSurface,
