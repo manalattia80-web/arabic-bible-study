@@ -155,7 +155,7 @@ class StrongsModal extends StatelessWidget {
                           textDirection: TextDirection.rtl,
                           child: Text(
                             entry.pronunciationAr!,
-                            style: AppTheme.arabicVerse(size: 16, color: AppColors.arabicText),
+                            style: AppTheme.arabicVerse(size: 22, color: AppColors.arabicText),
                           ),
                         ),
                       ],
@@ -209,7 +209,7 @@ class StrongsModal extends StatelessWidget {
                             textDirection: TextDirection.rtl,
                             child: Text(
                               entry.definitionAr!,
-                              style: AppTheme.arabicVerse(size: 18, color: AppColors.arabicText),
+                              style: AppTheme.arabicVerse(size: 24, color: AppColors.arabicText),
                               textAlign: TextAlign.right,
                             ),
                           ),
