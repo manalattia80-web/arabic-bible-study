@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفع بيانات تكوين 1 المترجمة بالذكاء الاصطناعي</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Tahoma, sans-serif; padding: 20px; max-width: 600px; margin: auto; background: #f9fafb; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; margin-top: 20px; background: #10b981; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 16px; }
+        #log { margin-top: 20px; font-size: 14px; color: #4b5563; white-space: pre-wrap; background: #f3f4f6; padding: 10px; border-radius: 4px; max-height: 400px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>رفع بيانات "تكوين 1" 🚀</h2>
+        <p>لقد قمت بدمج القائمة التي أرسلتها داخل هذا الملف. أدخل بيانات الخادم واضغط بدء ليتم تحديث الأصحاح الأول بالكامل!</p>
+        <input type="text" id="supabaseUrl" placeholder="Supabase URL">
+        <input type="password" id="supabaseKey" placeholder="Supabase Service Role Key">
+        <button id="startBtn">رفع التحديث الآن!</button>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        // البيانات التي أدخلها المستخدم مدمجة هنا
+        const aiData = [
+{"word": "في", "strongs": "H0"}, {"word": "البدء", "strongs": "H7225"}, {"word": "خلق", "strongs": "H1254"}, {"word": "الله", "strongs": "H430"}, {"word": "السموات", "strongs": "H8064"}, {"word": "والارض", "strongs": "H776"}, {"word": "وكانت", "strongs": "H1961"}, {"word": "الارض", "strongs": "H776"}, {"word": "خربة", "strongs": "H8414"}, {"word": "وخالية", "strongs": "H922"}, {"word": "وعلى", "strongs": "H0"}, {"word": "وجه", "strongs": "H6440"}, {"word": "الغمر", "strongs": "H8415"}, {"word": "ظلمة", "strongs": "H2822"}, {"word": "وروح", "strongs": "H7307"}, {"word": "الله", "strongs": "H430"}, {"word": "يرف", "strongs": "H7363"}, {"word": "على", "strongs": "H0"}, {"word": "وجه", "strongs": "H6440"}, {"word": "المياه", "strongs": "H4325"}, {"word": "وقال", "strongs": "H559"}, {"word": "الله", "strongs": "H430"}, {"word": "ليكن", "strongs": "H1961"}, {"word": "نور", "strongs": "H216"}, {"word": "فكان", "strongs": "H1961"}, {"word": "نور", "strongs": "H216"}, {"word": "وراى", "strongs": "H7200"}, {"word": "الله", "strongs": "H430"}, {"word": "النور", "strongs": "H216"}, {"word": "انه", "strongs": "H0"}, {"word": "حسن", "strongs": "H2896"}, {"word": "وفصل", "strongs": "H914"}, {"word": "الله", "strongs": "H430"}, {"word": "بين", "strongs": "H996"}, {"word": "النور", "strongs": "H216"}, {"word": "والظلمة", "strongs": "H2822"}, {"word": "ودعا", "strongs": "H7121"}, {"word": "الله", "strongs": "H430"}, {"word": "النور", "strongs": "H216"}, {"word": "نهارا", "strongs": "H3117"}, {"word": "والظلمة", "strongs": "H2822"}, {"word": "دعاها", "strongs": "H7121"}, {"word": "ليلا", "strongs": "H3915"}, {"word": "وكان", "strongs": "H1961"}, {"word": "مساء", "strongs": "H6153"}, {"word": "وكان", "strongs": "H1961"}, {"word": "صباح", "strongs": "H1242"}, {"word": "يوما", "strongs": "H3117"}, {"word": "واحدا", "strongs": "H259"}, {"word": "وقال", "strongs": "H559"}, {"word": "الله", "strongs": "H430"}, {"word": "ليكن", "strongs": "H1961"}, {"word": "جلد", "strongs": "H7549"}, {"word": "في", "strongs": "H0"}, {"word": "وسط", "strongs": "H8432"}, {"word": "المياه", "strongs": "H4325"}, {"word": "وليكن", "strongs": "H1961"}, {"word": "فاصلا", "strongs": "H914"}, {"word": "بين", "strongs": "H996"}, {"word": "مياه", "strongs": "H4325"}, {"word": "ومياه", "strongs": "H4325"}, {"word": "فعمل", "strongs": "H6213"}, {"word": "الله", "strongs": "H430"}, {"word": "الجلد", "strongs": "H7549"}, {"word": "وفصل", "strongs": "H914"}, {"word": "بين", "strongs": "H996"}, {"word": "المياه", "strongs": "H4325"}, {"word": "التي", "strongs": "H0"}, {"word": "تحت", "strongs": "H8478"}, {"word": "الجلد", "strongs": "H7549"}, {"word": "وبين", "strongs": "H996"}, {"word": "المياه", "strongs": "H4325"}, {"word": "التي", "strongs": "H0"}, {"word": "فوق", "strongs": "H5921"}, {"word": "الجلد", "strongs": "H7549"}, {"word": "وكان", "strongs": "H1961"}, {"word": "كذلك", "strongs": "H3651"}, {"word": "ودعا", "strongs": "H7121"}, {"word": "الله", "strongs": "H430"}, {"word": "الجلد", "strongs": "H7549"}, {"word": "سماء", "strongs": "H8064"}, {"word": "وكان", "strongs": "H1961"}, {"word": "مساء", "strongs": "H6153"}, {"word": "وكان", "strongs": "H1961"}, {"word": "صباح", "strongs": "H1242"}, {"word": "يوما", "strongs": "H3117"}, {"word": "ثانيا", "strongs": "H8145"}, {"word": "وقال", "strongs": "H559"}, {"word": "الله", "strongs": "H430"}, {"word": "لتجتمع", "strongs": "H6960"}, {"word": "المياه", "strongs": "H4325"}, {"word": "تحت", "strongs": "H8478"}, {"word": "السماء", "strongs": "H8064"}, {"word": "الى", "strongs": "H0"}, {"word": "مكان", "strongs": "H4725"}, {"word": "واحد", "strongs": "H259"}, {"word": "ولتظهر", "strongs": "H7200"}, {"word": "اليابسة", "strongs": "H3004"}, {"word": "وكان", "strongs": "H1961"}, {"word": "كذلك", "strongs": "H3651"}, {"word": "ودعا", "strongs": "H7121"}, {"word": "الله", "strongs": "H430"}, {"word": "اليابسة", "strongs": "H3004"}, {"word": "ارضا", "strongs": "H776"}, {"word": "ومجتمع", "strongs": "H4723"}, {"word": "المياه", "strongs": "H4325"}, {"word": "دعاه", "strongs": "H7121"}, {"word": "بحارا", "strongs": "H3220"}, {"word": "وراى", "strongs": "H7200"}, {"word": "الله", "strongs": "H430"}, {"word": "ذلك", "strongs": "H0"}, {"word": "انه", "strongs": "H0"}, {"word": "حسن", "strongs": "H2896"}, {"word": "وقال", "strongs": "H559"}, {"word": "الله", "strongs": "H430"}, {"word": "لتنبت", "strongs": "H1876"}, {"word": "الارض", "strongs": "H776"}, {"word": "عشبا", "strongs": "H1877"}, {"word": "وبقلا", "strongs": "H6212"}, {"word": "يبزر", "strongs": "H2232"}, {"word": "بزرا", "strongs": "H2233"}, {"word": "وشجرا", "strongs": "H6086"}, {"word": "ذا", "strongs": "H0"}, {"word": "ثمر", "strongs": "H6529"}, {"word": "يعمل", "strongs": "H6213"}, {"word": "ثمرا", "strongs": "H6529"}, {"word": "كجنسه", "strongs": "H4327"}, {"word": "بزره", "strongs": "H2233"}, {"word": "فيه", "strongs": "H0"}, {"word": "على", "strongs": "H0"}, {"word": "الارض", "strongs": "H776"}, {"word": "وكان", "strongs": "H1961"}, {"word": "كذلك", "strongs": "H3651"}, {"word": "فاخرجت", "strongs": "H3318"}, {"word": "الارض", "strongs": "H776"}, {"word": "عشبا", "strongs": "H1877"}, {"word": "وبقلا", "strongs": "H6212"}, {"word": "يبزر", "strongs": "H2232"}, {"word": "بزرا", "strongs": "H2233"}, {"word": "كجنسه", "strongs": "H4327"}, {"word": "وشجرا", "strongs": "H6086"}, {"word": "يعمل", "strongs": "H6213"}, {"word": "ثمرا", "strongs": "H6529"}, {"word": "بزره", "strongs": "H2233"}, {"word": "فيه", "strongs": "H0"}, {"word": "كجنسه", "strongs": "H4327"}, {"word": "وراى", "strongs": "H7200"}, {"word": "الله", "strongs": "H430"}, {"word": "ذلك", "strongs": "H0"}, {"word": "انه", "strongs": "H0"}, {"word": "حسن", "strongs": "H2896"}, {"word": "وكان", "strongs": "H1961"}, {"word": "مساء", "strongs": "H6153"}, {"word": "وكان", "strongs": "H1961"}, {"word": "صباح", "strongs": "H1242"}, {"word": "يوما", "strongs": "H3117"}, {"word": "ثالثا", "strongs": "H7992"}, {"word": "وقال", "strongs": "H559"}, {"word": "الله", "strongs": "H430"}, {"word": "لتكن", "strongs": "H1961"}, {"word": "انوار", "strongs": "H3974"}, {"word": "في", "strongs": "H0"}, {"word": "جلد", "strongs": "H7549"}, {"word": "السماء", "strongs": "H8064"}, {"word": "لتفصل", "strongs": "H914"}, {"word": "بين", "strongs": "H996"}, {"word": "النهار", "strongs": "H3117"}, {"word": "والليل", "strongs": "H3915"}, {"word": "وتكون", "strongs": "H1961"}, {"word": "لايات", "strongs": "H226"}, {"word": "واوقات", "strongs": "H4150"}, {"word": "وايام", "strongs": "H3117"}, {"word": "وسنين", "strongs": "H8141"}, {"word": "وتكون", "strongs": "H1961"}, {"word": "انوارا", "strongs": "H3974"}, {"word": "في", "strongs": "H0"}, {"word": "جلد", "strongs": "H7549"}, {"word": "السماء", "strongs": "H8064"}, {"word": "لتنير", "strongs": "H215"}, {"word": "على", "strongs": "H0"}, {"word": "الارض", "strongs": "H776"}, {"word": "وكان", "strongs": "H1961"}, {"word": "كذلك", "strongs": "H3651"}, {"word": "فعمل", "strongs": "H6213"}, {"word": "الله", "strongs": "H430"}, {"word": "النورين", "strongs": "H3974"}, {"word": "العظيمين", "strongs": "H1419"}, {"word": "النور", "strongs": "H3974"}, {"word": "الاكبر", "strongs": "H1419"}, {"word": "لحكم", "strongs": "H4475"}, {"word": "النهار", "strongs": "H3117"}, {"word": "والنور", "strongs": "H3974"}, {"word": "الاصغر", "strongs": "H6996"}, {"word": "لحكم", "strongs": "H4475"}, {"word": "الليل", "strongs": "H3915"}, {"word": "والنجوم", "strongs": "H3556"}, {"word": "وجعلها", "strongs": "H5414"}, {"word": "الله", "strongs": "H430"}, {"word": "في", "strongs": "H0"}, {"word": "جلد", "strongs": "H7549"}, {"word": "السماء", "strongs": "H8064"}, {"word": "لتنير", "strongs": "H215"}, {"word": "على", "strongs": "H0"}, {"word": "الارض", "strongs": "H776"}, {"word": "ولتحكم", "strongs": "H4910"}, {"word": "على", "strongs": "H0"}, {"word": "النهار", "strongs": "H3117"}, {"word": "والليل", "strongs": "H3915"}, {"word": "ولتفصل", "strongs": "H914"}, {"word": "بين", "strongs": "H996"}, {"word": "النور", "strongs": "H216"}, {"word": "والظلمة", "strongs": "H2822"}, {"word": "وراى", "strongs": "H7200"}, {"word": "الله", "strongs": "H430"}, {"word": "ذلك", "strongs": "H0"}, {"word": "انه", "strongs": "H0"}, {"word": "حسن", "strongs": "H2896"}, {"word": "وكان", "strongs": "H1961"}, {"word": "مساء", "strongs": "H6153"}, {"word": "وكان", "strongs": "H1961"}, {"word": "صباح", "strongs": "H1242"}, {"word": "يوما", "strongs": "H3117"}, {"word": "رابعا", "strongs": "H7243"}, {"word": "وقال", "strongs": "H559"}, {"word": "الله", "strongs": "H430"}, {"word": "لتفض", "strongs": "H8317"}, {"word": "المياه", "strongs": "H4325"}, {"word": "زحافات", "strongs": "H8318"}, {"word": "ذات", "strongs": "H0"}, {"word": "نفس", "strongs": "H5315"}, {"word": "حية", "strongs": "H2416"}, {"word": "وليطر", "strongs": "H5774"}, {"word": "طير", "strongs": "H5775"}, {"word": "فوق", "strongs": "H5921"}, {"word": "الارض", "strongs": "H776"}, {"word": "على", "strongs": "H0"}, {"word": "وجه", "strongs": "H6440"}, {"word": "جلد", "strongs": "H7549"}, {"word": "السماء", "strongs": "H8064"}, {"word": "فخلق", "strongs": "H1254"}, {"word": "الله", "strongs": "H430"}, {"word": "التنانين", "strongs": "H8577"}, {"word": "العظام", "strongs": "H1419"}, {"word": "وكل", "strongs": "H3605"}, {"word": "ذوات", "strongs": "H0"}, {"word": "الانفس", "strongs": "H5315"}, {"word": "الحية", "strongs": "H2416"}, {"word": "الدبابة", "strongs": "H7430"}, {"word": "التي", "strongs": "H0"}, {"word": "فاضت", "strongs": "H8317"}, {"word": "بها", "strongs": "H0"}, {"word": "المياه", "strongs": "H4325"}, {"word": "كاجناسها", "strongs": "H4327"}, {"word": "وكل", "strongs": "H3605"}, {"word": "طائر", "strongs": "H5775"}, {"word": "ذي", "strongs": "H0"}, {"word": "جناح", "strongs": "H3671"}, {"word": "كجنسه", "strongs": "H4327"}, {"word": "وراى", "strongs": "H7200"}, {"word": "الله", "strongs": "H430"}, {"word": "ذلك", "strongs": "H0"}, {"word": "انه", "strongs": "H0"}, {"word": "حسن", "strongs": "H2896"}, {"word": "وباركها", "strongs": "H1288"}, {"word": "الله", "strongs": "H430"}, {"word": "قائلا", "strongs": "H559"}, {"word": "اثمري", "strongs": "H6509"}, {"word": "وتكاثري", "strongs": "H7235"}, {"word": "واملاي", "strongs": "H4390"}, {"word": "المياه", "strongs": "H4325"}, {"word": "في", "strongs": "H0"}, {"word": "البحار", "strongs": "H3220"}, {"word": "وليكثر", "strongs": "H7235"}, {"word": "الطير", "strongs": "H5775"}, {"word": "على", "strongs": "H0"}, {"word": "الارض", "strongs": "H776"}, {"word": "وكان", "strongs": "H1961"}, {"word": "مساء", "strongs": "H6153"}, {"word": "وكان", "strongs": "H1961"}, {"word": "صباح", "strongs": "H1242"}, {"word": "يوما", "strongs": "H3117"}, {"word": "خامسا", "strongs": "H2549"}, {"word": "وقال", "strongs": "H559"}, {"word": "الله", "strongs": "H430"}, {"word": "لتخرج", "strongs": "H3318"}, {"word": "الارض", "strongs": "H776"}, {"word": "ذوات", "strongs": "H0"}, {"word": "انفس", "strongs": "H5315"}, {"word": "حية", "strongs": "H2416"}, {"word": "كجنسها", "strongs": "H4327"}, {"word": "بهائم", "strongs": "H929"}, {"word": "ودبابات", "strongs": "H7431"}, {"word": "ووحوش", "strongs": "H2416"}, {"word": "ارض", "strongs": "H776"}, {"word": "كجنسها", "strongs": "H4327"}, {"word": "وكان", "strongs": "H1961"}, {"word": "كذلك", "strongs": "H3651"}, {"word": "فعمل", "strongs": "H6213"}, {"word": "الله", "strongs": "H430"}, {"word": "وحوش", "strongs": "H2416"}, {"word": "الارض", "strongs": "H776"}, {"word": "كاجناسها", "strongs": "H4327"}, {"word": "والبهائم", "strongs": "H929"}, {"word": "كاجناسها", "strongs": "H4327"}, {"word": "وجميع", "strongs": "H3605"}, {"word": "دبابات", "strongs": "H7431"}, {"word": "الارض", "strongs": "H776"}, {"word": "كاجناسها", "strongs": "H4327"}, {"word": "وراى", "strongs": "H7200"}, {"word": "الله", "strongs": "H430"}, {"word": "ذلك", "strongs": "H0"}, {"word": "انه", "strongs": "H0"}, {"word": "حسن", "strongs": "H2896"}, {"word": "وقال", "strongs": "H559"}, {"word": "الله", "strongs": "H430"}, {"word": "نعمل", "strongs": "H6213"}, {"word": "الانسان", "strongs": "H120"}, {"word": "على", "strongs": "H0"}, {"word": "صورتنا", "strongs": "H6754"}, {"word": "كشبهنا", "strongs": "H1823"}, {"word": "فيتسلطون", "strongs": "H7287"}, {"word": "على", "strongs": "H0"}, {"word": "سمك", "strongs": "H1710"}, {"word": "البحر", "strongs": "H3220"}, {"word": "وعلى", "strongs": "H0"}, {"word": "طير", "strongs": "H5775"}, {"word": "السماء", "strongs": "H8064"}, {"word": "وعلى", "strongs": "H0"}, {"word": "البهائم", "strongs": "H929"}, {"word": "وعلى", "strongs": "H0"}, {"word": "كل", "strongs": "H3605"}, {"word": "الارض", "strongs": "H776"}, {"word": "وعلى", "strongs": "H0"}, {"word": "جميع", "strongs": "H3605"}, {"word": "الدبابات", "strongs": "H7431"}, {"word": "التي", "strongs": "H0"}, {"word": "تدب", "strongs": "H7430"}, {"word": "على", "strongs": "H0"}, {"word": "الارض", "strongs": "H776"}, {"word": "فخلق", "strongs": "H1254"}, {"word": "الله", "strongs": "H430"}, {"word": "الانسان", "strongs": "H120"}, {"word": "على", "strongs": "H0"}, {"word": "صورته", "strongs": "H6754"}, {"word": "على", "strongs": "H0"}, {"word": "صورة", "strongs": "H6754"}, {"word": "الله", "strongs": "H430"}, {"word": "خلقه", "strongs": "H1254"}, {"word": "ذكرا", "strongs": "H2145"}, {"word": "وانثى", "strongs": "H5347"}, {"word": "خلقهم", "strongs": "H1254"}, {"word": "وباركهم", "strongs": "H1288"}, {"word": "الله", "strongs": "H430"}, {"word": "وقال", "strongs": "H559"}, {"word": "لهم", "strongs": "H0"}, {"word": "الله", "strongs": "H430"}, {"word": "اثمروا", "strongs": "H6509"}, {"word": "وتكاثروا", "strongs": "H7235"}, {"word": "واملاوا", "strongs": "H4390"}, {"word": "الارض", "strongs": "H776"}, {"word": "واخضعوها", "strongs": "H3533"}, {"word": "وتسلطوا", "strongs": "H7287"}, {"word": "على", "strongs": "H0"}, {"word": "سمك", "strongs": "H1710"}, {"word": "البحر", "strongs": "H3220"}, {"word": "وعلى", "strongs": "H0"}, {"word": "طير", "strongs": "H5775"}, {"word": "السماء", "strongs": "H8064"}, {"word": "وعلى", "strongs": "H0"}, {"word": "كل", "strongs": "H3605"}, {"word": "حيوان", "strongs": "H2416"}, {"word": "يدب", "strongs": "H7430"}, {"word": "على", "strongs": "H0"}, {"word": "الارض", "strongs": "H776"}, {"word": "وقال", "strongs": "H559"}, {"word": "الله", "strongs": "H430"}, {"word": "اني", "strongs": "H0"}, {"word": "قد", "strongs": "H0"}, {"word": "اعطيتكم", "strongs": "H5414"}, {"word": "كل", "strongs": "H3605"}, {"word": "بقل", "strongs": "H6212"}, {"word": "يبزر", "strongs": "H2232"}, {"word": "بزرا", "strongs": "H2233"}, {"word": "على", "strongs": "H0"}, {"word": "وجه", "strongs": "H6440"}, {"word": "كل", "strongs": "H3605"}, {"word": "الارض", "strongs": "H776"}, {"word": "وكل", "strongs": "H3605"}, {"word": "شجر", "strongs": "H6086"}, {"word": "فيه", "strongs": "H0"}, {"word": "ثمر", "strongs": "H6529"}, {"word": "شجر", "strongs": "H6086"}, {"word": "يبزر", "strongs": "H2232"}, {"word": "بزرا", "strongs": "H2233"}, {"word": "يكون", "strongs": "H1961"}, {"word": "لكم", "strongs": "H0"}, {"word": "طعاما", "strongs": "H402"}, {"word": "ولكل", "strongs": "H3605"}, {"word": "حيوان", "strongs": "H2416"}, {"word": "الارض", "strongs": "H776"}, {"word": "وكل", "strongs": "H3605"}, {"word": "طير", "strongs": "H5775"}, {"word": "السماء", "strongs": "H8064"}, {"word": "وكل", "strongs": "H3605"}, {"word": "دابة", "strongs": "H7430"}, {"word": "على", "strongs": "H0"}, {"word": "الارض", "strongs": "H776"}, {"word": "فيها", "strongs": "H0"}, {"word": "نفس", "strongs": "H5315"}, {"word": "حية", "strongs": "H2416"}, {"word": "اعطيت", "strongs": "H0"}, {"word": "كل", "strongs": "H3605"}, {"word": "عشب", "strongs": "H6212"}, {"word": "اخضر", "strongs": "H3418"}, {"word": "طعاما", "strongs": "H402"}, {"word": "وكان", "strongs": "H1961"}, {"word": "كذلك", "strongs": "H3651"}, {"word": "وراى", "strongs": "H7200"}, {"word": "الله", "strongs": "H430"}, {"word": "كل", "strongs": "H3605"}, {"word": "ما", "strongs": "H0"}, {"word": "عمله", "strongs": "H6213"}, {"word": "فاذا", "strongs": "H2009"}, {"word": "هو", "strongs": "H0"}, {"word": "حسن", "strongs": "H2896"}, {"word": "جدا", "strongs": "H3966"}, {"word": "وكان", "strongs": "H1961"}, {"word": "مساء", "strongs": "H6153"}, {"word": "وكان", "strongs": "H1961"}, {"word": "صباح", "strongs": "H1242"}, {"word": "يوما", "strongs": "H3117"}, {"word": "سادسا", "strongs": "H8345"}
+];
+
+        function log(msg) {
+            const el = document.getElementById('log');
+            el.innerHTML += msg + '\n';
+            el.scrollTop = el.scrollHeight;
+        }
+
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            const supabaseUrl = document.getElementById('supabaseUrl').value.trim();
+            const supabaseKey = document.getElementById('supabaseKey').value.trim();
+
+            if (!supabaseUrl || !supabaseKey) return alert('أدخل بيانات Supabase');
+
+            document.getElementById('startBtn').disabled = true;
+            log('جاري الاتصال بـ Supabase وطلب آيات تكوين الإصحاح الأول...');
+
+            try {
+                const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+                
+                // جلب تكوين (1) الإصحاح (1)
+                const { data: verses, error } = await supabase
+                    .from('verses')
+                    .select('id, text_avd_ar, text_original_lang')
+                    .eq('book_id', 1)
+                    .eq('chapter_num', 1)
+                    .order('verse_num', { ascending: true });
+                    
+                if (error) throw error;
+                if (!verses || verses.length === 0) throw new Error("لم يتم العثور على آيات تكوين 1");
+
+                log(`تم جلب ${verses.length} آية بنجاح.`);
+                
+                let jsonIndex = 0;
+                let batch = [];
+                let wordsMappedCount = 0;
+
+                for (let i = 0; i < verses.length; i++) {
+                    const verse = verses[i];
+                    
+                    // تنظيف الكلمات كما في الواجهة الأمامية
+                    const cleanText = verse.text_avd_ar.replace(/[.,:;«»!؟?]/g, '');
+                    const words = cleanText.split(/\s+/).filter(w => w.trim().length > 0);
+                    
+                    for (let pos = 0; pos < words.length; pos++) {
+                        if (jsonIndex >= aiData.length) {
+                            log(`⚠️ تحذير: انتهت البيانات المرسلة قبل انتهاء الآيات عند الكلمة: ${words[pos]}`);
+                            break;
+                        }
+
+                        const mapping = aiData[jsonIndex];
+                        jsonIndex++;
+                        
+                        let origWord = mapping.strongs === 'H0' || mapping.strongs === 'G0' ? '---' : mapping.strongs;
+                        
+                        batch.push({
+                            verse_id: verse.id,
+                            ar_word_position: pos + 1,
+                            orig_word_position: pos + 1,
+                            ar_word: words[pos], 
+                            orig_word: origWord,
+                            orig_word_lang: verse.text_original_lang || 'hebrew',
+                            strongs_id: mapping.strongs,
+                            orig_morphology: '',
+                            transliteration_ar: '',
+                            transliteration_lat: '',
+                            audio_url: '',
+                            audio_duration_ms: 0,
+                            is_verified: true // مراجعة واعتماد
+                        });
+                        wordsMappedCount++;
+                    }
+                }
+
+                log(`جاري رفع ${batch.length} كلمة مربوطة إلى قاعدة البيانات...`);
+
+                const { error: insErr } = await supabase.from('word_mappings').upsert(batch, { onConflict: 'verse_id, ar_word_position, orig_word_position' });
+                if (insErr) {
+                    log(`❌ خطأ أثناء الرفع: ${insErr.message}`);
+                } else {
+                    log(`🎉 تمت العملية بنجاح! تم رفع الإصحاح الأول بالكامل (تكوين 1) للـ ${wordsMappedCount} كلمة.`);
+                    log(`الآن افتح تطبيق الموبايل على (تكوين 1) وسترى النتيجة المذهلة!`);
+                }
+                
+            } catch (err) {
+                log(`❌ خطأ: ${err.message}`);
+            } finally {
+                document.getElementById('startBtn').disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة المطابقة التلقائية لسفر الخروج (Exodus Auto-Aligner)</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 20px; background-color: #f8fafc; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1e293b; }
+        label { font-weight: bold; display: block; margin-top: 15px; color: #475569; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; }
+        button { margin-top: 20px; padding: 12px 20px; background-color: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; }
+        button:hover { background-color: #1d4ed8; }
+        button:disabled { background-color: #94a3b8; cursor: not-allowed; }
+        #log { margin-top: 20px; padding: 15px; background: #1e293b; color: #10b981; height: 300px; overflow-y: auto; border-radius: 4px; font-family: monospace; white-space: pre-wrap; direction: ltr; text-align: left; }
+        .progress-container { margin-top: 20px; background-color: #e2e8f0; border-radius: 4px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 24px; background-color: #10b981; text-align: center; color: white; line-height: 24px; font-size: 14px; font-weight: bold; transition: width 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 مطابقة سفر الخروج تلقائياً (Exodus)</h1>
+        <p style="text-align: center; color: #64748b;">ستقوم هذه الأداة بربط الـ 40 أصحاحاً بـ Gemini ثم حفظها في قاعدة البيانات</p>
+        
+        <label>رابط قاعدة البيانات (Supabase URL)</label>
+        <input type="text" id="supabaseUrl" placeholder="https://xyzcompany.supabase.co" value="https://ojtsoqxfuwpcmwnpnabo.supabase.co">
+        
+        <label>المفتاح السري (Supabase Service Key)</label>
+        <input type="password" id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5c...">
+
+        <label>مفتاح الذكاء الاصطناعي (Gemini API Key)</label>
+        <input type="password" id="geminiKey" placeholder="AIzaSy...">
+
+        <div style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+                <label>من أصحاح:</label>
+                <input type="number" id="startCh" value="1" min="1" max="40">
+            </div>
+            <div style="flex: 1;">
+                <label>إلى أصحاح:</label>
+                <input type="number" id="endCh" value="40" min="1" max="40">
+            </div>
+        </div>
+
+        <button id="startBtn" onclick="startProcess()">▶ ابدأ المطابقة التلقائية</button>
+        <button id="stopBtn" onclick="stopProcess()" style="background-color: #ef4444; display: none;">🛑 إيقاف</button>
+
+        <div class="progress-container">
+            <div id="progressBar" class="progress-bar">0%</div>
+        </div>
+
+        <div id="log">العمليات ستظهر هنا...</div>
+    </div>
+
+    <script>
+        window.onerror = function(msg, url, line) {
+            alert("خطأ: " + msg + "\nالسطر: " + line);
+            logMessage("❌ خطأ برمجي: " + msg);
+        };
+        
+        let isRunning = false;
+        let supabase = null;
+
+        function logMessage(msg) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += msg + '\n';
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        async function initSupabase() {
+            const url = document.getElementById('supabaseUrl').value.trim();
+            const key = document.getElementById('supabaseKey').value.trim();
+            if (!url || !key) throw new Error("يجب إدخال بيانات Supabase");
+            supabase = window.supabase.createClient(url, key);
+        }
+
+        async function getChapterVerses(chapterNum) {
+            const { data, error } = await supabase
+                .from('verses')
+                .select('id, chapter_num, verse_num, text_avd_ar')
+                .eq('book_id', 2)
+                .eq('chapter_num', chapterNum)
+                .order('verse_num', { ascending: true });
+            
+            if (error) throw error;
+            return data;
+        }
+
+        async function getStrongsDictionary() {
+            logMessage("جاري تحميل قاموس سترونج من قاعدة البيانات للمطابقة العكسية...");
+            const { data, error } = await supabase
+                .from('strongs_entries')
+                .select('id, original_word, definition_en')
+                .like('id', 'H%');
+            if (error) throw error;
+            const dict = {};
+            data.forEach(row => {
+                dict[row.id] = row.original_word;
+            });
+            return dict;
+        }
+
+        async function callGeminiForChapter(verses, strongsDict) {
+            const apiKey = document.getElementById('geminiKey').value.trim();
+            if (!apiKey) throw new Error("يجب إدخال مفتاح Gemini");
+
+            const promptVerses = verses.map(v => `Verse ${v.verse_num}: ${v.text_avd_ar}`).join('\n');
+            
+            const systemPrompt = `You are an expert in Biblical Hebrew and Arabic translations (specifically the Van Dyck Arabic Bible).
+Your task is to map each Arabic word in the provided verses of Exodus to its corresponding Hebrew Strong's number.
+Rules:
+1. Return ONLY a valid JSON array of objects. Do not include markdown code blocks (\`\`\`json) or any other text.
+2. The JSON array must represent the exact words in the Arabic text, in order, for each verse.
+3. If an Arabic word has no direct Hebrew equivalent in the source text (e.g., added for translation flow), assign the Strong's number "H0".
+4. For Exodus, all Strong's numbers must start with 'H' (e.g., "H430", "H7225").
+5. Format each object as: {"verse": <verse_number>, "word": "<arabic_word>", "strongs": "<strongs_id>"}
+
+Verses to process:
+${promptVerses}`;
+
+            logMessage(`إرسال الأصحاح إلى Gemini للتحليل...`);
+            
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: systemPrompt }] }],
+                    generationConfig: {
+                        temperature: 0.1,
+                        responseMimeType: "application/json"
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Gemini API Error: ${errorText}`);
+            }
+
+            const result = await response.json();
+            const textResponse = result.candidates[0].content.parts[0].text;
+            
+            try {
+                return JSON.parse(textResponse);
+            } catch (e) {
+                throw new Error("فشل في قراءة مخرجات Gemini كـ JSON.");
+            }
+        }
+
+        async function saveMappings(verses, aiMappings) {
+            const toInsert = [];
+            
+            verses.forEach(v => {
+                const vMappings = aiMappings.filter(m => parseInt(m.verse) === parseInt(v.verse_num));
+                
+                let wordPosition = 1;
+                vMappings.forEach(m => {
+                    toInsert.push({
+                        verse_id: v.id,
+                        ar_word: m.word,
+                        strongs_id: m.strongs === "H0" ? null : m.strongs,
+                        ar_word_position: wordPosition,
+                        orig_word_position: wordPosition,
+                        orig_word: '---', // placeholder
+                        orig_word_lang: 'hebrew',
+                        is_verified: true
+                    });
+                    wordPosition++;
+                });
+            });
+
+            if (toInsert.length === 0) return;
+
+            // Clear old mappings for these verses
+            for (let v of verses) {
+                await supabase.from('word_mappings').delete().eq('verse_id', v.id);
+            }
+
+            // Insert new mappings in chunks
+            const chunkSize = 100;
+            for (let i = 0; i < toInsert.length; i += chunkSize) {
+                const chunk = toInsert.slice(i, i + chunkSize);
+                const { error } = await supabase.from('word_mappings').insert(chunk);
+                if (error) {
+                    logMessage(`❌ خطأ أثناء الحفظ: ${error.message}`);
+                    throw error;
+                }
+            }
+            logMessage(`✅ تم حفظ ${toInsert.length} كلمة بنجاح!`);
+        }
+
+        async function startProcess() {
+            alert("بدأ العمل!");
+            try {
+                isRunning = true;
+                document.getElementById('startBtn').style.display = 'none';
+                document.getElementById('stopBtn').style.display = 'block';
+                document.getElementById('supabaseUrl').disabled = true;
+                document.getElementById('supabaseKey').disabled = true;
+                document.getElementById('geminiKey').disabled = true;
+
+                await initSupabase();
+
+                const startCh = parseInt(document.getElementById('startCh').value);
+                const endCh = parseInt(document.getElementById('endCh').value);
+                const totalCh = endCh - startCh + 1;
+                let completedCh = 0;
+
+                for (let ch = startCh; ch <= endCh; ch++) {
+                    if (!isRunning) break;
+                    
+                    logMessage(`\n--- بدء الأصحاح ${ch} ---`);
+                    const verses = await getChapterVerses(ch);
+                    
+                    if (verses.length === 0) {
+                        logMessage(`⚠️ الأصحاح ${ch} غير موجود في قاعدة البيانات.`);
+                        continue;
+                    }
+
+                    try {
+                        const aiMappings = await callGeminiForChapter(verses);
+                        await saveMappings(verses, aiMappings);
+                    } catch (err) {
+                        logMessage(`❌ خطأ في الأصحاح ${ch}: ${err.message}`);
+                        logMessage(`سيتم التخطي إلى الأصحاح التالي...`);
+                    }
+
+                    completedCh++;
+                    const progress = Math.round((completedCh / totalCh) * 100);
+                    const pBar = document.getElementById('progressBar');
+                    pBar.style.width = progress + '%';
+                    pBar.innerText = progress + '%';
+
+                    // Sleep to avoid rate limits (20 seconds between chapters for safety on free tier)
+                    if (ch < endCh && isRunning) {
+                        logMessage(`انتظار 20 ثانية لتجنب ضغط الـ API...`);
+                        await new Promise(r => setTimeout(r, 20000));
+                    }
+                }
+
+                logMessage('\n🎉 اكتملت العملية!');
+            } catch (e) {
+                logMessage('\n❌ توقف بسبب خطأ: ' + e.message);
+            } finally {
+                stopProcess();
+            }
+        }
+
+        function stopProcess() {
+            isRunning = false;
+            document.getElementById('startBtn').style.display = 'block';
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('supabaseUrl').disabled = false;
+            document.getElementById('supabaseKey').disabled = false;
+            document.getElementById('geminiKey').disabled = false;
+        }
+    </script>
+</body>
+</html>

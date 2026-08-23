@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرافع الذكي للإصحاحات (Smart Chapter Uploader)</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Tahoma, sans-serif; padding: 20px; max-width: 700px; margin: auto; background: #f3f4f6; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .row { display: flex; gap: 10px; margin-top: 10px; }
+        .row > div { flex: 1; }
+        label { font-weight: bold; font-size: 14px; display: block; margin-bottom: 5px; color: #374151; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 4px; box-sizing: border-box; }
+        textarea { height: 200px; font-family: monospace; text-align: left; direction: ltr; }
+        button { width: 100%; padding: 12px; margin-top: 20px; background: #3b82f6; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 16px; transition: 0.3s; }
+        button:hover { background: #2563eb; }
+        button:disabled { background: #9ca3af; cursor: not-allowed; }
+        #log { margin-top: 20px; font-size: 14px; color: #1f2937; white-space: pre-wrap; background: #e5e7eb; padding: 15px; border-radius: 4px; max-height: 300px; overflow-y: auto; }
+        .success { color: #059669; font-weight: bold; }
+        .error { color: #dc2626; font-weight: bold; }
+        .warning { color: #d97706; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>الرافع الذكي للإصحاحات 🚀</h2>
+        <p>استخدم هذه الأداة لرفع أي إصحاح تقوم بتجهيزه مستقبلاً بكل سهولة.</p>
+        
+        <div class="row">
+            <div>
+                <label>Supabase URL</label>
+                <input type="text" id="supabaseUrl" placeholder="https://xyzcompany.supabase.co">
+            </div>
+            <div>
+                <label>Supabase Service Key</label>
+                <input type="password" id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5c...">
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+            <div>
+                <label>رقم السفر (مثال: 1 للتكوين)</label>
+                <input type="number" id="bookId" value="1" min="1" max="66">
+            </div>
+            <div>
+                <label>رقم الإصحاح</label>
+                <input type="number" id="chapterNum" value="2" min="1">
+            </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <label>الكود (JSON Array)</label>
+            <textarea id="jsonData" placeholder='[\n  {"word": "فاكملت", "strongs": "H3615"},\n  ...\n]'></textarea>
+        </div>
+
+        <button id="startBtn">رفع الإصحاح الآن!</button>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        function log(msg, type = '') {
+            const el = document.getElementById('log');
+            const colorClass = type === 'success' ? 'success' : type === 'error' ? 'error' : type === 'warning' ? 'warning' : '';
+            el.innerHTML += `<span class="${colorClass}">${msg}</span>\n`;
+            el.scrollTop = el.scrollHeight;
+        }
+
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            const supabaseUrl = document.getElementById('supabaseUrl').value.trim();
+            const supabaseKey = document.getElementById('supabaseKey').value.trim();
+            const bookId = parseInt(document.getElementById('bookId').value);
+            const chapterNum = parseInt(document.getElementById('chapterNum').value);
+            const jsonString = document.getElementById('jsonData').value.trim();
+
+            if (!supabaseUrl || !supabaseKey) return alert('يرجى إدخال بيانات Supabase');
+            if (!jsonString) return alert('يرجى لصق كود الـ JSON');
+            if (isNaN(bookId) || isNaN(chapterNum)) return alert('يرجى إدخال أرقام السفر والإصحاح بشكل صحيح');
+
+            let aiData = [];
+            try {
+                aiData = JSON.parse(jsonString);
+                if (!Array.isArray(aiData)) throw new Error('البيانات يجب أن تكون Array');
+            } catch (e) {
+                return alert('خطأ في صيغة الـ JSON. تأكد من أن الكود يبدأ بـ [ وينتهي بـ ]');
+            }
+
+            document.getElementById('log').innerHTML = ''; // مسح السجل القديم
+            document.getElementById('startBtn').disabled = true;
+            log(`جاري الاتصال بـ Supabase لجلب آيات السفر (${bookId}) الإصحاح (${chapterNum})...`);
+
+            try {
+                const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+                
+                const { data: verses, error } = await supabase
+                    .from('verses')
+                    .select('id, text_avd_ar, text_original_lang')
+                    .eq('book_id', bookId)
+                    .eq('chapter_num', chapterNum)
+                    .order('verse_num', { ascending: true });
+                    
+                if (error) throw error;
+                if (!verses || verses.length === 0) throw new Error("لم يتم العثور على آيات لهذا الإصحاح");
+
+                log(`تم جلب ${verses.length} آية بنجاح.`);
+                
+                let jsonIndex = 0;
+                let batch = [];
+                let wordsMappedCount = 0;
+
+                for (let i = 0; i < verses.length; i++) {
+                    const verse = verses[i];
+                    
+                    // تنظيف الكلمات كما في الواجهة الأمامية تماماً
+                    const cleanText = verse.text_avd_ar.replace(/[.,:;«»!؟?]/g, '');
+                    const words = cleanText.split(/\s+/).filter(w => w.trim().length > 0);
+                    
+                    for (let pos = 0; pos < words.length; pos++) {
+                        if (jsonIndex >= aiData.length) {
+                            log(`⚠️ تحذير: الكلمات في JSON انتهت قبل انتهاء الآيات! توقفنا عند الكلمة: "${words[pos]}"`, 'warning');
+                            break;
+                        }
+
+                        const mapping = aiData[jsonIndex];
+                        jsonIndex++;
+                        
+                        let origWord = mapping.strongs === 'H0' || mapping.strongs === 'G0' ? '---' : mapping.strongs;
+                        
+                        batch.push({
+                            verse_id: verse.id,
+                            ar_word_position: pos + 1,
+                            orig_word_position: pos + 1,
+                            ar_word: words[pos], 
+                            orig_word: origWord,
+                            orig_word_lang: verse.text_original_lang || 'hebrew',
+                            strongs_id: mapping.strongs,
+                            orig_morphology: '',
+                            transliteration_ar: '',
+                            transliteration_lat: '',
+                            audio_url: '',
+                            audio_duration_ms: 0,
+                            is_verified: true 
+                        });
+                        wordsMappedCount++;
+                    }
+                    if (jsonIndex >= aiData.length) break;
+                }
+
+                if (jsonIndex < aiData.length) {
+                    log(`⚠️ تحذير: يوجد ${aiData.length - jsonIndex} كلمة زائدة في الـ JSON لم يتم استخدامها. تأكد من تطابق النص.`, 'warning');
+                }
+
+                log(`جاري رفع ${batch.length} كلمة...`);
+
+                const { error: insErr } = await supabase.from('word_mappings').upsert(batch, { onConflict: 'verse_id, ar_word_position, orig_word_position' });
+                if (insErr) {
+                    log(`❌ خطأ أثناء الرفع: ${insErr.message}`, 'error');
+                } else {
+                    log(`🎉 تمت العملية بنجاح! تم رفع الإصحاح بالكامل للـ ${wordsMappedCount} كلمة.`, 'success');
+                }
+                
+            } catch (err) {
+                log(`❌ خطأ: ${err.message}`, 'error');
+            } finally {
+                document.getElementById('startBtn').disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

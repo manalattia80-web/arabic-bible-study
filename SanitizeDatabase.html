@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطهير قاعدة البيانات من NULL</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Tahoma, sans-serif; padding: 20px; max-width: 600px; margin: auto; background: #f9fafb; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; margin-top: 20px; background: #dc2626; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        #log { margin-top: 20px; font-weight: bold; color: green; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>أداة تطهير قاعدة البيانات</h2>
+        <p>اكتشفنا أن الخطأ يظهر عند فتح كلمات حقيقية (مثل H1) لأن قاموس سترونج نفسه يحتوي على فراغات NULL مخفية. هذه الأداة ستطهر قاعدة البيانات بالكامل.</p>
+        <input type="text" id="supabaseUrl" placeholder="Supabase URL">
+        <input type="password" id="supabaseKey" placeholder="Supabase Service Role Key">
+        <button id="startBtn">🔥 بدء التطهير الشامل</button>
+        <div id="log"></div>
+    </div>
+    <script>
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            const url = document.getElementById('supabaseUrl').value.trim();
+            const key = document.getElementById('supabaseKey').value.trim();
+            if (!url || !key) return alert("أدخل البيانات أولاً");
+            
+            const logEl = document.getElementById('log');
+            logEl.innerText = 'جاري تطهير القاموس...';
+            const supabase = window.supabase.createClient(url, key);
+            
+            try {
+                // Sanitize strongs_entries
+                await supabase.from('strongs_entries').update({ root_word: '' }).is('root_word', null);
+                await supabase.from('strongs_entries').update({ pronunciation: '' }).is('pronunciation', null);
+                await supabase.from('strongs_entries').update({ kjv_usage: '' }).is('kjv_usage', null);
+                await supabase.from('strongs_entries').update({ transliteration: '' }).is('transliteration', null);
+                await supabase.from('strongs_entries').update({ definition_en: '' }).is('definition_en', null);
+
+                // Sanitize strongs_ar_translations
+                logEl.innerText = 'جاري تطهير الترجمات العربية...';
+                await supabase.from('strongs_ar_translations').update({ definition_ar: 'قيد الترجمة...' }).is('definition_ar', null);
+                await supabase.from('strongs_ar_translations').update({ notes_ar: '' }).is('notes_ar', null);
+
+                logEl.innerText = 'جاري تطهير الكتب والفصول...';
+                await supabase.from('books').update({ name_original: '' }).is('name_original', null);
+                await supabase.from('chapters').update({ summary: '' }).is('summary', null);
+
+                logEl.innerText = 'جاري تطهير الآيات... (قد يستغرق بعض الوقت)';
+                await supabase.from('verses').update({ text_avd_en: '' }).is('text_avd_en', null);
+                await supabase.from('verses').update({ text_original: '' }).is('text_original', null);
+                await supabase.from('verses').update({ notes: '' }).is('notes', null);
+
+                logEl.innerText = 'جاري تطهير الكلمات الفردية... (قد يستغرق بعض الوقت)';
+                await supabase.from('word_mappings').update({ orig_morphology: '' }).is('orig_morphology', null);
+                await supabase.from('word_mappings').update({ transliteration_ar: '' }).is('transliteration_ar', null);
+                await supabase.from('word_mappings').update({ transliteration_lat: '' }).is('transliteration_lat', null);
+                await supabase.from('word_mappings').update({ audio_url: '' }).is('audio_url', null);
+
+                logEl.innerText = '✅ تم القضاء على جميع فراغات NULL في جميع جداول التطبيق بنجاح! جرب التطبيق الآن!';
+            } catch (err) {
+                logEl.innerText = '❌ خطأ: ' + err.message;
+            }
+        });
+    </script>
+</body>
+</html>

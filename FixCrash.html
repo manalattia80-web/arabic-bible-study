@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إصلاح الخادم السريع</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Tahoma, sans-serif; padding: 20px; max-width: 600px; margin: auto; background: #f9fafb; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; margin-top: 20px; background: #2563eb; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        #log { margin-top: 20px; font-weight: bold; color: green; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>إصلاح مشكلة NULL النهائية</h2>
+        <p>هذا الملف سيقوم بإرسال "الترجمة المفقودة" التي تسبب الانهيار في التطبيق، بضغطة زر وبدون انتظار!</p>
+        <input type="text" id="supabaseUrl" placeholder="Supabase URL">
+        <input type="password" id="supabaseKey" placeholder="Supabase Service Role Key">
+        <button id="startBtn">🚀 إرسال الإصلاح الفوري</button>
+        <div id="log"></div>
+    </div>
+    <script>
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            const url = document.getElementById('supabaseUrl').value.trim();
+            const key = document.getElementById('supabaseKey').value.trim();
+            if (!url || !key) return alert("أدخل البيانات أولاً");
+            
+            document.getElementById('log').innerText = 'جاري الإرسال...';
+            const supabase = window.supabase.createClient(url, key);
+            
+            try {
+                // Fix Strong's entry root_word NULL
+                await supabase.from('strongs_entries').upsert({
+                    strongs_id: 'H0', language: 'hebrew', original_word: '---', 
+                    transliteration: '---', root_word: '---', pronunciation: '---', 
+                    definition_en: 'Not mapped yet', kjv_usage: ''
+                }, { onConflict: 'strongs_id' });
+
+                // Add missing Arabic translation that causes the NULL crash
+                await supabase.from('strongs_ar_translations').upsert({
+                    strongs_id: 'H0', definition_ar: 'قيد الترجمة...', notes_ar: '', is_verified: false
+                }, { onConflict: 'strongs_id' });
+
+                document.getElementById('log').innerText = '✅ تمت إضافة الترجمة المفقودة بنجاح! افتح التطبيق وجرب الآن!';
+            } catch (err) {
+                document.getElementById('log').innerText = '❌ خطأ: ' + err.message;
+            }
+        });
+    </script>
+</body>
+</html>

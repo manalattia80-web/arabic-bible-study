@@ -34,7 +34,7 @@ class AppTheme {
         foregroundColor:  AppColors.textPrimary,
         elevation:        0,
         scrolledUnderElevation: 0,
-        systemOverlayStyle: SystemUiOverlayStyle.light,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         centerTitle:      true,
         titleTextStyle: GoogleFonts.inter(
           fontSize:   17,

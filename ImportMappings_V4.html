@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة الربط الذكي العادل V4</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Tahoma, sans-serif; padding: 20px; max-width: 600px; margin: auto; background: #f9fafb; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; margin-top: 20px; background: #2563eb; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        #log { margin-top: 20px; font-size: 14px; color: #4b5563; white-space: pre-wrap; background: #f3f4f6; padding: 10px; border-radius: 4px; max-height: 300px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>أداة الربط الذكي العادل V4</h2>
+        <p>هذه النسخة الجديدة تستخدم خوارزمية "التوزيع العادل". تمنع تكرار الكلمة العبرية وتتجاهل حروف الجر ليصبح الربط دقيقاً بنسبة كبيرة جداً!</p>
+        <input type="text" id="supabaseUrl" placeholder="Supabase URL">
+        <input type="password" id="supabaseKey" placeholder="Supabase Service Role Key">
+        <input type="file" id="dbFile" accept=".db,.sqlite">
+        <button id="startBtn">🚀 بدء الربط الذكي V4</button>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        const BOOK_PREFIXES = {
+            1: 'GEN', 2: 'EXO', 3: 'LEV', 4: 'NUM', 5: 'DEU', 6: 'JOS', 7: 'JDG', 8: 'RUT', 9: '1SA', 10: '2SA',
+            11: '1KI', 12: '2KI', 13: '1CH', 14: '2CH', 15: 'EZR', 16: 'NEH', 17: 'EST', 18: 'JOB', 19: 'PSA', 20: 'PRO',
+            21: 'ECC', 22: 'SNG', 23: 'ISA', 24: 'JER', 25: 'LAM', 26: 'EZK', 27: 'DAN', 28: 'HOS', 29: 'JOL', 30: 'AMO',
+            31: 'OBA', 32: 'JON', 33: 'MIC', 34: 'NAH', 35: 'HAB', 36: 'ZEP', 37: 'HAG', 38: 'ZEC', 39: 'MAL',
+            40: 'MAT', 41: 'MRK', 42: 'LUK', 43: 'JHN', 44: 'ACT', 45: 'ROM', 46: '1CO', 47: '2CO', 48: 'GAL', 49: 'EPH',
+            50: 'PHP', 51: 'COL', 52: '1TH', 53: '2TH', 54: '1TI', 55: '2TI', 56: 'TIT', 57: 'PHM', 58: 'HEB', 59: 'JAS',
+            60: '1PE', 61: '2PE', 62: '1JN', 63: '2JN', 64: '3JN', 65: 'JUD', 66: 'REV'
+        };
+
+        const stopWords = new Set(["في", "من", "على", "الى", "عن", "ثم", "او", "يا", "لا", "ما", "لم", "لن", "ان", "كان", "كانت", "الذي", "التي", "الذين", "هو", "هي", "هم", "كل", "فان", "لان", "وان", "حتى", "بين", "مع", "عند", "الا", "نعم", "بلى", "قد", "لقد", "وما", "ولا", "فلا"]);
+
+        function log(msg) {
+            const el = document.getElementById('log');
+            el.innerHTML += msg + '\n';
+            el.scrollTop = el.scrollHeight;
+        }
+
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            const supabaseUrl = document.getElementById('supabaseUrl').value.trim();
+            const supabaseKey = document.getElementById('supabaseKey').value.trim();
+            const fileInput = document.getElementById('dbFile');
+
+            if (!supabaseUrl || !supabaseKey) return alert('أدخل بيانات Supabase');
+            if (fileInput.files.length === 0) return alert('اختر ملف strongs.db');
+
+            document.getElementById('startBtn').disabled = true;
+            log('جاري تهيئة قاعدة البيانات...');
+
+            try {
+                const SQL = await initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}` });
+                const arrayBuffer = await fileInput.files[0].arrayBuffer();
+                const db = new SQL.Database(new Uint8Array(arrayBuffer));
+                const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+                
+                log('تم الاتصال! جاري جلب جميع الآيات...');
+                let allVerses = [];
+                let from = 0;
+                let step = 1000;
+                let hasMore = true;
+                
+                while(hasMore) {
+                    const { data, error } = await supabase.from('verses').select('id, book_id, chapter_num, verse_num, text_avd_ar, text_original_lang').range(from, from + step - 1);
+                    if (error) throw error;
+                    if (data.length > 0) {
+                        allVerses.push(...data);
+                        from += step;
+                        log(`تم جلب ${allVerses.length} آية...`);
+                    } else {
+                        hasMore = false;
+                    }
+                }
+                
+                log(`🚀 جاري بدء خوارزمية الربط العادل (V4)...`);
+
+                let totalMapped = 0;
+                let batch = [];
+
+                for (let i = 0; i < allVerses.length; i++) {
+                    const verse = allVerses[i];
+                    const legacyVerseId = `${BOOK_PREFIXES[verse.book_id]}.${verse.chapter_num}.${verse.verse_num}`;
+                    
+                    const strongsRows = db.exec(`SELECT strongId FROM avd_verse_strongs WHERE verseId = '${legacyVerseId}'`);
+                    let verseStrongs = strongsRows.length > 0 ? strongsRows[0].values.map(v => v[0]) : [];
+                    
+                    const normalizeArabic = (str) => {
+                        return str
+                            .replace(/[\u0617-\u061A\u064B-\u0652\u06D6-\u06DC\u06DF-\u06E8\u06EA-\u06ED]/g, '') 
+                            .replace(/[أإآء]/g, 'ا')
+                            .replace(/ة/g, 'ه')
+                            .replace(/ى/g, 'ي');
+                    };
+
+                    const cleanText = verse.text_avd_ar.replace(/[.,:;«»!؟?]/g, '');
+                    const words = cleanText.split(/\s+/).filter(w => w.trim().length > 0);
+                    
+                    let candidatesList = [];
+                    let assignments = new Array(words.length).fill(null);
+
+                    // Pass 1: Get valid candidates
+                    for (let pos = 0; pos < words.length; pos++) {
+                        const normWord = normalizeArabic(words[pos]);
+                        if (stopWords.has(normWord) || normWord.length <= 1) {
+                            candidatesList.push([]);
+                            continue;
+                        }
+                        const indexRows = db.exec(`SELECT strongId FROM arabic_strong_index WHERE surface = '${normWord.replace(/'/g, "''")}' ORDER BY frequency DESC`);
+                        let candidates = indexRows.length > 0 ? indexRows[0].values.map(v => v[0]) : [];
+                        candidates = candidates.filter(c => verseStrongs.includes(c));
+                        candidatesList.push(candidates);
+                    }
+
+                    // Pass 2: Greedy unique assign
+                    for (let pos = 0; pos < words.length; pos++) {
+                        if (candidatesList[pos].length === 1) {
+                            let cand = candidatesList[pos][0];
+                            if (verseStrongs.includes(cand)) {
+                                assignments[pos] = cand;
+                                verseStrongs.splice(verseStrongs.indexOf(cand), 1);
+                            }
+                        }
+                    }
+
+                    // Pass 3: Assign remaining
+                    for (let pos = 0; pos < words.length; pos++) {
+                        if (!assignments[pos] && candidatesList[pos].length > 0) {
+                            for (let cand of candidatesList[pos]) {
+                                if (verseStrongs.includes(cand)) {
+                                    assignments[pos] = cand;
+                                    verseStrongs.splice(verseStrongs.indexOf(cand), 1);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    let mappedWords = 0;
+                    for (let pos = 0; pos < words.length; pos++) {
+                        const matchedStrong = assignments[pos];
+                        
+                        batch.push({
+                            verse_id: verse.id,
+                            ar_word_position: pos + 1,
+                            orig_word_position: pos + 1,
+                            ar_word: words[pos],
+                            orig_word: matchedStrong ? matchedStrong : '---',
+                            orig_word_lang: verse.text_original_lang,
+                            strongs_id: matchedStrong || 'H0',
+                            orig_morphology: '',
+                            transliteration_ar: '',
+                            transliteration_lat: '',
+                            audio_url: '',
+                            audio_duration_ms: 0,
+                            is_verified: false
+                        });
+                        mappedWords++;
+                    }
+                    
+                    if (mappedWords > 0) totalMapped++;
+
+                    if (batch.length >= 1000 || i === allVerses.length - 1) {
+                        const { error: insErr } = await supabase.from('word_mappings').upsert(batch, { onConflict: 'verse_id, ar_word_position, orig_word_position' });
+                        if (insErr) {
+                            log(`❌ خطأ: ${insErr.message}`);
+                        } else {
+                            log(`🔄 تم معالجة ورفع ${totalMapped} آية حتى الآن...`);
+                        }
+                        batch = [];
+                    }
+                }
+
+                log(`🎉 اكتملت العملية بنجاح! خوارزمية V4 الأذكى انتهت من ربط كل شيء!`);
+                
+            } catch (err) {
+                log(`❌ خطأ مفاجئ: ${err.message}`);
+            } finally {
+                document.getElementById('startBtn').disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

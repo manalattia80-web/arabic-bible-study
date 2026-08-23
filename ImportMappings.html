@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة استيراد خريطة الكلمات (Auto-Aligner)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; max-width: 800px; margin: auto; background: #f9fafb; color: #111827; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        h1 { color: #2563eb; font-size: 24px; }
+        label { font-weight: bold; display: block; margin-top: 15px; margin-bottom: 5px; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 4px; box-sizing: border-box; }
+        input[type="file"] { margin-top: 5px; }
+        button { background: #2563eb; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 4px; cursor: pointer; margin-top: 20px; width: 100%; font-weight: bold; }
+        button:disabled { background: #9ca3af; cursor: not-allowed; }
+        #log { background: #1f2937; color: #10b981; padding: 15px; border-radius: 4px; margin-top: 20px; height: 300px; overflow-y: auto; font-family: monospace; font-size: 14px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>أداة استيراد خريطة الكلمات الذكية</h1>
+        <p>هذه الأداة تعمل مباشرة على متصفحك بأمان تام (لن يتم إرسال أي بيانات سرية لأي خادم). ستقوم بربط الكلمات العربية بأرقام سترونج في قاعدة بياناتك الخاصة.</p>
+        
+        <label>Supabase URL (رابط قاعدة البيانات):</label>
+        <input type="text" id="supabaseUrl" placeholder="https://xxxx.supabase.co">
+        
+        <label>Supabase Service Role Key (المفتاح السري):</label>
+        <input type="password" id="supabaseKey" placeholder="eyJh......">
+        
+        <label>ملف strongs.db (استخرجه من التطبيق القديم):</label>
+        <input type="file" id="dbFile" accept=".db">
+        
+        <button id="startBtn">🚀 بدء عملية الربط الذكي الآن</button>
+        
+        <div id="log">بانتظار البدء...</div>
+    </div>
+
+    <script>
+        const BOOK_PREFIXES = [
+          "", "GEN", "EXO", "LEV", "NUM", "DEU", "JOS", "JDG", "RUT", "1SA", "2SA", "1KI", "2KI", "1CH", "2CH",
+          "EZR", "NEH", "EST", "JOB", "PSA", "PRO", "ECC", "SNG", "ISA", "JER", "LAM", "EZK", "DAN", "HOS",
+          "JOL", "AMO", "OBA", "JON", "MIC", "NAM", "HAB", "ZEP", "HAG", "ZEC", "MAL",
+          "MAT", "MRK", "LUK", "JHN", "ACT", "ROM", "1CO", "2CO", "GAL", "EPH", "PHP", "COL",
+          "1TH", "2TH", "1TI", "2TI", "TIT", "PHM", "HEB", "JAS", "1PE", "2PE", "1JN", "2JN", "3JN", "JUD", "REV"
+        ];
+
+        function log(msg) {
+            const el = document.getElementById('log');
+            el.innerHTML += msg + '\n';
+            el.scrollTop = el.scrollHeight;
+        }
+
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            const supabaseUrl = document.getElementById('supabaseUrl').value.trim();
+            const supabaseKey = document.getElementById('supabaseKey').value.trim();
+            const fileInput = document.getElementById('dbFile');
+
+            if (!supabaseUrl || !supabaseKey) {
+                alert('الرجاء إدخال رابط ومفتاح Supabase');
+                return;
+            }
+            if (fileInput.files.length === 0) {
+                alert('الرجاء اختيار ملف strongs.db');
+                return;
+            }
+
+            document.getElementById('startBtn').disabled = true;
+            log('🔄 جاري تحميل مكتبة SQLite...');
+
+            try {
+                // Initialize sql.js
+                const SQL = await initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}` });
+                
+                log('✅ تم التحميل! جاري قراءة ملف قاعدة البيانات...');
+                
+                const file = fileInput.files[0];
+                const arrayBuffer = await file.arrayBuffer();
+                const db = new SQL.Database(new Uint8Array(arrayBuffer));
+                
+                log('✅ تم فتح الملف بنجاح! جاري الاتصال بـ Supabase...');
+                
+                const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+                
+                log('⏳ جاري تهيئة قاموس الكلمات لتفادي مشكلة NULL...');
+                
+                // Insert a dummy Strong's entry so we never have to use NULL
+                await supabase.from('strongs_entries').upsert({
+                    strongs_id: '---',
+                    language: 'hebrew',
+                    original_word: '---',
+                    transliteration: '---',
+                    pronunciation: '---',
+                    definition_en: 'Not mapped yet',
+                    kjv_usage: ''
+                }, { onConflict: 'strongs_id' });
+                
+                log('⏳ جاري جلب جميع الآيات من قاعدة بياناتك... (قد يستغرق بعض الوقت)');
+                
+                let allVerses = [];
+                let from = 0;
+                let step = 1000;
+                let hasMore = true;
+                
+                while(hasMore) {
+                    const { data, error } = await supabase.from('verses').select('id, book_id, chapter_num, verse_num, text_avd_ar, text_original_lang').range(from, from + step - 1);
+                    if (error) throw error;
+                    if (data.length > 0) {
+                        allVerses.push(...data);
+                        from += step;
+                        log(`تم جلب ${allVerses.length} آية...`);
+                    } else {
+                        hasMore = false;
+                    }
+                }
+                
+                log(`✅ تم جلب ${allVerses.length} آية بنجاح!`);
+                log('🚀 جاري بدء خوارزمية الربط الذكي...');
+
+                let totalMapped = 0;
+                let batch = [];
+
+                for (let i = 0; i < allVerses.length; i++) {
+                    const verse = allVerses[i];
+                    const prefix = BOOK_PREFIXES[verse.book_id];
+                    const legacyVerseId = `${prefix}.${verse.chapter_num}.${verse.verse_num}`;
+                    
+                    const strongsRows = db.exec(`SELECT strongId FROM avd_verse_strongs WHERE verseId = '${legacyVerseId}'`);
+                    const verseStrongs = strongsRows.length > 0 ? strongsRows[0].values.map(v => v[0]) : [];
+                    
+                    // Normalize Arabic (remove diacritics, normalize Alefs)
+                    const normalizeArabic = (str) => {
+                        return str
+                            .replace(/[\u0617-\u061A\u064B-\u0652\u06D6-\u06DC\u06DF-\u06E8\u06EA-\u06ED]/g, '') // Remove tashkeel
+                            .replace(/[أإآٱ]/g, 'ا') // Normalize Alef
+                            .replace(/ة/g, 'ه') // Normalize Ta Marbuta (optional, depending on index)
+                            .replace(/ى/g, 'ي'); // Normalize Alef Maksura (optional)
+                    };
+
+                    const cleanText = verse.text_avd_ar.replace(/[.,:;«»!؟?]/g, '');
+                    const words = cleanText.split(/\s+/).filter(w => w.trim().length > 0);
+                    
+                    let mappedWords = 0;
+
+                    for (let pos = 0; pos < words.length; pos++) {
+                        const arWord = words[pos];
+                        const normWord = normalizeArabic(arWord);
+                        
+                        // Search the index with the normalized word
+                        const indexRows = db.exec(`SELECT strongId FROM arabic_strong_index WHERE surface = '${normWord.replace(/'/g, "''")}'`);
+                        
+                        let matchedStrong = null;
+                        if (indexRows.length > 0) {
+                            for (const val of indexRows[0].values) {
+                                if (verseStrongs.includes(val[0])) {
+                                    matchedStrong = val[0];
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        batch.push({
+                            verse_id: verse.id,
+                            ar_word_position: pos + 1,
+                            orig_word_position: pos + 1,
+                            ar_word: arWord,
+                            orig_word: matchedStrong ? matchedStrong : '---',
+                            orig_word_lang: verse.text_original_lang,
+                            strongs_id: matchedStrong || '---', // Use dummy instead of null to prevent Flutter crash
+                            orig_morphology: '',
+                            transliteration_ar: '',
+                            transliteration_lat: '',
+                            audio_url: '',
+                            audio_duration_ms: 0,
+                            is_verified: false
+                        });
+                        mappedWords++;
+                    }
+                    
+                    if (mappedWords > 0) totalMapped++;
+
+                    if (batch.length >= 1000 || i === allVerses.length - 1) {
+                        const { error: insErr } = await supabase.from('word_mappings').upsert(batch, { onConflict: 'verse_id, ar_word_position, orig_word_position' });
+                        if (insErr) {
+                            log(`❌ خطأ في الرفع: ${insErr.message}`);
+                        } else {
+                            log(`🔄 تم معالجة ورفع ${totalMapped} آية حتى الآن...`);
+                        }
+                        batch = []; // reset batch
+                    }
+                }
+
+                log(`🎉 اكتملت العملية بنجاح! تم ربط الكلمات في ${totalMapped} آية!`);
+                log('يمكنك الآن فتح التطبيق وتجربته.');
+                
+            } catch (err) {
+                log(`❌ حدث خطأ: ${err.message}`);
+                console.error(err);
+            } finally {
+                document.getElementById('startBtn').disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

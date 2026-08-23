@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ربط نطق الصوت لقاموس سترونج</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-scale; margin: 20px; background-color: #f4f7f6; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        label { font-weight: bold; display: block; margin-top: 10px; color: #555; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { margin-top: 20px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background-color: #218838; }
+        button:disabled { background-color: #aaa; cursor: not-allowed; }
+        #log { margin-top: 20px; padding: 10px; background: #222; color: #0f0; height: 300px; overflow-y: auto; border-radius: 4px; font-family: monospace; white-space: pre-wrap; direction: ltr; text-align: left; }
+        .progress-container { margin-top: 20px; background-color: #e0e0e0; border-radius: 4px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 20px; background-color: #007bff; text-align: center; color: white; line-height: 20px; font-size: 12px; transition: width 0.3s; }
+        #error-box { background: #ffe6e6; color: #d93025; padding: 10px; border: 1px solid #f2a6a6; display: none; margin-bottom: 15px; border-radius: 4px; direction: ltr; text-align: left;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="error-box"></div>
+        <h1>🎧 أداة ربط ملفات الصوت</h1>
+        <p style="color:#666; text-align:center;">ستقوم هذه الأداة بحفظ روابط النطق الصوتي (Google TTS) في قاعدة بياناتك لتتمكن من تشغيلها في التطبيق.</p>
+        
+        <label>رابط قاعدة البيانات (Supabase URL)</label>
+        <input type="text" id="supabaseUrl" placeholder="https://xyzcompany.supabase.co">
+        
+        <label>المفتاح السري (Supabase Service Key)</label>
+        <input type="password" id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5c...">
+
+        <button id="startBtn" onclick="startAudioProcess()">▶️ ابدأ ربط الصوت</button>
+        <button id="stopBtn" onclick="stopAudioProcess()" style="background-color: #dc3545; display: none;">⏸️ إيقاف</button>
+
+        <div class="progress-container">
+            <div id="progressBar" class="progress-bar">0%</div>
+        </div>
+
+        <div id="log">Logs will appear here...</div>
+    </div>
+
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            const errBox = document.getElementById('error-box');
+            errBox.style.display = 'block';
+            errBox.innerHTML += `<strong>Global Error:</strong> ${message} at line ${lineno}<br>`;
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        function log(msg) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `<div>${msg}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        let isRunningAudio = false;
+        let supabaseAudioClient = null;
+
+        async function startAudioProcess() {
+            try {
+                const url = document.getElementById('supabaseUrl').value.trim();
+                const key = document.getElementById('supabaseKey').value.trim();
+
+                if (!url || !key) {
+                    alert("يرجى تعبئة رابط ومفتاح Supabase.");
+                    return;
+                }
+
+                isRunningAudio = true;
+                document.getElementById('startBtn').style.display = 'none';
+                document.getElementById('stopBtn').style.display = 'block';
+                log("🚀 جارٍ الاتصال بقاعدة البيانات...");
+
+                if (!window.supabase) {
+                    throw new Error("لم يتم تحميل مكتبة Supabase. تأكد من اتصالك بالإنترنت وأن المتصفح لا يحجبها.");
+                }
+
+                supabaseAudioClient = window.supabase.createClient(url, key);
+
+                log("🔍 جاري فحص الكلمات التي ليس لها رابط صوتي...");
+                
+                let allEntries = [];
+                let hasMore = true;
+                let page = 0;
+                const pageSize = 1000;
+
+                while (hasMore) {
+                    log(`⏳ جاري جلب الدفعة ${page + 1}...`);
+                    const { data, error } = await supabaseAudioClient
+                        .from('strongs_entries')
+                        .select('strongs_id, original_word, language, audio_url')
+                        .range(page * pageSize, (page + 1) * pageSize - 1);
+                    
+                    if (error) throw error;
+                    if (data.length === 0) {
+                        hasMore = false;
+                    } else {
+                        allEntries = allEntries.concat(data);
+                        page++;
+                    }
+                }
+
+                const missing = allEntries.filter(e => !e.audio_url || e.audio_url.trim() === '');
+
+                log(`✅ تم العثور على ${missing.length} كلمة تحتاج لربط صوتي من أصل ${allEntries.length}`);
+
+                if (missing.length === 0) {
+                    log("🎉 جميع الكلمات تمتلك ملفاً صوتياً! لا داعي لعمل أي شيء.");
+                    stopAudioProcess();
+                    return;
+                }
+
+                let processedCount = 0;
+                
+                for (let entry of missing) {
+                    if (!isRunningAudio) {
+                        log("⚠️ تم إيقاف المعالجة بواسطة المستخدم.");
+                        break;
+                    }
+                    
+                    try {
+                        const langCode = entry.language === 'hebrew' ? 'iw' : 'el'; 
+                        const encodedWord = encodeURIComponent(entry.original_word);
+                        const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedWord}&tl=${langCode}&client=tw-ob`;
+                        
+                        const { error } = await supabaseAudioClient
+                            .from('strongs_entries')
+                            .update({ audio_url: audioUrl })
+                            .eq('strongs_id', entry.strongs_id);
+
+                        if (error) throw error;
+
+                        log(`[${processedCount+1}/${missing.length}] ${entry.strongs_id} -> تم الحفظ 🎵`);
+
+                    } catch (e) {
+                        log(`❌ خطأ في ${entry.strongs_id}: ${e.message}`);
+                    }
+
+                    processedCount++;
+                    const percent = Math.floor((processedCount / missing.length) * 100);
+                    const pBar = document.getElementById('progressBar');
+                    pBar.style.width = `${percent}%`;
+                    pBar.innerText = `${percent}%`;
+
+                    await new Promise(r => setTimeout(r, 50)); // Fast update, since it's just saving URLs
+                }
+
+                log("🏁 اكتملت العملية!");
+
+            } catch (err) {
+                log(`❌ حدث خطأ جذري: ${err.message}`);
+                console.error(err);
+            }
+
+            stopAudioProcess();
+        }
+
+        function stopAudioProcess() {
+            isRunningAudio = false;
+            document.getElementById('startBtn').style.display = 'block';
+            document.getElementById('stopBtn').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
