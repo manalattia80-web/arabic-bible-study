@@ -205,21 +205,21 @@ class StrongsModal extends StatelessWidget {
                       label: 'Arabic Definition · المعنى بالعربية',
                       child: Column(
                         children: [
-                          if (entry.notesAr != null)
-                            Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Text(
-                                entry.notesAr!,
-                                style: AppTheme.arabicVerse(size: 24, color: AppColors.arabicText),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                          if (entry.definitionAr != null) ...[
-                            const SizedBox(height: 8),
+                          if (entry.definitionAr != null)
                             Directionality(
                               textDirection: TextDirection.rtl,
                               child: Text(
                                 entry.definitionAr!,
+                                style: AppTheme.arabicVerse(size: 24, color: AppColors.arabicText),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          if (entry.notesAr != null) ...[
+                            const SizedBox(height: 8),
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Text(
+                                entry.notesAr!,
                                 style: const TextStyle(color: AppColors.textSecondary, fontSize: 18, height: 1.6),
                                 textAlign: TextAlign.right,
                               ),
