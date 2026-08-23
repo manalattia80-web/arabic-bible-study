@@ -4,6 +4,7 @@ const SUPABASE_URL = 'https://ojtsoqxfuwpcmwnpnabo.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdHNvcXhmdXdwY213bnBuYWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NzAyNzc3NiwiZXhwIjoyMTAyNjAzNzc2fQ.jZJQLfEUjropwUsYfBVUkMlWc-p343_wpD4fNTkPgbA';
 const GEMINI_KEY = 'AQ.Ab8RN6I0iKzZWyqCYBb4GB1xUErrZVwF7TIRmAPh7XWF5kLZeQ';
 
+// Fetch with json
 async function fetchSupabase(path, options = {}) {
   const url = `${SUPABASE_URL}${path}`;
   const res = await fetch(url, {
@@ -15,20 +16,32 @@ async function fetchSupabase(path, options = {}) {
       ...options.headers
     }
   });
-  if (!res.ok) {
-    throw new Error(`Supabase Error: ${await res.text()}`);
-  }
+  if (!res.ok) throw new Error(`Supabase Error: ${await res.text()}`);
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
 
-async function getChapterVerses(chapterNum) {
-  return await fetchSupabase(`/rest/v1/verses?book_id=eq.2&chapter_num=eq.${chapterNum}&order=verse_num.asc&select=id,chapter_num,verse_num,text_avd_ar`);
+let strongsDict = {};
+
+async function initDict() {
+  console.log("Loading strongs dictionary...");
+  let offset = 0;
+  while(true) {
+    const res = await fetchSupabase(`/rest/v1/strongs_entries?select=strongs_id,original_word&limit=1000&offset=${offset}`);
+    if (!res || res.length === 0) break;
+    for (const d of res) strongsDict[d.strongs_id] = d.original_word;
+    offset += 1000;
+  }
+  console.log(`Loaded ${Object.keys(strongsDict).length} entries.`);
 }
 
-async function mapChapter(chapterNum) {
-  console.log(`\n--- Starting Chapter ${chapterNum} ---`);
-  const verses = await getChapterVerses(chapterNum);
+async function getChapterVerses(bookId, chapterNum) {
+  return await fetchSupabase(`/rest/v1/verses?book_id=eq.${bookId}&chapter_num=eq.${chapterNum}&order=verse_num.asc&select=id,chapter_num,verse_num,text_avd_ar`);
+}
+
+async function mapChapter(bookId, chapterNum, bookName) {
+  console.log(`\n--- Starting ${bookName} Chapter ${chapterNum} ---`);
+  const verses = await getChapterVerses(bookId, chapterNum);
   if (verses.length === 0) {
     console.log(`Chapter ${chapterNum} not found.`);
     return;
@@ -36,7 +49,7 @@ async function mapChapter(chapterNum) {
 
   const promptVerses = verses.map(v => `Verse ${v.verse_num}: ${v.text_avd_ar}`).join('\n');
   const systemPrompt = `You are an expert in Biblical Hebrew and Arabic translations (Van Dyck Arabic Bible).
-Map each Arabic word in these Exodus verses to its corresponding Hebrew Strong's number.
+Map each Arabic word in these ${bookName} verses to its corresponding Hebrew Strong's number.
 Rules:
 1. Return ONLY a valid JSON array of objects. No markdown.
 2. The JSON array must represent the exact words in the Arabic text, in order, for each verse.
@@ -51,7 +64,7 @@ ${promptVerses}`;
   let aiMappings = null;
   while(retries > 0) {
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${GEMINI_KEY}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${GEMINI_KEY}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -68,7 +81,14 @@ ${promptVerses}`;
       console.log(`Gemini error, retries left ${retries-1}: ${e.message}`);
       retries--;
       if (retries === 0) throw e;
-      await new Promise(r => setTimeout(r, 10000)); // wait 10s on error
+      // Extract retryDelay or default to 60s
+      let waitTime = 60000;
+      const match = e.message.match(/retry in ([\d\.]+)s/);
+      if (match) {
+        waitTime = Math.ceil(parseFloat(match[1]) * 1000) + 2000; // Add 2s buffer
+      }
+      console.log(`Waiting ${waitTime/1000}s before retry...`);
+      await new Promise(r => setTimeout(r, waitTime));
     }
   }
 
@@ -77,13 +97,25 @@ ${promptVerses}`;
       const vMappings = aiMappings.filter(m => parseInt(m.verse) === parseInt(v.verse_num));
       let wordPosition = 1;
       for (const m of vMappings) {
+          let sid = m.strongs === "H0" ? null : m.strongs;
+          // Clean up hallucinated leading zeros (e.g. H064 -> H64)
+          if (sid) {
+              sid = sid.replace(/^(H|G)0+([1-9])/, '$1$2');
+              if (!strongsDict[sid]) {
+                  console.log(`Warning: Invalid strongs_id ${sid}, falling back to null`);
+                  sid = null;
+              }
+          }
+          // LOOK UP ORIGINAL WORD FROM DICT!
+          const actualHebrewWord = sid ? strongsDict[sid] : '---';
+          
           toInsert.push({
               verse_id: v.id,
               ar_word: m.word,
-              strongs_id: m.strongs === "H0" ? null : m.strongs,
+              strongs_id: sid,
               ar_word_position: wordPosition,
               orig_word_position: wordPosition,
-              orig_word: '---', // placeholder
+              orig_word: actualHebrewWord,
               orig_word_lang: 'hebrew',
               is_verified: true
           });
@@ -110,10 +142,15 @@ ${promptVerses}`;
 }
 
 async function main() {
-  for (let ch = 21; ch <= 40; ch++) {
-    await mapChapter(ch);
-    await new Promise(r => setTimeout(r, 15000)); // 15s between chapters
+  await initDict();
+  
+  // Book 4 is Numbers. It has 36 chapters.
+  for (let ch = 28; ch <= 36; ch++) {
+    await mapChapter(4, ch, 'Numbers');
+    await new Promise(r => setTimeout(r, 20000)); // 20s between chapters
   }
+  
+  console.log("NUMBERS FINISHED!");
 }
 
 main().catch(console.error);

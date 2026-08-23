@@ -48,5 +48,5 @@ class StrongsEntry {
   );
 
   bool get isHebrew       => language == 'hebrew';
-  bool get hasArabicDef   => definitionAr != null && definitionAr!.isNotEmpty;
+  bool get hasArabicDef   => (definitionAr != null && definitionAr!.isNotEmpty) || (notesAr != null && notesAr!.isNotEmpty);
 }
