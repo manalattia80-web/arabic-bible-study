@@ -266,21 +266,24 @@ class _InfoCard extends StatelessWidget {
         border: Border.all(color: AppColors.primary.withOpacity(0.3)),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Row(
-        children: [
-          const Text('💡', style: TextStyle(fontSize: 18)),
-          const SizedBox(width: 12),
-          const Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Tap any verse to open Word Study', style: TextStyle(color: AppColors.primaryText, fontSize: 13, fontWeight: FontWeight.w600)),
-                SizedBox(height: 2),
-                Text('See Arabic ↔ Hebrew/Greek word-by-word alignment with Strong\'s definitions', style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
-              ],
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Row(
+          children: [
+            const Text('💡', style: TextStyle(fontSize: 18)),
+            const SizedBox(width: 12),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('اضغط على أي آية لفتح دراسة الكلمة', style: TextStyle(color: AppColors.primaryText, fontSize: 14, fontWeight: FontWeight.w600)),
+                  SizedBox(height: 4),
+                  Text('استكشف الكلمات الأصلية ومعانيها من قاموس سترونج، بالإضافة إلى النطق الصوتي (باللهجات العبرية واليونانية الحديثة).', style: TextStyle(color: AppColors.textSecondary, fontSize: 12, height: 1.5)),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
