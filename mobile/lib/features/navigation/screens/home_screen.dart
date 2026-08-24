@@ -86,13 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             Directionality(
                               textDirection: TextDirection.rtl,
                               child: Text(
-                                'البحث الكتابي العربي',
-                                style: AppTheme.arabicLabel(size: 26),
+                                'دليل الكتاب المقدس - عربي / عبري - يوناني',
+                                style: AppTheme.arabicLabel(size: 24),
                               ),
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              'Arabic Van Dyck Bible Study',
+                              'Bible Guide - Arabic / Hebrew / Greek',
                               style: TextStyle(
                                 color:    AppColors.textSecondary,
                                 fontSize: 13,
