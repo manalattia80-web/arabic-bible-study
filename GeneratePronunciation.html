@@ -62,7 +62,7 @@
 
         let isRunning = false;
         let supabaseClient = null;
-        let geminiModelName = "models/gemini-3.1-flash-lite";
+        let geminiModelName = "models/gemini-3.5-flash-lite";
 
         async function fetchGeminiPronunciation(geminiKey, originalWord, transliteration, language) {
             const prompt = `Return ONLY the Arabic transliteration (phonetic spelling) for the Biblical ${language} word "${originalWord}" (English phonetics: "${transliteration}"). Do not include any translation, meaning, explanation, punctuation or extra text. Output only the Arabic phonetic word. Example: ريشيث`;

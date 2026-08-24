@@ -183,55 +183,58 @@ class _TestamentCard extends StatelessWidget {
             splashColor: AppColors.primaryGlow,
             child: Padding(
               padding: const EdgeInsets.all(24),
-              child: Row(
-                children: [
-                  // Icon + accent bar
-                  Container(
-                    width: 56, height: 56,
-                    decoration: BoxDecoration(
-                      color:        accent.withOpacity(0.12),
-                      border:       Border.all(color: accent.withOpacity(0.3)),
-                      borderRadius: BorderRadius.circular(14),
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Row(
+                  children: [
+                    // Icon + accent bar
+                    Container(
+                      width: 56, height: 56,
+                      decoration: BoxDecoration(
+                        color:        accent.withOpacity(0.12),
+                        border:       Border.all(color: accent.withOpacity(0.3)),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Center(child: Text(icon, style: const TextStyle(fontSize: 26))),
                     ),
-                    child: Center(child: Text(icon, style: const TextStyle(fontSize: 26))),
-                  ),
-                  const SizedBox(width: 20),
+                    const SizedBox(width: 20),
 
-                  // Text
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Text(
+                    // Text
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
                             testament.nameAr,
                             style: AppTheme.arabicLabel(size: 20),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          testament.nameEn,
-                          style: const TextStyle(
-                            color:    AppColors.textSecondary,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                          const SizedBox(height: 4),
+                          Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: Text(
+                              testament.nameEn,
+                              style: const TextStyle(
+                                color:    AppColors.textSecondary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 6),
-                        Row(
-                          children: [
-                            _pill(isOT ? 'Hebrew' : 'Greek', accent),
-                            const SizedBox(width: 8),
-                            _pill(isOT ? '39 Books' : '27 Books', AppColors.textMuted),
-                          ],
-                        ),
-                      ],
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              _pill(isOT ? 'عبري' : 'يوناني', accent),
+                              const SizedBox(width: 8),
+                              _pill(isOT ? '39 سفر' : '27 سفر', AppColors.textMuted),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
 
-                  Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
-                ],
+                    Icon(Icons.chevron_left_rounded, color: AppColors.textMuted),
+                  ],
+                ),
               ),
             ),
           ),

@@ -9,20 +9,19 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/navigation_provider.dart';
 import '../../../models/book.dart';
 
-// Book category groupings (by book ID range)
 const _otGroups = {
-  'التوراة · Law':       [1, 2, 3, 4, 5],
-  'التاريخ · History':   [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
-  'الشعر · Poetry':      [18, 19, 20, 21, 22],
-  'الأنبياء الكبار · Major Prophets': [23, 24, 25, 26, 27],
-  'الأنبياء الصغار · Minor Prophets': [28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+  'أسفار موسى الخمسة • Law':       [1, 2, 3, 4, 5],
+  'الأسفار التاريخية • History':   [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+  'الأسفار الشعرية • Poetry':      [18, 19, 20, 21, 22],
+  'الأنبياء الكبار • Major Prophets': [23, 24, 25, 26, 27],
+  'الأنبياء الصغار • Minor Prophets': [28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
 };
 const _ntGroups = {
-  'الأناجيل · Gospels':   [40, 41, 42, 43],
-  'الأعمال · Acts':       [44],
-  'رسائل بولس · Paul':    [45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58],
-  'الرسائل العامة · General': [59, 60, 61, 62, 63, 64, 65],
-  'الرؤيا · Revelation':  [66],
+  'الأناجيل • Gospels':   [40, 41, 42, 43],
+  'أعمال الرسل • Acts':       [44],
+  'رسائل بولس • Paul':    [45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58],
+  'الرسائل العامة • General': [59, 60, 61, 62, 63, 64, 65],
+  'الرؤيا • Revelation':  [66],
 };
 
 class BookListScreen extends StatefulWidget {
@@ -71,15 +70,18 @@ class _BookListScreenState extends State<BookListScreen> {
           // Search
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-            child: TextField(
-              onChanged: (v) => setState(() => _filter = v),
-              style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
-              decoration: InputDecoration(
-                hintText: 'Search books… ابحث عن كتاب',
-                prefixIcon: const Icon(Icons.search, color: AppColors.textMuted, size: 20),
-                suffixIcon: _filter.isNotEmpty
-                    ? IconButton(icon: const Icon(Icons.clear, size: 18, color: AppColors.textMuted), onPressed: () => setState(() => _filter = ''))
-                    : null,
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextField(
+                onChanged: (v) => setState(() => _filter = v),
+                style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
+                decoration: InputDecoration(
+                  hintText: 'ابحث عن سفر...',
+                  prefixIcon: const Icon(Icons.search, color: AppColors.textMuted, size: 20),
+                  suffixIcon: _filter.isNotEmpty
+                      ? IconButton(icon: const Icon(Icons.clear, size: 18, color: AppColors.textMuted), onPressed: () => setState(() => _filter = ''))
+                      : null,
+                ),
               ),
             ),
           ),
@@ -107,34 +109,36 @@ class _GroupedBookList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.fromLTRB(16, 4, 16, 32),
-      itemCount: groups.length,
-      itemBuilder: (ctx, i) {
-        final groupName = groups.keys.elementAt(i);
-        final ids       = groups.values.elementAt(i);
-        final groupBooks = books.where((b) => ids.contains(b.id)).toList();
-        if (groupBooks.isEmpty) return const SizedBox.shrink();
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: ListView.builder(
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 32),
+        itemCount: groups.length,
+        itemBuilder: (ctx, i) {
+          final groupName = groups.keys.elementAt(i);
+          final ids       = groups.values.elementAt(i);
+          final groupBooks = books.where((b) => ids.contains(b.id)).toList();
+          if (groupBooks.isEmpty) return const SizedBox.shrink();
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
-              child: Text(
-                groupName,
-                style: const TextStyle(
-                  color:    AppColors.primary,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.8,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                child: Text(
+                  groupName,
+                  style: const TextStyle(
+                    color:    AppColors.primary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
-            ),
-            _BookGrid(books: groupBooks),
-          ],
-        );
-      },
+              _BookGrid(books: groupBooks),
+            ],
+          );
+        },
+      ),
     );
   }
 }
@@ -146,17 +150,20 @@ class _BookGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap:   true,
-      physics:      const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount:   3,
-        crossAxisSpacing: 10,
-        mainAxisSpacing:  10,
-        childAspectRatio: 0.85,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: GridView.builder(
+        shrinkWrap:   true,
+        physics:      const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount:   3,
+          crossAxisSpacing: 10,
+          mainAxisSpacing:  10,
+          childAspectRatio: 0.85,
+        ),
+        itemCount: books.length,
+        itemBuilder: (ctx, i) => _BookCard(book: books[i]),
       ),
-      itemCount: books.length,
-      itemBuilder: (ctx, i) => _BookCard(book: books[i]),
     );
   }
 }
@@ -187,24 +194,24 @@ class _BookCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Arabic name (large, RTL)
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Text(
-                      book.nameArShort,
-                      style: AppTheme.arabicLabel(size: 15),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  // Full Arabic name
+                  Text(
+                    book.nameAr,
+                    style: AppTheme.arabicLabel(size: 15),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 6),
-                  Text(
-                    book.nameEnShort,
-                    style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Text(
+                      book.nameEnShort,
+                      style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Container(
@@ -215,8 +222,9 @@ class _BookCard extends StatelessWidget {
                       border:       Border.all(color: AppColors.border),
                     ),
                     child: Text(
-                      '${book.chapterCount} ch',
+                      '${book.chapterCount} أصحاح',
                       style: const TextStyle(color: AppColors.textMuted, fontSize: 10),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
