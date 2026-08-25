@@ -158,4 +158,59 @@ export default async function wordStudyRoutes(fastify) {
     await fastify.cache.set(cacheKey, result, TTL.STRONGS);
     return { data: result };
   });
+
+  // "?"? GET /strongs/:strongsId/occurrences "?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?"?
+  /**
+   * Returns a list of verses where a given Strong's number appears.
+   */
+  fastify.get('/strongs/:strongsId/occurrences', {
+    schema: {
+      summary: 'Get verses where a Strong\'s word appears',
+      params:  {
+        type: 'object',
+        required: ['strongsId'],
+        properties: {
+          strongsId: { type: 'string' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { strongsId } = request.params;
+    
+    // Using Supabase to join word_mappings with verses.
+    // Note: We use !inner to ensure we only get rows that match.
+    // Also we fetch the book name from books table if possible.
+    const { data, error } = await fastify.supabase
+      .from('word_mappings')
+      .select('ar_word, verses!inner(id, book_id, chapter_num, verse_num, text_avd_ar, books(name_ar))')
+      .eq('strongs_id', strongsId)
+      .limit(30); // limit to 30 for performance
+
+    if (error) {
+      return reply.status(500).send({ error: error.message });
+    }
+
+    // Format data nicely for the mobile app
+    const occurrences = data.map(item => ({
+      ar_word: item.ar_word,
+      verse_id: item.verses?.id,
+      book_id: item.verses?.book_id,
+      book_name_ar: item.verses?.books?.name_ar || '',
+      chapter_num: item.verses?.chapter_num,
+      verse_num: item.verses?.verse_num,
+      text_avd_ar: item.verses?.text_avd_ar,
+    }));
+
+    // Deduplicate by verse_id (if a word appears twice in the same verse)
+    const uniqueOccurrences = [];
+    const seenVerseIds = new Set();
+    for (const occ of occurrences) {
+      if (!seenVerseIds.has(occ.verse_id)) {
+        seenVerseIds.add(occ.verse_id);
+        uniqueOccurrences.push(occ);
+      }
+    }
+
+    return { data: uniqueOccurrences };
+  });
 }
