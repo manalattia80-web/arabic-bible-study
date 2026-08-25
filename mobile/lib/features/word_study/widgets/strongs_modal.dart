@@ -356,20 +356,42 @@ class StrongsModal extends StatelessWidget {
   }
 
   List<TextSpan> _highlightWord(String fullText, String wordToHighlight) {
-    if (wordToHighlight.isEmpty || !fullText.contains(wordToHighlight)) {
+    if (wordToHighlight.isEmpty) {
       return [TextSpan(text: fullText)];
     }
+
+    // Normalize by removing Arabic diacritics (Tashkeel)
+    String normalize(String text) {
+      return text.replaceAll(RegExp(r'[\u064B-\u065F\u0670]'), '');
+    }
+
+    final String target = normalize(wordToHighlight).trim();
+    if (target.isEmpty) return [TextSpan(text: fullText)];
+
     final spans = <TextSpan>[];
-    final parts = fullText.split(wordToHighlight);
-    for (int i = 0; i < parts.length; i++) {
-      spans.add(TextSpan(text: parts[i]));
-      if (i < parts.length - 1) {
+    // Split the verse into words, preserving spaces
+    final words = fullText.split(' ');
+    
+    for (int i = 0; i < words.length; i++) {
+      final originalWord = words[i];
+      final normWord = normalize(originalWord);
+
+      // Check if this word contains our target root/word (ignoring diacritics)
+      // We use contains to catch prefixes like و (and), ب (by/in), ف (then), ال (the)
+      if (normWord.contains(target)) {
         spans.add(TextSpan(
-          text: wordToHighlight,
+          text: originalWord,
           style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
         ));
+      } else {
+        spans.add(TextSpan(text: originalWord));
+      }
+
+      if (i < words.length - 1) {
+        spans.add(const TextSpan(text: ' '));
       }
     }
+    
     return spans;
   }
 
