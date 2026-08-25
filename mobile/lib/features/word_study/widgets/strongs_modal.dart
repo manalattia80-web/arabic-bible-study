@@ -333,7 +333,7 @@ class StrongsModal extends StatelessWidget {
                                       textAlign: TextAlign.right,
                                       text: TextSpan(
                                         style: AppTheme.arabicVerse(size: 20, color: AppColors.textSecondary),
-                                        children: _highlightWordByIndex(occ.textAvdAr, occ.arWordPositions),
+                                        children: _highlightWord(occ.textAvdAr, occ.arWord),
                                       ),
                                     ),
                                   ),
@@ -355,15 +355,38 @@ class StrongsModal extends StatelessWidget {
     );
   }
 
-  List<TextSpan> _highlightWordByIndex(String fullText, List<int> positions) {
-    if (positions.isEmpty) return [TextSpan(text: fullText)];
+  List<TextSpan> _highlightWord(String fullText, String wordToHighlight) {
+    if (wordToHighlight.isEmpty) return [TextSpan(text: fullText)];
+
+    String normalize(String text) {
+      return text.replaceAll(RegExp(r'[\u064B-\u065F\u0670\p{P}]', unicode: true), '');
+    }
+
+    final String target = normalize(wordToHighlight).trim();
+    if (target.isEmpty) return [TextSpan(text: fullText)];
+
+    bool isMatch(String word) {
+      String norm = normalize(word);
+      if (norm == target) return true;
+      
+      const prefixes = ['وال', 'فال', 'بال', 'كال', 'لل', 'ال', 'و', 'ف', 'ب', 'ك', 'ل'];
+      for (final p in prefixes) {
+        if (norm.startsWith(p) && norm.substring(p.length) == target) return true;
+      }
+      
+      // Some suffixes just in case Gemini stripped them (هم, كم, ها, ه, ني, نا, ي)
+      const suffixes = ['هم', 'كم', 'ها', 'ه', 'ني', 'نا', 'ي'];
+      for (final s in suffixes) {
+        if (norm.endsWith(s) && norm.substring(0, norm.length - s.length) == target) return true;
+      }
+      return false;
+    }
 
     final spans = <TextSpan>[];
     final words = fullText.split(' ');
     
     for (int i = 0; i < words.length; i++) {
-      // position is 1-indexed in database
-      if (positions.contains(i + 1)) {
+      if (isMatch(words[i])) {
         spans.add(TextSpan(
           text: words[i],
           style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
