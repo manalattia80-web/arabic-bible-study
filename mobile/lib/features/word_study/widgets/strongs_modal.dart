@@ -292,7 +292,7 @@ class StrongsModal extends StatelessWidget {
                 const SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.only(top: 24),
-                    child: Center(child: CircularProgressIndicator(color: AppColors.accent)),
+                    child: Center(child: CircularProgressIndicator(color: AppColors.primary)),
                   ),
                 )
               else if (provider.occurrences.isNotEmpty)
@@ -309,7 +309,7 @@ class StrongsModal extends StatelessWidget {
                             child: Container(
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: AppColors.surfaceHover,
+                                color: AppColors.bgCardHov,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Column(
@@ -320,7 +320,7 @@ class StrongsModal extends StatelessWidget {
                                     child: Text(
                                       '${occ.bookNameAr} ${occ.chapterNum}:${occ.verseNum}',
                                       style: const TextStyle(
-                                        color: AppColors.accent,
+                                        color: AppColors.primary,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
                                       ),
@@ -366,7 +366,7 @@ class StrongsModal extends StatelessWidget {
       if (i < parts.length - 1) {
         spans.add(TextSpan(
           text: wordToHighlight,
-          style: const TextStyle(color: AppColors.accent, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
         ));
       }
     }
