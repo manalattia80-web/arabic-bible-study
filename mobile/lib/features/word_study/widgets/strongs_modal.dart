@@ -317,13 +317,43 @@ class StrongsModal extends StatelessWidget {
                                 children: [
                                   Directionality(
                                     textDirection: TextDirection.rtl,
-                                    child: Text(
-                                      '${occ.bookNameAr} ${occ.chapterNum}:${occ.verseNum}',
-                                      style: const TextStyle(
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          occ.bookNameAr,
+                                          style: const TextStyle(
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          '${occ.chapterNum}',
+                                          style: const TextStyle(
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const Text(
+                                          ':',
+                                          style: TextStyle(
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${occ.verseNum}',
+                                          style: const TextStyle(
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   const SizedBox(height: 4),
@@ -359,7 +389,12 @@ class StrongsModal extends StatelessWidget {
     if (wordToHighlight.isEmpty) return [TextSpan(text: fullText)];
 
     String normalize(String text) {
-      return text.replaceAll(RegExp(r'[\u064B-\u065F\u0670\p{P}]', unicode: true), '');
+      String t = text.replaceAll(RegExp(r'[\u064B-\u065F\u0670\p{P}]', unicode: true), '');
+      // Normalize Alefs, Taa Marbuta, and Alif Maqsura for robust matching
+      t = t.replaceAll(RegExp(r'[أإآ]'), 'ا');
+      t = t.replaceAll('ة', 'ه');
+      t = t.replaceAll('ى', 'ي');
+      return t;
     }
 
     final String target = normalize(wordToHighlight).trim();
@@ -374,7 +409,6 @@ class StrongsModal extends StatelessWidget {
         if (norm.startsWith(p) && norm.substring(p.length) == target) return true;
       }
       
-      // Some suffixes just in case Gemini stripped them (هم, كم, ها, ه, ني, نا, ي)
       const suffixes = ['هم', 'كم', 'ها', 'ه', 'ني', 'نا', 'ي'];
       for (final s in suffixes) {
         if (norm.endsWith(s) && norm.substring(0, norm.length - s.length) == target) return true;
