@@ -287,12 +287,90 @@ class StrongsModal extends StatelessWidget {
                   ),
                 ),
 
+              // Occurrences
+              if (provider.loadingOccurrences)
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 24),
+                    child: Center(child: CircularProgressIndicator(color: AppColors.accent)),
+                  ),
+                )
+              else if (provider.occurrences.isNotEmpty)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
+                    child: _Section(
+                      label: 'أماكن أخرى ظهرت فيها الكلمة',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: provider.occurrences.take(15).map((occ) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: AppColors.surfaceHover,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Text(
+                                      '${occ.bookNameAr} ${occ.chapterNum}:${occ.verseNum}',
+                                      style: const TextStyle(
+                                        color: AppColors.accent,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: RichText(
+                                      textAlign: TextAlign.right,
+                                      text: TextSpan(
+                                        style: AppTheme.arabicVerse(size: 20, color: AppColors.textSecondary),
+                                        children: _highlightWord(occ.textAvdAr, occ.arWord),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+
               const SliverToBoxAdapter(child: SizedBox(height: 40)),
             ],
           ],
         ),
       ),
     );
+  }
+
+  List<TextSpan> _highlightWord(String fullText, String wordToHighlight) {
+    if (wordToHighlight.isEmpty || !fullText.contains(wordToHighlight)) {
+      return [TextSpan(text: fullText)];
+    }
+    final spans = <TextSpan>[];
+    final parts = fullText.split(wordToHighlight);
+    for (int i = 0; i < parts.length; i++) {
+      spans.add(TextSpan(text: parts[i]));
+      if (i < parts.length - 1) {
+        spans.add(TextSpan(
+          text: wordToHighlight,
+          style: const TextStyle(color: AppColors.accent, fontWeight: FontWeight.bold),
+        ));
+      }
+    }
+    return spans;
   }
 
   Widget _langBadge(String lang) => Container(

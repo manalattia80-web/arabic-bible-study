@@ -12,6 +12,7 @@ import '../../models/book.dart';
 import '../../models/verse.dart';
 import '../../models/word_mapping.dart';
 import '../../models/strongs_entry.dart';
+import '../../models/word_occurrence.dart';
 
 class ApiService {
   ApiService._();
@@ -69,6 +70,15 @@ class ApiService {
     } on ApiException catch (e) {
       if (e.statusCode == 404) return null;
       rethrow;
+    }
+  }
+
+  static Future<List<WordOccurrence>> getStrongsOccurrences(String strongsId) async {
+    try {
+      final json = await _get('/strongs/$strongsId/occurrences');
+      return (json['data'] as List).map((j) => WordOccurrence.fromJson(j)).toList();
+    } catch (e) {
+      return [];
     }
   }
 

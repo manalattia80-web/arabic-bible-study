@@ -6,12 +6,16 @@ import 'package:just_audio/just_audio.dart';
 import '../core/services/api_service.dart';
 import '../models/word_mapping.dart';
 import '../models/strongs_entry.dart';
+import '../models/word_occurrence.dart';
 
 class WordStudyProvider extends ChangeNotifier {
   List<WordMapping>   _mappings  = [];
   StrongsEntry?       _selectedStrongs;
+  List<WordOccurrence> _occurrences = [];
+  
   bool                _loadingMappings = false;
   bool                _loadingStrongs  = false;
+  bool                _loadingOccurrences = false;
   String              _mappingsError   = '';
   String?             _playingAudioUrl;
 
@@ -19,8 +23,11 @@ class WordStudyProvider extends ChangeNotifier {
 
   List<WordMapping> get mappings        => _mappings;
   StrongsEntry?     get selectedStrongs => _selectedStrongs;
+  List<WordOccurrence> get occurrences  => _occurrences;
+  
   bool              get loadingMappings => _loadingMappings;
   bool              get loadingStrongs  => _loadingStrongs;
+  bool              get loadingOccurrences => _loadingOccurrences;
   String            get mappingsError   => _mappingsError;
   String?           get playingAudioUrl => _playingAudioUrl;
 
@@ -44,7 +51,9 @@ class WordStudyProvider extends ChangeNotifier {
 
   Future<void> loadStrongsEntry(String strongsId) async {
     _selectedStrongs = null;
+    _occurrences = [];
     _loadingStrongs  = true;
+    _loadingOccurrences = true;
     notifyListeners();
 
     try {
@@ -53,6 +62,16 @@ class WordStudyProvider extends ChangeNotifier {
       _selectedStrongs = null;
     } finally {
       _loadingStrongs = false;
+      notifyListeners();
+    }
+    
+    // Fetch occurrences independently
+    try {
+      _occurrences = await ApiService.getStrongsOccurrences(strongsId);
+    } catch (_) {
+      _occurrences = [];
+    } finally {
+      _loadingOccurrences = false;
       notifyListeners();
     }
   }
