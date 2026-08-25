@@ -333,7 +333,7 @@ class StrongsModal extends StatelessWidget {
                                       textAlign: TextAlign.right,
                                       text: TextSpan(
                                         style: AppTheme.arabicVerse(size: 20, color: AppColors.textSecondary),
-                                        children: _highlightWord(occ.textAvdAr, occ.arWord),
+                                        children: _highlightWordByIndex(occ.textAvdAr, occ.arWordPositions),
                                       ),
                                     ),
                                   ),
@@ -355,36 +355,21 @@ class StrongsModal extends StatelessWidget {
     );
   }
 
-  List<TextSpan> _highlightWord(String fullText, String wordToHighlight) {
-    if (wordToHighlight.isEmpty) {
-      return [TextSpan(text: fullText)];
-    }
-
-    // Normalize by removing Arabic diacritics (Tashkeel)
-    String normalize(String text) {
-      return text.replaceAll(RegExp(r'[\u064B-\u065F\u0670]'), '');
-    }
-
-    final String target = normalize(wordToHighlight).trim();
-    if (target.isEmpty) return [TextSpan(text: fullText)];
+  List<TextSpan> _highlightWordByIndex(String fullText, List<int> positions) {
+    if (positions.isEmpty) return [TextSpan(text: fullText)];
 
     final spans = <TextSpan>[];
-    // Split the verse into words, preserving spaces
     final words = fullText.split(' ');
     
     for (int i = 0; i < words.length; i++) {
-      final originalWord = words[i];
-      final normWord = normalize(originalWord);
-
-      // Check if this word contains our target root/word (ignoring diacritics)
-      // We use contains to catch prefixes like و (and), ب (by/in), ف (then), ال (the)
-      if (normWord.contains(target)) {
+      // position is 1-indexed in database
+      if (positions.contains(i + 1)) {
         spans.add(TextSpan(
-          text: originalWord,
+          text: words[i],
           style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
         ));
       } else {
-        spans.add(TextSpan(text: originalWord));
+        spans.add(TextSpan(text: words[i]));
       }
 
       if (i < words.length - 1) {

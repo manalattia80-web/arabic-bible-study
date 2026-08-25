@@ -1,5 +1,6 @@
 class WordOccurrence {
   final String arWord;
+  final List<int> arWordPositions;
   final String verseId;
   final int bookId;
   final String bookNameAr;
@@ -9,6 +10,7 @@ class WordOccurrence {
 
   WordOccurrence({
     required this.arWord,
+    required this.arWordPositions,
     required this.verseId,
     required this.bookId,
     required this.bookNameAr,
@@ -20,6 +22,7 @@ class WordOccurrence {
   factory WordOccurrence.fromJson(Map<String, dynamic> json) {
     return WordOccurrence(
       arWord: json['ar_word'] as String? ?? '',
+      arWordPositions: (json['ar_word_positions'] as List?)?.map((e) => e as int).toList() ?? [],
       verseId: json['verse_id'] as String? ?? '',
       bookId: json['book_id'] as int? ?? 0,
       bookNameAr: json['book_name_ar'] as String? ?? '',

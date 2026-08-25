@@ -182,7 +182,7 @@ export default async function wordStudyRoutes(fastify) {
     // Also we fetch the book name from books table if possible.
     const { data, error } = await fastify.supabase
       .from('word_mappings')
-      .select('ar_word, verses!inner(id, book_id, chapter_num, verse_num, text_avd_ar, books(name_ar))')
+      .select('ar_word, ar_word_position, verses!inner(id, book_id, chapter_num, verse_num, text_avd_ar, books(name_ar))')
       .eq('strongs_id', strongsId)
       .limit(30); // limit to 30 for performance
 
@@ -193,6 +193,7 @@ export default async function wordStudyRoutes(fastify) {
     // Format data nicely for the mobile app
     const occurrences = data.map(item => ({
       ar_word: item.ar_word,
+      ar_word_position: item.ar_word_position,
       verse_id: item.verses?.id,
       book_id: item.verses?.book_id,
       book_name_ar: item.verses?.books?.name_ar || '',
@@ -201,16 +202,21 @@ export default async function wordStudyRoutes(fastify) {
       text_avd_ar: item.verses?.text_avd_ar,
     }));
 
-    // Deduplicate by verse_id (if a word appears twice in the same verse)
-    const uniqueOccurrences = [];
-    const seenVerseIds = new Set();
+    // Deduplicate by verse_id, combining positions
+    const uniqueMap = new Map();
     for (const occ of occurrences) {
-      if (!seenVerseIds.has(occ.verse_id)) {
-        seenVerseIds.add(occ.verse_id);
-        uniqueOccurrences.push(occ);
+      if (!uniqueMap.has(occ.verse_id)) {
+        uniqueMap.set(occ.verse_id, {
+          ...occ,
+          ar_word_positions: occ.ar_word_position ? [occ.ar_word_position] : []
+        });
+      } else {
+        if (occ.ar_word_position) {
+          uniqueMap.get(occ.verse_id).ar_word_positions.push(occ.ar_word_position);
+        }
       }
     }
 
-    return { data: uniqueOccurrences };
+    return { data: Array.from(uniqueMap.values()) };
   });
 }
