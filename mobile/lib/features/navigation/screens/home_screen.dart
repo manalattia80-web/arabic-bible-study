@@ -276,9 +276,9 @@ class _InfoCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('اضغط على أي آية لفتح دراسة الكلمة', style: TextStyle(color: AppColors.primaryText, fontSize: 14, fontWeight: FontWeight.w600)),
-                  SizedBox(height: 4),
-                  Text('استكشف الكلمات الأصلية ومعانيها من قاموس سترونج، بالإضافة إلى النطق الصوتي (باللهجات العبرية واليونانية الحديثة).', style: TextStyle(color: AppColors.textSecondary, fontSize: 12, height: 1.5)),
+                  Text('اضغط على أي آية لفتح دراسة الكلمة', style: TextStyle(color: AppColors.primaryText, fontSize: 14, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 6),
+                  Text('• استكشف الكلمات الأصلية ومعانيها من قاموس سترونج، بالإضافة إلى النطق الصوتي (باللهجات العبرية واليونانية الحديثة).\n• تنويه لغوي: الكلمات الأصلية المعروضة في نظام الربط والشاشة هي أصول الكلمات والمعاني المعجمية (Lemmas / Root Words) المرتبطة بقاموس سترونج (Strong\'s Concordance)، وليست النصوص الصرفية المركبة المشكولة (Inflected Surface Text)، وذلك لتسهيل البحث المعجمي والمقارنة الشاملة في كل الكتاب المقدس.', style: TextStyle(color: AppColors.textSecondary, fontSize: 12, height: 1.6)),
                 ],
               ),
             ),
