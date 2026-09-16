@@ -1,0 +1,1 @@
+const { execSync } = require('child_process'); console.log('Running Joshua...'); try { execSync('node_dist\\node-v20.11.1-win-x64\\node.exe map_joshua_new.js', {stdio:'inherit'}); } catch(e){} console.log('Running Judges...'); try { execSync('node_dist\\node-v20.11.1-win-x64\\node.exe map_judges_new.js', {stdio:'inherit'}); } catch(e){} console.log('ALL DONE');

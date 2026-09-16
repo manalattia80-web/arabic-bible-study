@@ -8,21 +8,22 @@
     "node": "20.x"
   },
   "scripts": {
-    "dev":   "node --watch src/server.js",
+    "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "import:bible": "node scripts/import_bible.js"
   },
   "dependencies": {
-    "@fastify/cors":       "^9.0.1",
-    "@fastify/jwt":        "^8.0.1",
-    "@fastify/multipart":  "^8.3.0",
+    "@fastify/cors": "^9.0.1",
+    "@fastify/jwt": "^8.0.1",
+    "@fastify/multipart": "^8.3.0",
     "@supabase/supabase-js": "^2.43.0",
-    "@upstash/redis":      "^1.31.3",
-    "bcryptjs":            "^2.4.3",
-    "better-sqlite3":      "^11.1.2",
-    "dotenv":              "^16.4.5",
-    "fastify":             "^4.27.0",
-    "fastify-plugin":      "^4.5.1",
-    "ws":                  "^8.18.0"
+    "@upstash/redis": "^1.31.3",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.1.2",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.27.0",
+    "fastify-plugin": "^4.5.1",
+    "pino-pretty": "^13.1.3",
+    "ws": "^8.18.0"
   }
 }

@@ -35,14 +35,14 @@ class WordMapping {
   });
 
   factory WordMapping.fromJson(Map<String, dynamic> j) => WordMapping(
-    id:                 j['id'] as String,
-    verseId:            j['verse_id'] as String,
-    arWordPosition:     j['ar_word_position'] as int,
-    origWordPosition:   j['orig_word_position'] as int,
-    arWord:             j['ar_word'] as String,
+    id:                 j['id'] as String? ?? '',
+    verseId:            j['verse_id'] as String? ?? '',
+    arWordPosition:     j['ar_word_position'] as int? ?? 0,
+    origWordPosition:   j['orig_word_position'] as int? ?? 0,
+    arWord:             j['ar_word'] as String? ?? '-',
     arWordNormalized:   j['ar_word_normalized'] as String?,
-    origWord:           j['orig_word'] as String,
-    origWordLang:       j['orig_word_lang'] as String,
+    origWord:           j['orig_word'] as String? ?? '-',
+    origWordLang:       j['orig_word_lang'] as String? ?? 'hebrew',
     origMorphology:     j['orig_morphology'] as String?,
     transliterationAr:  j['transliteration_ar'] as String?,
     transliterationLat: j['transliteration_lat'] as String?,

@@ -8,5 +8,5 @@ class ApiConstants {
   // Development: local Fastify server
   // Production: e.g. https://arabic-bible-api.railway.app/api/v1
   // REPLACE THIS with your actual deployed backend URL before building:
-  static const String baseUrl = 'https://arabic-bible-study-production.up.railway.app/api/v1';
+  static const String baseUrl = 'https://e801ce11eaced8.lhr.life/api/v1';
 }
