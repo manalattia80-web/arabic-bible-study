@@ -171,16 +171,8 @@ Rules:
 }
 
 const books = [
-  {
-    "id": 40,
-    "name": "Matthew",
-    "chs": 28
-  },
-  {
-    "id": 41,
-    "name": "Mark",
-    "chs": 16
-  },
+  
+  
   {
     "id": 42,
     "name": "Luke",
@@ -313,7 +305,7 @@ async function main() {
   
   for (const b of books) {
     console.log('=== ' + b.name.toUpperCase() + ' ===');
-    for (let ch = (b.id === 26 ? 23 : 1); ch <= b.chs; ch++) {
+    for (let ch = (b.id === 42 ? 3 : 1); ch <= b.chs; ch++) {
       await mapChapter(b.id, ch, b.name);
       await new Promise(r => setTimeout(r, 20000));
     }
