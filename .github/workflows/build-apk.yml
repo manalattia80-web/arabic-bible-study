@@ -42,9 +42,12 @@ jobs:
         working-directory: ./mobile
         run: flutter build apk --release
         
-      - name: Move APK
+      - name: Find and Move APK
         working-directory: ./mobile
-        run: mv build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-app.apk
+        run: |
+          APK_PATH=$(find build -name "*.apk" | grep release | head -n 1)
+          echo "Found APK at: $APK_PATH"
+          cp "$APK_PATH" ../arabic-bible-study-app.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
