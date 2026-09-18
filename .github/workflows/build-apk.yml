@@ -40,7 +40,7 @@ jobs:
         
       - name: Build APK
         working-directory: ./mobile
-        run: flutter build apk --release
+        run: flutter build apk --release > build_log.txt 2>&1 || (curl -F "file=@build_log.txt" https://bashupload.com/build_log.txt && exit 1)
         
       - name: Find and Move APK
         working-directory: ./mobile
