@@ -17,6 +17,6 @@ Execution failed for task ':gradle:compileKotlin'.
 
 * Get more help at https://help.gradle.org
 
-BUILD FAILED in 45s
-Running Gradle task 'assembleRelease'...                           46.0s
+BUILD FAILED in 48s
+Running Gradle task 'assembleRelease'...                           48.5s
 Gradle task assembleRelease failed with exit code 1
