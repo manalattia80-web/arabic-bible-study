@@ -30,7 +30,7 @@ jobs:
           
       - name: Initialize Flutter Project
         working-directory: ./mobile
-        run: flutter create . --platforms android,ios && rm -f test/widget_test.dart
+        run: echo "Using checked-in android folder"
 
       - name: Install dependencies
         working-directory: ./mobile
