@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const SUPABASE_URL = 'https://ojtsoqxfuwpcmwnpnabo.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdHNvcXhmdXdwY213bnBuYWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NzAyNzc3NiwiZXhwIjoyMTAyNjAzNzc2fQ.jZJQLfEUjropwUsYfBVUkMlWc-p343_wpD4fNTkPgbA';
-const GEMINI_KEY = 'AQ.Ab8RN6I0iKzZWyqCYBb4GB1xUErrZVwF7TIRmAPh7XWF5kLZeQ';
+const GEMINI_KEY = process.env.GEMINI_KEY;
 
 // Fetch with json
 async function fetchSupabase(path, options = {}) {
@@ -173,16 +173,8 @@ Rules:
 const books = [
   
   
-  {
-    "id": 42,
-    "name": "Luke",
-    "chs": 24
-  },
-  {
-    "id": 43,
-    "name": "John",
-    "chs": 21
-  },
+  
+  
   {
     "id": 44,
     "name": "Acts",
@@ -305,7 +297,7 @@ async function main() {
   
   for (const b of books) {
     console.log('=== ' + b.name.toUpperCase() + ' ===');
-    for (let ch = (b.id === 42 ? 3 : 1); ch <= b.chs; ch++) {
+    for (let ch = 1; ch <= b.chs; ch++) {
       await mapChapter(b.id, ch, b.name);
       await new Promise(r => setTimeout(r, 20000));
     }
