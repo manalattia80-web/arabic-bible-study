@@ -30,12 +30,20 @@ jobs:
           
       - name: Initialize Flutter Project
         working-directory: ./mobile
-        run: echo "Using checked-in android folder"
+        run: |
+          flutter create . --platforms android,ios
+          rm -f test/widget_test.dart
+          sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <application/g' android/app/src/main/AndroidManifest.xml
+          sed -i 's/android:label="mobile"/android:label="Arabic Bible Study"/g' android/app/src/main/AndroidManifest.xml
 
       - name: Install dependencies
         working-directory: ./mobile
         run: flutter pub get
         
+      - name: Generate App Icons
+        working-directory: ./mobile
+        run: dart run flutter_launcher_icons
+
       - name: Build APK
         working-directory: ./mobile
         run: |
