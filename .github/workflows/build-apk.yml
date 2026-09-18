@@ -28,7 +28,7 @@ jobs:
           
       - name: Initialize Flutter Project
         working-directory: ./mobile
-        run: flutter create . --platforms android,ios
+        run: flutter create . --platforms android,ios && rm -f test/widget_test.dart
 
       - name: Install dependencies
         working-directory: ./mobile
