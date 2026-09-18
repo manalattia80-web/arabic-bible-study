@@ -14,6 +14,8 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
       - name: Set up Java
         uses: actions/setup-java@v5
@@ -40,7 +42,18 @@ jobs:
         
       - name: Build APK
         working-directory: ./mobile
-        run: flutter build apk --release > build_log.txt 2>&1 || (curl -F "file=@build_log.txt" https://bashupload.com/build_log.txt && exit 1)
+        run: |
+          if ! flutter build apk --release > build_log.txt 2>&1; then
+            cat build_log.txt
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+            cp build_log.txt ../build_log.txt
+            cd ..
+            git add build_log.txt
+            git commit -m "Upload build failure log"
+            git push
+            exit 1
+          fi
         
       - name: Find and Move APK
         working-directory: ./mobile
