@@ -39,9 +39,17 @@ jobs:
         working-directory: ./mobile
         run: flutter build apk --release
         
-      - name: Upload APK to bashupload
+      - name: Move APK
         working-directory: ./mobile
-        run: |
-          apk_path=$(find build/app/outputs/flutter-apk -name '*release*.apk' | head -n 1)
-          echo "Uploading $apk_path..."
-          curl -H "Max-Days: 1" -F "file=@$apk_path" https://bashupload.com/arabic-bible-study.apk
+        run: mv build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-app.apk
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v1.0.${{ github.run_number }}"
+          name: "Arabic Bible Study v1.0.${{ github.run_number }}"
+          files: arabic-bible-study-app.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
