@@ -1,7 +1,7 @@
 
 const SUPABASE_URL = 'https://ojtsoqxfuwpcmwnpnabo.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdHNvcXhmdXdwY213bnBuYWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NzAyNzc3NiwiZXhwIjoyMTAyNjAzNzc2fQ.jZJQLfEUjropwUsYfBVUkMlWc-p343_wpD4fNTkPgbA';
-const GEMINI_KEY = 'AQ.Ab8RN6I0iKzZWyqCYBb4GB1xUErrZVwF7TIRmAPh7XWF5kLZeQ';
+const GEMINI_KEY = process.env.GEMINI_KEY;
 
 const BATCH_SIZE = 5; // Smaller batch size to prevent hitting output token limits
 const REQUEST_DELAY_MS = 6000; // Wait 6 seconds between requests (10 reqs per minute to stay safely below 15 RPM limit)

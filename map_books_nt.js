@@ -50,6 +50,8 @@ async function getChapterVerses(bookId, chapterNum) {
 }
 
 async function mapChapter(bookId, chapterNum, bookName) {
+  const { count } = await supabase.from('word_mappings').select('*', { count: 'exact', head: true }).eq('book_id', bookId).eq('chapter_num', chapterNum);
+  if (count > 0) { console.log('Skipping ' + bookName + ' ' + chapterNum + ' - already mapped.'); return; }
   console.log(`\n--- Starting ${bookName} Chapter ${chapterNum} ---`);
   const verses = await getChapterVerses(bookId, chapterNum);
   if (verses.length === 0) {
