@@ -85,7 +85,7 @@ class WordStudyProvider extends ChangeNotifier {
         await _player.stop();
         _playingAudioUrl = url;
         notifyListeners();
-        await _player.setUrl(url, headers: {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'});
+        await _player.setUrl(url);
         await _player.play();
         _player.playerStateStream.listen((state) {
           if (state.processingState == ProcessingState.completed) {

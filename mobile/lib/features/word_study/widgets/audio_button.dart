@@ -14,6 +14,7 @@ class _AudioButtonState extends State<AudioButton> {
   late AudioPlayer _player;
   bool _isPlaying = false;
   bool _isError = false;
+  String _errorMsg = '';
 
   @override
   void initState() {
@@ -24,7 +25,7 @@ class _AudioButtonState extends State<AudioButton> {
 
   Future<void> _initAudio() async {
     try {
-      await _player.setUrl(widget.url, headers: {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'});
+      await _player.setUrl(widget.url);
       _player.playerStateStream.listen((state) {
         if (mounted) {
           setState(() {
@@ -37,7 +38,12 @@ class _AudioButtonState extends State<AudioButton> {
         }
       });
     } catch (e) {
-      if (mounted) setState(() => _isError = true);
+      if (mounted) {
+        setState(() {
+          _isError = true;
+          _errorMsg = e.toString();
+        });
+      }
     }
   }
 
@@ -50,7 +56,14 @@ class _AudioButtonState extends State<AudioButton> {
   @override
   Widget build(BuildContext context) {
     if (_isError) {
-      return const SizedBox.shrink();
+      return IconButton(
+        icon: const Icon(Icons.volume_off, color: Colors.grey, size: 28),
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Audio Error: $_errorMsg')),
+          );
+        },
+      );
     }
 
     return IconButton(
