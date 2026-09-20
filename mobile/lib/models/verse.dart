@@ -6,6 +6,7 @@ class Verse {
   final int    verseNum;
   final String textAvdAr;
   final String textOriginal;
+  final String? textManuscript;
   final String textOriginalLang; // 'hebrew' | 'greek' | 'aramaic'
 
   const Verse({
@@ -15,6 +16,7 @@ class Verse {
     required this.verseNum,
     required this.textAvdAr,
     required this.textOriginal,
+    this.textManuscript,
     required this.textOriginalLang,
   });
 
@@ -25,6 +27,7 @@ class Verse {
     verseNum:         j['verse_num'] as int,
     textAvdAr:        j['text_avd_ar'] as String,
     textOriginal:     j['text_original'] as String,
+    textManuscript:   j['text_manuscript'] as String?,
     textOriginalLang: j['text_original_lang'] as String,
   );
 

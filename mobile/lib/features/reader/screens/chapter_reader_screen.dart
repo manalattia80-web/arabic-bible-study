@@ -201,7 +201,7 @@ class _VerseCard extends StatelessWidget {
           'verse_num':  verse.verseNum,
           'chapter_num': chapterNum,
           'text_avd_ar': verse.textAvdAr,
-          'text_original': verse.textOriginal,
+          'text_original': verse.textManuscript ?? verse.textOriginal,
           'text_original_lang': verse.textOriginalLang,
         },
       ),
@@ -225,7 +225,7 @@ class _VerseCard extends StatelessWidget {
                 'verse_num':  verse.verseNum,
                 'chapter_num': chapterNum,
                 'text_avd_ar': verse.textAvdAr,
-                'text_original': verse.textOriginal,
+                'text_original': verse.textManuscript ?? verse.textOriginal,
                 'text_original_lang': verse.textOriginalLang,
               },
             ),
@@ -280,7 +280,7 @@ class _VerseCard extends StatelessWidget {
                     Directionality(
                       textDirection: verse.isHebrew ? TextDirection.rtl : TextDirection.ltr,
                       child: Text(
-                        verse.textOriginal,
+                        verse.textManuscript ?? verse.textOriginal,
                         style: origStyle,
                         textAlign: verse.isHebrew ? TextAlign.right : TextAlign.left,
                       ),

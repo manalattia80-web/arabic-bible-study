@@ -141,7 +141,7 @@ export default async function navigationRoutes(fastify) {
 
     const { data, error } = await fastify.supabase
       .from('verses')
-      .select('id, book_id, chapter_num, verse_num, text_avd_ar, text_original, text_original_lang')
+      .select('id, book_id, chapter_num, verse_num, text_avd_ar, text_original, text_manuscript, text_original_lang')
       .eq('book_id', book_id)
       .eq('chapter_num', chapter_num)
       .order('verse_num');
