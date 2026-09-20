@@ -38,7 +38,7 @@ class StrongsEntry {
     transliteration: j['transliteration'] as String,
     rootWord:        j['root_word'] as String?,
     pronunciation:   j['pronunciation'] as String?,
-    audioUrl:        j['audio_url'] as String?,
+    audioUrl:        (j['audio_url'] as String?)?.replaceAll('translate.google.com', 'translate.googleapis.com').replaceAll('client=tw-ob', 'client=gtx'),
     definitionEn:    j['definition_en'] as String,
     kjvUsage:        j['kjv_usage'] as String?,
     definitionAr:    j['definition_ar'] as String?,
