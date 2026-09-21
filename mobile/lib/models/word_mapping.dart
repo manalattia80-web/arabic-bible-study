@@ -47,7 +47,7 @@ class WordMapping {
     transliterationAr:  j['transliteration_ar'] as String?,
     transliterationLat: j['transliteration_lat'] as String?,
     strongsId:          j['strongs_id'] as String?,
-    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' + Uri.encodeComponent((j['audio_url'] as String).replaceAll('translate.google.com', 'translate.googleapis.com').replaceAll('client=tw-ob', 'client=gtx')) : null,
     audioDurationMs:    j['audio_duration_ms'] as int?,
     isVerified:         (j['is_verified'] as bool?) ?? false,
   );
