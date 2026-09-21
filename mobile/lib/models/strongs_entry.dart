@@ -38,7 +38,7 @@ class StrongsEntry {
     transliteration: j['transliteration'] as String,
     rootWord:        j['root_word'] as String?,
     pronunciation:   j['pronunciation'] as String?,
-    audioUrl:        (j['audio_url'] as String?)?.replaceAll('translate.google.com', 'translate.googleapis.com').replaceAll('client=tw-ob', 'client=gtx'),
+    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\' : null,
     definitionEn:    j['definition_en'] as String,
     kjvUsage:        j['kjv_usage'] as String?,
     definitionAr:    j['definition_ar'] as String?,

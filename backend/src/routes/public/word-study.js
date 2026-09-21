@@ -14,6 +14,22 @@ import { TTL } from '../../plugins/redis.js';
 
 export default async function wordStudyRoutes(fastify) {
 
+  fastify.get('/audio', async (request, reply) => {
+    const { url } = request.query;
+    if (!url) return reply.status(400).send({ error: 'Missing url' });
+    try {
+      const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } });
+      if (!res.ok) throw new Error('Google TTS returned ' + res.status);
+      const arrayBuffer = await res.arrayBuffer();
+      reply.header('Content-Type', 'audio/mpeg');
+      reply.header('Cache-Control', 'public, max-age=31536000');
+      return reply.send(Buffer.from(arrayBuffer));
+    } catch (e) {
+      return reply.status(500).send({ error: e.message });
+    }
+  });
+
+
   // ── GET /word-mappings ───────────────────────────────────────────────────
   /**
    * Returns the full interlinear word table for a verse.
