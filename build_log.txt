@@ -1,40 +1,36 @@
 Running Gradle task 'assembleRelease'...                        
-lib/models/word_mapping.dart:50:91: Error: String starting with ' must end with '.
-    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\' : null,
-                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-lib/models/word_mapping.dart:51:5: Error: Expected ':' before this.
-    audioDurationMs:    j['audio_duration_ms'] as int?,
-    ^^^^^^^^^^^^^^^
-lib/models/word_mapping.dart:51:20: Error: Expected ')' before this.
-    audioDurationMs:    j['audio_duration_ms'] as int?,
-                   ^
-lib/models/strongs_entry.dart:41:88: Error: String starting with ' must end with '.
-    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\' : null,
-                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-lib/models/strongs_entry.dart:42:5: Error: Expected ':' before this.
-    definitionEn:    j['definition_en'] as String,
-    ^^^^^^^^^^^^
-lib/models/strongs_entry.dart:42:17: Error: Expected ')' before this.
-    definitionEn:    j['definition_en'] as String,
-                ^
-lib/models/word_mapping.dart:51:5: Error: Undefined name 'audioDurationMs'.
-    audioDurationMs:    j['audio_duration_ms'] as int?,
-    ^^^^^^^^^^^^^^^
-lib/models/word_mapping.dart:37:70: Error: Required named parameter 'isVerified' must be provided.
-  factory WordMapping.fromJson(Map<String, dynamic> j) => WordMapping(
-                                                                     ^
-lib/models/word_mapping.dart:19:9: Context: Found this candidate, but the arguments don't match.
-  const WordMapping({
-        ^^^^^^^^^^^
-lib/models/strongs_entry.dart:42:5: Error: Undefined name 'definitionEn'.
-    definitionEn:    j['definition_en'] as String,
-    ^^^^^^^^^^^^
-lib/models/strongs_entry.dart:34:72: Error: Required named parameter 'definitionEn' must be provided.
-  factory StrongsEntry.fromJson(Map<String, dynamic> j) => StrongsEntry(
-                                                                       ^
-lib/models/strongs_entry.dart:18:9: Context: Found this candidate, but the arguments don't match.
-  const StrongsEntry({
-        ^^^^^^^^^^^^
+lib/models/word_mapping.dart:50:174: Error: Expected ':' before this.
+    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^^^^^^^^^
+lib/models/word_mapping.dart:50:183: Error: Expected ',' before this.
+    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/models/word_mapping.dart:50:183: Error: Expected an identifier, but got ''] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}''.
+Try inserting an identifier before ''] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}''.
+    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/models/strongs_entry.dart:41:171: Error: Expected ':' before this.
+    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^^^^^^^^^
+lib/models/strongs_entry.dart:41:180: Error: Expected ',' before this.
+    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/models/strongs_entry.dart:41:180: Error: Expected an identifier, but got ''] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}''.
+Try inserting an identifier before ''] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}''.
+    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/models/word_mapping.dart:50:174: Error: Undefined name 'audio_url'.
+    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^^^^^^^^^
+lib/models/word_mapping.dart:50:312: Error: Expected ',' before this.
+    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^
+lib/models/strongs_entry.dart:41:171: Error: Undefined name 'audio_url'.
+    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^^^^^^^^^
+lib/models/strongs_entry.dart:41:309: Error: Expected ',' before this.
+    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
+                                                                                          ^
 Target kernel_snapshot_program failed: Exception
 
 
@@ -50,6 +46,6 @@ Execution failed for task ':app:compileFlutterBuildRelease'.
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 2m 14s
-Running Gradle task 'assembleRelease'...                          134.7s
+BUILD FAILED in 2m 11s
+Running Gradle task 'assembleRelease'...                          131.8s
 Gradle task assembleRelease failed with exit code 1
