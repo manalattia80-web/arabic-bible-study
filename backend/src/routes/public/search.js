@@ -57,22 +57,53 @@ export default async function searchRoutes(fastify) {
     const offset = (page - 1) * limit;
     const cleanQ = q.replace(/[\u064B-\u065F\u0670]/g, '').trim();
 
+    // Generate word variations for Arabic prefixes/suffixes (الـ، و، ف، ب، ك، لـ)
+    const norm = cleanQ.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
+    const termSet = new Set([q, cleanQ, norm]);
+    
+    if (cleanQ.startsWith('ال')) {
+      const stem = cleanQ.substring(2);
+      if (stem.length >= 2) {
+        termSet.add(stem);
+        termSet.add('و' + stem);
+        termSet.add('ف' + stem);
+        termSet.add('ب' + stem);
+        termSet.add('ل' + stem);
+        termSet.add('ك' + stem);
+      }
+    } else if (cleanQ.length >= 2) {
+      termSet.add('ال' + cleanQ);
+      termSet.add('و' + cleanQ);
+      termSet.add('ف' + cleanQ);
+      termSet.add('ب' + cleanQ);
+      termSet.add('ل' + cleanQ);
+      termSet.add('ك' + cleanQ);
+      termSet.add('وال' + cleanQ);
+      termSet.add('فال' + cleanQ);
+      termSet.add('بال' + cleanQ);
+      termSet.add('كال' + cleanQ);
+      termSet.add('لال' + cleanQ);
+    }
+    const terms = Array.from(termSet).filter(t => t.length >= 2);
+
     try {
-      // 1. Search word_mappings for normalized Arabic word
+      // 1. Search word_mappings for all normalized Arabic word variants
+      const mapOr = terms.map(t => `ar_word.ilike.%${t}%`).join(',');
       const mapRes = await fastify.supabase
         .from('word_mappings')
         .select('verse_id')
-        .ilike('ar_word', `%${cleanQ}%`)
-        .limit(1000);
+        .or(mapOr)
+        .limit(2000);
 
       const mapVerseIds = mapRes.data ? mapRes.data.map(m => m.verse_id) : [];
 
-      // 2. Direct search in verses table
+      // 2. Direct search in verses table for text_avd_ar & text_original
+      const directOr = terms.map(t => `text_avd_ar.ilike.%${t}%`).concat([`text_original.ilike.%${q}%`]).join(',');
       let directQuery = fastify.supabase
         .from('verses')
         .select('id')
-        .or(`text_avd_ar.ilike.%${q}%,text_avd_ar.ilike.%${cleanQ}%,text_original.ilike.%${q}%`)
-        .limit(1000);
+        .or(directOr)
+        .limit(2000);
 
       const directRes = await directQuery;
       const directVerseIds = directRes.data ? directRes.data.map(v => v.id) : [];

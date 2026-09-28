@@ -244,6 +244,9 @@ class _SearchResultCard extends StatelessWidget {
             'bookId':     '${verse.bookId}',
             'chapterNum': '${verse.chapterNum}',
           },
+          queryParameters: {
+            'verseNum': '${verse.verseNum}',
+          },
         );
       },
       child: Container(
@@ -265,6 +268,9 @@ class _SearchResultCard extends StatelessWidget {
                 'bookId':     '${verse.bookId}',
                 'chapterNum': '${verse.chapterNum}',
               },
+              queryParameters: {
+                'verseNum': '${verse.verseNum}',
+              },
             ),
             child: Padding(
               padding: const EdgeInsets.all(14),
@@ -282,12 +288,11 @@ class _SearchResultCard extends StatelessWidget {
                           border:       Border.all(color: AppColors.primary.withOpacity(0.3)),
                         ),
                         child: Text(
-                          '${verse.chapterNum}:${verse.verseNum}',
+                          verse.reference,
                           style: const TextStyle(
                             color:      AppColors.primaryText,
-                            fontSize:   11,
+                            fontSize:   12,
                             fontWeight: FontWeight.w700,
-                            fontFamily: 'monospace',
                           ),
                         ),
                       ),

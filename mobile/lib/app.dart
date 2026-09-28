@@ -38,10 +38,14 @@ final _router = GoRouter(
     GoRoute(
       path: '/reader/:bookId/:chapterNum',
       name: 'reader',
-      builder: (ctx, state) => ChapterReaderScreen(
-        bookId:     int.parse(state.pathParameters['bookId']!),
-        chapterNum: int.parse(state.pathParameters['chapterNum']!),
-      ),
+      builder: (ctx, state) {
+        final verseNumStr = state.uri.queryParameters['verseNum'];
+        return ChapterReaderScreen(
+          bookId:          int.parse(state.pathParameters['bookId']!),
+          chapterNum:      int.parse(state.pathParameters['chapterNum']!),
+          initialVerseNum: verseNumStr != null ? int.tryParse(verseNumStr) : null,
+        );
+      },
     ),
     GoRoute(
       path: '/word-study/:verseId',

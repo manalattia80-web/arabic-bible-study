@@ -18,21 +18,50 @@ import '../../../providers/navigation_provider.dart';
 import '../../../models/verse.dart';
 
 class ChapterReaderScreen extends StatefulWidget {
-  final int bookId;
-  final int chapterNum;
-  const ChapterReaderScreen({super.key, required this.bookId, required this.chapterNum});
+  final int  bookId;
+  final int  chapterNum;
+  final int? initialVerseNum;
+
+  const ChapterReaderScreen({
+    super.key,
+    required this.bookId,
+    required this.chapterNum,
+    this.initialVerseNum,
+  });
 
   @override
   State<ChapterReaderScreen> createState() => _ChapterReaderScreenState();
 }
 
 class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
+  final Map<int, GlobalKey> _verseKeys = {};
+  bool _hasScrolledToTarget = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ReaderProvider>().loadChapter(widget.bookId, widget.chapterNum);
     });
+  }
+
+  void _scrollToTargetVerseIfNeeded(ReaderProvider reader) {
+    if (_hasScrolledToTarget || widget.initialVerseNum == null || reader.loading || reader.verses.isEmpty) return;
+
+    final targetKey = _verseKeys[widget.initialVerseNum];
+    if (targetKey?.currentContext != null) {
+      _hasScrolledToTarget = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (targetKey?.currentContext != null) {
+          Scrollable.ensureVisible(
+            targetKey!.currentContext!,
+            duration: const Duration(milliseconds: 600),
+            curve: Curves.easeInOut,
+            alignment: 0.1,
+          );
+        }
+      });
+    }
   }
 
   void _navigatePrev(ReaderProvider reader) {
@@ -61,6 +90,10 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
     final nav     = context.watch<NavigationProvider>();
     final book    = nav.getBook(widget.bookId);
     final totalCh = book?.chapterCount ?? 999;
+
+    if (!reader.loading && reader.verses.isNotEmpty) {
+      _scrollToTargetVerseIfNeeded(reader);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -118,12 +151,22 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
                   : ListView.builder(
                       padding: const EdgeInsets.fromLTRB(12, 8, 12, 100),
                       itemCount: reader.verses.length,
-                      itemBuilder: (ctx, i) => _VerseCard(
-                        verse:      reader.verses[i],
-                        fontSize:   reader.fontSize,
-                        showOrig:   reader.showOriginal,
-                        chapterNum: widget.chapterNum,
-                      ),
+                      itemBuilder: (ctx, i) {
+                        final v = reader.verses[i];
+                        _verseKeys[v.verseNum] ??= GlobalKey();
+                        final isHighlighted = v.verseNum == widget.initialVerseNum;
+
+                        return Container(
+                          key: _verseKeys[v.verseNum],
+                          child: _VerseCard(
+                            verse:         v,
+                            fontSize:      reader.fontSize,
+                            showOrig:      reader.showOriginal,
+                            chapterNum:    widget.chapterNum,
+                            isHighlighted: isHighlighted,
+                          ),
+                        );
+                      },
                     ),
 
       // Chapter prev/next navigation bar
@@ -185,7 +228,15 @@ class _VerseCard extends StatelessWidget {
   final double fontSize;
   final bool   showOrig;
   final int    chapterNum;
-  const _VerseCard({required this.verse, required this.fontSize, required this.showOrig, required this.chapterNum});
+  final bool   isHighlighted;
+
+  const _VerseCard({
+    required this.verse,
+    required this.fontSize,
+    required this.showOrig,
+    required this.chapterNum,
+    this.isHighlighted = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -208,9 +259,21 @@ class _VerseCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          color:        AppColors.bgCard,
-          border:       Border.all(color: AppColors.border),
+          color: isHighlighted ? AppColors.primaryGlow.withOpacity(0.4) : AppColors.bgCard,
+          border: Border.all(
+            color: isHighlighted ? AppColors.primary : AppColors.border,
+            width: isHighlighted ? 2.0 : 1.0,
+          ),
           borderRadius: BorderRadius.circular(12),
+          boxShadow: isHighlighted
+              ? [
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.25),
+                    blurRadius: 12,
+                    spreadRadius: 2,
+                  )
+                ]
+              : null,
         ),
         child: Material(
           color: Colors.transparent,
