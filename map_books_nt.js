@@ -50,9 +50,7 @@ async function getChapterVerses(bookId, chapterNum) {
 }
 
 async function mapChapter(bookId, chapterNum, bookName) {
-  const { count } = await supabase.from('word_mappings').select('*', { count: 'exact', head: true }).eq('book_id', bookId).eq('chapter_num', chapterNum);
-  if (count > 0) { console.log('Skipping ' + bookName + ' ' + chapterNum + ' - already mapped.'); return; }
-  console.log(`\n--- Starting ${bookName} Chapter ${chapterNum} ---`);
+  console.log(`\n--- Re-mapping ${bookName} Chapter ${chapterNum} ---`);
   const verses = await getChapterVerses(bookId, chapterNum);
   if (verses.length === 0) {
     console.log(`Chapter ${chapterNum} not found.`);
@@ -78,12 +76,37 @@ Rules:
     let aiMappings = null;
     while(retries > 0) {
       try {
-        const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=' + GEMINI_KEY, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: [{ text: systemPrompt }] }], generationConfig: { temperature: 0.1, responseMimeType: 'application/json' } })
-        });
-        
-        if (!response.ok) throw new Error(`Gemini API Error: ${await response.text()}`);
+        const models = [
+          'gemini-3.5-flash-lite',
+          'gemini-3-flash-preview',
+          'gemini-3.1-flash-lite',
+          'gemini-3.6-flash',
+          'gemini-3.8-flash',
+          'gemini-3.7-flash',
+          'gemini-3.5-flash',
+          'gemini-flash-latest'
+        ];
+        let response = null;
+        let lastErr = null;
+        for (const model of models) {
+          try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`, {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ contents: [{ parts: [{ text: systemPrompt }] }], generationConfig: { temperature: 0.1, responseMimeType: 'application/json' } })
+            });
+            if (res.ok) {
+              response = res;
+              console.log(`Successfully called model: ${model}`);
+              break;
+            } else {
+              lastErr = await res.text();
+              console.log(`Model ${model} failed with:`, lastErr.slice(0, 150));
+            }
+          } catch (e) {
+            lastErr = e.message;
+          }
+        }
+        if (!response) throw new Error(`Gemini API Error across all models: ${lastErr}`);
         
         const data = await response.json();
         let text = data.candidates[0].content.parts[0].text.trim();
@@ -91,8 +114,15 @@ Rules:
         aiMappings = JSON.parse(text);
         break; // Success
       } catch (err) {
-        const isQuota = err.message && (err.message.includes('RESOURCE_EXHAUSTED') || err.message.includes('"code": 429') || (err.message.includes('429') && !err.message.includes('JSON')) || err.message.includes('503'));
-        if (!isQuota) retries--;
+        console.log("ACTUAL ERROR:", err.message);
+        const isQuota = err.message && (err.message.includes('RESOURCE_EXHAUSTED') || err.message.includes('429'));
+        const is503 = err.message && err.message.includes('503');
+        if (isQuota || is503) {
+          console.log(`Model quota/busy error. Waiting 30s before trying again...`);
+          await new Promise(r => setTimeout(r, 30000));
+        } else {
+          retries--;
+        }
         console.error(`Gemini error, retries left ${retries}: ${err.message}`);
         if (retries === 0 && !isQuota) {
            console.log("SKIPPING CHUNK DUE TO PERSISTENT PARSE ERRORS");
@@ -108,29 +138,37 @@ Rules:
       }
     }
 
-    for (const v of chunkVerses) {
-        const vMappings = aiMappings.filter(m => parseInt(m.verse) === parseInt(v.verse_num));
-        let wordPosition = 1;
-        for (const m of vMappings) {
-            let sid = m.strongs === "G0" ? null : m.strongs;
-            if (sid) {
-                sid = sid.replace(/^(H|G)0+([1-9])/, '$1$2');
-                if (!strongsDict[sid]) sid = null;
-            }
-            const actualgreekWord = sid ? strongsDict[sid] : '---';
-            
-            toInsert.push({
-                verse_id: v.id || null,
-                ar_word: m.word || '',
-                strongs_id: sid || null,
-                ar_word_position: wordPosition || 1,
-                orig_word_position: wordPosition || 1,
-                orig_word: actualgreekWord || '',
-                orig_word_lang: 'greek',
-                is_verified: true
-            });
-            wordPosition++;
+    const vMappings = aiMappings.filter(m => parseInt(m.verse) === parseInt(v.verse_num));
+    const validStrongsWords = new Set(vMappings.filter(m => m.strongs && m.strongs !== "H0" && m.strongs !== "G0").map(m => m.word?.trim()));
+
+    const seenVerseWords = new Set();
+    let wordPosition = 1;
+    for (const m of vMappings) {
+        const wordClean = (m.word || '').trim();
+        let sid = (m.strongs === "G0" || m.strongs === "H0") ? null : m.strongs;
+        
+        // Skip G0 dummy entries if this word has a valid Strong's mapping or was already mapped
+        if (!sid && validStrongsWords.has(wordClean)) continue;
+        if (seenVerseWords.has(wordClean + '_' + sid)) continue;
+        seenVerseWords.add(wordClean + '_' + sid);
+
+        if (sid) {
+            sid = sid.replace(/^(H|G)0+([1-9])/, '$1$2');
+            if (!strongsDict[sid]) sid = null;
         }
+        const actualgreekWord = sid ? strongsDict[sid] : '---';
+        
+        toInsert.push({
+            verse_id: v.id || null,
+            ar_word: wordClean,
+            strongs_id: sid || null,
+            ar_word_position: wordPosition || 1,
+            orig_word_position: wordPosition || 1,
+            orig_word: actualgreekWord || '',
+            orig_word_lang: 'greek',
+            is_verified: true
+        });
+        wordPosition++;
     }
     await new Promise(r => setTimeout(r, 2000)); // Short wait between chunks
   }
@@ -298,14 +336,16 @@ async function main() {
   await initDict();
   
   for (const b of books) {
+    if (b.id > 46) continue;
     console.log('=== ' + b.name.toUpperCase() + ' ===');
-    for (let ch = 1; ch <= b.chs; ch++) {
-      await mapChapter(b.id, ch, b.name);
-      await new Promise(r => setTimeout(r, 20000));
-    }
+      for (let ch = 1; ch <= b.chs; ch++) {
+        if (b.id === 46 && ch >= 13) continue;
+        const res = await mapChapter(b.id, ch, b.name);
+        if (res !== 'skipped') await new Promise(r => setTimeout(r, 10000));
+      }
   }
   
-  console.log("ALL BOOKS FINISHED!");
+  console.log("GOSPELS AND ACTS RE-MAPPING FINISHED!");
 }
 
 main().catch(console.error);

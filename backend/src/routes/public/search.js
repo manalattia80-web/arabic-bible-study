@@ -14,12 +14,24 @@
 const MAX_LIMIT     = 100;
 const DEFAULT_LIMIT = 20;
 
+function buildArabicRegex(text) {
+  let t = text.replace(/[\u064B-\u065F\u0670]/g, '').trim();
+  let regex = '';
+  for (let c of t) {
+    if ('أإآا'.includes(c)) regex += '[أإآا][\u064B-\u065F\u0670]*';
+    else if ('ةه'.includes(c)) regex += '[ةه][\u064B-\u065F\u0670]*';
+    else if ('ىي'.includes(c)) regex += '[ىي][\u064B-\u065F\u0670]*';
+    else regex += c + '[\u064B-\u065F\u0670]*';
+  }
+  return regex;
+}
+
 export default async function searchRoutes(fastify) {
 
   // ── GET /search/verses ───────────────────────────────────────────────────
   /**
    * Search Arabic or original text across all verses.
-   * Uses trigram similarity for fuzzy matching.
+   * Uses regex matching for Arabic diacritics-insensitive search.
    * Supports pagination via page/limit.
    */
   fastify.get('/verses', {
@@ -29,7 +41,7 @@ export default async function searchRoutes(fastify) {
         type:     'object',
         required: ['q'],
         properties: {
-          q:            { type: 'string', minLength: 2 },
+          q:            { type: 'string', minLength: 1 },
           testament_id: { type: 'integer' },
           book_id:      { type: 'integer' },
           limit:        { type: 'integer', minimum: 1, maximum: MAX_LIMIT, default: DEFAULT_LIMIT },
@@ -41,9 +53,8 @@ export default async function searchRoutes(fastify) {
     const { q, testament_id, book_id, limit = DEFAULT_LIMIT, page = 1 } = request.query;
     const offset = (page - 1) * limit;
 
-    // Use Supabase's text search (ilike with trigrams)
-    // For Arabic text: search text_avd_ar
-    // Also search text_original for Greek/Hebrew scholars
+    const pattern = buildArabicRegex(q);
+
     let query = fastify.supabase
       .from('verses')
       .select(`
@@ -54,9 +65,9 @@ export default async function searchRoutes(fastify) {
         text_avd_ar,
         text_original,
         text_original_lang,
-        books!inner (name_ar, name_en, name_ar_short)
+        books!inner (name_ar, name_en, name_ar_short, testament_id)
       `, { count: 'exact' })
-      .or(`text_avd_ar.ilike.%${q}%,text_original.ilike.%${q}%`)
+      .or(`text_avd_ar.imatch.*${pattern}.*,text_original.ilike.%${q}%`)
       .order('book_id')
       .order('chapter_num')
       .order('verse_num')

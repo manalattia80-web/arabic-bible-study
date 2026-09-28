@@ -23,13 +23,14 @@ class _SearchScreenState extends State<SearchScreen> {
   final _ctrl = TextEditingController();
   final _focus = FocusNode();
 
-  List<Verse> _results      = [];
-  int         _total        = 0;
-  bool        _loading      = false;
-  String      _error        = '';
-  String      _lastQuery    = '';
-  int         _page         = 1;
-  bool        _hasMore      = true;
+  List<Verse> _results             = [];
+  int         _total               = 0;
+  bool        _loading             = false;
+  String      _error               = '';
+  String      _lastQuery           = '';
+  int         _page                = 1;
+  bool        _hasMore             = true;
+  int?        _selectedTestamentId; // null: All, 1: OT, 2: NT
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<void> _search({bool reset = true}) async {
     final q = _ctrl.text.trim();
-    if (q.isEmpty || q.length < 2) return;
+    if (q.isEmpty || q.length < 1) return;
 
     if (reset) {
       setState(() { _results = []; _page = 1; _hasMore = true; _loading = true; _error = ''; _lastQuery = q; });
@@ -55,7 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     try {
-      final res = await ApiService.searchVerses(q, page: _page, limit: 20);
+      final res = await ApiService.searchVerses(q, testamentId: _selectedTestamentId, page: _page, limit: 20);
       setState(() {
         if (reset) {
           _results = res.verses;
@@ -91,8 +92,8 @@ class _SearchScreenState extends State<SearchScreen> {
             style: const TextStyle(color: AppColors.textPrimary, fontSize: 15),
             textInputAction: TextInputAction.search,
             decoration: InputDecoration(
-              hintText: 'Search in Arabic or Hebrew/Greek…',
-              hintStyle: const TextStyle(color: AppColors.textMuted),
+              hintText: 'البحث في الكتاب المقدس (عربي، عبري، يوناني)…',
+              hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 13),
               border:  InputBorder.none,
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
@@ -100,7 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
               suffixIcon: _ctrl.text.isNotEmpty
                   ? IconButton(
                       icon: const Icon(Icons.clear, size: 18, color: AppColors.textMuted),
-                      onPressed: () { _ctrl.clear(); setState(() { _results = []; _total = 0; }); },
+                      onPressed: () { _ctrl.clear(); setState(() { _results = []; _total = 0; _lastQuery = ''; }); },
                     )
                   : null,
             ),
@@ -111,30 +112,50 @@ class _SearchScreenState extends State<SearchScreen> {
         actions: [
           TextButton(
             onPressed: _search,
-            child: const Text('Search', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600)),
+            child: const Text('بحث', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700)),
           ),
         ],
       ),
 
       body: Column(
         children: [
+          // ── Testament Filter Chips ─────────────────────────────
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: const BoxDecoration(
+              color: AppColors.bgSurface,
+              border: Border(bottom: BorderSide(color: AppColors.border)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _filterChip(label: 'الكل (كل الكتاب)', testamentId: null),
+                const SizedBox(width: 8),
+                _filterChip(label: 'العهد القديم', testamentId: 1),
+                const SizedBox(width: 8),
+                _filterChip(label: 'العهد الجديد', testamentId: 2),
+              ],
+            ),
+          ),
+
           // ── Results count ──────────────────────────────────────
           if (_lastQuery.isNotEmpty && !_loading)
             Container(
               width:   double.infinity,
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               decoration: const BoxDecoration(
-                color: AppColors.bgSurface,
+                color: AppColors.bgCard,
                 border: Border(bottom: BorderSide(color: AppColors.border)),
               ),
               child: Text(
                 _error.isNotEmpty
                     ? _error
-                    : '$_total results for "$_lastQuery"',
+                    : 'وجدنا $_total نتيجة لـ "$_lastQuery"',
                 style: TextStyle(
                   color:    _error.isNotEmpty ? AppColors.danger : AppColors.textSecondary,
                   fontSize: 12,
                 ),
+                textAlign: TextAlign.right,
               ),
             ),
 
@@ -168,6 +189,40 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _filterChip({required String label, required int? testamentId}) {
+    final selected = _selectedTestamentId == testamentId;
+    return InkWell(
+      borderRadius: BorderRadius.circular(100),
+      onTap: () {
+        if (_selectedTestamentId != testamentId) {
+          setState(() { _selectedTestamentId = testamentId; });
+          if (_ctrl.text.trim().isNotEmpty) {
+            _search(reset: true);
+          }
+        }
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primary : AppColors.bgCard,
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(
+            color: selected ? AppColors.primary : AppColors.border,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: selected ? Colors.white : AppColors.textSecondary,
+            fontSize: 12,
+            fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
       ),
     );
   }

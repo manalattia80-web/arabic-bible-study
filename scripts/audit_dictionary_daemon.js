@@ -40,9 +40,16 @@ async function fetchSupabase(path, options = {}) {
 }
 
 async function askGemini(entries) {
-    let promptText = `You are a bilingual biblical lexicographer. Review these Strong's entries and fix the Arabic translation.
-Provide accurate Arabic translations for the biblical dictionary terms. Keep definitions concise but theological.
+    let promptText = `You are an expert bilingual biblical lexicographer and conservative dispensational theologian. Review these Strong's entries and provide rich, clear, and deeply accurate Arabic dictionary definitions with full Arabic diacritics (تشكيل كامل).
 
+All theological, spiritual, and doctrinal commentary MUST strictly adhere to Conservative Dispensational Theology (الفكر التفسيري واللاهوتي التدبيري المحافظ - Conservative Dispensational Hermeneutics), maintaining a consistent literal-grammatical-historical interpretation of Scripture, explicit distinctions between Israel and the Church, unconditional biblical covenants, and conservative evangelical doctrine.
+
+For each entry, you MUST provide a comprehensive explanation in Arabic covering:
+1. المعنى المعجمي الأصلي للجذر (The root/lemma original dictionary meaning).
+2. المعنى حسب التصريف والسياق الكتابي (The specific contextual and inflected meanings as the word is translated and used across Biblical passages, e.g. how it functions in different inflections/grammatical forms).
+3. الأبعاد اللاهوتية والروحية (Theological, spiritual, and doctrinal significance in Scripture strictly aligned with Conservative Dispensational Theology - الفكر التدبيري المحافظ).
+
+Entries to audit:
 `;
     entries.forEach(e => {
         promptText += `ID: ${e.strongs_id}\n`;
@@ -50,46 +57,53 @@ Provide accurate Arabic translations for the biblical dictionary terms. Keep def
         promptText += `English Definition: ${e.definition_en}\n`;
         promptText += `KJV Usage: ${e.kjv_usage}\n\n`;
     });
+
     promptText += `Return ONLY a valid JSON array of objects. Format EXACTLY like this:
-[{"id": "H123", "pronunciation_ar": "accurate transliteration in arabic characters with tashkeel", "definition_ar": "theological meaning in Arabic", "notes_ar": "kjv usage translated to arabic"}]
+[{"id": "H123", "pronunciation_ar": "نطق الكلمة باللغة العربية مع التشكيل الكامل", "definition_ar": "شرح تفصيلي باللغة العربية يشمل: (1) المعنى الأصلي للجذر، (2) المعنى حسب التصريف والسياق الكتابي في أسفار الكتاب المقدس، (3) البعد اللاهوتي والروحي بحسب الفكر التدبيري المحافظ", "notes_ar": "توزيع واستخدامات الكلمة في الكتاب المقدس مترجمة إلى العربية بوضوح"}]
 `;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${GEMINI_KEY}`;
+    const models = [
+        'gemini-3.5-flash-lite',
+        'gemini-3-flash-preview',
+        'gemini-3.1-flash-lite',
+        'gemini-3.6-flash',
+        'gemini-3.8-flash',
+        'gemini-3.7-flash',
+        'gemini-3.5-flash',
+        'gemini-flash-latest'
+    ];
     
     let retries = 30;
     while(retries > 0) {
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptText }] }],
-                    generationConfig: {
-                        temperature: 0.1,
-                        responseMimeType: 'application/json'
-                    }
-                })
-            });
+        let lastErr = null;
+        for (const model of models) {
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptText }] }],
+                        generationConfig: {
+                            temperature: 0.1,
+                            responseMimeType: 'application/json'
+                        }
+                    })
+                });
 
-            if (!response.ok) {
-                const errText = await response.text();
-                if (response.status === 429) {
-                    console.log(`Gemini Rate Limit (429). Waiting 60 seconds...`);
-                    await sleep(60000);
-                    retries--;
-                    continue;
+                if (response.ok) {
+                    const data = await response.json();
+                    const textOutput = data.candidates[0].content.parts[0].text;
+                    return JSON.parse(textOutput);
+                } else {
+                    lastErr = await response.text();
                 }
-                throw new Error(`Gemini API Error: ${response.status} - ${errText}`);
+            } catch (e) {
+                lastErr = e.message;
             }
-
-            const data = await response.json();
-            const textOutput = data.candidates[0].content.parts[0].text;
-            return JSON.parse(textOutput);
-        } catch (e) {
-            console.error(`Gemini Fetch Error: ${e.message}`);
-            retries--;
-            await sleep(30000);
         }
+        console.error(`All models failed: ${lastErr?.slice(0, 100)}. Waiting 30s...`);
+        retries--;
+        await sleep(30000);
     }
     throw new Error('Failed to get response from Gemini after 30 retries.');
 }
