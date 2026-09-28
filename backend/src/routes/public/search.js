@@ -55,40 +55,37 @@ export default async function searchRoutes(fastify) {
   }, async (request, reply) => {
     const { q, testament_id, book_id, limit = DEFAULT_LIMIT, page = 1 } = request.query;
     const offset = (page - 1) * limit;
+    const cleanQ = q.replace(/[\u064B-\u065F\u0670]/g, '').trim();
 
-    const pattern = buildArabicRegex(q);
+    try {
+      // 1. Search word_mappings for normalized Arabic word
+      const mapRes = await fastify.supabase
+        .from('word_mappings')
+        .select('verse_id')
+        .ilike('ar_word', `%${cleanQ}%`)
+        .limit(1000);
 
-    let query = fastify.supabase
-      .from('verses')
-      .select(`
-        id,
-        book_id,
-        chapter_num,
-        verse_num,
-        text_avd_ar,
-        text_original,
-        text_original_lang,
-        books!inner (name_ar, name_en, name_ar_short, testament_id)
-      `, { count: 'exact' })
-      .or(`text_avd_ar.imatch.*${pattern}.*,text_original.ilike.%${q}%`)
-      .order('book_id')
-      .order('chapter_num')
-      .order('verse_num')
-      .range(offset, offset + limit - 1);
+      const mapVerseIds = mapRes.data ? mapRes.data.map(m => m.verse_id) : [];
 
-    if (testament_id) {
-      query = query.eq('books.testament_id', testament_id);
-    }
-    if (book_id) {
-      query = query.eq('book_id', book_id);
-    }
+      // 2. Direct search in verses table
+      let directQuery = fastify.supabase
+        .from('verses')
+        .select('id')
+        .or(`text_avd_ar.ilike.%${q}%,text_avd_ar.ilike.%${cleanQ}%,text_original.ilike.%${q}%`)
+        .limit(1000);
 
-    const { data, count, error } = await query;
-    
-    // Graceful fallback if regex fails
-    if (error) {
-      fastify.log.warn({ msg: 'Regex search error, trying fallback ilike', error: error.message });
-      let fbQuery = fastify.supabase
+      const directRes = await directQuery;
+      const directVerseIds = directRes.data ? directRes.data.map(v => v.id) : [];
+
+      // Combine unique verse IDs
+      let allVerseIds = Array.from(new Set([...mapVerseIds, ...directVerseIds]));
+
+      if (allVerseIds.length === 0) {
+        return { data: [], meta: { query: q, total: 0, page, limit, total_pages: 0 } };
+      }
+
+      // Query verses with pagination and filtering
+      let query = fastify.supabase
         .from('verses')
         .select(`
           id,
@@ -100,40 +97,35 @@ export default async function searchRoutes(fastify) {
           text_original_lang,
           books!inner (name_ar, name_en, name_ar_short, testament_id)
         `, { count: 'exact' })
-        .or(`text_avd_ar.ilike.%${q}%,text_original.ilike.%${q}%`)
-        .order('book_id')
-        .order('chapter_num')
-        .order('verse_num')
-        .range(offset, offset + limit - 1);
+        .in('id', allVerseIds)
+        .order('book_id', { ascending: true })
+        .order('chapter_num', { ascending: true })
+        .order('verse_num', { ascending: true });
 
-      if (testament_id) fbQuery = fbQuery.eq('books.testament_id', testament_id);
-      if (book_id) fbQuery = fbQuery.eq('book_id', book_id);
+      if (testament_id) {
+        query = query.eq('books.testament_id', testament_id);
+      }
+      if (book_id) {
+        query = query.eq('book_id', book_id);
+      }
 
-      const fbRes = await fbQuery;
-      if (fbRes.error) return reply.status(500).send({ error: fbRes.error.message });
+      const { data, count, error } = await query.range(offset, offset + limit - 1);
+      if (error) throw error;
 
       return {
-        data: fbRes.data,
+        data: data || [],
         meta: {
           query:       q,
-          total:       fbRes.count ?? 0,
+          total:       count ?? allVerseIds.length,
           page,
           limit,
-          total_pages: Math.ceil((fbRes.count ?? 0) / limit),
+          total_pages: Math.ceil((count ?? allVerseIds.length) / limit),
         },
       };
+    } catch (err) {
+      fastify.log.error({ msg: 'Search endpoint error', error: err.message });
+      return reply.status(500).send({ error: err.message });
     }
-
-    return {
-      data,
-      meta: {
-        query:       q,
-        total:       count ?? 0,
-        page,
-        limit,
-        total_pages: Math.ceil((count ?? 0) / limit),
-      },
-    };
   });
 
   // ── GET /search/strongs ──────────────────────────────────────────────────
