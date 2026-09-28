@@ -15,7 +15,10 @@ const MAX_LIMIT     = 100;
 const DEFAULT_LIMIT = 20;
 
 function buildArabicRegex(text) {
-  let t = text.replace(/[\u064B-\u065F\u0670]/g, '').trim();
+  if (!text) return '.*';
+  let safeText = text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  let t = safeText.replace(/[\u064B-\u065F\u0670]/g, '').trim();
+  if (!t) return '.*';
   let regex = '';
   for (let c of t) {
     if ('أإآا'.includes(c)) regex += '[أإآا][\u064B-\u065F\u0670]*';
@@ -81,7 +84,45 @@ export default async function searchRoutes(fastify) {
     }
 
     const { data, count, error } = await query;
-    if (error) return reply.status(500).send({ error: error.message });
+    
+    // Graceful fallback if regex fails
+    if (error) {
+      fastify.log.warn({ msg: 'Regex search error, trying fallback ilike', error: error.message });
+      let fbQuery = fastify.supabase
+        .from('verses')
+        .select(`
+          id,
+          book_id,
+          chapter_num,
+          verse_num,
+          text_avd_ar,
+          text_original,
+          text_original_lang,
+          books!inner (name_ar, name_en, name_ar_short, testament_id)
+        `, { count: 'exact' })
+        .or(`text_avd_ar.ilike.%${q}%,text_original.ilike.%${q}%`)
+        .order('book_id')
+        .order('chapter_num')
+        .order('verse_num')
+        .range(offset, offset + limit - 1);
+
+      if (testament_id) fbQuery = fbQuery.eq('books.testament_id', testament_id);
+      if (book_id) fbQuery = fbQuery.eq('book_id', book_id);
+
+      const fbRes = await fbQuery;
+      if (fbRes.error) return reply.status(500).send({ error: fbRes.error.message });
+
+      return {
+        data: fbRes.data,
+        meta: {
+          query:       q,
+          total:       fbRes.count ?? 0,
+          page,
+          limit,
+          total_pages: Math.ceil((fbRes.count ?? 0) / limit),
+        },
+      };
+    }
 
     return {
       data,
