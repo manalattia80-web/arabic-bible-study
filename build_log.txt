@@ -1,36 +1,9 @@
 Running Gradle task 'assembleRelease'...                        
-lib/models/word_mapping.dart:50:174: Error: Expected ':' before this.
-    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^^^^^^^^^
-lib/models/word_mapping.dart:50:183: Error: Expected ',' before this.
-    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-lib/models/word_mapping.dart:50:183: Error: Expected an identifier, but got ''] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}''.
-Try inserting an identifier before ''] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}''.
-    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-lib/models/strongs_entry.dart:41:171: Error: Expected ':' before this.
-    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^^^^^^^^^
-lib/models/strongs_entry.dart:41:180: Error: Expected ',' before this.
-    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-lib/models/strongs_entry.dart:41:180: Error: Expected an identifier, but got ''] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}''.
-Try inserting an identifier before ''] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}''.
-    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-lib/models/word_mapping.dart:50:174: Error: Undefined name 'audio_url'.
-    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^^^^^^^^^
-lib/models/word_mapping.dart:50:312: Error: Expected ',' before this.
-    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^
-lib/models/strongs_entry.dart:41:171: Error: Undefined name 'audio_url'.
-    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^^^^^^^^^
-lib/models/strongs_entry.dart:41:309: Error: Expected ',' before this.
-    audioUrl:        j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=\${Uri.encodeComponent((j['audio_url'] as String).replaceAll(\'translate.google.com\', \'translate.googleapis.com\').replaceAll(\'client=tw-ob\', \'client=gtx\'))}' : null,
-                                                                                          ^
+lib/core/theme/app_theme.dart:50:18: Error: The argument type 'CardTheme' can't be assigned to the parameter type 'CardThemeData?'.
+ - 'CardTheme' is from 'package:flutter/src/material/card_theme.dart' ('/opt/hostedtoolcache/flutter/stable-3.47.5-x64/flutter/packages/flutter/lib/src/material/card_theme.dart').
+ - 'CardThemeData' is from 'package:flutter/src/material/card_theme.dart' ('/opt/hostedtoolcache/flutter/stable-3.47.5-x64/flutter/packages/flutter/lib/src/material/card_theme.dart').
+      cardTheme: CardTheme(
+                 ^
 Target kernel_snapshot_program failed: Exception
 
 
@@ -46,6 +19,6 @@ Execution failed for task ':app:compileFlutterBuildRelease'.
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 2m 11s
-Running Gradle task 'assembleRelease'...                          131.8s
+BUILD FAILED in 2m 48s
+Running Gradle task 'assembleRelease'...                          168.6s
 Gradle task assembleRelease failed with exit code 1
