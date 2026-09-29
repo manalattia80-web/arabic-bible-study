@@ -28,14 +28,10 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Initialize Flutter Project
+      - name: Configure Flutter Project
         working-directory: ./mobile
         run: |
-          flutter create . --platforms android,ios
           rm -f test/widget_test.dart
-          sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <application/g' android/app/src/main/AndroidManifest.xml
-          sed -i 's/version "1.7.10"/version "1.9.0"/g' android/settings.gradle || true
-          sed -i 's/version "7.3.0"/version "7.4.2"/g' android/settings.gradle || true
 
       - name: Install dependencies
         working-directory: ./mobile
