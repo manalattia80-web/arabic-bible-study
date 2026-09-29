@@ -34,7 +34,8 @@ jobs:
           flutter create . --platforms android,ios
           rm -f test/widget_test.dart
           sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <application/g' android/app/src/main/AndroidManifest.xml
-          sed -i 's/android:label="mobile"/android:label="???? ?????? ??????"/g' android/app/src/main/AndroidManifest.xml
+          sed -i 's/version "1.7.10"/version "1.9.0"/g' android/settings.gradle || true
+          sed -i 's/version "7.3.0"/version "7.4.2"/g' android/settings.gradle || true
 
       - name: Install dependencies
         working-directory: ./mobile
@@ -46,18 +47,7 @@ jobs:
 
       - name: Build APK
         working-directory: ./mobile
-        run: |
-          if ! flutter build apk --release > build_log.txt 2>&1; then
-            cat build_log.txt
-            git config --global user.name "github-actions"
-            git config --global user.email "github-actions@github.com"
-            cp build_log.txt ../build_log.txt
-            cd ..
-            git add build_log.txt
-            git commit -m "Upload build failure log"
-            git push
-            exit 1
-          fi
+        run: flutter build apk --release
         
       - name: Find and Move APK
         working-directory: ./mobile
