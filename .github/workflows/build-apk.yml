@@ -59,7 +59,7 @@ jobs:
             exit 1
           fi
         
-      - name: Find and Move APK
+      - name: Find, Commit and Publish Direct Download APK
         working-directory: ./mobile
         run: |
           APK_PATH=$(find build -name "*.apk" | grep release | head -n 1)
@@ -69,6 +69,12 @@ jobs:
           echo "Found APK at: $APK_PATH"
           ls -la "$APK_PATH"
           cp "$APK_PATH" ../arabic-bible-study-app.apk
+          cd ..
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add arabic-bible-study-app.apk
+          git commit -m "Auto-publish compiled APK build v1.0.${{ github.run_number }}" || true
+          git push || true
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
