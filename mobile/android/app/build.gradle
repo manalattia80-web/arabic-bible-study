@@ -17,6 +17,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += ["-Xsuppress-version-warnings", "-Xlanguage-version=1.8", "-Xapi-version=1.8"]
     }
 
     defaultConfig {
