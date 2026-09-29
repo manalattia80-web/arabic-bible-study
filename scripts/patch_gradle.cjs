@@ -10,15 +10,11 @@ if (fs.existsSync(gradlePath)) {
   if (!content.includes('KotlinCompile')) {
     content += `
 
-subprojects {
-    afterEvaluate { project ->
-        if (project.plugins.hasPlugin('kotlin-android') || project.plugins.hasPlugin('kotlin')) {
-            project.tasks.withType(KotlinCompile).configureEach {
-                kotlinOptions {
-                    jvmTarget = "17"
-                    freeCompilerArgs += ["-Xsuppress-version-warnings", "-Xlanguage-version=1.8", "-Xapi-version=1.8"]
-                }
-            }
+allprojects {
+    tasks.withType(KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
+            freeCompilerArgs += ["-Xsuppress-version-warnings", "-Xlanguage-version=1.8", "-Xapi-version=1.8"]
         }
     }
 }
