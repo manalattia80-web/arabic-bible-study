@@ -52,6 +52,6 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Web App Server running at http://localhost:${PORT}/`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Web App Server running at http://localhost:${PORT}/ and http://192.168.1.15:${PORT}/`);
 });

@@ -137,37 +137,39 @@ Rules:
       }
     }
 
-    const vMappings = aiMappings.filter(m => parseInt(m.verse) === parseInt(v.verse_num));
-    const validStrongsWords = new Set(vMappings.filter(m => m.strongs && m.strongs !== "H0" && m.strongs !== "G0").map(m => m.word?.trim()));
+    for (const v of chunkVerses) {
+      const vMappings = aiMappings.filter(m => parseInt(m.verse) === parseInt(v.verse_num));
+      const validStrongsWords = new Set(vMappings.filter(m => m.strongs && m.strongs !== "H0" && m.strongs !== "G0").map(m => m.word?.trim()));
 
-    const seenVerseWords = new Set();
-    let wordPosition = 1;
-    for (const m of vMappings) {
-        const wordClean = (m.word || '').trim();
-        let sid = (m.strongs === "H0" || m.strongs === "G0") ? null : m.strongs;
-        
-        // Skip H0 dummy entries if this word has a valid Strong's mapping or was already mapped
-        if (!sid && validStrongsWords.has(wordClean)) continue;
-        if (seenVerseWords.has(wordClean + '_' + sid)) continue;
-        seenVerseWords.add(wordClean + '_' + sid);
+      const seenVerseWords = new Set();
+      let wordPosition = 1;
+      for (const m of vMappings) {
+          const wordClean = (m.word || '').trim();
+          let sid = (m.strongs === "H0" || m.strongs === "G0") ? null : m.strongs;
+          
+          // Skip H0 dummy entries if this word has a valid Strong's mapping or was already mapped
+          if (!sid && validStrongsWords.has(wordClean)) continue;
+          if (seenVerseWords.has(wordClean + '_' + sid)) continue;
+          seenVerseWords.add(wordClean + '_' + sid);
 
-        if (sid) {
-            sid = sid.replace(/^(H|G)0+([1-9])/, '$1$2');
-            if (!strongsDict[sid]) sid = null;
-        }
-        const actualHebrewWord = sid ? strongsDict[sid] : '---';
-        
-        toInsert.push({
-            verse_id: v.id || null,
-            ar_word: wordClean,
-            strongs_id: sid || null,
-            ar_word_position: wordPosition || 1,
-            orig_word_position: wordPosition || 1,
-            orig_word: actualHebrewWord || '',
-            orig_word_lang: 'hebrew',
-            is_verified: true
-        });
-        wordPosition++;
+          if (sid) {
+              sid = sid.replace(/^(H|G)0+([1-9])/, '$1$2');
+              if (!strongsDict[sid]) sid = null;
+          }
+          const actualHebrewWord = sid ? strongsDict[sid] : '---';
+          
+          toInsert.push({
+              verse_id: v.id || null,
+              ar_word: wordClean,
+              strongs_id: sid || null,
+              ar_word_position: wordPosition || 1,
+              orig_word_position: wordPosition || 1,
+              orig_word: actualHebrewWord || '',
+              orig_word_lang: 'hebrew',
+              is_verified: true
+          });
+          wordPosition++;
+      }
     }
     await new Promise(r => setTimeout(r, 1000)); // Short wait between chunks
   }
