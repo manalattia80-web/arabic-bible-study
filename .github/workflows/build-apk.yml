@@ -28,11 +28,27 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Configure Flutter Project
+      - name: Initialize Flutter Android Project
         working-directory: ./mobile
         run: |
+          flutter create . --platforms android
           rm -f test/widget_test.dart
           sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <application/g' android/app/src/main/AndroidManifest.xml || true
+          cat << 'EOF' >> android/build.gradle
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.plugins.hasPlugin('kotlin-android') || project.plugins.hasPlugin('kotlin')) {
+            project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+                kotlinOptions {
+                    jvmTarget = "17"
+                    freeCompilerArgs += ["-Xsuppress-version-warnings", "-Xlanguage-version=1.8", "-Xapi-version=1.8"]
+                }
+            }
+        }
+    }
+}
+EOF
 
       - name: Install dependencies
         working-directory: ./mobile
