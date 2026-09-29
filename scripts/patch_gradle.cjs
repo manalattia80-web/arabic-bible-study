@@ -1,6 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 
+const gradlePropsPath = path.join(__dirname, '..', 'mobile', 'android', 'gradle.properties');
+if (fs.existsSync(gradlePropsPath)) {
+  let props = fs.readFileSync(gradlePropsPath, 'utf8');
+  if (!props.includes('kotlin.compiler.languageVersion')) {
+    props += '\nkotlin.compiler.languageVersion=1.8\nkotlin.compiler.apiVersion=1.8\nkotlin.suppressKotlinVersionCompatibilityCheck=true\n';
+    fs.writeFileSync(gradlePropsPath, props, 'utf8');
+    console.log('Successfully patched gradle.properties');
+  }
+}
+
 const gradlePath = path.join(__dirname, '..', 'mobile', 'android', 'build.gradle');
 if (fs.existsSync(gradlePath)) {
   let content = fs.readFileSync(gradlePath, 'utf8');
