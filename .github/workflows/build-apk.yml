@@ -50,8 +50,18 @@ jobs:
         working-directory: ./mobile
         run: |
           APK_PATH=$(find build -name "*.apk" | grep release | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            APK_PATH=$(find . -name "*.apk" | head -n 1)
+          fi
           echo "Found APK at: $APK_PATH"
+          ls -la "$APK_PATH"
           cp "$APK_PATH" ../arabic-bible-study-app.apk
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: arabic-bible-study-app-v1.0.${{ github.run_number }}
+          path: arabic-bible-study-app.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -61,5 +71,6 @@ jobs:
           files: arabic-bible-study-app.apk
           draft: false
           prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
