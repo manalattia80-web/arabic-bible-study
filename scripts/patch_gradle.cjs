@@ -4,13 +4,16 @@ const path = require('path');
 const gradlePath = path.join(__dirname, '..', 'mobile', 'android', 'build.gradle');
 if (fs.existsSync(gradlePath)) {
   let content = fs.readFileSync(gradlePath, 'utf8');
+  if (!content.includes('import org.jetbrains.kotlin.gradle.tasks.KotlinCompile')) {
+    content = 'import org.jetbrains.kotlin.gradle.tasks.KotlinCompile\n' + content;
+  }
   if (!content.includes('KotlinCompile')) {
     content += `
 
 subprojects {
     afterEvaluate { project ->
         if (project.plugins.hasPlugin('kotlin-android') || project.plugins.hasPlugin('kotlin')) {
-            project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            project.tasks.withType(KotlinCompile).configureEach {
                 kotlinOptions {
                     jvmTarget = "17"
                     freeCompilerArgs += ["-Xsuppress-version-warnings", "-Xlanguage-version=1.8", "-Xapi-version=1.8"]
@@ -20,7 +23,7 @@ subprojects {
     }
 }
 `;
-    fs.writeFileSync(gradlePath, content, 'utf8');
-    console.log('Successfully patched android/build.gradle with KotlinCompile override');
   }
+  fs.writeFileSync(gradlePath, content, 'utf8');
+  console.log('Successfully patched android/build.gradle with KotlinCompile override');
 }
