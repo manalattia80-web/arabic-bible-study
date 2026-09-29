@@ -46,7 +46,18 @@ jobs:
 
       - name: Build APK
         working-directory: ./mobile
-        run: flutter build apk --release --no-tree-shake-icons
+        run: |
+          if ! flutter build apk --release --no-tree-shake-icons > build_log.txt 2>&1; then
+            cat build_log.txt
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+            cp build_log.txt ../build_log.txt
+            cd ..
+            git add build_log.txt
+            git commit -m "Upload build failure log" || true
+            git push || true
+            exit 1
+          fi
         
       - name: Find and Move APK
         working-directory: ./mobile
