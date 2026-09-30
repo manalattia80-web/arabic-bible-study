@@ -26,6 +26,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.24.3'
           channel: 'stable'
           
       - name: Initialize Flutter Android Project
@@ -47,6 +48,8 @@ jobs:
       - name: Build APK
         working-directory: ./mobile
         run: |
+          export GRADLE_OPTS="-Dkotlin.compiler.languageVersion=1.8 -Dkotlin.compiler.apiVersion=1.8"
+          export JAVA_TOOL_OPTIONS="-Dkotlin.compiler.languageVersion=1.8 -Dkotlin.compiler.apiVersion=1.8"
           if ! flutter build apk --release --no-tree-shake-icons > build_log.txt 2>&1; then
             cat build_log.txt
             git config --global user.name "github-actions"
