@@ -32,5 +32,5 @@ class WordOccurrence {
     );
   }
 
-  String get reference => '$bookNameAr \u202A$chapterNum:$verseNum\u202C';
+  String get reference => '$bookNameAr $chapterNum: $verseNum';
 }

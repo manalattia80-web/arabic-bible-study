@@ -309,7 +309,7 @@ class _VerseCard extends StatelessWidget {
                           border:       Border.all(color: AppColors.primary.withOpacity(0.35)),
                         ),
                         child: Text(
-                          '\u202A$chapterNum:${verse.verseNum}\u202C',
+                          '$chapterNum: ${verse.verseNum}',
                           style: const TextStyle(
                             color:      AppColors.primaryText,
                             fontSize:   11,
