@@ -59,30 +59,29 @@ export default async function searchRoutes(fastify) {
 
     // Generate word variations for Arabic prefixes/suffixes (الـ، و، ف، ب، ك، لـ)
     const norm = cleanQ.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
-    const termSet = new Set([q, cleanQ, norm]);
+    const normT = cleanQ.replace(/[أإآ]/g, 'ا').replace(/ه/g, 'ة').replace(/ى/g, 'ي');
+    const termSet = new Set([q, cleanQ, norm, normT]);
     
+    const stems = [cleanQ, norm, normT];
     if (cleanQ.startsWith('ال')) {
-      const stem = cleanQ.substring(2);
-      if (stem.length >= 2) {
-        termSet.add(stem);
-        termSet.add('و' + stem);
-        termSet.add('ف' + stem);
-        termSet.add('ب' + stem);
-        termSet.add('ل' + stem);
-        termSet.add('ك' + stem);
-      }
-    } else if (cleanQ.length >= 2) {
-      termSet.add('ال' + cleanQ);
-      termSet.add('و' + cleanQ);
-      termSet.add('ف' + cleanQ);
-      termSet.add('ب' + cleanQ);
-      termSet.add('ل' + cleanQ);
-      termSet.add('ك' + cleanQ);
-      termSet.add('وال' + cleanQ);
-      termSet.add('فال' + cleanQ);
-      termSet.add('بال' + cleanQ);
-      termSet.add('كال' + cleanQ);
-      termSet.add('لال' + cleanQ);
+      stems.push(cleanQ.substring(2));
+    }
+    
+    for (const stem of stems) {
+      if (stem.length < 2) continue;
+      termSet.add(stem);
+      termSet.add('ال' + stem);
+      termSet.add('و' + stem);
+      termSet.add('ف' + stem);
+      termSet.add('ب' + stem);
+      termSet.add('ل' + stem);
+      termSet.add('ك' + stem);
+      termSet.add('وال' + stem);
+      termSet.add('فال' + stem);
+      termSet.add('بال' + stem);
+      termSet.add('كال' + stem);
+      termSet.add('لال' + stem);
+      termSet.add('و' + 'ال' + stem);
     }
     const terms = Array.from(termSet).filter(t => t.length >= 2);
 
