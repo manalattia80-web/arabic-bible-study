@@ -45,8 +45,20 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              verseNum > 0 ? 'دراسة الكلمات · $chapterNum: $verseNum' : 'دراسة الكلمات',
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('دراسة الكلمات'),
+                  if (verseNum > 0) ...[
+                    const Text(' · '),
+                    Text('$chapterNum'),
+                    const Text(': '),
+                    Text('$verseNum'),
+                  ],
+                ],
+              ),
             ),
             const Text('Tap any row for Strong\'s definition', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
           ],

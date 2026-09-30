@@ -300,25 +300,47 @@ class _VerseCard extends StatelessWidget {
                   // Verse number badge
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    textDirection: TextDirection.rtl,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                         decoration: BoxDecoration(
                           color:        AppColors.primaryGlow,
                           borderRadius: BorderRadius.circular(100),
                           border:       Border.all(color: AppColors.primary.withOpacity(0.35)),
                         ),
-                        child: Text(
-                          '$chapterNum: ${verse.verseNum}',
-                          style: const TextStyle(
-                            color:      AppColors.primaryText,
-                            fontSize:   11,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'monospace',
-                          ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          textDirection: TextDirection.rtl,
+                          children: [
+                            Text(
+                              '$chapterNum',
+                              style: const TextStyle(
+                                color:      AppColors.primaryText,
+                                fontSize:   11,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const Text(
+                              ': ',
+                              style: TextStyle(
+                                color:      AppColors.primaryText,
+                                fontSize:   11,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Text(
+                              '${verse.verseNum}',
+                              style: const TextStyle(
+                                color:      AppColors.primaryText,
+                                fontSize:   11,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted, size: 16),
+                      const Icon(Icons.chevron_left_rounded, color: AppColors.textMuted, size: 16),
                     ],
                   ),
 
@@ -353,11 +375,12 @@ class _VerseCard extends StatelessWidget {
                   // Tap hint
                   const SizedBox(height: 8),
                   const Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    textDirection: TextDirection.rtl,
                     children: [
                       Icon(Icons.touch_app_outlined, size: 12, color: AppColors.textMuted),
                       SizedBox(width: 4),
-                      Text('Word Study', style: TextStyle(color: AppColors.textMuted, fontSize: 10)),
+                      Text('دراسة الكلمات', style: TextStyle(color: AppColors.textMuted, fontSize: 10)),
                     ],
                   ),
                 ],
