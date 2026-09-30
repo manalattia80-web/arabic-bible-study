@@ -60,34 +60,37 @@ export default async function searchRoutes(fastify) {
     // Generate word variations for Arabic prefixes/suffixes (الـ، و، ف، ب، ك، لـ)
     const norm = cleanQ.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
     const normT = cleanQ.replace(/[أإآ]/g, 'ا').replace(/ه/g, 'ة').replace(/ى/g, 'ي');
-    const termSet = new Set([q, cleanQ, norm, normT]);
     
-    const stems = [cleanQ, norm, normT];
+    const stems = Array.from(new Set([cleanQ, norm, normT]));
     if (cleanQ.startsWith('ال')) {
       stems.push(cleanQ.substring(2));
     }
     
+    const termSet = new Set([q, cleanQ, norm, normT]);
+    const mapOrSet = new Set();
+
     for (const stem of stems) {
       if (stem.length < 2) continue;
-      termSet.add(stem);
-      termSet.add('ال' + stem);
-      termSet.add('و' + stem);
-      termSet.add('ف' + stem);
-      termSet.add('ب' + stem);
-      termSet.add('ل' + stem);
-      termSet.add('ك' + stem);
-      termSet.add('وال' + stem);
-      termSet.add('فال' + stem);
-      termSet.add('بال' + stem);
-      termSet.add('كال' + stem);
-      termSet.add('لال' + stem);
-      termSet.add('و' + 'ال' + stem);
+      
+      // Diacritics wildcard pattern for ar_word in word_mappings table
+      mapOrSet.add(`ar_word.ilike.%${stem.split('').join('%')}%`);
+
+      const prefixes = ['', 'ال', 'و', 'ف', 'ب', 'ل', 'ك', 'وال', 'فال', 'بال', 'كال', 'لال'];
+      for (const p of prefixes) {
+        const full = p + stem;
+        termSet.add(full);
+        mapOrSet.add(`ar_word.ilike.%${full}%`);
+        mapOrSet.add(`ar_word.ilike.%${full}ً%`);
+        mapOrSet.add(`ar_word.ilike.%${full}ٌ%`);
+        mapOrSet.add(`ar_word.ilike.%${full}ٍ%`);
+      }
     }
+    
     const terms = Array.from(termSet).filter(t => t.length >= 2);
+    const mapOr = Array.from(mapOrSet).slice(0, 50).join(',');
 
     try {
       // 1. Search word_mappings for all normalized Arabic word variants
-      const mapOr = terms.map(t => `ar_word.ilike.%${t}%`).join(',');
       const mapRes = await fastify.supabase
         .from('word_mappings')
         .select('verse_id')

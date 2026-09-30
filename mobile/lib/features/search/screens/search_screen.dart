@@ -278,42 +278,46 @@ class _SearchResultCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Reference
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(
-                          color:        AppColors.primaryGlow,
-                          borderRadius: BorderRadius.circular(100),
-                          border:       Border.all(color: AppColors.primary.withOpacity(0.3)),
-                        ),
-                        child: Text(
-                          verse.reference,
-                          style: const TextStyle(
-                            color:      AppColors.primaryText,
-                            fontSize:   12,
-                            fontWeight: FontWeight.w700,
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            color:        AppColors.primaryGlow,
+                            borderRadius: BorderRadius.circular(100),
+                            border:       Border.all(color: AppColors.primary.withOpacity(0.3)),
+                          ),
+                          child: Text(
+                            verse.reference,
+                            style: const TextStyle(
+                              color:      AppColors.primaryText,
+                              fontSize:   12,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color:        AppColors.bgSurface,
-                          borderRadius: BorderRadius.circular(100),
-                          border:       Border.all(color: AppColors.border),
-                        ),
-                        child: Text(
-                          verse.isHebrew ? 'Hebrew' : 'Greek',
-                          style: TextStyle(
-                            color:    verse.isHebrew ? AppColors.hebrewText : AppColors.greekText,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color:        AppColors.bgSurface,
+                            borderRadius: BorderRadius.circular(100),
+                            border:       Border.all(color: AppColors.border),
+                          ),
+                          child: Text(
+                            verse.isHebrew ? 'العبرية' : 'اليونانية',
+                            style: TextStyle(
+                              color:    verse.isHebrew ? AppColors.hebrewText : AppColors.greekText,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10),
 
