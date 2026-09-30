@@ -196,12 +196,14 @@ class _MappingsStats extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        textDirection: TextDirection.rtl,
         children: [
-          _stat('${mappings.length}', 'words', AppColors.textSecondary),
+          _stat('${mappings.length}', 'كلمة', AppColors.textSecondary),
           const SizedBox(width: 12),
-          _stat('$verified', 'verified', AppColors.success),
+          _stat('$verified', 'مُدقق', AppColors.success),
           const SizedBox(width: 12),
-          _stat('$withAudio', 'with audio', AppColors.info),
+          _stat('$withAudio', 'مع صوت', AppColors.info),
         ],
       ),
     );
@@ -209,6 +211,7 @@ class _MappingsStats extends StatelessWidget {
 
   Widget _stat(String val, String label, Color color) => Row(
     mainAxisSize: MainAxisSize.min,
+    textDirection: TextDirection.rtl,
     children: [
       Text(val, style: TextStyle(color: color, fontWeight: FontWeight.w700, fontSize: 13)),
       const SizedBox(width: 3),
@@ -235,13 +238,14 @@ class _TableHeader extends StatelessWidget {
       borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
     ),
     child: const Row(
+      textDirection: TextDirection.rtl,
       children: [
         SizedBox(width: 28, child: Text('#', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
-        Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('ARABIC', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
+        Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('الكلمة العربية', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
         SizedBox(width: 12),
-        Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('ORIGINAL', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
+        Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('النص الأصلي', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
         SizedBox(width: 12),
-        Expanded(flex: 2, child: Text('TRANSLIT', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
+        Expanded(flex: 2, child: Text('النطق والرمز', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
         SizedBox(width: 40),
       ],
     ),
@@ -373,14 +377,23 @@ class _WordRow extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         if (mapping.hasStrongs)
-                          Text(
-                            mapping.strongsId!,
-                            style: const TextStyle(
-                              color:      AppColors.info,
-                              fontSize:   11,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'monospace',
-                            ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                mapping.strongsId!,
+                                style: const TextStyle(
+                                  color:      AppColors.info,
+                                  fontSize:   11,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'monospace',
+                                ),
+                              ),
+                              if (mapping.isVerified) ...[
+                                const SizedBox(width: 3),
+                                const Icon(Icons.verified, size: 13, color: AppColors.success),
+                              ],
+                            ],
                           ),
                       ],
                     ),

@@ -225,18 +225,24 @@ class StrongsModal extends StatelessWidget {
                               ),
                             ),
                           ],
-                          if (entry.arIsVerified)
+                          if (entry.arIsVerified || entry.hasArabicDef)
                             const Align(
                               alignment: Alignment.centerRight,
                               child: Padding(
                                 padding: EdgeInsets.only(top: 6),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(Icons.verified, color: AppColors.success, size: 13),
-                                    SizedBox(width: 4),
-                                    Text('Verified by scholars', style: TextStyle(color: AppColors.success, fontSize: 11)),
-                                  ],
+                                child: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.verified, color: AppColors.success, size: 14),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        'مُدقق لغوياً ومُعتمد',
+                                        style: TextStyle(color: AppColors.success, fontSize: 11, fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
