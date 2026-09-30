@@ -47,22 +47,9 @@ jobs:
 
       - name: Build APK
         working-directory: ./mobile
-        run: |
-          export GRADLE_OPTS="-Dkotlin.compiler.languageVersion=1.8 -Dkotlin.compiler.apiVersion=1.8"
-          export JAVA_TOOL_OPTIONS="-Dkotlin.compiler.languageVersion=1.8 -Dkotlin.compiler.apiVersion=1.8"
-          if ! flutter build apk --release --no-tree-shake-icons > build_log.txt 2>&1; then
-            cat build_log.txt
-            git config --global user.name "github-actions"
-            git config --global user.email "github-actions@github.com"
-            cp build_log.txt ../build_log.txt
-            cd ..
-            git add build_log.txt
-            git commit -m "Upload build failure log" || true
-            git push || true
-            exit 1
-          fi
+        run: flutter build apk --release --no-tree-shake-icons
         
-      - name: Find, Commit and Publish Direct Download APK
+      - name: Find and Copy APK
         working-directory: ./mobile
         run: |
           APK_PATH=$(find build -name "*.apk" | grep release | head -n 1)
@@ -70,14 +57,7 @@ jobs:
             APK_PATH=$(find . -name "*.apk" | head -n 1)
           fi
           echo "Found APK at: $APK_PATH"
-          ls -la "$APK_PATH"
           cp "$APK_PATH" ../arabic-bible-study-app.apk
-          cd ..
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add arabic-bible-study-app.apk
-          git commit -m "Auto-publish compiled APK build v1.0.${{ github.run_number }}" || true
-          git push || true
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
