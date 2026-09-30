@@ -290,14 +290,44 @@ class _SearchResultCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(100),
                             border:       Border.all(color: AppColors.primary.withOpacity(0.3)),
                           ),
-                          child: Text(
-                            verse.reference,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             textDirection: TextDirection.rtl,
-                            style: const TextStyle(
-                              color:      AppColors.primaryText,
-                              fontSize:   12,
-                              fontWeight: FontWeight.w700,
-                            ),
+                            children: [
+                              Text(
+                                verse.displayBookName,
+                                style: const TextStyle(
+                                  color:      AppColors.primaryText,
+                                  fontSize:   12,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                '${verse.chapterNum}',
+                                style: const TextStyle(
+                                  color:      AppColors.primaryText,
+                                  fontSize:   12,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const Text(
+                                ': ',
+                                style: TextStyle(
+                                  color:      AppColors.primaryText,
+                                  fontSize:   12,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                '${verse.verseNum}',
+                                style: const TextStyle(
+                                  color:      AppColors.primaryText,
+                                  fontSize:   12,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(width: 8),
