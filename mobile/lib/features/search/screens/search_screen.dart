@@ -284,19 +284,35 @@ class _SearchResultCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
                             color:        AppColors.primaryGlow,
                             borderRadius: BorderRadius.circular(100),
                             border:       Border.all(color: AppColors.primary.withOpacity(0.3)),
                           ),
-                          child: Text(
-                            verse.reference,
-                            style: const TextStyle(
-                              color:      AppColors.primaryText,
-                              fontSize:   12,
-                              fontWeight: FontWeight.w700,
-                            ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Text(
+                                verse.displayBookName,
+                                style: const TextStyle(
+                                  color:      AppColors.primaryText,
+                                  fontSize:   12,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${verse.chapterNum}:${verse.verseNum}',
+                                textDirection: TextDirection.ltr,
+                                style: const TextStyle(
+                                  color:      AppColors.primaryText,
+                                  fontSize:   12,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(width: 8),
