@@ -46,7 +46,7 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              verseNum > 0 ? 'Word Study · $chapterNum:$verseNum' : 'Word Study',
+              verseNum > 0 ? 'دراسة الكلمات · \u202A$chapterNum:$verseNum\u202C' : 'دراسة الكلمات',
             ),
             const Text('Tap any row for Strong\'s definition', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
           ],

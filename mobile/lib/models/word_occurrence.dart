@@ -31,4 +31,6 @@ class WordOccurrence {
       textAvdAr: json['text_avd_ar'] as String? ?? '',
     );
   }
+
+  String get reference => '$bookNameAr \u202A$chapterNum:$verseNum\u202C';
 }
