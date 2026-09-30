@@ -71,23 +71,17 @@ export default async function searchRoutes(fastify) {
 
     for (const stem of stems) {
       if (stem.length < 2) continue;
-      
-      // Diacritics wildcard pattern for ar_word in word_mappings table
+      // Single diacritics wildcard pattern for ar_word in word_mappings
       mapOrSet.add(`ar_word.ilike.%${stem.split('').join('%')}%`);
 
-      const prefixes = ['', 'ال', 'و', 'ف', 'ب', 'ل', 'ك', 'وال', 'فال', 'بال', 'كال', 'لال'];
+      const prefixes = ['', 'ال', 'و', 'ف', 'ب', 'ل', 'ك', 'وال', 'فال', 'بال'];
       for (const p of prefixes) {
-        const full = p + stem;
-        termSet.add(full);
-        mapOrSet.add(`ar_word.ilike.%${full}%`);
-        mapOrSet.add(`ar_word.ilike.%${full}ً%`);
-        mapOrSet.add(`ar_word.ilike.%${full}ٌ%`);
-        mapOrSet.add(`ar_word.ilike.%${full}ٍ%`);
+        termSet.add(p + stem);
       }
     }
     
     const terms = Array.from(termSet).filter(t => t.length >= 2);
-    const mapOr = Array.from(mapOrSet).slice(0, 50).join(',');
+    const mapOr = Array.from(mapOrSet).join(',');
 
     try {
       // 1. Search word_mappings for all normalized Arabic word variants
