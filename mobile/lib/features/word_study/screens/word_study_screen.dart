@@ -389,10 +389,8 @@ class _WordRow extends StatelessWidget {
                                   fontFamily: 'monospace',
                                 ),
                               ),
-                              if (mapping.isVerified) ...[
-                                const SizedBox(width: 3),
-                                const Icon(Icons.verified, size: 13, color: AppColors.success),
-                              ],
+                              if (mapping.isVerified) const SizedBox(width: 3),
+                              if (mapping.isVerified) const Icon(Icons.verified, size: 13, color: AppColors.success),
                             ],
                           ),
                       ],

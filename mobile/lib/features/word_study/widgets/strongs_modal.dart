@@ -226,15 +226,15 @@ class StrongsModal extends StatelessWidget {
                             ),
                           ],
                           if (entry.arIsVerified || entry.hasArabicDef)
-                            const Align(
+                            Align(
                               alignment: Alignment.centerRight,
                               child: Padding(
-                                padding: EdgeInsets.only(top: 6),
+                                padding: const EdgeInsets.only(top: 6),
                                 child: Directionality(
                                   textDirection: TextDirection.rtl,
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
-                                    children: [
+                                    children: const [
                                       Icon(Icons.verified, color: AppColors.success, size: 14),
                                       SizedBox(width: 4),
                                       Text(
