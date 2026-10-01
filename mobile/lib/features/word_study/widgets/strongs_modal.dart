@@ -202,25 +202,63 @@ class StrongsModal extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: _Section(
-                      label: 'Arabic Definition · المعنى بالعربية',
+                      label: 'الشرح والتحليل اللغوي',
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          if (entry.definitionAr != null)
+                          if (entry.definitionAr != null) ...[
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.auto_stories, size: 15, color: AppColors.primary),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    entry.isHebrew ? 'معنى الجذر العبري والبعد اللاهوتي' : 'معنى الجذر اليوناني والبعد اللاهوتي',
+                                    style: const TextStyle(
+                                      color:      AppColors.primary,
+                                      fontSize:   13,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 6),
                             Directionality(
                               textDirection: TextDirection.rtl,
                               child: Text(
                                 entry.definitionAr!,
-                                style: AppTheme.arabicVerse(size: 24, color: AppColors.arabicText),
+                                style: AppTheme.arabicVerse(size: 22, color: AppColors.arabicText),
                                 textAlign: TextAlign.right,
                               ),
                             ),
+                          ],
                           if (entry.notesAr != null) ...[
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 14),
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.translate, size: 15, color: AppColors.textSecondary),
+                                  const SizedBox(width: 6),
+                                  const Text(
+                                    'ملاحظات الاستخدام والترجمات الكتابية',
+                                    style: TextStyle(
+                                      color:      AppColors.textSecondary,
+                                      fontSize:   13,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 6),
                             Directionality(
                               textDirection: TextDirection.rtl,
                               child: Text(
                                 entry.notesAr!,
-                                style: const TextStyle(color: AppColors.textSecondary, fontSize: 18, height: 1.6),
+                                style: const TextStyle(color: AppColors.textSecondary, fontSize: 17, height: 1.6),
                                 textAlign: TextAlign.right,
                               ),
                             ),
@@ -229,7 +267,7 @@ class StrongsModal extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerRight,
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 6),
+                                padding: const EdgeInsets.only(top: 10),
                                 child: Directionality(
                                   textDirection: TextDirection.rtl,
                                   child: Row(
