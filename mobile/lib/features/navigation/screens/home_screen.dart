@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: [
           // ── Gradient App Bar ──────────────────────────────────
           SliverAppBar(
-            expandedHeight: 210,
+            expandedHeight: 225,
             pinned: true,
             centerTitle: true,
             backgroundColor: AppColors.bgSurface,
@@ -81,29 +81,42 @@ class _HomeScreenState extends State<HomeScreen> {
                     SafeArea(
                       child: Center(
                         child: Padding(
-                          padding: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
+                          padding: const EdgeInsets.only(bottom: 20, left: 16, right: 16),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              // Arabic title
+                              // Arabic title & languages
                               Directionality(
                                 textDirection: TextDirection.rtl,
-                                child: Text(
-                                  'دليل الكتاب المقدس - عربي / عبري - يوناني',
-                                  textAlign: TextAlign.center,
-                                  style: AppTheme.arabicLabel(size: 28),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'دليل الكتاب المقدس',
+                                      textAlign: TextAlign.center,
+                                      style: AppTheme.arabicLabel(size: 30),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'عربي / عبري   •   عربي / يوناني',
+                                      textAlign: TextAlign.center,
+                                      style: AppTheme.arabicLabel(size: 16).copyWith(
+                                        color: AppColors.primary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 6),
                               Text(
-                                'Arabic - Hebrew/ Greek Bible study',
+                                'Arabic - Hebrew / Greek Bible Study',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color:    AppColors.textSecondary,
-                                  fontSize: 14,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.2,
+                                  letterSpacing: 1.1,
                                 ),
                               ),
                             ],
