@@ -59,7 +59,7 @@ function escapeSql(str) {
 }
 
 async function main() {
-  console.log("=== EXPORTING SUPABASE TO OFFLINE SQLITE DB ===");
+  console.log("=== EXPORTING FULL BIBLE DATABASE TO OFFLINE SQLITE DB ===");
 
   if (fs.existsSync(DB_PATH)) {
     fs.unlinkSync(DB_PATH);
@@ -134,48 +134,67 @@ async function main() {
     console.log(`Exported ${books.length} books.`);
   }
 
-  // 2. Export Verses
-  console.log("Exporting verses...");
-  let offset = 0;
-  const limit = 2000;
-  let verseCount = 0;
-  while (true) {
-    const verses = await fetchSupabase(`/rest/v1/verses?select=id,book_id,chapter_num,verse_num,text_avd_ar,text_original,text_original_lang&limit=${limit}&offset=${offset}&order=id.asc`);
-    if (!verses || verses.length === 0) break;
-    let sql = 'BEGIN TRANSACTION;\n';
-    for (const v of verses) {
-      sql += `INSERT OR REPLACE INTO verses (id, book_id, chapter_num, verse_num, text_avd_ar, text_original, text_original_lang) VALUES (${escapeSql(v.id)}, ${v.book_id}, ${v.chapter_num}, ${v.verse_num}, ${escapeSql(v.text_avd_ar)}, ${escapeSql(v.text_original)}, ${escapeSql(v.text_original_lang)});\n`;
+  // 2. Export Verses and Word Mappings Book by Book (Ensures 100% complete export)
+  console.log("Exporting verses and word_mappings book by book...");
+  let totalVerses = 0;
+  let totalMappings = 0;
+
+  for (const b of books) {
+    let offset = 0;
+    const limit = 2000;
+    let bookVerses = [];
+
+    while (true) {
+      const verses = await fetchSupabase(`/rest/v1/verses?book_id=eq.${b.id}&select=id,book_id,chapter_num,verse_num,text_avd_ar,text_original,text_original_lang&limit=${limit}&offset=${offset}&order=chapter_num.asc,verse_num.asc`);
+      if (!verses || verses.length === 0) break;
+      bookVerses.push(...verses);
+      if (verses.length < limit) break;
+      offset += limit;
     }
-    sql += 'COMMIT;\n';
-    await execSql(sql);
-    verseCount += verses.length;
-    console.log(`Verses offset ${offset}: Exported ${verseCount} total.`);
-    offset += limit;
+
+    if (bookVerses.length === 0) continue;
+
+    // Insert verses for this book
+    let verseSql = 'BEGIN TRANSACTION;\n';
+    for (const v of bookVerses) {
+      verseSql += `INSERT OR REPLACE INTO verses (id, book_id, chapter_num, verse_num, text_avd_ar, text_original, text_original_lang) VALUES (${escapeSql(v.id)}, ${v.book_id}, ${v.chapter_num}, ${v.verse_num}, ${escapeSql(v.text_avd_ar)}, ${escapeSql(v.text_original)}, ${escapeSql(v.text_original_lang)});\n`;
+    }
+    verseSql += 'COMMIT;\n';
+    await execSql(verseSql);
+    totalVerses += bookVerses.length;
+
+    // Fetch and insert word_mappings for verses of this book in chunks of 50 verse IDs
+    const verseIds = bookVerses.map(v => v.id);
+    const chunkSize = 50;
+    let bookMappingsCount = 0;
+
+    for (let i = 0; i < verseIds.length; i += chunkSize) {
+      const chunk = verseIds.slice(i, i + chunkSize);
+      const idsParam = chunk.map(id => `"${id}"`).join(',');
+      const mappings = await fetchSupabase(`/rest/v1/word_mappings?verse_id=in.(${idsParam})&select=id,verse_id,ar_word_position,orig_word_position,ar_word,orig_word,orig_word_lang,strongs_id,is_verified&limit=5000`);
+      
+      if (mappings && mappings.length > 0) {
+        let wmSql = 'BEGIN TRANSACTION;\n';
+        for (const m of mappings) {
+          const verified = m.is_verified ? 1 : 0;
+          wmSql += `INSERT OR REPLACE INTO word_mappings (id, verse_id, ar_word_position, orig_word_position, ar_word, orig_word, orig_word_lang, strongs_id, is_verified) VALUES (${escapeSql(m.id)}, ${escapeSql(m.verse_id)}, ${m.ar_word_position || 0}, ${m.orig_word_position || 0}, ${escapeSql(m.ar_word)}, ${escapeSql(m.orig_word)}, ${escapeSql(m.orig_word_lang)}, ${escapeSql(m.strongs_id)}, ${verified});\n`;
+        }
+        wmSql += 'COMMIT;\n';
+        await execSql(wmSql);
+        bookMappingsCount += mappings.length;
+      }
+    }
+
+    totalMappings += bookMappingsCount;
+    console.log(`[Book ${b.id}] ${b.name_ar} (${b.name_en}): Exported ${bookVerses.length} verses & ${bookMappingsCount} word mappings.`);
   }
 
-  // 3. Export Word Mappings
-  console.log("Exporting word_mappings...");
-  offset = 0;
-  const wmLimit = 5000;
-  let wmCount = 0;
-  while (true) {
-    const wms = await fetchSupabase(`/rest/v1/word_mappings?select=id,verse_id,ar_word_position,orig_word_position,ar_word,orig_word,orig_word_lang,strongs_id,is_verified&limit=${wmLimit}&offset=${offset}`);
-    if (!wms || wms.length === 0) break;
-    let sql = 'BEGIN TRANSACTION;\n';
-    for (const m of wms) {
-      const verified = m.is_verified ? 1 : 0;
-      sql += `INSERT OR REPLACE INTO word_mappings (id, verse_id, ar_word_position, orig_word_position, ar_word, orig_word, orig_word_lang, strongs_id, is_verified) VALUES (${escapeSql(m.id)}, ${escapeSql(m.verse_id)}, ${m.ar_word_position || 0}, ${m.orig_word_position || 0}, ${escapeSql(m.ar_word)}, ${escapeSql(m.orig_word)}, ${escapeSql(m.orig_word_lang)}, ${escapeSql(m.strongs_id)}, ${verified});\n`;
-    }
-    sql += 'COMMIT;\n';
-    await execSql(sql);
-    wmCount += wms.length;
-    console.log(`Word Mappings offset ${offset}: Exported ${wmCount} total.`);
-    offset += wmLimit;
-  }
+  console.log(`\nTotal Verses Exported: ${totalVerses}`);
+  console.log(`Total Word Mappings Exported: ${totalMappings}`);
 
-  // 4. Export Strongs Entries
+  // 3. Export Strongs Entries
   console.log("Exporting strongs_entries...");
-  offset = 0;
+  let offset = 0;
   let seCount = 0;
   while (true) {
     const entries = await fetchSupabase(`/rest/v1/strongs_entries?select=strongs_id,original_word,definition_en,kjv_usage&limit=2000&offset=${offset}`);
@@ -191,7 +210,7 @@ async function main() {
     offset += 2000;
   }
 
-  // 5. Export Strongs AR Translations
+  // 4. Export Strongs AR Translations
   console.log("Exporting strongs_ar_translations...");
   offset = 0;
   let arCount = 0;
@@ -210,7 +229,7 @@ async function main() {
     offset += 2000;
   }
 
-  // 6. Create Indexes
+  // 5. Create Indexes
   console.log("Creating database indexes...");
   const indexSql = `
     CREATE INDEX idx_verses_book_ch ON verses(book_id, chapter_num);
@@ -221,10 +240,18 @@ async function main() {
   await execSql(indexSql);
   console.log("Database indexes created successfully!");
 
-  const stats = fs.statSync(DB_PATH);
-  console.log(`\n=== OFFLINE DATABASE EXPORT COMPLETE ===`);
-  console.log(`File: ${DB_PATH}`);
-  console.log(`Size: ${(stats.size / 1024 / 1024).toFixed(2)} MB`);
+  const zlib = require('zlib');
+  const GZ_PATH = DB_PATH + '.gz';
+  console.log("Compressing database to gzip format for repository asset distribution...");
+  const rawDb = fs.readFileSync(DB_PATH);
+  const gzDb = zlib.gzipSync(rawDb);
+  fs.writeFileSync(GZ_PATH, gzDb);
+  fs.unlinkSync(DB_PATH);
+
+  const gzStats = fs.statSync(GZ_PATH);
+  console.log(`\n=== FULL OFFLINE DATABASE EXPORT COMPLETE ===`);
+  console.log(`Gzip Asset File: ${GZ_PATH}`);
+  console.log(`Compressed Size: ${(gzStats.size / 1024 / 1024).toFixed(2)} MB`);
 }
 
 main().catch(console.error);
