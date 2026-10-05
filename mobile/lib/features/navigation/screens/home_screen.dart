@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: [
           // ── Gradient App Bar ──────────────────────────────────
           SliverAppBar(
-            expandedHeight: 200,
+            expandedHeight: 210,
             pinned: true,
             centerTitle: true,
             backgroundColor: AppColors.bgSurface,
@@ -92,16 +92,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Text(
                                   'دليل الكتاب المقدس - عربي / عبري - يوناني',
                                   textAlign: TextAlign.center,
-                                  style: AppTheme.arabicLabel(size: 24),
+                                  style: AppTheme.arabicLabel(size: 28, weight: FontWeight.bold),
                                 ),
                               ),
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 8),
                               Text(
                                 'Arabic / Hebrew / Greek Bible Study',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color:    AppColors.textSecondary,
-                                  fontSize: 13,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
                                   letterSpacing: 1.2,
                                 ),
                               ),
