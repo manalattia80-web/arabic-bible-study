@@ -53,26 +53,31 @@ class LocalDatabaseService {
     List<dynamic> args = [];
 
     if (testamentId != null) {
-      final testamentName = testamentId == 1 ? 'OT' : 'NT';
-      sql += ' WHERE testament = ?';
-      args.add(testamentName);
+      if (testamentId == 1) {
+        sql += ' WHERE id <= 39 OR testament = ?';
+        args.add('OT');
+      } else {
+        sql += ' WHERE id >= 40 OR testament = ?';
+        args.add('NT');
+      }
     }
     sql += ' ORDER BY id ASC';
 
     final res = await db.rawQuery(sql, args);
     return res.map((row) {
-      final testament = row['testament'] == 'OT' ? 1 : 2;
+      final bookId = row['id'] as int;
+      final testament = (row['testament'] == 'OT' || bookId <= 39) ? 1 : 2;
       final nameAr = row['name_ar'] as String? ?? '';
       final nameEn = row['name_en'] as String? ?? '';
       return Book(
-        id: row['id'] as int,
+        id: bookId,
         testamentId: testament,
         nameAr: nameAr,
         nameArShort: nameAr,
         nameEn: nameEn,
         nameEnShort: nameEn,
         chapterCount: row['total_chapters'] as int? ?? 1,
-        sortOrder: row['order_num'] as int? ?? row['id'] as int,
+        sortOrder: row['order_num'] as int? ?? bookId,
       );
     }).toList();
   }

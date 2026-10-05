@@ -126,7 +126,8 @@ async function main() {
   if (books.length > 0) {
     let sql = 'BEGIN TRANSACTION;\n';
     for (const b of books) {
-      sql += `INSERT OR REPLACE INTO books (id, name_ar, name_en, testament, total_chapters, order_num) VALUES (${b.id}, ${escapeSql(b.name_ar)}, ${escapeSql(b.name_en)}, ${escapeSql(b.testament)}, ${b.total_chapters || 0}, ${b.order_num || b.id});\n`;
+      const testName = b.id <= 39 ? 'OT' : 'NT';
+      sql += `INSERT OR REPLACE INTO books (id, name_ar, name_en, testament, total_chapters, order_num) VALUES (${b.id}, ${escapeSql(b.name_ar)}, ${escapeSql(b.name_en)}, ${escapeSql(testName)}, ${b.total_chapters || 0}, ${b.order_num || b.id});\n`;
     }
     sql += 'COMMIT;\n';
     await execSql(sql);
