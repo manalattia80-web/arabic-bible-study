@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Text(
                                   'دليل الكتاب المقدس - عربي / عبري - يوناني',
                                   textAlign: TextAlign.center,
-                                  style: AppTheme.arabicLabel(size: 28, weight: FontWeight.bold),
+                                  style: AppTheme.arabicLabel(size: 28),
                                 ),
                               ),
                               const SizedBox(height: 8),
