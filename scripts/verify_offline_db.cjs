@@ -21,6 +21,11 @@ function runSql(sql) {
 
 async function main() {
   console.log("=== VERIFYING OFFLINE SQLITE DATABASE ===");
+  if (!fs.existsSync(DB_PATH) && fs.existsSync(DB_PATH + '.gz')) {
+    const zlib = require('zlib');
+    console.log("Decompressing bible_study.db.gz for verification...");
+    fs.writeFileSync(DB_PATH, zlib.gunzipSync(fs.readFileSync(DB_PATH + '.gz')));
+  }
   if (!fs.existsSync(DB_PATH)) {
     console.error("DB file does not exist!");
     return;

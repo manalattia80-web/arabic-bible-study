@@ -145,7 +145,7 @@ async function main() {
     let bookVerses = [];
 
     while (true) {
-      const verses = await fetchSupabase(`/rest/v1/verses?book_id=eq.${b.id}&select=id,book_id,chapter_num,verse_num,text_avd_ar,text_original,text_original_lang&limit=${limit}&offset=${offset}&order=chapter_num.asc,verse_num.asc`);
+      const verses = await fetchSupabase(`/rest/v1/verses?book_id=eq.${b.id}&select=id,book_id,chapter_num,verse_num,text_avd_ar,text_original,text_manuscript,text_original_lang&limit=${limit}&offset=${offset}&order=chapter_num.asc,verse_num.asc`);
       if (!verses || verses.length === 0) break;
       bookVerses.push(...verses);
       if (verses.length < limit) break;
@@ -154,10 +154,11 @@ async function main() {
 
     if (bookVerses.length === 0) continue;
 
-    // Insert verses for this book
+    // Insert verses for this book (using authentic full manuscript text where available)
     let verseSql = 'BEGIN TRANSACTION;\n';
     for (const v of bookVerses) {
-      verseSql += `INSERT OR REPLACE INTO verses (id, book_id, chapter_num, verse_num, text_avd_ar, text_original, text_original_lang) VALUES (${escapeSql(v.id)}, ${v.book_id}, ${v.chapter_num}, ${v.verse_num}, ${escapeSql(v.text_avd_ar)}, ${escapeSql(v.text_original)}, ${escapeSql(v.text_original_lang)});\n`;
+      const origText = (v.text_manuscript && v.text_manuscript.trim().length > 0) ? v.text_manuscript : v.text_original;
+      verseSql += `INSERT OR REPLACE INTO verses (id, book_id, chapter_num, verse_num, text_avd_ar, text_original, text_original_lang) VALUES (${escapeSql(v.id)}, ${v.book_id}, ${v.chapter_num}, ${v.verse_num}, ${escapeSql(v.text_avd_ar)}, ${escapeSql(origText)}, ${escapeSql(v.text_original_lang)});\n`;
     }
     verseSql += 'COMMIT;\n';
     await execSql(verseSql);
