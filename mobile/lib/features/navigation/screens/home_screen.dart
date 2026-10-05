@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'Arabic / Hebrew / Greek Bible Study',
+                                'Arabic - Hebrew/ Greek Bible study',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color:    AppColors.textSecondary,
