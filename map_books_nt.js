@@ -50,12 +50,20 @@ async function getChapterVerses(bookId, chapterNum) {
 }
 
 async function mapChapter(bookId, chapterNum, bookName) {
-  console.log(`\n--- Re-mapping ${bookName} Chapter ${chapterNum} ---`);
   const verses = await getChapterVerses(bookId, chapterNum);
   if (verses.length === 0) {
     console.log(`Chapter ${chapterNum} not found.`);
-    return;
+    return 'skipped';
   }
+
+  // Check if chapter is already mapped
+  const check = await fetchSupabase(`/rest/v1/word_mappings?verse_id=eq.${verses[0].id}&limit=1`);
+  if (check && check.length > 0) {
+    console.log(`[SKIP] ${bookName} Chapter ${chapterNum} is already mapped.`);
+    return 'skipped';
+  }
+
+  console.log(`\n--- Mapping ${bookName} Chapter ${chapterNum} ---`);
 
   const toInsert = [];
   const chunkSize = 5;
@@ -70,6 +78,7 @@ Rules:
 3. Ignore punctuation. Ensure the word order exactly matches the Arabic verse order.
 4. If a word has no exact Strong's mapping (e.g. prepositions), use "G0".
 5. Every single Arabic word in the text must have exactly one entry in the array.
+6. CRITICAL TERMINOLOGY RULE: Always use the biblical name "أورشليم" for Jerusalem. NEVER use "القدس".
 \n\nVerses:\n${promptVerses}`;
 
     let retries = 10;
@@ -213,141 +222,47 @@ Rules:
 }
 
 const books = [
-  
-  
-  
-  
-  {
-    "id": 44,
-    "name": "Acts",
-    "chs": 28
-  },
-  {
-    "id": 45,
-    "name": "Romans",
-    "chs": 16
-  },
-  {
-    "id": 46,
-    "name": "1 Corinthians",
-    "chs": 16
-  },
-  {
-    "id": 47,
-    "name": "2 Corinthians",
-    "chs": 13
-  },
-  {
-    "id": 48,
-    "name": "Galatians",
-    "chs": 6
-  },
-  {
-    "id": 49,
-    "name": "Ephesians",
-    "chs": 6
-  },
-  {
-    "id": 50,
-    "name": "Philippians",
-    "chs": 4
-  },
-  {
-    "id": 51,
-    "name": "Colossians",
-    "chs": 4
-  },
-  {
-    "id": 52,
-    "name": "1 Thessalonians",
-    "chs": 5
-  },
-  {
-    "id": 53,
-    "name": "2 Thessalonians",
-    "chs": 3
-  },
-  {
-    "id": 54,
-    "name": "1 Timothy",
-    "chs": 6
-  },
-  {
-    "id": 55,
-    "name": "2 Timothy",
-    "chs": 4
-  },
-  {
-    "id": 56,
-    "name": "Titus",
-    "chs": 3
-  },
-  {
-    "id": 57,
-    "name": "Philemon",
-    "chs": 1
-  },
-  {
-    "id": 58,
-    "name": "Hebrews",
-    "chs": 13
-  },
-  {
-    "id": 59,
-    "name": "James",
-    "chs": 5
-  },
-  {
-    "id": 60,
-    "name": "1 Peter",
-    "chs": 5
-  },
-  {
-    "id": 61,
-    "name": "2 Peter",
-    "chs": 3
-  },
-  {
-    "id": 62,
-    "name": "1 John",
-    "chs": 5
-  },
-  {
-    "id": 63,
-    "name": "2 John",
-    "chs": 1
-  },
-  {
-    "id": 64,
-    "name": "3 John",
-    "chs": 1
-  },
-  {
-    "id": 65,
-    "name": "Jude",
-    "chs": 1
-  },
-  {
-    "id": 66,
-    "name": "Revelation",
-    "chs": 22
-  }
+  { "id": 40, "name": "Matthew", "chs": 28 },
+  { "id": 41, "name": "Mark", "chs": 16 },
+  { "id": 42, "name": "Luke", "chs": 24 },
+  { "id": 43, "name": "John", "chs": 21 },
+  { "id": 44, "name": "Acts", "chs": 28 },
+  { "id": 45, "name": "Romans", "chs": 16 },
+  { "id": 46, "name": "1 Corinthians", "chs": 16 },
+  { "id": 47, "name": "2 Corinthians", "chs": 13 },
+  { "id": 48, "name": "Galatians", "chs": 6 },
+  { "id": 49, "name": "Ephesians", "chs": 6 },
+  { "id": 50, "name": "Philippians", "chs": 4 },
+  { "id": 51, "name": "Colossians", "chs": 4 },
+  { "id": 52, "name": "1 Thessalonians", "chs": 5 },
+  { "id": 53, "name": "2 Thessalonians", "chs": 3 },
+  { "id": 54, "name": "1 Timothy", "chs": 6 },
+  { "id": 55, "name": "2 Timothy", "chs": 4 },
+  { "id": 56, "name": "Titus", "chs": 3 },
+  { "id": 57, "name": "Philemon", "chs": 1 },
+  { "id": 58, "name": "Hebrews", "chs": 13 },
+  { "id": 59, "name": "James", "chs": 5 },
+  { "id": 60, "name": "1 Peter", "chs": 5 },
+  { "id": 61, "name": "2 Peter", "chs": 3 },
+  { "id": 62, "name": "1 John", "chs": 5 },
+  { "id": 63, "name": "2 John", "chs": 1 },
+  { "id": 64, "name": "3 John", "chs": 1 },
+  { "id": 65, "name": "Jude", "chs": 1 },
+  { "id": 66, "name": "Revelation", "chs": 22 }
 ];
 
 async function main() {
   await initDict();
   
   for (const b of books) {
-    if (b.id > 46) continue;
     console.log('=== ' + b.name.toUpperCase() + ' ===');
-      for (let ch = 1; ch <= b.chs; ch++) {
-        if (b.id === 46 && ch >= 13) continue;
-        const res = await mapChapter(b.id, ch, b.name);
-        if (res !== 'skipped') await new Promise(r => setTimeout(r, 10000));
-      }
+    for (let ch = 1; ch <= b.chs; ch++) {
+      const res = await mapChapter(b.id, ch, b.name);
+      if (res !== 'skipped') await new Promise(r => setTimeout(r, 5000));
+    }
   }
   
-  console.log("GOSPELS AND ACTS RE-MAPPING FINISHED!");
+  console.log("ALL NEW TESTAMENT BOOKS RE-MAPPING FINISHED!");
 }
 
 main().catch(console.error);

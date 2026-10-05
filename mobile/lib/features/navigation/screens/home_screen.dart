@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverAppBar(
             expandedHeight: 200,
             pinned: true,
+            centerTitle: true,
             backgroundColor: AppColors.bgSurface,
             actions: [
               IconButton(
@@ -47,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(width: 8),
             ],
             flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
               collapseMode: CollapseMode.parallax,
               background: Container(
                 decoration: const BoxDecoration(
@@ -77,29 +79,34 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     // Title
                     SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 24),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            // Arabic title
-                            Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Text(
-                                'دليل الكتاب المقدس - عربي / عبري - يوناني',
-                                style: AppTheme.arabicLabel(size: 24),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Arabic title
+                              Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: Text(
+                                  'دليل الكتاب المقدس - عربي / عبري - يوناني',
+                                  textAlign: TextAlign.center,
+                                  style: AppTheme.arabicLabel(size: 24),
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              'Bible Guide - Arabic / Hebrew / Greek',
-                              style: TextStyle(
-                                color:    AppColors.textSecondary,
-                                fontSize: 13,
-                                letterSpacing: 1.2,
+                              const SizedBox(height: 6),
+                              Text(
+                                'Arabic / Hebrew / Greek Bible Study',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color:    AppColors.textSecondary,
+                                  fontSize: 13,
+                                  letterSpacing: 1.2,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

@@ -10,6 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Offline Local Database
+  sqflite: ^2.3.2
+  path_provider: ^2.1.2
+  path: ^1.9.0
+
   # Networking
   http: ^1.2.1
 
@@ -44,6 +49,8 @@ flutter_launcher_icons:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/bible_study.db
 
   # Uncomment if adding local font files later (e.g. SBL Hebrew/Greek)
   # fonts:

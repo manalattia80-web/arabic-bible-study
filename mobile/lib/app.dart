@@ -70,7 +70,7 @@ class ArabicBibleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title:              'Arabic Bible Study',
+      title:              'دليل الكتاب المقدس',
       debugShowCheckedModeBanner: false,
       theme:              AppTheme.light,
       routerConfig:       _router,
