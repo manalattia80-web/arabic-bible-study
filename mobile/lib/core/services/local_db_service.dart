@@ -26,34 +26,14 @@ class LocalDatabaseService {
     final dbPath = join(dbDir, 'bible_study.db');
 
     final exists = await databaseExists(dbPath);
-    bool shouldCopy = !exists;
-
-    if (exists) {
+    if (!exists) {
       try {
-        final tempDb = await openDatabase(dbPath, readOnly: true);
-        final countRes = await tempDb.rawQuery('SELECT COUNT(*) as cnt FROM verses');
-        final cnt = countRes.first['cnt'] as int? ?? 0;
-        await tempDb.close();
-        if (cnt < 27000) {
-          shouldCopy = true;
-        }
-      } catch (_) {
-        shouldCopy = true;
-      }
-    }
-
-    if (shouldCopy) {
-      try {
-        if (await databaseExists(dbPath)) {
-          await deleteDatabase(dbPath);
-        }
         await Directory(dirname(dbPath)).create(recursive: true);
       } catch (_) {}
 
-      final compressedData = await rootBundle.load('assets/bible_study.db.gz');
-      final compressedBytes = compressedData.buffer.asUint8List(compressedData.offsetInBytes, compressedData.lengthInBytes);
-      final decompressedBytes = gzip.decode(compressedBytes);
-      await File(dbPath).writeAsBytes(decompressedBytes, flush: true);
+      final data = await rootBundle.load('assets/bible_study.db');
+      final bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      await File(dbPath).writeAsBytes(bytes, flush: true);
     }
 
     return await openDatabase(dbPath, readOnly: true);
