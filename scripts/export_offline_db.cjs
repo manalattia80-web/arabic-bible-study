@@ -234,8 +234,10 @@ async function main() {
   // 4.5 Ensure all strongs_ar_translations exist in strongs_entries
   console.log("Ensuring all strongs_ar_translations exist in strongs_entries...");
   await execSql(`
+    BEGIN TRANSACTION;
     INSERT OR IGNORE INTO strongs_entries (strongs_id, original_word, definition_en, kjv_usage)
     SELECT strongs_id, pronunciation_ar, '', '' FROM strongs_ar_translations;
+    COMMIT;
   `);
 
   // 5. Create Indexes & Vacuum database for maximum performance and smallest file size
