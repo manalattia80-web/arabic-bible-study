@@ -13,7 +13,7 @@ import '../../models/word_occurrence.dart';
 class LocalDatabaseService {
   LocalDatabaseService._();
   static final LocalDatabaseService instance = LocalDatabaseService._();
-  static const int currentDbVersion = 1012;
+  static const int currentDbVersion = 1013;
 
   Database? _db;
 
@@ -205,16 +205,27 @@ class LocalDatabaseService {
     final r = resFallback.first;
     final id = r['strongs_id'] as String;
     final isHebrew = id.startsWith('H');
+    final origWord = r['original_word'] as String? ?? '';
+    final defEn = r['definition_en'] as String? ?? '';
+    final kjv = r['kjv_usage'] as String? ?? '';
+
+    String? fallbackAr;
+    if (defEn.isNotEmpty) {
+      fallbackAr = '(1) المعنى المعجمي اللغوي: $defEn';
+      if (kjv.isNotEmpty) {
+        fallbackAr += '\n(2) الاستخدام والاستشهادات: $kjv';
+      }
+    }
 
     return StrongsEntry(
       strongsId: id,
       language: isHebrew ? 'hebrew' : 'greek',
-      originalWord: r['original_word'] as String? ?? '',
+      originalWord: origWord,
       transliteration: id,
-      definitionEn: r['definition_en'] as String? ?? '',
-      kjvUsage: r['kjv_usage'] as String?,
-      pronunciationAr: null,
-      definitionAr: null,
+      definitionEn: defEn,
+      kjvUsage: kjv.isNotEmpty ? kjv : null,
+      pronunciationAr: origWord,
+      definitionAr: fallbackAr,
       notesAr: null,
       arIsVerified: false,
     );
