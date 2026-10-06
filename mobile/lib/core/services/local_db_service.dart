@@ -13,7 +13,7 @@ import '../../models/word_occurrence.dart';
 class LocalDatabaseService {
   LocalDatabaseService._();
   static final LocalDatabaseService instance = LocalDatabaseService._();
-  static const int currentDbVersion = 1010;
+  static const int currentDbVersion = 1011;
 
   Database? _db;
 
