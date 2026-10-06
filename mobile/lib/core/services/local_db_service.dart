@@ -102,7 +102,7 @@ class LocalDatabaseService {
       final bookIdVal = r['book_id'] as int;
       final isOt = bookIdVal <= 39;
       return Verse(
-        id: r['id'] as String,
+        id: r['id']?.toString() ?? '',
         bookId: bookIdVal,
         chapterNum: r['chapter_num'] as int,
         verseNum: r['verse_num'] as int,
@@ -123,8 +123,8 @@ class LocalDatabaseService {
 
     return res.map((r) {
       return WordMapping(
-        id: r['id'] as String,
-        verseId: r['verse_id'] as String,
+        id: r['id']?.toString() ?? '',
+        verseId: r['verse_id']?.toString() ?? '',
         arWordPosition: r['ar_word_position'] as int? ?? 0,
         origWordPosition: r['orig_word_position'] as int? ?? 0,
         arWord: r['ar_word'] as String? ?? '',
@@ -188,7 +188,7 @@ class LocalDatabaseService {
       return WordOccurrence(
         arWord: r['ar_word'] as String? ?? '',
         arWordPositions: [pos],
-        verseId: r['verse_id'] as String,
+        verseId: r['verse_id']?.toString() ?? '',
         bookId: r['book_id'] as int,
         bookNameAr: r['book_name_ar'] as String? ?? '',
         chapterNum: r['chapter_num'] as int,
