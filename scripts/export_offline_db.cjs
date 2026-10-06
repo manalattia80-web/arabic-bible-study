@@ -59,14 +59,14 @@ function escapeSql(str) {
 }
 
 async function main() {
-  console.log("=== EXPORTING FULL BIBLE DATABASE TO OFFLINE SQLITE DB ===");
+  console.log("=== EXPORTING CLEAN OFFLINE SQLITE DB FOR BIBLE STUDY APP ===");
 
   if (fs.existsSync(DB_PATH)) {
     fs.unlinkSync(DB_PATH);
     console.log("Removed existing DB file.");
   }
 
-  // Schema creation
+  // Schema creation: Integer autoincrement primary keys for word_mappings to optimize file size <75MB
   const schemaSql = `
     PRAGMA synchronous = OFF;
     PRAGMA journal_mode = MEMORY;
@@ -91,7 +91,7 @@ async function main() {
     );
 
     CREATE TABLE word_mappings (
-      id TEXT PRIMARY KEY,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       verse_id TEXT,
       ar_word_position INTEGER,
       orig_word_position INTEGER,
@@ -134,8 +134,8 @@ async function main() {
     console.log(`Exported ${books.length} books.`);
   }
 
-  // 2. Export Verses and Word Mappings Book by Book (Ensures 100% complete export)
-  console.log("Exporting verses and word_mappings book by book...");
+  // 2. Export Verses and Scholar-Verified Word Mappings Book by Book
+  console.log("Exporting verses and scholar-verified word_mappings book by book...");
   let totalVerses = 0;
   let totalMappings = 0;
 
@@ -154,7 +154,7 @@ async function main() {
 
     if (bookVerses.length === 0) continue;
 
-    // Insert verses for this book (using authentic full manuscript text where available)
+    // Insert verses for this book (preferring authentic full manuscript text e.g. Leningrad Codex / SBLGNT)
     let verseSql = 'BEGIN TRANSACTION;\n';
     for (const v of bookVerses) {
       const origText = (v.text_manuscript && v.text_manuscript.trim().length > 0) ? v.text_manuscript : v.text_original;
@@ -164,7 +164,7 @@ async function main() {
     await execSql(verseSql);
     totalVerses += bookVerses.length;
 
-    // Fetch and insert word_mappings for verses of this book in chunks of 50 verse IDs
+    // Fetch and insert ONLY scholar-verified word_mappings (is_verified = true)
     const verseIds = bookVerses.map(v => v.id);
     const chunkSize = 50;
     let bookMappingsCount = 0;
@@ -172,13 +172,12 @@ async function main() {
     for (let i = 0; i < verseIds.length; i += chunkSize) {
       const chunk = verseIds.slice(i, i + chunkSize);
       const idsParam = chunk.map(id => `"${id}"`).join(',');
-      const mappings = await fetchSupabase(`/rest/v1/word_mappings?verse_id=in.(${idsParam})&select=id,verse_id,ar_word_position,orig_word_position,ar_word,orig_word,orig_word_lang,strongs_id,is_verified&limit=5000`);
+      const mappings = await fetchSupabase(`/rest/v1/word_mappings?verse_id=in.(${idsParam})&is_verified=eq.true&select=verse_id,ar_word_position,orig_word_position,ar_word,orig_word,orig_word_lang,strongs_id,is_verified&limit=5000`);
       
       if (mappings && mappings.length > 0) {
         let wmSql = 'BEGIN TRANSACTION;\n';
         for (const m of mappings) {
-          const verified = m.is_verified ? 1 : 0;
-          wmSql += `INSERT OR REPLACE INTO word_mappings (id, verse_id, ar_word_position, orig_word_position, ar_word, orig_word, orig_word_lang, strongs_id, is_verified) VALUES (${escapeSql(m.id)}, ${escapeSql(m.verse_id)}, ${m.ar_word_position || 0}, ${m.orig_word_position || 0}, ${escapeSql(m.ar_word)}, ${escapeSql(m.orig_word)}, ${escapeSql(m.orig_word_lang)}, ${escapeSql(m.strongs_id)}, ${verified});\n`;
+          wmSql += `INSERT INTO word_mappings (verse_id, ar_word_position, orig_word_position, ar_word, orig_word, orig_word_lang, strongs_id, is_verified) VALUES (${escapeSql(m.verse_id)}, ${m.ar_word_position || 0}, ${m.orig_word_position || 0}, ${escapeSql(m.ar_word)}, ${escapeSql(m.orig_word)}, ${escapeSql(m.orig_word_lang)}, ${escapeSql(m.strongs_id)}, 1);\n`;
         }
         wmSql += 'COMMIT;\n';
         await execSql(wmSql);
@@ -187,11 +186,11 @@ async function main() {
     }
 
     totalMappings += bookMappingsCount;
-    console.log(`[Book ${b.id}] ${b.name_ar} (${b.name_en}): Exported ${bookVerses.length} verses & ${bookMappingsCount} word mappings.`);
+    console.log(`[Book ${b.id}] ${b.name_ar} (${b.name_en}): Exported ${bookVerses.length} verses & ${bookMappingsCount} verified word mappings.`);
   }
 
   console.log(`\nTotal Verses Exported: ${totalVerses}`);
-  console.log(`Total Word Mappings Exported: ${totalMappings}`);
+  console.log(`Total Verified Word Mappings Exported: ${totalMappings}`);
 
   // 3. Export Strongs Entries
   console.log("Exporting strongs_entries...");
@@ -230,29 +229,22 @@ async function main() {
     offset += 2000;
   }
 
-  // 5. Create Indexes
+  // 5. Create Indexes & Vacuum database for maximum performance and smallest file size
   console.log("Creating database indexes...");
   const indexSql = `
     CREATE INDEX idx_verses_book_ch ON verses(book_id, chapter_num);
     CREATE INDEX idx_wm_verse_id ON word_mappings(verse_id);
     CREATE INDEX idx_wm_strongs_id ON word_mappings(strongs_id);
     PRAGMA optimize;
+    VACUUM;
   `;
   await execSql(indexSql);
-  console.log("Database indexes created successfully!");
+  console.log("Database indexes created and database vacuumed successfully!");
 
-  const zlib = require('zlib');
-  const GZ_PATH = DB_PATH + '.gz';
-  console.log("Compressing database to gzip format for repository asset distribution...");
-  const rawDb = fs.readFileSync(DB_PATH);
-  const gzDb = zlib.gzipSync(rawDb);
-  fs.writeFileSync(GZ_PATH, gzDb);
-  fs.unlinkSync(DB_PATH);
-
-  const gzStats = fs.statSync(GZ_PATH);
+  const stats = fs.statSync(DB_PATH);
   console.log(`\n=== FULL OFFLINE DATABASE EXPORT COMPLETE ===`);
-  console.log(`Gzip Asset File: ${GZ_PATH}`);
-  console.log(`Compressed Size: ${(gzStats.size / 1024 / 1024).toFixed(2)} MB`);
+  console.log(`Uncompressed DB File: ${DB_PATH}`);
+  console.log(`Size: ${(stats.size / 1024 / 1024).toFixed(2)} MB`);
 }
 
 main().catch(console.error);
