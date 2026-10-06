@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../models/book.dart';
 import '../../models/testament.dart';
@@ -12,6 +13,7 @@ import '../../models/word_occurrence.dart';
 class LocalDatabaseService {
   LocalDatabaseService._();
   static final LocalDatabaseService instance = LocalDatabaseService._();
+  static const int currentDbVersion = 1010;
 
   Database? _db;
 
@@ -24,16 +26,39 @@ class LocalDatabaseService {
   Future<Database> _initDatabase() async {
     final dbDir = await getDatabasesPath();
     final dbPath = join(dbDir, 'bible_study.db');
+    final prefs = await SharedPreferences.getInstance();
+    final savedVersion = prefs.getInt('db_asset_version') ?? 0;
 
+    bool needsCopy = false;
     final exists = await databaseExists(dbPath);
-    if (!exists) {
+
+    if (!exists || savedVersion < currentDbVersion) {
+      needsCopy = true;
+    } else {
+      try {
+        final testDb = await openDatabase(dbPath, readOnly: true);
+        final res = await testDb.rawQuery('SELECT total_chapters FROM books WHERE id = 1;');
+        if (res.isEmpty || (res.first['total_chapters'] as int? ?? 0) == 0) {
+          needsCopy = true;
+        }
+        await testDb.close();
+      } catch (_) {
+        needsCopy = true;
+      }
+    }
+
+    if (needsCopy) {
       try {
         await Directory(dirname(dbPath)).create(recursive: true);
+        if (exists) {
+          await deleteDatabase(dbPath);
+        }
       } catch (_) {}
 
       final data = await rootBundle.load('assets/bible_study.db');
       final bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
       await File(dbPath).writeAsBytes(bytes, flush: true);
+      await prefs.setInt('db_asset_version', currentDbVersion);
     }
 
     return await openDatabase(dbPath, readOnly: true);
@@ -140,18 +165,44 @@ class LocalDatabaseService {
     final db = await database;
     final res = await db.rawQuery(
       '''
-      SELECT e.strongs_id, e.original_word, e.definition_en, e.kjv_usage,
+      SELECT t.strongs_id, 
+             COALESCE(e.original_word, t.pronunciation_ar, '') as original_word, 
+             COALESCE(e.definition_en, '') as definition_en, 
+             COALESCE(e.kjv_usage, '') as kjv_usage,
              t.pronunciation_ar, t.definition_ar, t.notes_ar, t.is_verified
-      FROM strongs_entries e
-      LEFT JOIN strongs_ar_translations t ON e.strongs_id = t.strongs_id
-      WHERE e.strongs_id = ?
+      FROM strongs_ar_translations t
+      LEFT JOIN strongs_entries e ON t.strongs_id = e.strongs_id
+      WHERE t.strongs_id = ?
       ''',
       [strongsId],
     );
 
-    if (res.isEmpty) return null;
-    final r = res.first;
+    if (res.isNotEmpty) {
+      final r = res.first;
+      final id = r['strongs_id'] as String;
+      final isHebrew = id.startsWith('H');
 
+      return StrongsEntry(
+        strongsId: id,
+        language: isHebrew ? 'hebrew' : 'greek',
+        originalWord: r['original_word'] as String? ?? '',
+        transliteration: id,
+        definitionEn: r['definition_en'] as String? ?? '',
+        kjvUsage: r['kjv_usage'] as String?,
+        pronunciationAr: r['pronunciation_ar'] as String?,
+        definitionAr: r['definition_ar'] as String?,
+        notesAr: r['notes_ar'] as String?,
+        arIsVerified: (r['is_verified'] as int? ?? 0) == 1,
+      );
+    }
+
+    final resFallback = await db.rawQuery(
+      'SELECT * FROM strongs_entries WHERE strongs_id = ?',
+      [strongsId],
+    );
+
+    if (resFallback.isEmpty) return null;
+    final r = resFallback.first;
     final id = r['strongs_id'] as String;
     final isHebrew = id.startsWith('H');
 
@@ -162,10 +213,10 @@ class LocalDatabaseService {
       transliteration: id,
       definitionEn: r['definition_en'] as String? ?? '',
       kjvUsage: r['kjv_usage'] as String?,
-      pronunciationAr: r['pronunciation_ar'] as String?,
-      definitionAr: r['definition_ar'] as String?,
-      notesAr: r['notes_ar'] as String?,
-      arIsVerified: (r['is_verified'] as int? ?? 0) == 1,
+      pronunciationAr: null,
+      definitionAr: null,
+      notesAr: null,
+      arIsVerified: false,
     );
   }
 
