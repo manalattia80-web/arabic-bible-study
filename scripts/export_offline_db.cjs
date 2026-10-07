@@ -143,7 +143,7 @@ async function main() {
 
   for (const b of books) {
     let offset = 0;
-    const limit = 2000;
+    const limit = 1000;
     let bookVerses = [];
 
     while (true) {
@@ -168,7 +168,7 @@ async function main() {
 
     // Fetch and insert ONLY scholar-verified word_mappings (is_verified = true)
     const verseIds = bookVerses.map(v => v.id);
-    const chunkSize = 50;
+    const chunkSize = 25;
     let bookMappingsCount = 0;
 
     for (let i = 0; i < verseIds.length; i += chunkSize) {
