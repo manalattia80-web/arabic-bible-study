@@ -13,7 +13,7 @@ import '../../models/word_occurrence.dart';
 class LocalDatabaseService {
   LocalDatabaseService._();
   static final LocalDatabaseService instance = LocalDatabaseService._();
-  static const int currentDbVersion = 1013;
+  static const int currentDbVersion = 1014;
 
   Database? _db;
 
@@ -163,6 +163,8 @@ class LocalDatabaseService {
 
   Future<StrongsEntry?> getStrongsEntry(String strongsId) async {
     final db = await database;
+    final cleanId = strongsId.trim();
+
     final res = await db.rawQuery(
       '''
       SELECT t.strongs_id, 
@@ -174,7 +176,7 @@ class LocalDatabaseService {
       LEFT JOIN strongs_entries e ON t.strongs_id = e.strongs_id
       WHERE t.strongs_id = ?
       ''',
-      [strongsId],
+      [cleanId],
     );
 
     if (res.isNotEmpty) {
@@ -198,7 +200,7 @@ class LocalDatabaseService {
 
     final resFallback = await db.rawQuery(
       'SELECT * FROM strongs_entries WHERE strongs_id = ?',
-      [strongsId],
+      [cleanId],
     );
 
     if (resFallback.isEmpty) return null;
@@ -209,14 +211,6 @@ class LocalDatabaseService {
     final defEn = r['definition_en'] as String? ?? '';
     final kjv = r['kjv_usage'] as String? ?? '';
 
-    String? fallbackAr;
-    if (defEn.isNotEmpty) {
-      fallbackAr = '(1) المعنى المعجمي اللغوي: $defEn';
-      if (kjv.isNotEmpty) {
-        fallbackAr += '\n(2) الاستخدام والاستشهادات: $kjv';
-      }
-    }
-
     return StrongsEntry(
       strongsId: id,
       language: isHebrew ? 'hebrew' : 'greek',
@@ -225,7 +219,7 @@ class LocalDatabaseService {
       definitionEn: defEn,
       kjvUsage: kjv.isNotEmpty ? kjv : null,
       pronunciationAr: origWord,
-      definitionAr: fallbackAr,
+      definitionAr: null,
       notesAr: null,
       arIsVerified: false,
     );

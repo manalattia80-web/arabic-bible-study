@@ -199,7 +199,7 @@ async function main() {
   let offset = 0;
   let seCount = 0;
   while (true) {
-    const entries = await fetchSupabase(`/rest/v1/strongs_entries?select=strongs_id,original_word,definition_en,kjv_usage&limit=2000&offset=${offset}`);
+    const entries = await fetchSupabase(`/rest/v1/strongs_entries?select=strongs_id,original_word,definition_en,kjv_usage&order=strongs_id.asc&limit=1000&offset=${offset}`);
     if (!entries || entries.length === 0) break;
     let sql = 'BEGIN TRANSACTION;\n';
     for (const e of entries) {
@@ -209,7 +209,8 @@ async function main() {
     await execSql(sql);
     seCount += entries.length;
     console.log(`Strongs Entries offset ${offset}: Exported ${seCount} total.`);
-    offset += 2000;
+    if (entries.length < 1000) break;
+    offset += 1000;
   }
 
   // 4. Export Strongs AR Translations
@@ -217,7 +218,7 @@ async function main() {
   offset = 0;
   let arCount = 0;
   while (true) {
-    const trans = await fetchSupabase(`/rest/v1/strongs_ar_translations?select=strongs_id,pronunciation_ar,definition_ar,notes_ar,is_verified&limit=2000&offset=${offset}`);
+    const trans = await fetchSupabase(`/rest/v1/strongs_ar_translations?select=strongs_id,pronunciation_ar,definition_ar,notes_ar,is_verified&order=strongs_id.asc&limit=1000&offset=${offset}`);
     if (!trans || trans.length === 0) break;
     let sql = 'BEGIN TRANSACTION;\n';
     for (const t of trans) {
@@ -228,7 +229,8 @@ async function main() {
     await execSql(sql);
     arCount += trans.length;
     console.log(`AR Translations offset ${offset}: Exported ${arCount} total.`);
-    offset += 2000;
+    if (trans.length < 1000) break;
+    offset += 1000;
   }
 
   // 4.5 Ensure all strongs_ar_translations exist in strongs_entries
