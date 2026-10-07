@@ -44,6 +44,10 @@ async function askGemini(entries) {
 
 All theological, spiritual, and doctrinal commentary MUST strictly adhere to Conservative Dispensational Theology (الفكر التفسيري واللاهوتي التدبيري المحافظ - Conservative Dispensational Hermeneutics), maintaining a consistent literal-grammatical-historical interpretation of Scripture, explicit distinctions between Israel and the Church, unconditional biblical covenants, and conservative evangelical doctrine.
 
+CRITICAL TERMINOLOGY RULE: Always use the biblical name "أورشليم" (Urshalim) for Jerusalem. NEVER use "القدس". All references to Jerusalem in Arabic MUST strictly be "أورشليم".
+
+CRITICAL LANGUAGE & ELOQUENCE RULE: The Arabic text MUST be written in natural, fluent, elegant, and crystal-clear classical Arabic prose (لغة عربية فصيحة، سلسة، عذبة، ومفهومة جداً بدون تعقيد). DO NOT write literal or awkward translations of English phrases. Express root meanings, biblical context, and theological dimensions in clean, smooth, and natural Arabic sentences that are crisp, articulate, and effortless to read.
+
 For each entry, you MUST provide a comprehensive explanation in Arabic covering:
 1. المعنى المعجمي الأصلي للجذر (The root/lemma original dictionary meaning).
 2. المعنى حسب التصريف والسياق الكتابي (The specific contextual and inflected meanings as the word is translated and used across Biblical passages, e.g. how it functions in different inflections/grammatical forms).

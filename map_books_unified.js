@@ -55,13 +55,6 @@ async function mapChapter(bookId, chapterNum, bookName) {
     return 'skipped';
   }
 
-  // Check if chapter is already mapped
-  const check = await fetchSupabase(`/rest/v1/word_mappings?verse_id=eq.${verses[0].id}&limit=1`);
-  if (check && check.length > 0) {
-    console.log(`[SKIP] ${bookName} Chapter ${chapterNum} is already mapped.`);
-    return 'skipped';
-  }
-
   console.log(`\n--- Starting ${bookName} Chapter ${chapterNum} ---`);
 
   const toInsert = [];
