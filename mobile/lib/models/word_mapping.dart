@@ -35,8 +35,8 @@ class WordMapping {
   });
 
   factory WordMapping.fromJson(Map<String, dynamic> j) => WordMapping(
-    id:                 j['id']?.toString() ?? '',
-    verseId:            j['verse_id']?.toString() ?? '',
+    id:                 j['id'] as String? ?? '',
+    verseId:            j['verse_id'] as String? ?? '',
     arWordPosition:     j['ar_word_position'] as int? ?? 0,
     origWordPosition:   j['orig_word_position'] as int? ?? 0,
     arWord:             j['ar_word'] as String? ?? '-',

@@ -35,9 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: [
           // ── Gradient App Bar ──────────────────────────────────
           SliverAppBar(
-            expandedHeight: 225,
+            expandedHeight: 220,
             pinned: true,
-            centerTitle: true,
             backgroundColor: AppColors.bgSurface,
             actions: [
               IconButton(
@@ -48,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(width: 8),
             ],
             flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
               collapseMode: CollapseMode.parallax,
               background: Container(
                 decoration: const BoxDecoration(
@@ -77,50 +75,52 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    // Title
+                    // Title in 3 centered lines
                     SafeArea(
                       child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 20, left: 16, right: 16),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              // Arabic title & languages
-                              Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'دليل الكتاب المقدس',
-                                      textAlign: TextAlign.center,
-                                      style: AppTheme.arabicLabel(size: 30),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'عربي / عبري   •   عربي / يوناني',
-                                      textAlign: TextAlign.center,
-                                      style: AppTheme.arabicLabel(size: 16).copyWith(
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                'Arabic - Hebrew / Greek Bible Study',
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // السطر الأول: دليل الكتاب المقدس (بخط أسود كبير)
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Text(
+                                'دليل الكتاب المقدس',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color:    AppColors.textSecondary,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.1,
+                                style: AppTheme.arabicLabel(size: 26).copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(height: 6),
+                            // السطر الثاني: عبري / عربي (بخط ذهبي أصغر)
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Text(
+                                'عبري / عربي',
+                                textAlign: TextAlign.center,
+                                style: AppTheme.arabicLabel(size: 16).copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            // السطر الثالث: يوناني / عربي (مثل السطر السابق)
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Text(
+                                'يوناني / عربي',
+                                textAlign: TextAlign.center,
+                                style: AppTheme.arabicLabel(size: 16).copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

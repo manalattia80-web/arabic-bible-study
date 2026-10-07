@@ -57,54 +57,60 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Header
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 16),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                          color:        AppColors.bgSurface,
-                          borderRadius: BorderRadius.circular(10),
-                          border:       Border.all(color: AppColors.border),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.menu_book_rounded, color: AppColors.primary, size: 18),
-                            const SizedBox(width: 8),
-                            Text(
-                              '${nav.chapters.length} chapter${nav.chapters.length != 1 ? 's' : ''}',
-                              style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
-                            ),
-                            const Spacer(),
-                            Text(
-                              'Tap a chapter to read',
-                              style: const TextStyle(color: AppColors.textMuted, fontSize: 11),
-                            ),
-                          ],
+                      Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color:        AppColors.bgSurface,
+                            borderRadius: BorderRadius.circular(10),
+                            border:       Border.all(color: AppColors.border),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.menu_book_rounded, color: AppColors.primary, size: 18),
+                              const SizedBox(width: 8),
+                              Text(
+                                '${nav.chapters.length} إصحاحاً',
+                                style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                              ),
+                              const Spacer(),
+                              const Text(
+                                'اضغط على الإصحاح للقراءة',
+                                style: TextStyle(color: AppColors.textMuted, fontSize: 11),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
 
-                      // Chapter grid
+                      // Chapter grid (ترتيب من اليمين للشمال)
                       Expanded(
-                        child: GridView.builder(
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:   5,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing:  10,
-                            childAspectRatio: 1,
+                        child: Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: GridView.builder(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount:   5,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing:  10,
+                              childAspectRatio: 1,
+                            ),
+                            itemCount: nav.chapters.length,
+                            itemBuilder: (ctx, i) {
+                              final chapter = nav.chapters[i];
+                              return _ChapterButton(
+                                number: chapter,
+                                onTap: () => context.pushNamed(
+                                  'reader',
+                                  pathParameters: {
+                                    'bookId':     '${widget.bookId}',
+                                    'chapterNum': '$chapter',
+                                  },
+                                ),
+                              );
+                            },
                           ),
-                          itemCount: nav.chapters.length,
-                          itemBuilder: (ctx, i) {
-                            final chapter = nav.chapters[i];
-                            return _ChapterButton(
-                              number: chapter,
-                              onTap: () => context.pushNamed(
-                                'reader',
-                                pathParameters: {
-                                  'bookId':     '${widget.bookId}',
-                                  'chapterNum': '$chapter',
-                                },
-                              ),
-                            );
-                          },
                         ),
                       ),
                     ],
