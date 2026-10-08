@@ -157,9 +157,9 @@ class _BookGrid extends StatelessWidget {
         physics:      const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount:   3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing:  10,
-          childAspectRatio: 0.85,
+          crossAxisSpacing: 8,
+          mainAxisSpacing:  8,
+          childAspectRatio: 1.35,
         ),
         itemCount: books.length,
         itemBuilder: (ctx, i) => _BookCard(book: books[i]),
@@ -180,21 +180,21 @@ class _BookCard extends StatelessWidget {
         decoration: BoxDecoration(
           color:        AppColors.bgCard,
           border:       Border.all(color: AppColors.border),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Material(
           color: Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(10),
           child: InkWell(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(10),
             splashColor:  AppColors.primaryGlow,
             onTap: () => context.pushNamed('chapters', pathParameters: {'bookId': '${book.id}'}),
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Full Arabic name
+                  // Full Arabic name (font size 15 preserved)
                   Text(
                     book.nameAr,
                     style: AppTheme.arabicLabel(size: 15),
@@ -202,29 +202,36 @@ class _BookCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 6),
-                  Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: Text(
-                      book.nameEnShort,
-                      style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                      color:        AppColors.bgSurface,
-                      borderRadius: BorderRadius.circular(100),
-                      border:       Border.all(color: AppColors.border),
-                    ),
-                    child: Text(
-                      '${book.chapterCount} أصحاح',
-                      style: TextStyle(color: AppColors.textMuted, fontSize: 10),
-                      textAlign: TextAlign.center,
+                  const SizedBox(height: 4),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Text(
+                            book.nameEnShort,
+                            style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                          decoration: BoxDecoration(
+                            color:        AppColors.bgSurface,
+                            borderRadius: BorderRadius.circular(100),
+                            border:       Border.all(color: AppColors.border),
+                          ),
+                          child: Text(
+                            '${book.chapterCount} أصحاح',
+                            style: TextStyle(color: AppColors.textMuted, fontSize: 10),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
