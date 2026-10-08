@@ -43,12 +43,12 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
                   )
                 : const Text('Chapters'),
             if (book != null)
-              Text(book.nameEn, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+              Text(book.nameEn, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
           ],
         ),
       ),
       body: nav.loading
-          ? const Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2))
+          ? Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2))
           : nav.error.isNotEmpty
               ? Center(child: Text(nav.error, style: const TextStyle(color: AppColors.danger)))
               : Padding(
@@ -69,11 +69,11 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.menu_book_rounded, color: AppColors.primary, size: 18),
+                              Icon(Icons.menu_book_rounded, color: AppColors.primary, size: 18),
                               const SizedBox(width: 8),
                               Text(
                                 '${nav.chapters.length} إصحاحاً',
-                                style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                                style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
                               ),
                               const Spacer(),
                               const Text(

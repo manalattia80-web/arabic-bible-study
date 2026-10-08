@@ -61,7 +61,7 @@ class _BookListScreenState extends State<BookListScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(testament?.nameAr ?? 'Books'),
-            Text(testament?.nameEn ?? '', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+            Text(testament?.nameEn ?? '', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
           ],
         ),
       ),
@@ -74,12 +74,12 @@ class _BookListScreenState extends State<BookListScreen> {
               textDirection: TextDirection.rtl,
               child: TextField(
                 onChanged: (v) => setState(() => _filter = v),
-                style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
+                style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
                 decoration: InputDecoration(
                   hintText: 'ابحث عن سفر...',
-                  prefixIcon: const Icon(Icons.search, color: AppColors.textMuted, size: 20),
+                  prefixIcon: Icon(Icons.search, color: AppColors.textMuted, size: 20),
                   suffixIcon: _filter.isNotEmpty
-                      ? IconButton(icon: const Icon(Icons.clear, size: 18, color: AppColors.textMuted), onPressed: () => setState(() => _filter = ''))
+                      ? IconButton(icon: Icon(Icons.clear, size: 18, color: AppColors.textMuted), onPressed: () => setState(() => _filter = ''))
                       : null,
                 ),
               ),
@@ -88,7 +88,7 @@ class _BookListScreenState extends State<BookListScreen> {
 
           Expanded(
             child: nav.loading
-                ? const Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2))
+                ? Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2))
                 : nav.error.isNotEmpty
                     ? Center(child: Text(nav.error, style: const TextStyle(color: AppColors.danger)))
                     : _filter.isNotEmpty
@@ -207,7 +207,7 @@ class _BookCard extends StatelessWidget {
                     textDirection: TextDirection.ltr,
                     child: Text(
                       book.nameEnShort,
-                      style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+                      style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -223,7 +223,7 @@ class _BookCard extends StatelessWidget {
                     ),
                     child: Text(
                       '${book.chapterCount} أصحاح',
-                      style: const TextStyle(color: AppColors.textMuted, fontSize: 10),
+                      style: TextStyle(color: AppColors.textMuted, fontSize: 10),
                       textAlign: TextAlign.center,
                     ),
                   ),

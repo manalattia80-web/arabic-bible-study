@@ -60,7 +60,7 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
                 ],
               ),
             ),
-            const Text('Tap any row for Strong\'s definition', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
+            Text('Tap any row for Strong\'s definition', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
           ],
         ),
       ),
@@ -81,7 +81,7 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
 
           // ── Table Body ─────────────────────────────────────────
           if (provider.loadingMappings)
-            const SliverFillRemaining(
+            SliverFillRemaining(
               child: Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2)),
             )
           else if (provider.mappingsError.isNotEmpty)
@@ -166,7 +166,7 @@ class _VerseHeader extends StatelessWidget {
               textAlign: TextAlign.right,
             ),
           ),
-          const Divider(color: AppColors.border, height: 20),
+          Divider(color: AppColors.border, height: 20),
           // Original text
           Directionality(
             textDirection: isHebrew ? TextDirection.rtl : TextDirection.ltr,
@@ -215,7 +215,7 @@ class _MappingsStats extends StatelessWidget {
     children: [
       Text(val, style: TextStyle(color: color, fontWeight: FontWeight.w700, fontSize: 13)),
       const SizedBox(width: 3),
-      Text(label, style: const TextStyle(color: AppColors.textMuted, fontSize: 12)),
+      Text(label, style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
     ],
   );
 }
@@ -227,7 +227,7 @@ class _TableHeader extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     margin: const EdgeInsets.fromLTRB(12, 4, 12, 0),
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-    decoration: const BoxDecoration(
+    decoration: BoxDecoration(
       color:  AppColors.bgSurface,
       border: Border(
         left:   BorderSide(color: AppColors.border),
@@ -319,7 +319,7 @@ class _WordRow extends StatelessWidget {
                               textDirection: TextDirection.rtl,
                               child: Text(
                                 mapping.transliterationAr!,
-                                style: const TextStyle(color: AppColors.textMuted, fontSize: 11),
+                                style: TextStyle(color: AppColors.textMuted, fontSize: 11),
                               ),
                             ),
                         ],
@@ -347,7 +347,7 @@ class _WordRow extends StatelessWidget {
                           if (mapping.origMorphology != null)
                             Text(
                               mapping.origMorphology!,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color:      AppColors.textMuted,
                                 fontSize:   10,
                                 fontFamily: 'monospace',
@@ -369,7 +369,7 @@ class _WordRow extends StatelessWidget {
                         if (mapping.transliterationLat != null)
                           Text(
                             mapping.transliterationLat!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color:     AppColors.textSecondary,
                               fontSize:  12,
                               fontStyle: FontStyle.italic,
@@ -418,7 +418,7 @@ class _WordRow extends StatelessWidget {
                             ),
                           ),
                         if (mapping.hasStrongs)
-                          const Icon(Icons.info_outline, size: 16, color: AppColors.textMuted),
+                          Icon(Icons.info_outline, size: 16, color: AppColors.textMuted),
                       ],
                     ),
                   ),

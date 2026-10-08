@@ -1,5 +1,8 @@
 // lib/core/theme/app_theme.dart
-// Material 3 dark theme with manuscript gold accents + Arabic/Hebrew/Greek text styles.
+// ─────────────────────────────────────────────────────────────────────────────
+// Material 3 themes (Light + Dark/Night mode) with manuscript gold accents
+// and dedicated Arabic/Hebrew/Greek typography.
+// ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,29 +12,30 @@ import '../constants/app_colors.dart';
 class AppTheme {
   AppTheme._();
 
+  // ── Light Theme ───────────────────────────────────────────────
   static ThemeData get light {
     final base = ThemeData.light(useMaterial3: true);
 
     return base.copyWith(
-      scaffoldBackgroundColor: AppColors.bgBase,
+      scaffoldBackgroundColor: AppColors.lightBgBase,
 
       colorScheme: const ColorScheme.light(
-        primary:         AppColors.primary,
-        onPrimary:       Colors.white,
-        secondary:       AppColors.info,
-        onSecondary:     Colors.white,
-        surface:         AppColors.bgSurface,
-        onSurface:       AppColors.textPrimary,
-        error:           AppColors.danger,
-        onError:         Colors.white,
-        outline:         AppColors.border,
-        surfaceContainerHigh: AppColors.bgCard,
+        primary:              AppColors.lightPrimary,
+        onPrimary:            Colors.white,
+        secondary:            AppColors.info,
+        onSecondary:          Colors.white,
+        surface:              AppColors.lightBgSurface,
+        onSurface:            AppColors.lightTextPrimary,
+        error:                AppColors.danger,
+        onError:              Colors.white,
+        outline:              AppColors.lightBorder,
+        surfaceContainerHigh: AppColors.lightBgCard,
       ),
 
       // AppBar
       appBarTheme: AppBarTheme(
-        backgroundColor:  AppColors.bgSurface,
-        foregroundColor:  AppColors.textPrimary,
+        backgroundColor:  AppColors.lightBgSurface,
+        foregroundColor:  AppColors.lightTextPrimary,
         elevation:        0,
         scrolledUnderElevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -39,30 +43,30 @@ class AppTheme {
         titleTextStyle: GoogleFonts.inter(
           fontSize:   17,
           fontWeight: FontWeight.w600,
-          color:      AppColors.textPrimary,
+          color:      AppColors.lightTextPrimary,
         ),
         shape: const Border(
-          bottom: BorderSide(color: AppColors.border, width: 1),
+          bottom: BorderSide(color: AppColors.lightBorder, width: 1),
         ),
       ),
 
       // Cards
       cardTheme: CardTheme(
-        color:       AppColors.bgCard,
+        color:       AppColors.lightBgCard,
         elevation:   0,
-        shape:       RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: AppColors.border),
+          side: const BorderSide(color: AppColors.lightBorder),
         ),
         margin: EdgeInsets.zero,
       ),
 
       // Bottom sheet
       bottomSheetTheme: const BottomSheetThemeData(
-        backgroundColor:    AppColors.bgCard,
+        backgroundColor:    AppColors.lightBgCard,
         surfaceTintColor:   Colors.transparent,
         showDragHandle:     true,
-        dragHandleColor:    AppColors.borderLight,
+        dragHandleColor:    AppColors.lightBorderLight,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
@@ -70,7 +74,7 @@ class AppTheme {
 
       // Dividers
       dividerTheme: const DividerThemeData(
-        color:     AppColors.border,
+        color:     AppColors.lightBorder,
         thickness: 1,
         space:     0,
       ),
@@ -78,26 +82,120 @@ class AppTheme {
       // Input decoration
       inputDecorationTheme: InputDecorationTheme(
         filled:           true,
-        fillColor:        AppColors.bgSurface,
-        border:           _inputBorder(AppColors.border),
-        enabledBorder:    _inputBorder(AppColors.border),
-        focusedBorder:    _inputBorder(AppColors.primary),
-        hintStyle: GoogleFonts.inter(color: AppColors.textMuted, fontSize: 14),
+        fillColor:        AppColors.lightBgSurface,
+        border:           _inputBorder(AppColors.lightBorder),
+        enabledBorder:    _inputBorder(AppColors.lightBorder),
+        focusedBorder:    _inputBorder(AppColors.lightPrimary),
+        hintStyle: GoogleFonts.inter(color: AppColors.lightTextMuted, fontSize: 14),
         contentPadding:   const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
 
       // Chips
       chipTheme: const ChipThemeData(
-        backgroundColor:  AppColors.bgCard,
-        labelStyle:       TextStyle(color: AppColors.textSecondary, fontSize: 12),
-        side:             BorderSide(color: AppColors.border),
+        backgroundColor:  AppColors.lightBgCard,
+        labelStyle:       TextStyle(color: AppColors.lightTextSecondary, fontSize: 12),
+        side:             BorderSide(color: AppColors.lightBorder),
         padding:          EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       ),
 
       // Text
       textTheme: GoogleFonts.interTextTheme(base.textTheme).apply(
-        bodyColor:    AppColors.textPrimary,
-        displayColor: AppColors.textPrimary,
+        bodyColor:    AppColors.lightTextPrimary,
+        displayColor: AppColors.lightTextPrimary,
+      ),
+    );
+  }
+
+  // ── Dark / Night Theme ─────────────────────────────────────────
+  static ThemeData get dark {
+    final base = ThemeData.dark(useMaterial3: true);
+
+    return base.copyWith(
+      scaffoldBackgroundColor: AppColors.darkBgBase,
+
+      colorScheme: const ColorScheme.dark(
+        primary:              AppColors.darkPrimary,
+        onPrimary:            Colors.black,
+        secondary:            AppColors.info,
+        onSecondary:          Colors.white,
+        surface:              AppColors.darkBgSurface,
+        onSurface:            AppColors.darkTextPrimary,
+        error:                AppColors.danger,
+        onError:              Colors.white,
+        outline:              AppColors.darkBorder,
+        surfaceContainerHigh: AppColors.darkBgCard,
+      ),
+
+      // AppBar
+      appBarTheme: AppBarTheme(
+        backgroundColor:  AppColors.darkBgSurface,
+        foregroundColor:  AppColors.darkTextPrimary,
+        elevation:        0,
+        scrolledUnderElevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        centerTitle:      true,
+        titleTextStyle: GoogleFonts.inter(
+          fontSize:   17,
+          fontWeight: FontWeight.w600,
+          color:      AppColors.darkTextPrimary,
+        ),
+        shape: const Border(
+          bottom: BorderSide(color: AppColors.darkBorder, width: 1),
+        ),
+      ),
+
+      // Cards
+      cardTheme: CardTheme(
+        color:       AppColors.darkBgCard,
+        elevation:   0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(color: AppColors.darkBorder),
+        ),
+        margin: EdgeInsets.zero,
+      ),
+
+      // Bottom sheet
+      bottomSheetTheme: const BottomSheetThemeData(
+        backgroundColor:    AppColors.darkBgCard,
+        surfaceTintColor:   Colors.transparent,
+        showDragHandle:     true,
+        dragHandleColor:    AppColors.darkBorderLight,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+      ),
+
+      // Dividers
+      dividerTheme: const DividerThemeData(
+        color:     AppColors.darkBorder,
+        thickness: 1,
+        space:     0,
+      ),
+
+      // Input decoration
+      inputDecorationTheme: InputDecorationTheme(
+        filled:           true,
+        fillColor:        AppColors.darkBgSurface,
+        border:           _inputBorder(AppColors.darkBorder),
+        enabledBorder:    _inputBorder(AppColors.darkBorder),
+        focusedBorder:    _inputBorder(AppColors.darkPrimary),
+        hintStyle: GoogleFonts.inter(color: AppColors.darkTextMuted, fontSize: 14),
+        contentPadding:   const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+
+      // Chips
+      chipTheme: const ChipThemeData(
+        backgroundColor:  AppColors.darkBgCard,
+        labelStyle:       TextStyle(color: AppColors.darkTextSecondary, fontSize: 12),
+        side:             BorderSide(color: AppColors.darkBorder),
+        padding:          EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      ),
+
+      // Text
+      textTheme: GoogleFonts.interTextTheme(base.textTheme).apply(
+        bodyColor:    AppColors.darkTextPrimary,
+        displayColor: AppColors.darkTextPrimary,
       ),
     );
   }
@@ -109,7 +207,7 @@ class AppTheme {
 
   // ── Text styles for language-specific text ─────────────────────
   static TextStyle arabicVerse({double size = 22, Color? color}) => TextStyle(
-    fontFamily: 'Amiri',   // fallback if Amiri not loaded
+    fontFamily: 'Amiri',
     fontSize:   size,
     height:     1.85,
     color:      color ?? AppColors.arabicText,
@@ -117,35 +215,35 @@ class AppTheme {
   );
 
   // For inline Arabic UI text (book names, etc.)
-  static TextStyle arabicLabel({double size = 16}) => TextStyle(
+  static TextStyle arabicLabel({double size = 16, Color? color}) => TextStyle(
     fontFamily: 'Amiri',
     fontSize:   size,
-    color:      AppColors.arabicText,
+    color:      color ?? AppColors.arabicText,
     fontWeight: FontWeight.w700,
     height:     1.4,
   );
 
-  static TextStyle hebrewText({double size = 20}) => TextStyle(
-    fontFamily: 'serif',   // SBL Hebrew if available, else Times
-    fontSize:   size,
-    height:     1.85,
-    color:      AppColors.hebrewText,
-    fontWeight: FontWeight.w400,
-  );
-
-  static TextStyle greekText({double size = 18}) => TextStyle(
+  static TextStyle hebrewText({double size = 20, Color? color}) => TextStyle(
     fontFamily: 'serif',
     fontSize:   size,
     height:     1.85,
-    color:      AppColors.greekText,
+    color:      color ?? AppColors.hebrewText,
     fontWeight: FontWeight.w400,
   );
 
-  static TextStyle originalText(String lang, {double size = 20}) {
-    return lang == 'greek' ? greekText(size: size) : hebrewText(size: size);
+  static TextStyle greekText({double size = 18, Color? color}) => TextStyle(
+    fontFamily: 'serif',
+    fontSize:   size,
+    height:     1.85,
+    color:      color ?? AppColors.greekText,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle originalText(String lang, {double size = 20, Color? color}) {
+    return lang == 'greek' ? greekText(size: size, color: color) : hebrewText(size: size, color: color);
   }
 
-  // ── Standard decorations ──────────────────────────────────────
+  // ── Standard decorations (Dynamic with current theme) ─────────
   static BoxDecoration get cardDecoration => BoxDecoration(
     color:        AppColors.bgCard,
     border:       Border.all(color: AppColors.border),

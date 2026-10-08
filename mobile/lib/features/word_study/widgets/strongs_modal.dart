@@ -143,14 +143,14 @@ class StrongsModal extends StatelessWidget {
                         ),
                       ),
                       if (entry.pronunciation != null) ...[
-                        const Text(' • ', style: TextStyle(color: AppColors.textMuted)),
+                        Text(' • ', style: TextStyle(color: AppColors.textMuted)),
                         Text(
                           entry.pronunciation!,
-                          style: const TextStyle(color: AppColors.textMuted, fontSize: 14),
+                          style: TextStyle(color: AppColors.textMuted, fontSize: 14),
                         ),
                       ],
                       if (entry.pronunciationAr != null) ...[
-                        const Text(' • ', style: TextStyle(color: AppColors.textMuted)),
+                        Text(' • ', style: TextStyle(color: AppColors.textMuted)),
                         Directionality(
                           textDirection: TextDirection.rtl,
                           child: Text(
@@ -174,7 +174,7 @@ class StrongsModal extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
                     child: Row(
                       children: [
-                        const Text('Root: ', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
+                        Text('Root: ', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
                         Directionality(
                           textDirection: entry.isHebrew ? TextDirection.rtl : TextDirection.ltr,
                           child: Text(
@@ -211,11 +211,11 @@ class StrongsModal extends StatelessWidget {
                               textDirection: TextDirection.rtl,
                               child: Row(
                                 children: [
-                                  const Icon(Icons.auto_stories, size: 15, color: AppColors.primary),
+                                  Icon(Icons.auto_stories, size: 15, color: AppColors.primary),
                                   const SizedBox(width: 6),
                                   Text(
                                     entry.isHebrew ? 'معنى الجذر العبري والبعد اللاهوتي' : 'معنى الجذر اليوناني والبعد اللاهوتي',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color:      AppColors.primary,
                                       fontSize:   13,
                                       fontWeight: FontWeight.bold,
@@ -240,9 +240,9 @@ class StrongsModal extends StatelessWidget {
                               textDirection: TextDirection.rtl,
                               child: Row(
                                 children: [
-                                  const Icon(Icons.translate, size: 15, color: AppColors.textSecondary),
+                                  Icon(Icons.translate, size: 15, color: AppColors.textSecondary),
                                   const SizedBox(width: 6),
-                                  const Text(
+                                  Text(
                                     'ملاحظات الاستخدام والترجمات الكتابية',
                                     style: TextStyle(
                                       color:      AppColors.textSecondary,
@@ -258,7 +258,7 @@ class StrongsModal extends StatelessWidget {
                               textDirection: TextDirection.rtl,
                               child: Text(
                                 entry.notesAr!,
-                                style: const TextStyle(color: AppColors.textSecondary, fontSize: 17, height: 1.6),
+                                style: TextStyle(color: AppColors.textSecondary, fontSize: 17, height: 1.6),
                                 textAlign: TextAlign.right,
                               ),
                             ),
@@ -305,7 +305,7 @@ class StrongsModal extends StatelessWidget {
                     label: 'English Definition',
                     child: Text(
                       entry.definitionEn,
-                      style: const TextStyle(color: AppColors.textSecondary, fontSize: 14, height: 1.65),
+                      style: TextStyle(color: AppColors.textSecondary, fontSize: 14, height: 1.65),
                     ),
                   ),
                 ),
@@ -467,7 +467,7 @@ class StrongsModal extends StatelessWidget {
       if (isMatch(words[i])) {
         spans.add(TextSpan(
           text: words[i],
-          style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+          style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
         ));
       } else {
         spans.add(TextSpan(text: words[i]));
@@ -490,7 +490,7 @@ class StrongsModal extends StatelessWidget {
     ),
     child: Text(
       lang[0].toUpperCase() + lang.substring(1),
-      style: const TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w600),
+      style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w600),
     ),
   );
 }

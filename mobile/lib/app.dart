@@ -5,7 +5,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'core/constants/app_colors.dart';
 import 'core/theme/app_theme.dart';
+import 'providers/theme_provider.dart';
 import 'features/navigation/screens/home_screen.dart';
 import 'features/navigation/screens/book_list_screen.dart';
 import 'features/navigation/screens/chapter_list_screen.dart';
@@ -69,10 +72,15 @@ class ArabicBibleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
+    AppColors.isDark = themeProvider.isDark;
+
     return MaterialApp.router(
       title:              'Arabic Bible Study',
       debugShowCheckedModeBanner: false,
       theme:              AppTheme.light,
+      darkTheme:          AppTheme.dark,
+      themeMode:          themeProvider.themeMode,
       routerConfig:       _router,
       // Force LTR layout for the app shell; individual RTL widgets are handled locally
       builder: (context, child) => Directionality(

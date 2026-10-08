@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'providers/theme_provider.dart';
 import 'providers/navigation_provider.dart';
 import 'providers/reader_provider.dart';
 import 'providers/word_study_provider.dart';
@@ -18,14 +19,13 @@ void main() {
 
   // Status bar style
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor:      Colors.transparent,
-    statusBarBrightness: Brightness.light,
-    statusBarIconBrightness: Brightness.dark,
+    statusBarColor: Colors.transparent,
   ));
 
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(create: (_) => ReaderProvider()),
         ChangeNotifierProvider(create: (_) => WordStudyProvider()),

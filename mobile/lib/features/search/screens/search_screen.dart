@@ -89,18 +89,18 @@ class _SearchScreenState extends State<SearchScreen> {
           child: TextField(
             controller:  _ctrl,
             focusNode:   _focus,
-            style: const TextStyle(color: AppColors.textPrimary, fontSize: 15),
+            style: TextStyle(color: AppColors.textPrimary, fontSize: 15),
             textInputAction: TextInputAction.search,
             decoration: InputDecoration(
               hintText: 'البحث في الكتاب المقدس (عربي، عبري، يوناني)…',
-              hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+              hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 13),
               border:  InputBorder.none,
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
               filled: false,
               suffixIcon: _ctrl.text.isNotEmpty
                   ? IconButton(
-                      icon: const Icon(Icons.clear, size: 18, color: AppColors.textMuted),
+                      icon: Icon(Icons.clear, size: 18, color: AppColors.textMuted),
                       onPressed: () { _ctrl.clear(); setState(() { _results = []; _total = 0; _lastQuery = ''; }); },
                     )
                   : null,
@@ -112,7 +112,7 @@ class _SearchScreenState extends State<SearchScreen> {
         actions: [
           TextButton(
             onPressed: _search,
-            child: const Text('بحث', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700)),
+            child: Text('بحث', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -122,7 +122,7 @@ class _SearchScreenState extends State<SearchScreen> {
           // ── Testament Filter Chips ─────────────────────────────
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.bgSurface,
               border: Border(bottom: BorderSide(color: AppColors.border)),
             ),
@@ -453,7 +453,7 @@ class _EmptyState extends StatelessWidget {
             query.isEmpty
                 ? 'Type Arabic text, Hebrew, or Greek words to search all 31,102 verses'
                 : 'Try different words or check spelling',
-            style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+            style: TextStyle(color: AppColors.textMuted, fontSize: 13),
             textAlign: TextAlign.center,
           ),
         ],

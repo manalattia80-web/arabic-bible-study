@@ -15,6 +15,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/reader_provider.dart';
 import '../../../providers/navigation_provider.dart';
+import '../../../providers/theme_provider.dart';
 import '../../../models/verse.dart';
 
 class ChapterReaderScreen extends StatefulWidget {
@@ -106,12 +107,23 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
                   ),
                   Text(
                     'Chapter ${widget.chapterNum}',
-                    style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+                    style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
                   ),
                 ],
               )
             : Text('Chapter ${widget.chapterNum}'),
         actions: [
+          // Theme toggle
+          Consumer<ThemeProvider>(
+            builder: (ctx, theme, _) => IconButton(
+              icon: Icon(
+                theme.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                size: 20,
+              ),
+              onPressed: theme.toggleTheme,
+              tooltip: theme.isDark ? 'الوضع النهاري' : 'الوضع الليلي',
+            ),
+          ),
           // Font size controls
           IconButton(
             icon: const Icon(Icons.text_decrease, size: 20),
@@ -143,11 +155,11 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
       ),
 
       body: reader.loading
-          ? const Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2))
+          ? Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2))
           : reader.error.isNotEmpty
               ? _ErrorRetry(reader.error, () => reader.loadChapter(widget.bookId, widget.chapterNum))
               : reader.verses.isEmpty
-                  ? const Center(child: Text('No verses found', style: TextStyle(color: AppColors.textMuted)))
+                  ? Center(child: Text('No verses found', style: TextStyle(color: AppColors.textMuted)))
                   : ListView.builder(
                       padding: const EdgeInsets.fromLTRB(12, 8, 12, 100),
                       itemCount: reader.verses.length,
@@ -172,7 +184,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
       // Chapter prev/next navigation bar
       bottomNavigationBar: Container(
         height: 56,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color:  AppColors.bgSurface,
           border: Border(top: BorderSide(color: AppColors.border)),
         ),
@@ -200,7 +212,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
               ),
               child: Text(
                 '${widget.chapterNum} / $totalCh',
-                style: const TextStyle(color: AppColors.primaryText, fontSize: 13, fontWeight: FontWeight.w600),
+                style: TextStyle(color: AppColors.primaryText, fontSize: 13, fontWeight: FontWeight.w600),
               ),
             ),
 
@@ -340,7 +352,7 @@ class _VerseCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Icon(Icons.chevron_left_rounded, color: AppColors.textMuted, size: 16),
+                      Icon(Icons.chevron_left_rounded, color: AppColors.textMuted, size: 16),
                     ],
                   ),
 
@@ -358,8 +370,8 @@ class _VerseCard extends StatelessWidget {
 
                   // Original text
                   if (showOrig) ...[
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Divider(color: AppColors.border, height: 1),
                     ),
                     Directionality(
@@ -374,12 +386,12 @@ class _VerseCard extends StatelessWidget {
 
                   // Tap hint
                   const SizedBox(height: 8),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     textDirection: TextDirection.rtl,
                     children: [
                       Icon(Icons.touch_app_outlined, size: 12, color: AppColors.textMuted),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text('دراسة الكلمات', style: TextStyle(color: AppColors.textMuted, fontSize: 10)),
                     ],
                   ),

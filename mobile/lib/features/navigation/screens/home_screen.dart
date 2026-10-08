@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/navigation_provider.dart';
+import '../../../providers/theme_provider.dart';
 import '../../../models/testament.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,6 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
             pinned: true,
             backgroundColor: AppColors.bgSurface,
             actions: [
+              Consumer<ThemeProvider>(
+                builder: (ctx, theme, _) => IconButton(
+                  onPressed: theme.toggleTheme,
+                  icon: Icon(theme.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
+                  tooltip: theme.isDark ? 'الوضع النهاري' : 'الوضع الليلي',
+                ),
+              ),
               IconButton(
                 onPressed: () => context.pushNamed('search'),
                 icon: const Icon(Icons.search_rounded),
@@ -49,11 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.parallax,
               background: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end:   Alignment.bottomRight,
-                    colors: [Color(0xFFF8FAFC), Color(0xFFE2E8F0), Color(0xFFCBD5E1)],
+                    colors: AppColors.isDark
+                        ? const [Color(0xFF080E1A), Color(0xFF0F1724), Color(0xFF161E2E)]
+                        : const [Color(0xFFF8FAFC), Color(0xFFE2E8F0), Color(0xFFCBD5E1)],
                   ),
                 ),
                 child: Stack(
@@ -82,14 +92,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // السطر الأول: دليل الكتاب المقدس (بخط أسود كبير)
+                            // السطر الأول: دليل الكتاب المقدس (بخط كبير)
                             Directionality(
                               textDirection: TextDirection.rtl,
                               child: Text(
                                 'دليل الكتاب المقدس',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.arabicLabel(size: 26).copyWith(
-                                  color: Colors.black,
+                                  color: AppColors.textPrimary,
                                   fontWeight: FontWeight.w900,
                                 ),
                               ),
@@ -334,7 +344,7 @@ class _ErrorWidget extends StatelessWidget {
         children: [
           const Text('⚠', style: TextStyle(fontSize: 40)),
           const SizedBox(height: 12),
-          Text(message, style: const TextStyle(color: AppColors.textSecondary), textAlign: TextAlign.center),
+          Text(message, style: TextStyle(color: AppColors.textSecondary), textAlign: TextAlign.center),
           const SizedBox(height: 16),
           ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
         ],
