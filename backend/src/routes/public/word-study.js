@@ -72,18 +72,25 @@ export default async function wordStudyRoutes(fastify) {
       };
     }
 
-    // Sanitize nulls to empty strings to prevent Dart/Flutter type cast errors
-    const sanitizedData = data.map(item => ({
-      ...item,
-      verse_id:            item.verse_id            ?? '',
-      ar_word_normalized:  item.ar_word_normalized  ?? '',
-      orig_morphology:     item.orig_morphology     ?? '',
-      transliteration_ar:  item.transliteration_ar  ?? '',
-      transliteration_lat: item.transliteration_lat ?? '',
-      strongs_id:          item.strongs_id          ?? '',
-      audio_url:           item.audio_url           ?? '',
-      audio_duration_ms:   item.audio_duration_ms   ?? 0,
-    }));
+    // Sanitize nulls to empty strings and synthesize audio_url if missing
+    const sanitizedData = data.map(item => {
+      let audioUrl = item.audio_url ?? '';
+      if (!audioUrl && item.orig_word && item.orig_word !== '-' && item.orig_word !== '—' && !item.orig_word.includes('---')) {
+        const langCode = (item.orig_word_lang === 'hebrew' || item.orig_word_lang === 'aramaic') ? 'iw' : 'el';
+        audioUrl = `https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(item.orig_word.trim())}&tl=${langCode}&client=gtx`;
+      }
+      return {
+        ...item,
+        verse_id:            item.verse_id            ?? '',
+        ar_word_normalized:  item.ar_word_normalized  ?? '',
+        orig_morphology:     item.orig_morphology     ?? '',
+        transliteration_ar:  item.transliteration_ar  ?? '',
+        transliteration_lat: item.transliteration_lat ?? '',
+        strongs_id:          item.strongs_id          ?? '',
+        audio_url:           audioUrl,
+        audio_duration_ms:   item.audio_duration_ms   ?? 0,
+      };
+    });
 
     // Cache for 5 minutes (admin edits will invalidate)
     await fastify.cache.set(cacheKey, sanitizedData, TTL.VERSES);

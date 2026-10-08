@@ -34,23 +34,44 @@ class WordMapping {
     required this.isVerified,
   });
 
-  factory WordMapping.fromJson(Map<String, dynamic> j) => WordMapping(
-    id:                 j['id'] as String? ?? '',
-    verseId:            j['verse_id'] as String? ?? '',
-    arWordPosition:     j['ar_word_position'] as int? ?? 0,
-    origWordPosition:   j['orig_word_position'] as int? ?? 0,
-    arWord:             j['ar_word'] as String? ?? '-',
-    arWordNormalized:   j['ar_word_normalized'] as String?,
-    origWord:           j['orig_word'] as String? ?? '-',
-    origWordLang:       j['orig_word_lang'] as String? ?? 'hebrew',
-    origMorphology:     j['orig_morphology'] as String?,
-    transliterationAr:  j['transliteration_ar'] as String?,
-    transliterationLat: j['transliteration_lat'] as String?,
-    strongsId:          j['strongs_id'] as String?,
-    audioUrl:           j['audio_url'] != null && (j['audio_url'] as String).isNotEmpty ? 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' + Uri.encodeComponent((j['audio_url'] as String).replaceAll('translate.google.com', 'translate.googleapis.com').replaceAll('client=tw-ob', 'client=gtx')) : null,
-    audioDurationMs:    j['audio_duration_ms'] as int?,
-    isVerified:         (j['is_verified'] as bool?) ?? false,
-  );
+  factory WordMapping.fromJson(Map<String, dynamic> j) {
+    final orig = j['orig_word'] as String? ?? '-';
+    final lang = j['orig_word_lang'] as String? ?? 'hebrew';
+    final isHeb = lang == 'hebrew' || lang == 'aramaic';
+
+    String? audio;
+    final rawAudio = j['audio_url'] as String?;
+    if (rawAudio != null && rawAudio.trim().isNotEmpty) {
+      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
+          Uri.encodeComponent(rawAudio
+              .replaceAll('translate.google.com', 'translate.googleapis.com')
+              .replaceAll('client=tw-ob', 'client=gtx'));
+    } else if (orig.trim().isNotEmpty && orig != '-' && orig != '—' && !orig.contains('---')) {
+      final langCode = isHeb ? 'iw' : 'el';
+      final ttsUrl =
+          'https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=gtx';
+      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
+          Uri.encodeComponent(ttsUrl);
+    }
+
+    return WordMapping(
+      id:                 j['id'] as String? ?? '',
+      verseId:            j['verse_id'] as String? ?? '',
+      arWordPosition:     j['ar_word_position'] as int? ?? 0,
+      origWordPosition:   j['orig_word_position'] as int? ?? 0,
+      arWord:             j['ar_word'] as String? ?? '-',
+      arWordNormalized:   j['ar_word_normalized'] as String?,
+      origWord:           orig,
+      origWordLang:       lang,
+      origMorphology:     j['orig_morphology'] as String?,
+      transliterationAr:  j['transliteration_ar'] as String?,
+      transliterationLat: j['transliteration_lat'] as String?,
+      strongsId:          j['strongs_id'] as String?,
+      audioUrl:           audio,
+      audioDurationMs:    j['audio_duration_ms'] as int?,
+      isVerified:         (j['is_verified'] as bool?) ?? false,
+    );
+  }
 
   bool get hasAudio    => audioUrl != null && audioUrl!.isNotEmpty;
   bool get hasStrongs  => strongsId != null && strongsId!.isNotEmpty;
