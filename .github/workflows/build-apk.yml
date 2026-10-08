@@ -47,11 +47,23 @@ jobs:
 
       - name: Analyze Dart Code
         working-directory: ./mobile
-        run: flutter analyze
+        run: |
+          OUT=$(flutter analyze 2>&1 || true)
+          echo "$OUT"
+          ESC_OUT="${OUT//$'\n'/'%0A'}"
+          echo "::warning title=Dart Analyzer::$ESC_OUT"
 
       - name: Build APK
         working-directory: ./mobile
-        run: flutter build apk --release --no-tree-shake-icons
+        run: |
+          if ! flutter build apk --release --no-tree-shake-icons; then
+            echo "Build failed, running verbose to capture error..."
+            V_OUT=$(flutter build apk --release --no-tree-shake-icons --verbose 2>&1 | tail -n 80)
+            echo "$V_OUT"
+            ESC_V="${V_OUT//$'\n'/'%0A'}"
+            echo "::error title=Flutter Build Failure::$ESC_V"
+            exit 1
+          fi
         
       - name: Find and Copy APK
         working-directory: ./mobile
