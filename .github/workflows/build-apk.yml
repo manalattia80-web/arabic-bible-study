@@ -35,6 +35,7 @@ jobs:
           flutter create . --platforms android
           rm -f test/widget_test.dart
           sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <application/g' android/app/src/main/AndroidManifest.xml || true
+          sed -i 's/android:label="[^"]*"/android:label="دليل الكتاب المقدس"/g' android/app/src/main/AndroidManifest.xml || true
           node ../scripts/patch_gradle.cjs
 
       - name: Install dependencies

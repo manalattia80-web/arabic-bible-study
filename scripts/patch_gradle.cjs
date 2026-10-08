@@ -61,3 +61,27 @@ if (fs.existsSync(appGradlePath)) {
     console.log('android/app/build.gradle already contains permanent release signingConfig');
   }
 }
+
+// 4. Ensure Android App Name Label is "دليل الكتاب المقدس"
+const manifestPath = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
+if (fs.existsSync(manifestPath)) {
+  let manifest = fs.readFileSync(manifestPath, 'utf8');
+  manifest = manifest.replace(/android:label="[^"]*"/g, 'android:label="دليل الكتاب المقدس"');
+  if (!manifest.includes('android:label="دليل الكتاب المقدس"')) {
+    manifest = manifest.replace('<application', '<application\n        android:label="دليل الكتاب المقدس"');
+  }
+  fs.writeFileSync(manifestPath, manifest, 'utf8');
+  console.log('Successfully patched AndroidManifest.xml with app name: دليل الكتاب المقدس');
+}
+
+const stringsDir = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src', 'main', 'res', 'values');
+if (!fs.existsSync(stringsDir)) {
+  fs.mkdirSync(stringsDir, { recursive: true });
+}
+const stringsPath = path.join(stringsDir, 'strings.xml');
+fs.writeFileSync(stringsPath, `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">دليل الكتاب المقدس</string>
+</resources>
+`, 'utf8');
+console.log('Successfully ensured strings.xml with app_name: دليل الكتاب المقدس');

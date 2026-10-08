@@ -76,7 +76,7 @@ class ArabicBibleApp extends StatelessWidget {
     AppColors.isDark = themeProvider.isDark;
 
     return MaterialApp.router(
-      title:              'Arabic Bible Study',
+      title:              'دليل الكتاب المقدس',
       debugShowCheckedModeBanner: false,
       theme:              AppTheme.light,
       darkTheme:          AppTheme.dark,
