@@ -76,7 +76,7 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
                                 style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
                               ),
                               const Spacer(),
-                              const Text(
+                              Text(
                                 'اضغط على الإصحاح للقراءة',
                                 style: TextStyle(color: AppColors.textMuted, fontSize: 11),
                               ),
@@ -142,7 +142,7 @@ class _ChapterButton extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             '$number',
-            style: const TextStyle(
+            style: TextStyle(
               color:      AppColors.textPrimary,
               fontSize:   18,
               fontWeight: FontWeight.w600,

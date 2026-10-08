@@ -101,17 +101,17 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
               ),
             )
           else if (provider.mappings.isEmpty)
-            const SliverFillRemaining(
+            SliverFillRemaining(
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.all(32),
+                  padding: const EdgeInsets.all(32),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text('⇌', style: TextStyle(fontSize: 40, color: AppColors.textMuted)),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Text('No word mappings yet for this verse', style: TextStyle(color: AppColors.textMuted), textAlign: TextAlign.center),
-                      SizedBox(height: 6),
+                      const SizedBox(height: 6),
                       Text('Admins are working on aligning the words', style: TextStyle(color: AppColors.textMuted, fontSize: 12), textAlign: TextAlign.center),
                     ],
                   ),
@@ -237,16 +237,16 @@ class _TableHeader extends StatelessWidget {
       ),
       borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
     ),
-    child: const Row(
+    child: Row(
       textDirection: TextDirection.rtl,
       children: [
         SizedBox(width: 28, child: Text('#', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
         Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('الكلمة العربية', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('النص الأصلي', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Expanded(flex: 2, child: Text('النطق والرمز', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
-        SizedBox(width: 40),
+        const SizedBox(width: 40),
       ],
     ),
   );
@@ -270,7 +270,7 @@ class _WordRow extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           color: isEven ? AppColors.bgCard : AppColors.bgSurface,
-          border: const Border(
+          border: Border(
             left:  BorderSide(color: AppColors.border),
             right: BorderSide(color: AppColors.border),
             bottom: BorderSide(color: AppColors.border),
@@ -294,7 +294,7 @@ class _WordRow extends StatelessWidget {
                     width: 28,
                     child: Text(
                       '${mapping.arWordPosition}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color:      AppColors.textMuted,
                         fontSize:   11,
                         fontFamily: 'monospace',

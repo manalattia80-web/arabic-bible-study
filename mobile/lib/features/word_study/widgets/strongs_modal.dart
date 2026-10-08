@@ -41,9 +41,9 @@ class StrongsModal extends StatelessWidget {
       minChildSize:     0.4,
       expand:           false,
       builder: (ctx, scrollCtrl) => Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.bgCard,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: CustomScrollView(
           controller: scrollCtrl,
@@ -64,11 +64,11 @@ class StrongsModal extends StatelessWidget {
 
             // Loading state
             if (provider.loadingStrongs)
-              const SliverFillRemaining(
+              SliverFillRemaining(
                 child: Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2)),
               )
             else if (entry == null)
-              const SliverFillRemaining(
+              SliverFillRemaining(
                 child: Center(child: Text('Entry not found', style: TextStyle(color: AppColors.textMuted))),
               )
             else ...[
@@ -136,7 +136,7 @@ class StrongsModal extends StatelessWidget {
                     children: [
                       Text(
                         entry.transliteration,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color:      AppColors.textSecondary,
                           fontSize:   16,
                           fontStyle:  FontStyle.italic,
@@ -189,9 +189,9 @@ class StrongsModal extends StatelessWidget {
                   ),
                 ),
 
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, 14),
+                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
                   child: Divider(color: AppColors.border),
                 ),
               ),
@@ -289,9 +289,9 @@ class StrongsModal extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, 14),
+                    padding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
                     child: Divider(color: AppColors.border),
                   ),
                 ),
@@ -320,7 +320,7 @@ class StrongsModal extends StatelessWidget {
                       label: 'KJV Usage',
                       child: Text(
                         entry.kjvUsage!,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color:      AppColors.textMuted,
                           fontSize:   12,
                           fontStyle:  FontStyle.italic,
@@ -333,9 +333,9 @@ class StrongsModal extends StatelessWidget {
 
               // Occurrences
               if (provider.loadingOccurrences)
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(top: 24),
+                    padding: const EdgeInsets.only(top: 24),
                     child: Center(child: CircularProgressIndicator(color: AppColors.primary)),
                   ),
                 )
@@ -366,7 +366,7 @@ class StrongsModal extends StatelessWidget {
                                       children: [
                                         Text(
                                           occ.bookNameAr,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
@@ -375,13 +375,13 @@ class StrongsModal extends StatelessWidget {
                                         const SizedBox(width: 4),
                                         Text(
                                           '${occ.chapterNum}',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
                                           ),
                                         ),
-                                        const Text(
+                                        Text(
                                           ':',
                                           style: TextStyle(
                                             color: AppColors.primary,
@@ -391,7 +391,7 @@ class StrongsModal extends StatelessWidget {
                                         ),
                                         Text(
                                           '${occ.verseNum}',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
@@ -508,7 +508,7 @@ class _Section extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             color:      AppColors.primary,
             fontSize:   10,
             fontWeight: FontWeight.w700,

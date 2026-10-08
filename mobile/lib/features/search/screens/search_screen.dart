@@ -143,7 +143,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Container(
               width:   double.infinity,
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.bgCard,
                 border: Border(bottom: BorderSide(color: AppColors.border)),
               ),
@@ -175,8 +175,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       itemCount: _results.length + (_loading || _hasMore && _results.isNotEmpty ? 1 : 0),
                       itemBuilder: (ctx, i) {
                         if (i >= _results.length) {
-                          return const Padding(
-                            padding: EdgeInsets.all(20),
+                          return Padding(
+                            padding: const EdgeInsets.all(20),
                             child: Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2)),
                           );
                         }
@@ -296,7 +296,7 @@ class _SearchResultCard extends StatelessWidget {
                             children: [
                               Text(
                                 verse.displayBookName,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color:      AppColors.primaryText,
                                   fontSize:   12,
                                   fontWeight: FontWeight.w700,
@@ -305,13 +305,13 @@ class _SearchResultCard extends StatelessWidget {
                               const SizedBox(width: 5),
                               Text(
                                 '${verse.chapterNum}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color:      AppColors.primaryText,
                                   fontSize:   12,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              const Text(
+                              Text(
                                 ': ',
                                 style: TextStyle(
                                   color:      AppColors.primaryText,
@@ -321,7 +321,7 @@ class _SearchResultCard extends StatelessWidget {
                               ),
                               Text(
                                 '${verse.verseNum}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color:      AppColors.primaryText,
                                   fontSize:   12,
                                   fontWeight: FontWeight.w700,
@@ -363,7 +363,7 @@ class _SearchResultCard extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 6),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Icon(Icons.chevron_right, size: 14, color: AppColors.textMuted),
@@ -442,7 +442,7 @@ class _EmptyState extends StatelessWidget {
             query.isEmpty
                 ? 'Search the Bible'
                 : 'No results for "$query"',
-            style: const TextStyle(
+            style: TextStyle(
               color:      AppColors.textSecondary,
               fontSize:   16,
               fontWeight: FontWeight.w600,

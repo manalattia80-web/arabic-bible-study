@@ -327,13 +327,13 @@ class _VerseCard extends StatelessWidget {
                           children: [
                             Text(
                               '$chapterNum',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color:      AppColors.primaryText,
                                 fontSize:   11,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            const Text(
+                            Text(
                               ': ',
                               style: TextStyle(
                                 color:      AppColors.primaryText,
@@ -343,7 +343,7 @@ class _VerseCard extends StatelessWidget {
                             ),
                             Text(
                               '${verse.verseNum}',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color:      AppColors.primaryText,
                                 fontSize:   11,
                                 fontWeight: FontWeight.w700,

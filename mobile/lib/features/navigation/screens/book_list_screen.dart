@@ -127,7 +127,7 @@ class _GroupedBookList extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
                 child: Text(
                   groupName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color:    AppColors.primary,
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
