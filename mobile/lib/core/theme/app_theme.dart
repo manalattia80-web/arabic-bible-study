@@ -45,8 +45,8 @@ class AppTheme {
           fontWeight: FontWeight.w600,
           color:      AppColors.lightTextPrimary,
         ),
-        shape: const Border(
-          bottom: BorderSide(color: AppColors.lightBorder, width: 1),
+        shape: Border(
+          bottom: BorderSide(color: AppColors.lightBorder, width: 1.0),
         ),
       ),
 
@@ -56,24 +56,24 @@ class AppTheme {
         elevation:   0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: AppColors.lightBorder),
+          side: BorderSide(color: AppColors.lightBorder),
         ),
         margin: EdgeInsets.zero,
       ),
 
       // Bottom sheet
-      bottomSheetTheme: const BottomSheetThemeData(
+      bottomSheetTheme: BottomSheetThemeData(
         backgroundColor:    AppColors.lightBgCard,
         surfaceTintColor:   Colors.transparent,
         showDragHandle:     true,
         dragHandleColor:    AppColors.lightBorderLight,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
       ),
 
       // Dividers
-      dividerTheme: const DividerThemeData(
+      dividerTheme: DividerThemeData(
         color:     AppColors.lightBorder,
         thickness: 1,
         space:     0,
@@ -91,11 +91,11 @@ class AppTheme {
       ),
 
       // Chips
-      chipTheme: const ChipThemeData(
+      chipTheme: ChipThemeData(
         backgroundColor:  AppColors.lightBgCard,
         labelStyle:       TextStyle(color: AppColors.lightTextSecondary, fontSize: 12),
         side:             BorderSide(color: AppColors.lightBorder),
-        padding:          EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        padding:          const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       ),
 
       // Text
@@ -139,8 +139,8 @@ class AppTheme {
           fontWeight: FontWeight.w600,
           color:      AppColors.darkTextPrimary,
         ),
-        shape: const Border(
-          bottom: BorderSide(color: AppColors.darkBorder, width: 1),
+        shape: Border(
+          bottom: BorderSide(color: AppColors.darkBorder, width: 1.0),
         ),
       ),
 
@@ -150,24 +150,24 @@ class AppTheme {
         elevation:   0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: AppColors.darkBorder),
+          side: BorderSide(color: AppColors.darkBorder),
         ),
         margin: EdgeInsets.zero,
       ),
 
       // Bottom sheet
-      bottomSheetTheme: const BottomSheetThemeData(
+      bottomSheetTheme: BottomSheetThemeData(
         backgroundColor:    AppColors.darkBgCard,
         surfaceTintColor:   Colors.transparent,
         showDragHandle:     true,
         dragHandleColor:    AppColors.darkBorderLight,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
       ),
 
       // Dividers
-      dividerTheme: const DividerThemeData(
+      dividerTheme: DividerThemeData(
         color:     AppColors.darkBorder,
         thickness: 1,
         space:     0,
@@ -185,11 +185,11 @@ class AppTheme {
       ),
 
       // Chips
-      chipTheme: const ChipThemeData(
+      chipTheme: ChipThemeData(
         backgroundColor:  AppColors.darkBgCard,
         labelStyle:       TextStyle(color: AppColors.darkTextSecondary, fontSize: 12),
         side:             BorderSide(color: AppColors.darkBorder),
-        padding:          EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        padding:          const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       ),
 
       // Text
