@@ -300,16 +300,33 @@ class _InfoCard extends StatelessWidget {
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('💡', style: TextStyle(fontSize: 18)),
+            const Text('💡', style: TextStyle(fontSize: 20)),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('اضغط على أي آية لفتح دراسة الكلمات', style: TextStyle(color: AppColors.primaryText, fontSize: 14, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 6),
-                  Text('• النص الأصلي الكامل: تعرض شاشة القراءة النص الكتابي الأصلي الكامل لكل آية (العبري المشكول للعهد القديم، واليوناني للعهد الجديد) بالتوازي مع الترجمة العربية (فانديك).\n• دراسة الكلمات وقاموس سترونج: عند الضغط على أي آية، يُعرض تحليل دقيق كلمة بكلمة يربط كل لفظة بجذرها المعجمي في قاموس سترونج مع النطق الصوتي والشرح اللاهوتي الوافي.', style: TextStyle(color: AppColors.textSecondary, fontSize: 12, height: 1.6)),
+                  Text(
+                    'إرشادات وتنبيهات هامة',
+                    style: TextStyle(
+                      color: AppColors.primaryText,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '• دراسة الكلمات والنص الأصلي: تعرض شاشة القراءة النص الكتابي الأصلي الكامل لكل آية (العبري المشكول للعهد القديم، واليوناني للعهد الجديد) بالتوازي مع ترجمة الفانديك. وعند الضغط على أي آية يُعرض تحليل دقيق يربط كل لفظة بجذرها المعجمي والشرح اللاهوتي في قاموس سترونج.\n\n'
+                    '• استخدام النطق الصوتي: استكشف الكلمات الأصلية ومعانيها من قاموس سترونج، بالإضافة إلى إمكانية الاستماع للنطق الصوتي لكل كلمة (باللهجات العبرية واليونانية الحديثة).\n\n'
+                    '• العمل بدون إنترنت (أوفلاين): يعمل التطبيق بكامل وظائفه لقراءة كافة الأسفار والآيات الـ 31,102 آية، والبحث الشامل، وتصفح قاموس سترونج بالكامل بدون الحاجة لأي اتصال بالإنترنت، بينما يتطلب الاستماع للنطق الصوتي للكلمات فقط وجود اتصال بالإنترنت.',
+                    style: TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 12,
+                      height: 1.6,
+                    ),
+                  ),
                 ],
               ),
             ),
