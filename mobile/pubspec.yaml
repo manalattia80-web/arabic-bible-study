@@ -28,6 +28,11 @@ dependencies:
   # Persistence
   shared_preferences: ^2.3.2
 
+  # Local SQLite Database (Offline-first)
+  sqflite: ^2.3.3+1
+  path_provider: ^2.1.4
+  path: ^1.9.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -44,6 +49,9 @@ flutter_launcher_icons:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/bible_study.db
 
   # Uncomment if adding local font files later (e.g. SBL Hebrew/Greek)
   # fonts:

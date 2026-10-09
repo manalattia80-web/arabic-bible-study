@@ -6,10 +6,14 @@ import 'providers/theme_provider.dart';
 import 'providers/navigation_provider.dart';
 import 'providers/reader_provider.dart';
 import 'providers/word_study_provider.dart';
+import 'core/services/database_service.dart';
 import 'app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize offline SQLite database in background
+  DatabaseService.instance.database;
 
   // Lock to portrait mode (can be unlocked later for tablets)
   SystemChrome.setPreferredOrientations([
