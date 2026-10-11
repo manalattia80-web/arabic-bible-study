@@ -134,26 +134,31 @@ class ApiService {
     int page = 1,
     int limit = 20,
   }) async {
+    // 1. Instant normalized search on local SQLite database (100% offline, diacritics-insensitive)
     try {
-      final params = StringBuffer('/search/verses?q=${Uri.encodeQueryComponent(q)}&page=$page&limit=$limit');
-      if (testamentId != null) params.write('&testament_id=$testamentId');
-      final json = await _get(params.toString());
-      return SearchResult(
-        verses: (json['data'] as List).map((j) => Verse.fromJson(j)).toList(),
-        total:  (json['meta']?['total'] as int?) ?? 0,
-      );
-    } catch (_) {
-      // Offline fallback search
-      final localVerses = await DatabaseService.instance.searchVerses(
+      final local = await DatabaseService.instance.searchVersesWithCount(
         q,
         testamentId: testamentId,
         page: page,
         limit: limit,
       );
       return SearchResult(
-        verses: localVerses,
-        total:  localVerses.length,
+        verses: local.verses,
+        total:  local.total,
       );
+    } catch (e) {
+      // 2. Online API fallback in case of local db error
+      try {
+        final params = StringBuffer('/search/verses?q=${Uri.encodeQueryComponent(q)}&page=$page&limit=$limit');
+        if (testamentId != null) params.write('&testament_id=$testamentId');
+        final json = await _get(params.toString());
+        return SearchResult(
+          verses: (json['data'] as List).map((j) => Verse.fromJson(j)).toList(),
+          total:  (json['meta']?['total'] as int?) ?? 0,
+        );
+      } catch (_) {
+        return const SearchResult(verses: [], total: 0);
+      }
     }
   }
 }

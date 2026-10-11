@@ -380,42 +380,78 @@ class _SearchResultCard extends StatelessWidget {
   }
 }
 
-// ── Highlighted text ───────────────────────────────────────────────────────
+// ── Highlighted text (Diacritics-Insensitive) ──────────────────────────────
 class _HighlightedText extends StatelessWidget {
   final String text;
   final String query;
   final TextStyle style;
   const _HighlightedText({required this.text, required this.query, required this.style});
 
+  static RegExp? _buildDiacriticsRegex(String q) {
+    final clean = q.replaceAll(RegExp(r'[\u064B-\u065F\u0670\u0640]'), '').trim();
+    if (clean.isEmpty) return null;
+
+    final words = clean.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+    if (words.isEmpty) return null;
+
+    String wordPattern(String w) {
+      final buf = StringBuffer();
+      for (int i = 0; i < w.length; i++) {
+        final c = w[i];
+        if (RegExp(r'[أإآا]').hasMatch(c)) {
+          buf.write(r'[أإآا][\u064B-\u065F\u0670\u0640]*');
+        } else if (RegExp(r'[ةه]').hasMatch(c)) {
+          buf.write(r'[ةه][\u064B-\u065F\u0670\u0640]*');
+        } else if (RegExp(r'[ىي]').hasMatch(c)) {
+          buf.write(r'[ىي][\u064B-\u065F\u0670\u0640]*');
+        } else {
+          buf.write('${RegExp.escape(c)}[\\u064B-\\u065F\\u0670\\u0640]*');
+        }
+      }
+      return buf.toString();
+    }
+
+    final pattern = words.map(wordPattern).join('|');
+    return RegExp(pattern, caseSensitive: false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (query.isEmpty) return Text(text, style: style, maxLines: 3, overflow: TextOverflow.ellipsis);
+    if (query.trim().isEmpty) {
+      return Text(text, style: style, maxLines: 3, overflow: TextOverflow.ellipsis);
+    }
 
-    final lower   = text.toLowerCase();
-    final qLower  = query.toLowerCase();
-    final spans   = <TextSpan>[];
-    int   start   = 0;
+    final reg = _buildDiacriticsRegex(query);
+    if (reg == null) {
+      return Text(text, style: style, maxLines: 3, overflow: TextOverflow.ellipsis);
+    }
 
-    int match = lower.indexOf(qLower, start);
-    while (match != -1) {
-      if (match > start) spans.add(TextSpan(text: text.substring(start, match)));
+    final spans = <TextSpan>[];
+    int lastEnd = 0;
+
+    for (final match in reg.allMatches(text)) {
+      if (match.start > lastEnd) {
+        spans.add(TextSpan(text: text.substring(lastEnd, match.start)));
+      }
       spans.add(TextSpan(
-        text: text.substring(match, match + query.length),
+        text: text.substring(match.start, match.end),
         style: TextStyle(
-          backgroundColor: AppColors.primary.withOpacity(0.3),
+          backgroundColor: AppColors.primary.withOpacity(0.35),
           color:           AppColors.primaryText,
-          fontWeight:      FontWeight.w700,
+          fontWeight:      FontWeight.w800,
         ),
       ));
-      start = match + query.length;
-      match = lower.indexOf(qLower, start);
+      lastEnd = match.end;
     }
-    if (start < text.length) spans.add(TextSpan(text: text.substring(start)));
+
+    if (lastEnd < text.length) {
+      spans.add(TextSpan(text: text.substring(lastEnd)));
+    }
 
     return RichText(
-      text:      TextSpan(style: style, children: spans),
-      maxLines:  3,
-      overflow:  TextOverflow.ellipsis,
+      text:          TextSpan(style: style, children: spans),
+      maxLines:      3,
+      overflow:      TextOverflow.ellipsis,
       textDirection: TextDirection.rtl,
     );
   }

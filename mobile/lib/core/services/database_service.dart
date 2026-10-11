@@ -210,34 +210,77 @@ class DatabaseService {
     );
   }
 
-  // ── Offline Search ─────────────────────────────────────────────────────────
+  // ── Offline Search (Diacritics-Insensitive & Normalized) ───────────────────
 
-  Future<List<Verse>> searchVerses(String query, {int? testamentId, int page = 1, int limit = 20}) async {
+  static String normalizeArabic(String text) {
+    if (text.isEmpty) return '';
+    return text
+        .replaceAll(RegExp(r'[\u064B-\u065F\u0670\u0640]'), '') // remove tashkeel & tatweel
+        .replaceAll(RegExp(r'[أإآ]'), 'ا')
+        .replaceAll('ة', 'ه')
+        .replaceAll('ى', 'ي')
+        .replaceAll('السموات', 'السماوات')
+        .replaceAll('داوود', 'داود')
+        .trim();
+  }
+
+  Future<({List<Verse> verses, int total})> searchVersesWithCount(
+    String query, {
+    int? testamentId,
+    int page = 1,
+    int limit = 20,
+  }) async {
     final db = await database;
-    final cleanQuery = query.trim();
-    if (cleanQuery.isEmpty) return [];
+    final trimmed = query.trim();
+    if (trimmed.isEmpty) return (verses: <Verse>[], total: 0);
 
-    String sql = '''
-      SELECT v.*, b.name_ar as book_name_ar 
-      FROM verses v 
-      JOIN books b ON v.book_id = b.id 
-      WHERE v.text_avd_ar LIKE ?
-    ''';
-    List<dynamic> args = ['%$cleanQuery%'];
+    final normQuery = normalizeArabic(trimmed);
+    final words = normQuery.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+
+    String whereConditions;
+    List<dynamic> whereArgs = [];
+
+    if (words.length <= 1) {
+      whereConditions = '(v.text_clean LIKE ? OR v.text_original LIKE ?)';
+      whereArgs = ['%$normQuery%', '%$trimmed%'];
+    } else {
+      final phrase = '%$normQuery%';
+      final wordsConditions = words.map((_) => 'v.text_clean LIKE ?').join(' AND ');
+      whereConditions = '(v.text_clean LIKE ? OR ($wordsConditions) OR v.text_original LIKE ?)';
+      whereArgs = [phrase, ...words.map((w) => '%$w%'), '%$trimmed%'];
+    }
 
     if (testamentId != null) {
       final tStr = testamentId == 1 ? 'old' : 'new';
-      sql += ' AND LOWER(b.testament) = ?';
-      args.add(tStr);
+      whereConditions += ' AND LOWER(b.testament) = ?';
+      whereArgs.add(tStr);
     }
 
-    sql += ' ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC LIMIT ? OFFSET ?';
-    args.add(limit);
-    args.add((page - 1) * limit);
+    // 1. Get total matching count
+    final countSql = '''
+      SELECT COUNT(*) as total_count 
+      FROM verses v 
+      JOIN books b ON v.book_id = b.id 
+      WHERE $whereConditions
+    ''';
+    final countResult = await db.rawQuery(countSql, whereArgs);
+    final total = Sqflite.firstIntValue(countResult) ?? 0;
 
-    final rows = await db.rawQuery(sql, args);
+    if (total == 0) return (verses: <Verse>[], total: 0);
 
-    return rows.map((r) => Verse(
+    // 2. Fetch paginated rows
+    final querySql = '''
+      SELECT v.*, b.name_ar as book_name_ar 
+      FROM verses v 
+      JOIN books b ON v.book_id = b.id 
+      WHERE $whereConditions
+      ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC 
+      LIMIT ? OFFSET ?
+    ''';
+    final queryArgs = [...whereArgs, limit, (page - 1) * limit];
+    final rows = await db.rawQuery(querySql, queryArgs);
+
+    final verses = rows.map((r) => Verse(
       id:               r['id'] as String,
       bookId:           r['book_id'] as int,
       chapterNum:       r['chapter_num'] as int,
@@ -247,5 +290,12 @@ class DatabaseService {
       textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
       bookNameAr:       r['book_name_ar'] as String?,
     )).toList();
+
+    return (verses: verses, total: total);
+  }
+
+  Future<List<Verse>> searchVerses(String query, {int? testamentId, int page = 1, int limit = 20}) async {
+    final res = await searchVersesWithCount(query, testamentId: testamentId, page: page, limit: limit);
+    return res.verses;
   }
 }
