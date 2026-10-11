@@ -16,6 +16,7 @@ import '../../models/testament.dart';
 import '../../models/verse.dart';
 import '../../models/word_mapping.dart';
 import '../../models/strongs_entry.dart';
+import '../../models/word_occurrence.dart';
 
 class DatabaseService {
   DatabaseService._();
