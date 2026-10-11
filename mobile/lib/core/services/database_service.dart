@@ -31,17 +31,26 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v2.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v3.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 2; // Incremented for full offline release
+    const targetDbVersion = 3; // Incremented for dictionary & script cleanups
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
       debugPrint('Initializing local offline SQLite database (v$targetDbVersion) at $dbPath...');
       try {
         await Directory(p.dirname(dbPath)).create(recursive: true);
+      } catch (_) {}
+
+      // Clean up previous v2 database file to save space on device
+      try {
+        final oldV2Path = p.join(databasesPath, 'bible_study_v2.db');
+        final oldV2File = File(oldV2Path);
+        if (await oldV2File.exists()) {
+          await oldV2File.delete();
+        }
       } catch (_) {}
 
       // Copy from asset
