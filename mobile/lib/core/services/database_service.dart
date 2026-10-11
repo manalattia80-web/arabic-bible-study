@@ -31,11 +31,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v3.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v5.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 3; // Incremented for dictionary & script cleanups
+    const targetDbVersion = 5; // Incremented for full normalized search overhaul
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -44,16 +44,18 @@ class DatabaseService {
         await Directory(p.dirname(dbPath)).create(recursive: true);
       } catch (_) {}
 
-      // Clean up previous v2 database file to save space on device
-      try {
-        final oldV2Path = p.join(databasesPath, 'bible_study_v2.db');
-        final oldV2File = File(oldV2Path);
-        if (await oldV2File.exists()) {
-          await oldV2File.delete();
-        }
-      } catch (_) {}
+      // Clean up previous database versions to save space on device
+      for (final oldVer in ['bible_study_v2.db', 'bible_study_v3.db', 'bible_study_v4.db']) {
+        try {
+          final oldPath = p.join(databasesPath, oldVer);
+          final oldFile = File(oldPath);
+          if (await oldFile.exists()) {
+            await oldFile.delete();
+          }
+        } catch (_) {}
+      }
 
-      // Copy from asset
+      // Copy fresh asset
       final data = await rootBundle.load('assets/bible_study.db');
       final bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
       await File(dbPath).writeAsBytes(bytes, flush: true);
@@ -61,7 +63,30 @@ class DatabaseService {
       debugPrint('Local SQLite database copied successfully (${bytes.length} bytes).');
     }
 
-    return await openDatabase(dbPath);
+    final db = await openDatabase(dbPath);
+
+    // Dynamic Self-Healing: guarantee text_clean exists and is populated
+    try {
+      final cols = await db.rawQuery("PRAGMA table_info(verses)");
+      final hasTextClean = cols.any((c) => c['name'] == 'text_clean');
+      if (!hasTextClean) {
+        debugPrint('Dynamic Self-Healing: text_clean missing in verses table, generating...');
+        await db.execute('ALTER TABLE verses ADD COLUMN text_clean TEXT;');
+        final rows = await db.rawQuery('SELECT id, text_avd_ar FROM verses');
+        final batch = db.batch();
+        for (final r in rows) {
+          final clean = normalizeArabic(r['text_avd_ar'] as String? ?? '');
+          batch.update('verses', {'text_clean': clean}, where: 'id = ?', whereArgs: [r['id']]);
+        }
+        await batch.commit(noResult: true);
+        await db.execute('CREATE INDEX IF NOT EXISTS idx_verses_text_clean ON verses(text_clean);');
+        debugPrint('Dynamic Self-Healing complete: text_clean populated and indexed.');
+      }
+    } catch (e) {
+      debugPrint('Schema verification warning: $e');
+    }
+
+    return db;
   }
 
   // ── Navigation ─────────────────────────────────────────────────────────────
