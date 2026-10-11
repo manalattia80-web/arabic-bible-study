@@ -126,8 +126,9 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     try {
+      final queryToSend = detectedStrongs ?? q;
       final res = await ApiService.searchVerses(
-        q,
+        queryToSend,
         testamentId: _selectedBook != null ? null : _selectedTestamentId,
         bookId: _selectedBook?.id,
         page: _page,
@@ -399,7 +400,9 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Text(
                 _error.isNotEmpty
                     ? _error
-                    : 'وجدنا $_total نتيجة لـ "$_lastQuery"${_selectedBook != null ? " في ${_selectedBook!.nameAr}" : ""}',
+                    : (_matchedStrongs != null
+                        ? 'وردت كلمة "${_matchedStrongs!.originalWord}" ($_lastQuery) في $_total آية${_selectedBook != null ? " في ${_selectedBook!.nameAr}" : ""}'
+                        : 'وجدنا $_total نتيجة لـ "$_lastQuery"${_selectedBook != null ? " في ${_selectedBook!.nameAr}" : ""}'),
                 style: TextStyle(
                   color:    _error.isNotEmpty ? AppColors.danger : AppColors.textSecondary,
                   fontSize: 12,
@@ -444,8 +447,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           );
                         }
                         return _SearchResultCard(
-                          verse: _results[i],
-                          query: _lastQuery,
+                          verse:         _results[i],
+                          query:         _lastQuery,
+                          matchedStrongs: _matchedStrongs,
                         );
                       },
                     ),
@@ -727,9 +731,15 @@ class _SuggestionChip extends StatelessWidget {
 
 // ── Search Result Card ─────────────────────────────────────────────────────
 class _SearchResultCard extends StatelessWidget {
-  final Verse  verse;
-  final String query;
-  const _SearchResultCard({required this.verse, required this.query});
+  final Verse         verse;
+  final String        query;
+  final StrongsEntry? matchedStrongs;
+
+  const _SearchResultCard({
+    required this.verse,
+    required this.query,
+    this.matchedStrongs,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -824,9 +834,10 @@ class _SearchResultCard extends StatelessWidget {
                 Directionality(
                   textDirection: TextDirection.rtl,
                   child: _HighlightedText(
-                    text:  verse.textAvdAr,
-                    query: query,
-                    style: AppTheme.arabicVerse(size: 16),
+                    text:           verse.textAvdAr,
+                    query:          query,
+                    matchedStrongs: matchedStrongs,
+                    style:          AppTheme.arabicVerse(size: 16),
                   ),
                 ),
 
@@ -849,19 +860,23 @@ class _SearchResultCard extends StatelessWidget {
 
 // ── Highlighted text (Diacritics-Insensitive) ──────────────────────────────
 class _HighlightedText extends StatelessWidget {
-  final String text;
-  final String query;
-  final TextStyle style;
-  const _HighlightedText({required this.text, required this.query, required this.style});
+  final String        text;
+  final String        query;
+  final StrongsEntry? matchedStrongs;
+  final TextStyle     style;
+
+  const _HighlightedText({
+    required this.text,
+    required this.query,
+    this.matchedStrongs,
+    required this.style,
+  });
 
   static RegExp? _buildDiacriticsRegex(String q) {
-    // If it's a Strong's code, we don't highlight in verse text unless words match
-    if (RegExp(r'^[HhGg]\d+$').hasMatch(q.trim())) return null;
-
     final clean = q.replaceAll(RegExp(r'[\u064B-\u065F\u0670\u0640]'), '').trim();
     if (clean.isEmpty) return null;
 
-    final words = clean.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+    final words = clean.split(RegExp(r'[\s,\(\)\-]+')).where((w) => w.length >= 2).toList();
     if (words.isEmpty) return null;
 
     String wordPattern(String w) {
@@ -887,11 +902,17 @@ class _HighlightedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (query.trim().isEmpty) {
+    String effectiveQuery = query;
+    if (RegExp(r'^[HhGg]\d+$').hasMatch(query.trim())) {
+      // If Strong's query, highlight using pronunciationAr or common meaning if available
+      effectiveQuery = matchedStrongs?.pronunciationAr ?? '';
+    }
+
+    if (effectiveQuery.trim().isEmpty) {
       return Text(text, style: style, maxLines: 3, overflow: TextOverflow.ellipsis);
     }
 
-    final reg = _buildDiacriticsRegex(query);
+    final reg = _buildDiacriticsRegex(effectiveQuery);
     if (reg == null) {
       return Text(text, style: style, maxLines: 3, overflow: TextOverflow.ellipsis);
     }

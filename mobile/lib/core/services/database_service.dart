@@ -303,6 +303,61 @@ class DatabaseService {
     final trimmed = query.trim();
     if (trimmed.isEmpty) return (verses: <Verse>[], total: 0);
 
+    // If query is a Strong's ID (e.g. H4428 or G2880), search via word_mappings
+    final strongsMatch = RegExp(r'^([HG])\s*0*([1-9][0-9]{0,4})$', caseSensitive: false).firstMatch(trimmed);
+    if (strongsMatch != null) {
+      final sId = '${strongsMatch.group(1)!.toUpperCase()}${strongsMatch.group(2)}';
+      String sWhere = 'wm.strongs_id = ?';
+      List<dynamic> sArgs = [sId];
+
+      if (bookId != null) {
+        sWhere += ' AND v.book_id = ?';
+        sArgs.add(bookId);
+      } else if (testamentId != null) {
+        final tStr = testamentId == 1 ? 'old' : 'new';
+        sWhere += ' AND LOWER(b.testament) = ?';
+        sArgs.add(tStr);
+      }
+
+      final countSql = '''
+        SELECT COUNT(DISTINCT v.id) as total_count
+        FROM verses v
+        JOIN books b ON v.book_id = b.id
+        JOIN word_mappings wm ON v.id = wm.verse_id
+        WHERE $sWhere
+      ''';
+      final countResult = await db.rawQuery(countSql, sArgs);
+      final total = Sqflite.firstIntValue(countResult) ?? 0;
+
+      if (total == 0) return (verses: <Verse>[], total: 0);
+
+      final querySql = '''
+        SELECT v.*, b.name_ar as book_name_ar
+        FROM verses v
+        JOIN books b ON v.book_id = b.id
+        JOIN word_mappings wm ON v.id = wm.verse_id
+        WHERE $sWhere
+        GROUP BY v.id
+        ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC
+        LIMIT ? OFFSET ?
+      ''';
+      final queryArgs = [...sArgs, limit, (page - 1) * limit];
+      final rows = await db.rawQuery(querySql, queryArgs);
+
+      final verses = rows.map((r) => Verse(
+        id:               r['id'] as String,
+        bookId:           r['book_id'] as int,
+        chapterNum:       r['chapter_num'] as int,
+        verseNum:         r['verse_num'] as int,
+        textAvdAr:        r['text_avd_ar'] as String? ?? '',
+        textOriginal:     r['text_original'] as String? ?? '',
+        textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
+        bookNameAr:       r['book_name_ar'] as String?,
+      )).toList();
+
+      return (verses: verses, total: total);
+    }
+
     final normQuery = normalizeArabic(trimmed);
     final words = normQuery.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
 
