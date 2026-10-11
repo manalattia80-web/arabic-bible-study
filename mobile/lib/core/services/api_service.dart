@@ -118,6 +118,13 @@ class ApiService {
   }
 
   static Future<List<WordOccurrence>> getStrongsOccurrences(String strongsId) async {
+    // 1. Try local SQLite database first (instant offline)
+    try {
+      final local = await DatabaseService.instance.getStrongsOccurrences(strongsId);
+      if (local.isNotEmpty) return local;
+    } catch (_) {}
+
+    // 2. Fallback to API
     try {
       final json = await _get('/strongs/$strongsId/occurrences');
       return (json['data'] as List).map((j) => WordOccurrence.fromJson(j)).toList();
@@ -131,6 +138,7 @@ class ApiService {
   static Future<SearchResult> searchVerses(
     String q, {
     int? testamentId,
+    int? bookId,
     int page = 1,
     int limit = 20,
   }) async {
@@ -139,6 +147,7 @@ class ApiService {
       final local = await DatabaseService.instance.searchVersesWithCount(
         q,
         testamentId: testamentId,
+        bookId: bookId,
         page: page,
         limit: limit,
       );
@@ -150,7 +159,11 @@ class ApiService {
       // 2. Online API fallback in case of local db error
       try {
         final params = StringBuffer('/search/verses?q=${Uri.encodeQueryComponent(q)}&page=$page&limit=$limit');
-        if (testamentId != null) params.write('&testament_id=$testamentId');
+        if (bookId != null) {
+          params.write('&book_id=$bookId');
+        } else if (testamentId != null) {
+          params.write('&testament_id=$testamentId');
+        }
         final json = await _get(params.toString());
         return SearchResult(
           verses: (json['data'] as List).map((j) => Verse.fromJson(j)).toList(),

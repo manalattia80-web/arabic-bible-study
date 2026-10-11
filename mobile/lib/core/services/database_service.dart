@@ -235,6 +235,48 @@ class DatabaseService {
     );
   }
 
+  Future<List<WordOccurrence>> getStrongsOccurrences(String strongsId) async {
+    final db = await database;
+    final rows = await db.rawQuery('''
+      SELECT 
+        wm.ar_word,
+        wm.ar_word_position,
+        v.id as verse_id,
+        v.book_id,
+        b.name_ar as book_name_ar,
+        v.chapter_num,
+        v.verse_num,
+        v.text_avd_ar
+      FROM word_mappings wm
+      JOIN verses v ON wm.verse_id = v.id
+      JOIN books b ON v.book_id = b.id
+      WHERE wm.strongs_id = ?
+      ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC
+    ''', [strongsId]);
+
+    // Group by verse_id if a word appears multiple times in the same verse
+    final Map<String, WordOccurrence> grouped = {};
+    for (final r in rows) {
+      final vId = r['verse_id'] as String;
+      final pos = (r['ar_word_position'] as int?) ?? 0;
+      if (grouped.containsKey(vId)) {
+        grouped[vId]!.arWordPositions.add(pos);
+      } else {
+        grouped[vId] = WordOccurrence(
+          arWord:          r['ar_word'] as String? ?? '',
+          arWordPositions: [pos],
+          verseId:         vId,
+          bookId:          r['book_id'] as int? ?? 0,
+          bookNameAr:      r['book_name_ar'] as String? ?? '',
+          chapterNum:      r['chapter_num'] as int? ?? 0,
+          verseNum:        r['verse_num'] as int? ?? 0,
+          textAvdAr:       r['text_avd_ar'] as String? ?? '',
+        );
+      }
+    }
+    return grouped.values.toList();
+  }
+
   // ── Offline Search (Diacritics-Insensitive & Normalized) ───────────────────
 
   static String normalizeArabic(String text) {
@@ -252,6 +294,7 @@ class DatabaseService {
   Future<({List<Verse> verses, int total})> searchVersesWithCount(
     String query, {
     int? testamentId,
+    int? bookId,
     int page = 1,
     int limit = 20,
   }) async {
@@ -275,7 +318,10 @@ class DatabaseService {
       whereArgs = [phrase, ...words.map((w) => '%$w%'), '%$trimmed%'];
     }
 
-    if (testamentId != null) {
+    if (bookId != null) {
+      whereConditions += ' AND v.book_id = ?';
+      whereArgs.add(bookId);
+    } else if (testamentId != null) {
       final tStr = testamentId == 1 ? 'old' : 'new';
       whereConditions += ' AND LOWER(b.testament) = ?';
       whereArgs.add(tStr);
@@ -319,8 +365,8 @@ class DatabaseService {
     return (verses: verses, total: total);
   }
 
-  Future<List<Verse>> searchVerses(String query, {int? testamentId, int page = 1, int limit = 20}) async {
-    final res = await searchVersesWithCount(query, testamentId: testamentId, page: page, limit: limit);
+  Future<List<Verse>> searchVerses(String query, {int? testamentId, int? bookId, int page = 1, int limit = 20}) async {
+    final res = await searchVersesWithCount(query, testamentId: testamentId, bookId: bookId, page: page, limit: limit);
     return res.verses;
   }
 }
