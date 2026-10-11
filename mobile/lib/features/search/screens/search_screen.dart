@@ -836,7 +836,7 @@ class _SearchResultCard extends StatelessWidget {
                   child: _HighlightedText(
                     text:           verse.textAvdAr,
                     query:          query,
-                    matchedStrongs: matchedStrongs,
+                    highlightWords: verse.highlightWords,
                     style:          AppTheme.arabicVerse(size: 16),
                   ),
                 ),
@@ -858,31 +858,32 @@ class _SearchResultCard extends StatelessWidget {
   }
 }
 
-// ── Highlighted text (Diacritics-Insensitive) ──────────────────────────────
+// ── Highlighted text (Diacritics-Insensitive & Exact Words Match) ─────────
 class _HighlightedText extends StatelessWidget {
   final String        text;
   final String        query;
-  final StrongsEntry? matchedStrongs;
+  final List<String>? highlightWords;
   final TextStyle     style;
 
   const _HighlightedText({
     required this.text,
     required this.query,
-    this.matchedStrongs,
+    this.highlightWords,
     required this.style,
   });
 
-  static RegExp? _buildDiacriticsRegex(String q) {
-    final clean = q.replaceAll(RegExp(r'[\u064B-\u065F\u0670\u0640]'), '').trim();
-    if (clean.isEmpty) return null;
-
-    final words = clean.split(RegExp(r'[\s,\(\)\-]+')).where((w) => w.length >= 2).toList();
+  static RegExp? _buildRegexFromWords(List<String> words) {
     if (words.isEmpty) return null;
+    final sorted = [...words]..sort((a, b) => b.length.compareTo(a.length));
 
     String wordPattern(String w) {
       final buf = StringBuffer();
       for (int i = 0; i < w.length; i++) {
         final c = w[i];
+        if (RegExp(r'[\u064B-\u065F\u0670\u0640]').hasMatch(c)) {
+          // ignore tashkeel in pattern construction
+          continue;
+        }
         if (RegExp(r'[أإآا]').hasMatch(c)) {
           buf.write(r'[أإآا][\u064B-\u065F\u0670\u0640]*');
         } else if (RegExp(r'[ةه]').hasMatch(c)) {
@@ -896,23 +897,31 @@ class _HighlightedText extends StatelessWidget {
       return buf.toString();
     }
 
-    final pattern = words.map(wordPattern).join('|');
-    return RegExp(pattern, caseSensitive: false);
+    final patterns = sorted.map(wordPattern).where((p) => p.isNotEmpty).toList();
+    if (patterns.isEmpty) return null;
+    return RegExp('(${patterns.join('|')})', caseSensitive: false);
+  }
+
+  static RegExp? _buildDiacriticsRegex(String q) {
+    final clean = q.replaceAll(RegExp(r'[\u064B-\u065F\u0670\u0640]'), '').trim();
+    if (clean.isEmpty) return null;
+
+    final words = clean.split(RegExp(r'[\s,\(\)\-]+')).where((w) => w.length >= 2).toList();
+    if (words.isEmpty) return null;
+    return _buildRegexFromWords(words);
   }
 
   @override
   Widget build(BuildContext context) {
-    String effectiveQuery = query;
-    if (RegExp(r'^[HhGg]\d+$').hasMatch(query.trim())) {
-      // If Strong's query, highlight using pronunciationAr or common meaning if available
-      effectiveQuery = matchedStrongs?.pronunciationAr ?? '';
+    RegExp? reg;
+    final isStrongsWord = highlightWords != null && highlightWords!.isNotEmpty;
+
+    if (isStrongsWord) {
+      reg = _buildRegexFromWords(highlightWords!);
+    } else if (query.trim().isNotEmpty && !RegExp(r'^[HhGg]\d+$').hasMatch(query.trim())) {
+      reg = _buildDiacriticsRegex(query);
     }
 
-    if (effectiveQuery.trim().isEmpty) {
-      return Text(text, style: style, maxLines: 3, overflow: TextOverflow.ellipsis);
-    }
-
-    final reg = _buildDiacriticsRegex(effectiveQuery);
     if (reg == null) {
       return Text(text, style: style, maxLines: 3, overflow: TextOverflow.ellipsis);
     }
@@ -926,11 +935,19 @@ class _HighlightedText extends StatelessWidget {
       }
       spans.add(TextSpan(
         text: text.substring(match.start, match.end),
-        style: TextStyle(
-          backgroundColor: AppColors.primary.withOpacity(0.35),
-          color:           AppColors.primaryText,
-          fontWeight:      FontWeight.w800,
-        ),
+        style: isStrongsWord
+            ? TextStyle(
+                backgroundColor: const Color(0xFF0284C7).withOpacity(0.25),
+                color:           const Color(0xFF0284C7),
+                fontWeight:      FontWeight.w900,
+                decoration:      TextDecoration.underline,
+                decorationColor: const Color(0xFF0284C7).withOpacity(0.5),
+              )
+            : TextStyle(
+                backgroundColor: AppColors.primary.withOpacity(0.35),
+                color:           AppColors.primaryText,
+                fontWeight:      FontWeight.w800,
+              ),
       ));
       lastEnd = match.end;
     }

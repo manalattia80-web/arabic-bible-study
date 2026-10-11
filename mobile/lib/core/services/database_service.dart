@@ -332,7 +332,7 @@ class DatabaseService {
       if (total == 0) return (verses: <Verse>[], total: 0);
 
       final querySql = '''
-        SELECT v.*, b.name_ar as book_name_ar
+        SELECT v.*, b.name_ar as book_name_ar, GROUP_CONCAT(wm.ar_word, ',') as mapped_words
         FROM verses v
         JOIN books b ON v.book_id = b.id
         JOIN word_mappings wm ON v.id = wm.verse_id
@@ -344,16 +344,23 @@ class DatabaseService {
       final queryArgs = [...sArgs, limit, (page - 1) * limit];
       final rows = await db.rawQuery(querySql, queryArgs);
 
-      final verses = rows.map((r) => Verse(
-        id:               r['id'] as String,
-        bookId:           r['book_id'] as int,
-        chapterNum:       r['chapter_num'] as int,
-        verseNum:         r['verse_num'] as int,
-        textAvdAr:        r['text_avd_ar'] as String? ?? '',
-        textOriginal:     r['text_original'] as String? ?? '',
-        textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
-        bookNameAr:       r['book_name_ar'] as String?,
-      )).toList();
+      final verses = rows.map((r) {
+        final rawWords = r['mapped_words'] as String?;
+        final wordsList = rawWords != null
+            ? rawWords.split(',').map((w) => w.trim()).where((w) => w.isNotEmpty).toSet().toList()
+            : null;
+        return Verse(
+          id:               r['id'] as String,
+          bookId:           r['book_id'] as int,
+          chapterNum:       r['chapter_num'] as int,
+          verseNum:         r['verse_num'] as int,
+          textAvdAr:        r['text_avd_ar'] as String? ?? '',
+          textOriginal:     r['text_original'] as String? ?? '',
+          textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
+          bookNameAr:       r['book_name_ar'] as String?,
+          highlightWords:   wordsList,
+        );
+      }).toList();
 
       return (verses: verses, total: total);
     }

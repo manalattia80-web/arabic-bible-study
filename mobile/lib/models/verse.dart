@@ -9,6 +9,7 @@ class Verse {
   final String? textManuscript;
   final String textOriginalLang; // 'hebrew' | 'greek' | 'aramaic'
   final String? bookNameAr;
+  final List<String>? highlightWords;
 
   const Verse({
     required this.id,
@@ -20,6 +21,7 @@ class Verse {
     this.textManuscript,
     required this.textOriginalLang,
     this.bookNameAr,
+    this.highlightWords,
   });
 
   factory Verse.fromJson(Map<String, dynamic> j) {
