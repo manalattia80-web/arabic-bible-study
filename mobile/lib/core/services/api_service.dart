@@ -139,6 +139,7 @@ class ApiService {
     String q, {
     int? testamentId,
     int? bookId,
+    List<int>? bookIds,
     int page = 1,
     int limit = 20,
   }) async {
@@ -148,6 +149,7 @@ class ApiService {
         q,
         testamentId: testamentId,
         bookId: bookId,
+        bookIds: bookIds,
         page: page,
         limit: limit,
       );
@@ -161,6 +163,8 @@ class ApiService {
         final params = StringBuffer('/search/verses?q=${Uri.encodeQueryComponent(q)}&page=$page&limit=$limit');
         if (bookId != null) {
           params.write('&book_id=$bookId');
+        } else if (bookIds != null && bookIds.isNotEmpty) {
+          params.write('&book_ids=${bookIds.join(",")}');
         } else if (testamentId != null) {
           params.write('&testament_id=$testamentId');
         }

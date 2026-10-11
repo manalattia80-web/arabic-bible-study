@@ -16,6 +16,7 @@ import '../../../core/services/database_service.dart';
 import '../../../core/services/search_history_service.dart';
 import '../../../models/verse.dart';
 import '../../../models/book.dart';
+import '../../../models/book_group.dart';
 import '../../../models/strongs_entry.dart';
 import '../../word_study/widgets/strongs_modal.dart';
 
@@ -39,6 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
   bool              _hasMore             = true;
   int?              _selectedTestamentId; // null: All, 1: OT, 2: NT
   Book?             _selectedBook;
+  BookGroup?        _selectedGroup;
   List<Book>        _allBooks            = [];
   StrongsEntry?     _matchedStrongs;
   List<String>      _searchHistory       = [];
@@ -129,8 +131,9 @@ class _SearchScreenState extends State<SearchScreen> {
       final queryToSend = detectedStrongs ?? q;
       final res = await ApiService.searchVerses(
         queryToSend,
-        testamentId: _selectedBook != null ? null : _selectedTestamentId,
+        testamentId: (_selectedBook != null || _selectedGroup != null) ? null : _selectedTestamentId,
         bookId: _selectedBook?.id,
+        bookIds: _selectedGroup?.bookIds,
         page: _page,
         limit: 20,
       );
@@ -261,6 +264,110 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
+  void _openGroupPicker() {
+    final filteredGroups = _selectedTestamentId == null
+        ? BookGroup.allGroups
+        : BookGroup.allGroups.where((g) => g.testamentId == _selectedTestamentId).toList();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.bgSurface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => DraggableScrollableSheet(
+        initialChildSize: 0.7,
+        maxChildSize: 0.9,
+        minChildSize: 0.4,
+        expand: false,
+        builder: (ctx, scroll) => Directionality(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 12, bottom: 8),
+                width: 36,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppColors.border,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'اختر المجموعة السفرية للبحث فيها',
+                      style: TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    if (_selectedGroup != null)
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(ctx);
+                          setState(() { _selectedGroup = null; });
+                          if (_ctrl.text.trim().isNotEmpty) _search(reset: true);
+                        },
+                        child: Text('إلغاء التحديد', style: TextStyle(color: AppColors.danger, fontSize: 13)),
+                      ),
+                  ],
+                ),
+              ),
+              Divider(height: 1, color: AppColors.border),
+              Expanded(
+                child: ListView.builder(
+                  controller: scroll,
+                  itemCount: filteredGroups.length,
+                  itemBuilder: (ctx, i) {
+                    final g = filteredGroups[i];
+                    final isSel = _selectedGroup?.id == g.id;
+                    return ListTile(
+                      dense: true,
+                      leading: Icon(
+                        g.testamentId == 1 ? Icons.menu_book : Icons.auto_stories,
+                        color: isSel ? AppColors.primary : AppColors.textMuted,
+                        size: 22,
+                      ),
+                      title: Text(
+                        g.nameAr,
+                        style: TextStyle(
+                          color: isSel ? AppColors.primary : AppColors.textPrimary,
+                          fontWeight: isSel ? FontWeight.bold : FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      subtitle: Text(
+                        '${g.testamentId == 1 ? "العهد القديم" : "العهد الجديد"} • ${g.descriptionAr}',
+                        style: TextStyle(color: AppColors.textMuted, fontSize: 11),
+                      ),
+                      trailing: isSel ? Icon(Icons.check_circle, color: AppColors.primary, size: 20) : null,
+                      onTap: () {
+                        Navigator.pop(ctx);
+                        setState(() {
+                          _selectedGroup = g;
+                          _selectedBook = null; // Group takes precedence or clears single book
+                        });
+                        if (_ctrl.text.trim().isNotEmpty) {
+                          _search(reset: true);
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -329,6 +436,54 @@ class _SearchScreenState extends State<SearchScreen> {
                   const SizedBox(width: 8),
                   Container(height: 20, width: 1, color: AppColors.border),
                   const SizedBox(width: 8),
+                  // Group Selector Chip
+                  InkWell(
+                    borderRadius: BorderRadius.circular(100),
+                    onTap: _openGroupPicker,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: _selectedGroup != null ? AppColors.primaryGlow : AppColors.bgCard,
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(
+                          color: _selectedGroup != null ? AppColors.primary : AppColors.border,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.folder_outlined,
+                            size: 14,
+                            color: _selectedGroup != null ? AppColors.primaryText : AppColors.textSecondary,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            _selectedGroup != null ? _selectedGroup!.nameAr : 'المجموعة السفرية',
+                            style: TextStyle(
+                              color: _selectedGroup != null ? AppColors.primaryText : AppColors.textSecondary,
+                              fontSize: 12,
+                              fontWeight: _selectedGroup != null ? FontWeight.bold : FontWeight.normal,
+                            ),
+                          ),
+                          if (_selectedGroup != null) ...[
+                            const SizedBox(width: 4),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() { _selectedGroup = null; });
+                                if (_ctrl.text.trim().isNotEmpty) _search(reset: true);
+                              },
+                              child: Icon(Icons.close, size: 14, color: AppColors.primaryText),
+                            ),
+                          ] else ...[
+                            const SizedBox(width: 2),
+                            Icon(Icons.arrow_drop_down, size: 16, color: AppColors.textMuted),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
                   // Book Selector Chip
                   InkWell(
                     borderRadius: BorderRadius.circular(100),
@@ -397,17 +552,24 @@ class _SearchScreenState extends State<SearchScreen> {
                 color: AppColors.bgCard,
                 border: Border(bottom: BorderSide(color: AppColors.border)),
               ),
-              child: Text(
-                _error.isNotEmpty
-                    ? _error
-                    : (_matchedStrongs != null
-                        ? 'وردت كلمة "${_matchedStrongs!.originalWord}" ($_lastQuery) في $_total آية${_selectedBook != null ? " في ${_selectedBook!.nameAr}" : ""}'
-                        : 'وجدنا $_total نتيجة لـ "$_lastQuery"${_selectedBook != null ? " في ${_selectedBook!.nameAr}" : ""}'),
-                style: TextStyle(
-                  color:    _error.isNotEmpty ? AppColors.danger : AppColors.textSecondary,
-                  fontSize: 12,
-                ),
-                textAlign: TextAlign.right,
+              child: Builder(
+                builder: (context) {
+                  final scopeLabel = _selectedBook != null
+                      ? ' في ${_selectedBook!.nameAr}'
+                      : (_selectedGroup != null ? ' في ${_selectedGroup!.nameAr}' : '');
+                  return Text(
+                    _error.isNotEmpty
+                        ? _error
+                        : (_matchedStrongs != null
+                            ? 'وردت كلمة "${_matchedStrongs!.originalWord}" ($_lastQuery) في $_total آية$scopeLabel'
+                            : 'وجدنا $_total نتيجة لـ "$_lastQuery"$scopeLabel'),
+                    style: TextStyle(
+                      color:    _error.isNotEmpty ? AppColors.danger : AppColors.textSecondary,
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.right,
+                  );
+                },
               ),
             ),
 
@@ -471,6 +633,10 @@ class _SearchScreenState extends State<SearchScreen> {
             // If the selected book belongs to another testament, reset it
             if (_selectedBook != null && testamentId != null && _selectedBook!.testamentId != testamentId) {
               _selectedBook = null;
+            }
+            // If the selected group belongs to another testament, reset it
+            if (_selectedGroup != null && testamentId != null && _selectedGroup!.testamentId != testamentId) {
+              _selectedGroup = null;
             }
           });
           if (_ctrl.text.trim().isNotEmpty) {

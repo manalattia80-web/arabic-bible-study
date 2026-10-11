@@ -296,6 +296,7 @@ class DatabaseService {
     String query, {
     int? testamentId,
     int? bookId,
+    List<int>? bookIds,
     int page = 1,
     int limit = 20,
   }) async {
@@ -313,6 +314,10 @@ class DatabaseService {
       if (bookId != null) {
         sWhere += ' AND v.book_id = ?';
         sArgs.add(bookId);
+      } else if (bookIds != null && bookIds.isNotEmpty) {
+        final placeholders = List.filled(bookIds.length, '?').join(',');
+        sWhere += ' AND v.book_id IN ($placeholders)';
+        sArgs.addAll(bookIds);
       } else if (testamentId != null) {
         final tStr = testamentId == 1 ? 'old' : 'new';
         sWhere += ' AND LOWER(b.testament) = ?';
@@ -384,6 +389,10 @@ class DatabaseService {
     if (bookId != null) {
       whereConditions += ' AND v.book_id = ?';
       whereArgs.add(bookId);
+    } else if (bookIds != null && bookIds.isNotEmpty) {
+      final placeholders = List.filled(bookIds.length, '?').join(',');
+      whereConditions += ' AND v.book_id IN ($placeholders)';
+      whereArgs.addAll(bookIds);
     } else if (testamentId != null) {
       final tStr = testamentId == 1 ? 'old' : 'new';
       whereConditions += ' AND LOWER(b.testament) = ?';
@@ -428,8 +437,8 @@ class DatabaseService {
     return (verses: verses, total: total);
   }
 
-  Future<List<Verse>> searchVerses(String query, {int? testamentId, int? bookId, int page = 1, int limit = 20}) async {
-    final res = await searchVersesWithCount(query, testamentId: testamentId, bookId: bookId, page: page, limit: limit);
+  Future<List<Verse>> searchVerses(String query, {int? testamentId, int? bookId, List<int>? bookIds, int page = 1, int limit = 20}) async {
+    final res = await searchVersesWithCount(query, testamentId: testamentId, bookId: bookId, bookIds: bookIds, page: page, limit: limit);
     return res.verses;
   }
 }
