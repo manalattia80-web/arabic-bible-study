@@ -34,7 +34,7 @@ jobs:
         run: |
           flutter create . --platforms android
           rm -f test/widget_test.dart
-          sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <application/g' android/app/src/main/AndroidManifest.xml || true
+          sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <queries><intent><action android:name="android.intent.action.VIEW"\/><data android:scheme="https"\/><\/intent><\/queries>\n    <application/g' android/app/src/main/AndroidManifest.xml || true
           sed -i 's/android:label="[^"]*"/android:label="دليل الكتاب المقدس"/g' android/app/src/main/AndroidManifest.xml || true
           node ../scripts/patch_gradle.cjs
 
@@ -57,9 +57,9 @@ jobs:
       - name: Build APK
         working-directory: ./mobile
         run: |
-          if ! flutter build apk --release --no-tree-shake-icons; then
+          if ! flutter build apk --release --no-tree-shake-icons --dart-define=APP_BUILD_NUMBER=${{ github.run_number }}; then
             echo "Build failed, running verbose to capture error..."
-            V_OUT=$(flutter build apk --release --no-tree-shake-icons --verbose 2>&1 | tail -n 80)
+            V_OUT=$(flutter build apk --release --no-tree-shake-icons --dart-define=APP_BUILD_NUMBER=${{ github.run_number }} --verbose 2>&1 | tail -n 80)
             echo "$V_OUT"
             ESC_V="${V_OUT//$'\n'/'%0A'}"
             echo "::error title=Flutter Build Failure::$ESC_V"

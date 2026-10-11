@@ -6,6 +6,7 @@ import 'providers/theme_provider.dart';
 import 'providers/navigation_provider.dart';
 import 'providers/reader_provider.dart';
 import 'providers/word_study_provider.dart';
+import 'providers/update_provider.dart';
 import 'core/services/database_service.dart';
 import 'app.dart';
 
@@ -33,6 +34,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(create: (_) => ReaderProvider()),
         ChangeNotifierProvider(create: (_) => WordStudyProvider()),
+        ChangeNotifierProvider(create: (_) => UpdateProvider()),
       ],
       child: const ArabicBibleApp(),
     ),
