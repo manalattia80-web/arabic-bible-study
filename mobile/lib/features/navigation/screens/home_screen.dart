@@ -501,51 +501,96 @@ class _UpdateBannerCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                IconButton(
-                  onPressed: () => context.read<UpdateProvider>().dismissUpdate(),
-                  icon: Icon(
-                    Icons.close_rounded,
-                    size: 20,
-                    color: isDark ? Colors.white54 : Colors.black45,
+                if (!context.watch<UpdateProvider>().isDownloading)
+                  IconButton(
+                    onPressed: () => context.read<UpdateProvider>().dismissUpdate(),
+                    icon: Icon(
+                      Icons.close_rounded,
+                      size: 20,
+                      color: isDark ? Colors.white54 : Colors.black45,
+                    ),
+                    tooltip: 'إخفاء',
                   ),
-                  tooltip: 'إخفاء',
-                ),
               ],
             ),
             const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () => context.read<UpdateProvider>().dismissUpdate(),
-                  child: Text(
-                    'لاحقاً',
-                    style: TextStyle(
-                      color: isDark ? Colors.white60 : Colors.black54,
+            Consumer<UpdateProvider>(
+              builder: (ctx, updater, _) {
+                if (updater.isDownloading) {
+                  final pct = (updater.downloadProgress * 100).toInt();
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            pct >= 100 ? 'جارٍ فتح برنامج التثبيت...' : 'جارٍ تنزيل التحديث...',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: isDark ? Colors.white : const Color(0xFF0F172A),
+                            ),
+                          ),
+                          Text(
+                            '$pct%',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF0284C7),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: LinearProgressIndicator(
+                          value: updater.downloadProgress > 0 ? updater.downloadProgress : null,
+                          backgroundColor: const Color(0xFF0284C7).withOpacity(0.15),
+                          color: const Color(0xFF0284C7),
+                          minHeight: 8,
+                        ),
+                      ),
+                    ],
+                  );
+                }
+
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => updater.dismissUpdate(),
+                      child: Text(
+                        'لاحقاً',
+                        style: TextStyle(
+                          color: isDark ? Colors.white60 : Colors.black54,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton.icon(
-                  onPressed: () async {
-                    final ok = await context.read<UpdateProvider>().startDownload();
-                    if (!ok && context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('تعذر فتح رابط التحميل، يرجى المحاولة لاحقاً')),
-                      );
-                    }
-                  },
-                  icon: const Icon(Icons.download_rounded, size: 18),
-                  label: const Text('تنزيل التحديث (APK)'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0284C7),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  ),
-                ),
-              ],
+                    const SizedBox(width: 8),
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        final ok = await updater.startDirectUpdate();
+                        if (!ok && ctx.mounted) {
+                          ScaffoldMessenger.of(ctx).showSnackBar(
+                            const SnackBar(content: Text('جارٍ متابعة التحميل عبر المتصفح...')),
+                          );
+                        }
+                      },
+                      icon: const Icon(Icons.system_update_rounded, size: 18),
+                      label: const Text('تحديث الآن مباشرةً'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0284C7),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ],
         ),

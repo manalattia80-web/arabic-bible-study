@@ -67,6 +67,9 @@ const manifestPath = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src
 if (fs.existsSync(manifestPath)) {
   let manifest = fs.readFileSync(manifestPath, 'utf8');
   manifest = manifest.replace(/android:label="[^"]*"/g, 'android:label="دليل الكتاب المقدس"');
+  if (!manifest.includes('android.permission.REQUEST_INSTALL_PACKAGES')) {
+    manifest = manifest.replace('<application', '<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />\n    <application');
+  }
   if (!manifest.includes('android:label="دليل الكتاب المقدس"')) {
     manifest = manifest.replace('<application', '<application\n        android:label="دليل الكتاب المقدس"');
   }

@@ -28,8 +28,9 @@ dependencies:
   # Persistence
   shared_preferences: ^2.3.2
 
-  # External URL Launcher (for App Updates & Downloads)
+  # External URL Launcher & File Opener (for App Updates & Downloads)
   url_launcher: ^6.3.0
+  open_filex: ^4.7.0
 
   # Local SQLite Database (Offline-first)
   sqflite: ^2.3.3+1

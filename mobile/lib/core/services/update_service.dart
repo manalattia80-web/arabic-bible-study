@@ -1,13 +1,18 @@
 // lib/core/services/update_service.dart
 // ─────────────────────────────────────────────────────────────────────────────
 // Automatic Update Service for Arabic Bible Study App.
-// Checks GitHub Releases API in background (with timeout), compares build numbers,
-// and launches the direct APK download link via external browser.
+// Checks GitHub Releases API in background, downloads the latest APK locally
+// with real-time download progress, and triggers direct Android package installer.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpdateInfo {
@@ -75,6 +80,72 @@ class UpdateService {
       debugPrint('Update check skipped (offline or network timeout): $e');
     }
     return null;
+  }
+
+  /// Downloads the APK directly to local device storage with progress callbacks,
+  /// and automatically triggers the Android APK package installer.
+  Future<bool> downloadAndInstallApk({
+    String? url,
+    required void Function(double progress) onProgress,
+  }) async {
+    final downloadUri = Uri.parse(url ?? defaultDownloadUrl);
+
+    try {
+      final client = http.Client();
+      final request = http.Request('GET', downloadUri);
+      final response = await client.send(request);
+
+      if (response.statusCode != 200) {
+        // Fallback to browser download if direct stream fails
+        return await launchDownloadUrl(url);
+      }
+
+      final totalBytes = response.contentLength ?? 0;
+      int receivedBytes = 0;
+
+      // Save APK into external cache or temp directory
+      final dir = await getExternalStorageDirectory() ?? await getTemporaryDirectory();
+      final filePath = p.join(dir.path, 'arabic-bible-study-update.apk');
+      final file = File(filePath);
+      if (await file.exists()) {
+        await file.delete();
+      }
+
+      final sink = file.openWrite();
+
+      await response.stream.listen(
+        (chunk) {
+          receivedBytes += chunk.length;
+          sink.add(chunk);
+          if (totalBytes > 0) {
+            onProgress(receivedBytes / totalBytes);
+          }
+        },
+        cancelOnError: true,
+      ).asFuture();
+
+      await sink.flush();
+      await sink.close();
+      client.close();
+
+      onProgress(1.0);
+
+      // Trigger Android APK Package Installer
+      final result = await OpenFilex.open(
+        filePath,
+        type: 'application/vnd.android.package-archive',
+      );
+
+      if (result.type == ResultType.done) {
+        return true;
+      } else {
+        debugPrint('OpenFilex returned: ${result.message}, falling back to browser');
+        return await launchDownloadUrl(url);
+      }
+    } catch (e) {
+      debugPrint('Direct APK download failed: $e, falling back to browser');
+      return await launchDownloadUrl(url);
+    }
   }
 
   Future<bool> launchDownloadUrl([String? url]) async {
