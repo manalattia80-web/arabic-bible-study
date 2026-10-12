@@ -41,6 +41,11 @@ android {
         }
     }
 
+    
+    aaptOptions {
+        noCompress 'dat'
+    }
+
     buildTypes {
         release {
             signingConfig = signingConfigs.release

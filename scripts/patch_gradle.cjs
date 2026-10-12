@@ -57,6 +57,8 @@ if (fs.existsSync(appGradlePath)) {
     appGradle = appGradle.replace('signingConfig signingConfigs.debug', 'signingConfig signingConfigs.release');
     fs.writeFileSync(appGradlePath, appGradle, 'utf8');
     console.log('Successfully patched android/app/build.gradle with permanent release signingConfig');
+  }
+
   if (!appGradle.includes('noCompress')) {
     const aaptBlock = `
     aaptOptions {
