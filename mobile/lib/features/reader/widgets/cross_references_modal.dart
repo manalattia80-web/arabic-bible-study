@@ -113,7 +113,7 @@ class _CrossReferencesModalState extends State<CrossReferencesModal> {
                           Row(
                             textDirection: TextDirection.rtl,
                             children: [
-                              const Text(
+                              Text(
                                 'الشواهد المرجعية المتقاطعة',
                                 style: TextStyle(
                                   color: AppColors.textPrimary,
@@ -157,7 +157,7 @@ class _CrossReferencesModalState extends State<CrossReferencesModal> {
               ),
             ),
 
-            const Divider(height: 1, color: AppColors.border),
+            Divider(height: 1, color: AppColors.border),
 
             // Content
             Expanded(
@@ -169,9 +169,9 @@ class _CrossReferencesModalState extends State<CrossReferencesModal> {
                       ),
                     )
                   : _crossRefs.isEmpty
-                      ? const Center(
+                      ? Center(
                           child: Padding(
-                            padding: EdgeInsets.all(24),
+                            padding: const EdgeInsets.all(24),
                             child: Text(
                               'لا توجد شواهد متقاطعة مسجلة لهذه الآية حالياً',
                               style: TextStyle(color: AppColors.textMuted, fontSize: 14),
@@ -256,7 +256,7 @@ class _CrossReferencesModalState extends State<CrossReferencesModal> {
                                                   },
                                                 ),
                                                 const SizedBox(width: 8),
-                                                const Icon(
+                                                Icon(
                                                   Icons.arrow_forward_ios_rounded,
                                                   size: 14,
                                                   color: AppColors.primary,

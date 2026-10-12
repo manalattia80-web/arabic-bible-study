@@ -117,7 +117,7 @@ class VerseComparisonModal extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'مقارنة الترجمات',
                             style: TextStyle(
                               color: AppColors.textPrimary,
@@ -147,7 +147,7 @@ class VerseComparisonModal extends StatelessWidget {
               ),
             ),
 
-            const Divider(height: 1, color: AppColors.border),
+            Divider(height: 1, color: AppColors.border),
 
             // Translations list
             Expanded(
@@ -257,7 +257,7 @@ class VerseComparisonModal extends StatelessWidget {
                       child: Text(
                         code,
                         style: TextStyle(
-                          color: isPrimary ? AppColors.primaryBackground : AppColors.primaryText,
+                          color: isPrimary ? Colors.white : AppColors.primaryText,
                           fontWeight: FontWeight.bold,
                           fontSize: 11,
                         ),
@@ -294,7 +294,7 @@ class VerseComparisonModal extends StatelessWidget {
                 text,
                 style: isArabic
                     ? AppTheme.arabicVerse(size: 17, color: AppColors.textPrimary)
-                    : const TextStyle(
+                    : TextStyle(
                         fontSize: 15,
                         height: 1.45,
                         fontFamily: 'serif',
