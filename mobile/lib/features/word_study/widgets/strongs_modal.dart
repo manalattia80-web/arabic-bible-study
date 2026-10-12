@@ -12,7 +12,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
 import 'audio_button.dart';
 
-class StrongsModal extends StatelessWidget {
+class StrongsModal extends StatefulWidget {
   final String strongsId;
   const StrongsModal({super.key, required this.strongsId});
 
@@ -29,6 +29,13 @@ class StrongsModal extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  State<StrongsModal> createState() => _StrongsModalState();
+}
+
+class _StrongsModalState extends State<StrongsModal> {
+  bool _showAllBooks = false;
 
   @override
   Widget build(BuildContext context) {
@@ -388,7 +395,10 @@ class StrongsModal extends StatelessWidget {
                             const SizedBox(height: 12),
 
                             // Distribution Bars (Top books or all books)
-                            ...provider.bookDistribution.take(8).map((b) {
+                            ...(_showAllBooks
+                                ? provider.bookDistribution
+                                : provider.bookDistribution.take(6)
+                            ).map((b) {
                               final bName = b['book_name'] as String? ?? 'سفر';
                               final count = b['count'] as int? ?? 0;
                               final maxCount = provider.bookDistribution.first['count'] as int? ?? 1;
@@ -435,12 +445,46 @@ class StrongsModal extends StatelessWidget {
                               );
                             }),
 
-                            if (provider.bookDistribution.length > 8) ...[
-                              const SizedBox(height: 6),
+                            if (provider.bookDistribution.length > 6) ...[
+                              const SizedBox(height: 10),
                               Center(
-                                child: Text(
-                                  '+ أسفار أخرى تكررت فيها الكلمة',
-                                  style: TextStyle(fontSize: 10, color: AppColors.textMuted),
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _showAllBooks = !_showAllBooks;
+                                    });
+                                  },
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryGlow,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(color: AppColors.primary.withOpacity(0.35)),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      textDirection: TextDirection.rtl,
+                                      children: [
+                                        Icon(
+                                          _showAllBooks ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded,
+                                          size: 18,
+                                          color: AppColors.primary,
+                                        ),
+                                        const SizedBox(width: 6),
+                                        Text(
+                                          _showAllBooks
+                                              ? 'إخفاء وعرض أول 6 أسفار فقط'
+                                              : 'عرض جميع الأسفار (${provider.bookDistribution.length} سفر) بالكامل',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.primaryText,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
