@@ -17,6 +17,8 @@ import '../../../providers/reader_provider.dart';
 import '../../../providers/navigation_provider.dart';
 import '../../../providers/theme_provider.dart';
 import '../../../models/verse.dart';
+import '../widgets/verse_comparison_modal.dart';
+import '../widgets/cross_references_modal.dart';
 
 class ChapterReaderScreen extends StatefulWidget {
   final int  bookId;
@@ -384,15 +386,113 @@ class _VerseCard extends StatelessWidget {
                     ),
                   ],
 
-                  // Tap hint
-                  const SizedBox(height: 8),
+                  // Action buttons row (Word Study, Compare, Cross-References)
+                  const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     textDirection: TextDirection.rtl,
                     children: [
-                      Icon(Icons.touch_app_outlined, size: 12, color: AppColors.textMuted),
-                      const SizedBox(width: 4),
-                      Text('دراسة الكلمات', style: TextStyle(color: AppColors.textMuted, fontSize: 10)),
+                      // Word Study Button
+                      InkWell(
+                        onTap: () => context.pushNamed(
+                          'word-study',
+                          pathParameters: {'verseId': verse.id},
+                          extra: {
+                            'verse_num':  verse.verseNum,
+                            'chapter_num': chapterNum,
+                            'text_avd_ar': verse.textAvdAr,
+                            'text_original': verse.textManuscript ?? verse.textOriginal,
+                            'text_original_lang': verse.textOriginalLang,
+                          },
+                        ),
+                        borderRadius: BorderRadius.circular(6),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(Icons.menu_book_rounded, size: 14, color: AppColors.primary),
+                              const SizedBox(width: 4),
+                              Text(
+                                'دراسة الكلمات',
+                                style: TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      // Compare & Cross-References actions
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Compare translations button
+                          InkWell(
+                            onTap: () => VerseComparisonModal.show(context, verse),
+                            borderRadius: BorderRadius.circular(6),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: AppColors.bgSurface,
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: AppColors.border),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                textDirection: TextDirection.rtl,
+                                children: [
+                                  Icon(Icons.compare_arrows_rounded, size: 14, color: AppColors.primary),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'مقارنة الترجمات',
+                                    style: TextStyle(
+                                      color: AppColors.textSecondary,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+
+                          // Cross-references button
+                          InkWell(
+                            onTap: () => CrossReferencesModal.show(context, verse),
+                            borderRadius: BorderRadius.circular(6),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: AppColors.bgSurface,
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: AppColors.border),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                textDirection: TextDirection.rtl,
+                                children: [
+                                  Icon(Icons.hub_rounded, size: 13, color: AppColors.primary),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'شواهد',
+                                    style: TextStyle(
+                                      color: AppColors.textSecondary,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ],

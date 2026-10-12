@@ -133,6 +133,22 @@ class ApiService {
     }
   }
 
+  static Future<List<Map<String, dynamic>>> getStrongsBookDistribution(String strongsId) async {
+    try {
+      return await DatabaseService.instance.getStrongsBookDistribution(strongsId);
+    } catch (_) {
+      return [];
+    }
+  }
+
+  static Future<List<Map<String, dynamic>>> getCrossReferences(int bookId, int chapterNum, int verseNum) async {
+    try {
+      return await DatabaseService.instance.getCrossReferences(bookId, chapterNum, verseNum);
+    } catch (_) {
+      return [];
+    }
+  }
+
   // ── Search (Offline Full-Text Search with API Fallback) ─────────────────────
 
   static Future<SearchResult> searchVerses(

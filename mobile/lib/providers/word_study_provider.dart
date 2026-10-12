@@ -12,6 +12,7 @@ class WordStudyProvider extends ChangeNotifier {
   List<WordMapping>   _mappings  = [];
   StrongsEntry?       _selectedStrongs;
   List<WordOccurrence> _occurrences = [];
+  List<Map<String, dynamic>> _bookDistribution = [];
   
   bool                _loadingMappings = false;
   bool                _loadingStrongs  = false;
@@ -24,6 +25,7 @@ class WordStudyProvider extends ChangeNotifier {
   List<WordMapping> get mappings        => _mappings;
   StrongsEntry?     get selectedStrongs => _selectedStrongs;
   List<WordOccurrence> get occurrences  => _occurrences;
+  List<Map<String, dynamic>> get bookDistribution => _bookDistribution;
   
   bool              get loadingMappings => _loadingMappings;
   bool              get loadingStrongs  => _loadingStrongs;
@@ -65,11 +67,13 @@ class WordStudyProvider extends ChangeNotifier {
       notifyListeners();
     }
     
-    // Fetch occurrences independently
+    // Fetch occurrences and book distribution independently
     try {
       _occurrences = await ApiService.getStrongsOccurrences(strongsId);
+      _bookDistribution = await ApiService.getStrongsBookDistribution(strongsId);
     } catch (_) {
       _occurrences = [];
+      _bookDistribution = [];
     } finally {
       _loadingOccurrences = false;
       notifyListeners();

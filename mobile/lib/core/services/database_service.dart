@@ -32,11 +32,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v5.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v6.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 5; // Incremented for full normalized search overhaul
+    const targetDbVersion = 6; // Incremented for translations and cross-references
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -46,7 +46,7 @@ class DatabaseService {
       } catch (_) {}
 
       // Clean up previous database versions to save space on device
-      for (final oldVer in ['bible_study_v2.db', 'bible_study_v3.db', 'bible_study_v4.db']) {
+      for (final oldVer in ['bible_study_v2.db', 'bible_study_v3.db', 'bible_study_v4.db', 'bible_study_v5.db']) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
           final oldFile = File(oldPath);
@@ -162,7 +162,51 @@ class DatabaseService {
       textAvdAr:        r['text_avd_ar'] as String? ?? '',
       textOriginal:     r['text_original'] as String? ?? '',
       textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
+      textAlab:         r['text_alab'] as String?,
+      textErv:          r['text_erv'] as String?,
+      textKjv:          r['text_kjv'] as String?,
+      textNiv:          r['text_niv'] as String?,
     )).toList();
+  }
+
+  Future<Verse?> getVerse(int bookId, int chapterNum, int verseNum) async {
+    final db = await database;
+    final rows = await db.rawQuery(
+      'SELECT v.*, b.name_ar as book_name_ar FROM verses v JOIN books b ON v.book_id = b.id WHERE v.book_id = ? AND v.chapter_num = ? AND v.verse_num = ? LIMIT 1',
+      [bookId, chapterNum, verseNum],
+    );
+    if (rows.isEmpty) return null;
+    final r = rows.first;
+    return Verse(
+      id:               r['id'] as String,
+      bookId:           r['book_id'] as int,
+      chapterNum:       r['chapter_num'] as int,
+      verseNum:         r['verse_num'] as int,
+      textAvdAr:        r['text_avd_ar'] as String? ?? '',
+      textOriginal:     r['text_original'] as String? ?? '',
+      textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
+      bookNameAr:       r['book_name_ar'] as String?,
+      textAlab:         r['text_alab'] as String?,
+      textErv:          r['text_erv'] as String?,
+      textKjv:          r['text_kjv'] as String?,
+      textNiv:          r['text_niv'] as String?,
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> getCrossReferences(int bookId, int chapterNum, int verseNum) async {
+    final db = await database;
+    return await db.rawQuery('''
+      SELECT cr.id, cr.target_book_id, b.name_ar as target_book_name,
+             cr.target_chapter_num, cr.target_verse_num,
+             COALESCE(v.text_avd_ar, '') as target_text
+      FROM cross_references cr
+      JOIN books b ON cr.target_book_id = b.id
+      LEFT JOIN verses v ON v.book_id = cr.target_book_id 
+                         AND v.chapter_num = cr.target_chapter_num 
+                         AND v.verse_num = cr.target_verse_num
+      WHERE cr.book_id = ? AND cr.chapter_num = ? AND cr.verse_num = ?
+      ORDER BY cr.id ASC
+    ''', [bookId, chapterNum, verseNum]);
   }
 
   // ── Word Study ─────────────────────────────────────────────────────────────
@@ -289,6 +333,20 @@ class DatabaseService {
       }
     }
     return grouped.values.toList();
+  }
+
+  /// Returns occurrence counts per book for the given strongsId (for charting/visualizing)
+  Future<List<Map<String, dynamic>>> getStrongsBookDistribution(String strongsId) async {
+    final db = await database;
+    return await db.rawQuery('''
+      SELECT b.id as book_id, b.name_ar as book_name, b.testament, COUNT(wm.id) as count
+      FROM word_mappings wm
+      JOIN verses v ON wm.verse_id = v.id
+      JOIN books b ON v.book_id = b.id
+      WHERE wm.strongs_id = ?
+      GROUP BY b.id, b.name_ar, b.testament
+      ORDER BY b.id ASC
+    ''', [strongsId]);
   }
 
   // ── Offline Search (Diacritics-Insensitive & Normalized) ───────────────────

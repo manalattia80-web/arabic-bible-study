@@ -331,6 +331,126 @@ class StrongsModal extends StatelessWidget {
                   ),
                 ),
 
+              // Word Distribution Chart (Proposal 4: خريطة وتوزيع تكرار الكلمة بيانيًا)
+              if (!provider.loadingOccurrences && provider.bookDistribution.isNotEmpty)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    child: _Section(
+                      label: 'توزيع تكرار الكلمة بيانيًا (Concordance Distribution)',
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: AppColors.bgSurface,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.border),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // Summary Row
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Row(
+                                  textDirection: TextDirection.rtl,
+                                  children: [
+                                    Icon(Icons.bar_chart_rounded, size: 16, color: AppColors.primary),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      'إجمالي الورود في الأسفار:',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: AppColors.textSecondary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primaryGlow,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    '${provider.bookDistribution.fold<int>(0, (sum, b) => sum + (b['count'] as int? ?? 0))} مرة عبر ${provider.bookDistribution.length} سفر',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: AppColors.primaryText,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+
+                            // Distribution Bars (Top books or all books)
+                            ...provider.bookDistribution.take(8).map((b) {
+                              final bName = b['book_name'] as String? ?? 'سفر';
+                              final count = b['count'] as int? ?? 0;
+                              final maxCount = provider.bookDistribution.first['count'] as int? ?? 1;
+                              final ratio = maxCount > 0 ? (count / maxCount).clamp(0.05, 1.0) : 0.1;
+
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 4),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      textDirection: TextDirection.rtl,
+                                      children: [
+                                        Text(
+                                          bName,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.textPrimary,
+                                          ),
+                                        ),
+                                        Text(
+                                          '$count',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.primary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 3),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: LinearProgressIndicator(
+                                        value: ratio,
+                                        minHeight: 6,
+                                        backgroundColor: AppColors.bgCardHov,
+                                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+
+                            if (provider.bookDistribution.length > 8) ...[
+                              const SizedBox(height: 6),
+                              Center(
+                                child: Text(
+                                  '+ أسفار أخرى تكررت فيها الكلمة',
+                                  style: TextStyle(fontSize: 10, color: AppColors.textMuted),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
               // Occurrences
               if (provider.loadingOccurrences)
                 SliverToBoxAdapter(

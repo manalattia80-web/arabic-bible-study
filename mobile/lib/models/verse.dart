@@ -10,6 +10,10 @@ class Verse {
   final String textOriginalLang; // 'hebrew' | 'greek' | 'aramaic'
   final String? bookNameAr;
   final List<String>? highlightWords;
+  final String? textAlab;
+  final String? textErv;
+  final String? textKjv;
+  final String? textNiv;
 
   const Verse({
     required this.id,
@@ -22,6 +26,10 @@ class Verse {
     required this.textOriginalLang,
     this.bookNameAr,
     this.highlightWords,
+    this.textAlab,
+    this.textErv,
+    this.textKjv,
+    this.textNiv,
   });
 
   factory Verse.fromJson(Map<String, dynamic> j) {
@@ -41,6 +49,10 @@ class Verse {
       textManuscript:   j['text_manuscript'] as String?,
       textOriginalLang: j['text_original_lang'] as String,
       bookNameAr:       bName,
+      textAlab:         j['text_alab'] as String?,
+      textErv:          j['text_erv'] as String?,
+      textKjv:          j['text_kjv'] as String?,
+      textNiv:          j['text_niv'] as String?,
     );
   }
 
