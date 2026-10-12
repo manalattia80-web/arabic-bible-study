@@ -246,7 +246,7 @@ class _TableHeader extends StatelessWidget {
         Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('النص الأصلي', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
         const SizedBox(width: 12),
         Expanded(flex: 2, child: Text('النطق والرمز', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
-        const SizedBox(width: 40),
+        const SizedBox(width: 52),
       ],
     ),
   );
@@ -399,26 +399,33 @@ class _WordRow extends StatelessWidget {
 
                   // Action icons (audio + Strong's indicator)
                   SizedBox(
-                    width: 40,
+                    width: 52,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         if (mapping.hasAudio)
-                          GestureDetector(
+                          InkWell(
+                            borderRadius: BorderRadius.circular(20),
                             onTap: () => provider.playAudio(mapping.audioUrl!),
-                            child: Icon(
-                              provider.isPlaying(mapping.audioUrl!)
-                                  ? Icons.stop_circle
-                                  : Icons.play_circle_outline,
-                              size:  20,
-                              color: provider.isPlaying(mapping.audioUrl!)
-                                  ? AppColors.primary
-                                  : AppColors.textMuted,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Icon(
+                                provider.isPlaying(mapping.audioUrl!)
+                                    ? Icons.stop_circle_rounded
+                                    : Icons.volume_up_rounded,
+                                size:  22,
+                                color: provider.isPlaying(mapping.audioUrl!)
+                                    ? AppColors.primary
+                                    : AppColors.primary,
+                              ),
                             ),
                           ),
                         if (mapping.hasStrongs)
-                          Icon(Icons.info_outline, size: 16, color: AppColors.textMuted),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 2),
+                            child: Icon(Icons.info_outline_rounded, size: 16, color: AppColors.textMuted),
+                          ),
                       ],
                     ),
                   ),

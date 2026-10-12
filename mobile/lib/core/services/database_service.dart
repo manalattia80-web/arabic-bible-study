@@ -221,12 +221,25 @@ class DatabaseService {
 
     if (rows.isEmpty) return null;
     final r = rows.first;
+    final orig = r['original_word'] as String? ?? '';
+    final lang = r['language'] as String? ?? 'hebrew';
+    final isHeb = lang == 'hebrew' || lang == 'aramaic';
+
+    String? audio;
+    if (orig.trim().isNotEmpty) {
+      final langCode = isHeb ? 'iw' : 'el';
+      final ttsUrl =
+          'https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=gtx';
+      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
+          Uri.encodeComponent(ttsUrl);
+    }
+
     return StrongsEntry(
       strongsId:       r['strongs_id'] as String,
-      language:        r['language'] as String? ?? 'hebrew',
-      originalWord:    r['original_word'] as String? ?? '',
+      language:        lang,
+      originalWord:    orig,
       transliteration: r['transliteration'] as String? ?? '',
-      audioUrl:        null, // Synthesized on the fly by StrongsEntry.fromJson or fallback
+      audioUrl:        audio,
       definitionEn:    r['definition_en'] as String? ?? '',
       kjvUsage:        r['kjv_usage'] as String?,
       definitionAr:    r['definition_ar'] as String?,
