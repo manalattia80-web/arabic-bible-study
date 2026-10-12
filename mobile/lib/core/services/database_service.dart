@@ -32,11 +32,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v6.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v7.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 6; // Incremented for translations and cross-references
+    const targetDbVersion = 7; // Incremented for full cross-references integration
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -46,7 +46,7 @@ class DatabaseService {
       } catch (_) {}
 
       // Clean up previous database versions to save space on device
-      for (final oldVer in ['bible_study_v2.db', 'bible_study_v3.db', 'bible_study_v4.db', 'bible_study_v5.db']) {
+      for (final oldVer in ['bible_study_v2.db', 'bible_study_v3.db', 'bible_study_v4.db', 'bible_study_v5.db', 'bible_study_v6.db']) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
           final oldFile = File(oldPath);
