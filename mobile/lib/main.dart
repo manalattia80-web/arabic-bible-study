@@ -10,11 +10,15 @@ import 'providers/update_provider.dart';
 import 'core/services/database_service.dart';
 import 'app.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize offline SQLite database in background
-  DatabaseService.instance.database;
+  // Guarantee offline SQLite database is ready before UI renders
+  try {
+    await DatabaseService.instance.database;
+  } catch (e) {
+    debugPrint('Database initialization warning: $e');
+  }
 
   // Lock to portrait mode (can be unlocked later for tablets)
   SystemChrome.setPreferredOrientations([

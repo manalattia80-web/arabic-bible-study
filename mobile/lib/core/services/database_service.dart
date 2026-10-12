@@ -23,20 +23,27 @@ class DatabaseService {
   static final DatabaseService instance = DatabaseService._();
 
   Database? _db;
+  Future<Database>? _initFuture;
 
   Future<Database> get database async {
     if (_db != null && _db!.isOpen) return _db!;
-    _db = await _initDatabase();
-    return _db!;
+    try {
+      _initFuture ??= _initDatabase();
+      _db = await _initFuture!;
+      return _db!;
+    } catch (e) {
+      _initFuture = null;
+      rethrow;
+    }
   }
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v7.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v8.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 7; // Incremented for full cross-references integration
+    const targetDbVersion = 8; // Incremented for chunked stream-loader + full cross-references & translations
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -46,7 +53,14 @@ class DatabaseService {
       } catch (_) {}
 
       // Clean up previous database versions to save space on device
-      for (final oldVer in ['bible_study_v2.db', 'bible_study_v3.db', 'bible_study_v4.db', 'bible_study_v5.db', 'bible_study_v6.db']) {
+      for (final oldVer in [
+        'bible_study_v2.db',
+        'bible_study_v3.db',
+        'bible_study_v4.db',
+        'bible_study_v5.db',
+        'bible_study_v6.db',
+        'bible_study_v7.db',
+      ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
           final oldFile = File(oldPath);
@@ -56,12 +70,23 @@ class DatabaseService {
         } catch (_) {}
       }
 
-      // Copy fresh asset
-      final data = await rootBundle.load('assets/bible_study.db');
-      final bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-      await File(dbPath).writeAsBytes(bytes, flush: true);
+      // Reassemble SQLite database from chunked parts (5 MB each, zero OOM risk)
+      final outFile = File(dbPath);
+      if (await outFile.exists()) {
+        try { await outFile.delete(); } catch (_) {}
+      }
+
+      final sink = outFile.openWrite();
+      const totalParts = 20;
+      for (int i = 0; i < totalParts; i++) {
+        final partIndexStr = i.toString().padLeft(2, '0');
+        final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
+        sink.add(partData.buffer.asUint8List(partData.offsetInBytes, partData.lengthInBytes));
+      }
+      await sink.flush();
+      await sink.close();
       await prefs.setInt('db_version', targetDbVersion);
-      debugPrint('Local SQLite database copied successfully (${bytes.length} bytes).');
+      debugPrint('Local SQLite database assembled successfully (${await outFile.length()} bytes).');
     }
 
     final db = await openDatabase(dbPath);

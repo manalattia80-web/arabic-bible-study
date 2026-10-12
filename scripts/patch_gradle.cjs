@@ -57,16 +57,26 @@ if (fs.existsSync(appGradlePath)) {
     appGradle = appGradle.replace('signingConfig signingConfigs.debug', 'signingConfig signingConfigs.release');
     fs.writeFileSync(appGradlePath, appGradle, 'utf8');
     console.log('Successfully patched android/app/build.gradle with permanent release signingConfig');
-  } else {
-    console.log('android/app/build.gradle already contains permanent release signingConfig');
+  if (!appGradle.includes('noCompress')) {
+    const aaptBlock = `
+    aaptOptions {
+        noCompress 'dat'
+    }
+`;
+    appGradle = appGradle.replace('buildTypes {', aaptBlock + '\n    buildTypes {');
+    fs.writeFileSync(appGradlePath, appGradle, 'utf8');
+    console.log('Successfully added noCompress dat to android/app/build.gradle');
   }
 }
 
-// 4. Ensure Android App Name Label is "دليل الكتاب المقدس"
+// 4. Ensure Android App Name Label is "دليل الكتاب المقدس" and largeHeap="true"
 const manifestPath = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
 if (fs.existsSync(manifestPath)) {
   let manifest = fs.readFileSync(manifestPath, 'utf8');
   manifest = manifest.replace(/android:label="[^"]*"/g, 'android:label="دليل الكتاب المقدس"');
+  if (!manifest.includes('android:largeHeap="true"')) {
+    manifest = manifest.replace('<application', '<application\n        android:largeHeap="true"');
+  }
   if (!manifest.includes('android.permission.REQUEST_INSTALL_PACKAGES')) {
     manifest = manifest.replace('<application', '<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />\n    <application');
   }
@@ -74,7 +84,7 @@ if (fs.existsSync(manifestPath)) {
     manifest = manifest.replace('<application', '<application\n        android:label="دليل الكتاب المقدس"');
   }
   fs.writeFileSync(manifestPath, manifest, 'utf8');
-  console.log('Successfully patched AndroidManifest.xml with app name: دليل الكتاب المقدس');
+  console.log('Successfully patched AndroidManifest.xml with app name & largeHeap');
 }
 
 const stringsDir = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src', 'main', 'res', 'values');

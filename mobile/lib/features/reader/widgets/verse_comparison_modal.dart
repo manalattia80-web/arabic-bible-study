@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/database_service.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../models/verse.dart';
 
-class VerseComparisonModal extends StatelessWidget {
+class VerseComparisonModal extends StatefulWidget {
   final Verse verse;
 
   const VerseComparisonModal({super.key, required this.verse});
@@ -20,31 +21,62 @@ class VerseComparisonModal extends StatelessWidget {
     );
   }
 
+  @override
+  State<VerseComparisonModal> createState() => _VerseComparisonModalState();
+}
+
+class _VerseComparisonModalState extends State<VerseComparisonModal> {
+  late Verse _verse;
+
+  @override
+  void initState() {
+    super.initState();
+    _verse = widget.verse;
+    _ensureTranslationsLoaded();
+  }
+
+  Future<void> _ensureTranslationsLoaded() async {
+    if (_verse.textAlab == null && _verse.textErv == null) {
+      try {
+        final full = await DatabaseService.instance.getVerse(
+          widget.verse.bookId,
+          widget.verse.chapterNum,
+          widget.verse.verseNum,
+        );
+        if (full != null && mounted) {
+          setState(() {
+            _verse = full;
+          });
+        }
+      } catch (_) {}
+    }
+  }
+
   void _copyAll(BuildContext context) {
     final buffer = StringBuffer();
-    buffer.writeln('【 ${verse.reference} 】');
+    buffer.writeln('【 ${_verse.reference} 】');
     buffer.writeln();
     buffer.writeln('● الفانديك (Smith & Van Dyke):');
-    buffer.writeln(verse.textAvdAr);
-    if (verse.textAlab != null && verse.textAlab!.isNotEmpty) {
+    buffer.writeln(_verse.textAvdAr);
+    if (_verse.textAlab != null && _verse.textAlab!.isNotEmpty) {
       buffer.writeln();
       buffer.writeln('● كتاب الحياة (ALAB):');
-      buffer.writeln(verse.textAlab);
+      buffer.writeln(_verse.textAlab);
     }
-    if (verse.textErv != null && verse.textErv!.isNotEmpty) {
+    if (_verse.textErv != null && _verse.textErv!.isNotEmpty) {
       buffer.writeln();
       buffer.writeln('● الترجمة العربية المبسطة (ERV):');
-      buffer.writeln(verse.textErv);
+      buffer.writeln(_verse.textErv);
     }
-    if (verse.textKjv != null && verse.textKjv!.isNotEmpty) {
+    if (_verse.textKjv != null && _verse.textKjv!.isNotEmpty) {
       buffer.writeln();
       buffer.writeln('● King James Version (KJV):');
-      buffer.writeln(verse.textKjv);
+      buffer.writeln(_verse.textKjv);
     }
-    if (verse.textNiv != null && verse.textNiv!.isNotEmpty) {
+    if (_verse.textNiv != null && _verse.textNiv!.isNotEmpty) {
       buffer.writeln();
       buffer.writeln('● New International Version (NIV):');
-      buffer.writeln(verse.textNiv);
+      buffer.writeln(_verse.textNiv);
     }
 
     Clipboard.setData(ClipboardData(text: buffer.toString()));
@@ -57,7 +89,7 @@ class VerseComparisonModal extends StatelessWidget {
   }
 
   void _copySingle(BuildContext context, String title, String text) {
-    Clipboard.setData(ClipboardData(text: '$title (${verse.reference}):\n$text'));
+    Clipboard.setData(ClipboardData(text: '$title (${_verse.reference}):\n$text'));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('تم نسخ $title', textAlign: TextAlign.center),
@@ -126,7 +158,7 @@ class VerseComparisonModal extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            verse.reference,
+                            _verse.reference,
                             style: TextStyle(
                               color: AppColors.primary,
                               fontWeight: FontWeight.w600,
@@ -160,48 +192,48 @@ class VerseComparisonModal extends StatelessWidget {
                     context: context,
                     code: 'AVD',
                     title: 'ترجمة الفانديك (Smith & Van Dyke)',
-                    text: verse.textAvdAr,
+                    text: _verse.textAvdAr,
                     isArabic: true,
                     isPrimary: true,
                   ),
 
                   // 2. Arabic Life Application Bible (ALAB)
-                  if (verse.textAlab != null && verse.textAlab!.isNotEmpty)
+                  if (_verse.textAlab != null && _verse.textAlab!.isNotEmpty)
                     _buildTranslationCard(
                       context: context,
                       code: 'ALAB',
                       title: 'كتاب الحياة (الترجمة التفسيرية)',
-                      text: verse.textAlab!,
+                      text: _verse.textAlab!,
                       isArabic: true,
                     ),
 
                   // 3. Easy-to-Read Version (ERV-AR)
-                  if (verse.textErv != null && verse.textErv!.isNotEmpty)
+                  if (_verse.textErv != null && _verse.textErv!.isNotEmpty)
                     _buildTranslationCard(
                       context: context,
                       code: 'ERV',
                       title: 'الترجمة العربية المبسطة',
-                      text: verse.textErv!,
+                      text: _verse.textErv!,
                       isArabic: true,
                     ),
 
                   // 4. King James Version (KJV)
-                  if (verse.textKjv != null && verse.textKjv!.isNotEmpty)
+                  if (_verse.textKjv != null && _verse.textKjv!.isNotEmpty)
                     _buildTranslationCard(
                       context: context,
                       code: 'KJV',
                       title: 'King James Version',
-                      text: verse.textKjv!,
+                      text: _verse.textKjv!,
                       isArabic: false,
                     ),
 
                   // 5. New International Version (NIV)
-                  if (verse.textNiv != null && verse.textNiv!.isNotEmpty)
+                  if (_verse.textNiv != null && _verse.textNiv!.isNotEmpty)
                     _buildTranslationCard(
                       context: context,
                       code: 'NIV',
                       title: 'New International Version',
-                      text: verse.textNiv!,
+                      text: _verse.textNiv!,
                       isArabic: false,
                     ),
 

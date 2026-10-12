@@ -55,7 +55,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/bible_study.db
+    - assets/db_parts/
 
   # Uncomment if adding local font files later (e.g. SBL Hebrew/Greek)
   # fonts:
