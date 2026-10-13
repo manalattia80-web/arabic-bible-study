@@ -11,7 +11,6 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
 import '../../../models/word_mapping.dart';
-import '../widgets/strongs_modal.dart';
 import '../widgets/morphology_modal.dart';
 import '../../../core/services/morphology_service.dart';
 
@@ -363,7 +362,7 @@ class _WordRow extends StatelessWidget {
                                 ),
                                 child: Text(
                                   badgeText,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color:      AppColors.primary,
                                     fontSize:   10,
                                     fontWeight: FontWeight.bold,
@@ -426,8 +425,8 @@ class _WordRow extends StatelessWidget {
                         InkWell(
                           borderRadius: BorderRadius.circular(20),
                           onTap: () => MorphologyModal.show(context, mapping: mapping),
-                          child: const Padding(
-                            padding: EdgeInsets.all(3),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3),
                             child: Icon(
                               Icons.psychology_outlined,
                               size: 20,
