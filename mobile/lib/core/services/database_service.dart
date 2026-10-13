@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v9.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v10.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 9; // Corrected corrupt characters in Arabic text (مُسْتَحِقٌّ, حَقٌّ, كُلٌّ, هُدُوءٌ, إِخْوَتِي)
+    const targetDbVersion = 10; // Cleaned text_clean search index from legacy symbols
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -61,6 +61,7 @@ class DatabaseService {
         'bible_study_v6.db',
         'bible_study_v7.db',
         'bible_study_v8.db',
+        'bible_study_v9.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
@@ -380,12 +381,13 @@ class DatabaseService {
   static String normalizeArabic(String text) {
     if (text.isEmpty) return '';
     return text
-        .replaceAll(RegExp(r'[\u064B-\u065F\u0670\u0640]'), '') // remove tashkeel & tatweel
+        .replaceAll(RegExp(r'[\u064B-\u065F\u0670\u0640\u00AD]'), '') // remove tashkeel, tatweel, soft-hyphen
         .replaceAll(RegExp(r'[أإآ]'), 'ا')
         .replaceAll('ة', 'ه')
         .replaceAll('ى', 'ي')
         .replaceAll('السموات', 'السماوات')
         .replaceAll('داوود', 'داود')
+        .replaceAll(RegExp(r'[÷¾]'), '') // remove legacy division and fraction symbols
         .trim();
   }
 
@@ -468,6 +470,9 @@ class DatabaseService {
     }
 
     final normQuery = normalizeArabic(trimmed);
+    if (normQuery.isEmpty && !trimmed.contains(RegExp(r'[A-Za-z\u0370-\u03FF\u0590-\u05FF]'))) {
+      return (verses: <Verse>[], total: 0);
+    }
     final words = normQuery.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
 
     String whereConditions;
