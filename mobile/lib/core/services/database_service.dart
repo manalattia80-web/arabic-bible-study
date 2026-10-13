@@ -322,6 +322,23 @@ class DatabaseService {
 
   Future<List<WordOccurrence>> getStrongsOccurrences(String strongsId) async {
     final db = await database;
+    final match = RegExp(r'^([HG])\s*0*([1-9][0-9]{0,4})$', caseSensitive: false).firstMatch(strongsId.trim());
+    List<String> candidates;
+    if (match != null) {
+      final prefix = match.group(1)!.toUpperCase();
+      final numInt = int.tryParse(match.group(2)!) ?? 0;
+      candidates = {
+        '$prefix$numInt',
+        '$prefix${numInt.toString().padLeft(4, '0')}',
+        '$prefix${numInt.toString().padLeft(5, '0')}',
+        '$numInt',
+        numInt.toString().padLeft(4, '0'),
+      }.toList();
+    } else {
+      candidates = [strongsId.trim()];
+    }
+
+    final placeholders = List.filled(candidates.length, '?').join(',');
     final rows = await db.rawQuery('''
       SELECT 
         wm.ar_word,
@@ -335,9 +352,9 @@ class DatabaseService {
       FROM word_mappings wm
       JOIN verses v ON wm.verse_id = v.id
       JOIN books b ON v.book_id = b.id
-      WHERE wm.strongs_id = ?
+      WHERE wm.strongs_id IN ($placeholders)
       ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC
-    ''', [strongsId]);
+    ''', candidates);
 
     // Group by verse_id if a word appears multiple times in the same verse
     final Map<String, WordOccurrence> grouped = {};
@@ -403,12 +420,23 @@ class DatabaseService {
     final trimmed = query.trim();
     if (trimmed.isEmpty) return (verses: <Verse>[], total: 0);
 
-    // If query is a Strong's ID (e.g. H4428 or G2880), search via word_mappings
+    // If query is a Strong's ID (e.g. H4428 or G2880), search via word_mappings with fallback to text_original
     final strongsMatch = RegExp(r'^([HG])\s*0*([1-9][0-9]{0,4})$', caseSensitive: false).firstMatch(trimmed);
     if (strongsMatch != null) {
-      final sId = '${strongsMatch.group(1)!.toUpperCase()}${strongsMatch.group(2)}';
-      String sWhere = 'wm.strongs_id = ?';
-      List<dynamic> sArgs = [sId];
+      final prefix = strongsMatch.group(1)!.toUpperCase();
+      final numStr = strongsMatch.group(2)!;
+      final numInt = int.tryParse(numStr) ?? 0;
+      final candidates = {
+        '$prefix$numInt',
+        '$prefix${numInt.toString().padLeft(4, '0')}',
+        '$prefix${numInt.toString().padLeft(5, '0')}',
+        '$numInt',
+        numInt.toString().padLeft(4, '0'),
+      }.toList();
+
+      final sPlaceholders = List.filled(candidates.length, '?').join(',');
+      String sWhere = 'wm.strongs_id IN ($sPlaceholders)';
+      List<dynamic> sArgs = [...candidates];
 
       if (bookId != null) {
         sWhere += ' AND v.book_id = ?';
@@ -431,42 +459,104 @@ class DatabaseService {
         WHERE $sWhere
       ''';
       final countResult = await db.rawQuery(countSql, sArgs);
-      final total = Sqflite.firstIntValue(countResult) ?? 0;
+      int total = Sqflite.firstIntValue(countResult) ?? 0;
 
-      if (total == 0) return (verses: <Verse>[], total: 0);
+      if (total > 0) {
+        final querySql = '''
+          SELECT v.*, b.name_ar as book_name_ar, GROUP_CONCAT(wm.ar_word, ',') as mapped_words
+          FROM verses v
+          JOIN books b ON v.book_id = b.id
+          JOIN word_mappings wm ON v.id = wm.verse_id
+          WHERE $sWhere
+          GROUP BY v.id
+          ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC
+          LIMIT ? OFFSET ?
+        ''';
+        final queryArgs = [...sArgs, limit, (page - 1) * limit];
+        final rows = await db.rawQuery(querySql, queryArgs);
 
-      final querySql = '''
-        SELECT v.*, b.name_ar as book_name_ar, GROUP_CONCAT(wm.ar_word, ',') as mapped_words
-        FROM verses v
-        JOIN books b ON v.book_id = b.id
-        JOIN word_mappings wm ON v.id = wm.verse_id
-        WHERE $sWhere
-        GROUP BY v.id
-        ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC
-        LIMIT ? OFFSET ?
-      ''';
-      final queryArgs = [...sArgs, limit, (page - 1) * limit];
-      final rows = await db.rawQuery(querySql, queryArgs);
+        final verses = rows.map((r) {
+          final rawWords = r['mapped_words'] as String?;
+          final wordsList = rawWords != null
+              ? rawWords.split(',').map((w) => w.trim()).where((w) => w.isNotEmpty).toSet().toList()
+              : null;
+          return Verse(
+            id:               r['id'] as String,
+            bookId:           r['book_id'] as int,
+            chapterNum:       r['chapter_num'] as int,
+            verseNum:         r['verse_num'] as int,
+            textAvdAr:        r['text_avd_ar'] as String? ?? '',
+            textOriginal:     r['text_original'] as String? ?? '',
+            textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
+            bookNameAr:       r['book_name_ar'] as String?,
+            highlightWords:   wordsList,
+          );
+        }).toList();
 
-      final verses = rows.map((r) {
-        final rawWords = r['mapped_words'] as String?;
-        final wordsList = rawWords != null
-            ? rawWords.split(',').map((w) => w.trim()).where((w) => w.isNotEmpty).toSet().toList()
-            : null;
-        return Verse(
-          id:               r['id'] as String,
-          bookId:           r['book_id'] as int,
-          chapterNum:       r['chapter_num'] as int,
-          verseNum:         r['verse_num'] as int,
-          textAvdAr:        r['text_avd_ar'] as String? ?? '',
-          textOriginal:     r['text_original'] as String? ?? '',
-          textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
-          bookNameAr:       r['book_name_ar'] as String?,
-          highlightWords:   wordsList,
-        );
-      }).toList();
+        return (verses: verses, total: total);
+      }
 
-      return (verses: verses, total: total);
+      // Fallback: search via original Hebrew/Greek word from strongs_entries
+      final sEntries = await db.rawQuery(
+        'SELECT original_word FROM strongs_entries WHERE strongs_id IN ($sPlaceholders) LIMIT 1',
+        candidates,
+      );
+      if (sEntries.isNotEmpty) {
+        final origWord = sEntries.first['original_word'] as String? ?? '';
+        final unpointed = origWord.replaceAll(RegExp(r'[\u0591-\u05C7\u0300-\u036F]'), '').trim();
+        final searchToken = unpointed.isNotEmpty ? unpointed : origWord.trim();
+        if (searchToken.isNotEmpty) {
+          String origWhere = '(v.text_original LIKE ?)';
+          List<dynamic> origArgs = ['%$searchToken%'];
+
+          if (bookId != null) {
+            origWhere += ' AND v.book_id = ?';
+            origArgs.add(bookId);
+          } else if (bookIds != null && bookIds.isNotEmpty) {
+            final placeholders = List.filled(bookIds.length, '?').join(',');
+            origWhere += ' AND v.book_id IN ($placeholders)';
+            origArgs.addAll(bookIds);
+          } else if (testamentId != null) {
+            final tStr = testamentId == 1 ? 'old' : 'new';
+            origWhere += ' AND LOWER(b.testament) = ?';
+            origArgs.add(tStr);
+          }
+
+          final countOrigSql = '''
+            SELECT COUNT(*) as total_count
+            FROM verses v
+            JOIN books b ON v.book_id = b.id
+            WHERE $origWhere
+          ''';
+          final countOrigRes = await db.rawQuery(countOrigSql, origArgs);
+          total = Sqflite.firstIntValue(countOrigRes) ?? 0;
+
+          if (total > 0) {
+            final queryOrigSql = '''
+              SELECT v.*, b.name_ar as book_name_ar
+              FROM verses v
+              JOIN books b ON v.book_id = b.id
+              WHERE $origWhere
+              ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC
+              LIMIT ? OFFSET ?
+            ''';
+            final rows = await db.rawQuery(queryOrigSql, [...origArgs, limit, (page - 1) * limit]);
+            final verses = rows.map((r) => Verse(
+              id:               r['id'] as String,
+              bookId:           r['book_id'] as int,
+              chapterNum:       r['chapter_num'] as int,
+              verseNum:         r['verse_num'] as int,
+              textAvdAr:        r['text_avd_ar'] as String? ?? '',
+              textOriginal:     r['text_original'] as String? ?? '',
+              textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
+              bookNameAr:       r['book_name_ar'] as String?,
+            )).toList();
+            return (verses: verses, total: total);
+          }
+        }
+      }
+
+      return (verses: <Verse>[], total: 0);
     }
 
     final normQuery = normalizeArabic(trimmed);
