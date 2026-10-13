@@ -352,6 +352,9 @@ class _WordRow extends StatelessWidget {
                               final analysis = MorphologyService.parse(
                                 code: mapping.origMorphology,
                                 language: mapping.origWordLang,
+                                arWord: mapping.arWord,
+                                origWord: mapping.origWord,
+                                strongsId: mapping.strongsId,
                               );
                               final badgeText = analysis.tags.isNotEmpty
                                   ? analysis.tags.first

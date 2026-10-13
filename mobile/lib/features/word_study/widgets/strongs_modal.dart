@@ -199,6 +199,9 @@ class StrongsModal extends StatelessWidget {
                     code: mapping?.origMorphology,
                     language: entry.language,
                     fallbackDefinition: entry.definitionEn,
+                    arWord: mapping?.arWord,
+                    origWord: mapping?.origWord ?? entry.originalWord,
+                    strongsId: mapping?.strongsId ?? entry.strongsId,
                   );
 
                   return SliverToBoxAdapter(
@@ -226,7 +229,7 @@ class StrongsModal extends StatelessWidget {
                                     Icon(Icons.psychology_outlined, size: 18, color: AppColors.primary),
                                     const SizedBox(width: 8),
                                     const Text(
-                                      'التحليل النحوي والصرفي',
+                                      'التحليل النحوي والصرفي بحسب النص الأصلي',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
@@ -272,26 +275,26 @@ class StrongsModal extends StatelessWidget {
                                   ),
                                 ),
                               _GrammarRow(
-                                label: 'القسم اللغوي',
+                                label: 'نوع الكلمة (القسم اللغوي)',
                                 value: morphAnalysis.partOfSpeech,
                                 isFirst: morphAnalysis.tags.isEmpty,
                               ),
                               if (morphAnalysis.stem != null)
                                 _GrammarRow(label: 'الوزن الصرفي العبري', value: morphAnalysis.stem!),
                               if (morphAnalysis.tense != null)
-                                _GrammarRow(label: 'الزمن والتصريف', value: morphAnalysis.tense!),
+                                _GrammarRow(label: 'نوع الفعل والزمن', value: morphAnalysis.tense!),
                               if (morphAnalysis.voice != null)
                                 _GrammarRow(label: 'البناء للمعلوم / المجهول', value: morphAnalysis.voice!),
                               if (morphAnalysis.mood != null)
-                                _GrammarRow(label: 'الصيغة / الحالة التعبيرية', value: morphAnalysis.mood!),
+                                _GrammarRow(label: 'الصيغة التعبيرية', value: morphAnalysis.mood!),
                               if (morphAnalysis.grammaticalCase != null)
                                 _GrammarRow(label: 'الحالة الإعرابية', value: morphAnalysis.grammaticalCase!),
-                              if (morphAnalysis.person != null)
-                                _GrammarRow(label: 'ضمير الفاعل', value: morphAnalysis.person!),
                               if (morphAnalysis.number != null)
-                                _GrammarRow(label: 'العدد', value: morphAnalysis.number!),
+                                _GrammarRow(label: 'العدد (مفرد / مثنى / جمع)', value: morphAnalysis.number!),
                               if (morphAnalysis.gender != null)
-                                _GrammarRow(label: 'الجنس', value: morphAnalysis.gender!),
+                                _GrammarRow(label: 'الجنس (مذكر / مؤنث / محايد)', value: morphAnalysis.gender!),
+                              if (morphAnalysis.person != null)
+                                _GrammarRow(label: 'ضمير الفاعل / الشخص', value: morphAnalysis.person!),
                               if (morphAnalysis.prefixes.isNotEmpty)
                                 _GrammarRow(label: 'الحروف والزوائد المتصلة', value: morphAnalysis.prefixes.join(' · ')),
                               if (morphAnalysis.rawCode.isNotEmpty)
