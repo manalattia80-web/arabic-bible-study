@@ -192,7 +192,7 @@ class StrongsModal extends StatelessWidget {
                   ),
                 ),
 
-              // ── Morphology & Grammatical Analysis ───────────────────────
+              // ── 1. التحليل النحوي والصرفي الكامل (Morphology & Syntax Analysis) ──
               Builder(
                 builder: (context) {
                   final morphAnalysis = MorphologyService.parse(
@@ -207,73 +207,113 @@ class StrongsModal extends StatelessWidget {
                       child: Directionality(
                         textDirection: TextDirection.rtl,
                         child: Container(
-                          padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
                             color: AppColors.bgSurface,
-                            borderRadius: BorderRadius.circular(14),
+                            borderRadius: BorderRadius.circular(16),
                             border: Border.all(color: AppColors.border),
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.psychology_outlined, size: 16, color: AppColors.primary),
-                                  const SizedBox(width: 8),
-                                  const Text(
-                                    'التحليل النحوي والصرفي',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary.withOpacity(0.12),
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: Text(
-                                      morphAnalysis.partOfSpeech,
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary.withOpacity(0.08),
+                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.psychology_outlined, size: 18, color: AppColors.primary),
+                                    const SizedBox(width: 8),
+                                    const Text(
+                                      'التحليل النحوي والصرفي',
                                       style: TextStyle(
-                                        color: AppColors.primary,
-                                        fontSize: 11,
                                         fontWeight: FontWeight.bold,
+                                        fontSize: 14,
                                       ),
                                     ),
+                                    const Spacer(),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primary.withOpacity(0.12),
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      child: Text(
+                                        morphAnalysis.partOfSpeech,
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (morphAnalysis.tags.isNotEmpty)
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 6),
+                                  child: Wrap(
+                                    spacing: 6,
+                                    runSpacing: 6,
+                                    children: morphAnalysis.tags.map((t) => Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.bgCard,
+                                        borderRadius: BorderRadius.circular(6),
+                                        border: Border.all(color: AppColors.borderLight),
+                                      ),
+                                      child: Text(
+                                        t,
+                                        style: TextStyle(fontSize: 11, color: AppColors.textPrimary, fontWeight: FontWeight.w600),
+                                      ),
+                                    )).toList(),
                                   ),
-                                ],
+                                ),
+                              _GrammarRow(
+                                label: 'القسم اللغوي',
+                                value: morphAnalysis.partOfSpeech,
+                                isFirst: morphAnalysis.tags.isEmpty,
                               ),
-                              const SizedBox(height: 8),
-                              Text(
-                                morphAnalysis.summary,
-                                style: TextStyle(
-                                  color: AppColors.textPrimary,
-                                  fontSize: 13,
-                                  height: 1.5,
-                                  fontWeight: FontWeight.w500,
+                              if (morphAnalysis.stem != null)
+                                _GrammarRow(label: 'الوزن الصرفي العبري', value: morphAnalysis.stem!),
+                              if (morphAnalysis.tense != null)
+                                _GrammarRow(label: 'الزمن والتصريف', value: morphAnalysis.tense!),
+                              if (morphAnalysis.voice != null)
+                                _GrammarRow(label: 'البناء للمعلوم / المجهول', value: morphAnalysis.voice!),
+                              if (morphAnalysis.mood != null)
+                                _GrammarRow(label: 'الصيغة / الحالة التعبيرية', value: morphAnalysis.mood!),
+                              if (morphAnalysis.grammaticalCase != null)
+                                _GrammarRow(label: 'الحالة الإعرابية', value: morphAnalysis.grammaticalCase!),
+                              if (morphAnalysis.person != null)
+                                _GrammarRow(label: 'ضمير الفاعل', value: morphAnalysis.person!),
+                              if (morphAnalysis.number != null)
+                                _GrammarRow(label: 'العدد', value: morphAnalysis.number!),
+                              if (morphAnalysis.gender != null)
+                                _GrammarRow(label: 'الجنس', value: morphAnalysis.gender!),
+                              if (morphAnalysis.prefixes.isNotEmpty)
+                                _GrammarRow(label: 'الحروف والزوائد المتصلة', value: morphAnalysis.prefixes.join(' · ')),
+                              if (morphAnalysis.rawCode.isNotEmpty)
+                                _GrammarRow(label: 'الرمز القياسي', value: morphAnalysis.rawCode, isMonospace: true),
+                              Container(
+                                margin: const EdgeInsets.all(12),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary.withOpacity(0.06),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: AppColors.primary.withOpacity(0.15)),
+                                ),
+                                child: Text(
+                                  morphAnalysis.summary,
+                                  style: TextStyle(
+                                    color: AppColors.textPrimary,
+                                    fontSize: 12.5,
+                                    height: 1.5,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                              if (morphAnalysis.tags.isNotEmpty) ...[
-                                const SizedBox(height: 8),
-                                Wrap(
-                                  spacing: 6,
-                                  runSpacing: 6,
-                                  children: morphAnalysis.tags.map((t) => Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.bgCard,
-                                      borderRadius: BorderRadius.circular(6),
-                                      border: Border.all(color: AppColors.borderLight),
-                                    ),
-                                    child: Text(
-                                      t,
-                                      style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
-                                    ),
-                                  )).toList(),
-                                ),
-                              ],
                             ],
                           ),
                         ),
@@ -285,7 +325,7 @@ class StrongsModal extends StatelessWidget {
 
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 14),
                   child: Divider(color: AppColors.border),
                 ),
               ),
@@ -614,3 +654,63 @@ class _Section extends StatelessWidget {
     );
   }
 }
+
+class _GrammarRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool isFirst;
+  final bool isMonospace;
+
+  const _GrammarRow({
+    required this.label,
+    required this.value,
+    this.isFirst = false,
+    this.isMonospace = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: isFirst ? Colors.transparent : AppColors.borderLight,
+            width: 0.8,
+          ),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 4,
+            child: Text(
+              label,
+              style: TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            flex: 6,
+            child: Text(
+              value,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 12.5,
+                fontWeight: FontWeight.w700,
+                fontFamily: isMonospace ? 'monospace' : null,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

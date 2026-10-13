@@ -11,7 +11,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
 import '../../../models/word_mapping.dart';
-import '../widgets/morphology_modal.dart';
+import '../widgets/strongs_modal.dart';
 import '../../../core/services/morphology_service.dart';
 
 class WordStudyScreen extends StatefulWidget {
@@ -125,7 +125,11 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
               itemBuilder: (ctx, i) => _WordRow(
                 mapping: provider.mappings[i],
                 index:   i,
-                onTap: () => MorphologyModal.show(ctx, mapping: provider.mappings[i]),
+                onTap: () => StrongsModal.show(
+                  ctx,
+                  provider.mappings[i].strongsId ?? '',
+                  mapping: provider.mappings[i],
+                ),
               ),
             ),
 
@@ -245,7 +249,7 @@ class _TableHeader extends StatelessWidget {
         Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('النص الأصلي والصرف', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
         const SizedBox(width: 12),
         Expanded(flex: 2, child: Text('سترونج والنطق', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
-        const SizedBox(width: 60),
+        const SizedBox(width: 36),
       ],
     ),
   );
@@ -415,25 +419,13 @@ class _WordRow extends StatelessWidget {
                     ),
                   ),
 
-                  // Action icons (Morphology analyzer + Audio)
+                  // Action audio button
                   SizedBox(
-                    width: 60,
+                    width: 36,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(20),
-                          onTap: () => MorphologyModal.show(context, mapping: mapping),
-                          child: Padding(
-                            padding: const EdgeInsets.all(3),
-                            child: Icon(
-                              Icons.psychology_outlined,
-                              size: 20,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ),
                         if (mapping.hasAudio)
                           InkWell(
                             borderRadius: BorderRadius.circular(20),
