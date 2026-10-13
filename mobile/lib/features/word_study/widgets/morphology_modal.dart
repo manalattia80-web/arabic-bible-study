@@ -125,7 +125,7 @@ class MorphologyModal extends StatelessWidget {
               ),
             ),
 
-            const Divider(height: 1, color: AppColors.border),
+            Divider(height: 1, color: AppColors.border),
 
             // Scrollable Content
             Expanded(
@@ -198,10 +198,10 @@ class MorphologyModal extends StatelessWidget {
                               const SizedBox(width: 8),
                               Text(
                                 mapping.arWord,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.accent,
+                                  color: AppColors.primary,
                                 ),
                               ),
                               if (mapping.transliterationAr != null) ...[
@@ -458,7 +458,7 @@ class _GrammarRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
       decoration: BoxDecoration(
         border: Border(
-          top: isFirst ? BorderSide.none : const BorderSide(color: AppColors.border, width: 0.8),
+          top: isFirst ? BorderSide.none : BorderSide(color: AppColors.border, width: 0.8),
         ),
       ),
       child: Row(

@@ -248,7 +248,7 @@ class StrongsModal extends StatelessWidget {
                               const SizedBox(height: 8),
                               Text(
                                 morphAnalysis.summary,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: AppColors.textPrimary,
                                   fontSize: 13,
                                   height: 1.5,
