@@ -4,22 +4,50 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../core/services/update_service.dart';
 
 class UpdateProvider extends ChangeNotifier {
+  static const String _autoDownloadKey = 'pref_auto_download_updates';
+
   UpdateInfo? _updateInfo;
   bool _isDismissed = false;
   bool _isChecking = false;
   bool _isDownloading = false;
+  bool _isDownloaded = false;
+  bool _autoDownload = true;
   double _downloadProgress = 0.0;
   String? _downloadError;
+
+  UpdateProvider() {
+    _loadPreferences();
+  }
 
   UpdateInfo? get updateInfo => _isDismissed ? null : _updateInfo;
   bool get hasUpdate => (_updateInfo?.hasUpdate ?? false) && !_isDismissed;
   bool get isChecking => _isChecking;
   bool get isDownloading => _isDownloading;
+  bool get isDownloaded => _isDownloaded;
+  bool get autoDownload => _autoDownload;
   double get downloadProgress => _downloadProgress;
   String? get downloadError => _downloadError;
+
+  Future<void> _loadPreferences() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _autoDownload = prefs.getBool(_autoDownloadKey) ?? true;
+      notifyListeners();
+    } catch (_) {}
+  }
+
+  Future<void> setAutoDownload(bool enabled) async {
+    _autoDownload = enabled;
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_autoDownloadKey, enabled);
+    } catch (_) {}
+  }
 
   Future<void> checkForUpdates() async {
     if (_isChecking) return;
@@ -32,6 +60,11 @@ class UpdateProvider extends ChangeNotifier {
 
     _isChecking = false;
     notifyListeners();
+
+    // Automatically trigger background download if connected & update is available
+    if ((_updateInfo?.hasUpdate ?? false) && _autoDownload && !_isDownloading && !_isDownloaded) {
+      startDirectUpdate();
+    }
   }
 
   void dismissUpdate() {
@@ -55,11 +88,21 @@ class UpdateProvider extends ChangeNotifier {
     );
 
     _isDownloading = false;
-    if (!success) {
-      _downloadError = 'تعذر التثبيت المباشر، تم التحويل للمتصفح';
+    if (success) {
+      _isDownloaded = true;
+    } else {
+      _downloadError = 'تعذر تنزيل التحديث تلقائياً';
     }
     notifyListeners();
     return success;
+  }
+
+  Future<bool> installDownloadedApk() async {
+    final success = await UpdateService.instance.openDownloadedApk();
+    if (!success) {
+      return await startDirectUpdate();
+    }
+    return true;
   }
 
   Future<bool> startDownload() async {

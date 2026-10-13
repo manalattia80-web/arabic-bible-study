@@ -413,6 +413,29 @@ class _UpdateBannerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final updater = context.watch<UpdateProvider>();
+
+    final iconData = updater.isDownloaded
+        ? Icons.check_circle_rounded
+        : (updater.isDownloading
+            ? Icons.cloud_download_rounded
+            : Icons.system_update_rounded);
+
+    final iconColor = updater.isDownloaded
+        ? const Color(0xFF10B981)
+        : const Color(0xFF0284C7);
+
+    final titleText = updater.isDownloaded
+        ? 'التحديث جاهز للتثبيت'
+        : (updater.isDownloading
+            ? 'جارٍ تنزيل التحديث تلقائياً'
+            : 'تحديث جديد متوفر للتطبيق');
+
+    final subtitleText = updater.isDownloaded
+        ? 'تم تنزيل حزمة التحديث في الخلفية بنجاح. اضغط للتثبيت الآن.'
+        : (updater.isDownloading
+            ? 'يتم تنزيل التحديث تلقائياً في الخلفية بدون مقاطعة القراءة.'
+            : 'يتضمن أحدث تصحيحات المعجم وقاعدة البيانات الأوفلاين.');
 
     return Container(
       decoration: BoxDecoration(
@@ -424,7 +447,11 @@ class _UpdateBannerCard extends StatelessWidget {
           end: Alignment.bottomLeft,
         ),
         border: Border.all(
-          color: isDark ? const Color(0xFF38BDF8).withOpacity(0.4) : const Color(0xFF2563EB).withOpacity(0.3),
+          color: updater.isDownloaded
+              ? const Color(0xFF10B981).withOpacity(0.5)
+              : (isDark
+                  ? const Color(0xFF38BDF8).withOpacity(0.4)
+                  : const Color(0xFF2563EB).withOpacity(0.3)),
           width: 1.5,
         ),
         borderRadius: BorderRadius.circular(16),
@@ -447,12 +474,12 @@ class _UpdateBannerCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF0284C7).withOpacity(0.15),
+                    color: iconColor.withOpacity(0.15),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
-                    Icons.system_update_rounded,
-                    color: Color(0xFF0284C7),
+                  child: Icon(
+                    iconData,
+                    color: iconColor,
                     size: 24,
                   ),
                 ),
@@ -464,7 +491,7 @@ class _UpdateBannerCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'تحديث جديد متوفر للتطبيق',
+                            titleText,
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -492,7 +519,7 @@ class _UpdateBannerCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'يتضمن أحدث تصحيحات المعجم وقاعدة البيانات الأوفلاين.',
+                        subtitleText,
                         style: TextStyle(
                           fontSize: 12,
                           color: isDark ? Colors.white70 : const Color(0xFF475569),
@@ -501,9 +528,9 @@ class _UpdateBannerCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (!context.watch<UpdateProvider>().isDownloading)
+                if (!updater.isDownloading)
                   IconButton(
-                    onPressed: () => context.read<UpdateProvider>().dismissUpdate(),
+                    onPressed: () => updater.dismissUpdate(),
                     icon: Icon(
                       Icons.close_rounded,
                       size: 20,
@@ -514,9 +541,9 @@ class _UpdateBannerCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Consumer<UpdateProvider>(
-              builder: (ctx, updater, _) {
-                if (updater.isDownloading) {
+            if (updater.isDownloading) ...[
+              Builder(
+                builder: (context) {
                   final pct = (updater.downloadProgress * 100).toInt();
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -525,7 +552,7 @@ class _UpdateBannerCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            pct >= 100 ? 'جارٍ فتح برنامج التثبيت...' : 'جارٍ تنزيل التحديث...',
+                            pct >= 100 ? 'جارٍ فتح برنامج التثبيت...' : 'جارٍ تنزيل التحديث تلقائياً...',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -554,44 +581,72 @@ class _UpdateBannerCard extends StatelessWidget {
                       ),
                     ],
                   );
-                }
-
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => updater.dismissUpdate(),
-                      child: Text(
-                        'لاحقاً',
-                        style: TextStyle(
-                          color: isDark ? Colors.white60 : Colors.black54,
-                        ),
+                },
+              ),
+            ] else if (updater.isDownloaded) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => updater.dismissUpdate(),
+                    child: Text(
+                      'لاحقاً',
+                      style: TextStyle(
+                        color: isDark ? Colors.white60 : Colors.black54,
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    ElevatedButton.icon(
-                      onPressed: () async {
-                        final ok = await updater.startDirectUpdate();
-                        if (!ok && ctx.mounted) {
-                          ScaffoldMessenger.of(ctx).showSnackBar(
-                            const SnackBar(content: Text('جارٍ متابعة التحميل عبر المتصفح...')),
-                          );
-                        }
-                      },
-                      icon: const Icon(Icons.system_update_rounded, size: 18),
-                      label: const Text('تحديث الآن مباشرةً'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0284C7),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  const SizedBox(width: 8),
+                  ElevatedButton.icon(
+                    onPressed: () => updater.installDownloadedApk(),
+                    icon: const Icon(Icons.install_mobile_rounded, size: 18),
+                    label: const Text('تثبيت الآن'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF10B981),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                ],
+              ),
+            ] else ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => updater.dismissUpdate(),
+                    child: Text(
+                      'لاحقاً',
+                      style: TextStyle(
+                        color: isDark ? Colors.white60 : Colors.black54,
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                  const SizedBox(width: 8),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      final ok = await updater.startDirectUpdate();
+                      if (!ok && context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('تعذر التنزيل المباشر، تحقق من اتصال الإنترنت')),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.system_update_rounded, size: 18),
+                    label: const Text('تحديث الآن مباشرةً'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0284C7),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ],
         ),
       ),

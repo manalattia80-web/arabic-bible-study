@@ -139,13 +139,32 @@ class UpdateService {
       if (result.type == ResultType.done) {
         return true;
       } else {
-        debugPrint('OpenFilex returned: ${result.message}, falling back to browser');
-        return await launchDownloadUrl(url);
+        debugPrint('OpenFilex returned: ${result.message}');
+        // The file is downloaded, so return true even if prompt dismissed
+        return true;
       }
     } catch (e) {
-      debugPrint('Direct APK download failed: $e, falling back to browser');
-      return await launchDownloadUrl(url);
+      debugPrint('Direct APK download failed: $e');
+      return false;
     }
+  }
+
+  Future<bool> openDownloadedApk() async {
+    try {
+      final dir = await getExternalStorageDirectory() ?? await getTemporaryDirectory();
+      final filePath = p.join(dir.path, 'arabic-bible-study-update.apk');
+      final file = File(filePath);
+      if (await file.exists()) {
+        final result = await OpenFilex.open(
+          filePath,
+          type: 'application/vnd.android.package-archive',
+        );
+        return result.type == ResultType.done;
+      }
+    } catch (e) {
+      debugPrint('Failed to open downloaded apk: $e');
+    }
+    return false;
   }
 
   Future<bool> launchDownloadUrl([String? url]) async {
