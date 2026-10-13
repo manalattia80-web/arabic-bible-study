@@ -49,7 +49,10 @@ class UpdateProvider extends ChangeNotifier {
     } catch (_) {}
   }
 
-  Future<void> checkForUpdates() async {
+  Future<void> checkForUpdates({
+    void Function(String version)? onUpdateStarting,
+    void Function()? onUpdateReady,
+  }) async {
     if (_isChecking) return;
     _isChecking = true;
     notifyListeners();
@@ -63,7 +66,13 @@ class UpdateProvider extends ChangeNotifier {
 
     // Automatically trigger background download if connected & update is available
     if ((_updateInfo?.hasUpdate ?? false) && _autoDownload && !_isDownloading && !_isDownloaded) {
-      startDirectUpdate();
+      if (onUpdateStarting != null && _updateInfo?.latestTag != null) {
+        onUpdateStarting(_updateInfo!.latestTag);
+      }
+      final ok = await startDirectUpdate();
+      if (ok && onUpdateReady != null) {
+        onUpdateReady();
+      }
     }
   }
 

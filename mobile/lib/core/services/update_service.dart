@@ -66,12 +66,18 @@ class UpdateService {
           final latestBuild = int.tryParse(match.group(1)!) ?? 0;
           final hasUpdate = latestBuild > currentBuildNumber;
 
+          final assets = data['assets'] as List<dynamic>? ?? [];
+          String resolvedDownloadUrl = defaultDownloadUrl;
+          if (assets.isNotEmpty && assets[0] is Map && assets[0]['browser_download_url'] != null) {
+            resolvedDownloadUrl = assets[0]['browser_download_url'] as String;
+          }
+
           return UpdateInfo(
             latestTag: tagName,
             latestBuildNumber: latestBuild,
             releaseName: name,
             releaseNotes: body,
-            downloadUrl: defaultDownloadUrl,
+            downloadUrl: resolvedDownloadUrl,
             hasUpdate: hasUpdate,
           );
         }
@@ -129,6 +135,15 @@ class UpdateService {
       client.close();
 
       onProgress(1.0);
+
+      // Verify file size: a real APK must be at least 15 MB
+      if (receivedBytes < 15 * 1024 * 1024) {
+        debugPrint('Downloaded file too small ($receivedBytes bytes), likely incomplete.');
+        if (await file.exists()) {
+          await file.delete();
+        }
+        return false;
+      }
 
       // Trigger Android APK Package Installer
       final result = await OpenFilex.open(

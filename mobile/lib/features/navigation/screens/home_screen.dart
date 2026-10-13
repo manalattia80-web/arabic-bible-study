@@ -28,7 +28,69 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<NavigationProvider>().loadTestaments();
-      context.read<UpdateProvider>().checkForUpdates();
+      context.read<UpdateProvider>().checkForUpdates(
+        onUpdateStarting: (version) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.cloud_download_rounded, color: Colors.white, size: 20),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'يوجد تحديث جديد ($version)، جارٍ تنزيله في الخلفية...',
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                duration: const Duration(seconds: 4),
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: const Color(0xFF0284C7),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            );
+          }
+        },
+        onUpdateReady: () {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Row(
+                    children: [
+                      Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'تم تنزيل التحديث وهو جاهز للتثبيت.',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                action: SnackBarAction(
+                  label: 'تثبيت الآن',
+                  textColor: Colors.amberAccent,
+                  onPressed: () {
+                    context.read<UpdateProvider>().installDownloadedApk();
+                  },
+                ),
+                duration: const Duration(seconds: 8),
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: const Color(0xFF10B981),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            );
+          }
+        },
+      );
     });
   }
 
@@ -143,18 +205,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          // ── Update Notification Banner (if update available) ───
-          Consumer<UpdateProvider>(
-            builder: (ctx, updater, _) {
-              if (!updater.hasUpdate) return const SliverToBoxAdapter(child: SizedBox.shrink());
-              return SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                  child: _UpdateBannerCard(updateInfo: updater.updateInfo!),
-                ),
-              );
-            },
-          ),
 
           // ── Testament Cards ───────────────────────────────────
           SliverPadding(
@@ -405,252 +455,5 @@ class _GridPainter extends CustomPainter {
   bool shouldRepaint(_) => false;
 }
 
-// ── Update Banner Card ─────────────────────────────────────────────────────
-class _UpdateBannerCard extends StatelessWidget {
-  final UpdateInfo updateInfo;
-  const _UpdateBannerCard({required this.updateInfo});
 
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final updater = context.watch<UpdateProvider>();
-
-    final iconData = updater.isDownloaded
-        ? Icons.check_circle_rounded
-        : (updater.isDownloading
-            ? Icons.cloud_download_rounded
-            : Icons.system_update_rounded);
-
-    final iconColor = updater.isDownloaded
-        ? const Color(0xFF10B981)
-        : const Color(0xFF0284C7);
-
-    final titleText = updater.isDownloaded
-        ? 'التحديث جاهز للتثبيت'
-        : (updater.isDownloading
-            ? 'جارٍ تنزيل التحديث تلقائياً'
-            : 'تحديث جديد متوفر للتطبيق');
-
-    final subtitleText = updater.isDownloaded
-        ? 'تم تنزيل حزمة التحديث في الخلفية بنجاح. اضغط للتثبيت الآن.'
-        : (updater.isDownloading
-            ? 'يتم تنزيل التحديث تلقائياً في الخلفية بدون مقاطعة القراءة.'
-            : 'يتضمن أحدث تصحيحات المعجم وقاعدة البيانات الأوفلاين.');
-
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: isDark
-              ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
-              : [const Color(0xFFEFF6FF), const Color(0xFFDBEAFE)],
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-        ),
-        border: Border.all(
-          color: updater.isDownloaded
-              ? const Color(0xFF10B981).withOpacity(0.5)
-              : (isDark
-                  ? const Color(0xFF38BDF8).withOpacity(0.4)
-                  : const Color(0xFF2563EB).withOpacity(0.3)),
-          width: 1.5,
-        ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.25 : 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.15),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    iconData,
-                    color: iconColor,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            titleText,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: isDark ? Colors.white : const Color(0xFF0F172A),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF0284C7).withOpacity(0.15),
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: const Color(0xFF0284C7).withOpacity(0.3)),
-                            ),
-                            child: Text(
-                              updateInfo.latestTag,
-                              style: const TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF0284C7),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        subtitleText,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: isDark ? Colors.white70 : const Color(0xFF475569),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (!updater.isDownloading)
-                  IconButton(
-                    onPressed: () => updater.dismissUpdate(),
-                    icon: Icon(
-                      Icons.close_rounded,
-                      size: 20,
-                      color: isDark ? Colors.white54 : Colors.black45,
-                    ),
-                    tooltip: 'إخفاء',
-                  ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            if (updater.isDownloading) ...[
-              Builder(
-                builder: (context) {
-                  final pct = (updater.downloadProgress * 100).toInt();
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            pct >= 100 ? 'جارٍ فتح برنامج التثبيت...' : 'جارٍ تنزيل التحديث تلقائياً...',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: isDark ? Colors.white : const Color(0xFF0F172A),
-                            ),
-                          ),
-                          Text(
-                            '$pct%',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF0284C7),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        child: LinearProgressIndicator(
-                          value: updater.downloadProgress > 0 ? updater.downloadProgress : null,
-                          backgroundColor: const Color(0xFF0284C7).withOpacity(0.15),
-                          color: const Color(0xFF0284C7),
-                          minHeight: 8,
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ] else if (updater.isDownloaded) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => updater.dismissUpdate(),
-                    child: Text(
-                      'لاحقاً',
-                      style: TextStyle(
-                        color: isDark ? Colors.white60 : Colors.black54,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton.icon(
-                    onPressed: () => updater.installDownloadedApk(),
-                    icon: const Icon(Icons.install_mobile_rounded, size: 18),
-                    label: const Text('تثبيت الآن'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF10B981),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
-                ],
-              ),
-            ] else ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => updater.dismissUpdate(),
-                    child: Text(
-                      'لاحقاً',
-                      style: TextStyle(
-                        color: isDark ? Colors.white60 : Colors.black54,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton.icon(
-                    onPressed: () async {
-                      final ok = await updater.startDirectUpdate();
-                      if (!ok && context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('تعذر التنزيل المباشر، تحقق من اتصال الإنترنت')),
-                        );
-                      }
-                    },
-                    icon: const Icon(Icons.system_update_rounded, size: 18),
-                    label: const Text('تحديث الآن مباشرةً'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF0284C7),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-}
 
