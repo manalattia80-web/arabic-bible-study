@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v8.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v9.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 8; // Incremented for chunked stream-loader + full cross-references & translations
+    const targetDbVersion = 9; // Corrected corrupt characters in Arabic text (مُسْتَحِقٌّ, حَقٌّ, كُلٌّ, هُدُوءٌ, إِخْوَتِي)
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -60,6 +60,7 @@ class DatabaseService {
         'bible_study_v5.db',
         'bible_study_v6.db',
         'bible_study_v7.db',
+        'bible_study_v8.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
