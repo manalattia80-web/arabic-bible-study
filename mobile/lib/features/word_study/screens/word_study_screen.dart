@@ -12,6 +12,8 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
 import '../../../models/word_mapping.dart';
 import '../widgets/strongs_modal.dart';
+import '../widgets/morphology_modal.dart';
+import '../../../core/services/morphology_service.dart';
 
 class WordStudyScreen extends StatefulWidget {
   final String              verseId;
@@ -124,9 +126,7 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
               itemBuilder: (ctx, i) => _WordRow(
                 mapping: provider.mappings[i],
                 index:   i,
-                onTap: provider.mappings[i].hasStrongs
-                    ? () => StrongsModal.show(ctx, provider.mappings[i].strongsId!)
-                    : null,
+                onTap: () => MorphologyModal.show(ctx, mapping: provider.mappings[i]),
               ),
             ),
 
@@ -243,10 +243,10 @@ class _TableHeader extends StatelessWidget {
         SizedBox(width: 28, child: Text('#', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
         Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('الكلمة العربية', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
         const SizedBox(width: 12),
-        Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('النص الأصلي', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
+        Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('النص الأصلي والصرف', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
         const SizedBox(width: 12),
-        Expanded(flex: 2, child: Text('النطق والرمز', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
-        const SizedBox(width: 52),
+        Expanded(flex: 2, child: Text('سترونج والنطق', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
+        const SizedBox(width: 60),
       ],
     ),
   );
@@ -344,15 +344,34 @@ class _WordRow extends StatelessWidget {
                                 : AppTheme.greekText(size: 16),
                             textAlign: mapping.isHebrew ? TextAlign.right : TextAlign.right,
                           ),
-                          if (mapping.origMorphology != null)
-                            Text(
-                              mapping.origMorphology!,
-                              style: TextStyle(
-                                color:      AppColors.textMuted,
-                                fontSize:   10,
-                                fontFamily: 'monospace',
-                              ),
-                            ),
+                          Builder(
+                            builder: (ctx) {
+                              final analysis = MorphologyService.parse(
+                                code: mapping.origMorphology,
+                                language: mapping.origWordLang,
+                              );
+                              final badgeText = analysis.tags.isNotEmpty
+                                  ? analysis.tags.first
+                                  : (mapping.origMorphology ?? '');
+                              if (badgeText.isEmpty) return const SizedBox.shrink();
+                              return Container(
+                                margin: const EdgeInsets.only(top: 2),
+                                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  badgeText,
+                                  style: const TextStyle(
+                                    color:      AppColors.primary,
+                                    fontSize:   10,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -397,34 +416,39 @@ class _WordRow extends StatelessWidget {
                     ),
                   ),
 
-                  // Action icons (audio + Strong's indicator)
+                  // Action icons (Morphology analyzer + Audio)
                   SizedBox(
-                    width: 52,
+                    width: 60,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        InkWell(
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () => MorphologyModal.show(context, mapping: mapping),
+                          child: const Padding(
+                            padding: EdgeInsets.all(3),
+                            child: Icon(
+                              Icons.psychology_outlined,
+                              size: 20,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ),
                         if (mapping.hasAudio)
                           InkWell(
                             borderRadius: BorderRadius.circular(20),
                             onTap: () => provider.playAudio(mapping.audioUrl!),
                             child: Padding(
-                              padding: const EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(3),
                               child: Icon(
                                 provider.isPlaying(mapping.audioUrl!)
                                     ? Icons.stop_circle_rounded
                                     : Icons.volume_up_rounded,
-                                size:  22,
-                                color: provider.isPlaying(mapping.audioUrl!)
-                                    ? AppColors.primary
-                                    : AppColors.primary,
+                                size:  20,
+                                color: AppColors.primary,
                               ),
                             ),
-                          ),
-                        if (mapping.hasStrongs)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 2),
-                            child: Icon(Icons.info_outline_rounded, size: 16, color: AppColors.textMuted),
                           ),
                       ],
                     ),

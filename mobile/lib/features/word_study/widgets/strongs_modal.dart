@@ -10,13 +10,16 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
+import '../../../core/services/morphology_service.dart';
+import '../../../models/word_mapping.dart';
 import 'audio_button.dart';
 
 class StrongsModal extends StatelessWidget {
   final String strongsId;
-  const StrongsModal({super.key, required this.strongsId});
+  final WordMapping? mapping;
+  const StrongsModal({super.key, required this.strongsId, this.mapping});
 
-  static Future<void> show(BuildContext context, String strongsId) {
+  static Future<void> show(BuildContext context, String strongsId, {WordMapping? mapping}) {
     final provider = context.read<WordStudyProvider>();
     provider.loadStrongsEntry(strongsId);
     return showModalBottomSheet(
@@ -25,7 +28,7 @@ class StrongsModal extends StatelessWidget {
       useSafeArea:    true,
       builder: (_) => ChangeNotifierProvider.value(
         value: provider,
-        child: StrongsModal(strongsId: strongsId),
+        child: StrongsModal(strongsId: strongsId, mapping: mapping),
       ),
     );
   }
@@ -188,6 +191,97 @@ class StrongsModal extends StatelessWidget {
                     ),
                   ),
                 ),
+
+              // ── Morphology & Grammatical Analysis ───────────────────────
+              Builder(
+                builder: (context) {
+                  final morphAnalysis = MorphologyService.parse(
+                    code: mapping?.origMorphology,
+                    language: entry.language,
+                    fallbackDefinition: entry.definitionEn,
+                  );
+
+                  return SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: AppColors.bgSurface,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: AppColors.border),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.psychology_outlined, size: 16, color: AppColors.primary),
+                                  const SizedBox(width: 8),
+                                  const Text(
+                                    'التحليل النحوي والصرفي',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary.withOpacity(0.12),
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Text(
+                                      morphAnalysis.partOfSpeech,
+                                      style: TextStyle(
+                                        color: AppColors.primary,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                morphAnalysis.summary,
+                                style: const TextStyle(
+                                  color: AppColors.textPrimary,
+                                  fontSize: 13,
+                                  height: 1.5,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              if (morphAnalysis.tags.isNotEmpty) ...[
+                                const SizedBox(height: 8),
+                                Wrap(
+                                  spacing: 6,
+                                  runSpacing: 6,
+                                  children: morphAnalysis.tags.map((t) => Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.bgCard,
+                                      borderRadius: BorderRadius.circular(6),
+                                      border: Border.all(color: AppColors.borderLight),
+                                    ),
+                                    child: Text(
+                                      t,
+                                      style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+                                    ),
+                                  )).toList(),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
 
               SliverToBoxAdapter(
                 child: Padding(
