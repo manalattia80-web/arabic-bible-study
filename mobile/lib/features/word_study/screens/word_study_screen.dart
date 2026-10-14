@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
+import '../../../core/services/database_service.dart';
 import '../../../models/word_mapping.dart';
 import '../widgets/strongs_modal.dart';
 
@@ -23,18 +24,37 @@ class WordStudyScreen extends StatefulWidget {
 }
 
 class _WordStudyScreenState extends State<WordStudyScreen> {
+  Map<String, dynamic>? _verseData;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<WordStudyProvider>().loadWordMappings(widget.verseId);
+    _verseData = widget.verse;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        context.read<WordStudyProvider>().loadWordMappings(widget.verseId);
+      }
+      if (_verseData == null) {
+        final v = await DatabaseService.instance.getVerseById(widget.verseId);
+        if (v != null && mounted) {
+          setState(() {
+            _verseData = {
+              'verse_num': v.verseNum,
+              'chapter_num': v.chapterNum,
+              'text_avd_ar': v.textAvdAr,
+              'text_original': v.textOriginal,
+              'text_original_lang': v.textOriginalLang,
+            };
+          });
+        }
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final provider  = context.watch<WordStudyProvider>();
-    final verse     = widget.verse;
+    final verse     = _verseData ?? widget.verse;
     final chapterNum = verse?['chapter_num'] as int? ?? 0;
     final verseNum   = verse?['verse_num']   as int? ?? 0;
     final lang       = verse?['text_original_lang'] as String? ?? 'hebrew';
@@ -110,9 +130,17 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
                     children: [
                       Text('⇌', style: TextStyle(fontSize: 40, color: AppColors.textMuted)),
                       const SizedBox(height: 12),
-                      Text('No word mappings yet for this verse', style: TextStyle(color: AppColors.textMuted), textAlign: TextAlign.center),
+                      Text(
+                        'لا توجد خريطة كلمات لهذه الآية حالياً',
+                        style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 15),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 6),
-                      Text('Admins are working on aligning the words', style: TextStyle(color: AppColors.textMuted, fontSize: 12), textAlign: TextAlign.center),
+                      Text(
+                        'يمكنك دراسة الآية من خلال النص الأصلي والترجمات المقارنة',
+                        style: TextStyle(color: AppColors.textMuted, fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                 ),

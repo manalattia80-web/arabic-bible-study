@@ -291,6 +291,30 @@ class DatabaseService {
     );
   }
 
+  Future<Verse?> getVerseById(String verseId) async {
+    final db = await database;
+    final rows = await db.rawQuery(
+      'SELECT v.*, b.name_ar as book_name_ar FROM verses v JOIN books b ON v.book_id = b.id WHERE v.id = ? LIMIT 1',
+      [verseId],
+    );
+    if (rows.isEmpty) return null;
+    final r = rows.first;
+    return Verse(
+      id:               r['id'] as String,
+      bookId:           r['book_id'] as int,
+      chapterNum:       r['chapter_num'] as int,
+      verseNum:         r['verse_num'] as int,
+      textAvdAr:        r['text_avd_ar'] as String? ?? '',
+      textOriginal:     r['text_original'] as String? ?? '',
+      textOriginalLang: r['text_original_lang'] as String? ?? 'hebrew',
+      bookNameAr:       r['book_name_ar'] as String?,
+      textAlab:         r['text_alab'] as String?,
+      textErv:          r['text_erv'] as String?,
+      textKjv:          r['text_kjv'] as String?,
+      textNiv:          r['text_niv'] as String?,
+    );
+  }
+
   Future<List<Map<String, dynamic>>> getCrossReferences(int bookId, int chapterNum, int verseNum) async {
     final db = await database;
     return await db.rawQuery('''
@@ -311,12 +335,16 @@ class DatabaseService {
 
   Future<List<WordMapping>> getWordMappings(String verseId) async {
     final db = await database;
-    final rows = await db.rawQuery(
-      'SELECT * FROM word_mappings WHERE verse_id = ? ORDER BY ar_word_position ASC',
-      [verseId],
-    );
-    if (rows.isNotEmpty) {
-      return rows.map((r) => WordMapping.fromJson(Map<String, dynamic>.from(r))).toList();
+    try {
+      final rows = await db.rawQuery(
+        'SELECT * FROM word_mappings WHERE verse_id = ? ORDER BY ar_word_position ASC',
+        [verseId],
+      );
+      if (rows.isNotEmpty) {
+        return rows.map((r) => WordMapping.fromJson(Map<String, dynamic>.from(r))).toList();
+      }
+    } catch (e) {
+      debugPrint('Error querying local word_mappings: $e');
     }
 
     // Dynamic offline fallback from verse texts if not pre-seeded
@@ -341,10 +369,11 @@ class DatabaseService {
             String? sId;
             String? trans;
             if (orig.isNotEmpty && orig != '-') {
-              final unpointed = orig.replaceAll(RegExp(r'[\u0591-\u05C7\u0300-\u036F]'), '').trim();
+              final cleanOrig = orig.replaceAll(RegExp(r'[\.,;:!?׃־—–\[\]\(\)\{\}\x22\x27״׳]'), '').trim();
+              final unpointed = cleanOrig.replaceAll(RegExp(r'[\u0591-\u05C7\u0300-\u036F]'), '').trim();
               final sMatches = await db.rawQuery(
                 'SELECT strongs_id, transliteration FROM strongs_entries WHERE original_word LIKE ? OR original_word LIKE ? LIMIT 1',
-                ['%$orig%', '%$unpointed%'],
+                ['%$cleanOrig%', '%$unpointed%'],
               );
               if (sMatches.isNotEmpty) {
                 sId = sMatches.first['strongs_id'] as String?;
@@ -367,25 +396,29 @@ class DatabaseService {
           }
 
           if (generated.isNotEmpty) {
-            saveWordMappings(verseId, generated);
+            try {
+              await saveWordMappings(verseId, generated);
+            } catch (e) {
+              debugPrint('Warning: Could not cache generated word mappings: $e');
+            }
           }
           return generated;
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('Error generating fallback word mappings: $e');
+    }
 
     return [];
   }
 
   Future<void> saveWordMappings(String verseId, List<WordMapping> mappings) async {
     if (mappings.isEmpty) return;
-    final db = await database;
-    final batch = db.batch();
-    for (final m in mappings) {
-      batch.insert(
-        'word_mappings',
-        {
-          'id':                 m.id,
+    try {
+      final db = await database;
+      final batch = db.batch();
+      for (final m in mappings) {
+        final row = <String, dynamic>{
           'verse_id':           m.verseId,
           'ar_word_position':   m.arWordPosition,
           'ar_word':            m.arWord,
@@ -394,15 +427,30 @@ class DatabaseService {
           'orig_word_lang':     m.origWordLang,
           'strongs_id':          m.strongsId,
           'is_verified':         m.isVerified ? 1 : 0,
-        },
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
+        };
+        final intId = int.tryParse(m.id);
+        if (intId != null) {
+          row['id'] = intId;
+        }
+        batch.insert(
+          'word_mappings',
+          row,
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+      await batch.commit(noResult: true);
+    } catch (e) {
+      debugPrint('Error saving word mappings: $e');
     }
-    await batch.commit(noResult: true);
   }
 
   Future<StrongsEntry?> getStrongsEntry(String strongsId) async {
+    if (strongsId.trim().isEmpty) return null;
     final db = await database;
+    final trimmed = strongsId.trim().toUpperCase();
+    final match = RegExp(r'^([HG])0*([1-9][0-9]*)$').firstMatch(trimmed);
+    final normalizedId = match != null ? '${match.group(1)}${match.group(2)}' : trimmed;
+
     final rows = await db.rawQuery('''
       SELECT 
         e.strongs_id,
@@ -417,13 +465,14 @@ class DatabaseService {
         t.is_verified as ar_is_verified
       FROM strongs_entries e
       LEFT JOIN strongs_ar_translations t ON e.strongs_id = t.strongs_id
-      WHERE e.strongs_id = ?
-    ''', [strongsId]);
+      WHERE e.strongs_id = ? OR e.strongs_id = ?
+      LIMIT 1
+    ''', [trimmed, normalizedId]);
 
     if (rows.isEmpty) return null;
     final r = rows.first;
-    final orig = r['original_word'] as String? ?? '';
-    final lang = r['language'] as String? ?? 'hebrew';
+    final orig = r['original_word']?.toString() ?? '';
+    final lang = r['language']?.toString() ?? 'hebrew';
     final isHeb = lang == 'hebrew' || lang == 'aramaic';
 
     String? audio;
@@ -435,18 +484,21 @@ class DatabaseService {
           Uri.encodeComponent(ttsUrl);
     }
 
+    final rawVerified = r['ar_is_verified'];
+    final bool arIsVerified = rawVerified == 1 || rawVerified == true || rawVerified == '1';
+
     return StrongsEntry(
-      strongsId:       r['strongs_id'] as String,
+      strongsId:       r['strongs_id']?.toString() ?? trimmed,
       language:        lang,
       originalWord:    orig,
-      transliteration: r['transliteration'] as String? ?? '',
+      transliteration: r['transliteration']?.toString() ?? '',
       audioUrl:        audio,
-      definitionEn:    r['definition_en'] as String? ?? '',
-      kjvUsage:        r['kjv_usage'] as String?,
-      definitionAr:    r['definition_ar'] as String?,
-      notesAr:         r['notes_ar'] as String?,
-      pronunciationAr: r['pronunciation_ar'] as String?,
-      arIsVerified:    (r['ar_is_verified'] == 1 || r['ar_is_verified'] == true),
+      definitionEn:    r['definition_en']?.toString() ?? '',
+      kjvUsage:        r['kjv_usage']?.toString(),
+      definitionAr:    r['definition_ar']?.toString(),
+      notesAr:         r['notes_ar']?.toString(),
+      pronunciationAr: r['pronunciation_ar']?.toString(),
+      arIsVerified:    arIsVerified,
     );
   }
 

@@ -32,12 +32,12 @@ class StrongsEntry {
   });
 
   factory StrongsEntry.fromJson(Map<String, dynamic> j) {
-    final orig = j['original_word'] as String? ?? '';
-    final lang = j['language'] as String? ?? 'hebrew';
+    final orig = j['original_word']?.toString() ?? '';
+    final lang = j['language']?.toString() ?? 'hebrew';
     final isHeb = lang == 'hebrew' || lang == 'aramaic';
 
     String? audio;
-    final rawAudio = j['audio_url'] as String?;
+    final rawAudio = j['audio_url']?.toString();
     if (rawAudio != null && rawAudio.trim().isNotEmpty) {
       audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
           Uri.encodeComponent(rawAudio
@@ -51,20 +51,23 @@ class StrongsEntry {
           Uri.encodeComponent(ttsUrl);
     }
 
+    final rawIsVerified = j['ar_is_verified'];
+    final bool arIsVerified = rawIsVerified == true || rawIsVerified == 1 || rawIsVerified == '1';
+
     return StrongsEntry(
-      strongsId:       j['strongs_id'] as String? ?? '',
+      strongsId:       j['strongs_id']?.toString() ?? '',
       language:        lang,
       originalWord:    orig,
-      transliteration: j['transliteration'] as String? ?? '',
-      rootWord:        j['root_word'] as String?,
-      pronunciation:   j['pronunciation'] as String?,
+      transliteration: j['transliteration']?.toString() ?? '',
+      rootWord:        j['root_word']?.toString(),
+      pronunciation:   j['pronunciation']?.toString(),
       audioUrl:        audio,
-      definitionEn:    j['definition_en'] as String? ?? '',
-      kjvUsage:        j['kjv_usage'] as String?,
-      definitionAr:    j['definition_ar'] as String?,
-      notesAr:         j['notes_ar'] as String?,
-      pronunciationAr: j['pronunciation_ar'] as String?,
-      arIsVerified:    (j['ar_is_verified'] as bool?) ?? false,
+      definitionEn:    j['definition_en']?.toString() ?? '',
+      kjvUsage:        j['kjv_usage']?.toString(),
+      definitionAr:    j['definition_ar']?.toString(),
+      notesAr:         j['notes_ar']?.toString(),
+      pronunciationAr: j['pronunciation_ar']?.toString(),
+      arIsVerified:    arIsVerified,
     );
   }
 
