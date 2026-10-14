@@ -68,8 +68,14 @@ class UpdateService {
 
           final assets = data['assets'] as List<dynamic>? ?? [];
           String resolvedDownloadUrl = defaultDownloadUrl;
-          if (assets.isNotEmpty && assets[0] is Map && assets[0]['browser_download_url'] != null) {
-            resolvedDownloadUrl = assets[0]['browser_download_url'] as String;
+          for (final a in assets) {
+            if (a is Map && a['browser_download_url'] != null) {
+              final url = a['browser_download_url'] as String;
+              if (url.toLowerCase().endsWith('.apk')) {
+                resolvedDownloadUrl = url;
+                break;
+              }
+            }
           }
 
           return UpdateInfo(

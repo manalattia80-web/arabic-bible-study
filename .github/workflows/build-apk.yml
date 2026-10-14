@@ -93,7 +93,7 @@ jobs:
             AAB_PATH=$(find . -name "*.aab" | head -n 1)
           fi
           echo "Found AAB at: $AAB_PATH"
-          cp "$AAB_PATH" ../arabic-bible-study-app.aab
+          cp "$AAB_PATH" ../play-store-bundle.aab
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
@@ -101,7 +101,7 @@ jobs:
           name: arabic-bible-study-v1.0.${{ github.run_number }}
           path: |
             arabic-bible-study-app.apk
-            arabic-bible-study-app.aab
+            play-store-bundle.aab
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -110,7 +110,7 @@ jobs:
           name: "Arabic Bible Study v1.0.${{ github.run_number }}"
           files: |
             arabic-bible-study-app.apk
-            arabic-bible-study-app.aab
+            play-store-bundle.aab
           draft: false
           prerelease: false
           make_latest: true
