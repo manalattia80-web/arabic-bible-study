@@ -165,15 +165,15 @@ class MorphologyService {
     // Elohim (اسم الجلالة אֱלֹהִים)
     if (cons == 'אלהים' || cons == 'ואלהים' || (strongsId == 'H430')) {
       final pos = 'اسم الجلالة (Divine Title - Elohim)';
-      tags.addAll(['اسم إلهي', 'جمع التعظيم', 'مذكر', 'عبري']);
+      tags.addAll(['اسم إلهي', 'جمع', 'مذكر', 'عبري']);
       return MorphologyAnalysis(
         rawCode: 'H430',
         language: 'hebrew',
         partOfSpeech: pos,
         gender: 'مذكر في الأصل العبري (Masculine)',
-        number: 'جمع التعظيم والفخامة (Plural of Majesty)',
+        number: 'جمع (Plural)',
         prefixes: prefixes,
-        summary: 'اسم الجلالة في الأصل العبري (אֱלֹהִים)، جاء في صيغة جمع التعظيم والسيادة الإلهية، ويأخذ فعلاً مفرداً.',
+        summary: 'اسم في الأصل العبري، جاء بصيغة جمع (Plural)، ويأخذ فعلاً مفرداً.',
         tags: tags,
       );
     }
