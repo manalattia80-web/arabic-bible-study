@@ -1,4 +1,4 @@
-package com.example.mobile
+package com.arabicbible.study
 
 import io.flutter.embedding.android.FlutterActivity
 

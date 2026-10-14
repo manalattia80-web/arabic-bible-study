@@ -66,6 +66,8 @@ if (fs.existsSync(appGradlePath)) {
     }
 `;
     appGradle = appGradle.replace('buildTypes {', aaptBlock + '\n    buildTypes {');
+    appGradle = appGradle.replace(/namespace\s*=\s*"[^"]*"/, 'namespace = "com.arabicbible.study"');
+    appGradle = appGradle.replace(/applicationId\s*=\s*"[^"]*"/, 'applicationId = "com.arabicbible.study"');
     fs.writeFileSync(appGradlePath, appGradle, 'utf8');
     console.log('Successfully added noCompress dat to android/app/build.gradle');
   }
@@ -79,14 +81,16 @@ if (fs.existsSync(manifestPath)) {
   if (!manifest.includes('android:largeHeap="true"')) {
     manifest = manifest.replace('<application', '<application\n        android:largeHeap="true"');
   }
-  if (!manifest.includes('android.permission.REQUEST_INSTALL_PACKAGES')) {
-    manifest = manifest.replace('<application', '<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />\n    <application');
+  if (!manifest.includes('android.permission.INTERNET')) {
+    manifest = manifest.replace('<application', '<uses-permission android:name="android.permission.INTERNET" />\n    <application');
   }
+  // Strip any legacy REQUEST_INSTALL_PACKAGES to comply with Google Play Store policies
+  manifest = manifest.replace(/<uses-permission\s+android:name="android\.permission\.REQUEST_INSTALL_PACKAGES"\s*\/>\s*/g, '');
   if (!manifest.includes('android:label="دليل الكتاب المقدس"')) {
     manifest = manifest.replace('<application', '<application\n        android:label="دليل الكتاب المقدس"');
   }
   fs.writeFileSync(manifestPath, manifest, 'utf8');
-  console.log('Successfully patched AndroidManifest.xml with app name & largeHeap');
+  console.log('Successfully patched AndroidManifest.xml with app name, internet permission & largeHeap');
 }
 
 const stringsDir = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src', 'main', 'res', 'values');

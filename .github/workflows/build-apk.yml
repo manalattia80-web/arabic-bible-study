@@ -32,9 +32,9 @@ jobs:
       - name: Initialize Flutter Android Project
         working-directory: ./mobile
         run: |
-          flutter create . --platforms android
+          flutter create . --platforms android --org com.arabicbible
           rm -f test/widget_test.dart
-          sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"\/>\n    <queries><intent><action android:name="android.intent.action.VIEW"\/><data android:scheme="https"\/><\/intent><\/queries>\n    <application/g' android/app/src/main/AndroidManifest.xml || true
+          sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <queries><intent><action android:name="android.intent.action.VIEW"\/><data android:scheme="https"\/><\/intent><\/queries>\n    <application/g' android/app/src/main/AndroidManifest.xml || true
           sed -i 's/android:label="[^"]*"/android:label="دليل الكتاب المقدس"/g' android/app/src/main/AndroidManifest.xml || true
           node ../scripts/patch_gradle.cjs
 
@@ -76,18 +76,44 @@ jobs:
           echo "Found APK at: $APK_PATH"
           cp "$APK_PATH" ../arabic-bible-study-app.apk
 
-      - name: Upload Build Artifact
+      - name: Build App Bundle (AAB for Google Play Store)
+        working-directory: ./mobile
+        run: |
+          if ! flutter build appbundle --release --no-tree-shake-icons --dart-define=APP_BUILD_NUMBER=${{ github.run_number }}; then
+            echo "AAB build failed, running verbose to capture error..."
+            AAB_OUT=$(flutter build appbundle --release --no-tree-shake-icons --dart-define=APP_BUILD_NUMBER=${{ github.run_number }} --verbose 2>&1 | tail -n 80)
+            echo "$AAB_OUT"
+            ESC_AAB="${AAB_OUT//$'\n'/'%0A'}"
+            echo "::error title=Flutter AAB Build Failure::$ESC_AAB"
+            exit 1
+          fi
+
+      - name: Find and Copy AAB
+        working-directory: ./mobile
+        run: |
+          AAB_PATH=$(find build -name "*.aab" | grep release | head -n 1)
+          if [ -z "$AAB_PATH" ]; then
+            AAB_PATH=$(find . -name "*.aab" | head -n 1)
+          fi
+          echo "Found AAB at: $AAB_PATH"
+          cp "$AAB_PATH" ../arabic-bible-study-app.aab
+
+      - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: arabic-bible-study-app-v1.0.${{ github.run_number }}
-          path: arabic-bible-study-app.apk
+          name: arabic-bible-study-v1.0.${{ github.run_number }}
+          path: |
+            arabic-bible-study-app.apk
+            arabic-bible-study-app.aab
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "v1.0.${{ github.run_number }}"
           name: "Arabic Bible Study v1.0.${{ github.run_number }}"
-          files: arabic-bible-study-app.apk
+          files: |
+            arabic-bible-study-app.apk
+            arabic-bible-study-app.aab
           draft: false
           prerelease: false
           make_latest: true
