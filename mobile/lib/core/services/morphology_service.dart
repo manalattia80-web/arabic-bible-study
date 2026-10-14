@@ -146,9 +146,9 @@ class MorphologyService {
       );
     }
 
-    // Tetragrammaton (اسم الجلالة الأعظم יהוה)
+    // Tetragrammaton (الاسم الإلهي يهوه יהוה)
     if (cons == 'יהוה' || cons == 'ויהוה' || (strongsId == 'H3068')) {
-      final pos = 'اسم الجلالة الأعظم (The Tetragrammaton - YHWH)';
+      final pos = 'الاسم الإلهي (The Tetragrammaton - YHWH)';
       tags.addAll(['اسم علم إلهي', 'مذكر', 'مفرد', 'عبري']);
       return MorphologyAnalysis(
         rawCode: 'H3068',
@@ -157,7 +157,7 @@ class MorphologyService {
         gender: 'مذكر في الأصل العبري (Masculine)',
         number: 'مفرد (Singular)',
         prefixes: prefixes,
-        summary: 'الاسم الإلهي العظيم والخاص في العهد القديم، يدل على الأزلي واجب الوجود (الكائن الدائم).',
+        summary: 'الاسم الإلهي الخاص في العهد القديم، مشتق من جذر الكينونة (הָיָה) الدال على الوجود الدائم ("أَهْيَه").',
         tags: tags,
       );
     }
@@ -474,7 +474,7 @@ class MorphologyService {
         person: person,
         number: number,
         gender: 'مشترك (Common)',
-        summary: 'فعل كينونة يوناني في زمن الماضي المستمر (Imperfect)، مبني للمعلوم، يدل لاهوتياً على الوجود الأزلي المستمر دون بداية.',
+        summary: 'فعل كينونة يوناني في زمن الماضي المستمر (Imperfect)، مبني للمعلوم، يدل على استمرار الكينونة أو الحالة في الماضي.',
         tags: tags,
       );
     }
