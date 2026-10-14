@@ -120,11 +120,27 @@ class DatabaseService {
       await db.execute("UPDATE books SET testament = 'new' WHERE id >= 40 AND (testament IS NULL OR testament = '');");
     } catch (_) {}
 
+    // Dynamic Self-Healing: guarantee books have accurate total_chapters populated
+    try {
+      final zeroChapters = await db.rawQuery("SELECT COUNT(*) as cnt FROM books WHERE total_chapters IS NULL OR total_chapters <= 0;");
+      final cnt = (zeroChapters.first['cnt'] as int?) ?? 0;
+      if (cnt > 0) {
+        final batch = db.batch();
+        defaultChapterCounts.forEach((id, chCount) {
+          batch.execute("UPDATE books SET total_chapters = ? WHERE id = ? AND (total_chapters IS NULL OR total_chapters <= 0);", [chCount, id]);
+        });
+        await batch.commit(noResult: true);
+        debugPrint('Dynamic Self-Healing: updated total_chapters for $cnt books.');
+      }
+    } catch (e) {
+      debugPrint('Self-healing total_chapters warning: $e');
+    }
+
     return db;
   }
 
   // ── Canonical Books Fallback Data (100% Offline Resilience) ────────────────
-  static const Map<int, String> _defaultBookNamesEn = {
+  static const Map<int, String> defaultBookNamesEn = {
     1: 'Genesis', 2: 'Exodus', 3: 'Leviticus', 4: 'Numbers', 5: 'Deuteronomy',
     6: 'Joshua', 7: 'Judges', 8: 'Ruth', 9: '1 Samuel', 10: '2 Samuel',
     11: '1 Kings', 12: '2 Kings', 13: '1 Chronicles', 14: '2 Chronicles',
@@ -141,7 +157,7 @@ class DatabaseService {
     65: 'Jude', 66: 'Revelation'
   };
 
-  static const Map<int, int> _defaultChapterCounts = {
+  static const Map<int, int> defaultChapterCounts = {
     1: 50, 2: 40, 3: 27, 4: 36, 5: 34, 6: 24, 7: 21, 8: 4, 9: 31, 10: 24,
     11: 22, 12: 25, 13: 29, 14: 36, 15: 10, 16: 13, 17: 10, 18: 42, 19: 150, 20: 31,
     21: 12, 22: 8, 23: 66, 24: 52, 25: 5, 26: 48, 27: 12, 28: 14, 29: 3, 30: 9,
@@ -159,7 +175,7 @@ class DatabaseService {
     for (int id = startId; id <= endId; id++) {
       final tId = id >= 40 ? 2 : 1;
       final nameAr = Verse.defaultBookNames[id] ?? 'سفر $id';
-      final nameEn = _defaultBookNamesEn[id] ?? 'Book $id';
+      final nameEn = defaultBookNamesEn[id] ?? 'Book $id';
       list.add(Book(
         id:           id,
         testamentId:  tId,
@@ -167,7 +183,7 @@ class DatabaseService {
         nameArShort:  nameAr,
         nameEn:       nameEn,
         nameEnShort:  nameEn,
-        chapterCount: _defaultChapterCounts[id] ?? 1,
+        chapterCount: defaultChapterCounts[id] ?? 1,
         sortOrder:    id,
       ));
     }
@@ -204,15 +220,17 @@ class DatabaseService {
           final tId = (bId >= 40) ? 2 : 1;
           final nameAr = (r['name_ar'] as String? ?? '').trim();
           final nameEn = (r['name_en'] as String? ?? '').trim();
+          final rawCount = (r['total_chapters'] as int?) ?? (r['chapter_count'] as int?) ?? 0;
+          final chCount = rawCount > 0 ? rawCount : (defaultChapterCounts[bId] ?? 1);
           return Book(
             id:           bId,
             testamentId:  tId,
             nameAr:       nameAr.isNotEmpty ? nameAr : (Verse.defaultBookNames[bId] ?? 'سفر $bId'),
             nameArShort:  (r['name_ar_short'] ?? (nameAr.isNotEmpty ? nameAr : Verse.defaultBookNames[bId])) as String? ?? '',
-            nameEn:       nameEn.isNotEmpty ? nameEn : (_defaultBookNamesEn[bId] ?? 'Book $bId'),
-            nameEnShort:  (r['name_en_short'] ?? (nameEn.isNotEmpty ? nameEn : _defaultBookNamesEn[bId])) as String? ?? '',
+            nameEn:       nameEn.isNotEmpty ? nameEn : (defaultBookNamesEn[bId] ?? 'Book $bId'),
+            nameEnShort:  (r['name_en_short'] ?? (nameEn.isNotEmpty ? nameEn : defaultBookNamesEn[bId])) as String? ?? '',
             nameOriginal: r['name_original'] as String?,
-            chapterCount: (r['total_chapters'] as int?) ?? (r['chapter_count'] as int?) ?? _defaultChapterCounts[bId] ?? 1,
+            chapterCount: chCount,
             sortOrder:    (r['order_num'] as int?) ?? (r['sort_order'] as int?) ?? bId,
           );
         }).toList();
@@ -235,12 +253,13 @@ class DatabaseService {
       // Fallback to book's total_chapters or chapter_count
       final bRows = await db.rawQuery('SELECT total_chapters, chapter_count FROM books WHERE id = ?', [bookId]);
       if (bRows.isNotEmpty) {
-        final total = (bRows.first['total_chapters'] as int?) ?? (bRows.first['chapter_count'] as int?) ?? _defaultChapterCounts[bookId] ?? 1;
+        final raw = (bRows.first['total_chapters'] as int?) ?? (bRows.first['chapter_count'] as int?) ?? 0;
+        final total = raw > 0 ? raw : (defaultChapterCounts[bookId] ?? 1);
         return List.generate(total, (i) => i + 1);
       }
     } catch (_) {}
 
-    final fallbackTotal = _defaultChapterCounts[bookId] ?? 1;
+    final fallbackTotal = defaultChapterCounts[bookId] ?? 1;
     return List.generate(fallbackTotal, (i) => i + 1);
   }
 

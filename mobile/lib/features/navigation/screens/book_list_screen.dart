@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/services/database_service.dart';
 import '../../../providers/navigation_provider.dart';
 import '../../../models/book.dart';
 
@@ -159,7 +160,7 @@ class _BookGrid extends StatelessWidget {
           crossAxisCount:   3,
           crossAxisSpacing: 8,
           mainAxisSpacing:  8,
-          childAspectRatio: 1.35,
+          childAspectRatio: 1.25,
         ),
         itemCount: books.length,
         itemBuilder: (ctx, i) => _BookCard(book: books[i]),
@@ -174,6 +175,13 @@ class _BookCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final count = book.chapterCount > 0
+        ? book.chapterCount
+        : (DatabaseService.defaultChapterCounts[book.id] ?? 1);
+    final countText = book.id == 19
+        ? '$count مزمور'
+        : (count >= 3 && count <= 10 ? '$count أصحاحات' : '$count أصحاح');
+
     return GestureDetector(
       onTap: () => context.pushNamed('chapters', pathParameters: {'bookId': '${book.id}'}),
       child: Container(
@@ -202,7 +210,7 @@ class _BookCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 5),
                   FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Row(
@@ -213,21 +221,29 @@ class _BookCard extends StatelessWidget {
                           textDirection: TextDirection.ltr,
                           child: Text(
                             book.nameEnShort,
-                            style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
+                            style: TextStyle(
+                              color: AppColors.textSecondary,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),
                         const SizedBox(width: 5),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
-                            color:        AppColors.bgSurface,
+                            color:        AppColors.primary.withOpacity(0.12),
                             borderRadius: BorderRadius.circular(100),
-                            border:       Border.all(color: AppColors.border),
+                            border:       Border.all(color: AppColors.primary.withOpacity(0.3)),
                           ),
                           child: Text(
-                            '${book.chapterCount} أصحاح',
-                            style: TextStyle(color: AppColors.textMuted, fontSize: 10),
+                            countText,
+                            style: TextStyle(
+                              color: AppColors.primary,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),

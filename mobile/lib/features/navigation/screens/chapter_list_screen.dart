@@ -72,7 +72,7 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
                               Icon(Icons.menu_book_rounded, color: AppColors.primary, size: 18),
                               const SizedBox(width: 8),
                               Text(
-                                '${nav.chapters.length} إصحاحاً',
+                                '${nav.chapters.length} ${widget.bookId == 19 ? "مزموراً" : "إصحاحاً"}',
                                 style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
                               ),
                               const Spacer(),
