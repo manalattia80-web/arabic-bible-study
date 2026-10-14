@@ -114,7 +114,64 @@ class DatabaseService {
       debugPrint('Schema verification warning: $e');
     }
 
+    // Dynamic Self-Healing: guarantee books have testament populated
+    try {
+      await db.execute("UPDATE books SET testament = 'old' WHERE id <= 39 AND (testament IS NULL OR testament = '');");
+      await db.execute("UPDATE books SET testament = 'new' WHERE id >= 40 AND (testament IS NULL OR testament = '');");
+    } catch (_) {}
+
     return db;
+  }
+
+  // ── Canonical Books Fallback Data (100% Offline Resilience) ────────────────
+  static const Map<int, String> _defaultBookNamesEn = {
+    1: 'Genesis', 2: 'Exodus', 3: 'Leviticus', 4: 'Numbers', 5: 'Deuteronomy',
+    6: 'Joshua', 7: 'Judges', 8: 'Ruth', 9: '1 Samuel', 10: '2 Samuel',
+    11: '1 Kings', 12: '2 Kings', 13: '1 Chronicles', 14: '2 Chronicles',
+    15: 'Ezra', 16: 'Nehemiah', 17: 'Esther', 18: 'Job', 19: 'Psalms', 20: 'Proverbs',
+    21: 'Ecclesiastes', 22: 'Song of Solomon', 23: 'Isaiah', 24: 'Jeremiah', 25: 'Lamentations',
+    26: 'Ezekiel', 27: 'Daniel', 28: 'Hosea', 29: 'Joel', 30: 'Amos', 31: 'Obadiah',
+    32: 'Jonah', 33: 'Micah', 34: 'Nahum', 35: 'Habakkuk', 36: 'Zephaniah', 37: 'Haggai',
+    38: 'Zechariah', 39: 'Malachi', 40: 'Matthew', 41: 'Mark', 42: 'Luke', 43: 'John',
+    44: 'Acts', 45: 'Romans', 46: '1 Corinthians', 47: '2 Corinthians',
+    48: 'Galatians', 49: 'Ephesians', 50: 'Philippians', 51: 'Colossians', 52: '1 Thessalonians',
+    53: '2 Thessalonians', 54: '1 Timothy', 55: '2 Timothy',
+    56: 'Titus', 57: 'Philemon', 58: 'Hebrews', 59: 'James', 60: '1 Peter',
+    61: '2 Peter', 62: '1 John', 63: '2 John', 64: '3 John',
+    65: 'Jude', 66: 'Revelation'
+  };
+
+  static const Map<int, int> _defaultChapterCounts = {
+    1: 50, 2: 40, 3: 27, 4: 36, 5: 34, 6: 24, 7: 21, 8: 4, 9: 31, 10: 24,
+    11: 22, 12: 25, 13: 29, 14: 36, 15: 10, 16: 13, 17: 10, 18: 42, 19: 150, 20: 31,
+    21: 12, 22: 8, 23: 66, 24: 52, 25: 5, 26: 48, 27: 12, 28: 14, 29: 3, 30: 9,
+    31: 1, 32: 4, 33: 7, 34: 3, 35: 3, 36: 3, 37: 2, 38: 14, 39: 4,
+    40: 28, 41: 16, 42: 24, 43: 21, 44: 28, 45: 16, 46: 16, 47: 13, 48: 6, 49: 6,
+    50: 4, 51: 4, 52: 5, 53: 3, 54: 6, 55: 4, 56: 3, 57: 1, 58: 13, 59: 5,
+    60: 5, 61: 3, 62: 5, 63: 1, 64: 1, 65: 1, 66: 22
+  };
+
+  List<Book> _getCanonicalBooks({int? testamentId}) {
+    final List<Book> list = [];
+    final startId = testamentId == 2 ? 40 : 1;
+    final endId   = testamentId == 1 ? 39 : 66;
+
+    for (int id = startId; id <= endId; id++) {
+      final tId = id >= 40 ? 2 : 1;
+      final nameAr = Verse.defaultBookNames[id] ?? 'سفر $id';
+      final nameEn = _defaultBookNamesEn[id] ?? 'Book $id';
+      list.add(Book(
+        id:           id,
+        testamentId:  tId,
+        nameAr:       nameAr,
+        nameArShort:  nameAr,
+        nameEn:       nameEn,
+        nameEnShort:  nameEn,
+        chapterCount: _defaultChapterCounts[id] ?? 1,
+        sortOrder:    id,
+      ));
+    }
+    return list;
   }
 
   // ── Navigation ─────────────────────────────────────────────────────────────
@@ -131,46 +188,60 @@ class DatabaseService {
     String sql = 'SELECT * FROM books';
     List<dynamic> args = [];
     if (testamentId != null) {
-      final tName = testamentId == 1 ? 'old' : 'new';
-      sql += ' WHERE LOWER(testament) = LOWER(?)';
-      args.add(tName);
+      if (testamentId == 1) {
+        sql += ' WHERE (id <= 39 OR LOWER(COALESCE(testament, "")) IN ("old", "ot", "1"))';
+      } else {
+        sql += ' WHERE (id >= 40 OR LOWER(COALESCE(testament, "")) IN ("new", "nt", "2"))';
+      }
     }
-    sql += ' ORDER BY order_num ASC';
+    sql += ' ORDER BY COALESCE(order_num, id) ASC';
 
-    final rows = await db.rawQuery(sql, args);
-    return rows.map((r) {
-      final tStr = (r['testament'] as String? ?? 'old').toLowerCase();
-      final tId = tStr == 'new' ? 2 : 1;
-      return Book(
-        id:           r['id'] as int,
-        testamentId:  tId,
-        nameAr:       r['name_ar'] as String,
-        nameArShort:  (r['name_ar_short'] ?? r['name_ar']) as String,
-        nameEn:       r['name_en'] as String,
-        nameEnShort:  (r['name_en_short'] ?? r['name_en']) as String,
-        nameOriginal: r['name_original'] as String?,
-        chapterCount: (r['total_chapters'] as int?) ?? 0,
-        sortOrder:    (r['order_num'] as int?) ?? (r['id'] as int),
-      );
-    }).toList();
+    try {
+      final rows = await db.rawQuery(sql, args);
+      if (rows.isNotEmpty) {
+        return rows.map((r) {
+          final bId = r['id'] as int;
+          final tId = (bId >= 40) ? 2 : 1;
+          final nameAr = (r['name_ar'] as String? ?? '').trim();
+          final nameEn = (r['name_en'] as String? ?? '').trim();
+          return Book(
+            id:           bId,
+            testamentId:  tId,
+            nameAr:       nameAr.isNotEmpty ? nameAr : (Verse.defaultBookNames[bId] ?? 'سفر $bId'),
+            nameArShort:  (r['name_ar_short'] ?? (nameAr.isNotEmpty ? nameAr : Verse.defaultBookNames[bId])) as String? ?? '',
+            nameEn:       nameEn.isNotEmpty ? nameEn : (_defaultBookNamesEn[bId] ?? 'Book $bId'),
+            nameEnShort:  (r['name_en_short'] ?? (nameEn.isNotEmpty ? nameEn : _defaultBookNamesEn[bId])) as String? ?? '',
+            nameOriginal: r['name_original'] as String?,
+            chapterCount: (r['total_chapters'] as int?) ?? (r['chapter_count'] as int?) ?? _defaultChapterCounts[bId] ?? 1,
+            sortOrder:    (r['order_num'] as int?) ?? (r['sort_order'] as int?) ?? bId,
+          );
+        }).toList();
+      }
+    } catch (_) {}
+
+    return _getCanonicalBooks(testamentId: testamentId);
   }
 
   Future<List<int>> getChapters(int bookId) async {
     final db = await database;
-    final rows = await db.rawQuery(
-      'SELECT DISTINCT chapter_num FROM verses WHERE book_id = ? ORDER BY chapter_num ASC',
-      [bookId],
-    );
-    if (rows.isNotEmpty) {
-      return rows.map((r) => r['chapter_num'] as int).toList();
-    }
-    // Fallback to book's total_chapters
-    final bRows = await db.rawQuery('SELECT total_chapters FROM books WHERE id = ?', [bookId]);
-    if (bRows.isNotEmpty) {
-      final total = (bRows.first['total_chapters'] as int?) ?? 1;
-      return List.generate(total, (i) => i + 1);
-    }
-    return [1];
+    try {
+      final rows = await db.rawQuery(
+        'SELECT DISTINCT chapter_num FROM verses WHERE book_id = ? ORDER BY chapter_num ASC',
+        [bookId],
+      );
+      if (rows.isNotEmpty) {
+        return rows.map((r) => r['chapter_num'] as int).toList();
+      }
+      // Fallback to book's total_chapters or chapter_count
+      final bRows = await db.rawQuery('SELECT total_chapters, chapter_count FROM books WHERE id = ?', [bookId]);
+      if (bRows.isNotEmpty) {
+        final total = (bRows.first['total_chapters'] as int?) ?? (bRows.first['chapter_count'] as int?) ?? _defaultChapterCounts[bookId] ?? 1;
+        return List.generate(total, (i) => i + 1);
+      }
+    } catch (_) {}
+
+    final fallbackTotal = _defaultChapterCounts[bookId] ?? 1;
+    return List.generate(fallbackTotal, (i) => i + 1);
   }
 
   // ── Verses ─────────────────────────────────────────────────────────────────

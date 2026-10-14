@@ -6,6 +6,7 @@
 
 import 'package:flutter/foundation.dart';
 import '../core/services/api_service.dart';
+import '../core/services/database_service.dart';
 import '../models/testament.dart';
 import '../models/book.dart';
 
@@ -49,13 +50,23 @@ class NavigationProvider extends ChangeNotifier {
     _set(loading: true, error: '');
     try {
       _books = await ApiService.getBooks(testamentId: testamentId);
-      // Merge into allBooks cache
+      if (_books.isEmpty) {
+        _books = await DatabaseService.instance.getBooks(testamentId: testamentId);
+      }
       for (final b in _books) {
         if (!_allBooks.any((ab) => ab.id == b.id)) _allBooks.add(b);
       }
       _error = '';
-    } catch (e) {
-      _error = e.toString();
+    } catch (_) {
+      try {
+        _books = await DatabaseService.instance.getBooks(testamentId: testamentId);
+        for (final b in _books) {
+          if (!_allBooks.any((ab) => ab.id == b.id)) _allBooks.add(b);
+        }
+        _error = '';
+      } catch (e2) {
+        _error = e2.toString();
+      }
     } finally {
       _set(loading: false);
     }
@@ -65,9 +76,17 @@ class NavigationProvider extends ChangeNotifier {
     _set(loading: true, error: '');
     try {
       _chapters = await ApiService.getChapters(bookId);
-      _error    = '';
-    } catch (e) {
-      _error = e.toString();
+      if (_chapters.isEmpty) {
+        _chapters = await DatabaseService.instance.getChapters(bookId);
+      }
+      _error = '';
+    } catch (_) {
+      try {
+        _chapters = await DatabaseService.instance.getChapters(bookId);
+        _error = '';
+      } catch (e2) {
+        _error = e2.toString();
+      }
     } finally {
       _set(loading: false);
     }

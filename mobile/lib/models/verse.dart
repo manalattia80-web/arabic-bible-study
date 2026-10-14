@@ -56,11 +56,11 @@ class Verse {
     );
   }
 
-  String get displayBookName => bookNameAr ?? _defaultBookNames[bookId] ?? 'السفر $bookId';
+  String get displayBookName => bookNameAr ?? defaultBookNames[bookId] ?? 'السفر $bookId';
   String get reference => '$displayBookName $chapterNum: $verseNum';
   bool   get isHebrew  => textOriginalLang == 'hebrew' || textOriginalLang == 'aramaic';
 
-  static const Map<int, String> _defaultBookNames = {
+  static const Map<int, String> defaultBookNames = {
     1: 'التكوين', 2: 'الخروج', 3: 'اللاويين', 4: 'العدد', 5: 'التثنية',
     6: 'يشوع', 7: 'القضاة', 8: 'راعوث', 9: 'صموئيل الأول', 10: 'صموئيل الثاني',
     11: 'الملوك الأول', 12: 'الملوك الثاني', 13: 'أخبار الأيام الأول', 14: 'أخبار الأيام الثاني',
