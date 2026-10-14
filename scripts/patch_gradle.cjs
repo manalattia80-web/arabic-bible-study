@@ -73,24 +73,16 @@ if (fs.existsSync(appGradlePath)) {
   }
 }
 
-// 4. Ensure Android App Name Label is "دليل الكتاب المقدس" and largeHeap="true"
+// 4. Ensure AndroidManifest.xml has package and no illegal tags
 const manifestPath = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
 if (fs.existsSync(manifestPath)) {
   let manifest = fs.readFileSync(manifestPath, 'utf8');
-  manifest = manifest.replace(/android:label="[^"]*"/g, 'android:label="دليل الكتاب المقدس"');
-  if (!manifest.includes('android:largeHeap="true"')) {
-    manifest = manifest.replace('<application', '<application\n        android:largeHeap="true"');
+  if (!manifest.includes('package="com.arabicbible.study"')) {
+    manifest = manifest.replace('<manifest', '<manifest package="com.arabicbible.study"');
   }
-  if (!manifest.includes('android.permission.INTERNET')) {
-    manifest = manifest.replace('<application', '<uses-permission android:name="android.permission.INTERNET" />\n    <application');
-  }
-  // Strip any legacy REQUEST_INSTALL_PACKAGES to comply with Google Play Store policies
   manifest = manifest.replace(/<uses-permission\s+android:name="android\.permission\.REQUEST_INSTALL_PACKAGES"\s*\/>\s*/g, '');
-  if (!manifest.includes('android:label="دليل الكتاب المقدس"')) {
-    manifest = manifest.replace('<application', '<application\n        android:label="دليل الكتاب المقدس"');
-  }
   fs.writeFileSync(manifestPath, manifest, 'utf8');
-  console.log('Successfully patched AndroidManifest.xml with app name, internet permission & largeHeap');
+  console.log('Successfully verified AndroidManifest.xml');
 }
 
 const stringsDir = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src', 'main', 'res', 'values');

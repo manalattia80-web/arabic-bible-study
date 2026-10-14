@@ -29,13 +29,10 @@ jobs:
           flutter-version: '3.24.3'
           channel: 'stable'
           
-      - name: Initialize Flutter Android Project
+      - name: Configure Flutter Android Project
         working-directory: ./mobile
         run: |
-          flutter create . --platforms android --org com.arabicbible
           rm -f test/widget_test.dart
-          sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <queries><intent><action android:name="android.intent.action.VIEW"\/><data android:scheme="https"\/><\/intent><\/queries>\n    <application/g' android/app/src/main/AndroidManifest.xml || true
-          sed -i 's/android:label="[^"]*"/android:label="دليل الكتاب المقدس"/g' android/app/src/main/AndroidManifest.xml || true
           node ../scripts/patch_gradle.cjs
 
       - name: Install dependencies
