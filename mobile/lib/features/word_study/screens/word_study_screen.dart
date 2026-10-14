@@ -12,7 +12,6 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
 import '../../../models/word_mapping.dart';
 import '../widgets/strongs_modal.dart';
-import '../../../core/services/morphology_service.dart';
 
 class WordStudyScreen extends StatefulWidget {
   final String              verseId;
@@ -246,7 +245,7 @@ class _TableHeader extends StatelessWidget {
         SizedBox(width: 28, child: Text('#', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
         Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('الكلمة العربية', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
         const SizedBox(width: 12),
-        Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('النص الأصلي والصرف', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
+        Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('النص الأصلي', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
         const SizedBox(width: 12),
         Expanded(flex: 2, child: Text('سترونج والنطق', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
         const SizedBox(width: 36),
@@ -346,37 +345,6 @@ class _WordRow extends StatelessWidget {
                                 ? AppTheme.hebrewText(size: 17)
                                 : AppTheme.greekText(size: 16),
                             textAlign: mapping.isHebrew ? TextAlign.right : TextAlign.right,
-                          ),
-                          Builder(
-                            builder: (ctx) {
-                              final analysis = MorphologyService.parse(
-                                code: mapping.origMorphology,
-                                language: mapping.origWordLang,
-                                arWord: mapping.arWord,
-                                origWord: mapping.origWord,
-                                strongsId: mapping.strongsId,
-                              );
-                              final badgeText = analysis.tags.isNotEmpty
-                                  ? analysis.tags.first
-                                  : (mapping.origMorphology ?? '');
-                              if (badgeText.isEmpty) return const SizedBox.shrink();
-                              return Container(
-                                margin: const EdgeInsets.only(top: 2),
-                                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Text(
-                                  badgeText,
-                                  style: TextStyle(
-                                    color:      AppColors.primary,
-                                    fontSize:   10,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              );
-                            },
                           ),
                         ],
                       ),

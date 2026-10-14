@@ -244,7 +244,66 @@ class DatabaseService {
       'SELECT * FROM word_mappings WHERE verse_id = ? ORDER BY ar_word_position ASC',
       [verseId],
     );
-    return rows.map((r) => WordMapping.fromJson(Map<String, dynamic>.from(r))).toList();
+    if (rows.isNotEmpty) {
+      return rows.map((r) => WordMapping.fromJson(Map<String, dynamic>.from(r))).toList();
+    }
+
+    // Dynamic offline fallback from verse texts if not pre-seeded
+    try {
+      final vRows = await db.rawQuery('SELECT * FROM verses WHERE id = ? LIMIT 1', [verseId]);
+      if (vRows.isNotEmpty) {
+        final v = vRows.first;
+        final arText = (v['text_avd_ar'] as String? ?? '').trim();
+        final origText = (v['text_original'] as String? ?? '').trim();
+        final origLang = (v['text_original_lang'] as String? ?? 'hebrew');
+
+        final arWords = arText.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+        final origWords = origText.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+
+        if (arWords.isNotEmpty) {
+          final List<WordMapping> generated = [];
+          for (int i = 0; i < arWords.length; i++) {
+            final ar = arWords[i];
+            final orig = i < origWords.length ? origWords[i] : (origWords.isNotEmpty ? origWords.last : '-');
+            final pos = i + 1;
+
+            String? sId;
+            String? trans;
+            if (orig.isNotEmpty && orig != '-') {
+              final unpointed = orig.replaceAll(RegExp(r'[\u0591-\u05C7\u0300-\u036F]'), '').trim();
+              final sMatches = await db.rawQuery(
+                'SELECT strongs_id, transliteration FROM strongs_entries WHERE original_word LIKE ? OR original_word LIKE ? LIMIT 1',
+                ['%$orig%', '%$unpointed%'],
+              );
+              if (sMatches.isNotEmpty) {
+                sId = sMatches.first['strongs_id'] as String?;
+                trans = sMatches.first['transliteration'] as String?;
+              }
+            }
+
+            generated.add(WordMapping(
+              id: '${verseId}_$pos',
+              verseId: verseId,
+              arWordPosition: pos,
+              origWordPosition: pos,
+              arWord: ar,
+              origWord: orig,
+              origWordLang: origLang,
+              strongsId: sId,
+              transliterationLat: trans,
+              isVerified: false,
+            ));
+          }
+
+          if (generated.isNotEmpty) {
+            saveWordMappings(verseId, generated);
+          }
+          return generated;
+        }
+      }
+    } catch (_) {}
+
+    return [];
   }
 
   Future<void> saveWordMappings(String verseId, List<WordMapping> mappings) async {
@@ -376,21 +435,95 @@ class DatabaseService {
         );
       }
     }
-    return grouped.values.toList();
+    if (grouped.isNotEmpty) {
+      return grouped.values.toList();
+    }
+
+    // Fallback: search verses matching original_word if word_mappings has no rows
+    final sEntries = await db.rawQuery(
+      'SELECT original_word FROM strongs_entries WHERE strongs_id IN ($placeholders) LIMIT 1',
+      candidates,
+    );
+    if (sEntries.isNotEmpty) {
+      final origWord = sEntries.first['original_word'] as String? ?? '';
+      final unpointed = origWord.replaceAll(RegExp(r'[\u0591-\u05C7\u0300-\u036F]'), '').trim();
+      final searchToken = unpointed.isNotEmpty ? unpointed : origWord.trim();
+      if (searchToken.isNotEmpty) {
+        final vRows = await db.rawQuery('''
+          SELECT v.id as verse_id, v.book_id, b.name_ar as book_name_ar, v.chapter_num, v.verse_num, v.text_avd_ar
+          FROM verses v
+          JOIN books b ON v.book_id = b.id
+          WHERE v.text_original LIKE ?
+          ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC
+          LIMIT 100
+        ''', ['%$searchToken%']);
+
+        return vRows.map((r) => WordOccurrence(
+          arWord:          origWord,
+          arWordPositions: [1],
+          verseId:         r['verse_id'] as String,
+          bookId:          r['book_id'] as int? ?? 0,
+          bookNameAr:      r['book_name_ar'] as String? ?? '',
+          chapterNum:      r['chapter_num'] as int? ?? 0,
+          verseNum:        r['verse_num'] as int? ?? 0,
+          textAvdAr:       r['text_avd_ar'] as String? ?? '',
+        )).toList();
+      }
+    }
+
+    return [];
   }
 
   /// Returns occurrence counts per book for the given strongsId (for charting/visualizing)
   Future<List<Map<String, dynamic>>> getStrongsBookDistribution(String strongsId) async {
     final db = await database;
-    return await db.rawQuery('''
+    final match = RegExp(r'^([HG])\s*0*([1-9][0-9]{0,4})$', caseSensitive: false).firstMatch(strongsId.trim());
+    List<String> candidates;
+    if (match != null) {
+      final prefix = match.group(1)!.toUpperCase();
+      final numInt = int.tryParse(match.group(2)!) ?? 0;
+      candidates = {
+        '$prefix$numInt',
+        '$prefix${numInt.toString().padLeft(4, '0')}',
+        '$prefix${numInt.toString().padLeft(5, '0')}',
+        '$numInt',
+        numInt.toString().padLeft(4, '0'),
+      }.toList();
+    } else {
+      candidates = [strongsId.trim()];
+    }
+    final placeholders = List.filled(candidates.length, '?').join(',');
+    final res = await db.rawQuery('''
       SELECT b.id as book_id, b.name_ar as book_name, b.testament, COUNT(wm.id) as count
       FROM word_mappings wm
       JOIN verses v ON wm.verse_id = v.id
       JOIN books b ON v.book_id = b.id
-      WHERE wm.strongs_id = ?
+      WHERE wm.strongs_id IN ($placeholders)
       GROUP BY b.id, b.name_ar, b.testament
       ORDER BY b.id ASC
-    ''', [strongsId]);
+    ''', candidates);
+    if (res.isNotEmpty) return res;
+
+    final sEntries = await db.rawQuery(
+      'SELECT original_word FROM strongs_entries WHERE strongs_id IN ($placeholders) LIMIT 1',
+      candidates,
+    );
+    if (sEntries.isNotEmpty) {
+      final origWord = sEntries.first['original_word'] as String? ?? '';
+      final unpointed = origWord.replaceAll(RegExp(r'[\u0591-\u05C7\u0300-\u036F]'), '').trim();
+      final searchToken = unpointed.isNotEmpty ? unpointed : origWord.trim();
+      if (searchToken.isNotEmpty) {
+        return await db.rawQuery('''
+          SELECT b.id as book_id, b.name_ar as book_name, b.testament, COUNT(v.id) as count
+          FROM verses v
+          JOIN books b ON v.book_id = b.id
+          WHERE v.text_original LIKE ?
+          GROUP BY b.id, b.name_ar, b.testament
+          ORDER BY b.id ASC
+        ''', ['%$searchToken%']);
+      }
+    }
+    return [];
   }
 
   // ── Offline Search (Diacritics-Insensitive & Normalized) ───────────────────

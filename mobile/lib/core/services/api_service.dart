@@ -49,9 +49,17 @@ class ApiService {
       if (local.isNotEmpty) return local;
     } catch (_) {}
 
-    final q = testamentId != null ? '?testament_id=$testamentId' : '';
-    final json = await _get('/books$q');
-    return (json['data'] as List).map((j) => Book.fromJson(j)).toList();
+    try {
+      final q = testamentId != null ? '?testament_id=$testamentId' : '';
+      final json = await _get('/books$q');
+      return (json['data'] as List).map((j) => Book.fromJson(j)).toList();
+    } catch (_) {
+      try {
+        return await DatabaseService.instance.getBooks(testamentId: testamentId);
+      } catch (_) {
+        return [];
+      }
+    }
   }
 
   static Future<List<int>> getChapters(int bookId) async {
@@ -60,8 +68,16 @@ class ApiService {
       if (local.isNotEmpty) return local;
     } catch (_) {}
 
-    final json = await _get('/chapters?book_id=$bookId');
-    return (json['data'] as List).map((j) => j['number'] as int).toList();
+    try {
+      final json = await _get('/chapters?book_id=$bookId');
+      return (json['data'] as List).map((j) => j['number'] as int).toList();
+    } catch (_) {
+      try {
+        return await DatabaseService.instance.getChapters(bookId);
+      } catch (_) {
+        return [1];
+      }
+    }
   }
 
   static Future<List<Verse>> getVerses(int bookId, int chapterNum) async {
@@ -70,31 +86,41 @@ class ApiService {
       if (local.isNotEmpty) return local;
     } catch (_) {}
 
-    final json = await _get('/verses?book_id=$bookId&chapter_num=$chapterNum');
-    return (json['data'] as List).map((j) => Verse.fromJson(j)).toList();
+    try {
+      final json = await _get('/verses?book_id=$bookId&chapter_num=$chapterNum');
+      return (json['data'] as List).map((j) => Verse.fromJson(j)).toList();
+    } catch (_) {
+      try {
+        return await DatabaseService.instance.getVerses(bookId, chapterNum);
+      } catch (_) {
+        return [];
+      }
+    }
   }
 
   // ── Word Study (Local Cache + Network Sync) ───────────────────────────────
 
   static Future<List<WordMapping>> getWordMappings(String verseId) async {
-    // 1. Try local SQLite database first
+    // 1. Try local SQLite database first (100% offline)
     try {
       final local = await DatabaseService.instance.getWordMappings(verseId);
       if (local.isNotEmpty) return local;
     } catch (_) {}
 
-    // 2. Fetch from API and cache locally
+    // 2. Fetch from API if online, but NEVER rethrow or fail if offline
     try {
       final json = await _get('/word-mappings?verse_id=$verseId');
       final list = (json['data'] as List).map((j) => WordMapping.fromJson(j)).toList();
       if (list.isNotEmpty) {
         DatabaseService.instance.saveWordMappings(verseId, list);
+        return list;
       }
-      return list;
-    } catch (e) {
-      final local = await DatabaseService.instance.getWordMappings(verseId);
-      if (local.isNotEmpty) return local;
-      rethrow;
+    } catch (_) {}
+
+    try {
+      return await DatabaseService.instance.getWordMappings(verseId);
+    } catch (_) {
+      return [];
     }
   }
 
@@ -109,11 +135,12 @@ class ApiService {
     try {
       final json = await _get('/strongs/$strongsId');
       return StrongsEntry.fromJson(json['data']);
-    } on ApiException catch (e) {
-      if (e.statusCode == 404) return null;
-      return await DatabaseService.instance.getStrongsEntry(strongsId);
     } catch (_) {
-      return await DatabaseService.instance.getStrongsEntry(strongsId);
+      try {
+        return await DatabaseService.instance.getStrongsEntry(strongsId);
+      } catch (_) {
+        return null;
+      }
     }
   }
 

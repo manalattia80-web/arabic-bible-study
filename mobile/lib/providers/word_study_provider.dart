@@ -4,6 +4,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
 import '../core/services/api_service.dart';
+import '../core/services/database_service.dart';
 import '../models/word_mapping.dart';
 import '../models/strongs_entry.dart';
 import '../models/word_occurrence.dart';
@@ -43,8 +44,15 @@ class WordStudyProvider extends ChangeNotifier {
 
     try {
       _mappings = await ApiService.getWordMappings(verseId);
-    } catch (e) {
-      _mappingsError = e.toString();
+      _mappingsError = '';
+    } catch (_) {
+      try {
+        _mappings = await DatabaseService.instance.getWordMappings(verseId);
+        _mappingsError = '';
+      } catch (_) {
+        _mappings = [];
+        _mappingsError = '';
+      }
     } finally {
       _loadingMappings = false;
       notifyListeners();
