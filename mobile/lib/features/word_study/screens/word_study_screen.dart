@@ -244,11 +244,11 @@ class _TableHeader extends StatelessWidget {
       children: [
         SizedBox(width: 28, child: Text('#', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
         Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('الكلمة العربية', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: Text('النص الأصلي', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         Expanded(flex: 2, child: Text('سترونج والنطق', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700))),
-        const SizedBox(width: 36),
+        SizedBox(width: 56, child: Align(alignment: Alignment.centerLeft, child: Text('دراسة', style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w700)))),
       ],
     ),
   );
@@ -390,16 +390,16 @@ class _WordRow extends StatelessWidget {
                     ),
                   ),
 
-                  // Action audio button
+                  // Action icons (Audio button + Study icon)
                   SizedBox(
-                    width: 36,
+                    width: 56,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         if (mapping.hasAudio)
                           InkWell(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(16),
                             onTap: () => provider.playAudio(mapping.audioUrl!),
                             child: Padding(
                               padding: const EdgeInsets.all(3),
@@ -407,11 +407,23 @@ class _WordRow extends StatelessWidget {
                                 provider.isPlaying(mapping.audioUrl!)
                                     ? Icons.stop_circle_rounded
                                     : Icons.volume_up_rounded,
-                                size:  20,
+                                size: 18,
                                 color: AppColors.primary,
                               ),
                             ),
                           ),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(16),
+                          onTap: onTap,
+                          child: Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: Icon(
+                              Icons.menu_book_rounded,
+                              size: 19,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
