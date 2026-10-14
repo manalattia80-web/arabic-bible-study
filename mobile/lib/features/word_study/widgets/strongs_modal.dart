@@ -219,23 +219,27 @@ class StrongsModal extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                                 decoration: BoxDecoration(
                                   color: AppColors.primary.withOpacity(0.08),
                                   borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                                 ),
                                 child: Row(
+                                  textDirection: TextDirection.rtl,
                                   children: [
                                     Icon(Icons.psychology_outlined, size: 18, color: AppColors.primary),
                                     const SizedBox(width: 8),
-                                    const Text(
-                                      'التحليل النحوي والصرفي بحسب النص الأصلي',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
+                                    const Expanded(
+                                      child: Text(
+                                        'التحليل النحوي والصرفي',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    const Spacer(),
+                                    const SizedBox(width: 8),
                                     Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                       decoration: BoxDecoration(
@@ -254,69 +258,8 @@ class StrongsModal extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              if (morphAnalysis.tags.isNotEmpty)
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 6),
-                                  child: Wrap(
-                                    spacing: 6,
-                                    runSpacing: 6,
-                                    children: morphAnalysis.tags.map((t) => Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.bgCard,
-                                        borderRadius: BorderRadius.circular(6),
-                                        border: Border.all(color: AppColors.borderLight),
-                                      ),
-                                      child: Text(
-                                        t,
-                                        style: TextStyle(fontSize: 11, color: AppColors.textPrimary, fontWeight: FontWeight.w600),
-                                      ),
-                                    )).toList(),
-                                  ),
-                                ),
-                              _GrammarRow(
-                                label: 'نوع الكلمة (القسم اللغوي)',
-                                value: morphAnalysis.partOfSpeech,
-                                isFirst: morphAnalysis.tags.isEmpty,
-                              ),
-                              if (morphAnalysis.stem != null)
-                                _GrammarRow(label: 'الوزن الصرفي العبري', value: morphAnalysis.stem!),
-                              if (morphAnalysis.tense != null)
-                                _GrammarRow(label: 'نوع الفعل والزمن', value: morphAnalysis.tense!),
-                              if (morphAnalysis.voice != null)
-                                _GrammarRow(label: 'البناء للمعلوم / المجهول', value: morphAnalysis.voice!),
-                              if (morphAnalysis.mood != null)
-                                _GrammarRow(label: 'الصيغة التعبيرية', value: morphAnalysis.mood!),
-                              if (morphAnalysis.grammaticalCase != null)
-                                _GrammarRow(label: 'الحالة الإعرابية', value: morphAnalysis.grammaticalCase!),
-                              if (morphAnalysis.number != null)
-                                _GrammarRow(label: 'العدد (مفرد / مثنى / جمع)', value: morphAnalysis.number!),
-                              if (morphAnalysis.gender != null)
-                                _GrammarRow(label: 'الجنس (مذكر / مؤنث / محايد)', value: morphAnalysis.gender!),
-                              if (morphAnalysis.person != null)
-                                _GrammarRow(label: 'ضمير الفاعل / الشخص', value: morphAnalysis.person!),
-                              if (morphAnalysis.prefixes.isNotEmpty)
-                                _GrammarRow(label: 'الحروف والزوائد المتصلة', value: morphAnalysis.prefixes.join(' · ')),
-                              if (morphAnalysis.rawCode.isNotEmpty)
-                                _GrammarRow(label: 'الرمز القياسي', value: morphAnalysis.rawCode, isMonospace: true),
-                              Container(
-                                margin: const EdgeInsets.all(12),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.06),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: AppColors.primary.withOpacity(0.15)),
-                                ),
-                                child: Text(
-                                  morphAnalysis.summary,
-                                  style: TextStyle(
-                                    color: AppColors.textPrimary,
-                                    fontSize: 12.5,
-                                    height: 1.5,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
+                              ..._buildGrammarTable(morphAnalysis),
+                              const SizedBox(height: 4),
                             ],
                           ),
                         ),
@@ -401,15 +344,15 @@ class StrongsModal extends StatelessWidget {
                             ),
                           ],
                           if (entry.arIsVerified || entry.hasArabicDef)
-                            Align(
+                            const Align(
                               alignment: Alignment.centerRight,
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 10),
+                                padding: EdgeInsets.only(top: 10),
                                 child: Directionality(
                                   textDirection: TextDirection.rtl,
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
-                                    children: const [
+                                    children: [
                                       Icon(Icons.verified, color: AppColors.success, size: 14),
                                       SizedBox(width: 4),
                                       Text(
@@ -629,6 +572,54 @@ class StrongsModal extends StatelessWidget {
       style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w600),
     ),
   );
+
+  List<Widget> _buildGrammarTable(MorphologyAnalysis m) {
+    final rows = <({String label, String value, bool isMonospace})>[];
+
+    rows.add((label: 'نوع الكلمة (القسم اللغوي)', value: m.partOfSpeech, isMonospace: false));
+
+    if (m.stem != null && m.stem!.isNotEmpty) {
+      rows.add((label: 'الوزن الصرفي العبري', value: m.stem!, isMonospace: false));
+    }
+    if (m.tense != null && m.tense!.isNotEmpty) {
+      rows.add((label: 'نوع الفعل والزمن', value: m.tense!, isMonospace: false));
+    }
+    if (m.voice != null && m.voice!.isNotEmpty) {
+      rows.add((label: 'البناء للمعلوم / المجهول', value: m.voice!, isMonospace: false));
+    }
+    if (m.mood != null && m.mood!.isNotEmpty) {
+      rows.add((label: 'الصيغة التعبيرية', value: m.mood!, isMonospace: false));
+    }
+    if (m.grammaticalCase != null && m.grammaticalCase!.isNotEmpty) {
+      rows.add((label: 'الحالة الإعرابية', value: m.grammaticalCase!, isMonospace: false));
+    }
+    if (m.gender != null && m.gender!.isNotEmpty) {
+      rows.add((label: 'الجنس (مذكر / مؤنث / محايد)', value: m.gender!, isMonospace: false));
+    }
+    if (m.number != null && m.number!.isNotEmpty) {
+      rows.add((label: 'العدد (مفرد / مثنى / جمع)', value: m.number!, isMonospace: false));
+    }
+    if (m.person != null && m.person!.isNotEmpty) {
+      rows.add((label: 'ضمير الفاعل / الشخص', value: m.person!, isMonospace: false));
+    }
+    if (m.prefixes.isNotEmpty) {
+      rows.add((label: 'الحروف والزوائد المتصلة', value: m.prefixes.join(' · '), isMonospace: false));
+    }
+    if (m.rawCode.isNotEmpty) {
+      rows.add((label: 'الرمز القياسي', value: m.rawCode, isMonospace: true));
+    }
+
+    return [
+      for (int i = 0; i < rows.length; i++)
+        _GrammarRow(
+          label: rows[i].label,
+          value: rows[i].value,
+          isFirst: i == 0,
+          isEven: i % 2 == 1,
+          isMonospace: rows[i].isMonospace,
+        ),
+    ];
+  }
 }
 
 // ── Section label + content ────────────────────────────────────────────────
@@ -661,12 +652,14 @@ class _Section extends StatelessWidget {
 class _GrammarRow extends StatelessWidget {
   final String label;
   final String value;
+  final bool isEven;
   final bool isFirst;
   final bool isMonospace;
 
   const _GrammarRow({
     required this.label,
     required this.value,
+    this.isEven = false,
     this.isFirst = false,
     this.isMonospace = false,
   });
@@ -674,11 +667,12 @@ class _GrammarRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
+        color: isEven ? AppColors.primary.withOpacity(0.04) : Colors.transparent,
         border: Border(
           top: BorderSide(
-            color: isFirst ? Colors.transparent : AppColors.borderLight,
+            color: isFirst ? Colors.transparent : AppColors.borderLight.withOpacity(0.7),
             width: 0.8,
           ),
         ),
@@ -687,7 +681,7 @@ class _GrammarRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 4,
+            flex: 5,
             child: Text(
               label,
               style: TextStyle(
@@ -699,7 +693,7 @@ class _GrammarRow extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Expanded(
-            flex: 6,
+            flex: 5,
             child: Text(
               value,
               textAlign: TextAlign.left,
