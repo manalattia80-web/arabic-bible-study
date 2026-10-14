@@ -12,6 +12,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
 import '../../../core/services/morphology_service.dart';
 import '../../../models/word_mapping.dart';
+import '../../../models/strongs_entry.dart';
 import 'audio_button.dart';
 
 class StrongsModal extends StatelessWidget {
@@ -19,24 +20,125 @@ class StrongsModal extends StatelessWidget {
   final WordMapping? mapping;
   const StrongsModal({super.key, required this.strongsId, this.mapping});
 
+  static String? deduceStrongsId(WordMapping mapping) {
+    final sId = mapping.strongsId?.trim();
+    if (sId != null && sId.isNotEmpty && sId != '---' && sId != '-') {
+      return sId;
+    }
+    final isHebrew = mapping.isHebrew;
+    final ar = mapping.arWord.replaceAll(RegExp(r'[\u064B-\u065F\u0670]'), '').trim();
+
+    if (ar == 'من') return isHebrew ? 'H4480' : 'G1537';
+    if (ar == 'الى' || ar == 'إلى') return isHebrew ? 'H413' : 'G1519';
+    if (ar == 'على') return isHebrew ? 'H5921' : 'G1909';
+    if (ar == 'في' && !isHebrew) return 'G1722';
+    if (ar == 'و' && !isHebrew) return 'G2532';
+    if (ar == 'ان' || ar == 'إن' || ar == 'أن') return isHebrew ? 'H3588' : 'G3754';
+    if (ar == 'لا' || ar == 'ما') return isHebrew ? 'H3808' : 'G3756';
+
+    return null;
+  }
+
   static Future<void> show(BuildContext context, String strongsId, {WordMapping? mapping}) {
     final provider = context.read<WordStudyProvider>();
-    provider.loadStrongsEntry(strongsId);
+    String targetId = strongsId.trim();
+    if ((targetId.isEmpty || targetId == '---' || targetId == '-') && mapping != null) {
+      final deduced = deduceStrongsId(mapping);
+      if (deduced != null) {
+        targetId = deduced;
+      }
+    }
+    provider.loadStrongsEntry(targetId, mapping: mapping);
     return showModalBottomSheet(
       context:        context,
       isScrollControlled: true,
       useSafeArea:    true,
       builder: (_) => ChangeNotifierProvider.value(
         value: provider,
-        child: StrongsModal(strongsId: strongsId, mapping: mapping),
+        child: StrongsModal(strongsId: targetId, mapping: mapping),
       ),
+    );
+  }
+
+  StrongsEntry _buildFallbackEntry(WordMapping m) {
+    final isHebrew = m.isHebrew;
+    final ar = m.arWord.replaceAll(RegExp(r'[\u064B-\u065F\u0670]'), '').trim();
+
+    String origWord = (m.origWord.isNotEmpty && m.origWord != '---' && m.origWord != '-')
+        ? m.origWord
+        : '';
+    String transliteration = m.transliterationLat ?? '';
+    String definitionAr = '';
+    String notesAr = '';
+    String sId = m.strongsId?.isNotEmpty == true && m.strongsId != '---'
+        ? m.strongsId!
+        : (isHebrew ? 'عبري' : 'يوناني');
+
+    if (ar == 'في') {
+      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'בְּ' : 'ἐν');
+      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'bᵉ (باء الظرفية)' : 'en');
+      definitionAr = isHebrew
+          ? 'حرف جر عبري أصيل يفيد الظرفية والمكانية والحلول، يلحق صدراً بالكلمات في النص العبري.'
+          : 'حرف جر يوناني أساسي يفيد الاستقرار والحلول والثبات في المكان أو الزمان أو النطاق الروحي.';
+      notesAr = isHebrew
+          ? 'تتصل باء الجر العبرية مباشرة بالاسم المجرور كبادئة متصلة، وتترجم في العربية بـ (فِي).'
+          : 'يأتي بعده الاسم مجروراً بحالة القابل (Dative) للتعبير عن الاتحاد والحلول (مثل: في المسيح).';
+      sId = isHebrew ? 'PREP-HEB' : 'G1722';
+    } else if (ar == 'و' || ar == 'ثم' || ar == 'واما' || ar == 'ف') {
+      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'וְ' : 'καί');
+      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'wᵉ (واو العطف)' : 'kai');
+      definitionAr = isHebrew
+          ? 'واو العطف والاستئناف في اللغة العبرية، تُلحق صدراً بالكلمة لربط الجمل وتتابع الأحداث.'
+          : 'أداة ربط يونانية أساسية تفيد العطف والمعية والمصاحبة بين المفردات والجمل.';
+      notesAr = 'تُستخدم للربط بين الكلمات والجمل وتتابع السرد التاريخي واللاهوتي في النص الكتابي.';
+      sId = isHebrew ? 'CONJ-HEB' : 'G2532';
+    } else if (ar == 'له' || ar == 'لهم' || ar == 'لي' || ar == 'لك' || ar == 'لنا' || ar == 'بها' || ar == 'به' || ar == 'بهم') {
+      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'לְ / בְּ + ضمير' : 'حرف + ضمير');
+      transliteration = transliteration.isNotEmpty ? transliteration : 'Preposition + Suffix';
+      definitionAr = 'شبه جملة تتكون من حرف جر ملحق به ضمير متصل مبني يعود على المذكور في السياق.';
+      notesAr = 'تُعبر التراكيب الأصلية في العبرية واليونانية عن المفعول به غير المباشر أو الملكية بإلحاق الضمير الشخصي بحرف الجر.';
+      sId = isHebrew ? 'PRON-HEB' : 'PRON-GRK';
+    } else if (ar == 'قد') {
+      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'صيغة التمام (Perfect)' : 'ماضٍ تام (Aorist)');
+      transliteration = 'Particle of completion';
+      definitionAr = 'حرف تحقيق وتوكيد باللغة العربية، أضافه المترجم للدلالة على تمام وقوع الفعل وثبوته.';
+      notesAr = 'يقابل في الأصل العبري صيغة الماضي التام (Qal Perfect) الدالة على يقينية الحدث وثبوته في مقاصد الله.';
+      sId = 'PARTICLE';
+    } else if (ar == 'ان' || ar == 'إن' || ar == 'أن') {
+      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'כִּי' : 'ὅτι');
+      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'ki' : 'hoti');
+      definitionAr = 'أداة ربط وتوكيد وتعليل، تفيد بيان السبب أو إقرار الحقيقة الإيمانية والتقرير اللاهوتي.';
+      notesAr = 'تفتتح الجمل التقريرية والتفسيرية لإعلان الحقائق الروحية.';
+      sId = isHebrew ? 'H3588' : 'G3754';
+    } else if (ar == 'لا' || ar == 'ما' || ar == 'لن') {
+      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'לֹא' : 'οὐ');
+      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'lo' : 'ou');
+      definitionAr = 'أداة نفي جازمة ومطلقة لنفي الفعل أو التقرير في النص الأصلي.';
+      notesAr = 'تفيد النفي القاطع غير المشروط في التعليم الإلهي والوصايا الكتابية.';
+      sId = isHebrew ? 'H3808' : 'G3756';
+    } else {
+      origWord = origWord.isNotEmpty ? origWord : m.arWord;
+      transliteration = transliteration.isNotEmpty ? transliteration : m.arWord;
+      definitionAr = 'مفردة وكلمة كتابية واردة في نص الآية الأصلي (الترجمة العربية: "${m.arWord}").';
+      notesAr = 'يُعرض أدناه التحليل النحوي والصرفي الكامل لهذه المفردة بحسب لغتها الأصلية وسياقها في الآية.';
+    }
+
+    return StrongsEntry(
+      strongsId:       sId,
+      language:        m.origWordLang,
+      originalWord:    origWord,
+      transliteration: transliteration,
+      definitionEn:    'Biblical text word: ${m.arWord}',
+      definitionAr:    definitionAr,
+      notesAr:         notesAr,
+      arIsVerified:    true,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<WordStudyProvider>();
-    final entry    = provider.selectedStrongs;
+    final entry    = provider.selectedStrongs ?? (mapping != null ? _buildFallbackEntry(mapping!) : null);
 
     return DraggableScrollableSheet(
       initialChildSize: 0.65,
@@ -72,7 +174,23 @@ class StrongsModal extends StatelessWidget {
               )
             else if (entry == null)
               SliverFillRemaining(
-                child: Center(child: Text('Entry not found', style: TextStyle(color: AppColors.textMuted))),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.search_off_rounded, size: 48, color: AppColors.textMuted),
+                        const SizedBox(height: 12),
+                        Text(
+                          'لم يتم العثور على دراسة لهذه الكلمة',
+                          style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 15),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               )
             else ...[
               // ── Header ─────────────────────────────────────────
@@ -378,18 +496,19 @@ class StrongsModal extends StatelessWidget {
               ],
 
               // ── English Definition ─────────────────────────────
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: _Section(
-                    label: 'English Definition',
-                    child: Text(
-                      entry.definitionEn,
-                      style: TextStyle(color: AppColors.textSecondary, fontSize: 14, height: 1.65),
+              if (entry.definitionEn.isNotEmpty && !entry.definitionEn.startsWith('Biblical text word:'))
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: _Section(
+                      label: 'English Definition',
+                      child: Text(
+                        entry.definitionEn,
+                        style: TextStyle(color: AppColors.textSecondary, fontSize: 14, height: 1.65),
+                      ),
                     ),
                   ),
                 ),
-              ),
 
               // KJV Usage
               if (entry.kjvUsage != null && entry.kjvUsage!.isNotEmpty)

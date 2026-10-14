@@ -124,24 +124,37 @@ class ApiService {
     }
   }
 
-  static Future<StrongsEntry?> getStrongsEntry(String strongsId) async {
-    // 1. Try local SQLite database first
-    try {
-      final local = await DatabaseService.instance.getStrongsEntry(strongsId);
-      if (local != null && local.hasArabicDef) return local;
-    } catch (_) {}
-
-    // 2. Try online API
-    try {
-      final json = await _get('/strongs/$strongsId');
-      return StrongsEntry.fromJson(json['data']);
-    } catch (_) {
+  static Future<StrongsEntry?> getStrongsEntry(String strongsId, {String? word, String? language}) async {
+    final cleanId = strongsId.trim();
+    if (cleanId.isNotEmpty && cleanId != '---' && cleanId != '-') {
+      // 1. Try local SQLite database first
       try {
-        return await DatabaseService.instance.getStrongsEntry(strongsId);
+        final local = await DatabaseService.instance.getStrongsEntry(cleanId);
+        if (local != null && local.hasArabicDef) return local;
+      } catch (_) {}
+
+      // 2. Try online API
+      try {
+        final json = await _get('/strongs/$cleanId');
+        return StrongsEntry.fromJson(json['data']);
       } catch (_) {
-        return null;
+        try {
+          return await DatabaseService.instance.getStrongsEntry(cleanId);
+        } catch (_) {
+          return null;
+        }
       }
     }
+
+    // Lookup by original word if strongsId is empty or placeholder
+    if (word != null && word.trim().isNotEmpty && word != '---' && word != '-') {
+      try {
+        final local = await DatabaseService.instance.getStrongsEntryByWord(word, language: language ?? 'hebrew');
+        if (local != null) return local;
+      } catch (_) {}
+    }
+
+    return null;
   }
 
   static Future<List<WordOccurrence>> getStrongsOccurrences(String strongsId) async {

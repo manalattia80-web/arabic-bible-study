@@ -445,11 +445,12 @@ class DatabaseService {
   }
 
   Future<StrongsEntry?> getStrongsEntry(String strongsId) async {
-    if (strongsId.trim().isEmpty) return null;
+    if (strongsId.trim().isEmpty || strongsId == '---' || strongsId == '-') return null;
     final db = await database;
     final trimmed = strongsId.trim().toUpperCase();
     final match = RegExp(r'^([HG])0*([1-9][0-9]*)$').firstMatch(trimmed);
     final normalizedId = match != null ? '${match.group(1)}${match.group(2)}' : trimmed;
+    final paddedId = match != null ? '${match.group(1)}${match.group(2)!.padLeft(4, '0')}' : trimmed;
 
     final rows = await db.rawQuery('''
       SELECT 
@@ -465,9 +466,9 @@ class DatabaseService {
         t.is_verified as ar_is_verified
       FROM strongs_entries e
       LEFT JOIN strongs_ar_translations t ON e.strongs_id = t.strongs_id
-      WHERE e.strongs_id = ? OR e.strongs_id = ?
+      WHERE e.strongs_id = ? OR e.strongs_id = ? OR e.strongs_id = ?
       LIMIT 1
-    ''', [trimmed, normalizedId]);
+    ''', [trimmed, normalizedId, paddedId]);
 
     if (rows.isEmpty) return null;
     final r = rows.first;
@@ -489,6 +490,64 @@ class DatabaseService {
 
     return StrongsEntry(
       strongsId:       r['strongs_id']?.toString() ?? trimmed,
+      language:        lang,
+      originalWord:    orig,
+      transliteration: r['transliteration']?.toString() ?? '',
+      audioUrl:        audio,
+      definitionEn:    r['definition_en']?.toString() ?? '',
+      kjvUsage:        r['kjv_usage']?.toString(),
+      definitionAr:    r['definition_ar']?.toString(),
+      notesAr:         r['notes_ar']?.toString(),
+      pronunciationAr: r['pronunciation_ar']?.toString(),
+      arIsVerified:    arIsVerified,
+    );
+  }
+
+  Future<StrongsEntry?> getStrongsEntryByWord(String word, {String language = 'hebrew'}) async {
+    if (word.trim().isEmpty || word == '---' || word == '-') return null;
+    final db = await database;
+    final cleanWord = word.replaceAll(RegExp(r'[\.,;:!?׃־—–\[\]\(\)\{\}\x22\x27״׳]'), '').trim();
+    final unpointed = cleanWord.replaceAll(RegExp(r'[\u0591-\u05C7\u0300-\u036F]'), '').trim();
+
+    final rows = await db.rawQuery('''
+      SELECT 
+        e.strongs_id,
+        e.language,
+        e.original_word,
+        e.transliteration,
+        e.definition_en,
+        e.kjv_usage,
+        t.pronunciation_ar,
+        t.definition_ar,
+        t.notes_ar,
+        t.is_verified as ar_is_verified
+      FROM strongs_entries e
+      LEFT JOIN strongs_ar_translations t ON e.strongs_id = t.strongs_id
+      WHERE (e.original_word LIKE ? OR e.original_word LIKE ?)
+        AND e.language = ?
+      LIMIT 1
+    ''', ['%$cleanWord%', '%$unpointed%', language]);
+
+    if (rows.isEmpty) return null;
+    final r = rows.first;
+    final orig = r['original_word']?.toString() ?? cleanWord;
+    final lang = r['language']?.toString() ?? language;
+    final isHeb = lang == 'hebrew' || lang == 'aramaic';
+
+    String? audio;
+    if (orig.trim().isNotEmpty) {
+      final langCode = isHeb ? 'iw' : 'el';
+      final ttsUrl =
+          'https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=gtx';
+      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
+          Uri.encodeComponent(ttsUrl);
+    }
+
+    final rawVerified = r['ar_is_verified'];
+    final bool arIsVerified = rawVerified == 1 || rawVerified == true || rawVerified == '1';
+
+    return StrongsEntry(
+      strongsId:       r['strongs_id']?.toString() ?? '',
       language:        lang,
       originalWord:    orig,
       transliteration: r['transliteration']?.toString() ?? '',

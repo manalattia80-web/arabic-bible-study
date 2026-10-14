@@ -59,7 +59,7 @@ class WordStudyProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> loadStrongsEntry(String strongsId) async {
+  Future<void> loadStrongsEntry(String strongsId, {WordMapping? mapping}) async {
     _selectedStrongs = null;
     _occurrences = [];
     _loadingStrongs  = true;
@@ -67,7 +67,11 @@ class WordStudyProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _selectedStrongs = await ApiService.getStrongsEntry(strongsId);
+      _selectedStrongs = await ApiService.getStrongsEntry(
+        strongsId,
+        word: mapping?.origWord,
+        language: mapping?.origWordLang,
+      );
     } catch (_) {
       _selectedStrongs = null;
     } finally {
@@ -76,13 +80,21 @@ class WordStudyProvider extends ChangeNotifier {
     }
     
     // Fetch occurrences and book distribution independently
-    try {
-      _occurrences = await ApiService.getStrongsOccurrences(strongsId);
-      _bookDistribution = await ApiService.getStrongsBookDistribution(strongsId);
-    } catch (_) {
+    final targetId = _selectedStrongs?.strongsId ?? strongsId;
+    if (targetId.isNotEmpty && targetId != '---' && !targetId.contains('-')) {
+      try {
+        _occurrences = await ApiService.getStrongsOccurrences(targetId);
+        _bookDistribution = await ApiService.getStrongsBookDistribution(targetId);
+      } catch (_) {
+        _occurrences = [];
+        _bookDistribution = [];
+      } finally {
+        _loadingOccurrences = false;
+        notifyListeners();
+      }
+    } else {
       _occurrences = [];
       _bookDistribution = [];
-    } finally {
       _loadingOccurrences = false;
       notifyListeners();
     }
