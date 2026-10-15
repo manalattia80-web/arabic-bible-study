@@ -107,6 +107,21 @@ class MorphologyService {
     final prefixes = <String>[];
     final tags = <String>[];
 
+    int? sNum;
+    if (strongsId != null && strongsId.startsWith('H')) {
+      sNum = int.tryParse(strongsId.substring(1));
+    }
+
+    final isBetRoot = (sNum != null && sNum >= 872 && sNum <= 1369) ||
+        cons == 'בהמה' || cons == 'בקר' || cons == 'ברית' || cons == 'ברא' ||
+        cons == 'בית' || cons == 'בשר' || cons == 'בן' || cons == 'בכור' || cons == 'ברכה';
+    final isLamedRoot = (sNum != null && sNum >= 3734 && sNum <= 4003) ||
+        cons == 'לב' || cons == 'לבב' || cons == 'לילה' || cons == 'לקח' || cons == 'לשון';
+    final isKafRoot = (sNum != null && sNum >= 3427 && sNum <= 3733) ||
+        cons == 'כבוד' || cons == 'כלב' || cons == 'כי' || cons == 'כל' || cons == 'כסף';
+    final isMemRoot = (sNum != null && sNum >= 4004 && sNum <= 4880) ||
+        cons == 'מים' || cons == 'מלך' || cons == 'מצרים' || cons == 'מקום';
+
     // Detect Inseparable Hebrew Prefixes (الزوائد العبرية المتصلة)
     bool isWayyiqtol = false;
     if (origWord.startsWith('וַיּ') || origWord.startsWith('וַיְ') || origWord.startsWith('וַתּ') || origWord.startsWith('וָא') || origWord.startsWith('וַנִּ')) {
@@ -116,19 +131,19 @@ class MorphologyService {
       prefixes.add('واو العطف (Conjunctive Waw וְ)');
     }
 
-    if (origWord.contains('הַ') || origWord.contains('הָ') || origWord.contains('הֶ')) {
+    if (origWord.startsWith('הַ') || origWord.startsWith('הָ') || origWord.startsWith('הֶ')) {
       prefixes.add('هاء التعريف العبرية (Definite Article הַ)');
     }
-    if (origWord.contains('בְּ') || origWord.contains('בַּ') || origWord.contains('בִּ')) {
+    if (!isBetRoot && (origWord.startsWith('בְּ') || origWord.startsWith('בַּ') || origWord.startsWith('בִּ'))) {
       prefixes.add('باء الجر والظرفية (Inseparable Bet בְּ)');
     }
-    if (origWord.contains('לְ') || origWord.contains('לַ') || origWord.contains('לִ')) {
+    if (!isLamedRoot && (origWord.startsWith('לְ') || origWord.startsWith('לַ') || origWord.startsWith('לִ'))) {
       prefixes.add('لام الملكية والغاية والجر (Inseparable Lamed לְ)');
     }
-    if (origWord.contains('כְּ') || origWord.contains('כַּ')) {
+    if (!isKafRoot && (origWord.startsWith('כְּ') || origWord.startsWith('כַּ'))) {
       prefixes.add('كاف التشبيه (Inseparable Kaf כְּ)');
     }
-    if (origWord.contains('מִ') || origWord.contains('מֵ')) {
+    if (!isMemRoot && (origWord.startsWith('מִ') || origWord.startsWith('מֵ'))) {
       prefixes.add('ميم الابتداء والتبعيض (Preposition Mem מִ)');
     }
 
@@ -136,7 +151,7 @@ class MorphologyService {
     final isArVerb = _isArabicVerb(arClean);
 
     // Hebrew Prepositions (حروف الجر العبرية)
-    if (arClean == 'في' || cons == 'ב' || origWord.startsWith('בְּ') || origWord.startsWith('בַּ')) {
+    if (cons == 'ב' || (arClean == 'في' && cons.length <= 1)) {
       final pos = 'حرف جر وظرفية عبري أصيل (Inseparable Bet בְּ)';
       tags.addAll(['حرف جر', 'ظرفية', 'عبري']);
       if (prefixes.isNotEmpty) tags.addAll(prefixes);
