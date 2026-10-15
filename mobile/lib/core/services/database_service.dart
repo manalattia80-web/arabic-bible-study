@@ -137,6 +137,44 @@ class DatabaseService {
       debugPrint('Self-healing total_chapters warning: $e');
     }
 
+    // Dynamic Self-Healing: restore Ezekiel 40:49 Hebrew Masoretic text
+    try {
+      await db.execute('''
+        UPDATE verses
+        SET text_original = 'אֹרֶךְ הָאוּלָם עֶשְׂרִים אַמָּה וְרֹחַב עַשְׁתֵּי עֶשְׂרֵה אַמָּה וּבַמַּעֲלוֹת אֲשֶׁר יַעֲלוּ אֵלָיו וְעַמֻּדִים אֶל־הָאֵילִים אֶחָד מִפּוֹ וְאֶחָד מִפּוֹ׃',
+            text_original_lang = 'hebrew'
+        WHERE book_id = 26 AND chapter_num = 40 AND verse_num = 49
+          AND (text_original IS NULL OR text_original = '' OR text_original = '---');
+      ''');
+    } catch (e) {
+      debugPrint('Self-healing Ezekiel 40:49 warning: $e');
+    }
+
+    // Dynamic Self-Healing: Strong's G1 (Alpha) lexical vs theological distinction
+    try {
+      final updated = await db.rawUpdate('''
+        UPDATE strongs_ar_translations
+        SET definition_ar = ?,
+            notes_ar = ?,
+            is_verified = 1
+        WHERE strongs_id IN ('G1', 'G0001', 'G001');
+      ''', [
+        'ألفا (ἄλφα) — الحرف الأول من الأبجدية اليونانية. يُستعمل رمزياً للدلالة على البداية والأولية، كما يدخل في تركيب الكلمات كسابقة تفيد النفي (Alpha Privative) أو الاجتماع والمصاحبة (Alpha Copulative).',
+        'الاستعمال الثيولوجي في العهد الجديد: يقترن بحرف الأوميجا في سفر الرؤيا (1: 8، 21: 6، 22: 13) كلقب لاهوتي مهيب للرب الإله والرب يسوع المسيح: «الأَلِفُ وَالْيَاءُ، الْبِدَايَةُ وَالنِّهَايَةُ، الأَوَّلُ وَالآخِرُ»، دلالة على الأزلية والأبدية والسيادة المطلقة على كل التاريخ والتدبير الإلهي.'
+      ]);
+      if (updated == 0) {
+        await db.rawInsert('''
+          INSERT OR IGNORE INTO strongs_ar_translations (strongs_id, definition_ar, notes_ar, is_verified)
+          VALUES ('G1', ?, ?, 1);
+        ''', [
+          'ألفا (ἄλفا) — الحرف الأول من الأبجدية اليونانية. يُستعمل رمزياً للدلالة على البداية والأولية، كما يدخل في تركيب الكلمات كسابقة تفيد النفي (Alpha Privative) أو الاجتماع والمصاحبة (Alpha Copulative).',
+          'الاستعمال الثيولوجي في العهد الجديد: يقترن بحرف الأوميجا في سفر الرؤيا (1: 8، 21: 6، 22: 13) كلقب لاهوتي مهيب للرب الإله والرب يسوع المسيح: «الأَلِفُ وَالْيَاءُ، الْبِدَايَةُ وَالنِّهَايَةُ، الأَوَّلُ وَالآخِرُ»، دلالة على الأزلية والأبدية والسيادة المطلقة على كل التاريخ والتدبير الإلهي.'
+        ]);
+      }
+    } catch (e) {
+      debugPrint('Self-healing Strongs G1 warning: $e');
+    }
+
     return db;
   }
 

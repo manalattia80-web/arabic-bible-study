@@ -362,20 +362,47 @@ class _WordRow extends StatelessWidget {
                   // Original word
                   Expanded(
                     flex: 3,
-                    child: Directionality(
-                      textDirection: mapping.isHebrew ? TextDirection.rtl : TextDirection.ltr,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            mapping.origWord,
-                            style: mapping.isHebrew
-                                ? AppTheme.hebrewText(size: 17)
-                                : AppTheme.greekText(size: 16),
-                            textAlign: mapping.isHebrew ? TextAlign.right : TextAlign.right,
+                    child: Builder(
+                      builder: (context) {
+                        final isSupplied = mapping.origWord.contains('---') ||
+                            mapping.origWord.trim() == '-' ||
+                            mapping.origWord.trim() == '—';
+                        if (isSupplied) {
+                          return Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: AppColors.borderLight.withValues(alpha: 0.3),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                '[مُضافة للسبك]',
+                                style: TextStyle(
+                                  color: AppColors.textMuted,
+                                  fontSize: 11,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        return Directionality(
+                          textDirection: mapping.isHebrew ? TextDirection.rtl : TextDirection.ltr,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                mapping.origWord,
+                                style: mapping.isHebrew
+                                    ? AppTheme.hebrewText(size: 17)
+                                    : AppTheme.greekText(size: 16),
+                                textAlign: mapping.isHebrew ? TextAlign.right : TextAlign.right,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   ),
 
@@ -413,6 +440,14 @@ class _WordRow extends StatelessWidget {
                               if (mapping.isVerified) const SizedBox(width: 3),
                               if (mapping.isVerified) const Icon(Icons.verified, size: 13, color: AppColors.success),
                             ],
+                          )
+                        else if (mapping.origWord.contains('---') || mapping.origWord.trim() == '-' || mapping.origWord.trim() == '—')
+                          Text(
+                            'بدون مقابل',
+                            style: TextStyle(
+                              color: AppColors.textMuted,
+                              fontSize: 10,
+                            ),
                           ),
                       ],
                     ),

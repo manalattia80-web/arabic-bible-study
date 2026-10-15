@@ -74,15 +74,23 @@ class StrongsModal extends StatelessWidget {
         ? m.strongsId!
         : (isHebrew ? 'عبري' : 'يوناني');
 
-    if (ar == 'في') {
+    final bool isSupplied = m.origWord.contains('---') || m.origWord.trim() == '-' || m.origWord.trim() == '—';
+
+    if (isSupplied) {
+      origWord = '—';
+      transliteration = 'مُضافة في الترجمة';
+      definitionAr = 'كلمة أو أداة مضافة في الترجمة العربية لاقتضاء صياغة المعنى واستقامة التركيب، ولا يقابلها لفظ مستقل بذاته في النص الأصلي.';
+      notesAr = 'تقتضي قواعد اللغة العربية في مواضع عدة إظهار روابط أو ضمائر أو أفعال كينونة مقدرة في الجملة الاسمية في اللغتين العبرية واليونانية ليستقيم البناء النحوي العربي.';
+      sId = 'مُضافة';
+    } else if (ar == 'في') {
       origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'בְּ' : 'ἐν');
       transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'bᵉ (باء الظرفية)' : 'en');
       definitionAr = isHebrew
-          ? 'حرف جر عبري أصيل يفيد الظرفية والمكانية والحلول، يلحق صدراً بالكلمات في النص العبري.'
-          : 'حرف جر يوناني أساسي يفيد الاستقرار والحلول والثبات في المكان أو الزمان أو النطاق الروحي.';
+          ? 'حرف جر عبري أصيل يفيد الظرفية والمكانية، يلحق صدراً بالكلمات في النص العبري.'
+          : 'حرف جر يوناني أساسي يفيد الاستقرار والثبات في المكان أو الزمان.';
       notesAr = isHebrew
           ? 'تتصل باء الجر العبرية مباشرة بالاسم المجرور كبادئة متصلة، وتترجم في العربية بـ (فِي).'
-          : 'يأتي بعده الاسم مجروراً بحالة القابل (Dative) للتعبير عن الاتحاد والحلول (مثل: في المسيح).';
+          : 'يأتي بعده الاسم مجروراً بحالة القابل (Dative) للدلالة على الظرفية المكانية أو الزمانية أو المجازية.';
       sId = isHebrew ? 'PREP-HEB' : 'G1722';
     } else if (ar == 'و' || ar == 'ثم' || ar == 'واما' || ar == 'ف') {
       origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'וְ' : 'καί');
@@ -90,7 +98,7 @@ class StrongsModal extends StatelessWidget {
       definitionAr = isHebrew
           ? 'واو العطف والاستئناف في اللغة العبرية، تُلحق صدراً بالكلمة لربط الجمل وتتابع الأحداث.'
           : 'أداة ربط يونانية أساسية تفيد العطف والمعية والمصاحبة بين المفردات والجمل.';
-      notesAr = 'تُستخدم للربط بين الكلمات والجمل وتتابع السرد التاريخي واللاهوتي في النص الكتابي.';
+      notesAr = 'تُستخدم للربط بين الكلمات والجمل وتتابع السرد التاريخي واللغوي في النص الكتابي.';
       sId = isHebrew ? 'CONJ-HEB' : 'G2532';
     } else if (ar == 'له' || ar == 'لهم' || ar == 'لي' || ar == 'لك' || ar == 'لنا' || ar == 'بها' || ar == 'به' || ar == 'بهم') {
       origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'לְ / בְּ + ضمير' : 'حرف + ضمير');
@@ -102,25 +110,25 @@ class StrongsModal extends StatelessWidget {
       origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'صيغة التمام (Perfect)' : 'ماضٍ تام (Aorist)');
       transliteration = 'Particle of completion';
       definitionAr = 'حرف تحقيق وتوكيد باللغة العربية، أضافه المترجم للدلالة على تمام وقوع الفعل وثبوته.';
-      notesAr = 'يقابل في الأصل العبري صيغة الماضي التام (Qal Perfect) الدالة على يقينية الحدث وثبوته في مقاصد الله.';
+      notesAr = 'يقابل في الأصل العبري صيغة الماضي التام (Qal Perfect) الدالة على وقوع الفعل واكتماله نحويًا.';
       sId = 'PARTICLE';
     } else if (ar == 'ان' || ar == 'إن' || ar == 'أن') {
       origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'כִּי' : 'ὅτι');
       transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'ki' : 'hoti');
-      definitionAr = 'أداة ربط وتوكيد وتعليل، تفيد بيان السبب أو إقرار الحقيقة الإيمانية والتقرير اللاهوتي.';
-      notesAr = 'تفتتح الجمل التقريرية والتفسيرية لإعلان الحقائق الروحية.';
+      definitionAr = 'أداة ربط وتوكيد وتعليل، تفيد بيان السبب أو الربط التقريري بين الجمل.';
+      notesAr = 'تفتتح الجمل الخبرية والتعليلية لبيان سبب أو مضمون القول.';
       sId = isHebrew ? 'H3588' : 'G3754';
     } else if (ar == 'لا' || ar == 'ما' || ar == 'لن') {
       origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'לֹא' : 'οὐ');
       transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'lo' : 'ou');
-      definitionAr = 'أداة نفي جازمة ومطلقة لنفي الفعل أو التقرير في النص الأصلي.';
-      notesAr = 'تفيد النفي القاطع غير المشروط في التعليم الإلهي والوصايا الكتابية.';
+      definitionAr = 'أداة نفي جازمة لنفي الفعل أو التقرير في النص الأصلي.';
+      notesAr = 'تفيد نفي الفعل أو الحدث في سياق الجملة الإسنادية.';
       sId = isHebrew ? 'H3808' : 'G3756';
     } else {
       origWord = origWord.isNotEmpty ? origWord : m.arWord;
       transliteration = transliteration.isNotEmpty ? transliteration : m.arWord;
-      definitionAr = 'مفردة وكلمة كتابية واردة في نص الآية الأصلي (الترجمة العربية: "${m.arWord}").';
-      notesAr = 'يُعرض أدناه التحليل النحوي والصرفي الكامل لهذه المفردة بحسب لغتها الأصلية وسياقها في الآية.';
+      definitionAr = 'مفردة لغوية واردة في نص الآية (الترجمة العربية: "${m.arWord}").';
+      notesAr = 'يُعرض أدناه التحليل النحوي والصرفي المتاح لهذه المفردة بحسب لغتها وسياقها في الآية.';
     }
 
     return StrongsEntry(
