@@ -41,21 +41,20 @@ class WordMapping {
 
     String? audio;
     final rawAudio = j['audio_url']?.toString();
-    if (rawAudio != null && rawAudio.trim().isNotEmpty) {
-      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
-          Uri.encodeComponent(rawAudio
-              .replaceAll('translate.google.com', 'translate.googleapis.com')
-              .replaceAll('client=tw-ob', 'client=gtx'));
+    if (rawAudio != null && rawAudio.trim().isNotEmpty && !rawAudio.contains('arabic-bible-study.vercel.app')) {
+      audio = rawAudio;
     } else if (orig.trim().isNotEmpty && orig != '-' && orig != '—' && !orig.contains('---')) {
+      final cleanOrig = orig.replaceAll(RegExp(r'[\.,;:!?׃־—–\[\]\(\)\{\}\x22\x27״׳·]'), '').trim();
       final langCode = isHeb ? 'iw' : 'el';
-      final ttsUrl =
-          'https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=gtx';
-      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
-          Uri.encodeComponent(ttsUrl);
+      audio = 'https://translate.google.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(cleanOrig)}&tl=$langCode&client=tw-ob';
     }
 
     final rawIsVerified = j['is_verified'];
-    final bool isVerified = rawIsVerified == true || rawIsVerified == 1 || rawIsVerified == '1';
+    final sId = j['strongs_id']?.toString().trim();
+    final hasValidStrongs = sId != null && sId.isNotEmpty && sId != '---' && sId != '-';
+    final bool isVerified = rawIsVerified == true || rawIsVerified == 1 || rawIsVerified == '1' ||
+        hasValidStrongs ||
+        (orig.trim().isNotEmpty && orig != '-' && orig != '—' && !orig.contains('---'));
 
     return WordMapping(
       id:                 j['id']?.toString() ?? '',
@@ -73,7 +72,7 @@ class WordMapping {
       origMorphology:     j['orig_morphology']?.toString(),
       transliterationAr:  j['transliteration_ar']?.toString(),
       transliterationLat: j['transliteration_lat']?.toString(),
-      strongsId:          j['strongs_id']?.toString(),
+      strongsId:          hasValidStrongs ? sId : null,
       audioUrl:           audio,
       audioDurationMs:    (j['audio_duration_ms'] is int)
           ? j['audio_duration_ms'] as int
@@ -83,6 +82,6 @@ class WordMapping {
   }
 
   bool get hasAudio    => audioUrl != null && audioUrl!.isNotEmpty;
-  bool get hasStrongs  => strongsId != null && strongsId!.isNotEmpty;
+  bool get hasStrongs  => strongsId != null && strongsId!.isNotEmpty && strongsId != '---' && strongsId != '-';
   bool get isHebrew    => origWordLang == 'hebrew' || origWordLang == 'aramaic';
 }

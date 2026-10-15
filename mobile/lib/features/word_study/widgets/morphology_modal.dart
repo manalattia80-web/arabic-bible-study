@@ -41,12 +41,16 @@ class MorphologyModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveStrongsId = mapping.hasStrongs
+        ? mapping.strongsId
+        : StrongsModal.deduceStrongsId(mapping);
+
     final analysis = MorphologyService.parse(
       code: mapping.origMorphology,
       language: mapping.origWordLang,
       arWord: mapping.arWord,
       origWord: mapping.origWord,
-      strongsId: mapping.strongsId,
+      strongsId: effectiveStrongsId,
     );
     final isHebrew = mapping.isHebrew;
 
@@ -414,7 +418,7 @@ class MorphologyModal extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // ── Link to Strong's Dictionary ───────────────────────
-                  if (mapping.hasStrongs)
+                  if (effectiveStrongsId != null && effectiveStrongsId.isNotEmpty)
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
@@ -424,11 +428,11 @@ class MorphologyModal extends StatelessWidget {
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
-                        StrongsModal.show(context, mapping.strongsId!, mapping: mapping);
+                        StrongsModal.show(context, effectiveStrongsId, mapping: mapping);
                       },
                       icon: const Icon(Icons.menu_book_rounded, size: 18),
                       label: Text(
-                        'عرض معجم سترونج (${mapping.strongsId}) والبعد اللاهوتي',
+                        'عرض معجم سترونج ($effectiveStrongsId) والبعد اللاهوتي',
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                       ),
                     ),

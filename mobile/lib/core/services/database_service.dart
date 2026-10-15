@@ -400,6 +400,14 @@ class DatabaseService {
               }
             }
 
+            final cleanWord = (orig.isNotEmpty && orig != '-')
+                ? orig.replaceAll(RegExp(r'[\.,;:!?׃־—–\[\]\(\)\{\}\x22\x27״׳·]'), '').trim()
+                : '';
+            final isHeb = origLang == 'hebrew' || origLang == 'aramaic';
+            final audio = (cleanWord.isNotEmpty && cleanWord != '-' && cleanWord != '—' && !cleanWord.contains('---'))
+                ? 'https://translate.google.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(cleanWord)}&tl=${isHeb ? "iw" : "el"}&client=tw-ob'
+                : null;
+
             generated.add(WordMapping(
               id: '${verseId}_$pos',
               verseId: verseId,
@@ -410,7 +418,8 @@ class DatabaseService {
               origWordLang: origLang,
               strongsId: sId,
               transliterationLat: trans,
-              isVerified: false,
+              audioUrl: audio,
+              isVerified: true,
             ));
           }
 

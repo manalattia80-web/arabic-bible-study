@@ -352,6 +352,7 @@ class MorphologyService {
   }
 
   // ───────────────────────────────────────────────────────────────────────────
+  // ───────────────────────────────────────────────────────────────────────────
   // BIBLICAL GREEK ANALYZER (الأصل اليوناني للعهد الجديد)
   // ───────────────────────────────────────────────────────────────────────────
   static MorphologyAnalysis _analyzeBiblicalGreek({
@@ -361,32 +362,35 @@ class MorphologyService {
     required String? fallbackDef,
     required String lang,
   }) {
-    final clean = origWord.toLowerCase().replaceAll(RegExp(r'[\u0300-\u036F\u1DC0-\u1DFF\u1AB0-\u1AFF\u1F00-\u1FFF]'), '').trim();
+    final rawClean = origWord.replaceAll(RegExp(r'[\.,;:!?׃־—–\[\]\(\)\{\}\x22\x27״׳·]'), '').trim();
+    final clean = rawClean.toLowerCase().replaceAll(RegExp(r'[\u0300-\u036F\u1DC0-\u1DFF\u1AB0-\u1AFF\u1F00-\u1FFF]'), '').trim();
+    final arClean = (arWord ?? '').replaceAll(RegExp(r'[\u064B-\u065F\u0670\.,;:!?«»()\[\]]'), '').trim();
     final def = (fallbackDef ?? '').toLowerCase();
+    final sId = (strongsId ?? '').trim().toUpperCase();
     final tags = <String>[];
 
-    // Greek Definite Article (أداة التعريف اليونانية)
+    // 1. Greek Definite Article (أداة التعريف اليونانية)
     const articles = {
-      'ο':  ['أداة تعريف (Definite Article)', 'حالة الرفع (Nominative)', 'مفرد (Singular)', 'مذكر في الأصل اليوناني (Masculine)'],
-      'η':  ['أداة تعريف (Definite Article)', 'حالة الرفع (Nominative)', 'مفرد (Singular)', 'مؤنث في الأصل اليوناني (Feminine)'],
-      'το': ['أداة تعريف (Definite Article)', 'حالة الرفع أو النصب (Nom/Acc)', 'مفرد (Singular)', 'محايد في الأصل اليوناني (Neuter)'],
-      'του':['أداة تعريف (Definite Article)', 'حالة الجر والإضافة (Genitive)', 'مفرد (Singular)', 'مذكر أو محايد (Masc/Neut)'],
-      'της':['أداة تعريف (Definite Article)', 'حالة الجر والإضافة (Genitive)', 'مفرد (Singular)', 'مؤنث في الأصل اليوناني (Feminine)'],
-      'τω': ['أداة تعريف (Definite Article)', 'حالة القابل (Dative)', 'مفرد (Singular)', 'مذكر أو محايد (Masc/Neut)'],
-      'τη': ['أداة تعريف (Definite Article)', 'حالة القابل (Dative)', 'مفرد (Singular)', 'مؤنث في الأصل اليوناني (Feminine)'],
-      'τον':['أداة تعريف (Definite Article)', 'حالة النصب (Accusative)', 'مفرد (Singular)', 'مذكر في الأصل اليوناني (Masculine)'],
-      'την':['أداة تعريف (Definite Article)', 'حالة النصب (Accusative)', 'مفرد (Singular)', 'مؤنث في الأصل اليوناني (Feminine)'],
-      'οι': ['أداة تعريف (Definite Article)', 'حالة الرفع (Nominative)', 'جمع (Plural)', 'مذكر في الأصل اليوناني (Masculine)'],
-      'αι': ['أداة تعريف (Definite Article)', 'حالة الرفع (Nominative)', 'جمع (Plural)', 'مؤنث في الأصل اليوناني (Feminine)'],
-      'τα': ['أداة تعريف (Definite Article)', 'حالة الرفع أو النصب (Nom/Acc)', 'جمع (Plural)', 'محايد في الأصل اليوناني (Neuter)'],
-      'των':['أداة تعريف (Definite Article)', 'حالة الجر والإضافة (Genitive)', 'جمع (Plural)', 'مشترك لجميع الأجناس'],
-      'τοις':['أداة تعريف (Definite Article)', 'حالة القابل (Dative)', 'جمع (Plural)', 'مذكر أو محايد'],
-      'ταις':['أداة تعريف (Definite Article)', 'حالة القابل (Dative)', 'جمع (Plural)', 'مؤنث'],
-      'τους':['أداة تعريف (Definite Article)', 'حالة النصب (Accusative)', 'جمع (Plural)', 'مذكر في الأصل اليوناني (Masculine)'],
-      'τας':['أداة تعريف (Definite Article)', 'حالة النصب (Accusative)', 'جمع (Plural)', 'مؤنث في الأصل اليوناني (Feminine)'],
+      'ο':    ['أداة تعريف (Definite Article)', 'حالة الرفع (Nominative)', 'مفرد (Singular)', 'مذكر في الأصل اليوناني (Masculine)'],
+      'η':    ['أداة تعريف (Definite Article)', 'حالة الرفع (Nominative)', 'مفرد (Singular)', 'مؤنث في الأصل اليوناني (Feminine)'],
+      'το':   ['أداة تعريف (Definite Article)', 'حالة الرفع أو النصب (Nom/Acc)', 'مفرد (Singular)', 'محايد في الأصل اليوناني (Neuter)'],
+      'του':  ['أداة تعريف (Definite Article)', 'حالة الجر والإضافة (Genitive)', 'مفرد (Singular)', 'مذكر أو محايد (Masc/Neut)'],
+      'της':  ['أداة تعريف (Definite Article)', 'حالة الجر والإضافة (Genitive)', 'مفرد (Singular)', 'مؤنث في الأصل اليوناني (Feminine)'],
+      'τω':   ['أداة تعريف (Definite Article)', 'حالة القابل (Dative)', 'مفرد (Singular)', 'مذكر أو محايد (Masc/Neut)'],
+      'τη':   ['أداة تعريف (Definite Article)', 'حالة القابل (Dative)', 'مفرد (Singular)', 'مؤنث في الأصل اليوناني (Feminine)'],
+      'τον':  ['أداة تعريف (Definite Article)', 'حالة النصب (Accusative)', 'مفرد (Singular)', 'مذكر في الأصل اليوناني (Masculine)'],
+      'την':  ['أداة تعريف (Definite Article)', 'حالة النصب (Accusative)', 'مفرد (Singular)', 'مؤنث في الأصل اليوناني (Feminine)'],
+      'οι':   ['أداة تعريف (Definite Article)', 'حالة الرفع (Nominative)', 'جمع (Plural)', 'مذكر في الأصل اليوناني (Masculine)'],
+      'αι':   ['أداة تعريف (Definite Article)', 'حالة الرفع (Nominative)', 'جمع (Plural)', 'مؤنث في الأصل اليوناني (Feminine)'],
+      'τα':   ['أداة تعريف (Definite Article)', 'حالة الرفع أو النصب (Nom/Acc)', 'جمع (Plural)', 'محايد في الأصل اليوناني (Neuter)'],
+      'των':  ['أداة تعريف (Definite Article)', 'حالة الجر والإضافة (Genitive)', 'جمع (Plural)', 'مشترك لجميع الأجناس'],
+      'τοις': ['أداة تعريف (Definite Article)', 'حالة القابل (Dative)', 'جمع (Plural)', 'مذكر أو محايد'],
+      'ταις': ['أداة تعريف (Definite Article)', 'حالة القابل (Dative)', 'جمع (Plural)', 'مؤنث'],
+      'τους': ['أداة تعريف (Definite Article)', 'حالة النصب (Accusative)', 'جمع (Plural)', 'مذكر في الأصل اليوناني (Masculine)'],
+      'τας':  ['أداة تعريف (Definite Article)', 'حالة النصب (Accusative)', 'جمع (Plural)', 'مؤنث في الأصل اليوناني (Feminine)'],
     };
 
-    if (articles.containsKey(clean) || (strongsId == 'G3588')) {
+    if (articles.containsKey(clean) || (sId == 'G3588') || arClean == 'ال') {
       final info = articles[clean] ?? ['أداة تعريف (Definite Article)', 'حالة الرفع', 'مفرد', 'مذكر'];
       tags.addAll(['أداة تعريف', info[1], info[2], info[3], 'يوناني']);
       return MorphologyAnalysis(
@@ -396,30 +400,51 @@ class MorphologyService {
         grammaticalCase: info[1],
         number: info[2],
         gender: info[3],
-        summary: 'أداة تعريف أصلية في اليونانية، في ${info[1]}، بصيغة الـ${info[2]} الـ${info[3]}.',
+        summary: 'أداة تعريف أصلية في لغة العهد الجديد اليونانية، في ${info[1]}، بصيغة الـ${info[2]} الـ${info[3]}.',
         tags: tags,
       );
     }
 
-    // Greek Prepositions (حروف الجر الأصلية في اليونانية)
+    // 2. Greek Prepositions (حروف الجر الأصلية في اليونانية)
     const greekPreps = {
-      'εν':   ['حرف جر أصلي (Preposition)', 'يلازمه حالة القابل (Dative)', 'يفيد الاستقرار والظرفية الثابتة'],
-      'εις':  ['حرف جر أصلي (Preposition)', 'يلازمه حالة النصب (Accusative)', 'يفيد الحركة نحو والغاية والبلوغ'],
-      'εκ':   ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الانبثاق والخروج من الأصل'],
-      'εξ':   ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الانبثاق والخروج من الأصل'],
-      'προς': ['حرف جر أصلي (Preposition)', 'يلازمه حالة النصب (Accusative)', 'يفيد التوجه نحو والمعية الحميمة والمواجهة'],
-      'δια':  ['حرف جر أصلي (Preposition)', 'مع النصب (لأجل) أو الجر (بواسطة)', 'يفيد الواسطة أو التعليل'],
-      'μετα': ['حرف جر أصلي (Preposition)', 'مع النصب (بعد) أو الجر (مع)', 'يفيد المعية والمصاحبة أو البعدية'],
-      'περι': ['حرف جر أصلي (Preposition)', 'مع الجر (عن) أو النصب (حول)', 'يفيد الإحاطة والموضوع'],
-      'κατα': ['حرف جر أصلي (Preposition)', 'مع النصب (بحسب) أو الجر (ضد)', 'يفيد المطابقة والموافقة'],
-      'υπο':  ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الواسطة والعلية (بواسطة)'],
-      'επι':  ['حرف جر أصلي (Preposition)', 'مع القابل أو النصب أو الجر', 'يفيد العلو والتمكين والاستناد'],
-      'απο':  ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الانفصال والمصدر (من وعن)'],
-      'συν':  ['حرف جر أصلي (Preposition)', 'يلازمه حالة القابل (Dative)', 'يفيد الاشتراك والاتحاد في الفعل'],
+      'εν':       ['حرف جر أصلي (Preposition)', 'يلازمه حالة القابل (Dative)', 'يفيد الاستقرار والظرفية والحلول الثابت'],
+      'εις':      ['حرف جر أصلي (Preposition)', 'يلازمه حالة النصب (Accusative)', 'يفيد الحركة نحو والغاية والبلوغ'],
+      'εκ':       ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الانبثاق والخروج من الأصل'],
+      'εξ':       ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الانبثاق والخروج من الأصل'],
+      'προς':     ['حرف جر أصلي (Preposition)', 'يلازمه حالة النصب (Accusative)', 'يفيد التوجه نحو والمعية الحميمة والمواجهة'],
+      'δια':      ['حرف جر أصلي (Preposition)', 'مع النصب (لأجل) أو الجر (بواسطة)', 'يفيد الواسطة والعلية والسبب'],
+      'μεتا':     ['حرف جر أصلي (Preposition)', 'مع النصب (بعد) أو الجر (مع)', 'يفيد المعية والمصاحبة أو البعدية'],
+      'περι':     ['حرف جر أصلي (Preposition)', 'مع الجر (عن) أو النصب (حول)', 'يفيد الإحاطة والموضوع المعني'],
+      'καتا':     ['حرف جر أصلي (Preposition)', 'مع النصب (بحسب) أو الجر (ضد)', 'يفيد المطابقة والموافقة أو النزول'],
+      'υπο':      ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الفاعلية والواسطة (بواسطة) أو التبعية'],
+      'επι':      ['حرف جر أصلي (Preposition)', 'مع القابل أو النصب أو الجر', 'يفيد العلو والتمكين والاستناد على'],
+      'απο':      ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الانفصال والابتعاد والمصدر (من وعن)'],
+      'συν':      ['حرف جر أصلي (Preposition)', 'يلازمه حالة القابل (Dative)', 'يفيد الاشتراك والاتحاد والرفقة في الفعل'],
+      'παρα':     ['حرف جر أصلي (Preposition)', 'مع القابل أو النصب أو الجر', 'يفيد القرب وبجانب ومن عند'],
+      'υπερ':     ['حرف جر أصلي (Preposition)', 'مع الجر (لأجل/نيابة عن) أو النصب (فوق)', 'يفيد النيابة والشفاعة والعلو'],
+      'αντι':     ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد البدل والتعويض (عوضاً عن / كفارة بدل)'],
+      'προ':      ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الأسبقية الزمانية أو المكانية (قبل / أمام)'],
+      'ανα':      ['حرف جر أصلي (Preposition)', 'يلازمه حالة النصب (Accusative)', 'يفيد التوزيع والصعود (في وسط / كذا كذا)'],
+      'αχρι':     ['حرف جر وظرف غاية', 'يلازمه حالة الجر (Genitive)', 'يفيد بلوغ الغاية والمدى (إلى أن / حتى)'],
+      'αχρις':    ['حرف جر وظرف غاية', 'يلازمه حالة الجر (Genitive)', 'يفيد بلوغ الغاية والمدى (إلى أن / حتى)'],
+      'μεχρι':    ['حرف جر وظرف غاية', 'يلازمه حالة الجر (Genitive)', 'يفيد بلوغ الغاية والمدى (إلى أن / حتى)'],
+      'μεχρις':   ['حرف جر وظرف غاية', 'يلازمه حالة الجر (Genitive)', 'يفيد بلوغ الغاية والمدى (إلى أن / حتى)'],
+      'ενωπιον':  ['حرف جر شبه ظرفي (Improper Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الوقوف في حضرة / أمام عينيه'],
+      'εμπροσθεν':['حرف جر شبه ظرفي', 'يلازمه حالة الجر (Genitive)', 'يفيد التقدم المكاني (قدام / أمام)'],
+      'οπισω':    ['حرف جر شبه ظرفي', 'يلازمه حالة الجر (Genitive)', 'يفيد التبعية المكانية (وراء / خلف)'],
+      'χωρις':    ['حرف جر شبه ظرفي', 'يلازمه حالة الجر (Genitive)', 'يفيد الانفصال التام (بدون / بمعزل عن)'],
+      'ανευ':     ['حرف جر شبه ظرفي', 'يلازمه حالة الجر (Genitive)', 'يفيد النفي والمعزل (بغير / بدون)'],
+      'εγγυς':    ['ظرف وحرف جر شبه ظرفي', 'يلازمه حالة الجر', 'يفيد القرب المكاني أو الزماني (قريب من)'],
     };
 
-    if (greekPreps.containsKey(clean) || def.contains('preposition')) {
-      final info = greekPreps[clean] ?? ['حرف جر أصلي (Preposition)', 'ملازم لحالات الإعراب', 'يفيد الربط والدلالة'];
+    const arPrepositions = {
+      'في', 'من', 'الى', 'إلى', 'على', 'عن', 'مع', 'نحو', 'لدى', 'عند',
+      'بين', 'تحت', 'فوق', 'أمام', 'امام', 'قدام', 'خلف', 'وراء', 'بدون',
+      'بغير', 'حتى', 'لاجل', 'لأجل'
+    };
+
+    if (greekPreps.containsKey(clean) || def.contains('preposition') || arPrepositions.contains(arClean)) {
+      final info = greekPreps[clean] ?? ['حرف جر أصلي (Preposition)', 'ملازم لحالات الإعراب', 'يفيد الربط والدلالة والنسبة السياقية'];
       tags.addAll(['حرف جر', info[1], 'يوناني']);
       return MorphologyAnalysis(
         rawCode: 'PREP',
@@ -431,19 +456,43 @@ class MorphologyService {
       );
     }
 
-    // Greek Conjunctions (حروف العطف والربط)
+    // 3. Greek Conjunctions (حروف العطف والربط)
     const greekConjs = {
-      'και':  ['حرف عطف وتوكيد (Conjunction)', 'يفيد الربط والجمع والتوكيد المعنوي (و / أيضاً)'],
-      'δε':   ['حرف عطف استدراكي / انتقالي', 'يفيد الانتقال أو الاستدراك اللطيف (وأما / ولكن)'],
-      'αλλα': ['حرف عطف استدراكي قوي', 'يفيد إبطال ما قبله وإثبات ما بعده (بل / ولكن بالحري)'],
-      'οτι':  ['أداة ربط وتعليل وتفسير', 'تفيد التعليل أو تقديم الكلام المنقول (أن / لأن)'],
-      'ινα':  ['أداة ربط غائية ومصدرية', 'تفيد القصد والغاية الحتمية (لكي / حتى)'],
-      'γαρ':  ['أداة تعليل وتوضيح برهانية', 'تفيد تقديم العلة والبرهان (لأنه / إذ)'],
-      'ουν':  ['أداة استنتاج ونتيجة منطقية', 'تفيد ترتيب النتيجة على المقدمة (فإذاً / بناءً عليه)'],
+      'και':    ['حرف عطف وتوكيد (Conjunction)', 'يفيد الربط والجمع والتوكيد المعنوي (و / أيضاً)'],
+      'δε':     ['حرف عطف استدراكي / انتقالي', 'يفيد الانتقال أو الاستدراك اللطيف (وأما / ولكن)'],
+      'αλλα':   ['حرف عطف استدراكي قوي', 'يفيد إبطال ما قبله وإثبات ما بعده (بل / ولكن بالحري)'],
+      'οτι':    ['أداة ربط وتعليل وتفسير', 'تفيد التعليل أو تقديم الكلام المنقول (أن / لأن)'],
+      'ινα':    ['أداة ربط غائية ومصدرية', 'تفيد القصد والغاية الحتمية (لكي / حتى)'],
+      'γαρ':    ['أداة تعليل وتوضيح برهانية', 'تفيد تقديم العلة والبرهان (لأنه / إذ)'],
+      'ουν':    ['أداة استنتاج ونتيجة منطقية', 'تفيد ترتيب النتيجة على المقدمة (فإذاً / بناءً عليه)'],
+      'τε':     ['حرف عطف ملازم وتوكيدي', 'يفيد الربط الوثيق بين المتلازمات (و / كذا)'],
+      'ειτε':   ['أداة تخيير وتفصيل', 'تفيد الترديد والتفصيل (إما / سواء كان)'],
+      'εαν':    ['أداة شرط احتمالية وتوقع', 'تفيد تعليق الجواب على شرط محتمل الوقوع (إن / إذا)'],
+      'ει':     ['أداة شرط حقيقية', 'تفيد الشرط الواقعي أو المفترض (إن / لو)'],
+      'ειπερ':  ['أداة شرط توكيدية', 'تفيد تأكيد صحة الشرط (إن كان حقاً)'],
+      'καθως':  ['أداة مطابقة ومقارنة', 'تفيد القياس والمطابقة (كما / نظير ما)'],
+      'ωσπερ':  ['أداة تشبيه ومطابقة تامة', 'تفيد التشبيه المباشر (تماماً كما)'],
+      'ως':     ['أداة مقارنة وحال وزمان', 'تفيد التشبيه أو الظرفية (كـ / كما / مثلما / حينما)'],
+      'διο':    ['أداة استنتاج وسببية', 'تفيد السببية والنتيجة (لذلك / لهذا السبب)'],
+      'διοτι':  ['أداة تعليل وسببية موكّدة', 'تفيد ذكر السبب المباشر (لأن / بما أن)'],
+      'επαν':   ['أداة توقيت وشرط', 'تفيد التوقيت المستقبلي (متى / بعدما)'],
+      'επει':   ['أداة تعليل وزمان', 'تفيد التعليل أو الظرفية (إذ / لما كان)'],
+      'επειδη': ['أداة تعليل توكيدية', 'تفيد بيان الدافع والسبب (إذ أن / بما أن)'],
+      'μεν':    ['أداة تمهيد وتوكيد', 'تفيد التمهيد لمقابلة قادمة (أما / من جهة)'],
+      'μεντοι': ['أداة استدراك وتوكيد', 'تفيد الاستدراك مع التوكيد (مع ذلك / بيد أن)'],
+      'ωστε':   ['أداة نتيجة وغاية', 'تفيد ترتيب الأثر والنتيجة (حتى أن / بحيث)'],
+      'οπως':   ['أداة قصد ونصب وغائية', 'تفيد بلوغ الغاية والقصد (لكي / كيما)'],
+      'πλην':   ['أداة استثناء واستدراك', 'تفيد الاستدراك والاستثناء (غير أن / إلا أن)'],
     };
 
-    if (greekConjs.containsKey(clean) || def.contains('conjunction')) {
-      final info = greekConjs[clean] ?? ['حرف عطف وربط (Conjunction)', 'يربط المفردات والجمل'];
+    const arConjunctions = {
+      'و', 'ثم', 'لكن', 'بل', 'فاذا', 'فإذا', 'فان', 'فإن', 'لذلك', 'اذن',
+      'إذن', 'لانه', 'لأنه', 'اذ', 'إذ', 'كي', 'لكي', 'ام', 'أم', 'او', 'أو',
+      'اما', 'إما', 'لو', 'ان', 'إن', 'بينما', 'غير أن'
+    };
+
+    if (greekConjs.containsKey(clean) || def.contains('conjunction') || arConjunctions.contains(arClean)) {
+      final info = greekConjs[clean] ?? ['حرف عطف وربط (Conjunction)', 'يربط المفردات والجمل بالسياق'];
       tags.addAll(['حرف عطف', 'يوناني']);
       return MorphologyAnalysis(
         rawCode: 'CONJ',
@@ -454,61 +503,265 @@ class MorphologyService {
       );
     }
 
-    // Greek Verbs (الأفعال اليونانية)
-    // Famous Greek Verbs: e.g. ἦν (was), ἐγένετο (became), ἔλεγεν, εἶπεν
-    if (clean == 'ην' || clean == 'ειμι' || clean == 'ησαν' || strongsId == 'G1510' || strongsId == 'G2258') {
-      final pos = 'فعل كينونة يوناني (Verb to be - εἰμί)';
-      final tense = 'الماضي المستمر / الناقص (Imperfect - παρατατικός)';
-      final voice = 'مبني للمعلوم (Active Voice)';
-      final mood = 'صيغة إخبارية واقعية (Indicative Mood)';
-      final person = (clean == 'ησαν') ? 'الغائبون (هم - 3P)' : 'الغائب المفرد (هو - 3S)';
-      final number = (clean == 'ησαν') ? 'جمع (Plural)' : 'مفرد (Singular)';
-      tags.addAll(['فعل كينونة', tense, voice, mood, person, number, 'يوناني']);
+    // 4. Greek Particles, Negatives & Interjections (أدوات النفي والتنبيه والتوكيد)
+    const greekParticles = {
+      'ου':     ['أداة نفي قطعية للواقع (Negative Particle)', 'تفيد نفي الواقعة يقيناً في الصيغة الإخبارية (لا / لم / ليس)'],
+      'ουκ':    ['أداة نفي قطعية تسبق حرف علة غير منفوخ', 'تفيد النفي القاطع لواقع الحدث'],
+      'ουχ':    ['أداة نفي قطعية تسبق تنفساً خشناً', 'تفيد النفي القاطع المباشر'],
+      'ουχι':   ['أداة نفي توكيدية مشددة', 'تفيد النفي المطلق القاطع (كلا البتة / أليس كذلك؟)'],
+      'μη':     ['أداة نفي احتمالية ونهي (Subjunctive/Imperative Negative)', 'تفيد النهي أو نفي الإمكانية والمشاعر'],
+      'μηδε':   ['أداة نفي عاطفة للمفردات', 'تفيد نفي الملحق (ولا حتى / ولا أيضاً)'],
+      'μητε':   ['أداة نفي مزدوجة متقابلة', 'تفيد النفي المزدوج المتسلسل (لا... ولا)'],
+      'μηποτε': ['أداة تحذير ونفي احتمالي', 'تفيد التحوط والخشية (لئلا في أي وقت)'],
+      'αν':     ['أداة شرط احتمالية ومطاوعة (Modal Particle)', 'تقترن بالشرط والفرض لتفيد الاحتمال الإمكاني'],
+      'ιδου':   ['أداة لفت انتباه وتنبيه إعجازي (Demonstrative Particle - Behold)', 'تفيد استدعاء الانتباه البصري والذهني الفوري (هُوذا / انظر)'],
+      'ιδε':    ['أداة تنبيه ومعاينة حية', 'تفيد لفت النظر المباشر للعيان (ها هو / انظر)'],
+      'αμην':   ['أداة تصديق وتوكيد لاهوتي (Amen)', 'لفظ عبري أصيل أُقر في اليونانية يفيد الحق والثبات المطلق (آمين / حقاً)'],
+      'ναι':    ['أداة إيجاب وتصديق (Yes / Verily)', 'تفيد الإقرار والموافقة التامة (نعم / أجل)'],
+      'ω':      ['أداة نداء واستعطاف (Vocative Interjection)', 'تفيد النداء والتعجب والاستغاثة (يا)'],
+    };
+
+    const arParticles = {'لا', 'ما', 'لم', 'لن', 'ليس', 'هوذا', 'ها', 'كلا', 'نعم', 'امين', 'آمين', 'يا'};
+
+    if (greekParticles.containsKey(clean) || def.contains('particle') || def.contains('interjection') || def.contains('negative') || arParticles.contains(arClean)) {
+      final info = greekParticles[clean] ?? ['أداة ونفي / توكيد وتنبيه (Particle)', 'تحدد نمط الدلالة ونبرة المعنى في الجملة'];
+      tags.addAll(['أداة نحوية', 'يوناني']);
       return MorphologyAnalysis(
-        rawCode: 'V-IAI-3S',
+        rawCode: 'PRT',
         language: 'greek',
-        partOfSpeech: pos,
-        tense: tense,
-        voice: voice,
-        mood: mood,
-        person: person,
-        number: number,
-        gender: 'مشترك (Common)',
-        summary: 'فعل كينونة يوناني في زمن الماضي المستمر (Imperfect)، مبني للمعلوم، يدل على استمرار الكينونة أو الحالة في الماضي.',
+        partOfSpeech: info[0],
+        summary: '${info[0]} في لغة العهد الجديد الأصلية، ${info[1]}.',
         tags: tags,
       );
     }
 
-    final isDefVerb = def.contains('to ') || def.contains('verb') || def.contains('a verb,');
-    if (isDefVerb || clean.endsWith('ω') || clean.endsWith('ει') || clean.endsWith('εν') || clean.endsWith('ον') || clean.endsWith('το')) {
+    // 5. Greek Pronouns & Demonstratives (الضمائر وأسماء الإشارة والموصول)
+    const personalPronouns = {
+      'εγω':  ['ضمير متكلم مفرد (أنا - 1S)', 'حالة الرفع (Nominative)'],
+      'μου':  ['ضمير متكلم مفرد مضاف (لي / ي)', 'حالة الجر والإضافة (Genitive)'],
+      'μοι':  ['ضمير متكلم مفرد مجرور (لي)', 'حالة القابل (Dative)'],
+      'με':   ['ضمير متكلم مفرد منصوب (إياي / ني)', 'حالة النصب (Accusative)'],
+      'συ':   ['ضمير مخاطب مفرد (أنتَ - 2S)', 'حالة الرفع (Nominative)'],
+      'σου':  ['ضمير مخاطب مفرد مضاف (لكَ / كَ)', 'حالة الجر والإضافة (Genitive)'],
+      'σοι':  ['ضمير مخاطب مفرد مجرور (لكَ)', 'حالة القابل (Dative)'],
+      'σε':   ['ضمير مخاطب مفرد منصوب (إياكَ)', 'حالة النصب (Accusative)'],
+      'ημεις':['ضمير متكلم جمع (نحن - 1P)', 'حالة الرفع (Nominative)'],
+      'ημων': ['ضمير متكلم جمع مضاف (لنا / نا)', 'حالة الجر والإضافة (Genitive)'],
+      'ημιν': ['ضمير متكلم جمع مجرور (لنا)', 'حالة القابل (Dative)'],
+      'ημας': ['ضمير متكلم جمع منصوب (إيانا)', 'حالة النصب (Accusative)'],
+      'υμεις':['ضمير مخاطب جمع (أنتم - 2P)', 'حالة الرفع (Nominative)'],
+      'υμων': ['ضمير مخاطب جمع مضاف (لكم / كم)', 'حالة الجر والإضافة (Genitive)'],
+      'υμιν': ['ضمير مخاطب جمع مجرور (لكم)', 'حالة القابل (Dative)'],
+      'υμας': ['ضمير مخاطب جمع منصوب (إياكم)', 'حالة النصب (Accusative)'],
+      'αυτος':['ضمير غائب مفرد مذكر (هو - 3S)', 'حالة الرفع (Nominative)'],
+      'αυτη': ['ضمير غائب مفرد مؤنث (هي - 3S)', 'حالة الرفع (Nominative)'],
+      'αυτο': ['ضمير غائب مفرد محايد (هو/هي)', 'حالة الرفع أو النصب (Nom/Acc)'],
+      'αυτου':['ضمير غائب مفرد مضاف (له / ه)', 'حالة الجر والإضافة (Genitive)'],
+      'αυτης':['ضمير غائب مفرد مؤنث مضاف (لها)', 'حالة الجر والإضافة (Genitive)'],
+      'αυτω': ['ضمير غائب مفرد مجرور (له)', 'حالة القابل (Dative)'],
+      'αυτον':['ضمير غائب مفرد منصوب (إياه)', 'حالة النصب (Accusative)'],
+      'αυτην':['ضمير غائب مفرد مؤنث منصوب (إياها)', 'حالة النصب (Accusative)'],
+      'αυτοι':['ضمير غائب جمع مذكر (هم - 3P)', 'حالة الرفع (Nominative)'],
+      'αυται':['ضمير غائب جمع مؤنث (هن - 3P)', 'حالة الرفع (Nominative)'],
+      'αυτα': ['ضمير غائب جمع محايد (هم/هن)', 'حالة الرفع أو النصب (Nom/Acc)'],
+      'αυτων':['ضمير غائب جمع مضاف (لهم / هم)', 'حالة الجر والإضافة (Genitive)'],
+      'αυτοις':['ضمير غائب جمع مجرور (لهم)', 'حالة القابل (Dative)'],
+      'αυτους':['ضمير غائب جمع منصوب (إياهم)', 'حالة النصب (Accusative)'],
+      'αυτας':['ضمير غائب جمع مؤنث منصوب (إياهن)', 'حالة النصب (Accusative)'],
+    };
+
+    const demonstrativePronouns = {
+      'ουτος':  ['اسم إشارة للقريب (هذا)', 'مذكر مفرد في حالة الرفع'],
+      'τουτο':  ['اسم إشارة للقريب (هذا الشيء)', 'محايد مفرد في حالة الرفع أو النصب'],
+      'τουτου': ['اسم إشارة للقريب (من هذا / لهذا)', 'مذكر/محايد مفرد في حالة الجر'],
+      'τουτω':  ['اسم إشارة للقريب (بهذا / لهذا)', 'مذكر/محايد مفرد في حالة القابل'],
+      'τουτον': ['اسم إشارة للقريب (هذا الشخص)', 'مذكر مفرد في حالة النصب'],
+      'ταυτη':  ['اسم إشارة للقريب (هذه)', 'مؤنث مفرد في حالة الرفع أو القابل'],
+      'ταυτην': ['اسم إشارة للقريب (هذه)', 'مؤنث مفرد في حالة النصب'],
+      'ουτοι':  ['اسم إشارة للقريب (هؤلاء)', 'مذكر جمع في حالة الرفع'],
+      'ταυτα':  ['اسم إشارة للقريب (هذه الأمور)', 'محايد جمع في حالة الرفع أو النصب'],
+      'τουτων': ['اسم إشارة للقريب (لهؤلاء)', 'جمع في حالة الجر والإضافة'],
+      'τουτοις':['اسم إشارة للقريب (لهؤلاء)', 'مذكر/محايد جمع في حالة القابل'],
+      'τουτους':['اسم إشارة للقريب (هؤلاء)', 'مذكر جمع في حالة النصب'],
+      'εκεινος':['اسم إشارة للبعيد (ذلك)', 'مذكر مفرد في حالة الرفع'],
+      'εκεινη': ['اسم إشارة للبعيد (تلك)', 'مؤنث مفرد في حالة الرفع'],
+      'εκεινο': ['اسم إشارة للبعيد (ذلك الشيء)', 'محايد مفرد في حالة الرفع أو النصب'],
+      'εκεινου':['اسم إشارة للبعيد (لذلك)', 'مذكر/محايد مفرد في حالة الجر'],
+      'εκεινω': ['اسم إشارة للبعيد (لذلك)', 'مذكر/محايد مفرد في حالة القابل'],
+      'εκεινον':['اسم إشارة للبعيد (ذلك)', 'مذكر مفرد في حالة النصب'],
+      'εκεινοι':['اسم إشارة للبعيد (أولئك)', 'مذكر جمع في حالة الرفع'],
+      'εκεινων':['اسم إشارة للبعيد (لأولئك)', 'جمع في حالة الجر والإضافة'],
+      'εκεινοις':['اسم إشارة للبعيد (لأولئك)', 'مذكر/محايد جمع في حالة القابل'],
+      'εκεινους':['اسم إشارة للبعيد (أولئك)', 'مذكر جمع في حالة النصب'],
+    };
+
+    const relativePronouns = {
+      'ος':   ['اسم موصول (الذي - Who/Which)', 'مذكر مفرد في حالة الرفع'],
+      'η':    ['اسم موصول (التي)', 'مؤنث مفرد في حالة الرفع'],
+      'ο':    ['اسم موصول (الذي/التي)', 'محايد مفرد في حالة الرفع أو النصب'],
+      'ου':   ['اسم موصول (الذي له)', 'مذكر/محايد مفرد في حالة الجر'],
+      'ης':   ['اسم موصول (التي لها)', 'مؤنث مفرد في حالة الجر'],
+      'ω':    ['اسم موصول (للذي)', 'مذكر/محايد مفرد في حالة القابل'],
+      'ον':   ['اسم موصول (الذي إياه)', 'مذكر مفرد في حالة النصب'],
+      'ην':   ['اسم موصول (التي إياها)', 'مؤنث مفرد في حالة النصب'],
+      'οι':   ['اسم موصول (الذين)', 'مذكر جمع في حالة الرفع'],
+      'αι':   ['اسم موصول (اللواتي)', 'مؤنث جمع في حالة الرفع'],
+      'α':    ['اسم موصول (التي للأشياء)', 'محايد جمع في حالة الرفع أو النصب'],
+      'ων':   ['اسم موصول (الذين لهم)', 'جمع لجميع الأجناس في حالة الجر'],
+      'οις':  ['اسم موصول (للذين)', 'مذكر/محايد جمع في حالة القابل'],
+      'ους':  ['اسم موصول (الذين إياهم)', 'مذكر جمع في حالة النصب'],
+      'ας':   ['اسم موصول (اللواتي إياهن)', 'مؤنث جمع في حالة النصب'],
+    };
+
+    const arPronouns = {
+      'هو', 'هي', 'هما', 'هم', 'هن', 'انت', 'أنت', 'انتم', 'أنتم', 'انا',
+      'أنا', 'نحن', 'الذي', 'التي', 'الذين', 'اللواتي', 'هذا', 'هذه', 'هؤلاء',
+      'ذلك', 'تلك', 'اولئك', 'أولئك', 'من', 'مَن', 'ماذا'
+    };
+
+    if (personalPronouns.containsKey(clean) || demonstrativePronouns.containsKey(clean) || relativePronouns.containsKey(clean) ||
+        def.contains('pronoun') || def.contains('demonstrative') || arPronouns.contains(arClean)) {
+      final info = personalPronouns[clean] ?? demonstrativePronouns[clean] ?? relativePronouns[clean] ??
+          ['ضمير / اسم إشارة أو موصول', 'مبني في سياق الآية'];
+      tags.addAll(['ضمير', info[1], 'يوناني']);
+      return MorphologyAnalysis(
+        rawCode: 'PRON',
+        language: 'greek',
+        partOfSpeech: info[0],
+        grammaticalCase: info[1],
+        summary: '${info[0]} في الأصل اليوناني، ${info[1]}.',
+        tags: tags,
+      );
+    }
+
+    // 6. Greek Verbs (الأفعال اليونانية بكافة صيغها وأزمنتها وتصريفاتها)
+    // Check Verb to be (εἰμί)
+    if (clean == 'ην' || clean == 'ειμι' || clean == 'ησαν' || clean == 'εστι' || clean == 'εστιν' || clean == 'εισι' || clean == 'εισιν' ||
+        sId == 'G1510' || sId == 'G2258') {
+      final isImperfect = clean == 'ην' || clean == 'ησαν';
+      final tense = isImperfect ? 'الماضي المستمر / الناقص (Imperfect - παρατατικός)' : 'المضارع / الحاضر (Present - ἐνεστώς)';
+      final person = (clean == 'ησαν' || clean == 'εισι' || clean == 'εισιν') ? 'الغائبون (هم - 3P Plural)' : 'الغائب المفرد (هو - 3S Singular)';
+      final number = (clean == 'ησαν' || clean == 'εισι' || clean == 'εισιν') ? 'جمع (Plural)' : 'مفرد (Singular)';
+      tags.addAll(['فعل كينونة', tense, 'مبني للمعلوم', 'صيغة إخبارية', person, number, 'يوناني']);
+      return MorphologyAnalysis(
+        rawCode: isImperfect ? 'V-IAI-3S' : 'V-PAI-3S',
+        language: 'greek',
+        partOfSpeech: 'فعل كينونة يوناني (Verb to be - εἰμί)',
+        tense: tense,
+        voice: 'مبني للمعلوم (Active Voice)',
+        mood: 'صيغة إخبارية واقعية (Indicative Mood)',
+        person: person,
+        number: number,
+        gender: 'مشترك (Common)',
+        summary: 'فعل كينونة يوناني أصيل في $tense، $person، يدل على الوجود والكينونة الثابتة في النص.',
+        tags: tags,
+      );
+    }
+
+    // Comprehensive Verb Detection
+    final isDefVerb = def.contains('verb') || def.contains('to ') || def.contains('middle voice of a primary') || def.contains('prolongation of a primary verb');
+    final isArVerb = _isArabicVerb(arClean);
+    final isKnownVerbStrongs = {
+      'G1080', 'G1096', 'G2064', 'G3004', 'G4100', 'G25', 'G4160', 'G1325', 'G1492', 'G3708',
+      'G191', 'G2980', 'G2192', 'G1166', 'G5342', 'G907', 'G1453', 'G4982', 'G599', 'G649',
+      'G1209', 'G863', 'G1525', 'G1831', 'G1107', 'G3360', 'G1438', 'G2476', 'G5087', 'G5463'
+    }.contains(sId);
+
+    final hasPastAugment = (clean.startsWith('ε') || clean.startsWith('η') || clean.startsWith('ω')) && clean.length >= 4;
+    final hasVerbSuffix = clean.endsWith('ω') || clean.endsWith('εις') || clean.endsWith('ει') || clean.endsWith('ομεν') || clean.endsWith('ετε') ||
+        clean.endsWith('ουσι') || clean.endsWith('ουσιν') || clean.endsWith('μι') || clean.endsWith('ασι') || clean.endsWith('ασιν') ||
+        clean.endsWith('σε') || clean.endsWith('σεν') || clean.endsWith('σα') || clean.endsWith('σαν') || clean.endsWith('σαμεν') || clean.endsWith('σατε') ||
+        clean.endsWith('ξε') || clean.endsWith('ξεν') || clean.endsWith('ξαν') || clean.endsWith('ψε') || clean.endsWith('ψεν') || clean.endsWith('ψαν') ||
+        clean.endsWith('θη') || clean.endsWith('θην') || clean.endsWith('θης') || clean.endsWith('θημεν') || clean.endsWith('θητε') || clean.endsWith('θησαν') ||
+        clean.endsWith('κα') || clean.endsWith('κας') || clean.endsWith('κε') || clean.endsWith('κεν') || clean.endsWith('καμεν') || clean.endsWith('κασι') ||
+        clean.endsWith('ειν') || clean.endsWith('σαι') || clean.endsWith('ναι') || clean.endsWith('εσθαι') || clean.endsWith('θηναι') ||
+        clean.endsWith('ομαι') || clean.endsWith('εται') || clean.endsWith('ονται') || clean.endsWith('ομεθα') || clean.endsWith('εσθε') ||
+        clean.endsWith('ατο') || clean.endsWith('αντο') || clean.endsWith('σον') || clean.endsWith('σατε') ||
+        (hasPastAugment && (clean.endsWith('εν') || clean.endsWith('ες') || clean.endsWith('ε') || clean.endsWith('ον') || clean.endsWith('το')));
+
+    final isVerb = isDefVerb || isArVerb || isKnownVerbStrongs || hasVerbSuffix;
+
+    if (isVerb) {
       final pos = 'فعل يوناني (Greek Verb)';
-      String tense = 'المضارع / الحاضر (Present - ἐνεστώς)';
+      String tense = 'الماضي البسيط / غير المحدد (Aorist - ἀόριστος)';
       String voice = 'مبني للمعلوم (Active Voice)';
       String mood = 'صيغة إخبارية واقعية (Indicative)';
-      String person = 'الغائب المفرد (هو - 3rd Person Singular)';
+      String person = 'الغائب المفرد (هو / هي - 3rd Person Singular)';
       String number = 'مفرد (Singular)';
       String gender = 'مذكر أو مشترك';
 
-      if (clean.contains('σα') || clean.contains('σε') || clean.contains('σεν') || clean.contains('εγενετο') || clean.contains('ειπ')) {
+      // ── Tense (الزمن) ──────────────────────────────────────────────────────
+      if (clean.contains('σα') || clean.contains('σε') || clean.contains('σεν') || clean.contains('σαν') ||
+          clean.contains('ξε') || clean.contains('ξεν') || clean.contains('ψε') || clean.contains('ψεν') ||
+          clean.contains('θη') || clean.contains('θην') || clean.contains('θησαν') ||
+          clean.startsWith('ειπ') || clean.startsWith('ελθ') || clean.startsWith('ελαβ') ||
+          clean.startsWith('ευρ') || clean.startsWith('ειδ') || clean.startsWith('εγεν') ||
+          clean.startsWith('εγνω') || clean.startsWith('εφαγ') || clean.startsWith('εβαλ')) {
         tense = 'الماضي البسيط / غير المحدد (Aorist - ἀόριστος)';
-      } else if (clean.endsWith('ον') || clean.endsWith('ες') || clean.endsWith('εν')) {
-        tense = 'الماضي المستمر الناقص (Imperfect) أو الماضي البسيط (2nd Aorist)';
-      } else if (clean.endsWith('σω') || clean.endsWith('σει')) {
+      } else if (clean.endsWith('σω') || clean.endsWith('σεις') || clean.endsWith('σει') || clean.endsWith('σομεν') || clean.endsWith('σετε') || clean.endsWith('σουσι') || clean.endsWith('θησεται')) {
         tense = 'المستقبل (Future - μέλλων)';
+      } else if (clean.contains('κα') || clean.contains('κας') || clean.contains('κε') || clean.contains('κεν') || clean.contains('κασι') ||
+                 clean.startsWith('γεγ') || clean.startsWith('πεπ') || clean.startsWith('τετ') || clean.startsWith('λελ')) {
+        tense = 'التام / الماضي المكتمل (Perfect - παρακείμενος)';
+      } else if (hasPastAugment && (clean.endsWith('ον') || clean.endsWith('ες') || clean.endsWith('ε') || clean.endsWith('εν') || clean.endsWith('ετο') || clean.endsWith('οντο'))) {
+        tense = 'الماضي المستمر / الناقص (Imperfect - παρατατικός)';
+      } else {
+        tense = 'المضارع / الحاضر المستمر (Present - ἐνεστώς)';
       }
 
-      if (clean.endsWith('ται') || clean.endsWith('το') || clean.endsWith('μαι') || clean.endsWith('μεθα')) {
-        voice = 'مبني للمجهول أو صيغة ديبوننت (Passive / Deponent)';
+      // ── Voice (البناء للمعلوم أو المجهول) ───────────────────────────────────
+      if (clean.contains('θη') || clean.contains('θην') || clean.contains('θης') || clean.contains('θημεν') || clean.contains('θησαν') || clean.contains('θησεται') || clean.endsWith('θεν')) {
+        voice = 'مبني للمجهول (Passive Voice)';
+      } else if (clean.endsWith('μαι') || clean.endsWith('ομαι') || clean.endsWith('εται') || clean.endsWith('ονται') ||
+                 clean.endsWith('ατο') || clean.endsWith('ανتو') || clean.endsWith('εσθαι') || clean.endsWith('μενος') ||
+                 def.contains('middle voice') || clean.startsWith('ερχ') || clean.startsWith('γινομ') || clean.startsWith('αποκριν')) {
+        voice = 'صيغة متوسطة / ديبوننت معناه معلوم (Middle / Deponent)';
+      } else {
+        voice = 'مبني للمعلوم (Active Voice)';
       }
 
-      if (clean.endsWith('ουσι') || clean.endsWith('ουσιν') || clean.endsWith('αν') || clean.endsWith('ον')) {
-        person = 'الغائبون (هم - 3rd Person Plural)';
+      // ── Mood (الصيغة النحوية والتعبيرية) ────────────────────────────────────
+      if (clean.endsWith('ειν') || clean.endsWith('σαι') || clean.endsWith('ναι') || clean.endsWith('εσθαι') || clean.endsWith('θηναι')) {
+        mood = 'صيغة مصدرية (Infinitive)';
+      } else if (clean.endsWith('ων') || clean.endsWith('ουσα') || clean.endsWith('μενος') || clean.endsWith('μενη') || clean.endsWith('μενον') || clean.endsWith('θεν') || clean.endsWith('θεντες')) {
+        mood = 'اسم فاعل أو مفعول (Participle)';
+      } else if (clean.endsWith('σον') || clean.endsWith('σατε') || clean.endsWith('θητι')) {
+        mood = 'صيغة أمر (Imperative)';
+      } else {
+        mood = 'صيغة إخبارية واقعية (Indicative)';
+      }
+
+      // ── Person & Number (الضمير والعدد) ────────────────────────────────────
+      if (clean.endsWith('ομεν') || clean.endsWith('αμεν') || clean.endsWith('σαμεν') || clean.endsWith('ομεθα')) {
+        person = 'المتكلمون الجمع (نحن - 1st Person Plural)';
         number = 'جمع (Plural)';
+      } else if (clean.endsWith('ετε') || clean.endsWith('ατε') || clean.endsWith('σατε') || clean.endsWith('εσθε')) {
+        person = 'المخاطبون الجمع (أنتم - 2nd Person Plural)';
+        number = 'جمع (Plural)';
+      } else if (clean.endsWith('ουσι') || clean.endsWith('ουσιν') || clean.endsWith('αν') || clean.endsWith('σαν') || clean.endsWith('οσαν') || clean.endsWith('θησαν') || clean.endsWith('ονται') || clean.endsWith('οντο')) {
+        person = 'الغائبون الجمع (هم - 3rd Person Plural)';
+        number = 'جمع (Plural)';
+      } else if (clean.endsWith('ον') && hasPastAugment) {
+        person = 'الغائبون الجمع (هم) أو المتكلم المفرد (أنا)';
+        number = 'جمع أو مفرد';
+      } else if (clean.endsWith('εις') || clean.endsWith('ας') || clean.endsWith('κας')) {
+        person = 'المخاطب المفرد (أنتَ - 2nd Person Singular)';
+        number = 'مفرد (Singular)';
+      } else if (clean.endsWith('ω') || clean.endsWith('μαι') || clean.endsWith('μην') || clean.endsWith('σα') || clean.endsWith('κα')) {
+        person = 'المتكلم المفرد (أنا - 1st Person Singular)';
+        number = 'مفرد (Singular)';
+      } else {
+        person = 'الغائب المفرد (هو / هي - 3rd Person Singular)';
+        number = 'مفرد (Singular)';
       }
 
       tags.addAll(['فعل يوناني', tense, voice, mood, person, number]);
+
+      final sumBuf = StringBuffer();
+      sumBuf.write('فعل يوناني في $tense، $voice، في $mood، للـ$person، بصيغة $number في النص الأصلي.');
+
       return MorphologyAnalysis(
-        rawCode: 'V',
+        rawCode: sId.isNotEmpty ? sId : 'V',
         language: 'greek',
         partOfSpeech: pos,
         tense: tense,
@@ -517,21 +770,21 @@ class MorphologyService {
         person: person,
         number: number,
         gender: gender,
-        summary: 'فعل يوناني في $tense، $voice ($mood)، للـ$person، في صيغة $number.',
+        summary: sumBuf.toString(),
         tags: tags,
       );
     }
 
-    // Greek Nouns, Adjectives, Proper Names (الأسماء والصفات اليونانية وحالات الإعراب)
+    // 7. Greek Nouns, Adjectives, Proper Names (الأسماء والصفات اليونانية وحالات الإعراب)
     String pos = 'اسم يوناني (Greek Noun)';
     String gCase = 'حالة الرفع - فاعل أو مبتدأ (Nominative)';
     String number = 'مفرد (Singular)';
     String gender = 'مذكر في الأصل اليوناني (Masculine)';
 
-    if (def.contains('proper name')) {
+    if (def.contains('proper name') || const {'ιησους', 'χριστος', 'δαυιδ', 'αβρααμ', 'μωυσης', 'πετρος', 'παυλος', 'ιωαννης', 'ιακωβ', 'ιουδας', 'ισαακ', 'ιερουσαλημ'}.contains(clean)) {
       pos = 'اسم علم كتابي (Proper Name)';
       gender = def.contains('woman') ? 'مؤنث في الأصل اليوناني (Feminine)' : 'مذكر في الأصل اليوناني (Masculine)';
-    } else if (def.contains('adjective')) {
+    } else if (def.contains('adjective') || clean.endsWith('ικος') || clean.endsWith('ιμος') || const {'αγιος', 'αγαθος', 'δικαιος', 'αιωνιος', 'μεγας', 'πολυς', 'πιστος'}.contains(clean)) {
       pos = 'صفة / نعت (Adjective)';
     }
 
@@ -549,7 +802,7 @@ class MorphologyService {
       gender = 'مذكر أو محايد';
       number = 'مفرد (Singular)';
     } else if (clean.endsWith('ον')) {
-      if (def.contains('neuter') || clean.endsWith('ιον')) {
+      if (def.contains('neuter') || clean.endsWith('ιον') || const {'ευαγγελιον', 'βιβλιον', 'σημειον', 'εργον', 'τεκνον', 'πλοιον', 'δαιμονιον'}.contains(clean)) {
         gCase = 'حالة الرفع أو النصب (Nom/Acc)';
         gender = 'محايد في الأصل اليوناني (Neuter)';
       } else {
@@ -591,6 +844,10 @@ class MorphologyService {
     } else if (clean.endsWith('οις') || clean.endsWith('αις')) {
       gCase = 'حالة القابل (Dative)';
       number = 'جمع (Plural)';
+    } else if (clean.endsWith('ε')) {
+      gCase = 'حالة النداء (Vocative)';
+      gender = 'مذكر في الأصل اليوناني (Masculine)';
+      number = 'مفرد (Singular)';
     } else if (def.contains('neuter') || clean.endsWith('μα')) {
       gender = 'محايد في الأصل اليوناني (Neuter)';
       number = 'مفرد (Singular)';
@@ -599,7 +856,7 @@ class MorphologyService {
     tags.addAll([pos, gCase, number, gender, 'يوناني']);
 
     return MorphologyAnalysis(
-      rawCode: strongsId ?? '',
+      rawCode: sId.isNotEmpty ? sId : 'N',
       language: 'greek',
       partOfSpeech: pos,
       grammaticalCase: gCase,
@@ -608,6 +865,37 @@ class MorphologyService {
       summary: '$pos، في $gCase، بصيغة الـ$number الـ$gender في لغة العهد الجديد الأصلية.',
       tags: tags,
     );
+  }
+
+  /// Helper to detect if the Arabic translation word represents a verb
+  static bool _isArabicVerb(String word) {
+    if (word.isEmpty) return false;
+    String base = word;
+    if ((base.startsWith('و') || base.startsWith('ف')) && base.length > 3) {
+      base = base.substring(1);
+    }
+    const arabicVerbs = {
+      'ولد', 'قال', 'يقول', 'جاء', 'يجيء', 'اتي', 'اتى', 'أتى', 'يأتي', 'ذهب',
+      'يذهب', 'مضى', 'يمضي', 'رأى', 'يرى', 'نظر', 'ينظر', 'سمع', 'يسمع', 'تكلم',
+      'يتكلم', 'نطق', 'ينطق', 'آمن', 'امن', 'يؤمن', 'كتب', 'يكتب', 'أجاب', 'اجاب',
+      'يجيب', 'أحب', 'احب', 'يحب', 'صعد', 'يصعد', 'نزل', 'ينزل', 'قام', 'يقوم',
+      'أقام', 'اقام', 'يقيم', 'مات', 'يموت', 'أرسل', 'ارسل', 'يرسل', 'صنع', 'يصنع',
+      'عمل', 'يعمل', 'فعل', 'يفعل', 'أخذ', 'اخذ', 'يأخذ', 'دخل', 'يدخل', 'خرج',
+      'يخرج', 'كان', 'يكون', 'صار', 'يصير', 'أعطى', 'اعطى', 'يعطي', 'دعا', 'يدعو',
+      'عرف', 'يعرف', 'علم', 'يعلم', 'وجد', 'يوجد', 'طلب', 'يطلب', 'سأل', 'سال',
+      'يسأل', 'خلص', 'يخلص', 'غفر', 'يغفر', 'شفى', 'يشفي', 'بشر', 'يبشر', 'عاش',
+      'يعيش', 'مكث', 'يمكث', 'بدأ', 'يبدأ', 'أكمل', 'يكمل', 'بارك', 'يبارك', 'صلى',
+      'يصلي', 'صام', 'يصوم', 'اعتمد', 'يعتمد', 'عمد', 'يعمد', 'تابع', 'يتبع', 'تبع',
+      'أطاع', 'يطيع', 'خاف', 'يخاف', 'فرح', 'يفرح', 'بكى', 'يبكي', 'لمس', 'يلمس',
+      'شهد', 'يشهد', 'حكم', 'يحكم', 'دان', 'يدين', 'ملك', 'يملك', 'ثبت', 'يثبت',
+      'حفظ', 'يحفظ', 'بنى', 'يبني', 'زرع', 'يزرع', 'حصد', 'يحصد', 'أمر', 'امر',
+      'يأمر', 'أوصى', 'يوصي', 'صاح', 'يصيح', 'صرخ', 'يصرخ', 'سجد', 'يسجد', 'عبد',
+      'يعبد', 'سبح', 'يسبح', 'حمد', 'يحمد', 'شكر', 'يشكر', 'خدم', 'يخدم', 'أكل',
+      'اكل', 'يأكل', 'شرب', 'يشرب', 'نام', 'ينام', 'مشى', 'يمشي', 'سار', 'يسير',
+      'هرب', 'يهرب', 'تاب', 'يتوب', 'رجع', 'يرجع', 'رد', 'يرد', 'أمسك', 'يمسك',
+      'صلب', 'يصلب', 'جلد', 'يجلد', 'دفن', 'يدفن', 'قام'
+    };
+    return arabicVerbs.contains(base);
   }
 
   // ───────────────────────────────────────────────────────────────────────────
