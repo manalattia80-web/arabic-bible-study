@@ -54,9 +54,9 @@ jobs:
       - name: Build APK
         working-directory: ./mobile
         run: |
-          if ! flutter build apk --release --no-tree-shake-icons --dart-define=APP_BUILD_NUMBER=${{ github.run_number }}; then
+          if ! flutter build apk --release --no-tree-shake-icons --build-name=1.0.${{ github.run_number }} --build-number=${{ github.run_number }} --dart-define=APP_BUILD_NUMBER=${{ github.run_number }}; then
             echo "Build failed, running verbose to capture error..."
-            V_OUT=$(flutter build apk --release --no-tree-shake-icons --dart-define=APP_BUILD_NUMBER=${{ github.run_number }} --verbose 2>&1 | tail -n 80)
+            V_OUT=$(flutter build apk --release --no-tree-shake-icons --build-name=1.0.${{ github.run_number }} --build-number=${{ github.run_number }} --dart-define=APP_BUILD_NUMBER=${{ github.run_number }} --verbose 2>&1 | tail -n 80)
             echo "$V_OUT"
             ESC_V="${V_OUT//$'\n'/'%0A'}"
             echo "::error title=Flutter Build Failure::$ESC_V"
@@ -76,9 +76,9 @@ jobs:
       - name: Build App Bundle (AAB for Google Play Store)
         working-directory: ./mobile
         run: |
-          if ! flutter build appbundle --release --no-tree-shake-icons --dart-define=APP_BUILD_NUMBER=${{ github.run_number }}; then
+          if ! flutter build appbundle --release --no-tree-shake-icons --build-name=1.0.${{ github.run_number }} --build-number=${{ github.run_number }} --dart-define=APP_BUILD_NUMBER=${{ github.run_number }}; then
             echo "AAB build failed, running verbose to capture error..."
-            AAB_OUT=$(flutter build appbundle --release --no-tree-shake-icons --dart-define=APP_BUILD_NUMBER=${{ github.run_number }} --verbose 2>&1 | tail -n 80)
+            AAB_OUT=$(flutter build appbundle --release --no-tree-shake-icons --build-name=1.0.${{ github.run_number }} --build-number=${{ github.run_number }} --dart-define=APP_BUILD_NUMBER=${{ github.run_number }} --verbose 2>&1 | tail -n 80)
             echo "$AAB_OUT"
             ESC_AAB="${AAB_OUT//$'\n'/'%0A'}"
             echo "::error title=Flutter AAB Build Failure::$ESC_AAB"
