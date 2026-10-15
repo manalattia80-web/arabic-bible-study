@@ -178,7 +178,12 @@ class MorphologyService {
       );
     }
 
-    if (arClean == 'لا' || arClean == 'ما' || cons == 'לא' || cons == 'אל' || strongsId == 'H3808' || strongsId == 'H408') {
+    // Negative Particle (أداة نفي לֹא / אַל)
+    final isNegative = strongsId == 'H3808' || strongsId == 'H408' ||
+        (cons == 'לא' && (arClean == 'لا' || arClean == 'ما' || arClean == 'كلا' || arClean == 'غير' || arClean == 'ليس')) ||
+        (cons == 'אל' && strongsId == 'H408') ||
+        (cons == 'אל' && (arClean == 'لا' || arClean == 'ما' || arClean == 'كلا') && strongsId != 'H410' && strongsId != 'H413');
+    if (isNegative) {
       final pos = 'أداة نفي جازمة (Negative Particle - לֹא / אַל)';
       tags.addAll(['أداة نفي', 'عبري']);
       return MorphologyAnalysis(
@@ -186,6 +191,36 @@ class MorphologyService {
         language: 'hebrew',
         partOfSpeech: pos,
         summary: 'أداة نفي عبرية أصيلة، تفيد نفي الفعل أو النهي القاطع في مقاصد الوحي الإلهي.',
+        tags: tags,
+      );
+    }
+
+    // El - Divine Title (اسم الجلالة إيل אֵל)
+    if (strongsId == 'H410' || (cons == 'אל' && (arClean == 'الله' || arClean == 'إله' || arClean == 'الاه' || def.contains('god')))) {
+      final pos = 'اسم إلهي / لقب الجلالة (Divine Title - El אֵל)';
+      tags.addAll(['اسم إلهي', 'مذكر', 'مفرد', 'عبري']);
+      return MorphologyAnalysis(
+        rawCode: 'H410',
+        language: 'hebrew',
+        partOfSpeech: pos,
+        gender: 'مذكر في الأصل العبري (Masculine)',
+        number: 'مفرد (Singular)',
+        prefixes: prefixes,
+        summary: 'لقب الجلالة في الأصل العبري (إيل אֵל) الدال على القوة المطلقة والسيادة الإلهية.',
+        tags: tags,
+      );
+    }
+
+    // El - Preposition (إلى / نحو אֶל)
+    if (strongsId == 'H413' || (cons == 'אל' && (arClean == 'الى' || arClean == 'إلى' || arClean == 'نحو' || def.contains('unto') || def.contains('towards')))) {
+      final pos = 'حرف جر وتوجه وغائية (Preposition El אֶל)';
+      tags.addAll(['حرف جر', 'توجه', 'عبري']);
+      return MorphologyAnalysis(
+        rawCode: 'H413',
+        language: 'hebrew',
+        partOfSpeech: pos,
+        prefixes: prefixes,
+        summary: 'حرف جر عبري أصيل (إِل אֶל)، يفيد التوجه وحركة الغاية نحو الهدف والمقصد.',
         tags: tags,
       );
     }
@@ -202,8 +237,8 @@ class MorphologyService {
       );
     }
 
-    // Direct Object Marker (أداة المفعول به المباشر את / ואت)
-    if (cons == 'את' || cons == 'ואת' || (strongsId == 'H853')) {
+    // Direct Object Marker (أداة المفعول به المباشر את / ואת)
+    if (strongsId == 'H853' || ((cons == 'את' || cons == 'ואת') && strongsId != 'H854' && strongsId != 'H859' && strongsId != 'H226' && arClean != 'انت' && arClean != 'أنت' && arClean != 'مع')) {
       final pos = 'أداة المفعول به المباشر (Direct Object Marker)';
       tags.addAll(['أداة نحوية', 'مفعول به', 'عبري']);
       return MorphologyAnalysis(
@@ -217,7 +252,7 @@ class MorphologyService {
     }
 
     // Tetragrammaton (الاسم الإلهي يهوه יהוה)
-    if (cons == 'יהוה' || cons == 'ויהוה' || (strongsId == 'H3068')) {
+    if (cons == 'יהוה' || cons == 'وיהוה' || (strongsId == 'H3068')) {
       final pos = 'الاسم الإلهي (The Tetragrammaton - YHWH)';
       tags.addAll(['اسم علم إلهي', 'مذكر', 'مفرد', 'عبري']);
       return MorphologyAnalysis(
@@ -249,9 +284,11 @@ class MorphologyService {
     }
 
     // Check if it's a Verb (الأفعال العبرية)
-    final isDefVerb = def.contains('primitive root') || def.startsWith('to ') || def.contains('verb') || def.contains('a verb,');
+    final isExplicitVerbDef = def.startsWith('a primitive root') || def.startsWith('to ') || def.contains('; to ') || def.contains('a verb,') || def.contains('(verb)');
+    final isDerivedNoun = def.contains('from ') && (def.contains('root') || def.contains('primitive'));
+    final isDefVerb = isExplicitVerbDef && !isDerivedNoun;
     final isKnownHebVerb = cons == 'ברא' || cons == 'אמר' || cons == 'עשה' || cons == 'נתן' || cons == 'היה' || cons == 'ידע' || cons == 'ראה' || cons == 'שמע';
-    if (isWayyiqtol || isDefVerb || isArVerb || isKnownHebVerb) {
+    if (isWayyiqtol || (isDefVerb && isArVerb) || (isArVerb && isKnownHebVerb) || (isExplicitVerbDef && !def.contains('noun') && !isDerivedNoun)) {
       final pos = 'فعل عبري (Hebrew Verb)';
       String stem = 'وزن قال البسيط المجرد (Qal Stem)';
       String voice = 'مبني للمعلوم (Active Voice)';
@@ -490,7 +527,7 @@ class MorphologyService {
       'τας':  ['أداة تعريف (Definite Article)', 'حالة النصب (Accusative)', 'جمع (Plural)', 'مؤنث في الأصل اليوناني (Feminine)'],
     };
 
-    if (articles.containsKey(clean) || (sId == 'G3588') || arClean == 'ال') {
+    if ((articles.containsKey(clean) && sId != 'G2228') || (sId == 'G3588') || (arClean == 'ال' && sId != 'G2228')) {
       final info = articles[clean] ?? ['أداة تعريف (Definite Article)', 'حالة الرفع', 'مفرد', 'مذكر'];
       tags.addAll(['أداة تعريف', info[1], info[2], info[3], 'يوناني']);
       return MorphologyAnalysis(
@@ -543,7 +580,10 @@ class MorphologyService {
       'بغير', 'حتى', 'لاجل', 'لأجل'
     };
 
-    if (greekPreps.containsKey(clean) || def.contains('preposition') || arPrepositions.contains(arClean)) {
+    final isGreekPrepMatch = greekPreps.containsKey(clean) || def.startsWith('preposition') || def.contains('a preposition') ||
+        (arPrepositions.contains(arClean) && clean.length <= 4 && !def.contains('pronoun') && !def.contains('verb') && !def.contains('noun') && sId != 'G3739' && sId != 'G5101');
+
+    if (isGreekPrepMatch) {
       final info = greekPreps[clean] ?? ['حرف جر أصلي (Preposition)', 'ملازم لحالات الإعراب', 'يفيد الربط والدلالة والنسبة السياقية'];
       tags.addAll(['حرف جر', info[1], 'يوناني']);
       return MorphologyAnalysis(
@@ -591,7 +631,10 @@ class MorphologyService {
       'اما', 'إما', 'لو', 'ان', 'إن', 'بينما', 'غير أن'
     };
 
-    if (greekConjs.containsKey(clean) || def.contains('conjunction') || arConjunctions.contains(arClean)) {
+    final isGreekConjMatch = greekConjs.containsKey(clean) || def.startsWith('conjunction') || def.contains('a conjunction') ||
+        (arConjunctions.contains(arClean) && clean.length <= 5 && !def.contains('pronoun') && !def.contains('verb') && !def.contains('noun') && sId != 'G3739' && sId != 'G5101');
+
+    if (isGreekConjMatch) {
       final info = greekConjs[clean] ?? ['حرف عطف وربط (Conjunction)', 'يربط المفردات والجمل بالسياق'];
       tags.addAll(['حرف عطف', 'يوناني']);
       return MorphologyAnalysis(
@@ -623,7 +666,10 @@ class MorphologyService {
 
     const arParticles = {'لا', 'ما', 'لم', 'لن', 'ليس', 'هوذا', 'ها', 'كلا', 'نعم', 'امين', 'آمين', 'يا'};
 
-    if (greekParticles.containsKey(clean) || def.contains('particle') || def.contains('interjection') || def.contains('negative') || arParticles.contains(arClean)) {
+    final isGreekParticleMatch = greekParticles.containsKey(clean) || def.contains('particle') || def.contains('interjection') ||
+        (arParticles.contains(arClean) && !def.contains('pronoun') && !def.contains('verb') && sId != 'G3739' && sId != 'G5101');
+
+    if (isGreekParticleMatch) {
       final info = greekParticles[clean] ?? ['أداة ونفي / توكيد وتنبيه (Particle)', 'تحدد نمط الدلالة ونبرة المعنى في الجملة'];
       tags.addAll(['أداة نحوية', 'يوناني']);
       return MorphologyAnalysis(
