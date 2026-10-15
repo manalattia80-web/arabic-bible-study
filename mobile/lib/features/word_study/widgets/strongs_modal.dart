@@ -313,13 +313,20 @@ class StrongsModal extends StatelessWidget {
               // ── 1. التحليل النحوي والصرفي الكامل (Morphology & Syntax Analysis) ──
               Builder(
                 builder: (context) {
+                  final effectiveOrig = (mapping?.origWord != null && mapping!.origWord.trim().isNotEmpty && mapping!.origWord != '-' && mapping!.origWord != '—' && !mapping!.origWord.contains('---'))
+                      ? mapping!.origWord
+                      : entry.originalWord;
+                  final effectiveStrongs = (mapping?.strongsId != null && mapping!.strongsId!.trim().isNotEmpty && mapping!.strongsId != '---' && mapping!.strongsId != '-')
+                      ? mapping!.strongsId
+                      : entry.strongsId;
+
                   final morphAnalysis = MorphologyService.parse(
                     code: mapping?.origMorphology,
                     language: entry.language,
                     fallbackDefinition: entry.definitionEn,
                     arWord: mapping?.arWord,
-                    origWord: mapping?.origWord ?? entry.originalWord,
-                    strongsId: mapping?.strongsId ?? entry.strongsId,
+                    origWord: effectiveOrig,
+                    strongsId: effectiveStrongs,
                   );
 
                   return SliverToBoxAdapter(

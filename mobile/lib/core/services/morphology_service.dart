@@ -132,7 +132,62 @@ class MorphologyService {
       prefixes.add('ميم الابتداء والتبعيض (Preposition Mem מִ)');
     }
 
-    // Direct Object Marker (أداة المفعول به المباشر את / ואת)
+    final arClean = (arWord ?? '').replaceAll(RegExp(r'[\u064B-\u065F\u0670\.,;:!?«»()\[\]]'), '').trim();
+    final isArVerb = _isArabicVerb(arClean);
+
+    // Hebrew Prepositions (حروف الجر العبرية)
+    if (arClean == 'في' || cons == 'ב' || origWord.startsWith('בְּ') || origWord.startsWith('בַּ')) {
+      final pos = 'حرف جر وظرفية عبري أصيل (Inseparable Bet בְּ)';
+      tags.addAll(['حرف جر', 'ظرفية', 'عبري']);
+      if (prefixes.isNotEmpty) tags.addAll(prefixes);
+      return MorphologyAnalysis(
+        rawCode: 'PREP-HEB',
+        language: 'hebrew',
+        partOfSpeech: pos,
+        prefixes: prefixes,
+        summary: 'حرف جر وظرفية عبري أصيل (باء الجر בְּ)، يلحق صدراً بالكلمات ليفيد الظرفية والحلول والمكانية.',
+        tags: tags,
+      );
+    }
+
+    if (arClean == 'و' || cons == 'ו' || (cons.length == 1 && cons.startsWith('ו'))) {
+      final pos = 'واو العطف والاستئناف (Conjunctive Waw וְ)';
+      tags.addAll(['حرف عطف', 'عبري']);
+      return MorphologyAnalysis(
+        rawCode: 'CONJ-HEB',
+        language: 'hebrew',
+        partOfSpeech: pos,
+        prefixes: prefixes,
+        summary: 'واو العطف والاستئناف والربط في العبرية، تفيد تتابع السرد وربط الجمل والمفردات.',
+        tags: tags,
+      );
+    }
+
+    if (arClean == 'لا' || arClean == 'ما' || cons == 'לא' || cons == 'אל' || strongsId == 'H3808' || strongsId == 'H408') {
+      final pos = 'أداة نفي جازمة (Negative Particle - לֹא / אַל)';
+      tags.addAll(['أداة نفي', 'عبري']);
+      return MorphologyAnalysis(
+        rawCode: strongsId ?? 'PRT-NEG',
+        language: 'hebrew',
+        partOfSpeech: pos,
+        summary: 'أداة نفي عبرية أصيلة، تفيد نفي الفعل أو النهي القاطع في مقاصد الوحي الإلهي.',
+        tags: tags,
+      );
+    }
+
+    if (arClean == 'ان' || arClean == 'إن' || arClean == 'أن' || cons == 'כי' || strongsId == 'H3588') {
+      final pos = 'أداة ربط وتعليل وتوكيد (Conjunction - כִּי)';
+      tags.addAll(['أداة ربط', 'عبري']);
+      return MorphologyAnalysis(
+        rawCode: 'H3588',
+        language: 'hebrew',
+        partOfSpeech: pos,
+        summary: 'أداة ربط وتعليل وتوكيد عبرية أصيلة (كِي כִּי)، تفتتح الجمل التقريرية والتفسيرية لإعلان الحقائق والعلل.',
+        tags: tags,
+      );
+    }
+
+    // Direct Object Marker (أداة المفعول به المباشر את / ואت)
     if (cons == 'את' || cons == 'ואת' || (strongsId == 'H853')) {
       final pos = 'أداة المفعول به المباشر (Direct Object Marker)';
       tags.addAll(['أداة نحوية', 'مفعول به', 'عبري']);
@@ -180,7 +235,8 @@ class MorphologyService {
 
     // Check if it's a Verb (الأفعال العبرية)
     final isDefVerb = def.contains('primitive root') || def.startsWith('to ') || def.contains('verb') || def.contains('a verb,');
-    if (isWayyiqtol || isDefVerb) {
+    final isKnownHebVerb = cons == 'ברא' || cons == 'אמר' || cons == 'עשה' || cons == 'נתן' || cons == 'היה' || cons == 'ידע' || cons == 'ראה' || cons == 'שמע';
+    if (isWayyiqtol || isDefVerb || isArVerb || isKnownHebVerb) {
       final pos = 'فعل عبري (Hebrew Verb)';
       String stem = 'وزن قال البسيط المجرد (Qal Stem)';
       String voice = 'مبني للمعلوم (Active Voice)';
@@ -355,6 +411,36 @@ class MorphologyService {
   // ───────────────────────────────────────────────────────────────────────────
   // BIBLICAL GREEK ANALYZER (الأصل اليوناني للعهد الجديد)
   // ───────────────────────────────────────────────────────────────────────────
+  static String _normalizeGreek(String input) {
+    if (input.isEmpty) return '';
+    final buffer = StringBuffer();
+    for (final rune in input.toLowerCase().runes) {
+      final ch = String.fromCharCode(rune);
+      if ('ἀἁἂἃἄἅἆἇὰάᾰᾱᾲᾳᾴᾶᾷά'.contains(ch)) {
+        buffer.write('α');
+      } else if ('ἐἑἒἓἔἕὲέέ'.contains(ch)) {
+        buffer.write('ε');
+      } else if ('ἠἡἢἣἤἥἦἧὴήᾐᾑᾒᾓᾔᾕᾖᾗῂῃῄῆῇή'.contains(ch)) {
+        buffer.write('η');
+      } else if ('ἰἱἲἳἴἵἶἷὶίῐῑῒΐῖῗϊΐί'.contains(ch)) {
+        buffer.write('ι');
+      } else if ('ὀὁὂὃὄὅὸόό'.contains(ch)) {
+        buffer.write('ο');
+      } else if ('ὐὑὒὓὔὕὖὗὺύῠῡῒΐῦῗϋΰύ'.contains(ch)) {
+        buffer.write('υ');
+      } else if ('ὠὡὢὣὤὥὦὧὼώᾠᾡᾢᾣᾤᾥᾦᾧῲῳῴῶῷώ'.contains(ch)) {
+        buffer.write('ω');
+      } else if ('ῤῥ'.contains(ch)) {
+        buffer.write('ρ');
+      } else if (RegExp(r'[\u0300-\u036F\u1DC0-\u1DFF\u1AB0-\u1AFF\.,;:!?׃־—–\[\]\(\)\{\}\x22\x27״׳·]').hasMatch(ch)) {
+        continue;
+      } else {
+        buffer.write(ch);
+      }
+    }
+    return buffer.toString().trim();
+  }
+
   static MorphologyAnalysis _analyzeBiblicalGreek({
     required String origWord,
     required String? arWord,
@@ -362,8 +448,7 @@ class MorphologyService {
     required String? fallbackDef,
     required String lang,
   }) {
-    final rawClean = origWord.replaceAll(RegExp(r'[\.,;:!?׃־—–\[\]\(\)\{\}\x22\x27״׳·]'), '').trim();
-    final clean = rawClean.toLowerCase().replaceAll(RegExp(r'[\u0300-\u036F\u1DC0-\u1DFF\u1AB0-\u1AFF\u1F00-\u1FFF]'), '').trim();
+    final clean = _normalizeGreek(origWord);
     final arClean = (arWord ?? '').replaceAll(RegExp(r'[\u064B-\u065F\u0670\.,;:!?«»()\[\]]'), '').trim();
     final def = (fallbackDef ?? '').toLowerCase();
     final sId = (strongsId ?? '').trim().toUpperCase();
@@ -413,9 +498,9 @@ class MorphologyService {
       'εξ':       ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الانبثاق والخروج من الأصل'],
       'προς':     ['حرف جر أصلي (Preposition)', 'يلازمه حالة النصب (Accusative)', 'يفيد التوجه نحو والمعية الحميمة والمواجهة'],
       'δια':      ['حرف جر أصلي (Preposition)', 'مع النصب (لأجل) أو الجر (بواسطة)', 'يفيد الواسطة والعلية والسبب'],
-      'μεتا':     ['حرف جر أصلي (Preposition)', 'مع النصب (بعد) أو الجر (مع)', 'يفيد المعية والمصاحبة أو البعدية'],
+      'μετα':     ['حرف جر أصلي (Preposition)', 'مع النصب (بعد) أو الجر (مع)', 'يفيد المعية والمصاحبة أو البعدية'],
       'περι':     ['حرف جر أصلي (Preposition)', 'مع الجر (عن) أو النصب (حول)', 'يفيد الإحاطة والموضوع المعني'],
-      'καتا':     ['حرف جر أصلي (Preposition)', 'مع النصب (بحسب) أو الجر (ضد)', 'يفيد المطابقة والموافقة أو النزول'],
+      'κατα':     ['حرف جر أصلي (Preposition)', 'مع النصب (بحسب) أو الجر (ضد)', 'يفيد المطابقة والموافقة أو النزول'],
       'υπο':      ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الفاعلية والواسطة (بواسطة) أو التبعية'],
       'επι':      ['حرف جر أصلي (Preposition)', 'مع القابل أو النصب أو الجر', 'يفيد العلو والتمكين والاستناد على'],
       'απο':      ['حرف جر أصلي (Preposition)', 'يلازمه حالة الجر (Genitive)', 'يفيد الانفصال والابتعاد والمصدر (من وعن)'],
@@ -713,7 +798,7 @@ class MorphologyService {
       if (clean.contains('θη') || clean.contains('θην') || clean.contains('θης') || clean.contains('θημεν') || clean.contains('θησαν') || clean.contains('θησεται') || clean.endsWith('θεν')) {
         voice = 'مبني للمجهول (Passive Voice)';
       } else if (clean.endsWith('μαι') || clean.endsWith('ομαι') || clean.endsWith('εται') || clean.endsWith('ονται') ||
-                 clean.endsWith('ατο') || clean.endsWith('ανتو') || clean.endsWith('εσθαι') || clean.endsWith('μενος') ||
+                 clean.endsWith('αتو') || clean.endsWith('αντο') || clean.endsWith('εσθαι') || clean.endsWith('μενος') ||
                  def.contains('middle voice') || clean.startsWith('ερχ') || clean.startsWith('γινομ') || clean.startsWith('αποκριν')) {
         voice = 'صيغة متوسطة / ديبوننت معناه معلوم (Middle / Deponent)';
       } else {
@@ -789,7 +874,15 @@ class MorphologyService {
     }
 
     // Greek Cases and Endings
-    if (clean.endsWith('ος') || clean.endsWith('ης') || clean.endsWith('ας')) {
+    if (clean.endsWith('εως') || clean.endsWith('ως')) {
+      gCase = 'حالة الجر والإضافة - مضاف إليه أو ملكية (Genitive)';
+      gender = 'مؤنث أو مذكر في الأصل اليوناني';
+      number = 'مفرد (Singular)';
+    } else if (clean.endsWith('ατος') || clean.endsWith('ματος')) {
+      gCase = 'حالة الجر والإضافة (Genitive)';
+      gender = 'محايد في الأصل اليوناني (Neuter)';
+      number = 'مفرد (Singular)';
+    } else if (clean.endsWith('ος')) {
       gCase = 'حالة الرفع - فاعل أو مبتدأ (Nominative)';
       gender = 'مذكر في الأصل اليوناني (Masculine)';
       number = 'مفرد (Singular)';
@@ -814,11 +907,15 @@ class MorphologyService {
       gCase = 'حالة الرفع - فاعل أو مبتدأ (Nominative)';
       gender = 'مؤنث في الأصل اليوناني (Feminine)';
       number = 'مفرد (Singular)';
-    } else if (clean.endsWith('ης') || clean.endsWith('ας')) {
-      gCase = 'حالة الجر والإضافة (Genitive)';
+    } else if (clean.endsWith('ης')) {
+      gCase = 'حالة الرفع أو الجر (Nom/Gen)';
       gender = 'مؤنث في الأصل اليوناني (Feminine)';
       number = 'مفرد (Singular)';
-    } else if (clean.endsWith('ῃ') || clean.endsWith('α')) {
+    } else if (clean.endsWith('ας')) {
+      gCase = 'حالة الرفع أو النصب (Nom/Acc)';
+      gender = 'مذكر أو مؤنث في الأصل اليوناني';
+      number = 'مفرد أو جمع';
+    } else if (clean.endsWith('ῃ')) {
       gCase = 'حالة القابل (Dative)';
       gender = 'مؤنث في الأصل اليوناني (Feminine)';
       number = 'مفرد (Singular)';
@@ -849,6 +946,7 @@ class MorphologyService {
       gender = 'مذكر في الأصل اليوناني (Masculine)';
       number = 'مفرد (Singular)';
     } else if (def.contains('neuter') || clean.endsWith('μα')) {
+      gCase = 'حالة الرفع أو النصب (Nom/Acc)';
       gender = 'محايد في الأصل اليوناني (Neuter)';
       number = 'مفرد (Singular)';
     }

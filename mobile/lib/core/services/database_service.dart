@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v10.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v11.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 10; // Cleaned text_clean search index from legacy symbols
+    const targetDbVersion = 11; // Master Offline Database with full Greek & Hebrew mappings
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -62,6 +62,7 @@ class DatabaseService {
         'bible_study_v7.db',
         'bible_study_v8.db',
         'bible_study_v9.db',
+        'bible_study_v10.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
@@ -79,7 +80,7 @@ class DatabaseService {
       }
 
       final sink = outFile.openWrite();
-      const totalParts = 20;
+      const totalParts = 29;
       for (int i = 0; i < totalParts; i++) {
         final partIndexStr = i.toString().padLeft(2, '0');
         final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
@@ -506,11 +507,8 @@ class DatabaseService {
 
     String? audio;
     if (orig.trim().isNotEmpty) {
-      final langCode = isHeb ? 'iw' : 'el';
-      final ttsUrl =
-          'https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=gtx';
-      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
-          Uri.encodeComponent(ttsUrl);
+      audio =
+          'https://translate.google.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=tw-ob';
     }
 
     final rawVerified = r['ar_is_verified'];
@@ -565,10 +563,8 @@ class DatabaseService {
     String? audio;
     if (orig.trim().isNotEmpty) {
       final langCode = isHeb ? 'iw' : 'el';
-      final ttsUrl =
-          'https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=gtx';
-      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
-          Uri.encodeComponent(ttsUrl);
+      audio =
+          'https://translate.google.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=tw-ob';
     }
 
     final rawVerified = r['ar_is_verified'];
