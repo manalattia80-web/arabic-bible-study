@@ -204,6 +204,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
+          // ── Update Notification Banner ────────────────────────
+          SliverToBoxAdapter(
+            child: Consumer<UpdateProvider>(
+              builder: (ctx, update, _) {
+                if (!update.hasUpdate) return const SizedBox.shrink();
+                return _UpdateBanner(update: update);
+              },
+            ),
+          ),
 
           // ── Testament Cards ───────────────────────────────────
           SliverPadding(
@@ -454,5 +463,157 @@ class _GridPainter extends CustomPainter {
   bool shouldRepaint(_) => false;
 }
 
+// ── In-App Update Banner ───────────────────────────────────────────────────
+class _UpdateBanner extends StatelessWidget {
+  final UpdateProvider update;
+  const _UpdateBanner({required this.update});
 
+  @override
+  Widget build(BuildContext context) {
+    final info = update.updateInfo;
+    final tag = info?.latestTag ?? '';
+    final isDownloading = update.isDownloading;
+    final isDownloaded = update.isDownloaded;
+    final progress = (update.downloadProgress * 100).toInt();
 
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: const Color(0xFF38BDF8).withOpacity(0.4)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.system_update_rounded, color: Color(0xFF38BDF8), size: 24),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'تحديث جديد متاح ($tag)',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close_rounded, color: Colors.white70, size: 20),
+                    onPressed: update.dismissUpdate,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              if (isDownloading) ...[
+                Text(
+                  'جارٍ تنزيل التحديث في الخلفية ($progress%)...',
+                  style: const TextStyle(color: Colors.white70, fontSize: 13),
+                ),
+                const SizedBox(height: 8),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: LinearProgressIndicator(
+                    value: update.downloadProgress > 0 ? update.downloadProgress : null,
+                    backgroundColor: Colors.white12,
+                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF38BDF8)),
+                    minHeight: 6,
+                  ),
+                ),
+              ] else if (isDownloaded) ...[
+                const Text(
+                  'اكتمل التنزيل! يمكنك الآن تثبيت التحديث مباشرة أو عبر المتصفح:',
+                  style: TextStyle(color: Colors.white70, fontSize: 13),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF10B981),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                        icon: const Icon(Icons.install_mobile_rounded, size: 18),
+                        label: const Text('تثبيت الآن', style: TextStyle(fontWeight: FontWeight.bold)),
+                        onPressed: () => update.installDownloadedApk(),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0284C7),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      icon: const Icon(Icons.open_in_browser_rounded, size: 18),
+                      label: const Text('المتصفح'),
+                      onPressed: () => update.startDownload(),
+                    ),
+                  ],
+                ),
+              ] else ...[
+                const Text(
+                  'يتضمن هذا الإصدار أحدث التحسينات والتصحيحات اللغوية.',
+                  style: TextStyle(color: Colors.white70, fontSize: 13),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF0284C7),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                        icon: const Icon(Icons.download_rounded, size: 18),
+                        label: const Text('تنزيل وتثبيت التحديث', style: TextStyle(fontWeight: FontWeight.bold)),
+                        onPressed: () => update.startDirectUpdate(),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white10,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      icon: const Icon(Icons.open_in_browser_rounded, size: 18),
+                      label: const Text('المتصفح'),
+                      onPressed: () => update.startDownload(),
+                    ),
+                  ],
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

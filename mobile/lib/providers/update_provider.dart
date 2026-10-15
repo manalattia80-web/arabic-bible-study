@@ -107,9 +107,9 @@ class UpdateProvider extends ChangeNotifier {
   }
 
   Future<bool> installDownloadedApk() async {
-    final success = await UpdateService.instance.openDownloadedApk();
+    final success = await UpdateService.instance.openDownloadedApk(_updateInfo?.downloadUrl);
     if (!success) {
-      return await startDirectUpdate();
+      return await startDownload();
     }
     return true;
   }

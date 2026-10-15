@@ -105,6 +105,7 @@ class UpdateService {
     try {
       final client = http.Client();
       final request = http.Request('GET', downloadUri);
+      request.headers['User-Agent'] = 'ArabicBibleStudyApp/1.0';
       final response = await client.send(request);
 
       if (response.statusCode != 200) {
@@ -148,7 +149,7 @@ class UpdateService {
         if (await file.exists()) {
           await file.delete();
         }
-        return false;
+        return await launchDownloadUrl(url);
       }
 
       // Trigger Android APK Package Installer
@@ -160,32 +161,36 @@ class UpdateService {
       if (result.type == ResultType.done) {
         return true;
       } else {
-        debugPrint('OpenFilex returned: ${result.message}');
-        // The file is downloaded, so return true even if prompt dismissed
-        return true;
+        debugPrint('OpenFilex returned: ${result.type} - ${result.message}');
+        return await launchDownloadUrl(url);
       }
     } catch (e) {
       debugPrint('Direct APK download failed: $e');
-      return false;
+      return await launchDownloadUrl(url);
     }
   }
 
-  Future<bool> openDownloadedApk() async {
+  Future<bool> openDownloadedApk([String? url]) async {
     try {
       final dir = await getExternalStorageDirectory() ?? await getTemporaryDirectory();
       final filePath = p.join(dir.path, 'arabic-bible-study-update.apk');
       final file = File(filePath);
-      if (await file.exists()) {
+      if (await file.exists() && (await file.length()) > 15 * 1024 * 1024) {
         final result = await OpenFilex.open(
           filePath,
           type: 'application/vnd.android.package-archive',
         );
-        return result.type == ResultType.done;
+        if (result.type == ResultType.done) {
+          return true;
+        } else {
+          debugPrint('OpenFilex returned: ${result.type} - ${result.message}');
+          return await launchDownloadUrl(url);
+        }
       }
     } catch (e) {
       debugPrint('Failed to open downloaded apk: $e');
     }
-    return false;
+    return await launchDownloadUrl(url);
   }
 
   Future<bool> launchDownloadUrl([String? url]) async {

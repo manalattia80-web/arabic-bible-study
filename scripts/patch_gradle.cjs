@@ -73,16 +73,18 @@ if (fs.existsSync(appGradlePath)) {
   }
 }
 
-// 4. Ensure AndroidManifest.xml has package and no illegal tags
+// 4. Ensure AndroidManifest.xml has package and REQUEST_INSTALL_PACKAGES permission
 const manifestPath = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
 if (fs.existsSync(manifestPath)) {
   let manifest = fs.readFileSync(manifestPath, 'utf8');
   if (!manifest.includes('package="com.arabicbible.study"')) {
     manifest = manifest.replace('<manifest', '<manifest package="com.arabicbible.study"');
   }
-  manifest = manifest.replace(/<uses-permission\s+android:name="android\.permission\.REQUEST_INSTALL_PACKAGES"\s*\/>\s*/g, '');
+  if (!manifest.includes('android.permission.REQUEST_INSTALL_PACKAGES')) {
+    manifest = manifest.replace('<application', '<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />\n    <application');
+  }
   fs.writeFileSync(manifestPath, manifest, 'utf8');
-  console.log('Successfully verified AndroidManifest.xml');
+  console.log('Successfully verified AndroidManifest.xml with REQUEST_INSTALL_PACKAGES');
 }
 
 const stringsDir = path.join(__dirname, '..', 'mobile', 'android', 'app', 'src', 'main', 'res', 'values');
