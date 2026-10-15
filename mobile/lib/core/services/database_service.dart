@@ -507,6 +507,7 @@ class DatabaseService {
 
     String? audio;
     if (orig.trim().isNotEmpty) {
+      final langCode = isHeb ? 'iw' : 'el';
       audio =
           'https://translate.google.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=tw-ob';
     }
