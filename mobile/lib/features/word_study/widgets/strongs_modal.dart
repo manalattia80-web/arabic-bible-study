@@ -210,14 +210,28 @@ class StrongsModal extends StatelessWidget {
                     children: [
                       // Big original word
                       Expanded(
-                        child: Directionality(
-                          textDirection: entry.isHebrew ? TextDirection.rtl : TextDirection.ltr,
-                          child: Text(
-                            entry.originalWord,
-                            style: entry.isHebrew
-                                ? AppTheme.hebrewText(size: 36)
-                                : AppTheme.greekText(size: 32),
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'المدخل المعجمي / الجذر',
+                              style: TextStyle(
+                                color: AppColors.textMuted,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Directionality(
+                              textDirection: entry.isHebrew ? TextDirection.rtl : TextDirection.ltr,
+                              child: Text(
+                                entry.originalWord,
+                                style: entry.isHebrew
+                                    ? AppTheme.hebrewText(size: 36)
+                                    : AppTheme.greekText(size: 32),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
 
