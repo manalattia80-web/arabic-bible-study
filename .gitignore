@@ -4,3 +4,11 @@ node_modules/
 build/
 .dart_tool/
 *.apk
+*.db
+scripts/data/*.json
+scripts/*.sql
+scripts/*.txt
+scripts/*.zip
+chat_data.json
+chat_history.html
+chat_history.md

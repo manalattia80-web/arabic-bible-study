@@ -373,7 +373,7 @@ class _WordRow extends StatelessWidget {
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
-                                color: AppColors.borderLight.withValues(alpha: 0.3),
+                                color: AppColors.borderLight.withOpacity(0.3),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
