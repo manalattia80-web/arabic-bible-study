@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v13.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v14.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 13; // Master Offline Database with authentic WLC Masoretic OT + Scrivener 1894 TR NT
+    const targetDbVersion = 14; // Master Offline Database with restored cross-chapter verses, complete 1 Samuel alignment, and verified mappings
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -65,6 +65,7 @@ class DatabaseService {
         'bible_study_v10.db',
         'bible_study_v11.db',
         'bible_study_v12.db',
+        'bible_study_v13.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
@@ -82,7 +83,7 @@ class DatabaseService {
       }
 
       final sink = outFile.openWrite();
-      const totalParts = 29;
+      const totalParts = 32;
       for (int i = 0; i < totalParts; i++) {
         final partIndexStr = i.toString().padLeft(2, '0');
         final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
