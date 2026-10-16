@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v14.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v15.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 14; // Master Offline Database with restored cross-chapter verses, complete 1 Samuel alignment, and verified mappings
+    const targetDbVersion = 15; // Database v15 with Greek NT lexemes (G976, G975), Matthew 1 fixes, and 1 Samuel valley fixes
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -66,6 +66,7 @@ class DatabaseService {
         'bible_study_v11.db',
         'bible_study_v12.db',
         'bible_study_v13.db',
+        'bible_study_v14.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
