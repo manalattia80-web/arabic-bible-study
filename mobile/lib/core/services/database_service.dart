@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v12.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v13.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 12; // Master Offline Database with authentic Scrivener 1894 Textus Receptus GNT
+    const targetDbVersion = 13; // Master Offline Database with authentic WLC Masoretic OT + Scrivener 1894 TR NT
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -64,6 +64,7 @@ class DatabaseService {
         'bible_study_v9.db',
         'bible_study_v10.db',
         'bible_study_v11.db',
+        'bible_study_v12.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
