@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v16.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v17.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 16; // Database v16 with comprehensive False Friends fixes and systematic sealing alignment
+    const targetDbVersion = 17; // Database v17 with 100% complete Bible-wide word mapping (31,102 verses)
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -68,6 +68,7 @@ class DatabaseService {
         'bible_study_v13.db',
         'bible_study_v14.db',
         'bible_study_v15.db',
+        'bible_study_v16.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
@@ -85,7 +86,7 @@ class DatabaseService {
       }
 
       final sink = outFile.openWrite();
-      const totalParts = 32;
+      const totalParts = 34;
       for (int i = 0; i < totalParts; i++) {
         final partIndexStr = i.toString().padLeft(2, '0');
         final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
