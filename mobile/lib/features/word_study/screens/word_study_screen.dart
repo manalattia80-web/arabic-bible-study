@@ -381,7 +381,7 @@ class _WordRow extends StatelessWidget {
                               ),
                               child: Text(
                                 mapping.origWord,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: AppColors.textSecondary,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
