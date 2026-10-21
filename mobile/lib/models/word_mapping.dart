@@ -15,6 +15,8 @@ class WordMapping {
   final String? audioUrl;
   final int?    audioDurationMs;
   final bool    isVerified;
+  final String? grammarNotes;
+  final String? relationType;
 
   const WordMapping({
     required this.id,
@@ -32,6 +34,8 @@ class WordMapping {
     this.audioUrl,
     this.audioDurationMs,
     required this.isVerified,
+    this.grammarNotes,
+    this.relationType,
   });
 
   factory WordMapping.fromJson(Map<String, dynamic> j) {
@@ -78,6 +82,8 @@ class WordMapping {
           ? j['audio_duration_ms'] as int
           : int.tryParse(j['audio_duration_ms']?.toString() ?? ''),
       isVerified:         isVerified,
+      grammarNotes:       j['grammar_notes']?.toString(),
+      relationType:       j['relation_type']?.toString(),
     );
   }
 

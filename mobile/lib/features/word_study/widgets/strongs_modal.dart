@@ -74,10 +74,19 @@ class StrongsModal extends StatelessWidget {
         ? m.strongsId!
         : (isHebrew ? 'عبري' : 'يوناني');
 
+    final bool hasGrammarNotes = m.grammarNotes != null && m.grammarNotes!.trim().isNotEmpty;
     final bool isSupplied = m.origWord.contains('---') || m.origWord.trim() == '-' || m.origWord.trim() == '—';
     final bool hasArabicDesc = RegExp(r'[\u0600-\u06FF]').hasMatch(m.origWord) && !isSupplied;
 
-    if (hasArabicDesc) {
+    if (hasGrammarNotes) {
+      origWord = (m.origWord.isNotEmpty && m.origWord != '---' && m.origWord != '-') ? m.origWord : '—';
+      transliteration = m.relationType != null && m.relationType!.isNotEmpty
+          ? 'دلالة نحوية (${m.relationType})'
+          : 'دلالة نحوية / تركيبية';
+      definitionAr = m.grammarNotes!;
+      notesAr = 'تُعبر هذه الكلمة عن دلالة نحوية أو جزء من تركيب لغوي عربي يقابل اللفظ الأصلي في لغة العهد، ولا يُسند إليها رقم سترونج مستقل منعاً للخلط المعجمي.';
+      sId = m.strongsId?.isNotEmpty == true && m.strongsId != '---' ? m.strongsId! : 'نحوي';
+    } else if (hasArabicDesc) {
       origWord = '—';
       transliteration = 'دلالة نحوية / تركيبية';
       definitionAr = m.origWord;
