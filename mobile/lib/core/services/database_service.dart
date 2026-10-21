@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v20.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v21.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 20; // Database v19 with full scientific audit and linguistic corrections
+    const targetDbVersion = 21; // Database v19 with full scientific audit and linguistic corrections
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -72,6 +72,7 @@ class DatabaseService {
         'bible_study_v17.db',
         'bible_study_v18.db',
         'bible_study_v19.db',
+        'bible_study_v20.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
