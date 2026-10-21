@@ -75,13 +75,26 @@ class StrongsModal extends StatelessWidget {
         : (isHebrew ? 'عبري' : 'يوناني');
 
     final bool isSupplied = m.origWord.contains('---') || m.origWord.trim() == '-' || m.origWord.trim() == '—';
+    final bool hasArabicDesc = RegExp(r'[\u0600-\u06FF]').hasMatch(m.origWord) && !isSupplied;
 
-    if (isSupplied) {
+    if (hasArabicDesc) {
+      origWord = '—';
+      transliteration = 'دلالة نحوية / تركيبية';
+      definitionAr = m.origWord;
+      notesAr = 'تُعبر هذه الكلمة عن دلالة نحوية أو جزء من تركيب لغوي عربي يقابل اللفظ الأصلي في لغة العهد، ولا يُسند إليها رقم سترونج مستقل منعاً للخلط المعجمي.';
+      sId = 'نحوي';
+    } else if (isSupplied) {
       origWord = '—';
       transliteration = 'مُضافة في الترجمة';
       definitionAr = 'كلمة أو أداة مضافة في الترجمة العربية لاقتضاء صياغة المعنى واستقامة التركيب، ولا يقابلها لفظ مستقل بذاته في النص الأصلي.';
       notesAr = 'تقتضي قواعد اللغة العربية في مواضع عدة إظهار روابط أو ضمائر أو أفعال كينونة مقدرة في الجملة الاسمية في اللغتين العبرية واليونانية ليستقيم البناء النحوي العربي.';
       sId = 'مُضافة';
+    } else if (ar == 'لم') {
+      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'לֹא / טֶרֶם' : 'οὐ / οὐδείς');
+      transliteration = 'Negative particle (نفي وجزم)';
+      definitionAr = 'أداة نفي وجزم عربية، ترد لنفي الفعل الماضي أو كجزء من تركيب نفي عربي يقابل كلمة أصلية واحدة مثل (οὐδείς = لم يره أحد).';
+      notesAr = 'في التراكيب المندمجة، تُترجم العبارة العربية المكونة من (لم + اسم) كلمة نفي أصلية واحدة، ولا يقابل أداة النفي مدخل معجمي مستقل.';
+      sId = isHebrew ? 'NEG-HEB' : 'NEG-GRK';
     } else if (ar == 'في') {
       origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'בְּ' : 'ἐν');
       transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'bᵉ (باء الظرفية)' : 'en');

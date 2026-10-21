@@ -367,6 +367,31 @@ class _WordRow extends StatelessWidget {
                         final isSupplied = mapping.origWord.contains('---') ||
                             mapping.origWord.trim() == '-' ||
                             mapping.origWord.trim() == '—';
+                        final isArabicDesc = RegExp(r'[\u0600-\u06FF]').hasMatch(mapping.origWord);
+
+                        if (isArabicDesc) {
+                          return Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryGlow.withOpacity(0.12),
+                                border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                mapping.origWord,
+                                style: const TextStyle(
+                                  color: AppColors.textSecondary,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          );
+                        }
+
                         if (isSupplied) {
                           return Align(
                             alignment: Alignment.centerRight,
@@ -440,6 +465,22 @@ class _WordRow extends StatelessWidget {
                               if (mapping.isVerified) const SizedBox(width: 3),
                               if (mapping.isVerified) const Icon(Icons.verified, size: 13, color: AppColors.success),
                             ],
+                          )
+                        else if (RegExp(r'[\u0600-\u06FF]').hasMatch(mapping.origWord))
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                            decoration: BoxDecoration(
+                              color: AppColors.info.withOpacity(0.12),
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                            child: const Text(
+                              'دلالة نحوية',
+                              style: TextStyle(
+                                color: AppColors.info,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           )
                         else if (mapping.origWord.contains('---') || mapping.origWord.trim() == '-' || mapping.origWord.trim() == '—')
                           Text(
