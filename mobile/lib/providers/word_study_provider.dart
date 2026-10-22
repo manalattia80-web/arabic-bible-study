@@ -102,8 +102,8 @@ class WordStudyProvider extends ChangeNotifier {
       _loadingOccurrences = true;
       notifyListeners();
       try {
-        _occurrences = await DatabaseService.instance.getWordOccurrences(strongsId);
-        _bookDistribution = await DatabaseService.instance.getOccurrencesDistribution(strongsId);
+        _occurrences = await DatabaseService.instance.getStrongsOccurrences(strongsId);
+        _bookDistribution = await DatabaseService.instance.getStrongsBookDistribution(strongsId);
       } catch (e) {
         debugPrint('Error loading occurrences: $e');
       } finally {

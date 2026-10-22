@@ -78,7 +78,7 @@ class AudioButton extends StatelessWidget {
             return IconButton(
               tooltip: isPlaying ? 'إيقاف النطق' : 'استماع للنطق الأصلي',
               icon: isLoadingThis
-                  ? const SizedBox(
+                  ? SizedBox(
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
@@ -88,7 +88,7 @@ class AudioButton extends StatelessWidget {
                     )
                   : Icon(
                       isPlaying ? Icons.stop_circle_rounded : Icons.volume_up_rounded,
-                      color: isPlaying ? AppColors.accent : AppColors.primary,
+                      color: isPlaying ? AppColors.info : AppColors.primary,
                       size: 26,
                     ),
               onPressed: () => _handleTap(context),
