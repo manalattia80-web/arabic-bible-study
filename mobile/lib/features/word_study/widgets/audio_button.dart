@@ -6,12 +6,14 @@ class AudioButton extends StatelessWidget {
   final String? url;
   final String? word;
   final String? lang;
+  final String? tooltip;
 
   const AudioButton({
     super.key,
     this.url,
     this.word,
     this.lang,
+    this.tooltip,
   });
 
   String get _targetKey {
@@ -76,7 +78,7 @@ class AudioButton extends StatelessWidget {
             final isLoadingThis = isPlaying && loading;
 
             return IconButton(
-              tooltip: isPlaying ? 'إيقاف النطق' : 'استماع للنطق الأصلي',
+              tooltip: isPlaying ? 'إيقاف النطق' : (tooltip ?? 'استماع (نطق آلي تقريبي)'),
               icon: isLoadingThis
                   ? SizedBox(
                       width: 20,

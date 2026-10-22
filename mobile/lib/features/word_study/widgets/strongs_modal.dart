@@ -330,6 +330,7 @@ class StrongsModal extends StatelessWidget {
                           word: entry.originalWord,
                           lang: entry.language,
                           url: entry.audioUrl,
+                          tooltip: 'استماع للمدخل المعجمي (نطق آلي تقريبي)',
                         ),
                     ],
                   ),
