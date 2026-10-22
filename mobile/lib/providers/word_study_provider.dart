@@ -2,8 +2,8 @@
 // Manages word mappings for a verse and audio playback state.
 
 import 'package:flutter/foundation.dart';
-import 'package:just_audio/just_audio.dart';
 import '../core/services/api_service.dart';
+import '../core/services/audio_playback_service.dart';
 import '../core/services/database_service.dart';
 import '../models/word_mapping.dart';
 import '../models/strongs_entry.dart';
@@ -19,9 +19,14 @@ class WordStudyProvider extends ChangeNotifier {
   bool                _loadingStrongs  = false;
   bool                _loadingOccurrences = false;
   String              _mappingsError   = '';
-  String?             _playingAudioUrl;
 
-  final _player = AudioPlayer();
+  WordStudyProvider() {
+    AudioPlaybackService.instance.currentlyPlayingKey.addListener(_onAudioStateChanged);
+  }
+
+  void _onAudioStateChanged() {
+    notifyListeners();
+  }
 
   List<WordMapping> get mappings        => _mappings;
   StrongsEntry?     get selectedStrongs => _selectedStrongs;
@@ -32,26 +37,37 @@ class WordStudyProvider extends ChangeNotifier {
   bool              get loadingStrongs  => _loadingStrongs;
   bool              get loadingOccurrences => _loadingOccurrences;
   String            get mappingsError   => _mappingsError;
-  String?           get playingAudioUrl => _playingAudioUrl;
 
-  bool isPlaying(String url) => _playingAudioUrl == url && _player.playing;
+  bool isPlaying(String url) {
+    try {
+      final uri = Uri.parse(url);
+      final q = uri.queryParameters['q'];
+      final tl = uri.queryParameters['tl'] ?? 'iw';
+      if (q != null && q.isNotEmpty) {
+        final clean = AudioPlaybackService.instance.cleanOriginalWord(q);
+        return AudioPlaybackService.instance.currentlyPlayingKey.value == '${tl}_$clean';
+      }
+    } catch (_) {}
+    return AudioPlaybackService.instance.currentlyPlayingKey.value == url;
+  }
 
   Future<void> loadWordMappings(String verseId) async {
     _loadingMappings = true;
     _mappingsError   = '';
-    _mappings        = [];
     notifyListeners();
 
     try {
       _mappings = await ApiService.getWordMappings(verseId);
-      _mappingsError = '';
-    } catch (_) {
+      if (_mappings.isEmpty) {
+        debugPrint('Remote mappings empty for $verseId, trying local sqlite fallback...');
+        _mappings = await DatabaseService.instance.getWordMappings(verseId);
+      }
+    } catch (e) {
+      debugPrint('Error loading word mappings from API ($e), trying local fallback...');
       try {
         _mappings = await DatabaseService.instance.getWordMappings(verseId);
-        _mappingsError = '';
-      } catch (_) {
-        _mappings = [];
-        _mappingsError = '';
+      } catch (localErr) {
+        _mappingsError = 'فشل في تحميل الكلمات: $localErr';
       }
     } finally {
       _loadingMappings = false;
@@ -60,34 +76,36 @@ class WordStudyProvider extends ChangeNotifier {
   }
 
   Future<void> loadStrongsEntry(String strongsId, {WordMapping? mapping}) async {
-    _selectedStrongs = null;
-    _occurrences = [];
-    _loadingStrongs  = true;
-    _loadingOccurrences = true;
+    await selectStrongs(strongsId, fallbackMapping: mapping);
+  }
+
+  Future<void> selectStrongs(String strongsId, {WordMapping? fallbackMapping}) async {
+    _loadingStrongs = true;
     notifyListeners();
 
     try {
-      _selectedStrongs = await ApiService.getStrongsEntry(
-        strongsId,
-        word: mapping?.origWord,
-        language: mapping?.origWordLang,
-      );
-    } catch (_) {
-      _selectedStrongs = null;
+      // 1. Try local database first (instant offline response)
+      _selectedStrongs = await DatabaseService.instance.getStrongsEntry(strongsId);
+      
+      // 2. If not found in local db, try backend API
+      if (_selectedStrongs == null) {
+        _selectedStrongs = await ApiService.getStrongsEntry(strongsId);
+      }
+    } catch (e) {
+      debugPrint('Error loading Strongs entry: $e');
     } finally {
       _loadingStrongs = false;
       notifyListeners();
     }
-    
-    // Fetch occurrences and book distribution independently
-    final targetId = _selectedStrongs?.strongsId ?? strongsId;
-    if (targetId.isNotEmpty && targetId != '---' && !targetId.contains('-')) {
+
+    if (strongsId.isNotEmpty && strongsId != '---') {
+      _loadingOccurrences = true;
+      notifyListeners();
       try {
-        _occurrences = await ApiService.getStrongsOccurrences(targetId);
-        _bookDistribution = await ApiService.getStrongsBookDistribution(targetId);
-      } catch (_) {
-        _occurrences = [];
-        _bookDistribution = [];
+        _occurrences = await DatabaseService.instance.getWordOccurrences(strongsId);
+        _bookDistribution = await DatabaseService.instance.getOccurrencesDistribution(strongsId);
+      } catch (e) {
+        debugPrint('Error loading occurrences: $e');
       } finally {
         _loadingOccurrences = false;
         notifyListeners();
@@ -101,30 +119,7 @@ class WordStudyProvider extends ChangeNotifier {
   }
 
   Future<void> playAudio(String url) async {
-    try {
-      if (_playingAudioUrl == url && _player.playing) {
-        await _player.stop();
-        _playingAudioUrl = null;
-      } else {
-        await _player.stop();
-        _playingAudioUrl = url;
-        notifyListeners();
-        await _player.setUrl(
-          url,
-          headers: const {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'},
-        );
-        await _player.play();
-        _player.playerStateStream.listen((state) {
-          if (state.processingState == ProcessingState.completed) {
-            _playingAudioUrl = null;
-            notifyListeners();
-          }
-        });
-      }
-    } catch (_) {
-      _playingAudioUrl = null;
-    }
-    notifyListeners();
+    await AudioPlaybackService.instance.playUrl(url);
   }
 
   void clearStrongs() {
@@ -134,7 +129,7 @@ class WordStudyProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    _player.dispose();
+    AudioPlaybackService.instance.currentlyPlayingKey.removeListener(_onAudioStateChanged);
     super.dispose();
   }
 }

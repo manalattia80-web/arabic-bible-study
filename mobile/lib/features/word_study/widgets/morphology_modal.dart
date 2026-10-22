@@ -176,7 +176,11 @@ class MorphologyModal extends StatelessWidget {
                             ),
                             // Audio Button
                             if (mapping.hasAudio)
-                              AudioButton(url: mapping.audioUrl!),
+                              AudioButton(
+                                word: mapping.origWord,
+                                lang: mapping.origWordLang,
+                                url: mapping.audioUrl,
+                              ),
                           ],
                         ),
 

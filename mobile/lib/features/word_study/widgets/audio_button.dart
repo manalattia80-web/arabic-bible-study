@@ -1,83 +1,100 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/audio_playback_service.dart';
 
-class AudioButton extends StatefulWidget {
-  final String url;
-  const AudioButton({super.key, required this.url});
+class AudioButton extends StatelessWidget {
+  final String? url;
+  final String? word;
+  final String? lang;
 
-  @override
-  State<AudioButton> createState() => _AudioButtonState();
-}
+  const AudioButton({
+    super.key,
+    this.url,
+    this.word,
+    this.lang,
+  });
 
-class _AudioButtonState extends State<AudioButton> {
-  late AudioPlayer _player;
-  bool _isPlaying = false;
-  bool _isError = false;
-  String _errorMsg = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _player = AudioPlayer();
-    _initAudio();
-  }
-
-  Future<void> _initAudio() async {
-    try {
-      await _player.setUrl(
-        widget.url,
-        headers: const {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'},
-      );
-      _player.playerStateStream.listen((state) {
-        if (mounted) {
-          setState(() {
-            _isPlaying = state.playing;
-          });
-          if (state.processingState == ProcessingState.completed) {
-            _player.seek(Duration.zero);
-            _player.pause();
-          }
-        }
-      });
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          _isError = true;
-          _errorMsg = e.toString();
-        });
-      }
+  String get _targetKey {
+    if (word != null && word!.isNotEmpty) {
+      final code = AudioPlaybackService.instance.resolveLangCode(lang ?? 'hebrew');
+      final clean = AudioPlaybackService.instance.cleanOriginalWord(word!);
+      return '${code}_$clean';
     }
+    if (url != null && url!.isNotEmpty) {
+      try {
+        final uri = Uri.parse(url!);
+        final q = uri.queryParameters['q'];
+        final tl = uri.queryParameters['tl'] ?? 'iw';
+        if (q != null && q.isNotEmpty) {
+          final clean = AudioPlaybackService.instance.cleanOriginalWord(q);
+          return '${tl}_$clean';
+        }
+      } catch (_) {}
+      return url!;
+    }
+    return '';
   }
 
-  @override
-  void dispose() {
-    _player.dispose();
-    super.dispose();
+  Future<void> _handleTap(BuildContext context) async {
+    final key = _targetKey;
+    if (key.isEmpty) return;
+
+    bool success = false;
+    if (word != null && word!.isNotEmpty) {
+      success = await AudioPlaybackService.instance.playWord(
+        word: word!,
+        lang: lang ?? 'hebrew',
+      );
+    } else if (url != null && url!.isNotEmpty) {
+      success = await AudioPlaybackService.instance.playUrl(url!);
+    }
+
+    if (!success && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('تعذر تشغيل النطق الصوتي. يرجى التحقق من الاتصال بالإنترنت.'),
+          duration: Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isError) {
-      return IconButton(
-        icon: const Icon(Icons.volume_off, color: Colors.grey, size: 28),
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Audio Error: $_errorMsg')),
-          );
-        },
-      );
-    }
+    final key = _targetKey;
+    if (key.isEmpty) return const SizedBox.shrink();
 
-    return IconButton(
-      icon: Icon(_isPlaying ? Icons.pause_circle_filled : Icons.volume_up, 
-                 color: AppColors.primary, size: 28),
-      onPressed: () {
-        if (_isPlaying) {
-          _player.pause();
-        } else {
-          _player.play();
-        }
+    return ValueListenableBuilder<String?>(
+      valueListenable: AudioPlaybackService.instance.currentlyPlayingKey,
+      builder: (context, playingKey, _) {
+        final isPlaying = playingKey == key;
+
+        return ValueListenableBuilder<bool>(
+          valueListenable: AudioPlaybackService.instance.isLoading,
+          builder: (context, loading, _) {
+            final isLoadingThis = isPlaying && loading;
+
+            return IconButton(
+              tooltip: isPlaying ? 'إيقاف النطق' : 'استماع للنطق الأصلي',
+              icon: isLoadingThis
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                      ),
+                    )
+                  : Icon(
+                      isPlaying ? Icons.stop_circle_rounded : Icons.volume_up_rounded,
+                      color: isPlaying ? AppColors.accent : AppColors.primary,
+                      size: 26,
+                    ),
+              onPressed: () => _handleTap(context),
+            );
+          },
+        );
       },
     );
   }

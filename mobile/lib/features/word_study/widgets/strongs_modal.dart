@@ -325,8 +325,12 @@ class StrongsModal extends StatelessWidget {
                         ),
                       ],
                       const Spacer(),
-                      if (entry.audioUrl != null && entry.audioUrl!.isNotEmpty)
-                        AudioButton(url: entry.audioUrl!),
+                      if (entry.originalWord.isNotEmpty && entry.originalWord != '—')
+                        AudioButton(
+                          word: entry.originalWord,
+                          lang: entry.language,
+                          url: entry.audioUrl,
+                        ),
                     ],
                   ),
                 ),

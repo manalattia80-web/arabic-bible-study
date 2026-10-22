@@ -38,10 +38,11 @@ android {
             storePassword "bible_study_2026"
             keyAlias "arabic_bible_study"
             keyPassword "bible_study_2026"
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
 
-    
     aaptOptions {
         noCompress 'dat'
     }
