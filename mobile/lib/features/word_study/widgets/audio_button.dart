@@ -16,6 +16,8 @@ class AudioButton extends StatelessWidget {
     this.tooltip,
   });
 
+  bool get _isAramaic => AudioPlaybackService.instance.isAramaic(lang ?? '');
+
   String get _targetKey {
     if (word != null && word!.isNotEmpty) {
       final code = AudioPlaybackService.instance.resolveLangCode(lang ?? 'hebrew');
@@ -38,6 +40,19 @@ class AudioButton extends StatelessWidget {
   }
 
   Future<void> _handleTap(BuildContext context) async {
+    if (_isAramaic) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('النطق الصوتي للآرامية معلّق حالياً لحين مراجعة واعتماد مصدر صوتي آرامي أصيل.'),
+            duration: Duration(seconds: 3),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+      return;
+    }
+
     final key = _targetKey;
     if (key.isEmpty) return;
 
@@ -64,6 +79,18 @@ class AudioButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_isAramaic) {
+      return IconButton(
+        tooltip: tooltip ?? 'النطق الآرامي معلّق قيد المراجعة',
+        icon: Icon(
+          Icons.volume_off_rounded,
+          color: AppColors.textMuted,
+          size: 24,
+        ),
+        onPressed: () => _handleTap(context),
+      );
+    }
+
     final key = _targetKey;
     if (key.isEmpty) return const SizedBox.shrink();
 

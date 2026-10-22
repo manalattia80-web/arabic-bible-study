@@ -51,10 +51,13 @@ class AudioPlaybackService {
         .trim();
   }
 
+  /// Checks if language is Aramaic (currently suspended pending scholarly review)
+  bool isAramaic(String lang) => lang.toLowerCase().trim() == 'aramaic';
+
   /// Resolves standard Google TTS language code (iw for Hebrew, el for Greek)
   String resolveLangCode(String lang) {
     final l = lang.toLowerCase().trim();
-    if (l == 'hebrew' || l == 'aramaic' || l == 'he' || l == 'iw') {
+    if (l == 'hebrew' || l == 'he' || l == 'iw') {
       return 'iw';
     }
     return 'el';
@@ -69,6 +72,11 @@ class AudioPlaybackService {
   }) async {
     final cleanWord = cleanOriginalWord(word);
     if (cleanWord.isEmpty || cleanWord == '-' || cleanWord == '—' || cleanWord.contains('---')) {
+      return false;
+    }
+
+    if (isAramaic(lang)) {
+      debugPrint('Aramaic audio playback is suspended pending scholarly review: $cleanWord');
       return false;
     }
 

@@ -180,7 +180,9 @@ class MorphologyModal extends StatelessWidget {
                                 word: mapping.origWord,
                                 lang: mapping.origWordLang,
                                 url: mapping.audioUrl,
-                                tooltip: 'استماع لصيغة الكلمة في الآية (نطق آلي تقريبي)',
+                                tooltip: mapping.isAramaic
+                                    ? 'النطق الآرامي معلّق قيد المراجعة'
+                                    : 'استماع لصيغة الكلمة في الآية (نطق آلي تقريبي)',
                               ),
                           ],
                         ),

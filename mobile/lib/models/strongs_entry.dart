@@ -39,16 +39,15 @@ class StrongsEntry {
     String? audio;
     final rawAudio = j['audio_url']?.toString();
     if (rawAudio != null && rawAudio.trim().isNotEmpty) {
-      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
-          Uri.encodeComponent(rawAudio
-              .replaceAll('translate.google.com', 'translate.googleapis.com')
-              .replaceAll('client=tw-ob', 'client=gtx'));
+      final replaced = rawAudio
+          .replaceAll('translate.google.com', 'translate.googleapis.com')
+          .replaceAll('client=tw-ob', 'client=gtx');
+      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=${Uri.encodeComponent(replaced)}';
     } else if (orig.trim().isNotEmpty) {
       final langCode = isHeb ? 'iw' : 'el';
       final ttsUrl =
           'https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${Uri.encodeComponent(orig.trim())}&tl=$langCode&client=gtx';
-      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=' +
-          Uri.encodeComponent(ttsUrl);
+      audio = 'https://arabic-bible-study.vercel.app/api/v1/audio?url=${Uri.encodeComponent(ttsUrl)}';
     }
 
     final rawIsVerified = j['ar_is_verified'];
@@ -72,5 +71,6 @@ class StrongsEntry {
   }
 
   bool get isHebrew       => language == 'hebrew';
+  bool get isAramaic      => language == 'aramaic' || definitionEn.contains('(Aramaic)');
   bool get hasArabicDef   => (definitionAr != null && definitionAr!.isNotEmpty) || (notesAr != null && notesAr!.isNotEmpty);
 }

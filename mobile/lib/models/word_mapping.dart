@@ -89,5 +89,6 @@ class WordMapping {
 
   bool get hasAudio    => audioUrl != null && audioUrl!.isNotEmpty;
   bool get hasStrongs  => strongsId != null && strongsId!.isNotEmpty && strongsId != '---' && strongsId != '-';
-  bool get isHebrew    => origWordLang == 'hebrew' || origWordLang == 'aramaic';
+  bool get isHebrew    => origWordLang == 'hebrew';
+  bool get isAramaic   => origWordLang.toLowerCase() == 'aramaic';
 }
