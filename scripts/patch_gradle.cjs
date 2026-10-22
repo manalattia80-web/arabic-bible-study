@@ -49,8 +49,6 @@ if (fs.existsSync(appGradlePath)) {
             storePassword "bible_study_2026"
             keyAlias "arabic_bible_study"
             keyPassword "bible_study_2026"
-            v1SigningEnabled true
-            v2SigningEnabled true
         }
     }
 `;
@@ -59,11 +57,6 @@ if (fs.existsSync(appGradlePath)) {
     appGradle = appGradle.replace('signingConfig signingConfigs.debug', 'signingConfig signingConfigs.release');
     fs.writeFileSync(appGradlePath, appGradle, 'utf8');
     console.log('Successfully patched android/app/build.gradle with permanent release signingConfig');
-  }
-
-  if (!appGradle.includes('v1SigningEnabled true')) {
-    appGradle = appGradle.replace('keyPassword "bible_study_2026"', 'keyPassword "bible_study_2026"\n            v1SigningEnabled true\n            v2SigningEnabled true');
-    fs.writeFileSync(appGradlePath, appGradle, 'utf8');
   }
 
   if (!appGradle.includes('noCompress')) {
