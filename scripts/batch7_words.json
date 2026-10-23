@@ -1,0 +1,4506 @@
+{
+  "greek": [
+    {
+      "strongs_id": "G5219",
+      "orig_word": "ὑπακούω",
+      "freq": 21
+    },
+    {
+      "strongs_id": "G5312",
+      "orig_word": "ὑψόω",
+      "freq": 21
+    },
+    {
+      "strongs_id": "G5384",
+      "orig_word": "φίλος",
+      "freq": 21
+    },
+    {
+      "strongs_id": "G5578",
+      "orig_word": "ψευδοπροφήτης",
+      "freq": 21
+    },
+    {
+      "strongs_id": "G5616",
+      "orig_word": "ὡσεί",
+      "freq": 21
+    },
+    {
+      "strongs_id": "G570",
+      "orig_word": "ἀπιστία",
+      "freq": 21
+    },
+    {
+      "strongs_id": "G936",
+      "orig_word": "βασιλεύω",
+      "freq": 21
+    },
+    {
+      "strongs_id": "G1220",
+      "orig_word": "δηνάριον",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G1360",
+      "orig_word": "διότι",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G1782",
+      "orig_word": "ἐντεῦθεν",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G1922",
+      "orig_word": "ἐπίγνωσις",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G2268",
+      "orig_word": "Ἠσαΐας",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G2605",
+      "orig_word": "καταγγέλλω",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G2756",
+      "orig_word": "κενός",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G2937",
+      "orig_word": "κτίσις",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G3918",
+      "orig_word": "πάρειμι",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G4138",
+      "orig_word": "πλήρωμα",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G4166",
+      "orig_word": "ποιμήν",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G4369",
+      "orig_word": "προστίθημι",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G4633",
+      "orig_word": "σκηνή",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G5088",
+      "orig_word": "τίκτω",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G5143",
+      "orig_word": "τρέχω",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G5273",
+      "orig_word": "ὑποκριτής",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G5552",
+      "orig_word": "χρυσοῦς",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G694",
+      "orig_word": "ἀργύριον",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G772",
+      "orig_word": "ἀσθενής",
+      "freq": 20
+    },
+    {
+      "strongs_id": "G1118",
+      "orig_word": "γονεύς",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G1869",
+      "orig_word": "ἐπαίρω",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G2010",
+      "orig_word": "ἐπιτρέπω",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G2032",
+      "orig_word": "ἐπουράνιος",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G2181",
+      "orig_word": "Ἔφεσος",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G2205",
+      "orig_word": "ζῆλος",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G2344",
+      "orig_word": "θησαυρός",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G2372",
+      "orig_word": "θυμός",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G2464",
+      "orig_word": "Ἰσαάκ",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G3198",
+      "orig_word": "Μελχισεδέκ",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G3617",
+      "orig_word": "οἰκοδεσπότης",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G4127",
+      "orig_word": "πληγή",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G4215",
+      "orig_word": "ποταμός",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G4219",
+      "orig_word": "πότε",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G4394",
+      "orig_word": "προφητεία",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G4440",
+      "orig_word": "πυλών",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G5111",
+      "orig_word": "τολμάω",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G5526",
+      "orig_word": "χορτάζω",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G706",
+      "orig_word": "ἀριθμός",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G963",
+      "orig_word": "Βηθανία",
+      "freq": 19
+    },
+    {
+      "strongs_id": "G1131",
+      "orig_word": "γυμνός",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G1162",
+      "orig_word": "δέησις",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G1189",
+      "orig_word": "δέομαι",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G1252",
+      "orig_word": "διακρίνω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G1435",
+      "orig_word": "δῶρον",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G1651",
+      "orig_word": "ἐλέγχω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G1839",
+      "orig_word": "ἐξίστημι",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G1937",
+      "orig_word": "ἐπιθυμέω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G1949",
+      "orig_word": "ἐπιλαμβάνομαι",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G2560",
+      "orig_word": "κακῶς",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G2722",
+      "orig_word": "κατέχω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G2723",
+      "orig_word": "κατηγορέω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G2816",
+      "orig_word": "κληρονομέω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G2840",
+      "orig_word": "κοινόω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G2873",
+      "orig_word": "κόπος",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G2909",
+      "orig_word": "κρείττων",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G2923",
+      "orig_word": "κριτής",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3077",
+      "orig_word": "λύπη",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3115",
+      "orig_word": "μακροθυμία",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G312",
+      "orig_word": "ἀναγγέλλω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3480",
+      "orig_word": "Ναζωραῖος",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3581",
+      "orig_word": "ξένος",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3586",
+      "orig_word": "ξύλον",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3619",
+      "orig_word": "οἰκοδομή",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3804",
+      "orig_word": "πάθημα",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3820",
+      "orig_word": "παλαιός",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3908",
+      "orig_word": "παρατίθημι",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G3916",
+      "orig_word": "παραχρῆμα",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G4059",
+      "orig_word": "περιτέμνω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G4066",
+      "orig_word": "περίχωρος",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G4130",
+      "orig_word": "πλήθω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G4506",
+      "orig_word": "ῥύομαι",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G4531",
+      "orig_word": "σαλεύω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G4621",
+      "orig_word": "σῖτος",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G4762",
+      "orig_word": "στρέφω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G490",
+      "orig_word": "Ἀντιόχεια",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G50",
+      "orig_word": "ἀγνοέω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G5015",
+      "orig_word": "ταράσσω",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G5257",
+      "orig_word": "ὑπηρέτης",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G530",
+      "orig_word": "ἅπαξ",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G5486",
+      "orig_word": "χάρισμα",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G602",
+      "orig_word": "ἀποκάλυψις",
+      "freq": 18
+    },
+    {
+      "strongs_id": "G114",
+      "orig_word": "ἀθετέω",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G1173",
+      "orig_word": "δεῖπνον",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G1302",
+      "orig_word": "διατί",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G156",
+      "orig_word": "αἰτία",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G1684",
+      "orig_word": "ἐμβαίνω",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G1781",
+      "orig_word": "ἐντέλλομαι",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G1821",
+      "orig_word": "ἐξαποστέλλω",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G2359",
+      "orig_word": "θρίξ",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G2390",
+      "orig_word": "ἰάομαι",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G2542",
+      "orig_word": "Καισάρεια",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G2658",
+      "orig_word": "καταντάω",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G2806",
+      "orig_word": "κλάω",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G2808",
+      "orig_word": "κλείω",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G2812",
+      "orig_word": "κλέπτης",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G2837",
+      "orig_word": "κοιμάω",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G3625",
+      "orig_word": "οἰκουμένη",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G4139",
+      "orig_word": "πλησίον",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G4171",
+      "orig_word": "πόλεμος",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G4250",
+      "orig_word": "πρίν",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G4461",
+      "orig_word": "ῥαββί",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G4491",
+      "orig_word": "ῥίζα",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G4569",
+      "orig_word": "Σαῦλος",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G5035",
+      "orig_word": "ταχύ",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G5093",
+      "orig_word": "τίμιος",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G5179",
+      "orig_word": "τύπος",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G5225",
+      "orig_word": "ὑπάρχω",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G544",
+      "orig_word": "ἀπειθέω",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G5560",
+      "orig_word": "χωλός",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G979",
+      "orig_word": "βίος",
+      "freq": 17
+    },
+    {
+      "strongs_id": "G1198",
+      "orig_word": "δέσμιος",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G1256",
+      "orig_word": "διαλέγομαι",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G1260",
+      "orig_word": "διαλογίζομαι",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G1271",
+      "orig_word": "διάνοια",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G1372",
+      "orig_word": "διψάω",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G1702",
+      "orig_word": "ἐμπαίζω",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G173",
+      "orig_word": "ἄκανθα",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G1987",
+      "orig_word": "ἐπίσταμαι",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G2040",
+      "orig_word": "ἐργάτης",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G2129",
+      "orig_word": "εὐλογία",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G2150",
+      "orig_word": "εὐσέβεια",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G2310",
+      "orig_word": "θεμέλιος",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G2462",
+      "orig_word": "ἵππος",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G2584",
+      "orig_word": "Καπερναούμ",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G2770",
+      "orig_word": "κερδαίνω",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G3027",
+      "orig_word": "λῃστής",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G3113",
+      "orig_word": "μακρόθεν",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G3371",
+      "orig_word": "μηκέτι",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G350",
+      "orig_word": "ἀνακρίνω",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G3566",
+      "orig_word": "νυμφίος",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G3798",
+      "orig_word": "ὄψιος",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G402",
+      "orig_word": "ἀναχωρέω",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G4022",
+      "orig_word": "περιέρχομαι",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G406",
+      "orig_word": "Ἀνδρέας",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G4073",
+      "orig_word": "πέτρα",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G4232",
+      "orig_word": "πραιτώριον",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G436",
+      "orig_word": "ἀνθίστημι",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G458",
+      "orig_word": "ἀνομία",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G4815",
+      "orig_word": "συλλαμβάνω",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G4851",
+      "orig_word": "συμφέρω",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G4904",
+      "orig_word": "συνεργός",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G4973",
+      "orig_word": "σφραγίς",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G5059",
+      "orig_word": "τέρας",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G5160",
+      "orig_word": "τροφή",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G5218",
+      "orig_word": "ὑπακοή",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G5528",
+      "orig_word": "χόρτος",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G5615",
+      "orig_word": "ὡσαύτως",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G700",
+      "orig_word": "ἀρέσκω",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G859",
+      "orig_word": "ἄφεσις",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G965",
+      "orig_word": "Βηθλεέμ",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G968",
+      "orig_word": "βῆμα",
+      "freq": 16
+    },
+    {
+      "strongs_id": "G1062",
+      "orig_word": "γάμος",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G1110",
+      "orig_word": "γνωστός",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G1121",
+      "orig_word": "γράμμα",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G1154",
+      "orig_word": "Δαμασκός",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G1261",
+      "orig_word": "διαλογισμός",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G1485",
+      "orig_word": "ἔθος",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G1496",
+      "orig_word": "εἰδωλολάτρης",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G1636",
+      "orig_word": "ἐλαία",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G1861",
+      "orig_word": "ἐπαγγέλλομαι",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G199",
+      "orig_word": "ἀκριβῶς",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G2446",
+      "orig_word": "Ἰορδάνης",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G2549",
+      "orig_word": "κακία",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G2657",
+      "orig_word": "κατανοέω",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G2746",
+      "orig_word": "καύχησις",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G2768",
+      "orig_word": "κέρας",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G2818",
+      "orig_word": "κληρονόμος",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G2822",
+      "orig_word": "κλητός",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G3087",
+      "orig_word": "λυχνία",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G3122",
+      "orig_word": "μάλιστα",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G3464",
+      "orig_word": "μύρον",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G3543",
+      "orig_word": "νομίζω",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G3583",
+      "orig_word": "ξηραίνω",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G3930",
+      "orig_word": "παρέχω",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G3933",
+      "orig_word": "παρθένος",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G4071",
+      "orig_word": "πετεινόν",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G4121",
+      "orig_word": "πλεονάζω",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G4222",
+      "orig_word": "ποτίζω",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G4229",
+      "orig_word": "πρᾶγμα",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G430",
+      "orig_word": "ἀνέχομαι",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G4610",
+      "orig_word": "Σιλουανός",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G4625",
+      "orig_word": "σκάνδαλον",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G5118",
+      "orig_word": "τοσοῦτος",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G5177",
+      "orig_word": "τυγχάνω",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G5180",
+      "orig_word": "τύπτω",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G5429",
+      "orig_word": "φρόνιμος",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G5519",
+      "orig_word": "χοῖρος",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G5557",
+      "orig_word": "χρυσός",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G5564",
+      "orig_word": "χωρίον",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G5574",
+      "orig_word": "ψεύδομαι",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G910",
+      "orig_word": "βαπτιστής",
+      "freq": 15
+    },
+    {
+      "strongs_id": "G1012",
+      "orig_word": "βουλή",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G1350",
+      "orig_word": "δίκτυον",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G15",
+      "orig_word": "ἀγαθοποιέω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G1534",
+      "orig_word": "εἶτα",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G1581",
+      "orig_word": "ἐκκόπτω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G1605",
+      "orig_word": "ἐκπλήσσω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G1623",
+      "orig_word": "ἕκτος",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G1899",
+      "orig_word": "ἔπειτα",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G1968",
+      "orig_word": "ἐπιπίπτω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G2092",
+      "orig_word": "ἕτοιμος",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G2227",
+      "orig_word": "ζωοποιέω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G230",
+      "orig_word": "ἀληθῶς",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G2380",
+      "orig_word": "θύω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G2495",
+      "orig_word": "Ἰωνᾶς",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G2638",
+      "orig_word": "καταλαμβάνω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G2817",
+      "orig_word": "κληρονομία",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G2936",
+      "orig_word": "κτίζω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G3088",
+      "orig_word": "λύχνος",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G3307",
+      "orig_word": "μερίζω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G3358",
+      "orig_word": "μέτρον",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G3360",
+      "orig_word": "μέχρι",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G3725",
+      "orig_word": "ὅριον",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G3814",
+      "orig_word": "παιδίσκη",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G3842",
+      "orig_word": "πάντοτε",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G391",
+      "orig_word": "ἀναστροφή",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G3973",
+      "orig_word": "παύω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4164",
+      "orig_word": "ποικίλος",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4204",
+      "orig_word": "πόρνη",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4240",
+      "orig_word": "πραΰτης",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4327",
+      "orig_word": "προσδέχομαι",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4355",
+      "orig_word": "προσλαμβάνω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4404",
+      "orig_word": "πρωΐ",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4464",
+      "orig_word": "ῥάβδος",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4523",
+      "orig_word": "Σαδδουκαῖος",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4710",
+      "orig_word": "σπουδή",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G4741",
+      "orig_word": "στηρίζω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G5013",
+      "orig_word": "ταπεινόω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G509",
+      "orig_word": "ἄνωθεν",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G5198",
+      "orig_word": "ὑγιαίνω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G5302",
+      "orig_word": "ὑστερέω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G5310",
+      "orig_word": "ὕψιστος",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G5461",
+      "orig_word": "φωτίζω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G744",
+      "orig_word": "ἀρχαῖος",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G816",
+      "orig_word": "ἀτενίζω",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G839",
+      "orig_word": "αὔριον",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G966",
+      "orig_word": "Βηθσαϊδά",
+      "freq": 14
+    },
+    {
+      "strongs_id": "G1089",
+      "orig_word": "γεύομαι",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1194",
+      "orig_word": "δέρω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1263",
+      "orig_word": "διαμαρτύρομαι",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1299",
+      "orig_word": "διατάσσω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1303",
+      "orig_word": "διατίθεμαι",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1388",
+      "orig_word": "δόλος",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1404",
+      "orig_word": "δράκων",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1431",
+      "orig_word": "δωρεά",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1567",
+      "orig_word": "ἐκζητέω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1614",
+      "orig_word": "ἐκτείνω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1654",
+      "orig_word": "ἐλεημοσύνη",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1763",
+      "orig_word": "ἐνιαυτός",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1803",
+      "orig_word": "ἕξ",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1911",
+      "orig_word": "ἐπιβάλλω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2081",
+      "orig_word": "ἔσωθεν",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2165",
+      "orig_word": "εὐφραίνω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2169",
+      "orig_word": "εὐχαριστία",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2326",
+      "orig_word": "θερισμός",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2348",
+      "orig_word": "θνῄσκω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2617",
+      "orig_word": "καταισχύνω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2618",
+      "orig_word": "κατακαίω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2798",
+      "orig_word": "κλάδος",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2813",
+      "orig_word": "κλέπτω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2819",
+      "orig_word": "κλῆρος",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2825",
+      "orig_word": "κλίνη",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2928",
+      "orig_word": "κρύπτω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G2976",
+      "orig_word": "Λάζαρος",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3094",
+      "orig_word": "Μαγδαληνή",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G318",
+      "orig_word": "ἀνάγκη",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3342",
+      "orig_word": "μεταξύ",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3376",
+      "orig_word": "μήν",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3431",
+      "orig_word": "μοιχεύω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3516",
+      "orig_word": "νήπιος",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3521",
+      "orig_word": "νηστεία",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G353",
+      "orig_word": "ἀναλαμβάνω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3539",
+      "orig_word": "νοέω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3606",
+      "orig_word": "ὅθεν",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3763",
+      "orig_word": "οὐδέποτε",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3789",
+      "orig_word": "ὄφις",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G3811",
+      "orig_word": "παιδεύω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G4077",
+      "orig_word": "πηγή",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G4301",
+      "orig_word": "προλαμβάνω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G4537",
+      "orig_word": "σαλπίζω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G4559",
+      "orig_word": "σαρκικός",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G4578",
+      "orig_word": "σεισμός",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G5038",
+      "orig_word": "τεῖχος",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G5103",
+      "orig_word": "Τίτος",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G5132",
+      "orig_word": "τράπεζα",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G5449",
+      "orig_word": "φύσις",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G5480",
+      "orig_word": "χάραγμα",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G5623",
+      "orig_word": "ὠφελέω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G67",
+      "orig_word": "Ἀγρίππας",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G726",
+      "orig_word": "ἁρπάζω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G861",
+      "orig_word": "ἀφθαρσία",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G868",
+      "orig_word": "ἀφίστημι",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G878",
+      "orig_word": "ἄφρων",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G928",
+      "orig_word": "βασανίζω",
+      "freq": 13
+    },
+    {
+      "strongs_id": "G1067",
+      "orig_word": "γέεννα",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G1119",
+      "orig_word": "γόνυ",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G1139",
+      "orig_word": "δαιμονίζομαι",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G1308",
+      "orig_word": "διαφέρω",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G1432",
+      "orig_word": "δωρεάν",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G1657",
+      "orig_word": "ἐλευθερία",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G1743",
+      "orig_word": "ἐνδυναμόω",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G175",
+      "orig_word": "ἄκαρπος",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G1868",
+      "orig_word": "ἔπαινος",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G1870",
+      "orig_word": "ἐπαισχύνομαι",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G1934",
+      "orig_word": "ἐπιζητέω",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2199",
+      "orig_word": "Ζεβεδαῖος",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2346",
+      "orig_word": "θλίβω",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G245",
+      "orig_word": "ἀλλότριος",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2509",
+      "orig_word": "καθάπερ",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2574",
+      "orig_word": "κάμηλος",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2586",
+      "orig_word": "καπνός",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G260",
+      "orig_word": "ἅμα",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2647",
+      "orig_word": "καταλύω",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2675",
+      "orig_word": "καταρτίζω",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2821",
+      "orig_word": "κλῆσις",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2904",
+      "orig_word": "κράτος",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G2974",
+      "orig_word": "κωφός",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G3029",
+      "orig_word": "λίαν",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G3042",
+      "orig_word": "λιμός",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G345",
+      "orig_word": "ἀνάκειμαι",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G347",
+      "orig_word": "ἀνακλίνω",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G3474",
+      "orig_word": "μωρός",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G3478",
+      "orig_word": "Ναζαρέτ",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G3554",
+      "orig_word": "νόσος",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G3599",
+      "orig_word": "ὀδούς",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G3862",
+      "orig_word": "παράδοσις",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G4017",
+      "orig_word": "περιβλέπομαι",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G4106",
+      "orig_word": "πλάνη",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G4286",
+      "orig_word": "πρόθεσις",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G4514",
+      "orig_word": "Ῥωμαῖος",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G4570",
+      "orig_word": "σβέννυμι",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G4672",
+      "orig_word": "Σολομών",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G4697",
+      "orig_word": "σπλαγχνίζομαι",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G4714",
+      "orig_word": "στάσις",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G4773",
+      "orig_word": "συγγενής",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G5040",
+      "orig_word": "τεκνίον",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G5067",
+      "orig_word": "τέταρτος",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G5266",
+      "orig_word": "ὑπόδημα",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G533",
+      "orig_word": "ἀπαρνέομαι",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G5339",
+      "orig_word": "φείδομαι",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G5357",
+      "orig_word": "φιάλη",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G5360",
+      "orig_word": "φιλαδελφία",
+      "freq": 12
+    },
+    {
+      "strongs_id": "G5499",
+      "orig_word": "χειροποίητος",
+      "freq": 12
+    }
+  ],
+  "hebrew": [
+    {
+      "strongs_id": "H8096",
+      "orig_word": "שִׁמְעִי",
+      "freq": 40
+    },
+    {
+      "strongs_id": "H8582",
+      "orig_word": "תָּעָה",
+      "freq": 40
+    },
+    {
+      "strongs_id": "H914",
+      "orig_word": "בָּדַל",
+      "freq": 40
+    },
+    {
+      "strongs_id": "H14",
+      "orig_word": "אָבָה",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H1439",
+      "orig_word": "גִּדְעוֹן",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H1715",
+      "orig_word": "דָּגָן",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H2919",
+      "orig_word": "טַל",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H3079",
+      "orig_word": "יְהוֹיָקִים",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H3871",
+      "orig_word": "לוּחַ",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H4603",
+      "orig_word": "מָעַל",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H5062",
+      "orig_word": "נָגַף",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H558",
+      "orig_word": "אֲמַצְיָה",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H5594",
+      "orig_word": "סָפַד",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H6467",
+      "orig_word": "פֹּעַל",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H7185",
+      "orig_word": "קָשָׁה",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H7243",
+      "orig_word": "רְבִיעִי",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H7355",
+      "orig_word": "רָחַם",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H7778",
+      "orig_word": "שׁוֹעֵר",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H8123",
+      "orig_word": "שִׁמְשׁוֹן",
+      "freq": 39
+    },
+    {
+      "strongs_id": "H1157",
+      "orig_word": "בְּעַד",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H1497",
+      "orig_word": "גָּזַל",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H1523",
+      "orig_word": "גִּיל",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H1661",
+      "orig_word": "גַּת",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H1859",
+      "orig_word": "דָּר",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H2574",
+      "orig_word": "חֲמָת",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H268",
+      "orig_word": "אָחוֹר",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H2796",
+      "orig_word": "חָרָשׁ",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H2809",
+      "orig_word": "חֶשְׁבּוֹן",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H3568",
+      "orig_word": "כּוּשׁ",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H4318",
+      "orig_word": "מִיכָה",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H5130",
+      "orig_word": "נוּף",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H5521",
+      "orig_word": "סֻכָּה",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H5564",
+      "orig_word": "סָמַךְ",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H5678",
+      "orig_word": "עֶבְרָה",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H5857",
+      "orig_word": "עַי",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H6203",
+      "orig_word": "עֹרֶף",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H6643",
+      "orig_word": "צְבִי",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H6757",
+      "orig_word": "צַלְמָוֶת",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H693",
+      "orig_word": "אָרַב",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H7321",
+      "orig_word": "רוּעַ",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H748",
+      "orig_word": "אָרַךְ",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H7562",
+      "orig_word": "רֶשַׁע",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H816",
+      "orig_word": "אָשַׁם",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H8283",
+      "orig_word": "שָׂרָה",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H8438",
+      "orig_word": "תּוֹלָע",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H970",
+      "orig_word": "בָּחוּר",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H998",
+      "orig_word": "בִּינָה",
+      "freq": 38
+    },
+    {
+      "strongs_id": "H1637",
+      "orig_word": "גֹּרֶן",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H223",
+      "orig_word": "אוּרִיָּה",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H2342",
+      "orig_word": "חוּל",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H274",
+      "orig_word": "אֲחַזְיָה",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H2740",
+      "orig_word": "חָרוֹן",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H3176",
+      "orig_word": "יָחַל",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H3245",
+      "orig_word": "יָסַד",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H3368",
+      "orig_word": "יָקָר",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H3612",
+      "orig_word": "כָּלֵב",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H4159",
+      "orig_word": "מוֹפֵת",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H4609",
+      "orig_word": "מַעֲלָה",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H5116",
+      "orig_word": "נָוֶה",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H5511",
+      "orig_word": "סִיחוֹן",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H6239",
+      "orig_word": "עֹשֶׁר",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H6412",
+      "orig_word": "פָּלִיט",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H713",
+      "orig_word": "אַרְגָּמָן",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H7416",
+      "orig_word": "רִמּוֹן",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H7703",
+      "orig_word": "שָׁדַד",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H8084",
+      "orig_word": "שְׁמֹנִים",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H8227",
+      "orig_word": "שָׁפָן",
+      "freq": 37
+    },
+    {
+      "strongs_id": "H2132",
+      "orig_word": "זַיִת",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H2167",
+      "orig_word": "זָמַר",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H2372",
+      "orig_word": "חָזָה",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H2563",
+      "orig_word": "חֹמֶר",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H3157",
+      "orig_word": "יִזְרְעֵאל",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H3373",
+      "orig_word": "יָרֵא",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H3394",
+      "orig_word": "יָרֵחַ",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H3556",
+      "orig_word": "כּוֹכָב",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H3950",
+      "orig_word": "לָקַט",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H3985",
+      "orig_word": "מָאֵן",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H4118",
+      "orig_word": "מַהֵר",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H4501",
+      "orig_word": "מְנוֹרָה",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H4578",
+      "orig_word": "מֵעֶה",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H4631",
+      "orig_word": "מְעָרָה",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H530",
+      "orig_word": "אֱמוּנָה",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H591",
+      "orig_word": "אֳנִיָּה",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H6663",
+      "orig_word": "צָדַק",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H6883",
+      "orig_word": "צָרַעַת",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H6921",
+      "orig_word": "קָדִים",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H7358",
+      "orig_word": "רֶחֶם",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H8398",
+      "orig_word": "תֵּבֵל",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H983",
+      "orig_word": "בֶּטַח",
+      "freq": 36
+    },
+    {
+      "strongs_id": "H1361",
+      "orig_word": "גָּבַהּ",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H1364",
+      "orig_word": "גָּבֹהַּ",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H1653",
+      "orig_word": "גֶּשֶׁם",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H2029",
+      "orig_word": "הָרָה",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H2436",
+      "orig_word": "חֵיק",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H2438",
+      "orig_word": "חִירָם",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H2656",
+      "orig_word": "חֵפֶץ",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H3474",
+      "orig_word": "יָשַׁר",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H3618",
+      "orig_word": "כַּלָּה",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H4135",
+      "orig_word": "מוּל",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H4541",
+      "orig_word": "מַסֵּכָה",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H4676",
+      "orig_word": "מַצֵּבָה",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H4900",
+      "orig_word": "מָשַׁךְ",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H5079",
+      "orig_word": "נִדָּה",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H5128",
+      "orig_word": "נוּעַ",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H5216",
+      "orig_word": "נִיר",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H5643",
+      "orig_word": "סֵתֶר",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H5645",
+      "orig_word": "עָב",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H5715",
+      "orig_word": "עֵדוּת",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H5787",
+      "orig_word": "עִוֵּר",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H6040",
+      "orig_word": "עֳנִי",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H6370",
+      "orig_word": "פִּילֶגֶשׁ",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H7414",
+      "orig_word": "רָמָה",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H7939",
+      "orig_word": "שָׂכָר",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H8213",
+      "orig_word": "שָׁפֵל",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H8573",
+      "orig_word": "תְּנוּפָה",
+      "freq": 35
+    },
+    {
+      "strongs_id": "H1111",
+      "orig_word": "בָּלָק",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H160",
+      "orig_word": "אַהֲבָה",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H212",
+      "orig_word": "אוֹפָן",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H2377",
+      "orig_word": "חָזוֹן",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H2729",
+      "orig_word": "חָרַד",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H2932",
+      "orig_word": "טֻמְאָה",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H3240",
+      "orig_word": "יָנַח",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H3812",
+      "orig_word": "לֵאָה",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H4229",
+      "orig_word": "מָחָה",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H4405",
+      "orig_word": "מִלָּה",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H5488",
+      "orig_word": "סוּף",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H5514",
+      "orig_word": "סִינַי",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H5680",
+      "orig_word": "עִבְרִי",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H6509",
+      "orig_word": "פָּרָה",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H6685",
+      "orig_word": "צוֹם",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H6884",
+      "orig_word": "צָרַף",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H7339",
+      "orig_word": "רְחֹב",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H7857",
+      "orig_word": "שָׁטַף",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H8252",
+      "orig_word": "שָׁקַט",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H8345",
+      "orig_word": "שִׁשִּׁי",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H8668",
+      "orig_word": "תְּשׁוּעָה",
+      "freq": 34
+    },
+    {
+      "strongs_id": "H1416",
+      "orig_word": "גְּדוּד",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H2504",
+      "orig_word": "חָלָץ",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H2518",
+      "orig_word": "חִלְקִיָּה",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H2723",
+      "orig_word": "חׇרְבָּה",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H2778",
+      "orig_word": "חָרַף",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H3577",
+      "orig_word": "כָּזָב",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H374",
+      "orig_word": "אֵיפָה",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H4170",
+      "orig_word": "מוֹקֵשׁ",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H4393",
+      "orig_word": "מְלֹא",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H4775",
+      "orig_word": "מָרַד",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H4932",
+      "orig_word": "מִשְׁנֶה",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H5234",
+      "orig_word": "נָכַר",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H5668",
+      "orig_word": "עָבוּר",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H5941",
+      "orig_word": "עֵלִי",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H6212",
+      "orig_word": "עֶשֶׂב",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H623",
+      "orig_word": "אָסָף",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H6584",
+      "orig_word": "פָּשַׁט",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H6865",
+      "orig_word": "צֹר",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H7257",
+      "orig_word": "רָבַץ",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H7337",
+      "orig_word": "רָחַב",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H7941",
+      "orig_word": "שֵׁכָר",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H8415",
+      "orig_word": "תְּהוֹם",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H8467",
+      "orig_word": "תְּחִנָּה",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H8543",
+      "orig_word": "תְּמוֹל",
+      "freq": 33
+    },
+    {
+      "strongs_id": "H121",
+      "orig_word": "אָדָם",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H1767",
+      "orig_word": "דַּי",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H1926",
+      "orig_word": "הָדָר",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H2637",
+      "orig_word": "חָסֵר",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H2713",
+      "orig_word": "חָקַר",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H2764",
+      "orig_word": "חֵרֶם",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H2859",
+      "orig_word": "חָתַן",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H3088",
+      "orig_word": "יְהוֹרָם",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H3341",
+      "orig_word": "יָצַת",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H3611",
+      "orig_word": "כֶּלֶב",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H4058",
+      "orig_word": "מָדַד",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H4219",
+      "orig_word": "מִזְרָק",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H4513",
+      "orig_word": "מָנַע",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H5203",
+      "orig_word": "נָטַשׁ",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H5401",
+      "orig_word": "נָשַׁק",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H6113",
+      "orig_word": "עָצָר",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H6524",
+      "orig_word": "פָּרַח",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H6539",
+      "orig_word": "פָּרַס",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H6586",
+      "orig_word": "פָּשַׁע",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H6822",
+      "orig_word": "צָפָה",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H7605",
+      "orig_word": "שְׁאָר",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H7701",
+      "orig_word": "שֹׁד",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H7845",
+      "orig_word": "שַׁחַת",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H8394",
+      "orig_word": "תָּבוּן",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H962",
+      "orig_word": "בָּזַז",
+      "freq": 32
+    },
+    {
+      "strongs_id": "H1952",
+      "orig_word": "הוֹן",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H2296",
+      "orig_word": "חָגַר",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H2620",
+      "orig_word": "חָסָה",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H3563",
+      "orig_word": "כּוֹס",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H4327",
+      "orig_word": "מִין",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H4581",
+      "orig_word": "מָעוֹז",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H4801",
+      "orig_word": "מֶרְחָק",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H5074",
+      "orig_word": "נָדַד",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H5175",
+      "orig_word": "נָחָשׁ",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H5358",
+      "orig_word": "נָקַם",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H5833",
+      "orig_word": "עֶזְרָה",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H6442",
+      "orig_word": "פְּנִימִי",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H676",
+      "orig_word": "אֶצְבַּע",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H7065",
+      "orig_word": "קָנָא",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H7194",
+      "orig_word": "קָשַׁר",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H7440",
+      "orig_word": "רִנָּה",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H7848",
+      "orig_word": "שִׁטָּה",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H7887",
+      "orig_word": "שִׁילֹה",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H8328",
+      "orig_word": "שֶׁרֶשׁ",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H8433",
+      "orig_word": "תּוֹכֵחָה",
+      "freq": 31
+    },
+    {
+      "strongs_id": "H1406",
+      "orig_word": "גָּג",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H188",
+      "orig_word": "אוֹי",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H215",
+      "orig_word": "אוֹר",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H3123",
+      "orig_word": "יוֹנָה",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H325",
+      "orig_word": "אֲחַשְׁוֵרוֹשׁ",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H3409",
+      "orig_word": "יָרֵךְ",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H3629",
+      "orig_word": "כִּלְיָה",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H3665",
+      "orig_word": "כָּנַע",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H3715",
+      "orig_word": "כְּפִיר",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H4417",
+      "orig_word": "מֶלַח",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H4918",
+      "orig_word": "מְשֻׁלָּם",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H6779",
+      "orig_word": "צָמַח",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H7326",
+      "orig_word": "רוּשׁ",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H8027",
+      "orig_word": "שָׁלַשׁ",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H8444",
+      "orig_word": "תּוֹצָאָה",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H8446",
+      "orig_word": "תּוּר",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H926",
+      "orig_word": "בָּהַל",
+      "freq": 30
+    },
+    {
+      "strongs_id": "H1065",
+      "orig_word": "בְּכִי",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H1942",
+      "orig_word": "הַוָּה",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H2154",
+      "orig_word": "זִמָּה",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H2204",
+      "orig_word": "זָקֵן",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H2254",
+      "orig_word": "חָבַל",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H2406",
+      "orig_word": "חִטָּה",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H2682",
+      "orig_word": "חָצִיר",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H2893",
+      "orig_word": "טׇהֳרָה",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H339",
+      "orig_word": "אִי",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H3557",
+      "orig_word": "כּוּל",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H3791",
+      "orig_word": "כָּתָב",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H3887",
+      "orig_word": "לוּץ",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H4392",
+      "orig_word": "מָלֵא",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H4598",
+      "orig_word": "מְעִיל",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H4643",
+      "orig_word": "מַעֲשֵׂר",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H5087",
+      "orig_word": "נָדַר",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H5126",
+      "orig_word": "נוּן",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H5148",
+      "orig_word": "נָחָה",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H5254",
+      "orig_word": "נָסָה",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H543",
+      "orig_word": "אָמֵן",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H5818",
+      "orig_word": "עֻזִּיָּה",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H6099",
+      "orig_word": "עָצוּם",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H6187",
+      "orig_word": "עֵרֶךְ",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H6231",
+      "orig_word": "עָשַׁק",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H6504",
+      "orig_word": "פָּרַד",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H6532",
+      "orig_word": "פֹּרֶכֶת",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H7401",
+      "orig_word": "רָכַךְ",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H7810",
+      "orig_word": "שַׁחַד",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H8184",
+      "orig_word": "שְׂעֹרָה",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H8251",
+      "orig_word": "שִׁקּוּץ",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H8300",
+      "orig_word": "שָׂרִיד",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H8403",
+      "orig_word": "תַּבְנִית",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H8518",
+      "orig_word": "תָּלָה",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H8659",
+      "orig_word": "תַּרְשִׁישׁ",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H8671",
+      "orig_word": "תְּשִׁיעִי",
+      "freq": 29
+    },
+    {
+      "strongs_id": "H1100",
+      "orig_word": "בְּלִיַּעַל",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H1201",
+      "orig_word": "בַּעְשָׁא",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H1258",
+      "orig_word": "בָּרַד",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H2236",
+      "orig_word": "זָרַק",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H238",
+      "orig_word": "אָזַן",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H2502",
+      "orig_word": "חָלַץ",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H2608",
+      "orig_word": "חֲנַנְיָה",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H2623",
+      "orig_word": "חָסִיד",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H2658",
+      "orig_word": "חָפַר",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H2659",
+      "orig_word": "חָפֵר",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H29",
+      "orig_word": "אֲבִיָּה",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H2945",
+      "orig_word": "טַף",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H3411",
+      "orig_word": "יְרֵכָה",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H3582",
+      "orig_word": "כָּחַד",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H3760",
+      "orig_word": "כַּרְמֶל",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H3972",
+      "orig_word": "מְאוּמָה",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H4066",
+      "orig_word": "מָדוֹן",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H4970",
+      "orig_word": "מָתַי",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H5090",
+      "orig_word": "נָהַג",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H5503",
+      "orig_word": "סָחַר",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H6525",
+      "orig_word": "פֶּרַח",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H6721",
+      "orig_word": "צִידוֹן",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H6845",
+      "orig_word": "צָפַן",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H7045",
+      "orig_word": "קְלָלָה",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H7259",
+      "orig_word": "רִבְקָה",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H7493",
+      "orig_word": "רָעַשׁ",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H7568",
+      "orig_word": "רֶשֶׁת",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H8558",
+      "orig_word": "תָּמָר",
+      "freq": 28
+    },
+    {
+      "strongs_id": "H1310",
+      "orig_word": "בָּשַׁל",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H138",
+      "orig_word": "אֲדֹנִיָּה",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H1436",
+      "orig_word": "גְּדַּלְיָה",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H2102",
+      "orig_word": "זוּד",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H2280",
+      "orig_word": "חָבַשׁ",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H2347",
+      "orig_word": "חוּס",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H2513",
+      "orig_word": "חֶלְקָה",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H2876",
+      "orig_word": "טַבָּח",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H3442",
+      "orig_word": "יֵשׁוּעַ",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H5404",
+      "orig_word": "נֶשֶׁר",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H5867",
+      "orig_word": "עֵילָם",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H6227",
+      "orig_word": "עָשָׁן",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H6293",
+      "orig_word": "פָּגַע",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H6522",
+      "orig_word": "פְּרִזִּי",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H6870",
+      "orig_word": "צְרוּיָה",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H7342",
+      "orig_word": "רָחָב",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H7860",
+      "orig_word": "שֹׁטֵר",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H7967",
+      "orig_word": "שַׁלּוּם",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H8457",
+      "orig_word": "תַּזְנוּת",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H8577",
+      "orig_word": "תַּנִּין",
+      "freq": 27
+    },
+    {
+      "strongs_id": "H1130",
+      "orig_word": "בֶּן־הֲדַד",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H1162",
+      "orig_word": "בֹּעַז",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H1263",
+      "orig_word": "בָּרוּךְ",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H1530",
+      "orig_word": "גַּל",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H1819",
+      "orig_word": "דָּמָה",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H1823",
+      "orig_word": "דְּמוּת",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H1826",
+      "orig_word": "דָּמַם",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H191",
+      "orig_word": "אֱוִיל",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H200",
+      "orig_word": "אִוֶּלֶת",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H2146",
+      "orig_word": "זִכְרוֹן",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H3233",
+      "orig_word": "יְמָנִי",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H3243",
+      "orig_word": "יָנַק",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H3468",
+      "orig_word": "יֶשַׁע",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H402",
+      "orig_word": "אׇכְלָה",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H4022",
+      "orig_word": "מֶגֶד",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H4334",
+      "orig_word": "מִישׁוֹר",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H4692",
+      "orig_word": "מָצוֹר",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H4805",
+      "orig_word": "מְרִי",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H4888",
+      "orig_word": "מִשְׁחָה",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H4994",
+      "orig_word": "נָא",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H5275",
+      "orig_word": "נַעַל",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H54",
+      "orig_word": "אֶבְיָתָר",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H550",
+      "orig_word": "אַמְנוֹן",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H5794",
+      "orig_word": "עַז",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H6490",
+      "orig_word": "פִּקּוּד",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H6597",
+      "orig_word": "פִּתְאוֹם",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H665",
+      "orig_word": "אֵפֶר",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H6696",
+      "orig_word": "צוּר",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H7032",
+      "orig_word": "קָל",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H7141",
+      "orig_word": "קֹרַח",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H7264",
+      "orig_word": "רָגַז",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H7356",
+      "orig_word": "רַחַם",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H7561",
+      "orig_word": "רָשַׁע",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H7614",
+      "orig_word": "שְׁבָא",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H7854",
+      "orig_word": "שָׂטָן",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H8071",
+      "orig_word": "שִׂמְלָה",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H8254",
+      "orig_word": "שָׁקַל",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H8426",
+      "orig_word": "תּוֹדָה",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H906",
+      "orig_word": "בַּד",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H974",
+      "orig_word": "בָּחַן",
+      "freq": 26
+    },
+    {
+      "strongs_id": "H1319",
+      "orig_word": "בָּשַׂר",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H1346",
+      "orig_word": "גַּאֲוָה",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H1590",
+      "orig_word": "גַּנָּב",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H1709",
+      "orig_word": "דָּג",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H183",
+      "orig_word": "אָוָה",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H2266",
+      "orig_word": "חָבַר",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H2340",
+      "orig_word": "חִוִּי",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H2483",
+      "orig_word": "חֳלִי",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H2689",
+      "orig_word": "חֲצֹצְרָה",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H2742",
+      "orig_word": "חֲרוּץ",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H2833",
+      "orig_word": "חֹשֶׁן",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H3021",
+      "orig_word": "יָגַע",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H3316",
+      "orig_word": "יִפְתָּח",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H340",
+      "orig_word": "אָיַב",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H3489",
+      "orig_word": "יָתֵד",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H3727",
+      "orig_word": "כַּפֹּרֶת",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H3766",
+      "orig_word": "כָּרַע",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H3807",
+      "orig_word": "כָּתַת",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H4601",
+      "orig_word": "מַעֲכָה",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H4604",
+      "orig_word": "מַעַל",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H4713",
+      "orig_word": "מִצְרִי",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H4744",
+      "orig_word": "מִקְרָא",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H5003",
+      "orig_word": "נָאַף",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H5006",
+      "orig_word": "נָאַץ",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H5028",
+      "orig_word": "נְבָט",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H5137",
+      "orig_word": "נָזָה",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H5258",
+      "orig_word": "נָסַךְ",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H5281",
+      "orig_word": "נׇעֳמִי",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H5428",
+      "orig_word": "נָתַשׁ",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H5475",
+      "orig_word": "סוֹד",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H5804",
+      "orig_word": "עַזָּה",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H6372",
+      "orig_word": "פִּינְחָס",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H6438",
+      "orig_word": "פִּנָּה",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H6456",
+      "orig_word": "פְּסִיל",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H657",
+      "orig_word": "אֶפֶס",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H6672",
+      "orig_word": "צֹהַר",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H7027",
+      "orig_word": "קִישׁ",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H7186",
+      "orig_word": "קָשֶׁה",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H7281",
+      "orig_word": "רֶגַע",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H7433",
+      "orig_word": "רָמֹת גִּלעָד",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H7497",
+      "orig_word": "רָפָא",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H759",
+      "orig_word": "אַרְמוֹן",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H769",
+      "orig_word": "אַרְנוֹן",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H7768",
+      "orig_word": "שָׁוַע",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H7837",
+      "orig_word": "שַׁחַר",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H8003",
+      "orig_word": "שָׁלֵם",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H8482",
+      "orig_word": "תַּחְתִּי",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H8535",
+      "orig_word": "תָּם",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H855",
+      "orig_word": "אֵת",
+      "freq": 25
+    },
+    {
+      "strongs_id": "H117",
+      "orig_word": "אַדִּיר",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H1250",
+      "orig_word": "בָּר",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H1396",
+      "orig_word": "גָּבַר",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H1820",
+      "orig_word": "דָּמָה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H1832",
+      "orig_word": "דִּמְעָה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H2400",
+      "orig_word": "חַטָּא",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H2498",
+      "orig_word": "חָלַף",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H281",
+      "orig_word": "אֲחִיָּה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H2963",
+      "orig_word": "טָרַף",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H3059",
+      "orig_word": "יְהוֹאָחָז",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H3147",
+      "orig_word": "יוֹתָם",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H3276",
+      "orig_word": "יַעַל",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H3308",
+      "orig_word": "יֳפִי",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H3547",
+      "orig_word": "כָּהַן",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H3830",
+      "orig_word": "לְבוּשׁ",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H3923",
+      "orig_word": "לָכִישׁ",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H4353",
+      "orig_word": "מָכִיר",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H4496",
+      "orig_word": "מְנוּחָה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H4549",
+      "orig_word": "מָסַס",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H4553",
+      "orig_word": "מִסְפֵּד",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H4591",
+      "orig_word": "מָעַט",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H4641",
+      "orig_word": "מַעֲשֵׂיָה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H4784",
+      "orig_word": "מָרָה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H4962",
+      "orig_word": "מַת",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H52",
+      "orig_word": "אֲבִישַׁי",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H5347",
+      "orig_word": "נְקֵבָה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H5592",
+      "orig_word": "סַף",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H5953",
+      "orig_word": "עָלַל",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H6223",
+      "orig_word": "עָשִׁיר",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H6578",
+      "orig_word": "פְּרָת",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H697",
+      "orig_word": "אַרְבֶּה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H7457",
+      "orig_word": "רָעֵב",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H7533",
+      "orig_word": "רָצַץ",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H7579",
+      "orig_word": "שָׁאַב",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H7684",
+      "orig_word": "שְׁגָגָה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H7699",
+      "orig_word": "שַׁד",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H8025",
+      "orig_word": "שָׁלַף",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H8142",
+      "orig_word": "שֵׁנָה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H8181",
+      "orig_word": "שֵׂעָר",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H8378",
+      "orig_word": "תַּאֲוָה",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H8414",
+      "orig_word": "תֹּהוּ",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H8551",
+      "orig_word": "תָּמַךְ",
+      "freq": 24
+    },
+    {
+      "strongs_id": "H1107",
+      "orig_word": "בִּלְעֲדֵי",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H1314",
+      "orig_word": "בֶּשֶׂם",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H1993",
+      "orig_word": "הָמָה",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H2143",
+      "orig_word": "זֵכֶר",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H2244",
+      "orig_word": "חָבָא",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H2344",
+      "orig_word": "חוֹל",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H2371",
+      "orig_word": "חֲזָאֵל",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H2674",
+      "orig_word": "חָצוֹר",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H2720",
+      "orig_word": "חָרֵב",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H3100",
+      "orig_word": "יוֹאֵל",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H3104",
+      "orig_word": "יוֹבֵל",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H3323",
+      "orig_word": "יִצְהָר",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H3518",
+      "orig_word": "כָּבָה",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H3639",
+      "orig_word": "כְּלִמָּה",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H3895",
+      "orig_word": "לְחִי",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H446",
+      "orig_word": "אֱלִיאָב",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H4599",
+      "orig_word": "מַעְיָן",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H4733",
+      "orig_word": "מִקְלָט",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H5716",
+      "orig_word": "עֲדִי",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H5774",
+      "orig_word": "עוּף",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H6025",
+      "orig_word": "עֵנָב",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H6297",
+      "orig_word": "פֶּגֶר",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H6722",
+      "orig_word": "צִידֹנִי",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H6793",
+      "orig_word": "צִנָּה",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H6810",
+      "orig_word": "צָעִיר",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H6879",
+      "orig_word": "צָרַע",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H7019",
+      "orig_word": "קַיִץ",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H7050",
+      "orig_word": "קֶלַע",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H7253",
+      "orig_word": "רֶבַע",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H7488",
+      "orig_word": "רַעֲנָן",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H8172",
+      "orig_word": "שָׁעַן",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H8342",
+      "orig_word": "שָׂשׂוֹן",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H8392",
+      "orig_word": "תֵּבָה",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H8401",
+      "orig_word": "תֶּבֶן",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H8486",
+      "orig_word": "תֵּימָן",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H860",
+      "orig_word": "אָתוֹן",
+      "freq": 23
+    },
+    {
+      "strongs_id": "H1387",
+      "orig_word": "גֶּבַע",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H1513",
+      "orig_word": "גֶּחֶל",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H1548",
+      "orig_word": "גָּלַח",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H1589",
+      "orig_word": "גָּנַב",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H1648",
+      "orig_word": "גֵּרְשׁוֹן",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H1935",
+      "orig_word": "הוֹד",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H197",
+      "orig_word": "אוּלָם",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H2030",
+      "orig_word": "הָרֶה",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H2094",
+      "orig_word": "זָהַר",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H2195",
+      "orig_word": "זַעַם",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H2672",
+      "orig_word": "חָצַב",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H2856",
+      "orig_word": "חָתַם",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H2885",
+      "orig_word": "טַבַּעַת",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H3187",
+      "orig_word": "יָחַשׂ",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H3259",
+      "orig_word": "יָעַד",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H343",
+      "orig_word": "אֵיד",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H3738",
+      "orig_word": "כָּרָה",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H3971",
+      "orig_word": "מאוּם",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H4046",
+      "orig_word": "מַגֵּפָה",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H4321",
+      "orig_word": "מִיכָיְהוּ",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H4522",
+      "orig_word": "מַס",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H4583",
+      "orig_word": "מָעוֹן",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H5037",
+      "orig_word": "נָבָל",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H5071",
+      "orig_word": "נְדָבָה",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H5492",
+      "orig_word": "סוּפָה",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H5516",
+      "orig_word": "סִיסְרָא",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H5633",
+      "orig_word": "סֶרֶן",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H5699",
+      "orig_word": "עֲגָלָה",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H5747",
+      "orig_word": "עוֹג",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H5830",
+      "orig_word": "עֶזְרָא",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H5998",
+      "orig_word": "עָמַל",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H6035",
+      "orig_word": "עָנָו",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H6138",
+      "orig_word": "עֶקְרוֹן",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H6224",
+      "orig_word": "עֲשִׂירִי",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H6342",
+      "orig_word": "פָּחַד",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H6403",
+      "orig_word": "פָּלַט",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H6475",
+      "orig_word": "פָּצָה",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H6505",
+      "orig_word": "פֶּרֶד",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H6510",
+      "orig_word": "פָּרָה",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H6601",
+      "orig_word": "פָּתָה",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H7036",
+      "orig_word": "קָלוֹן",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H7107",
+      "orig_word": "קָצַף",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H7806",
+      "orig_word": "שָׁזַר",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H8559",
+      "orig_word": "תָּמָר",
+      "freq": 22
+    },
+    {
+      "strongs_id": "H1215",
+      "orig_word": "בֶּצַע",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H1237",
+      "orig_word": "בִּקְעָה",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H1324",
+      "orig_word": "בַּת",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H1423",
+      "orig_word": "גְּדִי",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H1580",
+      "orig_word": "גָּמַל",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H1777",
+      "orig_word": "דִּין",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H1881",
+      "orig_word": "דָּת",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H1909",
+      "orig_word": "הֲדַדְעֶזֶר",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H2201",
+      "orig_word": "זַעַק",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H2216",
+      "orig_word": "זְרֻבָּבֶל",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H2226",
+      "orig_word": "זֶרַח",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H2354",
+      "orig_word": "חוּר",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H2486",
+      "orig_word": "חָלִילָה",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H2820",
+      "orig_word": "חָשַׂךְ",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H3051",
+      "orig_word": "יָהַב",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H3213",
+      "orig_word": "יָלַל",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H3312",
+      "orig_word": "יְפֻנֶּה",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H348",
+      "orig_word": "אִיזֶבֶל",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H370",
+      "orig_word": "אַיִן",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H3801",
+      "orig_word": "כְּתֹנֶת",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H385",
+      "orig_word": "אִיתָמָר",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H3996",
+      "orig_word": "מָבוֹא",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H4039",
+      "orig_word": "מְגִלָּה",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H4283",
+      "orig_word": "מׇחֳרָת",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H4296",
+      "orig_word": "מִטָּה",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H4726",
+      "orig_word": "מָקוֹר",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H4813",
+      "orig_word": "מִרְיָם",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H5022",
+      "orig_word": "נָבוֹת",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H5065",
+      "orig_word": "נָגַשׂ",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H511",
+      "orig_word": "אֶלְקָנָה",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H5397",
+      "orig_word": "נְשָׁמָה",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H5410",
+      "orig_word": "נָתִיב",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H56",
+      "orig_word": "אָבַל",
+      "freq": 21
+    },
+    {
+      "strongs_id": "H5662",
+      "orig_word": "עֹבַדְיָה",
+      "freq": 21
+    }
+  ]
+}
