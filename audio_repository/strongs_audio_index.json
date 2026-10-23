@@ -1,5 +1,16 @@
 [
   {
+    "strongs_id": "G18",
+    "language": "greek",
+    "lemma": "ἀγαθός",
+    "transliteration": "agathós",
+    "filename": "G18.mp3",
+    "byte_size": 9600,
+    "sha256": "d82cf76132ee12c99e8e852abd5e27dbfc96c8fdca411b16444ee32b8e7f58af",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G25",
     "language": "greek",
     "lemma": "ἀγαπάω",
@@ -17,6 +28,17 @@
     "sha256": "480e003290833e086e389a3a942b22ec60744c82b7f2c499499ae468a8787c72",
     "standard": "erasmian_target",
     "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G32",
+    "language": "greek",
+    "lemma": "ἄγγελος",
+    "transliteration": "ángelos",
+    "filename": "G32.mp3",
+    "byte_size": 9600,
+    "sha256": "e6647e8be425da4aa4c4e6c6b6fce5982d55b6aaa0522221a869b00e79961fb2",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
   },
   {
     "strongs_id": "G40",
@@ -48,6 +70,17 @@
     "filename": "G129.mp3",
     "byte_size": 6528,
     "sha256": "c11e8d0beab7478e94ab6cb64647133354bdbff826cb1d06751085dd0f8699a5",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G165",
+    "language": "greek",
+    "lemma": "αἰών",
+    "transliteration": "aiṓn",
+    "filename": "G165.mp3",
+    "byte_size": 7872,
+    "sha256": "c7922a0a4eb0b2425ebbc17572d30004cacd32827abba7bbb1c1b474d291e63c",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -85,6 +118,50 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G240",
+    "language": "greek",
+    "lemma": "ἀλλήλων",
+    "transliteration": "allḗlōn",
+    "filename": "G240.mp3",
+    "byte_size": 8832,
+    "sha256": "07f62b0af171877423f160ffa38d2e8df0eeecdb0efb9cab1ccebb6050d4e6c9",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G243",
+    "language": "greek",
+    "lemma": "ἄλλος",
+    "transliteration": "állos",
+    "filename": "G243.mp3",
+    "byte_size": 8064,
+    "sha256": "6f280ba2998fc8cbeb527b24bc8e909bf2c8151e08b89f81a408a9a1045ff68c",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G266",
+    "language": "greek",
+    "lemma": "ἁμαρτία",
+    "transliteration": "hamartía",
+    "filename": "G266.mp3",
+    "byte_size": 9024,
+    "sha256": "dd3dbee19ac8dd1f54af3d9ece334329dd840bd723f69d860fabe3acd2ff9953",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G281",
+    "language": "greek",
+    "lemma": "ἀμήν",
+    "transliteration": "amḗn",
+    "filename": "G281.mp3",
+    "byte_size": 8256,
+    "sha256": "cbb18d75a96562be2282d8a6f0d6915fe096583888f2a1904cc4ccd4e4406a6c",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G386",
     "language": "greek",
     "lemma": "ἀνάστασις",
@@ -92,6 +169,17 @@
     "filename": "G386.mp3",
     "byte_size": 11136,
     "sha256": "3fa8891e1921797a4067d3e76c8c8410304af879b5ef2070c16c985a4ea9be7e",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G435",
+    "language": "greek",
+    "lemma": "ἀνήρ",
+    "transliteration": "anḗr",
+    "filename": "G435.mp3",
+    "byte_size": 6912,
+    "sha256": "09df42b8942909cf2ce273d9865dbeff7c4b8d24aee1d5825393fb0a824e3613",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -107,6 +195,28 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G450",
+    "language": "greek",
+    "lemma": "ἀνίστημι",
+    "transliteration": "anístēmi",
+    "filename": "G450.mp3",
+    "byte_size": 9216,
+    "sha256": "1baa3ed9844aff87c57450005ffe3964a929073cad0a260c0ccf4a087fbbf6aa",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G565",
+    "language": "greek",
+    "lemma": "ἀπέρχομαι",
+    "transliteration": "apérchomai",
+    "filename": "G565.mp3",
+    "byte_size": 9408,
+    "sha256": "56a08afb8406df614537ece0cf5feb14f9c2c1138ad6c361f8e864b26d6de17b",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G575",
     "language": "greek",
     "lemma": "ἀπό",
@@ -118,6 +228,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G599",
+    "language": "greek",
+    "lemma": "ἀποθνήσκω",
+    "transliteration": "apothnḗskō",
+    "filename": "G599.mp3",
+    "byte_size": 10368,
+    "sha256": "825cc0c7531c2e22bdefada47ac7e4f1c6bf0b89bc440ae42cb720acb6c640a7",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G611",
     "language": "greek",
     "lemma": "ἀποκρίνομαι",
@@ -125,6 +246,17 @@
     "filename": "G611.mp3",
     "byte_size": 10368,
     "sha256": "f74bb7af822f4f3c4d93b78146772f1aa1cf998782f31c8201632fc95f653207",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G649",
+    "language": "greek",
+    "lemma": "ἀποστέλλω",
+    "transliteration": "apostéllō",
+    "filename": "G649.mp3",
+    "byte_size": 9408,
+    "sha256": "ee81691166ecdbe9af28ec4da34b33ae9a13c25de0da041fcc2c83e29a364de1",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -151,6 +283,28 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G863",
+    "language": "greek",
+    "lemma": "ἀφίημι",
+    "transliteration": "aphíēmi",
+    "filename": "G863.mp3",
+    "byte_size": 9408,
+    "sha256": "ab743f8ea92860e819b4fea15070dc9395b6b314959a637690194d25ff882248",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G906",
+    "language": "greek",
+    "lemma": "βάλλω",
+    "transliteration": "bállō",
+    "filename": "G906.mp3",
+    "byte_size": 7488,
+    "sha256": "c9c2a63b013da3d5e6b0ae9b87ac76e1d8a95994203c56810126fd93c8260831",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G907",
     "language": "greek",
     "filename": "G907.mp3",
@@ -167,6 +321,28 @@
     "filename": "G932.mp3",
     "byte_size": 9792,
     "sha256": "3e3715a6ad3816e004e2d90225e7d9639d181ac3d7cefcc7c14b67fb7040195f",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G935",
+    "language": "greek",
+    "lemma": "βασιλεύς",
+    "transliteration": "basileús",
+    "filename": "G935.mp3",
+    "byte_size": 10368,
+    "sha256": "f09fa585cb310a48097f5b19655a6ea9df287e6f7c9d3a6b24867439c0c76253",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G991",
+    "language": "greek",
+    "lemma": "βλέπω",
+    "transliteration": "blépō",
+    "filename": "G991.mp3",
+    "byte_size": 7680,
+    "sha256": "d64103a7640260cba5f63201780dbf7864d6b42ac906b571012b272727ddaaa3",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -215,6 +391,28 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G1125",
+    "language": "greek",
+    "lemma": "γράφω",
+    "transliteration": "gráphō",
+    "filename": "G1125.mp3",
+    "byte_size": 8064,
+    "sha256": "74521ce5fd53c497a6cde97c40bf4c7d18d6385eab678c95895f5cb7348ea39c",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G1135",
+    "language": "greek",
+    "lemma": "γυνή",
+    "transliteration": "gynḗ",
+    "filename": "G1135.mp3",
+    "byte_size": 7296,
+    "sha256": "53f5fed27571aa006b479bf391308a766b0887e505683efbd9bd05ef9fc6c210",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G1161",
     "language": "greek",
     "lemma": "δέ",
@@ -222,6 +420,17 @@
     "filename": "G1161.mp3",
     "byte_size": 5760,
     "sha256": "909f535ea417d9bacde797811f61c551cfe815c0f64578108620f281b7440940",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G1163",
+    "language": "greek",
+    "lemma": "δεῖ",
+    "transliteration": "deî",
+    "filename": "G1163.mp3",
+    "byte_size": 6528,
+    "sha256": "a27eda7ecd9ef192d14b33c3d313daf09cb77e0590d9f4022bebd822be4d7b1f",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -270,6 +479,28 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G1401",
+    "language": "greek",
+    "lemma": "δοῦλος",
+    "transliteration": "doûlos",
+    "filename": "G1401.mp3",
+    "byte_size": 9024,
+    "sha256": "8d0bf7b4d87b0552bf56dda797552b38a40328c37b6bc49b8fd1b01e3bf859c4",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G1410",
+    "language": "greek",
+    "lemma": "δύναμαι",
+    "transliteration": "dýnamai",
+    "filename": "G1410.mp3",
+    "byte_size": 8640,
+    "sha256": "f9d83924b0ac59a6f5c8522a8dbf6509ba094c59523778a3661bb3a12ecf27be",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G1411",
     "language": "greek",
     "lemma": "δύναμις",
@@ -277,6 +508,17 @@
     "filename": "G1411.mp3",
     "byte_size": 9984,
     "sha256": "fbf4e5af3307fb92b0d72519ff7b8e4f2304fd991e9a34f5639b86b929bedf28",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G1427",
+    "language": "greek",
+    "lemma": "δώδεκα",
+    "transliteration": "dṓdeka",
+    "filename": "G1427.mp3",
+    "byte_size": 8640,
+    "sha256": "24dccb32ab61fb75a6880bb4134f1a77fed139693e34430ff8af1ca48d1a1c6d",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -303,6 +545,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G1453",
+    "language": "greek",
+    "lemma": "ἐγείρω",
+    "transliteration": "egeírō",
+    "filename": "G1453.mp3",
+    "byte_size": 7872,
+    "sha256": "677387036d1526d7714bb86c6a0f810882055c377991ae5516d000f1a7457d75",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G1473",
     "language": "greek",
     "lemma": "ἐγώ",
@@ -310,6 +563,17 @@
     "filename": "G1473.mp3",
     "byte_size": 6144,
     "sha256": "cc8f92507b5645496e8af91356c2314fdaa5a9edc7bee5fad6c0daad1a4d8f6c",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G1484",
+    "language": "greek",
+    "lemma": "ἔθνος",
+    "transliteration": "éthnos",
+    "filename": "G1484.mp3",
+    "byte_size": 9024,
+    "sha256": "a90df58e005db2c576279e7e506c954180d34ab341590eb7c66c734aca3cafd8",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -380,6 +644,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G1525",
+    "language": "greek",
+    "lemma": "εἰσέρχομαι",
+    "transliteration": "eisérchomai",
+    "filename": "G1525.mp3",
+    "byte_size": 9408,
+    "sha256": "5f323704c42dc340a2c02f339c7036960b6fe77263b8ae6baca9f38f95669fa4",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G1537",
     "language": "greek",
     "lemma": "ἐκ",
@@ -387,6 +662,28 @@
     "filename": "G1537.mp3",
     "byte_size": 6144,
     "sha256": "a704eae4845c30d83480bf7cbc3288d6e1cd78a53318c340aca7ec19dd840dca",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G1538",
+    "language": "greek",
+    "lemma": "ἕκαστος",
+    "transliteration": "hékastos",
+    "filename": "G1538.mp3",
+    "byte_size": 9792,
+    "sha256": "854fedec839c32d08ec49dcb71f1b468e026c3a1841cd8920d3eb3d190b1dc8b",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G1563",
+    "language": "greek",
+    "lemma": "ἐκεῖ",
+    "transliteration": "ekeî",
+    "filename": "G1563.mp3",
+    "byte_size": 6720,
+    "sha256": "c62d951e6544e9165face8f3cfb07e961a1fb25c9a118d6bd3058a229c5a964d",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -446,6 +743,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G2036",
+    "language": "greek",
+    "lemma": "ἔπω",
+    "transliteration": "épō",
+    "filename": "G2036.mp3",
+    "byte_size": 6720,
+    "sha256": "13f5801451d47742d7d86488c658a6180081b4e85ee2afa92e6f7334101d2ae8",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G2041",
     "language": "greek",
     "lemma": "ἔργον",
@@ -477,6 +785,17 @@
     "status": "empirical_sample_catalogued"
   },
   {
+    "strongs_id": "G2147",
+    "language": "greek",
+    "lemma": "εὑρίσκω",
+    "transliteration": "heurískō",
+    "filename": "G2147.mp3",
+    "byte_size": 8256,
+    "sha256": "e37b23dc104efd53f1efdb58835a7fbb6e5711b5372e525223752e11e71e5290",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G2192",
     "language": "greek",
     "lemma": "ἔχω",
@@ -484,6 +803,39 @@
     "filename": "G2192.mp3",
     "byte_size": 7104,
     "sha256": "e96122b36f887e8cb485180525085d3c5f4a366b28739bb6a3363c69f3e55f21",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G2193",
+    "language": "greek",
+    "lemma": "ἕως",
+    "transliteration": "héōs",
+    "filename": "G2193.mp3",
+    "byte_size": 7680,
+    "sha256": "51016ca6c41031c3532a633cbf19306dccc540b20988f957bd07a18444f645fe",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G2198",
+    "language": "greek",
+    "lemma": "ζάω",
+    "transliteration": "záō",
+    "filename": "G2198.mp3",
+    "byte_size": 7488,
+    "sha256": "6a42adc960419bae743542e8e21469a91968de148b82661ee055c1d3bb5ef67e",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G2212",
+    "language": "greek",
+    "lemma": "ζητέω",
+    "transliteration": "zētéō",
+    "filename": "G2212.mp3",
+    "byte_size": 8640,
+    "sha256": "0d99decb7fb9f72697ec518a18b679e929ccb87013c3efc78726bf1e059e7d2b",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -521,6 +873,28 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G2288",
+    "language": "greek",
+    "lemma": "θάνατος",
+    "transliteration": "thánatos",
+    "filename": "G2288.mp3",
+    "byte_size": 9984,
+    "sha256": "57416f18411c031523850b496faa24a3fae5b340e4f9cfb275d9abd83a7cc4e5",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G2309",
+    "language": "greek",
+    "lemma": "θέλω",
+    "transliteration": "thélō",
+    "filename": "G2309.mp3",
+    "byte_size": 7296,
+    "sha256": "b1feaa1c072b56fbeefe6b100b1fd07cff80ad962c4ff6936b5aaf7f0f09aa87",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G2316",
     "language": "greek",
     "filename": "G2316.mp3",
@@ -550,6 +924,50 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G2453",
+    "language": "greek",
+    "lemma": "Ἰουδαῖος",
+    "transliteration": "Ioudaîos",
+    "filename": "G2453.mp3",
+    "byte_size": 10560,
+    "sha256": "3903d4fbf643f567d62b34f5a78f2865dc4f683db4e559fbeecb2988e235d6ed",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G2476",
+    "language": "greek",
+    "lemma": "ἵστημι",
+    "transliteration": "hístēmi",
+    "filename": "G2476.mp3",
+    "byte_size": 7872,
+    "sha256": "1003feda9a85598e945ef6b508a439d525d3253da5c79f89e4d89aba57823323",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G2491",
+    "language": "greek",
+    "lemma": "Ἰωάννης",
+    "transliteration": "Iōánnēs",
+    "filename": "G2491.mp3",
+    "byte_size": 10176,
+    "sha256": "f57aeb512252150dc67d266164062a5f6d704584c58f44f534a2bf6261ffc1a3",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G2531",
+    "language": "greek",
+    "lemma": "καθώς",
+    "transliteration": "kathṓs",
+    "filename": "G2531.mp3",
+    "byte_size": 9024,
+    "sha256": "d7d237f021e7d2158d563bbf706c91a61e6b8c4d9f846d367467cb26bf2e56a6",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G2532",
     "language": "greek",
     "lemma": "καί",
@@ -557,6 +975,17 @@
     "filename": "G2532.mp3",
     "byte_size": 6528,
     "sha256": "e21da0bdda947d392a794243f8b5939e1721f8abf4762f34499d12dd4b404ddc",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G2564",
+    "language": "greek",
+    "lemma": "καλέω",
+    "transliteration": "kaléō",
+    "filename": "G2564.mp3",
+    "byte_size": 8064,
+    "sha256": "4462c85edcece1c25ca06f277d58c85c4afe59d14ce708e643e47dd435a09c14",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -594,6 +1023,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G2919",
+    "language": "greek",
+    "lemma": "κρίνω",
+    "transliteration": "krínō",
+    "filename": "G2919.mp3",
+    "byte_size": 7680,
+    "sha256": "ed719b6129e0d117d3879917ae2bb1e4d506913d07cc37fb08c5029e0cf2cf45",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G2962",
     "language": "greek",
     "filename": "G2962.mp3",
@@ -621,6 +1061,17 @@
     "filename": "G2983.mp3",
     "byte_size": 9216,
     "sha256": "2cfeba5036ef079fdc505e997a2863bbc4ab190679b73e30a27eab10941bcd78",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G2992",
+    "language": "greek",
+    "lemma": "λαός",
+    "transliteration": "laós",
+    "filename": "G2992.mp3",
+    "byte_size": 8640,
+    "sha256": "1d7bc60b8f57a3a00d6f169e598d194c10d1185b3ef85c495346696037762507",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -656,6 +1107,39 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G3173",
+    "language": "greek",
+    "lemma": "μέγας",
+    "transliteration": "mégas",
+    "filename": "G3173.mp3",
+    "byte_size": 8256,
+    "sha256": "26cb13fa7921f1b06842926897b77198b94983150ebf50b1d072033bf80e796a",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3195",
+    "language": "greek",
+    "lemma": "μέλλω",
+    "transliteration": "méllō",
+    "filename": "G3195.mp3",
+    "byte_size": 7296,
+    "sha256": "fb08bf9e8d4147d21d300d10080689ca843667741a47c1c2f89535f2d8a87800",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3306",
+    "language": "greek",
+    "lemma": "μένω",
+    "transliteration": "ménō",
+    "filename": "G3306.mp3",
+    "byte_size": 7488,
+    "sha256": "8a5c20336833d76a0c2acfa8d2d646b9a0ac8a6bb78d86af89bc8b9cad40a0e9",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G3326",
     "language": "greek",
     "lemma": "μετά",
@@ -678,6 +1162,50 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G3367",
+    "language": "greek",
+    "lemma": "μηδείς",
+    "transliteration": "mēdeís",
+    "filename": "G3367.mp3",
+    "byte_size": 8832,
+    "sha256": "dac407cd170efbdfdd8bc237a51a2640ecbd3ca88770fb00d7e80481a3e6c3fb",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3498",
+    "language": "greek",
+    "lemma": "νεκρός",
+    "transliteration": "nekrós",
+    "filename": "G3498.mp3",
+    "byte_size": 9024,
+    "sha256": "21ac1dce4f790178faba7d8f2e5b311f789354b5671182a58b407817c1e9bf81",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3551",
+    "language": "greek",
+    "lemma": "νόμος",
+    "transliteration": "nómos",
+    "filename": "G3551.mp3",
+    "byte_size": 8256,
+    "sha256": "2b3e0649fe21e8b0ddffb7db78e84948666c2684b7eb9d37bf1f4e3a688912e2",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3568",
+    "language": "greek",
+    "lemma": "νῦν",
+    "transliteration": "nŷn",
+    "filename": "G3568.mp3",
+    "byte_size": 7104,
+    "sha256": "5a93e1e741ff39836b3c2abd0e6aa2ce3f718cb7ea8e9020fe592d4ecf2d497b",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G3588",
     "language": "greek",
     "lemma": "ὁ",
@@ -685,6 +1213,39 @@
     "filename": "G3588.mp3",
     "byte_size": 4032,
     "sha256": "13f49ce727b2f2b015d2034bbe55fdb46e55565dd411b2a0341f2ce96d5a99ee",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3598",
+    "language": "greek",
+    "lemma": "ὁδός",
+    "transliteration": "hodós",
+    "filename": "G3598.mp3",
+    "byte_size": 7872,
+    "sha256": "d0e05632fdf40d875d222db507651cb4db41021dcbc8b8588eecf5caf0894b2f",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3624",
+    "language": "greek",
+    "lemma": "οἶκος",
+    "transliteration": "oîkos",
+    "filename": "G3624.mp3",
+    "byte_size": 7872,
+    "sha256": "ca274400b3170af36b2e7753d9f729ce94a6738abcccabee72d4b648a8eaa5e6",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3686",
+    "language": "greek",
+    "lemma": "ὄνομα",
+    "transliteration": "ónoma",
+    "filename": "G3686.mp3",
+    "byte_size": 7296,
+    "sha256": "663cf743fb064b60816ac530e37ffe6c6728dc6c7b782900d0048f0bc86adc2d",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -707,6 +1268,17 @@
     "filename": "G3739.mp3",
     "byte_size": 6336,
     "sha256": "25a801bb1c27958281394128ef64788635baf2c54fee3a353ea73a575ce21200",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3752",
+    "language": "greek",
+    "lemma": "ὅταν",
+    "transliteration": "hótan",
+    "filename": "G3752.mp3",
+    "byte_size": 7680,
+    "sha256": "da42d51a79fc41606248ce5b6fbee296838d9f04fbff588d32a2ea192ed38271",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -744,6 +1316,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G3767",
+    "language": "greek",
+    "lemma": "οὖν",
+    "transliteration": "oûn",
+    "filename": "G3767.mp3",
+    "byte_size": 5952,
+    "sha256": "07eac538e6b34baff3ad23392b3c3fa85f574ef17668cb6d0cb483660e512258",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G3772",
     "language": "greek",
     "lemma": "οὐρανός",
@@ -762,6 +1345,72 @@
     "filename": "G3778.mp3",
     "byte_size": 7872,
     "sha256": "a42f79402765dc8566b14b752505b057c038b31e449cad8194423b7da1baadb4",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3779",
+    "language": "greek",
+    "lemma": "οὕτω",
+    "transliteration": "hoútō",
+    "filename": "G3779.mp3",
+    "byte_size": 6720,
+    "sha256": "920fcaced16518c9e1b5ed37b8418183f4bf20f11f40bd129f070018b2eafe9f",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3793",
+    "language": "greek",
+    "lemma": "ὄχλος",
+    "transliteration": "óchlos",
+    "filename": "G3793.mp3",
+    "byte_size": 9024,
+    "sha256": "d5915197c26538d75acec86fea48d36a4782b6061ad453ce3fe5384a5ea19bad",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3825",
+    "language": "greek",
+    "lemma": "πάλιν",
+    "transliteration": "pálin",
+    "filename": "G3825.mp3",
+    "byte_size": 8064,
+    "sha256": "7c1b5aa36b5f60e7359e10d3d0fedc8d375fd7b9345aca618c2ad270496e983a",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3844",
+    "language": "greek",
+    "lemma": "παρά",
+    "transliteration": "pará",
+    "filename": "G3844.mp3",
+    "byte_size": 6912,
+    "sha256": "7b4dab9abf5017e69b02ad4754eb6e192ccd2d0ea831e8214cb12e6d5245708e",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3860",
+    "language": "greek",
+    "lemma": "παραδίδωμι",
+    "transliteration": "paradídōmi",
+    "filename": "G3860.mp3",
+    "byte_size": 10752,
+    "sha256": "6290df59cf2c0b7e481288eae1eddfac188fcdec939b5db14bfd76fe08902397",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G3870",
+    "language": "greek",
+    "lemma": "παρακαλέω",
+    "transliteration": "parakaléō",
+    "filename": "G3870.mp3",
+    "byte_size": 9984,
+    "sha256": "b10869614ce798c41f5a0bea5f9d3c48a8d7c7cd27a467bd7da6a73996c551e6",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -788,6 +1437,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G3972",
+    "language": "greek",
+    "lemma": "Παῦλος",
+    "transliteration": "Paûlos",
+    "filename": "G3972.mp3",
+    "byte_size": 8832,
+    "sha256": "bc0dbd56179911e6b9f8272b68e5e9c65e22d2ae1052511f29652c664c1b187a",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G4012",
     "language": "greek",
     "lemma": "περί",
@@ -795,6 +1455,17 @@
     "filename": "G4012.mp3",
     "byte_size": 6912,
     "sha256": "2be45c69c6a88385d0e7cae46c1be3822fd70e49dc8092654b92cfd840b4eb7a",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G4074",
+    "language": "greek",
+    "lemma": "Πέτρος",
+    "transliteration": "Pétros",
+    "filename": "G4074.mp3",
+    "byte_size": 9024,
+    "sha256": "363a7a677803279d52d12be2d927709397246abc8294fbea9ae187e4e4ee73e3",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -841,6 +1512,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G4172",
+    "language": "greek",
+    "lemma": "πόλις",
+    "transliteration": "pólis",
+    "filename": "G4172.mp3",
+    "byte_size": 8640,
+    "sha256": "19a5635394e98ec87373ceec579268de0bcd28e51921bee076e0790ad1102cd3",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G4183",
     "language": "greek",
     "lemma": "πολύς",
@@ -852,6 +1534,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G4198",
+    "language": "greek",
+    "lemma": "πορεύομαι",
+    "transliteration": "poreúomai",
+    "filename": "G4198.mp3",
+    "byte_size": 9408,
+    "sha256": "95c12bce81b50359693851e6003ca0d9e5289087a0bc92680feb6f68978b3050",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G4314",
     "language": "greek",
     "lemma": "πρός",
@@ -859,6 +1552,28 @@
     "filename": "G4314.mp3",
     "byte_size": 7680,
     "sha256": "5b87309b644ba7733cf2c5e8b618d4145e85294a41869916617f6b9e9e017031",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G4396",
+    "language": "greek",
+    "lemma": "προφήτης",
+    "transliteration": "prophḗtēs",
+    "filename": "G4396.mp3",
+    "byte_size": 9984,
+    "sha256": "e73b90449edd6b781db5407eda5a0d65efc4444586ebb600a2de036a9a6a30f3",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G4413",
+    "language": "greek",
+    "lemma": "πρῶτος",
+    "transliteration": "prōtos",
+    "filename": "G4413.mp3",
+    "byte_size": 8832,
+    "sha256": "d439772933ff89e45f5b36340bba201127639c2af71478919b3149a996622482",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -881,6 +1596,39 @@
     "filename": "G4771.mp3",
     "byte_size": 5952,
     "sha256": "2c04acdf1e22083b4bfcb235333c5499c41d824034f448a249a42e5cb4809e95",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G4862",
+    "language": "greek",
+    "lemma": "σύν",
+    "transliteration": "sýn",
+    "filename": "G4862.mp3",
+    "byte_size": 7104,
+    "sha256": "af863681a99e0d31b9877c3a0089a954c9cedece9ecb04800ab326391a7e1a27",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G4982",
+    "language": "greek",
+    "lemma": "σώζω",
+    "transliteration": "sṓzō",
+    "filename": "G4982.mp3",
+    "byte_size": 7488,
+    "sha256": "63885bec6f17221812b777af4955ffa03089a478747f54fd5f6abec024649318",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G4983",
+    "language": "greek",
+    "lemma": "σῶμα",
+    "transliteration": "sōma",
+    "filename": "G4983.mp3",
+    "byte_size": 7296,
+    "sha256": "058ba933548b11442ad98aebc3156ec04b082e87d80eba1b7c838ab71afc7ddd",
     "standard": "erasmian_target",
     "status": "cataloged_verified"
   },
@@ -918,6 +1666,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "G5119",
+    "language": "greek",
+    "lemma": "τότε",
+    "transliteration": "tóte",
+    "filename": "G5119.mp3",
+    "byte_size": 6912,
+    "sha256": "8aa5229b0c4b13592e051e4fd27d612dc6556e6f5363be699761391028d659a0",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G5207",
     "language": "greek",
     "filename": "G5207.mp3",
@@ -925,6 +1684,39 @@
     "sha256": "3b012082f52896de523aa16894f2f09e0dcdf7a51a73b9bc9d1103e75f157271",
     "standard": "erasmian_target",
     "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G5228",
+    "language": "greek",
+    "lemma": "ὑπέρ",
+    "transliteration": "hypér",
+    "filename": "G5228.mp3",
+    "byte_size": 7296,
+    "sha256": "ede50e77b650a667c5ffc1147927993f81eb1e46de1c9847a81820937c9282c0",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G5259",
+    "language": "greek",
+    "lemma": "ὑπό",
+    "transliteration": "hypó",
+    "filename": "G5259.mp3",
+    "byte_size": 6144,
+    "sha256": "fa78b264f8926ecb1407dfdba17e06e5f6563783d0e228fd356c90093e4ef65d",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G5456",
+    "language": "greek",
+    "lemma": "φωνή",
+    "transliteration": "phōnḗ",
+    "filename": "G5456.mp3",
+    "byte_size": 7488,
+    "sha256": "3490d9e56034c2e86c89f12af93e2271000c388694e4557b1d3394f8513c5d7e",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
   },
   {
     "strongs_id": "G5457",
@@ -947,6 +1739,17 @@
     "status": "empirical_sample_catalogued"
   },
   {
+    "strongs_id": "G5495",
+    "language": "greek",
+    "lemma": "χείρ",
+    "transliteration": "cheír",
+    "filename": "G5495.mp3",
+    "byte_size": 6720,
+    "sha256": "09c2228830c847ea57e71199bf6c15bb5a8b92f94737503097de192c93c2374f",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "G5547",
     "language": "greek",
     "lemma": "Χριστός",
@@ -955,6 +1758,28 @@
     "sha256": "2f2b249ea5863508b425a7e5b3b2f7dcb858790a7df667b1f3f016634e040ca0",
     "standard": "erasmian_target",
     "status": "verified_catalogued"
+  },
+  {
+    "strongs_id": "G5590",
+    "language": "greek",
+    "lemma": "ψυχή",
+    "transliteration": "psychḗ",
+    "filename": "G5590.mp3",
+    "byte_size": 7680,
+    "sha256": "19aaf95adb4471aae41e14ea101957dc8cf5e7b92a78b1a463298eec3fa6d6a1",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "G5610",
+    "language": "greek",
+    "lemma": "ὥρα",
+    "transliteration": "hṓra",
+    "filename": "G5610.mp3",
+    "byte_size": 5952,
+    "sha256": "115bfef651c414550e4404e922bd2d0d28c3a9dc4bb3d776bb33c9c6cf1aaa31",
+    "standard": "erasmian_target",
+    "status": "cataloged_verified"
   },
   {
     "strongs_id": "G5613",
@@ -1012,6 +1837,28 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H168",
+    "language": "hebrew",
+    "lemma": "אֹהֶל",
+    "transliteration": "ʼôhel",
+    "filename": "H168.mp3",
+    "byte_size": 7104,
+    "sha256": "fb736ed4750fc8b710ca3fc7886ee54be32771f3416dc74569f9a65bbee8035d",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H175",
+    "language": "hebrew",
+    "lemma": "אַהֲרוֹן",
+    "transliteration": "ʼAhărôwn",
+    "filename": "H175.mp3",
+    "byte_size": 8832,
+    "sha256": "d57f149166be3e2c04e54f971228c0442821c504650ee0f0a292eafd3d7ff25e",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H216",
     "language": "hebrew",
     "filename": "H216.mp3",
@@ -1054,6 +1901,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H369",
+    "language": "hebrew",
+    "lemma": "אַיִן",
+    "transliteration": "ʼayin",
+    "filename": "H369.mp3",
+    "byte_size": 6528,
+    "sha256": "c7165360656baed680808fb7fd26cb5ce4e59afc0e4e067f546a4821cde656a6",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H376",
     "language": "hebrew",
     "lemma": "אִישׁ",
@@ -1083,6 +1941,17 @@
     "filename": "H408.mp3",
     "byte_size": 5760,
     "sha256": "45543432c07dd1119185bbddfbe4d8555c6fcaf8eb9e13c9d22b95558249aa39",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H410",
+    "language": "hebrew",
+    "lemma": "אֵל",
+    "transliteration": "ʼêl",
+    "filename": "H410.mp3",
+    "byte_size": 5568,
+    "sha256": "e1d2bdcfe89de9dca7eee77a283d63042906a8fc0ac06c3a9e690e69ebfb64ba",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1127,6 +1996,28 @@
     "status": "empirical_sample_catalogued"
   },
   {
+    "strongs_id": "H505",
+    "language": "hebrew",
+    "lemma": "אֶלֶף",
+    "transliteration": "ʼeleph",
+    "filename": "H505.mp3",
+    "byte_size": 7680,
+    "sha256": "57a75c10486cc77229f5b633532c8978c7b47f3f6fefd383428ccf2d06907711",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H518",
+    "language": "hebrew",
+    "lemma": "אִם",
+    "transliteration": "ʼim",
+    "filename": "H518.mp3",
+    "byte_size": 5184,
+    "sha256": "6ed7051fb38f4a9134f6ae59bce6aab9bb290f5bb638fd2c745a1b4ccc2c8ec6",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H559",
     "language": "hebrew",
     "lemma": "אָמַר",
@@ -1149,6 +2040,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H702",
+    "language": "hebrew",
+    "lemma": "אַרְבַּע",
+    "transliteration": "ʼarbaʻ",
+    "filename": "H702.mp3",
+    "byte_size": 6528,
+    "sha256": "ffa0bc849773a0954857c61f34e49cbce93643f690461bfcde1777bf5c23dd6e",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H776",
     "language": "hebrew",
     "filename": "H776.mp3",
@@ -1156,6 +2058,17 @@
     "sha256": "bd2c274bcb9f091e7c61b9ad4a1560024648d5917fe9b06301e47a0d8b04582c",
     "standard": "masoretic_target",
     "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H784",
+    "language": "hebrew",
+    "lemma": "אֵשׁ",
+    "transliteration": "ʼêsh",
+    "filename": "H784.mp3",
+    "byte_size": 6912,
+    "sha256": "16922cb1aa7589bcc4e7a3b9dd7180dcab0b60f9590afa04bd8349e8b04092e5",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
   },
   {
     "strongs_id": "H802",
@@ -1213,6 +2126,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H899",
+    "language": "hebrew",
+    "lemma": "בֶּגֶד",
+    "transliteration": "beged",
+    "filename": "H899.mp3",
+    "byte_size": 7872,
+    "sha256": "42deab9c0990f33bd3cc579beca5e743ac97e32882652874790d3f631f1c1cd4",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H935",
     "language": "hebrew",
     "lemma": "בּוֹא",
@@ -1256,6 +2180,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H1129",
+    "language": "hebrew",
+    "lemma": "בָּנָה",
+    "transliteration": "bânâh",
+    "filename": "H1129.mp3",
+    "byte_size": 6144,
+    "sha256": "74c1b0059c55588e12aad2602fd348c8f49db2f5f74d88ff6dc1a18a5db3ba4b",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H1247",
     "language": "aramaic",
     "filename": "H1247.mp3",
@@ -1282,6 +2217,50 @@
     "sha256": "79737bc834fd2e2dea3918f9ddbc2df082babb12e5ab945b9079b9e62e76277a",
     "standard": "masoretic_target",
     "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H1288",
+    "language": "hebrew",
+    "lemma": "בָרַךְ",
+    "transliteration": "bârak",
+    "filename": "H1288.mp3",
+    "byte_size": 8256,
+    "sha256": "bb6eebe20b9f0e29368b30c1474d28d55fe2ab82222b8572ea69aed3b5d9bae5",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H1323",
+    "language": "hebrew",
+    "lemma": "בַּת",
+    "transliteration": "bath",
+    "filename": "H1323.mp3",
+    "byte_size": 7488,
+    "sha256": "8a2b72f553bf8bc8b89c693cba0cb37878dae49fcdc8495bfd10cdf8dcb7cefe",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H1419",
+    "language": "hebrew",
+    "lemma": "גָּדוֹל",
+    "transliteration": "gâdôwl",
+    "filename": "H1419.mp3",
+    "byte_size": 7872,
+    "sha256": "a6defebcd5814911f40aecbfa907aaaebef23fdb2957dc292fd178f70a624487",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H1471",
+    "language": "hebrew",
+    "lemma": "גּוֹי",
+    "transliteration": "gôwy",
+    "filename": "H1471.mp3",
+    "byte_size": 6720,
+    "sha256": "1e693212033b001431d67bfdf738d4af517f33140481a2f2e327be938de463e7",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
   },
   {
     "strongs_id": "H1567",
@@ -1343,6 +2322,17 @@
     "filename": "H1732.mp3",
     "byte_size": 7872,
     "sha256": "7c93de337166d68385b98cfc95499a4864854f4e5a0575896ac3ca70de412f40",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H1818",
+    "language": "hebrew",
+    "lemma": "דָּם",
+    "transliteration": "dâm",
+    "filename": "H1818.mp3",
+    "byte_size": 6912,
+    "sha256": "0e10e128b92bced7dbf5eacc68e8be27badf41bc759106a3baa32f8684b4c30d",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1413,6 +2403,28 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H2022",
+    "language": "hebrew",
+    "lemma": "הַר",
+    "transliteration": "har",
+    "filename": "H2022.mp3",
+    "byte_size": 6528,
+    "sha256": "eaa5346dcb8ac42c357919b5ed5bfc74664d0559684a695436cd1f07a8499560",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H2063",
+    "language": "hebrew",
+    "lemma": "זֹאת",
+    "transliteration": "zôʼth",
+    "filename": "H2063.mp3",
+    "byte_size": 7488,
+    "sha256": "bcc3cf8c9670a2a01bfef6a539e2032ac04e947292c48d21fe0b2d38c74115c6",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H2077",
     "language": "hebrew",
     "lemma": "זֶבַח",
@@ -1435,6 +2447,39 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H2091",
+    "language": "hebrew",
+    "lemma": "זָהָב",
+    "transliteration": "zâhâb",
+    "filename": "H2091.mp3",
+    "byte_size": 8832,
+    "sha256": "d6cc4afa265c00edbe6a7bf382a5a4cf7958ef77885ec4c0a869ccec594e7fcc",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H2403",
+    "language": "hebrew",
+    "lemma": "חַטָּאָה",
+    "transliteration": "chaṭṭâʼâh",
+    "filename": "H2403.mp3",
+    "byte_size": 7872,
+    "sha256": "9108c1bf4d3b3fe57d0b2e699bfb012ef06306d171885eecb6bb0ee12efd63a4",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H2416",
+    "language": "hebrew",
+    "lemma": "חַי",
+    "transliteration": "chay",
+    "filename": "H2416.mp3",
+    "byte_size": 6912,
+    "sha256": "05ddea1902aae46759e80b0b5d355f3023b9d7e8d76a5c2aa5254991f4e0ec68",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H2493",
     "language": "aramaic",
     "filename": "H2493.mp3",
@@ -1444,6 +2489,17 @@
     "status": "empirical_sample_catalogued"
   },
   {
+    "strongs_id": "H2568",
+    "language": "hebrew",
+    "lemma": "חָמֵשׁ",
+    "transliteration": "châmêsh",
+    "filename": "H2568.mp3",
+    "byte_size": 8640,
+    "sha256": "77f32d55861250370dce6fb3035f73efc6b1ccc8cbbd7c62645621206b575397",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H2617",
     "language": "hebrew",
     "filename": "H2617.mp3",
@@ -1451,6 +2507,28 @@
     "sha256": "9f2941ffa89657ce05514272a2a15bcc653134dabc58b03580bbd1454d9ece4c",
     "standard": "masoretic_target",
     "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H2719",
+    "language": "hebrew",
+    "lemma": "חֶרֶב",
+    "transliteration": "chereb",
+    "filename": "H2719.mp3",
+    "byte_size": 8064,
+    "sha256": "3af5b33aac4973b911458212fad5ede86b12b0486e04acfaa795a179433933d8",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H2896",
+    "language": "hebrew",
+    "lemma": "טוֹב",
+    "transliteration": "ṭôwb",
+    "filename": "H2896.mp3",
+    "byte_size": 6528,
+    "sha256": "34f1ab9d9774d7481a41eda50d28e3a5f531e76c31a29009e3c1e7a7f0038e88",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
   },
   {
     "strongs_id": "H3026",
@@ -1516,6 +2594,50 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H3205",
+    "language": "hebrew",
+    "lemma": "יָלַד",
+    "transliteration": "yâlad",
+    "filename": "H3205.mp3",
+    "byte_size": 7872,
+    "sha256": "9710beac86e6208edf7f9ef6146176fe3696034111b2115c26a3094dc5019493",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H3212",
+    "language": "hebrew",
+    "lemma": "יָלַךְ",
+    "transliteration": "yâlak",
+    "filename": "H3212.mp3",
+    "byte_size": 8256,
+    "sha256": "c995e487c919469dd4e775213ceca18db855ffbb27c46efc6d539b066e5519a2",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H3220",
+    "language": "hebrew",
+    "lemma": "יָם",
+    "transliteration": "yâm",
+    "filename": "H3220.mp3",
+    "byte_size": 6720,
+    "sha256": "ead44b3f6682b84a6c84b40007d3c45a2fe8e24221710bb6151083e90c324767",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H3290",
+    "language": "hebrew",
+    "lemma": "יַעֲקֹב",
+    "transliteration": "Yaʻăqôb",
+    "filename": "H3290.mp3",
+    "byte_size": 9216,
+    "sha256": "a4b51b86226aadf1a97add2bbea725ffe852307a59be13fe41349a2722f7ceab",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H3318",
     "language": "hebrew",
     "lemma": "יָצָא",
@@ -1523,6 +2645,39 @@
     "filename": "H3318.mp3",
     "byte_size": 6720,
     "sha256": "4a1b36dc752e6c8ca9329c5b690ca0e63c552728f842179b6b1701b247c60a50",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H3372",
+    "language": "hebrew",
+    "lemma": "יָרֵא",
+    "transliteration": "yârêʼ",
+    "filename": "H3372.mp3",
+    "byte_size": 6144,
+    "sha256": "cd6813e3379711d1a28bf91a153c9ffd9124f4feea127abed577cef0352c8f75",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H3381",
+    "language": "hebrew",
+    "lemma": "יָרַד",
+    "transliteration": "yârad",
+    "filename": "H3381.mp3",
+    "byte_size": 7872,
+    "sha256": "8326516d19d3d41c3007d9c471dfc652d93c11e9bbc0224218340fd834ce52bd",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H3390",
+    "language": "hebrew",
+    "lemma": "יְרוּשָׁלֵם",
+    "transliteration": "Yᵉrûwshâlêm",
+    "filename": "H3390.mp3",
+    "byte_size": 10368,
+    "sha256": "ffc1297806fc510a3ce2802eebd82dc16a44090de80017279e698c41c9fe9e0d",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1602,6 +2757,17 @@
     "status": "verified_catalogued"
   },
   {
+    "strongs_id": "H3701",
+    "language": "hebrew",
+    "lemma": "כֶּסֶף",
+    "transliteration": "keçeph",
+    "filename": "H3701.mp3",
+    "byte_size": 8256,
+    "sha256": "59c42534b9f57862173f54b102e8b08505814ec671b8c583b34f8b691a844283",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H3702",
     "language": "aramaic",
     "filename": "H3702.mp3",
@@ -1622,6 +2788,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H3820",
+    "language": "hebrew",
+    "lemma": "לֵב",
+    "transliteration": "lêb",
+    "filename": "H3820.mp3",
+    "byte_size": 6336,
+    "sha256": "671eb5f8f506cf777f9991e7aacda23c8eed683885ab9c2447e825c007fd2b1e",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H3824",
     "language": "hebrew",
     "lemma": "לֵבָב",
@@ -1633,6 +2810,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H3899",
+    "language": "hebrew",
+    "lemma": "לֶחֶם",
+    "transliteration": "lechem",
+    "filename": "H3899.mp3",
+    "byte_size": 7680,
+    "sha256": "d8cd347fdaecf52bc1624b7cfbdb268e170dbf429983edce524fe1e8607de299",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H3947",
     "language": "hebrew",
     "lemma": "לָקַח",
@@ -1640,6 +2828,39 @@
     "filename": "H3947.mp3",
     "byte_size": 8448,
     "sha256": "99d2c49d3c2253b7285b611f392c865257f1ddaecd2e0bc1d28bd02003f800ab",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H3966",
+    "language": "hebrew",
+    "lemma": "מְאֹד",
+    "transliteration": "mᵉʼôd",
+    "filename": "H3966.mp3",
+    "byte_size": 8256,
+    "sha256": "9c35706c0171edf72d5f3b902e86ad34562778563bbee5aa29a07024e4987282",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H3967",
+    "language": "hebrew",
+    "lemma": "מֵאָה",
+    "transliteration": "mêʼâh",
+    "filename": "H3967.mp3",
+    "byte_size": 6336,
+    "sha256": "6194f175d8096eb885edbe5b41ff61ad111ad5e1d892cb61fab76cdcb600e636",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H4057",
+    "language": "hebrew",
+    "lemma": "מִדְבָּר",
+    "transliteration": "midbâr",
+    "filename": "H4057.mp3",
+    "byte_size": 8448,
+    "sha256": "e929021735e5e7c68b0a4d55b7748d541a2b8115761d3abd8b3ee14f0118c639",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1677,6 +2898,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H4310",
+    "language": "hebrew",
+    "lemma": "מִי",
+    "transliteration": "mîy",
+    "filename": "H4310.mp3",
+    "byte_size": 4800,
+    "sha256": "8a803ff1ac4ca32a69b99baf6a2db415640dc0070090b568769afc7fc47d8481",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H4325",
     "language": "hebrew",
     "lemma": "מַיִם",
@@ -1684,6 +2916,28 @@
     "filename": "H4325.mp3",
     "byte_size": 7680,
     "sha256": "d93069edcd925d9701ed8096f39c3d88a9cdebe0f2e647284fffdfe7a2058571",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H4421",
+    "language": "hebrew",
+    "lemma": "מִלְחָמָה",
+    "transliteration": "milchâmâh",
+    "filename": "H4421.mp3",
+    "byte_size": 8448,
+    "sha256": "d6e6f9a0e1e30a76aa11be6395bd723fe52488dcdde0c566e26d724ff5c6187d",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H4427",
+    "language": "hebrew",
+    "lemma": "מָלַךְ",
+    "transliteration": "mâlak",
+    "filename": "H4427.mp3",
+    "byte_size": 8448,
+    "sha256": "20e8c2ef5c8abefe539c126845a0f223b526b489e3cf168142306e20179fc618",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1719,6 +2973,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H4672",
+    "language": "hebrew",
+    "lemma": "מָצָא",
+    "transliteration": "mâtsâʼ",
+    "filename": "H4672.mp3",
+    "byte_size": 6528,
+    "sha256": "ac777176f3efb0f829578d1d193fd523116072b450643edc9e5846076c36325a",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H4714",
     "language": "hebrew",
     "lemma": "מִצְרַיִם",
@@ -1730,6 +2995,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H4725",
+    "language": "hebrew",
+    "lemma": "מָקוֹם",
+    "transliteration": "mâqôwm",
+    "filename": "H4725.mp3",
+    "byte_size": 8448,
+    "sha256": "dd586dc6b4282ac86290f270e7c0d3babd863863c8f2d80b66fbf5a139928373",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H4872",
     "language": "hebrew",
     "lemma": "מֹשֶׁה",
@@ -1737,6 +3013,39 @@
     "filename": "H4872.mp3",
     "byte_size": 6336,
     "sha256": "d046f678fc8a8a5c8e678d062dd2ee82bd26e617f72153ab03e3781b38363fee",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H4940",
+    "language": "hebrew",
+    "lemma": "מִשְׁפָּחָה",
+    "transliteration": "mishpâchâh",
+    "filename": "H4940.mp3",
+    "byte_size": 8256,
+    "sha256": "d7fa918c9627d297f6610f003808eab1f28a47502a50d312cfcc3dae13874f52",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H4941",
+    "language": "hebrew",
+    "lemma": "מִשְׁפָּט",
+    "transliteration": "mishpâṭ",
+    "filename": "H4941.mp3",
+    "byte_size": 9216,
+    "sha256": "e52c2f3b37cbe59f434957179cb1ee657cfe82ee637bb0517bf6ea3da2f90b57",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H5002",
+    "language": "hebrew",
+    "lemma": "נְאֻם",
+    "transliteration": "nᵉʼum",
+    "filename": "H5002.mp3",
+    "byte_size": 7872,
+    "sha256": "6752345b639f76d30380e6c36b1f91c4a842a32969b27b1563e77dae83b29dcd",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1761,6 +3070,28 @@
     "status": "empirical_sample_catalogued"
   },
   {
+    "strongs_id": "H5221",
+    "language": "hebrew",
+    "lemma": "נָכָה",
+    "transliteration": "nâkâh",
+    "filename": "H5221.mp3",
+    "byte_size": 6336,
+    "sha256": "02282e821fc89a4ac3d425b5b51660af2cd9d9f1a895ddf2b3a95fa955b56189",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H5307",
+    "language": "hebrew",
+    "lemma": "נָפַל",
+    "transliteration": "nâphal",
+    "filename": "H5307.mp3",
+    "byte_size": 8064,
+    "sha256": "be4d7e18c7de762a610a0ba04860406dfb57d35a2ad42991379c5453d0d7f5c9",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H5315",
     "language": "hebrew",
     "lemma": "נֶפֶשׁ",
@@ -1768,6 +3099,17 @@
     "filename": "H5315.mp3",
     "byte_size": 8832,
     "sha256": "86b1064ef691dbc834034acf8de17aa1f97d5b7ccb1714badf2b9320ca067d4a",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H5375",
+    "language": "hebrew",
+    "lemma": "נָשָׂא",
+    "transliteration": "nâsâʼ",
+    "filename": "H5375.mp3",
+    "byte_size": 6528,
+    "sha256": "a19c9a90ec375da9edcab7666858da82f119f1fe604d3131914800ea5ea50d85",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1783,6 +3125,28 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H5439",
+    "language": "hebrew",
+    "lemma": "סָבִיב",
+    "transliteration": "çâbîyb",
+    "filename": "H5439.mp3",
+    "byte_size": 8448,
+    "sha256": "281af7c5db44e0fde55247db10ad17e7548840ee195008e990514f025283fd0b",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H5647",
+    "language": "hebrew",
+    "lemma": "עָבַד",
+    "transliteration": "ʻâbad",
+    "filename": "H5647.mp3",
+    "byte_size": 7488,
+    "sha256": "25cb900a966f9636c9bb04231c3eba92fcb64901c8bfe254987912c559de6eb7",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H5650",
     "language": "hebrew",
     "lemma": "עֶבֶד",
@@ -1794,6 +3158,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H5674",
+    "language": "hebrew",
+    "lemma": "עָבַר",
+    "transliteration": "ʻâbar",
+    "filename": "H5674.mp3",
+    "byte_size": 7296,
+    "sha256": "8a44f767fcb49ea202ea687488d7bb6836589513709f304dea138951d94c8140",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H5704",
     "language": "hebrew",
     "lemma": "עַד",
@@ -1801,6 +3176,17 @@
     "filename": "H5704.mp3",
     "byte_size": 5760,
     "sha256": "5f40093a5fc3eff421d7084f1dd2211ebd48ed6d64c69639b3a60d4caaa27556",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H5750",
+    "language": "hebrew",
+    "lemma": "עוֹד",
+    "transliteration": "ʻôwd",
+    "filename": "H5750.mp3",
+    "byte_size": 5760,
+    "sha256": "f71da9e6b50b0db90bb241a0ff42e866a88eb6d83f4e3c76e09e2f1419b7c70f",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1882,6 +3268,28 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H5975",
+    "language": "hebrew",
+    "lemma": "עָמַד",
+    "transliteration": "ʻâmad",
+    "filename": "H5975.mp3",
+    "byte_size": 7296,
+    "sha256": "0b159ba5b8ccced26c59c33631f3e2b7352c783de2f3521d62153872fc2d90ae",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H6030",
+    "language": "hebrew",
+    "lemma": "עָנָה",
+    "transliteration": "ʻânâh",
+    "filename": "H6030.mp3",
+    "byte_size": 5760,
+    "sha256": "b053cb7dbd3109526f00ff7a794cf74fd624a46b2680d2452b43c5e419c49806",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H6086",
     "language": "hebrew",
     "lemma": "עֵץ",
@@ -1904,6 +3312,61 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H6240",
+    "language": "hebrew",
+    "lemma": "עָשָׂר",
+    "transliteration": "ʻâsâr",
+    "filename": "H6240.mp3",
+    "byte_size": 7488,
+    "sha256": "21c635de8d375c403dd69b9922cfe656060a2bbd63ba8f0da493df4c49b3ca9f",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H6242",
+    "language": "hebrew",
+    "lemma": "עֶשְׂרִים",
+    "transliteration": "ʻesrîym",
+    "filename": "H6242.mp3",
+    "byte_size": 8256,
+    "sha256": "54e6520330516dc1acdda9f750a6a4a63473d83593cee053652e9fa6443b5d62",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H6256",
+    "language": "hebrew",
+    "lemma": "עֵת",
+    "transliteration": "ʻêth",
+    "filename": "H6256.mp3",
+    "byte_size": 6720,
+    "sha256": "e85c8d54c49a9c9a54190b56b44f3bf0d64546a0bbb258eda8ce3ed01fb61db2",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H6258",
+    "language": "hebrew",
+    "lemma": "עַתָּה",
+    "transliteration": "ʻattâh",
+    "filename": "H6258.mp3",
+    "byte_size": 6144,
+    "sha256": "27c7a3d11e67f814c0084b553a09d0dae296867a3a3802c3bd9e16d5733572f4",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H6310",
+    "language": "hebrew",
+    "lemma": "פֶּה",
+    "transliteration": "peh",
+    "filename": "H6310.mp3",
+    "byte_size": 4800,
+    "sha256": "2c3afaae12e7430a2ffbd7372a475792a6240d3852b273158c9d2eace8a9531d",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H6440",
     "language": "hebrew",
     "lemma": "פָּנִים",
@@ -1915,6 +3378,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H6635",
+    "language": "hebrew",
+    "lemma": "צָבָא",
+    "transliteration": "tsâbâʼ",
+    "filename": "H6635.mp3",
+    "byte_size": 6720,
+    "sha256": "67e20d57f0c917b373dcfa53112d4531dd14354c0c4d6b1d83cbdf21445c430b",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H6664",
     "language": "hebrew",
     "lemma": "צֶדֶק",
@@ -1922,6 +3396,17 @@
     "filename": "H6664.mp3",
     "byte_size": 8448,
     "sha256": "52ebd2d3e752a262a0f3c4dde6b9dc6486bc0458490d702da88f37b190f1ae67",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H6680",
+    "language": "hebrew",
+    "lemma": "צָוָה",
+    "transliteration": "tsâvâh",
+    "filename": "H6680.mp3",
+    "byte_size": 6720,
+    "sha256": "e4698a560009b49947bcc52346e75c60c073cb1e42c0f5630f9e427e98042ab4",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1944,6 +3429,39 @@
     "status": "empirical_sample_catalogued"
   },
   {
+    "strongs_id": "H6944",
+    "language": "hebrew",
+    "lemma": "קֹדֶשׁ",
+    "transliteration": "qôdesh",
+    "filename": "H6944.mp3",
+    "byte_size": 8832,
+    "sha256": "d5852e7176e9daf262406038f2d3b889dd6ae491c842164a84f5c3f9ba0df43f",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H6963",
+    "language": "hebrew",
+    "lemma": "קוֹל",
+    "transliteration": "qôwl",
+    "filename": "H6963.mp3",
+    "byte_size": 6528,
+    "sha256": "5543e32bfc0a8dcdd3c9c66ce6bf56d729d583486c019fc7a7641da8f4dc2dea",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H6965",
+    "language": "hebrew",
+    "lemma": "קוּם",
+    "transliteration": "qûwm",
+    "filename": "H6965.mp3",
+    "byte_size": 6336,
+    "sha256": "fbec136b53a441e86eea5ea68cf07881991223891ca3590c6b0e309b6cba44de",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H7121",
     "language": "hebrew",
     "lemma": "קָרָא",
@@ -1951,6 +3469,17 @@
     "filename": "H7121.mp3",
     "byte_size": 5952,
     "sha256": "f0695ec40267359fc788510c7f44746b4d54aea93a0b7708a60de8b2ea754a62",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H7126",
+    "language": "hebrew",
+    "lemma": "קָרַב",
+    "transliteration": "qârab",
+    "filename": "H7126.mp3",
+    "byte_size": 7488,
+    "sha256": "e8e382966c208a43d09a88033812373255187af8aec595a3d0e4f0c8b6a14fb2",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
@@ -1986,6 +3515,17 @@
     "status": "empirical_sample_catalogued"
   },
   {
+    "strongs_id": "H7227",
+    "language": "hebrew",
+    "lemma": "רַב",
+    "transliteration": "rab",
+    "filename": "H7227.mp3",
+    "byte_size": 6912,
+    "sha256": "5f3d70346585c30193a44429b57ded7852200ca0470a07271c6b57a633c3dfab",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H7261",
     "language": "aramaic",
     "filename": "H7261.mp3",
@@ -2017,6 +3557,39 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H7586",
+    "language": "hebrew",
+    "lemma": "שָׁאוּל",
+    "transliteration": "Shâʼûwl",
+    "filename": "H7586.mp3",
+    "byte_size": 8256,
+    "sha256": "e370839dfb5b63657d9a021783ba5999b2525100134c985316ddf9b3075b9850",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H7651",
+    "language": "hebrew",
+    "lemma": "שֶׁבַע",
+    "transliteration": "shebaʻ",
+    "filename": "H7651.mp3",
+    "byte_size": 6720,
+    "sha256": "0d781e1fd24c1d8ab56c55445a3437cf5046a7050f8e8a981c5fb6188869c677",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H7704",
+    "language": "hebrew",
+    "lemma": "שָׂדֶה",
+    "transliteration": "sâdeh",
+    "filename": "H7704.mp3",
+    "byte_size": 6336,
+    "sha256": "953dcde427df75821ed443e07c120c62c521ce5f4951fd70e56eb36a06d034f4",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H7725",
     "language": "hebrew",
     "lemma": "שׁוּב",
@@ -2028,6 +3601,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H7760",
+    "language": "hebrew",
+    "lemma": "שׂוּם",
+    "transliteration": "sûwm",
+    "filename": "H7760.mp3",
+    "byte_size": 7104,
+    "sha256": "9968ccd895c46c8ee48a2db75c472ca15c54c756f9fedb907d40e9dc1c8c76a5",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H7965",
     "language": "hebrew",
     "filename": "H7965.mp3",
@@ -2035,6 +3619,17 @@
     "sha256": "02fba9bb3540e1b249d09302917e44d6434662738fd2b311c9b0a317436b9816",
     "standard": "masoretic_target",
     "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H7969",
+    "language": "hebrew",
+    "lemma": "שָׁלוֹשׁ",
+    "transliteration": "shâlôwsh",
+    "filename": "H7969.mp3",
+    "byte_size": 8832,
+    "sha256": "ae4fc8f65a6607d1ca11d987cf5ae7f23fe380b283c4903669e3fb1d32a0df3c",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
   },
   {
     "strongs_id": "H7971",
@@ -2099,6 +3694,17 @@
     "status": "cataloged_verified"
   },
   {
+    "strongs_id": "H8104",
+    "language": "hebrew",
+    "lemma": "שָׁמַר",
+    "transliteration": "shâmar",
+    "filename": "H8104.mp3",
+    "byte_size": 7872,
+    "sha256": "8f401f60b6726c1c72ad169352b2a133c4f2d4e978c08bf637b1b7225bd61ea2",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
     "strongs_id": "H8141",
     "language": "hebrew",
     "lemma": "שָׁנֶה",
@@ -2106,6 +3712,50 @@
     "filename": "H8141.mp3",
     "byte_size": 6336,
     "sha256": "cf912aef275af65c784435e5ab67dbfaeee6f6ec43641a401d500d0df3ac6e20",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H8147",
+    "language": "hebrew",
+    "lemma": "שְׁנַיִם",
+    "transliteration": "shᵉnayim",
+    "filename": "H8147.mp3",
+    "byte_size": 8256,
+    "sha256": "1312fa8066cfd2ac94e5498cdbc6422e25be1d8386915f2b94dfc0dcea7bc211",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H8179",
+    "language": "hebrew",
+    "lemma": "שַׁעַר",
+    "transliteration": "shaʻar",
+    "filename": "H8179.mp3",
+    "byte_size": 7680,
+    "sha256": "f698ecf392b4b7b3b716a3cc6b1a561dbcb84690c842aa5891441395f474f446",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H8269",
+    "language": "hebrew",
+    "lemma": "שַׂר",
+    "transliteration": "sar",
+    "filename": "H8269.mp3",
+    "byte_size": 7104,
+    "sha256": "a38d539b614eee0452a8026f374fdcba19ea3955eb315a82b13db5c2b773f065",
+    "standard": "masoretic_target",
+    "status": "cataloged_verified"
+  },
+  {
+    "strongs_id": "H8432",
+    "language": "hebrew",
+    "lemma": "תָּוֶךְ",
+    "transliteration": "tâvek",
+    "filename": "H8432.mp3",
+    "byte_size": 7872,
+    "sha256": "771e32d65060c2e58b662c30163dab5974517e450818b8ede733d2113b768c16",
     "standard": "masoretic_target",
     "status": "cataloged_verified"
   },
