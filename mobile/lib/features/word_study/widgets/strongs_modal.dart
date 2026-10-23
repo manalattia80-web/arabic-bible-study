@@ -327,12 +327,13 @@ class StrongsModal extends StatelessWidget {
                       const Spacer(),
                       if (entry.originalWord.isNotEmpty && entry.originalWord != '—')
                         AudioButton(
+                          strongsId: entry.strongsId,
                           word: entry.originalWord,
                           lang: entry.isAramaic ? 'aramaic' : entry.language,
                           url: entry.audioUrl,
                           tooltip: entry.isAramaic
                               ? 'النطق الآرامي معلّق قيد المراجعة'
-                              : 'استماع للمدخل المعجمي (نطق آلي تقريبي)',
+                              : 'استماع للمدخل المعجمي (${entry.strongsId})',
                         ),
                     ],
                   ),

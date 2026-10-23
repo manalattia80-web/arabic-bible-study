@@ -177,12 +177,15 @@ class MorphologyModal extends StatelessWidget {
                             // Audio Button
                             if (mapping.hasAudio)
                               AudioButton(
+                                strongsId: mapping.strongsId,
                                 word: mapping.origWord,
                                 lang: mapping.origWordLang,
                                 url: mapping.audioUrl,
                                 tooltip: mapping.isAramaic
                                     ? 'النطق الآرامي معلّق قيد المراجعة'
-                                    : 'استماع لصيغة الكلمة في الآية (نطق آلي تقريبي)',
+                                    : (mapping.hasStrongs
+                                        ? 'استماع للنطق المعجمي (${mapping.strongsId})'
+                                        : 'استماع لصيغة الكلمة في الآية'),
                               ),
                           ],
                         ),

@@ -1,0 +1,272 @@
+[
+  {
+    "strongs_id": "G2098",
+    "language": "greek",
+    "filename": "G2098.mp3",
+    "byte_size": 10368,
+    "sha256": "439a476eef053f954fb57f5a0640f3511c960c933e25d3821ffcb2c18d90791f",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G2316",
+    "language": "greek",
+    "filename": "G2316.mp3",
+    "byte_size": 8640,
+    "sha256": "d7a4d163408e654a634da2402debdb999b009bc7b9377195b6ad4f4ec550e6e7",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G2424",
+    "language": "greek",
+    "filename": "G2424.mp3",
+    "byte_size": 9216,
+    "sha256": "daffa0b8826e099e42afc63c2c5ab54cd008aa90b6f98a9879f8a7c656b73ce7",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G26",
+    "language": "greek",
+    "filename": "G26.mp3",
+    "byte_size": 8448,
+    "sha256": "480e003290833e086e389a3a942b22ec60744c82b7f2c499499ae468a8787c72",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G2962",
+    "language": "greek",
+    "filename": "G2962.mp3",
+    "byte_size": 8448,
+    "sha256": "478b51bcc2d1431c67ec386c7fb08bdee71d9fd665665a9121db01bef69d9d5a",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G3056",
+    "language": "greek",
+    "filename": "G3056.mp3",
+    "byte_size": 8832,
+    "sha256": "8a2538f00e2eb2367029d8e64be1196902d10c7622d5b6e41ae191a22e462e0d",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G4151",
+    "language": "greek",
+    "filename": "G4151.mp3",
+    "byte_size": 8064,
+    "sha256": "5d4445e8772a9d6013e18a585e55b7d955f19c885f5b86b78e6a8bce222080b9",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G5207",
+    "language": "greek",
+    "filename": "G5207.mp3",
+    "byte_size": 7488,
+    "sha256": "3b012082f52896de523aa16894f2f09e0dcdf7a51a73b9bc9d1103e75f157271",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G5485",
+    "language": "greek",
+    "filename": "G5485.mp3",
+    "byte_size": 8832,
+    "sha256": "661f40d6f9ba94a0b3ace66ea6b5fb3a538b45d4f2f87487dad6d74489b2a474",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G907",
+    "language": "greek",
+    "filename": "G907.mp3",
+    "byte_size": 9024,
+    "sha256": "e2e909f995aacc4d1b3c3d0dc11c08a46cf8fc9ae3acef7c72b9444bddcc7e31",
+    "standard": "erasmian_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H1247",
+    "language": "aramaic",
+    "filename": "H1247.mp3",
+    "byte_size": 6528,
+    "sha256": "ba881e5b743e684f14dc9f4fd4e761373cb24d8aa49ace516441281c1e755636",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H1285",
+    "language": "hebrew",
+    "filename": "H1285.mp3",
+    "byte_size": 7872,
+    "sha256": "79737bc834fd2e2dea3918f9ddbc2df082babb12e5ab945b9079b9e62e76277a",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H1722",
+    "language": "aramaic",
+    "filename": "H1722.mp3",
+    "byte_size": 8448,
+    "sha256": "22e344e2c6f53c07fc8f21f42ef3e34786a310a28cc3cd2dc1a086d1938dda6b",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H216",
+    "language": "hebrew",
+    "filename": "H216.mp3",
+    "byte_size": 5568,
+    "sha256": "cb73e6b7e34d2342ec7147db485dc7f5a8d34b6d942f549a497e55287808f4b4",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H2493",
+    "language": "aramaic",
+    "filename": "H2493.mp3",
+    "byte_size": 7872,
+    "sha256": "1b4f7aae1e3b4a24ebe812148c7f6ead7abd0c2ced1b700ee58d5f12c1382c8a",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H2617",
+    "language": "hebrew",
+    "filename": "H2617.mp3",
+    "byte_size": 8256,
+    "sha256": "9f2941ffa89657ce05514272a2a15bcc653134dabc58b03580bbd1454d9ece4c",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H3068",
+    "language": "hebrew",
+    "filename": "H3068.mp3",
+    "byte_size": 7680,
+    "sha256": "ee05687ed61cad0061ae7f699828e6ef599d7a6509f951f39e4f4e67c1eff025",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H3702",
+    "language": "aramaic",
+    "filename": "H3702.mp3",
+    "byte_size": 7872,
+    "sha256": "ed03188ac3ed3f2649fc79051da3945f527cbea3613c18acdc29368086b732a9",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H426",
+    "language": "aramaic",
+    "filename": "H426.mp3",
+    "byte_size": 5760,
+    "sha256": "220ac47f7827858073ceb0c47672349526404544e1d060de5c20d66a91b5d523",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H430",
+    "language": "hebrew",
+    "filename": "H430.mp3",
+    "byte_size": 8448,
+    "sha256": "1cf7a0f51f3c7b443b8073c8515c57db4710e7819055957cf82e21a64765c082",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H4437",
+    "language": "aramaic",
+    "filename": "H4437.mp3",
+    "byte_size": 7296,
+    "sha256": "10d3956a8f490b8d712fcde393724fecad00d0d9b2093d36182ec2926d563bd0",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H5174",
+    "language": "aramaic",
+    "filename": "H5174.mp3",
+    "byte_size": 9216,
+    "sha256": "cc392f143baeb030e6445ac07277516dd08c0765d34eae4fca4a021119642b10",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H6918",
+    "language": "hebrew",
+    "filename": "H6918.mp3",
+    "byte_size": 8640,
+    "sha256": "f825c3dc169edab3a8a86e81843466cb9651b8c4f8a4655d38bc1ac4c16130e4",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H6922",
+    "language": "aramaic",
+    "filename": "H6922.mp3",
+    "byte_size": 9024,
+    "sha256": "7daa55454cf0df91bea5e0aefe05655d629525a1e4cd063b3276eeee224d1c11",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H7225",
+    "language": "hebrew",
+    "filename": "H7225.mp3",
+    "byte_size": 9792,
+    "sha256": "af6954acb44b67ae1073fcc2d3ad20141fd5602fd6656c93bb40e9c057a6caa3",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H7261",
+    "language": "aramaic",
+    "filename": "H7261.mp3",
+    "byte_size": 9984,
+    "sha256": "1718935456cb6c963d1fed833fc57a41252f035f8fb8501da60455147120bb19",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H776",
+    "language": "hebrew",
+    "filename": "H776.mp3",
+    "byte_size": 7488,
+    "sha256": "bd2c274bcb9f091e7c61b9ad4a1560024648d5917fe9b06301e47a0d8b04582c",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H7965",
+    "language": "hebrew",
+    "filename": "H7965.mp3",
+    "byte_size": 8064,
+    "sha256": "02fba9bb3540e1b249d09302917e44d6434662738fd2b311c9b0a317436b9816",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H8064",
+    "language": "hebrew",
+    "filename": "H8064.mp3",
+    "byte_size": 8832,
+    "sha256": "3222aacb47f9c1a13d1613ba1405848c38f7b32ac4593be7c339d6028f3942bf",
+    "standard": "masoretic_target",
+    "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "H8065",
+    "language": "aramaic",
+    "filename": "H8065.mp3",
+    "byte_size": 7296,
+    "sha256": "b970c9dc7c7928ae8e6f478b29a369f9d223c2d010d84287709f323606a235b6",
+    "standard": "biblical_aramaic",
+    "status": "empirical_sample_catalogued"
+  }
+]

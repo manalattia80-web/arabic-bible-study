@@ -118,6 +118,29 @@ class WordStudyProvider extends ChangeNotifier {
     }
   }
 
+  bool isMappingPlaying(WordMapping mapping) {
+    if (mapping.hasStrongs) {
+      return AudioPlaybackService.instance.isPlaying('strongs_${mapping.strongsId!.trim().toUpperCase()}');
+    }
+    if (mapping.audioUrl != null && mapping.audioUrl!.isNotEmpty) {
+      return isPlaying(mapping.audioUrl!);
+    }
+    return false;
+  }
+
+  Future<void> playWordMapping(WordMapping mapping) async {
+    if (mapping.hasStrongs) {
+      await AudioPlaybackService.instance.playStrongs(
+        strongsId: mapping.strongsId!,
+        language: mapping.origWordLang,
+        word: mapping.origWord,
+        fallbackUrl: mapping.audioUrl,
+      );
+    } else if (mapping.audioUrl != null && mapping.audioUrl!.isNotEmpty) {
+      await AudioPlaybackService.instance.playUrl(mapping.audioUrl!);
+    }
+  }
+
   Future<void> playAudio(String url) async {
     await AudioPlaybackService.instance.playUrl(url);
   }

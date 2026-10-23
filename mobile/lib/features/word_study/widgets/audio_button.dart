@@ -3,6 +3,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/services/audio_playback_service.dart';
 
 class AudioButton extends StatelessWidget {
+  final String? strongsId;
   final String? url;
   final String? word;
   final String? lang;
@@ -10,6 +11,7 @@ class AudioButton extends StatelessWidget {
 
   const AudioButton({
     super.key,
+    this.strongsId,
     this.url,
     this.word,
     this.lang,
@@ -19,6 +21,9 @@ class AudioButton extends StatelessWidget {
   bool get _isAramaic => AudioPlaybackService.instance.isAramaic(lang ?? '');
 
   String get _targetKey {
+    if (strongsId != null && strongsId!.isNotEmpty && strongsId != '---' && strongsId != '-') {
+      return 'strongs_${strongsId!.trim().toUpperCase()}';
+    }
     if (word != null && word!.isNotEmpty) {
       final code = AudioPlaybackService.instance.resolveLangCode(lang ?? 'hebrew');
       final clean = AudioPlaybackService.instance.cleanOriginalWord(word!);
@@ -40,6 +45,38 @@ class AudioButton extends StatelessWidget {
   }
 
   Future<void> _handleTap(BuildContext context) async {
+    // 1. If Strong's ID is available, prioritize trusted Strong's audio
+    if (strongsId != null && strongsId!.isNotEmpty && strongsId != '---' && strongsId != '-') {
+      final success = await AudioPlaybackService.instance.playStrongs(
+        strongsId: strongsId!,
+        language: lang ?? 'hebrew',
+        word: word,
+        fallbackUrl: url,
+      );
+
+      if (!success && context.mounted) {
+        if (_isAramaic) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('النطق الصوتي للآرامية معلّق حالياً لحين استكمال حزمة التسجيلات الآرامية الأصيلة.'),
+              duration: Duration(seconds: 3),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('تعذر تشغيل النطق الصوتي. يرجى التحقق من الاتصال بالإنترنت.'),
+              duration: Duration(seconds: 2),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      }
+      return;
+    }
+
+    // 2. Direct fallback for non-Strongs items
     if (_isAramaic) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

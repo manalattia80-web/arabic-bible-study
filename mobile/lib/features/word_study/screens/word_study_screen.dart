@@ -573,11 +573,11 @@ class _WordRow extends StatelessWidget {
                         if (mapping.hasAudio)
                           InkWell(
                             borderRadius: BorderRadius.circular(16),
-                            onTap: () => provider.playAudio(mapping.audioUrl!),
+                            onTap: () => provider.playWordMapping(mapping),
                             child: Padding(
                               padding: const EdgeInsets.all(3),
                               child: Icon(
-                                provider.isPlaying(mapping.audioUrl!)
+                                provider.isMappingPlaying(mapping)
                                     ? Icons.stop_circle_rounded
                                     : Icons.volume_up_rounded,
                                 size: 18,

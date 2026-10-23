@@ -63,6 +63,97 @@ class AudioPlaybackService {
     return 'el';
   }
 
+  /// Base URL for verified human-recorded Strong's audio files (Erasmian Greek, Masoretic Hebrew, Biblical Aramaic)
+  static const String trustedAudioBaseUrl =
+      'https://raw.githubusercontent.com/manalattia80-web/arabic-bible-study/main/audio_repository/strongs';
+
+  /// Plays trusted audio for a given Strong's ID, prioritizing authentic human recordings.
+  /// 1. Checks local cache for `strongs_${cleanId}.mp3`.
+  /// 2. If not found locally, attempts to fetch from the authentic Strong's audio repository.
+  /// 3. If not yet in the authentic repository:
+  ///    - For Aramaic: halts cleanly without playing modern Hebrew TTS.
+  ///    - For Greek/Hebrew: falls back to approximate automated pronunciation if word is provided.
+  Future<bool> playStrongs({
+    required String strongsId,
+    required String language,
+    String? word,
+    String? fallbackUrl,
+  }) async {
+    final cleanId = strongsId.trim().toUpperCase();
+    if (cleanId.isEmpty || cleanId == '---' || cleanId == '-' || cleanId.startsWith('NEG-') || cleanId.startsWith('PREP-') || cleanId.startsWith('CONJ-') || cleanId.startsWith('PRON-')) {
+      if (word != null && word.isNotEmpty) {
+        return await playWord(word: word, lang: language);
+      }
+      return false;
+    }
+
+    final bool aramaic = isAramaic(language);
+    final cacheKey = 'strongs_$cleanId';
+
+    // Toggle pause/stop if already playing this Strong's audio
+    if (currentlyPlayingKey.value == cacheKey) {
+      await stop();
+      return true;
+    }
+
+    await stop();
+    isLoading.value = true;
+    currentlyPlayingKey.value = cacheKey;
+
+    try {
+      final cacheDir = await _getCacheDir();
+      final localFile = File(p.join(cacheDir.path, '$cacheKey.mp3'));
+
+      // 1. Play from local cache if file exists and has valid audio data
+      if (await localFile.exists() && (await localFile.length()) > 200) {
+        isLoading.value = false;
+        await _player.setFilePath(localFile.path);
+        await _player.play();
+        return true;
+      }
+
+      // 2. Fetch authentic Strong's audio from repository
+      final trustedUrl = '$trustedAudioBaseUrl/$cleanId.mp3';
+      try {
+        final res = await http.get(Uri.parse(trustedUrl), headers: const {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+          'Accept': 'audio/mpeg, audio/*; q=0.9, */*; q=0.1',
+        }).timeout(const Duration(seconds: 4));
+
+        if (res.statusCode == 200 && res.bodyBytes.length > 200) {
+          await localFile.writeAsBytes(res.bodyBytes, flush: true);
+          isLoading.value = false;
+          await _player.setFilePath(localFile.path);
+          await _player.play();
+          return true;
+        }
+      } catch (e) {
+        debugPrint('Trusted audio fetch attempt for $cleanId: $e');
+      }
+
+      // 3. Fallback behavior
+      if (aramaic) {
+        debugPrint('Authentic audio for Aramaic $cleanId not yet in repository. Fallback to Hebrew TTS is suspended.');
+        await stop();
+        return false;
+      }
+
+      // Fallback to approximate pronunciation for Greek or Hebrew
+      if (word != null && word.trim().isNotEmpty && word != '-' && word != '---') {
+        return await playWord(word: word, lang: language);
+      } else if (fallbackUrl != null && fallbackUrl.isNotEmpty) {
+        return await playUrl(fallbackUrl);
+      }
+
+      await stop();
+      return false;
+    } catch (e) {
+      debugPrint('AudioPlaybackService playStrongs error: $e');
+      await stop();
+      return false;
+    }
+  }
+
   /// Plays audio for a given word and language.
   /// Checks local disk cache first. If not cached, downloads audio bytes,
   /// saves to file, and plays via setFilePath.
