@@ -3,21 +3,21 @@
     "totalStrongs": 14167,
     "totalStrongsGreek": 5498,
     "totalStrongsHebrew": 8669,
-    "catalogTotal": 725,
-    "catGreek": 340,
-    "catHeb": 374,
+    "catalogTotal": 1525,
+    "catGreek": 640,
+    "catHeb": 874,
     "catAr": 11,
-    "lexiconGreenPercent": "5.12",
-    "lexiconGreekPercent": "6.18",
-    "lexiconHebrewPercent": "4.31"
+    "lexiconGreenPercent": "10.76",
+    "lexiconGreekPercent": "11.64",
+    "lexiconHebrewPercent": "10.08"
   },
   "textCoverage": {
     "totalMappings": 434350,
-    "greenTotal": 308383,
-    "yellowTotal": 122044,
-    "arOccurrences": 3923,
-    "greenPct": "71.00",
-    "yellowPct": "28.10",
-    "arPct": "0.90"
+    "greenTotal": 350369,
+    "yellowTotal": 80267,
+    "arOccurrences": 3714,
+    "greenPct": "80.67",
+    "yellowPct": "18.48",
+    "arPct": "0.86"
   }
 }
