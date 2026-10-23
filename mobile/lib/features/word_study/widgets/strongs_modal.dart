@@ -14,6 +14,7 @@ import '../../../core/services/morphology_service.dart';
 import '../../../models/word_mapping.dart';
 import '../../../models/strongs_entry.dart';
 import 'audio_button.dart';
+import '../../../core/services/audio_playback_service.dart';
 
 class StrongsModal extends StatelessWidget {
   final String strongsId;
@@ -326,14 +327,21 @@ class StrongsModal extends StatelessWidget {
                       ],
                       const Spacer(),
                       if (entry.originalWord.isNotEmpty && entry.originalWord != '—')
-                        AudioButton(
-                          strongsId: entry.strongsId,
-                          word: entry.originalWord,
-                          lang: entry.isAramaic ? 'aramaic' : entry.language,
-                          url: entry.audioUrl,
-                          tooltip: entry.isAramaic
-                              ? 'النطق الآرامي معلّق قيد المراجعة'
-                              : 'استماع للمدخل المعجمي (${entry.strongsId})',
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _buildAudioBadge(entry),
+                            const SizedBox(width: 8),
+                            AudioButton(
+                              strongsId: entry.strongsId,
+                              word: entry.originalWord,
+                              lang: entry.isAramaic ? 'aramaic' : entry.language,
+                              url: entry.audioUrl,
+                              tooltip: entry.isAramaic
+                                  ? 'النطق الآرامي معلّق قيد المراجعة'
+                                  : 'استماع للمدخل المعجمي (${entry.strongsId})',
+                            ),
+                          ],
                         ),
                     ],
                   ),
@@ -686,6 +694,57 @@ class StrongsModal extends StatelessWidget {
     );
   }
 
+  Widget _buildAudioBadge(StrongsEntry entry) {
+    final bool isCataloged = AudioPlaybackService.instance.isStrongsCataloged(entry.strongsId);
+    final bool isAramaic = entry.isAramaic;
+
+    Color bg;
+    Color textColor;
+    String label;
+    IconData icon;
+
+    if (isCataloged) {
+      bg = const Color(0xFF1E3A2B);
+      textColor = const Color(0xFF4ADE80);
+      label = isAramaic ? 'نطق آرامي موثق' : (entry.isHebrew ? 'نطق موثق (مسوري)' : 'نطق موثق (إيرازمي)');
+      icon = Icons.verified_rounded;
+    } else if (isAramaic) {
+      bg = const Color(0xFF2D2D2D);
+      textColor = const Color(0xFF9E9E9E);
+      label = 'آرامي معلّق';
+      icon = Icons.volume_off_rounded;
+    } else {
+      bg = const Color(0xFF3B2F1E);
+      textColor = const Color(0xFFFBBF24);
+      label = 'نطق تقريبي';
+      icon = Icons.auto_awesome_rounded;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: textColor.withOpacity(0.35), width: 0.8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 12, color: textColor),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 10.5,
+              fontWeight: FontWeight.w600,
+              color: textColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   List<TextSpan> _highlightWord(String fullText, String wordToHighlight) {
     if (wordToHighlight.isEmpty) return [TextSpan(text: fullText)];
 
@@ -887,5 +946,6 @@ class _GrammarRow extends StatelessWidget {
       ),
     );
   }
-}
 
+  
+}

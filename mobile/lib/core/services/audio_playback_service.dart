@@ -34,6 +34,20 @@ class AudioPlaybackService {
     });
   }
 
+  /// Set of cataloged authentic Strong's entries in the audio repository
+  static const Set<String> catalogedStrongsIds = {
+    'G25', 'G26', 'G907', 'G2098', 'G2316', 'G2424', 'G2962', 'G3056', 'G4151', 'G5207', 'G5485', 'G5547',
+    'H216', 'H426', 'H430', 'H776', 'H996', 'H1247', 'H1254', 'H1285', 'H1567', 'H1722', 'H2493', 'H2617',
+    'H3026', 'H3068', 'H3541', 'H3651', 'H3702', 'H4437', 'H5174', 'H6918', 'H6922', 'H7225', 'H7261',
+    'H7965', 'H8064', 'H8065',
+  };
+
+  /// Returns true if the Strong's ID has an authentic recording in the repository
+  bool isStrongsCataloged(String? strongsId) {
+    if (strongsId == null || strongsId.isEmpty) return false;
+    return catalogedStrongsIds.contains(strongsId.trim().toUpperCase());
+  }
+
   bool isPlaying(String key) => currentlyPlayingKey.value == key;
 
   Future<void> stop() async {

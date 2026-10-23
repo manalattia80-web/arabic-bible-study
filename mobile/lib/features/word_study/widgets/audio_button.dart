@@ -116,9 +116,11 @@ class AudioButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_isAramaic) {
+    final bool isCataloged = AudioPlaybackService.instance.isStrongsCataloged(strongsId);
+
+    if (_isAramaic && !isCataloged) {
       return IconButton(
-        tooltip: tooltip ?? 'النطق الآرامي معلّق قيد المراجعة',
+        tooltip: tooltip ?? 'النطق الآرامي معلّق قيد المراجعة والاعتماد',
         icon: Icon(
           Icons.volume_off_rounded,
           color: AppColors.textMuted,
@@ -131,6 +133,8 @@ class AudioButton extends StatelessWidget {
     final key = _targetKey;
     if (key.isEmpty) return const SizedBox.shrink();
 
+    final Color normalColor = isCataloged ? const Color(0xFF4ADE80) : AppColors.primary;
+
     return ValueListenableBuilder<String?>(
       valueListenable: AudioPlaybackService.instance.currentlyPlayingKey,
       builder: (context, playingKey, _) {
@@ -141,20 +145,24 @@ class AudioButton extends StatelessWidget {
           builder: (context, loading, _) {
             final isLoadingThis = isPlaying && loading;
 
+            final defaultTooltip = isCataloged
+                ? 'استماع: نطق معجمي موثق ($strongsId)'
+                : 'استماع (نطق آلي تقريبي)';
+
             return IconButton(
-              tooltip: isPlaying ? 'إيقاف النطق' : (tooltip ?? 'استماع (نطق آلي تقريبي)'),
+              tooltip: isPlaying ? 'إيقاف النطق' : (tooltip ?? defaultTooltip),
               icon: isLoadingThis
                   ? SizedBox(
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                        valueColor: AlwaysStoppedAnimation<Color>(normalColor),
                       ),
                     )
                   : Icon(
                       isPlaying ? Icons.stop_circle_rounded : Icons.volume_up_rounded,
-                      color: isPlaying ? AppColors.info : AppColors.primary,
+                      color: isPlaying ? AppColors.info : normalColor,
                       size: 26,
                     ),
               onPressed: () => _handleTap(context),

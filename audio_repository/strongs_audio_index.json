@@ -268,5 +268,85 @@
     "sha256": "b970c9dc7c7928ae8e6f478b29a369f9d223c2d010d84287709f323606a235b6",
     "standard": "biblical_aramaic",
     "status": "empirical_sample_catalogued"
+  },
+  {
+    "strongs_id": "G25",
+    "language": "greek",
+    "lemma": "ἀγαπάω",
+    "filename": "G25.mp3",
+    "byte_size": 8832,
+    "sha256": "98812e85b181ef540e69500d361d2ca1101e9327dcfb2cdab501235a3f85f514",
+    "standard": "erasmian_target",
+    "status": "verified_catalogued"
+  },
+  {
+    "strongs_id": "G5547",
+    "language": "greek",
+    "lemma": "Χριστός",
+    "filename": "G5547.mp3",
+    "byte_size": 9216,
+    "sha256": "2f2b249ea5863508b425a7e5b3b2f7dcb858790a7df667b1f3f016634e040ca0",
+    "standard": "erasmian_target",
+    "status": "verified_catalogued"
+  },
+  {
+    "strongs_id": "H1254",
+    "language": "hebrew",
+    "lemma": "בָּרָא",
+    "filename": "H1254.mp3",
+    "byte_size": 6144,
+    "sha256": "694bc21a392b0aaccee26d4c07f81a204fec9c695c310deafc463226d87002f1",
+    "standard": "masoretic_target",
+    "status": "verified_catalogued"
+  },
+  {
+    "strongs_id": "H1567",
+    "language": "hebrew",
+    "lemma": "גַּלְעֵד",
+    "filename": "H1567.mp3",
+    "byte_size": 8256,
+    "sha256": "522b8cff0aec98c6ab49a8270503f4ab0f295b264c63c0ef482335d976d02c04",
+    "standard": "masoretic_target",
+    "status": "verified_catalogued"
+  },
+  {
+    "strongs_id": "H996",
+    "language": "hebrew",
+    "lemma": "בֵּין",
+    "filename": "H996.mp3",
+    "byte_size": 7296,
+    "sha256": "15e70bbd6724190570fe60bfe509717c1e5ef10e3cf8c4d7dad4a7b9163aff8a",
+    "standard": "masoretic_target",
+    "status": "verified_catalogued"
+  },
+  {
+    "strongs_id": "H3026",
+    "language": "aramaic",
+    "lemma": "יְגַר שָׂהֲדוּתָא",
+    "filename": "H3026.mp3",
+    "byte_size": 12864,
+    "sha256": "622786ce9636c8d8d83e6a72c2b2bc5c6e103e2c8416787ba696d89435cf0520",
+    "standard": "biblical_aramaic",
+    "status": "verified_catalogued"
+  },
+  {
+    "strongs_id": "H3541",
+    "language": "hebrew",
+    "lemma": "כֹּה",
+    "filename": "H3541.mp3",
+    "byte_size": 4800,
+    "sha256": "469264b1b7503ccde4e2d5f740548c3a4e8ea9836e2a604938fced8b3103e4b5",
+    "standard": "masoretic_target",
+    "status": "verified_catalogued"
+  },
+  {
+    "strongs_id": "H3651",
+    "language": "hebrew",
+    "lemma": "כֵּן",
+    "filename": "H3651.mp3",
+    "byte_size": 6528,
+    "sha256": "78741491742cd054f3da83170f91de98cafa2fd741a3627a6cfe8679dbddddda",
+    "standard": "masoretic_target",
+    "status": "verified_catalogued"
   }
 ]
