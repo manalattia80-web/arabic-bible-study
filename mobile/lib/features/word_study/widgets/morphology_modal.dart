@@ -191,7 +191,7 @@ class MorphologyModal extends StatelessWidget {
                                 url: mapping.audioUrl,
                                 tooltip: mapping.isAramaic
                                     ? (AudioPlaybackService.instance.isAuthenticAramaic(mapping.strongsId)
-                                        ? 'استماع: تسجيل آرامي بشري معتمد (${mapping.strongsId})'
+                                        ? 'استماع: تسجيل بشري — قيد المراجعة (${mapping.strongsId})'
                                         : 'النطق الآرامي غير متاح حاليًا')
                                     : 'استماع: نطق المدخل المعجمي (${mapping.strongsId})',
                               ),
@@ -479,7 +479,7 @@ class MorphologyModal extends StatelessWidget {
       if (isAuthenticAramaic) {
         bg = const Color(0xFF1E3A2B);
         textColor = const Color(0xFF4ADE80);
-        label = 'تسجيل آرامي بشري معتمد';
+        label = 'تسجيل بشري — قيد المراجعة';
         icon = Icons.record_voice_over_rounded;
       } else {
         bg = const Color(0xFF2D2D2D);

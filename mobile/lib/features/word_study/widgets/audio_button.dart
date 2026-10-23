@@ -151,7 +151,7 @@ class AudioButton extends StatelessWidget {
 
             final String defaultTooltip;
             if (_isAramaic && isAuthenticAramaic) {
-              defaultTooltip = 'استماع: تسجيل آرامي بشري معتمد ($strongsId)';
+              defaultTooltip = 'استماع: تسجيل بشري — قيد المراجعة ($strongsId)';
             } else {
               defaultTooltip = 'استماع: نطق آلي تقريبي للمدخل المعجمي ($strongsId)';
             }
