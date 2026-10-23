@@ -1,0 +1,23 @@
+{
+  "lexicon": {
+    "totalStrongs": 14167,
+    "totalStrongsGreek": 5498,
+    "totalStrongsHebrew": 8669,
+    "catalogTotal": 100,
+    "catalogGreek": 40,
+    "catalogHebrew": 49,
+    "catalogAramaic": 11,
+    "lexiconGreenPercent": "0.71",
+    "lexiconGreekPercent": "0.73",
+    "lexiconHebrewPercent": "0.57"
+  },
+  "textCoverage": {
+    "totalMappings": 434350,
+    "greenOccurrences": 85342,
+    "yellowOccurrences": 344637,
+    "aramaicOccurrences": 4371,
+    "greenPercent": "19.65",
+    "yellowPercent": "79.35",
+    "aramaicPercent": "1.01"
+  }
+}
