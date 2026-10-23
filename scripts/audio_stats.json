@@ -4,22 +4,31 @@
     "totalStrongsGreek": 5498,
     "totalStrongsHebrew": 8669,
     "catalogTotal": 9880,
-    "catGreek": 4265,
-    "catHeb": 5604,
-    "catAr": 11,
-    "lexiconGreenPercent": "69.74",
+    "catGreekAutomatedTTS": 4265,
+    "catHebrewAutomatedTTS": 5604,
+    "catAramaicHumanRecorded": 11,
+    "lexiconAvailabilityPercent": "69.74",
     "lexiconGreekPercent": "77.57",
-    "lexiconHebrewPercent": "64.64"
+    "lexiconHebrewPercent": "64.64",
+    "lexiconAramaicHumanPercent": "1.63"
   },
   "textCoverage": {
     "totalMappings": 434350,
-    "realOriginalWords": 409348,
-    "greenTotal": 407522,
-    "yellowTotal": 22284,
-    "arOccurrences": 4544,
-    "greenPct": "93.82",
-    "realOriginalGreenPct": "99.55",
-    "yellowPct": "5.13",
-    "arPct": "1.05"
+    "unalignedMappingIndicators": 25002,
+    "mappedTextRecords": 409348,
+    "audioAvailableTotal": 404703,
+    "audioAvailablePercent": "98.87",
+    "breakdown": {
+      "greekAutomatedTTS": 105474,
+      "hebrewAutomatedTTS": 298970,
+      "aramaicHumanRecorded": 259,
+      "hebrewUncovered": 240,
+      "aramaicSuspended": 4405
+    },
+    "aramaicSuspendedDetail": {
+      "withHebrewTTSNotApplicable": 2819,
+      "withoutAudio": 1586,
+      "totalSuspended": 4405
+    }
   }
 }

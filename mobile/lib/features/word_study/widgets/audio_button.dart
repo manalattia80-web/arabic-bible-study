@@ -116,11 +116,12 @@ class AudioButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isCataloged = AudioPlaybackService.instance.isStrongsCataloged(strongsId);
+    final bool isAuthenticAramaic = AudioPlaybackService.instance.isAuthenticAramaic(strongsId);
 
-    if (_isAramaic && !isCataloged) {
+    // 1. Aramaic: only active if verified authentic human recording
+    if (_isAramaic && !isAuthenticAramaic) {
       return IconButton(
-        tooltip: tooltip ?? 'النطق الآرامي معلّق قيد المراجعة والاعتماد',
+        tooltip: tooltip ?? 'النطق الآرامي غير متاح حاليًا (معلّق قيد المراجعة)',
         icon: Icon(
           Icons.volume_off_rounded,
           color: AppColors.textMuted,
@@ -133,7 +134,10 @@ class AudioButton extends StatelessWidget {
     final key = _targetKey;
     if (key.isEmpty) return const SizedBox.shrink();
 
-    final Color normalColor = isCataloged ? const Color(0xFF4ADE80) : AppColors.primary;
+    // 2. Color: Green ONLY for authentic human Aramaic; primary/slate for automated TTS
+    final Color normalColor = (_isAramaic && isAuthenticAramaic)
+        ? const Color(0xFF4ADE80)
+        : AppColors.primary;
 
     return ValueListenableBuilder<String?>(
       valueListenable: AudioPlaybackService.instance.currentlyPlayingKey,
@@ -145,9 +149,12 @@ class AudioButton extends StatelessWidget {
           builder: (context, loading, _) {
             final isLoadingThis = isPlaying && loading;
 
-            final defaultTooltip = isCataloged
-                ? 'استماع: نطق معجمي موثق ($strongsId)'
-                : 'استماع (نطق آلي تقريبي)';
+            final String defaultTooltip;
+            if (_isAramaic && isAuthenticAramaic) {
+              defaultTooltip = 'استماع: تسجيل آرامي بشري معتمد ($strongsId)';
+            } else {
+              defaultTooltip = 'استماع: نطق آلي تقريبي للمدخل المعجمي ($strongsId)';
+            }
 
             return IconButton(
               tooltip: isPlaying ? 'إيقاف النطق' : (tooltip ?? defaultTooltip),

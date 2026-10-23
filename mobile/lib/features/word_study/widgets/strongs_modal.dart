@@ -294,55 +294,67 @@ class StrongsModal extends StatelessWidget {
                 ),
               ),
 
-              // Transliteration + Pronunciation + Audio
+              // Transliteration + Pronunciation + Audio (on a dedicated separate line)
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        entry.transliteration,
-                        style: TextStyle(
-                          color:      AppColors.textSecondary,
-                          fontSize:   16,
-                          fontStyle:  FontStyle.italic,
-                        ),
+                      // Line 1: Transliteration and Pronunciation
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          if (entry.transliteration.isNotEmpty)
+                            Text(
+                              entry.transliteration,
+                              style: TextStyle(
+                                color:      AppColors.textSecondary,
+                                fontSize:   16,
+                                fontStyle:  FontStyle.italic,
+                              ),
+                            ),
+                          if (entry.pronunciation != null && entry.pronunciation!.trim().isNotEmpty && entry.pronunciation!.trim() != entry.transliteration.trim()) ...[
+                            Text('•', style: TextStyle(color: AppColors.textMuted)),
+                            Text(
+                              entry.pronunciation!,
+                              style: TextStyle(color: AppColors.textMuted, fontSize: 14),
+                            ),
+                          ],
+                          if (entry.pronunciationAr != null && entry.pronunciationAr!.trim().isNotEmpty) ...[
+                            Text('•', style: TextStyle(color: AppColors.textMuted)),
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Text(
+                                _cleanPronunciationAr(entry.pronunciationAr!, entry.transliteration),
+                                style: AppTheme.arabicVerse(size: 19, color: AppColors.arabicText),
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
-                      if (entry.pronunciation != null) ...[
-                        Text(' • ', style: TextStyle(color: AppColors.textMuted)),
-                        Text(
-                          entry.pronunciation!,
-                          style: TextStyle(color: AppColors.textMuted, fontSize: 14),
-                        ),
-                      ],
-                      if (entry.pronunciationAr != null) ...[
-                        Text(' • ', style: TextStyle(color: AppColors.textMuted)),
-                        Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Text(
-                            entry.pronunciationAr!,
-                            style: AppTheme.arabicVerse(size: 22, color: AppColors.arabicText),
-                          ),
-                        ),
-                      ],
-                      const Spacer(),
-                      if (entry.originalWord.isNotEmpty && entry.originalWord != '—')
+                      // Line 2: Audio Button and Verification Badge on a separate line
+                      if (entry.originalWord.isNotEmpty && entry.originalWord != '—') ...[
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            _buildAudioBadge(entry),
-                            const SizedBox(width: 8),
                             AudioButton(
                               strongsId: entry.strongsId,
                               word: entry.originalWord,
                               lang: entry.isAramaic ? 'aramaic' : entry.language,
                               url: entry.audioUrl,
                               tooltip: entry.isAramaic
-                                  ? 'النطق الآرامي معلّق قيد المراجعة'
-                                  : 'استماع للمدخل المعجمي (${entry.strongsId})',
+                                  ? 'النطق الآرامي غير متاح حاليًا'
+                                  : 'استماع: نطق آلي تقريبي للمدخل المعجمي (${entry.strongsId})',
                             ),
+                            const SizedBox(width: 8),
+                            _buildAudioBadge(entry),
                           ],
                         ),
+                      ],
                     ],
                   ),
                 ),
@@ -694,8 +706,18 @@ class StrongsModal extends StatelessWidget {
     );
   }
 
+  String _cleanPronunciationAr(String pronAr, String transliteration) {
+    if (pronAr.trim().isEmpty) return '';
+    if (transliteration.trim().isNotEmpty) {
+      // Strip redundant Latin/Greek text inside parentheses, e.g. "إيريتس (Erets)" -> "إيريتس"
+      final stripped = pronAr.replaceAll(RegExp(r'\s*\([A-Za-z0-9\s/,._\u0370-\u03FF\u1F00-\u1FFF-]+\)'), '').trim();
+      if (stripped.isNotEmpty) return stripped;
+    }
+    return pronAr.trim();
+  }
+
   Widget _buildAudioBadge(StrongsEntry entry) {
-    final bool isCataloged = AudioPlaybackService.instance.isStrongsCataloged(entry.strongsId);
+    final bool isAuthenticAramaic = AudioPlaybackService.instance.isAuthenticAramaic(entry.strongsId);
     final bool isAramaic = entry.isAramaic;
 
     Color bg;
@@ -703,21 +725,23 @@ class StrongsModal extends StatelessWidget {
     String label;
     IconData icon;
 
-    if (isCataloged) {
-      bg = const Color(0xFF1E3A2B);
-      textColor = const Color(0xFF4ADE80);
-      label = isAramaic ? 'نطق آرامي موثق' : (entry.isHebrew ? 'نطق موثق (مسوري)' : 'نطق موثق (إيرازمي)');
-      icon = Icons.verified_rounded;
-    } else if (isAramaic) {
-      bg = const Color(0xFF2D2D2D);
-      textColor = const Color(0xFF9E9E9E);
-      label = 'آرامي معلّق';
-      icon = Icons.volume_off_rounded;
+    if (isAramaic) {
+      if (isAuthenticAramaic) {
+        bg = const Color(0xFF1E3A2B);
+        textColor = const Color(0xFF4ADE80);
+        label = 'تسجيل آرامي بشري معتمد';
+        icon = Icons.record_voice_over_rounded;
+      } else {
+        bg = const Color(0xFF2D2D2D);
+        textColor = const Color(0xFF9E9E9E);
+        label = 'النطق الآرامي غير متاح حاليًا';
+        icon = Icons.volume_off_rounded;
+      }
     } else {
-      bg = const Color(0xFF3B2F1E);
-      textColor = const Color(0xFFFBBF24);
-      label = 'نطق تقريبي';
-      icon = Icons.auto_awesome_rounded;
+      bg = const Color(0xFF1E293B);
+      textColor = const Color(0xFF94A3B8);
+      label = 'نطق آلي تقريبي للمدخل المعجمي';
+      icon = Icons.smart_toy_outlined;
     }
 
     return Container(

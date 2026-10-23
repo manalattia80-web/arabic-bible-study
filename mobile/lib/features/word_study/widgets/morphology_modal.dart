@@ -175,24 +175,31 @@ class MorphologyModal extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            // Audio Button
-                            if (mapping.hasAudio) ...[
-                              _buildAudioBadge(mapping),
-                              const SizedBox(width: 4),
+                          ],
+                        ),
+
+                        // Audio button and badge on a dedicated separate line
+                        if (mapping.hasAudio) ...[
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
                               AudioButton(
                                 strongsId: mapping.strongsId,
                                 word: mapping.origWord,
                                 lang: mapping.origWordLang,
                                 url: mapping.audioUrl,
                                 tooltip: mapping.isAramaic
-                                    ? 'النطق الآرامي معلّق قيد المراجعة'
-                                    : (mapping.hasStrongs
-                                        ? 'استماع للنطق المعجمي (${mapping.strongsId})'
-                                        : 'استماع لصيغة الكلمة في الآية'),
+                                    ? (AudioPlaybackService.instance.isAuthenticAramaic(mapping.strongsId)
+                                        ? 'استماع: تسجيل آرامي بشري معتمد (${mapping.strongsId})'
+                                        : 'النطق الآرامي غير متاح حاليًا')
+                                    : 'استماع: نطق المدخل المعجمي (${mapping.strongsId})',
                               ),
+                              const SizedBox(width: 8),
+                              _buildAudioBadge(mapping),
                             ],
-                          ],
-                        ),
+                          ),
+                        ],
 
                         const SizedBox(height: 10),
 
@@ -460,7 +467,7 @@ class MorphologyModal extends StatelessWidget {
   }
 
   Widget _buildAudioBadge(WordMapping mapping) {
-    final bool isCataloged = AudioPlaybackService.instance.isStrongsCataloged(mapping.strongsId);
+    final bool isAuthenticAramaic = AudioPlaybackService.instance.isAuthenticAramaic(mapping.strongsId);
     final bool isAramaic = mapping.isAramaic;
 
     Color bg;
@@ -468,21 +475,23 @@ class MorphologyModal extends StatelessWidget {
     String label;
     IconData icon;
 
-    if (isCataloged) {
-      bg = const Color(0xFF1E3A2B);
-      textColor = const Color(0xFF4ADE80);
-      label = isAramaic ? 'نطق آرامي موثق' : (mapping.isHebrew ? 'نطق موثق (مسوري)' : 'نطق موثق (إيرازمي)');
-      icon = Icons.verified_rounded;
-    } else if (isAramaic) {
-      bg = const Color(0xFF2D2D2D);
-      textColor = const Color(0xFF9E9E9E);
-      label = 'آرامي معلّق';
-      icon = Icons.volume_off_rounded;
+    if (isAramaic) {
+      if (isAuthenticAramaic) {
+        bg = const Color(0xFF1E3A2B);
+        textColor = const Color(0xFF4ADE80);
+        label = 'تسجيل آرامي بشري معتمد';
+        icon = Icons.record_voice_over_rounded;
+      } else {
+        bg = const Color(0xFF2D2D2D);
+        textColor = const Color(0xFF9E9E9E);
+        label = 'النطق الآرامي غير متاح حاليًا';
+        icon = Icons.volume_off_rounded;
+      }
     } else {
-      bg = const Color(0xFF3B2F1E);
-      textColor = const Color(0xFFFBBF24);
-      label = 'نطق تقريبي';
-      icon = Icons.auto_awesome_rounded;
+      bg = const Color(0xFF1E293B);
+      textColor = const Color(0xFF94A3B8);
+      label = 'نطق آلي تقريبي للمدخل المعجمي';
+      icon = Icons.smart_toy_outlined;
     }
 
     return Container(
