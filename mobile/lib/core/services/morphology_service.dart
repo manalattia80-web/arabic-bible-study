@@ -20,6 +20,8 @@ class MorphologyAnalysis {
   final List<String> prefixes; // زوائد وحروف متصلة (واو العطف، هاء التعريف...)
   final String summary; // جملة إعرابية وتحليلية موجزة بالفصحى
   final List<String> tags; // كلمات دلالية للبطاقات السريعة (Badges)
+  final String? morphSource; // 'manual_review' | 'oshb_wlc' | 'morphgnt_sblgnt' | 'syntactic_ar'
+  final String? verifiedLocator;
 
   const MorphologyAnalysis({
     required this.rawCode,
@@ -36,6 +38,8 @@ class MorphologyAnalysis {
     this.prefixes = const [],
     required this.summary,
     required this.tags,
+    this.morphSource,
+    this.verifiedLocator,
   });
 
   bool get isVerb => partOfSpeech.contains('فعل');
@@ -73,6 +77,8 @@ class MorphologyService {
     String? morphNumber,
     String? morphGender,
     String? morphCase,
+    String? morphSource,
+    String? verifiedLocator,
   }) {
     final cleanCode = (code ?? '').trim();
     final lang = language.toLowerCase();
@@ -115,6 +121,8 @@ class MorphologyService {
         arWord: arWord,
         fallbackDef: fallbackDefinition,
         syntacticNote: (posClean == 'syntactic_ar') ? grammarNotes : null,
+        morphSource: morphSource,
+        verifiedLocator: verifiedLocator,
       );
     }
 
@@ -215,6 +223,8 @@ class MorphologyService {
     'infinitive_construct': 'المصدر المضاف العبري (Infinitive Construct)',
     'infinitive_absolute':  'المصدر المطلق العبري (Infinitive Absolute)',
     'participle':           'اسم فاعل / مفعول (Participle)',
+    'jussive':              'صيغة الجزم والطلب (Jussive)',
+    'cohortative':          'صيغة الحث والطلب الذاتي (Cohortative)',
   };
 
   static const Map<String, String> _structuredPersonLabels = {
@@ -303,6 +313,8 @@ class MorphologyService {
     required String? arWord,
     required String? fallbackDef,
     required String? syntacticNote,
+    String? morphSource,
+    String? verifiedLocator,
   }) {
     if (posKey == 'syntactic_ar') {
       final noteSummary = (syntacticNote != null && syntacticNote.trim().isNotEmpty)
@@ -314,6 +326,8 @@ class MorphologyService {
         partOfSpeech: 'أداة / لفظ في التركيب العربي',
         summary: noteSummary,
         tags: const ['تركيب عربي', 'دون مقابل معجمي مستقل'],
+        morphSource: 'syntactic_ar',
+        verifiedLocator: verifiedLocator,
       );
     }
 
@@ -465,6 +479,8 @@ class MorphologyService {
       prefixes: prefixes,
       summary: sumBuf.toString(),
       tags: tags,
+      morphSource: morphSource,
+      verifiedLocator: verifiedLocator,
     );
   }
 
@@ -844,6 +860,8 @@ class MorphologyService {
       prefixes: prefixes,
       summary: sumBuf.toString(),
       tags: tags,
+      morphSource: morphSource,
+      verifiedLocator: verifiedLocator,
     );
   }
 

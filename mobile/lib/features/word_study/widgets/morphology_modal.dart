@@ -63,6 +63,8 @@ class MorphologyModal extends StatelessWidget {
       morphNumber: mapping.morphNumber,
       morphGender: mapping.morphGender,
       morphCase: mapping.morphCase,
+      morphSource: mapping.morphSource,
+      verifiedLocator: mapping.verifiedLocator,
     );
     final isHebrew = mapping.isHebrew;
 
@@ -265,7 +267,15 @@ class MorphologyModal extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
+
+                  // ── Provenance & Source Badge ────────────────────────
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: _buildSourceBadge(mapping),
+                  ),
+
+                  const SizedBox(height: 14),
 
                   // ── Quick Morphological Badges ───────────────────────
                   if (analysis.tags.isNotEmpty)
@@ -571,6 +581,72 @@ class MorphologyModal extends StatelessWidget {
               fontSize: 10.5,
               fontWeight: FontWeight.w600,
               color: textColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSourceBadge(WordMapping mapping) {
+    final src = mapping.morphSource;
+    final loc = mapping.verifiedLocator;
+
+    Color bg;
+    Color textColor;
+    String label;
+    IconData icon;
+
+    if (src == 'manual_review' || mapping.isVerified) {
+      bg = const Color(0xFF132E27);
+      textColor = const Color(0xFF34D399);
+      label = 'مراجعة معجمية وسياقية موثقة';
+      if (loc != null && loc.isNotEmpty) {
+        label = '$label [$loc]';
+      }
+      icon = Icons.verified_user_rounded;
+    } else if (src == 'oshb_wlc') {
+      bg = const Color(0xFF1E293B);
+      textColor = const Color(0xFF38BDF8);
+      label = 'مدونة وستمنستر العبرية (OSHB / WLC 4.20)';
+      icon = Icons.menu_book_rounded;
+    } else if (src == 'morphgnt_sblgnt') {
+      bg = const Color(0xFF281E3B);
+      textColor = const Color(0xFFC084FC);
+      label = 'مدونة العهد الجديد الصرفية (MorphGNT / SBLGNT)';
+      icon = Icons.auto_stories_rounded;
+    } else if (src == 'syntactic_ar') {
+      bg = const Color(0xFF1F2937);
+      textColor = const Color(0xFF9CA3AF);
+      label = 'تركيب نحوي في الصياغة العربية (دون مقابل أصلي منفصل)';
+      icon = Icons.format_paint_rounded;
+    } else {
+      bg = const Color(0xFF2D2316);
+      textColor = const Color(0xFFFBBF24);
+      label = 'تحليل أولي قيد المراجعة السياقية';
+      icon = Icons.hourglass_top_rounded;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: textColor.withOpacity(0.35), width: 0.8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 13, color: textColor),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: textColor,
+              ),
             ),
           ),
         ],

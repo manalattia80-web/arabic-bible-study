@@ -495,18 +495,19 @@ class _WordRow extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         if (mapping.hasStrongs)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
+                          Wrap(
+                            spacing: 4,
+                            crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              Text(
-                                mapping.strongsId!,
+                              ...mapping.strongsIds.map((sId) => Text(
+                                sId,
                                 style: const TextStyle(
                                   color:      AppColors.info,
                                   fontSize:   11,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'monospace',
                                 ),
-                              ),
+                              )),
                               if (mapping.isVerified) const SizedBox(width: 3),
                               if (mapping.isVerified) const Icon(Icons.verified, size: 13, color: AppColors.success),
                             ],

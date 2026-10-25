@@ -22,11 +22,14 @@ class WordMapping {
   final String? transliterationAr;
   final String? transliterationLat;
   final String? strongsId;
+  final List<String> strongsIds;
   final String? audioUrl;
   final int?    audioDurationMs;
   final bool    isVerified;
   final String? verifiedSource;
   final String? verifiedAt;
+  final String? verifiedLocator;
+  final String? morphSource;
   final String? grammarNotes;
   final String? relationType;
 
@@ -53,11 +56,14 @@ class WordMapping {
     this.transliterationAr,
     this.transliterationLat,
     this.strongsId,
+    this.strongsIds = const [],
     this.audioUrl,
     this.audioDurationMs,
     required this.isVerified,
     this.verifiedSource,
     this.verifiedAt,
+    this.verifiedLocator,
+    this.morphSource,
     this.grammarNotes,
     this.relationType,
   });
@@ -87,6 +93,20 @@ class WordMapping {
         vSource != null &&
         vSource.isNotEmpty;
 
+    final List<String> allStrongs = [];
+    final rawAllStrongs = j['all_strongs_ids']?.toString();
+    if (rawAllStrongs != null && rawAllStrongs.isNotEmpty) {
+      for (final part in rawAllStrongs.split(',')) {
+        final pt = part.trim();
+        if (pt.isNotEmpty && pt != '-' && pt != '---' && !allStrongs.contains(pt)) {
+          allStrongs.add(pt);
+        }
+      }
+    }
+    if (allStrongs.isEmpty && hasValidStrongs) {
+      allStrongs.add(sId);
+    }
+
     return WordMapping(
       id:                 j['id']?.toString() ?? '',
       verseId:            j['verse_id']?.toString() ?? '',
@@ -114,6 +134,7 @@ class WordMapping {
       transliterationAr:  j['transliteration_ar']?.toString(),
       transliterationLat: j['transliteration_lat']?.toString(),
       strongsId:          hasValidStrongs ? sId : null,
+      strongsIds:         allStrongs,
       audioUrl:           audio,
       audioDurationMs:    (j['audio_duration_ms'] is int)
           ? j['audio_duration_ms'] as int
@@ -121,6 +142,8 @@ class WordMapping {
       isVerified:         isVerified,
       verifiedSource:     (vSource != null && vSource.isNotEmpty) ? vSource : null,
       verifiedAt:         j['verified_at']?.toString(),
+      verifiedLocator:    j['verified_locator']?.toString(),
+      morphSource:        j['morph_source']?.toString(),
       grammarNotes:       j['grammar_notes']?.toString(),
       relationType:       j['relation_type']?.toString(),
     );

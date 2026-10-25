@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v31.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v32.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 31; // Database v31: v1.0.289 structured morphology columns, provenance-backed verification, 13-verse + 40-word audit realignments
+    const targetDbVersion = 32; // Database v32: v1.0.290 OSHB WLC 4.20 & MorphGNT SBLGNT contextual morphology, Ezek 48:10 H6921 fix, word_mapping_strongs normalized multi-entry relation, strict bibliographic edition citations
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -83,6 +83,7 @@ class DatabaseService {
         'bible_study_v28.db',
         'bible_study_v29.db',
         'bible_study_v30.db',
+        'bible_study_v31.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
@@ -100,7 +101,7 @@ class DatabaseService {
       }
 
       final sink = outFile.openWrite();
-      const totalParts = 45;
+      const totalParts = 62;
       for (int i = 0; i < totalParts; i++) {
         final partIndexStr = i.toString().padLeft(2, '0');
         final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
@@ -415,7 +416,14 @@ class DatabaseService {
     final db = await database;
     try {
       final rows = await db.rawQuery(
-        'SELECT * FROM word_mappings WHERE verse_id = ? ORDER BY ar_word_position ASC',
+        '''SELECT wm.*, 
+                  (SELECT GROUP_CONCAT(wms.strongs_id, ',') 
+                   FROM word_mapping_strongs wms 
+                   WHERE wms.mapping_id = wm.id 
+                   ORDER BY wms.link_order ASC) AS all_strongs_ids
+           FROM word_mappings wm 
+           WHERE wm.verse_id = ? 
+           ORDER BY wm.ar_word_position ASC''',
         [verseId],
       );
       if (rows.isNotEmpty) {
@@ -703,6 +711,7 @@ class DatabaseService {
       JOIN verses v ON wm.verse_id = v.id
       JOIN books b ON v.book_id = b.id
       WHERE wm.strongs_id IN ($placeholders)
+         OR wm.id IN (SELECT mapping_id FROM word_mapping_strongs WHERE strongs_id IN ($placeholders))
       ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC
     ''', candidates);
 

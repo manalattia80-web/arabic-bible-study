@@ -219,6 +219,87 @@ class StrongsModal extends StatelessWidget {
                 ),
               )
             else ...[
+              if (mapping != null && mapping!.strongsIds.length > 1)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: AppColors.bgSurface,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.call_split_rounded, size: 16, color: AppColors.primary),
+                                const SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    'تركيب متعدد المداخل المعجمية للفظ العربي «${mapping!.arWord}»:',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.textPrimary,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 6,
+                              children: mapping!.strongsIds.map((sId) {
+                                final isSelected = sId.toUpperCase() == entry.strongsId.toUpperCase();
+                                return FilterChip(
+                                  selected: isSelected,
+                                  showCheckmark: false,
+                                  avatar: CircleAvatar(
+                                    radius: 9,
+                                    backgroundColor: isSelected ? Colors.white : AppColors.primary.withOpacity(0.15),
+                                    child: Text(
+                                      sId.startsWith('H') ? 'H' : 'G',
+                                      style: TextStyle(
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.bold,
+                                        color: isSelected ? AppColors.primary : AppColors.textPrimary,
+                                      ),
+                                    ),
+                                  ),
+                                  label: Text(
+                                    sId,
+                                    style: TextStyle(
+                                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                                      color: isSelected ? Colors.white : AppColors.textPrimary,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  backgroundColor: AppColors.bgCard,
+                                  selectedColor: AppColors.primary,
+                                  side: BorderSide(
+                                    color: isSelected ? AppColors.primary : AppColors.borderLight,
+                                  ),
+                                  onSelected: (_) {
+                                    if (!isSelected) {
+                                      provider.loadStrongsEntry(sId, mapping: mapping);
+                                    }
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
               // ── Header ─────────────────────────────────────────
               SliverToBoxAdapter(
                 child: Padding(
