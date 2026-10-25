@@ -860,8 +860,6 @@ class MorphologyService {
       prefixes: prefixes,
       summary: sumBuf.toString(),
       tags: tags,
-      morphSource: morphSource,
-      verifiedLocator: verifiedLocator,
     );
   }
 
