@@ -47,29 +47,76 @@ class MorphologyAnalysis {
 class MorphologyService {
   MorphologyService._();
 
-  /// Analyzes Biblical Hebrew and Koine Greek words with scholarly depth.
-  /// First checks Robinson / WLC code if present; if absent or partial,
-  /// deeply analyzes the original Hebrew/Greek word, Strong's metadata, and Arabic context.
+  /// Analyzes Biblical Hebrew and Koine Greek words deterministically.
+  /// Priority 1: Structured morphological columns (`morph_pos`, `morph_stem`,
+  /// `morph_tense`, `morph_voice`, `morph_mood`, `morph_person`, `morph_number`,
+  /// `morph_gender`, `morph_case`, `orig_surface`) stored in SQLite, from which
+  /// the Arabic labels and prose summary are generated without inspecting Arabic notes.
+  /// Priority 2: Standard Robinson / WLC morphological codes (`orig_morphology`).
+  /// Priority 3: Surface/lemma fallback for unseeded dynamic tokens.
   static MorphologyAnalysis parse({
     String? code,
     String language = 'greek',
     String? fallbackDefinition,
     String? arWord,
     String? origWord,
+    String? origSurface,
     String? strongsId,
     String? lemmaWord,
     String? grammarNotes,
+    String? morphPos,
+    String? morphStem,
+    String? morphTense,
+    String? morphVoice,
+    String? morphMood,
+    String? morphPerson,
+    String? morphNumber,
+    String? morphGender,
+    String? morphCase,
   }) {
     final cleanCode = (code ?? '').trim();
     final lang = language.toLowerCase();
     final sTrim = (strongsId ?? '').trim();
     final hasValidStrongs = RegExp(r'^[HG]\d+$', caseSensitive: false).hasMatch(sTrim);
-    final origTrim = (origWord ?? '').trim();
-    final isSuppliedOrArabicOnly = origTrim.isEmpty ||
-        origTrim == '-' ||
-        origTrim == '—' ||
-        origTrim == '---' ||
-        RegExp(r'^[\u0600-\u06FF\s\.,;:!?«»()\[\]]+$').hasMatch(origTrim);
+    final surfaceTrim = (origSurface ?? '').trim();
+    final effectiveOrig = (surfaceTrim.isNotEmpty && surfaceTrim != '-' && surfaceTrim != '—' && surfaceTrim != '---')
+        ? surfaceTrim
+        : (origWord ?? '').trim();
+    final isSuppliedOrArabicOnly = effectiveOrig.isEmpty ||
+        effectiveOrig == '-' ||
+        effectiveOrig == '—' ||
+        effectiveOrig == '---' ||
+        RegExp(r'^[\u0600-\u06FF\s\.,;:!?«»()\[\]]+$').hasMatch(effectiveOrig);
+
+    final isHebrew = lang == 'hebrew' || lang == 'aramaic' || (hasValidStrongs && sTrim.toUpperCase().startsWith('H'));
+
+    // ── Priority 1: Structured Morphological Columns (Zero prose parsing) ──
+    final posClean = (morphPos ?? '').trim().toLowerCase();
+    if (posClean.isNotEmpty) {
+      return _fromStructuredColumns(
+        posKey: posClean,
+        stemKey: morphStem?.trim().toLowerCase(),
+        tenseKey: morphTense?.trim().toLowerCase(),
+        voiceKey: morphVoice?.trim().toLowerCase(),
+        moodKey: morphMood?.trim().toLowerCase(),
+        personKey: morphPerson?.trim().toLowerCase(),
+        numberKey: morphNumber?.trim().toLowerCase(),
+        genderKey: morphGender?.trim().toLowerCase(),
+        caseKey: morphCase?.trim().toLowerCase(),
+        code: cleanCode,
+        lang: lang,
+        isHebrew: isHebrew,
+        origSurface: (surfaceTrim.isNotEmpty && surfaceTrim != '-' && surfaceTrim != '—' && surfaceTrim != '---')
+            ? surfaceTrim
+            : null,
+        origWord: effectiveOrig,
+        lemmaWord: lemmaWord,
+        strongsId: hasValidStrongs ? sTrim.toUpperCase() : null,
+        arWord: arWord,
+        fallbackDef: fallbackDefinition,
+        syntacticNote: (posClean == 'syntactic_ar') ? grammarNotes : null,
+      );
+    }
 
     // Never invent Hebrew/Greek Strong's or root analyses for Arabic-only syntactic tokens
     if (!hasValidStrongs && isSuppliedOrArabicOnly) {
@@ -85,8 +132,7 @@ class MorphologyService {
       );
     }
 
-    final isHebrew = lang == 'hebrew' || lang == 'aramaic' || (hasValidStrongs && sTrim.toUpperCase().startsWith('H'));
-
+    // ── Priority 2: Standard Robinson / WLC Morphological Codes ──
     if (cleanCode.isNotEmpty && cleanCode != '-' && cleanCode != '—') {
       final parsed = (isHebrew || cleanCode.contains('/') || cleanCode.startsWith('H'))
           ? _parseHebrewCode(cleanCode, lang)
@@ -96,26 +142,330 @@ class MorphologyService {
       }
     }
 
-    // Direct Linguistic Analysis based on Biblical Hebrew and Greek originals
+    // ── Priority 3: Direct Original-Script Fallback (No Arabic-prose inspection) ──
     if (isHebrew) {
       return _analyzeBiblicalHebrew(
-        origWord: origWord ?? '',
-        arWord: arWord,
-        strongsId: strongsId,
-        fallbackDef: fallbackDefinition,
-        lang: lang,
-      );
-    } else {
-      return _analyzeBiblicalGreek(
-        origWord: origWord ?? '',
+        origWord: effectiveOrig,
         arWord: arWord,
         strongsId: strongsId,
         fallbackDef: fallbackDefinition,
         lang: lang,
         lemmaWord: lemmaWord,
-        grammarNotes: grammarNotes,
+      );
+    } else {
+      return _analyzeBiblicalGreek(
+        origWord: effectiveOrig,
+        arWord: arWord,
+        strongsId: strongsId,
+        fallbackDef: fallbackDefinition,
+        lang: lang,
+        lemmaWord: lemmaWord,
       );
     }
+  }
+
+  // ───────────────────────────────────────────────────────────────────────────
+  // STRUCTURED MORPHOLOGY GENERATOR (توليد التحليل والشرح من الحقول المنظمة)
+  // ───────────────────────────────────────────────────────────────────────────
+  static const Map<String, String> _structuredStemLabels = {
+    'qal':       'وزن قال المجرد (Qal)',
+    'niphal':    'وزن نيفعل المطاوع / المجهول (Niphal)',
+    'piel':      'وزن بيعل المشدد (Piel)',
+    'pual':      'وزن بوعل المجهول المشدد (Pual)',
+    'hiphil':    'وزن هفعيل السببي (Hiphil)',
+    'hophal':    'وزن هوفعل السببي المجهول (Hophal)',
+    'hithpael':  'وزن هيثباعل الانعكاسي (Hithpael)',
+    'peal':      'وزن بعل الآرامي المجرد (Peal)',
+    'pael':      'وزن باعل الآرامي المشدد (Pael)',
+    'haphel':    'وزن هفعل الآرامي السببي (Haphel)',
+    'aphel':     'وزن أفعل الآرامي السببي (Aphel)',
+    'hithpeel':  'وزن هيثبعل الآرامي المطاوع (Hithpeel)',
+    'hithpaal':  'وزن هيثباعل الآرامي المطاوع (Hithpaal)',
+  };
+
+  static const Map<String, String> _structuredTenseLabels = {
+    'present':    'المضارع / الحاضر (Present)',
+    'imperfect':  'الماضي المستمر / الناقص (Imperfect)',
+    'aorist':     'الأوريست (Aorist)',
+    'future':     'المستقبل (Future)',
+    'perfect':    'الماضي التام (Perfect)',
+    'pluperfect': 'الماضي الأتم (Pluperfect)',
+    'qatal':      'الماضي التام العبري (Qatal / Perfect)',
+    'yiqtol':     'المضارع / المستقبل العبري (Yiqtol / Imperfect)',
+    'wayyiqtol':  'الماضي السردي المتتابع (Wayyiqtol)',
+    'weqatal':    'التام المقترن بالواو المتتابعة (Weqatal)',
+  };
+
+  static const Map<String, String> _structuredVoiceLabels = {
+    'active':           'مبني للمعلوم (Active)',
+    'causative_active': 'مبني للمعلوم السببي (Causative Active)',
+    'passive':          'مبني للمجهول (Passive)',
+    'middle':           'البناء المتوسط (Middle)',
+    'middle_passive':   'متوسط أو مجهول الصيغة (Middle / Passive)',
+    'middle_deponent':  'متوسط الصيغة فاعلي المعنى (Middle Deponent)',
+    'passive_deponent': 'مجهول الصيغة فاعلي المعنى (Passive Deponent)',
+  };
+
+  static const Map<String, String> _structuredMoodLabels = {
+    'indicative':           'الصيغة الإخبارية (Indicative)',
+    'subjunctive':          'صيغة الاحتمال / الغاية (Subjunctive)',
+    'optative':             'صيغة التمني (Optative)',
+    'imperative':           'صيغة الأمر (Imperative)',
+    'infinitive':           'صيغة المصدر (Infinitive)',
+    'infinitive_construct': 'المصدر المضاف العبري (Infinitive Construct)',
+    'infinitive_absolute':  'المصدر المطلق العبري (Infinitive Absolute)',
+    'participle':           'اسم فاعل / مفعول (Participle)',
+  };
+
+  static const Map<String, String> _structuredPersonLabels = {
+    '1': 'المتكلم (1st Person)',
+    '2': 'المخاطب (2nd Person)',
+    '3': 'الغائب (3rd Person)',
+  };
+
+  static const Map<String, String> _structuredNumberLabels = {
+    'singular': 'مفرد (Singular)',
+    'plural':   'جمع (Plural)',
+    'dual':     'مثنى (Dual)',
+  };
+
+  static const Map<String, String> _structuredGenderLabels = {
+    'masculine': 'مذكر (Masculine)',
+    'feminine':  'مؤنث (Feminine)',
+    'neuter':    'محايد (Neuter)',
+    'common':    'مشترك (Common)',
+  };
+
+  static const Map<String, String> _structuredCaseLabels = {
+    'nominative':  'حالة الرفع (Nominative)',
+    'accusative':  'حالة النصب (Accusative)',
+    'genitive':    'حالة الجر والإضافة (Genitive)',
+    'dative':      'حالة القابل (Dative)',
+    'vocative':    'حالة النداء (Vocative)',
+    'construct':   'حالة الإضافة العبرية (Construct)',
+    'absolute':    'الحالة المطلقة (Absolute)',
+    'directional': 'مقترن بهاء الاتجاه (Directional He)',
+  };
+
+  static List<String> _detectHebrewSurfacePrefixes(String surfaceWord, String? strongsId) {
+    final cons = surfaceWord.replaceAll(RegExp(r'[\u0591-\u05C7]'), '').trim();
+    if (cons.length <= 1) return const [];
+    int? sNum;
+    if (strongsId != null && strongsId.startsWith('H')) {
+      sNum = int.tryParse(strongsId.substring(1));
+    }
+    final isBetRoot = (sNum != null && sNum >= 872 && sNum <= 1369);
+    final isLamedRoot = (sNum != null && sNum >= 3734 && sNum <= 4003);
+    final isKafRoot = (sNum != null && sNum >= 3427 && sNum <= 3733);
+    final isMemRoot = (sNum != null && sNum >= 4004 && sNum <= 4880);
+
+    final prefixes = <String>[];
+    if (surfaceWord.startsWith('וַיּ') || surfaceWord.startsWith('וַיְ') || surfaceWord.startsWith('וַתּ') || surfaceWord.startsWith('וָא') || surfaceWord.startsWith('וַנִּ')) {
+      prefixes.add('واو السرد المتتابعة (Wayyiqtol)');
+    } else if (cons.startsWith('ו') && cons.length > 2) {
+      prefixes.add('واو العطف (וְ)');
+    }
+    if (surfaceWord.startsWith('הַ') || surfaceWord.startsWith('הָ') || surfaceWord.startsWith('הֶ')) {
+      prefixes.add('هاء التعريف (הַ)');
+    }
+    if (!isBetRoot && (surfaceWord.startsWith('בְּ') || surfaceWord.startsWith('בַּ') || surfaceWord.startsWith('בִּ'))) {
+      prefixes.add('باء الجر والظرفية (בְּ)');
+    }
+    if (!isLamedRoot && (surfaceWord.startsWith('לְ') || surfaceWord.startsWith('לַ') || surfaceWord.startsWith('לִ'))) {
+      prefixes.add('لام الجر والملكية (לְ)');
+    }
+    if (!isKafRoot && (surfaceWord.startsWith('כְּ') || surfaceWord.startsWith('כַּ'))) {
+      prefixes.add('كاف التشبيه (כְּ)');
+    }
+    if (!isMemRoot && (surfaceWord.startsWith('מִ') || surfaceWord.startsWith('מֵ'))) {
+      prefixes.add('ميم الابتداء (מִן)');
+    }
+    return prefixes;
+  }
+
+  static MorphologyAnalysis _fromStructuredColumns({
+    required String posKey,
+    required String? stemKey,
+    required String? tenseKey,
+    required String? voiceKey,
+    required String? moodKey,
+    required String? personKey,
+    required String? numberKey,
+    required String? genderKey,
+    required String? caseKey,
+    required String code,
+    required String lang,
+    required bool isHebrew,
+    required String? origSurface,
+    required String origWord,
+    required String? lemmaWord,
+    required String? strongsId,
+    required String? arWord,
+    required String? fallbackDef,
+    required String? syntacticNote,
+  }) {
+    if (posKey == 'syntactic_ar') {
+      final noteSummary = (syntacticNote != null && syntacticNote.trim().isNotEmpty)
+          ? syntacticNote.trim()
+          : 'عنصر نحوي في الصياغة العربية لاستقامة التركيب وأداء معنى الجملة، ولا تقابله كلمة معجمية مستقلة في النص الأصلي.';
+      return MorphologyAnalysis(
+        rawCode: 'SYNTAX-AR',
+        language: lang,
+        partOfSpeech: 'أداة / لفظ في التركيب العربي',
+        summary: noteSummary,
+        tags: const ['تركيب عربي', 'دون مقابل معجمي مستقل'],
+      );
+    }
+
+    final langAdj = lang == 'aramaic'
+        ? 'آرامي'
+        : (isHebrew ? 'عبري' : 'يوناني');
+    final langFemAdj = lang == 'aramaic'
+        ? 'آرامية'
+        : (isHebrew ? 'عبرية' : 'يونانية');
+
+    final stemLabel   = (stemKey != null && stemKey.isNotEmpty)     ? _structuredStemLabels[stemKey]     : null;
+    final tenseLabel  = (tenseKey != null && tenseKey.isNotEmpty)   ? _structuredTenseLabels[tenseKey]   : null;
+    final voiceLabel  = (voiceKey != null && voiceKey.isNotEmpty)   ? _structuredVoiceLabels[voiceKey]   : null;
+    final moodLabel   = (moodKey != null && moodKey.isNotEmpty)     ? _structuredMoodLabels[moodKey]     : null;
+    final personLabel = (personKey != null && personKey.isNotEmpty) ? _structuredPersonLabels[personKey] : null;
+    final numberLabel = (numberKey != null && numberKey.isNotEmpty) ? _structuredNumberLabels[numberKey] : null;
+    final genderLabel = (genderKey != null && genderKey.isNotEmpty) ? _structuredGenderLabels[genderKey] : null;
+    final caseLabel   = (caseKey != null && caseKey.isNotEmpty)     ? _structuredCaseLabels[caseKey]     : null;
+
+    final hasStructuredInflection = stemLabel != null ||
+        tenseLabel != null ||
+        voiceLabel != null ||
+        moodLabel != null ||
+        personLabel != null ||
+        numberLabel != null ||
+        genderLabel != null ||
+        caseLabel != null;
+
+    // If a Robinson/WLC code is stored and structured inflection fields were not yet populated, parse the code
+    if (!hasStructuredInflection && code.isNotEmpty && code != '-' && code != '—') {
+      final parsed = (isHebrew || code.contains('/') || code.startsWith('H'))
+          ? _parseHebrewCode(code, lang)
+          : _parseGreekCode(code, lang);
+      if (parsed.hasDetailedAnalysis) return parsed;
+    }
+
+    final prefixes = (isHebrew && origSurface != null)
+        ? _detectHebrewSurfacePrefixes(origSurface, strongsId)
+        : const <String>[];
+
+    // Map structured part-of-speech key to scholarly Arabic label
+    String posLabel;
+    switch (posKey) {
+      case 'verb':
+        if (!hasStructuredInflection && origSurface == null) {
+          posLabel = 'فعل $langAdj (المدخل المعجمي)';
+        } else {
+          posLabel = 'فعل $langAdj';
+        }
+        break;
+      case 'noun':
+        posLabel = 'اسم $langAdj';
+        break;
+      case 'proper_noun':
+        posLabel = 'اسم علم';
+        break;
+      case 'adjective':
+        posLabel = 'صفة $langFemAdj';
+        break;
+      case 'pronoun':
+        posLabel = 'ضمير $langAdj';
+        break;
+      case 'relative_pronoun':
+        posLabel = 'اسم موصول $langAdj';
+        break;
+      case 'demonstrative':
+        posLabel = 'اسم إشارة $langAdj';
+        break;
+      case 'article':
+        posLabel = 'أداة تعريف $langFemAdj';
+        break;
+      case 'preposition':
+        posLabel = 'حرف جر $langAdj';
+        break;
+      case 'conjunction':
+        posLabel = 'حرف عطف / أداة ربط';
+        break;
+      case 'particle':
+        posLabel = 'أداة نحوية $langFemAdj';
+        break;
+      case 'adverb':
+        posLabel = 'ظرف $langAdj';
+        break;
+      case 'numeral':
+        posLabel = 'اسم عدد $langAdj';
+        break;
+      default:
+        posLabel = 'مفردة $langFemAdj';
+    }
+
+    // Build tags deterministically from structured columns
+    final tags = <String>[
+      posLabel,
+      if (stemLabel != null) stemLabel,
+      if (tenseLabel != null) tenseLabel,
+      if (voiceLabel != null) voiceLabel,
+      if (moodLabel != null) moodLabel,
+      if (caseLabel != null) caseLabel,
+      if (personLabel != null) personLabel,
+      if (numberLabel != null) numberLabel,
+      if (genderLabel != null) genderLabel,
+    ];
+
+    // Generate clean Arabic grammatical summary strictly from structured columns
+    final formShown = (origSurface != null && origSurface.isNotEmpty)
+        ? origSurface
+        : ((origWord.isNotEmpty && origWord != '-' && origWord != '—' && origWord != '---') ? origWord : '');
+
+    final details = <String>[
+      if (stemLabel != null) 'على $stemLabel',
+      if (tenseLabel != null) 'في $tenseLabel',
+      if (voiceLabel != null) voiceLabel,
+      if (moodLabel != null) moodLabel,
+      if (caseLabel != null) 'في $caseLabel',
+      if (personLabel != null) 'لـ$personLabel',
+      if (numberLabel != null) numberLabel,
+      if (genderLabel != null) genderLabel,
+    ];
+
+    final sumBuf = StringBuffer();
+    if (!hasStructuredInflection && posKey == 'verb' && origSurface == null) {
+      sumBuf.write('المدخل المعجمي للفعل${formShown.isNotEmpty ? " ($formShown)" : ""}؛ وتُراجع صيغته الصرفية السياقية في النص الأصلي للآية.');
+    } else {
+      sumBuf.write(posLabel);
+      if (formShown.isNotEmpty) {
+        sumBuf.write(' ($formShown)');
+      }
+      if (details.isNotEmpty) {
+        sumBuf.write(': ${details.join('، ')}');
+      }
+      if (prefixes.isNotEmpty) {
+        sumBuf.write('، مقترن بـ: ${prefixes.join(' و ')}');
+      }
+      sumBuf.write('.');
+    }
+
+    return MorphologyAnalysis(
+      rawCode: code.isNotEmpty ? code : (strongsId ?? posKey.toUpperCase()),
+      language: lang,
+      partOfSpeech: posLabel,
+      stem: stemLabel,
+      tense: tenseLabel,
+      voice: voiceLabel,
+      mood: moodLabel,
+      grammaticalCase: caseLabel,
+      person: personLabel,
+      number: numberLabel,
+      gender: genderLabel,
+      prefixes: prefixes,
+      summary: sumBuf.toString(),
+      tags: tags,
+    );
   }
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -127,6 +477,7 @@ class MorphologyService {
     required String? strongsId,
     required String? fallbackDef,
     required String lang,
+    String? lemmaWord,
   }) {
     // Strip Hebrew cantillation and vowel points for consonant root detection
     final cons = origWord.replaceAll(RegExp(r'[\u0591-\u05C7]'), '').trim();
@@ -316,6 +667,16 @@ class MorphologyService {
     final isDefVerb = isExplicitVerbDef && !isDerivedNoun;
     final isKnownHebVerb = cons == 'ברא' || cons == 'אמר' || cons == 'עשה' || cons == 'נתן' || cons == 'היה' || cons == 'ידע' || cons == 'ראה' || cons == 'שמע';
     if (isWayyiqtol || (isDefVerb && isArVerb) || (isArVerb && isKnownHebVerb) || (isExplicitVerbDef && !def.contains('noun') && !isDerivedNoun)) {
+      final lemmaCons = lemmaWord != null ? lemmaWord.replaceAll(RegExp(r'[\u0591-\u05C7]'), '').trim() : '';
+      if (!isWayyiqtol && lemmaCons.isNotEmpty && cons == lemmaCons) {
+        return MorphologyAnalysis(
+          rawCode: strongsId ?? 'V-LEMMA',
+          language: lang,
+          partOfSpeech: 'فعل عبري (المدخل المعجمي)',
+          summary: 'المدخل المعجمي للفعل العبري ($origWord)؛ وتُراجع صيغته الصرفية السياقية في النص العبري للآية.',
+          tags: const ['فعل عبري', 'مدخل معجمي'],
+        );
+      }
       final pos = 'فعل عبري (Hebrew Verb)';
       String stem = 'وزن قال البسيط المجرد (Qal Stem)';
       String voice = 'مبني للمعلوم (Active Voice)';
@@ -375,14 +736,14 @@ class MorphologyService {
           person = 'الغائبة المفردة (هي - 3rd Person Feminine)';
           number = 'مفرد (Singular)';
           gender = 'مؤنث (Feminine)';
-        } else if (cons.endsWith('ת')) {
-          person = 'المخاطب المفرد (أنتَ - 2nd Person Masculine)';
-          number = 'مفرد (Singular)';
-          gender = 'مذكر (Masculine)';
         } else if (cons.endsWith('תי')) {
           person = 'المتكلم المفرد (أنا - 1st Person Singular)';
           number = 'مفرد (Singular)';
           gender = 'مشترك (Common)';
+        } else if (cons.endsWith('ת')) {
+          person = 'المخاطب المفرد (أنتَ - 2nd Person Masculine)';
+          number = 'مفرد (Singular)';
+          gender = 'مذكر (Masculine)';
         } else {
           person = 'الغائب المفرد (هو - 3rd Person Singular)';
           number = 'مفرد (Singular)';
@@ -527,7 +888,6 @@ class MorphologyService {
     required String? fallbackDef,
     required String lang,
     String? lemmaWord,
-    String? grammarNotes,
   }) {
     final clean = _normalizeGreek(origWord);
     final arClean = (arWord ?? '').replaceAll(RegExp(r'[\u064B-\u065F\u0670\.,;:!?«»()\[\]]'), '').trim();
@@ -859,65 +1219,6 @@ class MorphologyService {
     if (isVerb) {
       final lemmaClean = lemmaWord != null ? _normalizeGreek(lemmaWord) : '';
       final isCitationLemmaOnly = lemmaClean.isNotEmpty && clean == lemmaClean;
-      final gNote = (grammarNotes ?? '').trim();
-
-      // If grammarNotes documents the exact Greek form in the verse, honor its classification directly
-      if (gNote.contains('الأوريست') || gNote.contains('Aorist') || gNote.contains('مضارع مبني للمعلوم للمذكر المفرد')) {
-        String? noteTense;
-        String? noteVoice;
-        String? noteMood;
-        String? notePerson;
-        String? noteNumber;
-        if (gNote.contains('الأوريست') || gNote.contains('Aorist')) {
-          noteTense = 'الأوريست (Aorist - ἀόριστος)';
-        } else if (gNote.contains('مضارع')) {
-          noteTense = 'المضارع (Present - ἐνεστώς)';
-        }
-        if (gNote.contains('مبني للمجهول في الصيغة')) {
-          noteVoice = 'مبني للمجهول في الصيغة (Passive in form)';
-        } else if (gNote.contains('المبني للمجهول')) {
-          noteVoice = 'مبني للمجهول (Passive Voice)';
-        } else if (gNote.contains('المبني للمعلوم') || gNote.contains('مبني للمعلوم')) {
-          noteVoice = 'مبني للمعلوم (Active Voice)';
-        }
-        if (gNote.contains('الاحتمال') || gNote.contains('Subjunctive')) {
-          noteMood = 'صيغة الاحتمال (Subjunctive)';
-        } else if (gNote.contains('الخبرية') || gNote.contains('Indicative')) {
-          noteMood = 'الصيغة الخبرية (Indicative)';
-        } else if (gNote.contains('مصدر') || gNote.contains('Infinitive')) {
-          noteMood = 'صيغة مصدرية (Infinitive)';
-        } else if (gNote.contains('اسم مفعول') || gNote.contains('اسم فاعل')) {
-          noteMood = 'اسم فاعل / مفعول (Participle)';
-        }
-        if (gNote.contains('للغائب المفرد')) {
-          notePerson = 'الغائب المفرد (3rd Person Singular)';
-          noteNumber = 'مفرد (Singular)';
-        } else if (gNote.contains('للمخاطب المفرد')) {
-          notePerson = 'المخاطب المفرد (2nd Person Singular)';
-          noteNumber = 'مفرد (Singular)';
-        } else if (gNote.contains('المفرد')) {
-          noteNumber = 'مفرد (Singular)';
-        }
-        final vTags = <String>[
-          'فعل يوناني',
-          if (noteTense != null) noteTense,
-          if (noteVoice != null) noteVoice,
-          if (noteMood != null) noteMood,
-          if (notePerson != null) notePerson,
-        ];
-        return MorphologyAnalysis(
-          rawCode: sId.isNotEmpty ? sId : 'V',
-          language: 'greek',
-          partOfSpeech: 'فعل يوناني (Greek Verb)',
-          tense: noteTense,
-          voice: noteVoice,
-          mood: noteMood,
-          person: notePerson,
-          number: noteNumber,
-          summary: gNote,
-          tags: vTags,
-        );
-      }
 
       // Do not mistake dictionary citation ending (-ω / -ομαι / -μι) for 1st-person singular present in the verse
       if (isCitationLemmaOnly) {

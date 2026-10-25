@@ -17,6 +17,8 @@ class StrongsEntry {
   final String? editorialCommentaryAr;
   final String? pronunciationAr;
   final bool    arIsVerified;
+  final String? verifiedSource;
+  final String? verifiedAt;
 
   const StrongsEntry({
     required this.strongsId,
@@ -35,6 +37,8 @@ class StrongsEntry {
     this.editorialCommentaryAr,
     this.pronunciationAr,
     required this.arIsVerified,
+    this.verifiedSource,
+    this.verifiedAt,
   });
 
   factory StrongsEntry.fromJson(Map<String, dynamic> j) {
@@ -57,7 +61,10 @@ class StrongsEntry {
     }
 
     final rawIsVerified = j['ar_is_verified'];
-    final bool arIsVerified = rawIsVerified == true || rawIsVerified == 1 || rawIsVerified == '1';
+    final vSource = j['verified_source']?.toString().trim();
+    final bool arIsVerified = (rawIsVerified == true || rawIsVerified == 1 || rawIsVerified == '1') &&
+        vSource != null &&
+        vSource.isNotEmpty;
 
     return StrongsEntry(
       strongsId:       j['strongs_id']?.toString() ?? '',
@@ -76,8 +83,13 @@ class StrongsEntry {
       editorialCommentaryAr: j['editorial_commentary_ar']?.toString(),
       pronunciationAr:       j['pronunciation_ar']?.toString(),
       arIsVerified:          arIsVerified,
+      verifiedSource:        (vSource != null && vSource.isNotEmpty) ? vSource : null,
+      verifiedAt:            j['verified_at']?.toString(),
     );
   }
+
+  bool get isProvenanceVerified =>
+      arIsVerified && verifiedSource != null && verifiedSource!.trim().isNotEmpty;
 
   bool get isHebrew       => language == 'hebrew';
   bool get isAramaic      => language == 'aramaic' || definitionEn.contains('(Aramaic)');

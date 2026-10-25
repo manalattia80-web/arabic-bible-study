@@ -407,9 +407,19 @@ class StrongsModal extends StatelessWidget {
                     fallbackDefinition: entry.definitionEn,
                     arWord: mapping?.arWord,
                     origWord: effectiveOrig,
+                    origSurface: mapping?.origSurface,
                     strongsId: effectiveStrongs,
                     lemmaWord: entry.originalWord,
                     grammarNotes: mapping?.grammarNotes,
+                    morphPos: mapping?.morphPos,
+                    morphStem: mapping?.morphStem,
+                    morphTense: mapping?.morphTense,
+                    morphVoice: mapping?.morphVoice,
+                    morphMood: mapping?.morphMood,
+                    morphPerson: mapping?.morphPerson,
+                    morphNumber: mapping?.morphNumber,
+                    morphGender: mapping?.morphGender,
+                    morphCase: mapping?.morphCase,
                   );
 
                   return SliverToBoxAdapter(
@@ -539,7 +549,7 @@ class StrongsModal extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        if (entry.arIsVerified)
+                                        if (entry.isProvenanceVerified)
                                           Container(
                                             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                                             decoration: BoxDecoration(
@@ -571,6 +581,26 @@ class StrongsModal extends StatelessWidget {
                                         lexicalText,
                                         style: AppTheme.arabicVerse(size: 20, color: AppColors.arabicText),
                                         textAlign: TextAlign.right,
+                                      ),
+                                    ],
+                                    if (entry.isProvenanceVerified) ...[
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.fact_check_outlined, size: 13, color: AppColors.success.withOpacity(0.85)),
+                                          const SizedBox(width: 5),
+                                          Expanded(
+                                            child: Text(
+                                              'المصدر المراجع: ${entry.verifiedSource!}',
+                                              style: TextStyle(
+                                                color: AppColors.textMuted,
+                                                fontSize: 11.5,
+                                                height: 1.4,
+                                              ),
+                                              textAlign: TextAlign.right,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                     if (hasEnLexicon) ...[
@@ -683,12 +713,12 @@ class StrongsModal extends StatelessWidget {
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                                if (mapping!.origWord.trim().isNotEmpty &&
-                                                    mapping!.origWord != '---' &&
-                                                    mapping!.origWord != '-' &&
-                                                    mapping!.origWord != '—')
+                                                if (((mapping!.origSurface ?? mapping!.origWord).trim().isNotEmpty) &&
+                                                    (mapping!.origSurface ?? mapping!.origWord) != '---' &&
+                                                    (mapping!.origSurface ?? mapping!.origWord) != '-' &&
+                                                    (mapping!.origSurface ?? mapping!.origWord) != '—')
                                                   Text(
-                                                    '(${mapping!.origWord})',
+                                                    '(${mapping!.origSurface ?? mapping!.origWord})',
                                                     style: TextStyle(
                                                       color: AppColors.textSecondary,
                                                       fontSize: 13.5,

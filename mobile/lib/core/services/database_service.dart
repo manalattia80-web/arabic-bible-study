@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v30.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v31.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 30; // Database v30: v1.0.288 full diacritic-insensitive 3-layer lexicon split, Matt 1:20 morphology, function-word editorial cleanup
+    const targetDbVersion = 31; // Database v31: v1.0.289 structured morphology columns, provenance-backed verification, 13-verse + 40-word audit realignments
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -82,6 +82,7 @@ class DatabaseService {
         'bible_study_v27.db',
         'bible_study_v28.db',
         'bible_study_v29.db',
+        'bible_study_v30.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
@@ -99,7 +100,7 @@ class DatabaseService {
       }
 
       final sink = outFile.openWrite();
-      const totalParts = 37;
+      const totalParts = 45;
       for (int i = 0; i < totalParts; i++) {
         final partIndexStr = i.toString().padLeft(2, '0');
         final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
@@ -178,7 +179,9 @@ class DatabaseService {
             editorial_commentary_ar = ?,
             definition_ar = ?,
             notes_ar = ?,
-            is_verified = 1
+            is_verified = 1,
+            verified_source = 'قاموس سترونج اليوناني (G1) ومعجم Thayer',
+            verified_at = '2026-10-25'
         WHERE strongs_id IN ('G1', 'G0001', 'G001')
           AND (lexical_def_ar IS NULL OR lexical_def_ar = '');
       ''', [
@@ -475,7 +478,7 @@ class DatabaseService {
               strongsId: sId,
               transliterationLat: trans,
               audioUrl: audio,
-              isVerified: true,
+              isVerified: false,
             ));
           }
 
@@ -550,7 +553,9 @@ class DatabaseService {
         t.lexical_def_ar,
         t.contextual_usage_ar,
         t.editorial_commentary_ar,
-        t.is_verified as ar_is_verified
+        t.is_verified as ar_is_verified,
+        t.verified_source,
+        t.verified_at
       FROM strongs_entries e
       LEFT JOIN strongs_ar_translations t ON e.strongs_id = t.strongs_id
       WHERE e.strongs_id = ? OR e.strongs_id = ? OR e.strongs_id = ?
@@ -571,7 +576,10 @@ class DatabaseService {
     }
 
     final rawVerified = r['ar_is_verified'];
-    final bool arIsVerified = rawVerified == 1 || rawVerified == true || rawVerified == '1';
+    final vSource = r['verified_source']?.toString().trim();
+    final bool arIsVerified = (rawVerified == 1 || rawVerified == true || rawVerified == '1') &&
+        vSource != null &&
+        vSource.isNotEmpty;
 
     return StrongsEntry(
       strongsId:             r['strongs_id']?.toString() ?? trimmed,
@@ -588,6 +596,8 @@ class DatabaseService {
       editorialCommentaryAr: r['editorial_commentary_ar']?.toString(),
       pronunciationAr:       r['pronunciation_ar']?.toString(),
       arIsVerified:          arIsVerified,
+      verifiedSource:        (vSource != null && vSource.isNotEmpty) ? vSource : null,
+      verifiedAt:            r['verified_at']?.toString(),
     );
   }
 
@@ -611,7 +621,9 @@ class DatabaseService {
         t.lexical_def_ar,
         t.contextual_usage_ar,
         t.editorial_commentary_ar,
-        t.is_verified as ar_is_verified
+        t.is_verified as ar_is_verified,
+        t.verified_source,
+        t.verified_at
       FROM strongs_entries e
       LEFT JOIN strongs_ar_translations t ON e.strongs_id = t.strongs_id
       WHERE (e.original_word LIKE ? OR e.original_word LIKE ?)
@@ -633,7 +645,10 @@ class DatabaseService {
     }
 
     final rawVerified = r['ar_is_verified'];
-    final bool arIsVerified = rawVerified == 1 || rawVerified == true || rawVerified == '1';
+    final vSource = r['verified_source']?.toString().trim();
+    final bool arIsVerified = (rawVerified == 1 || rawVerified == true || rawVerified == '1') &&
+        vSource != null &&
+        vSource.isNotEmpty;
 
     return StrongsEntry(
       strongsId:             r['strongs_id']?.toString() ?? '',
@@ -650,6 +665,8 @@ class DatabaseService {
       editorialCommentaryAr: r['editorial_commentary_ar']?.toString(),
       pronunciationAr:       r['pronunciation_ar']?.toString(),
       arIsVerified:          arIsVerified,
+      verifiedSource:        (vSource != null && vSource.isNotEmpty) ? vSource : null,
+      verifiedAt:            r['verified_at']?.toString(),
     );
   }
 

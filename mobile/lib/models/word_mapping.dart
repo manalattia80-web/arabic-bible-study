@@ -7,14 +7,26 @@ class WordMapping {
   final String  arWord;
   final String? arWordNormalized;
   final String  origWord;
+  final String? origSurface;
   final String  origWordLang;    // 'hebrew' | 'greek'
   final String? origMorphology;
+  final String? morphPos;
+  final String? morphStem;
+  final String? morphTense;
+  final String? morphVoice;
+  final String? morphMood;
+  final String? morphPerson;
+  final String? morphNumber;
+  final String? morphGender;
+  final String? morphCase;
   final String? transliterationAr;
   final String? transliterationLat;
   final String? strongsId;
   final String? audioUrl;
   final int?    audioDurationMs;
   final bool    isVerified;
+  final String? verifiedSource;
+  final String? verifiedAt;
   final String? grammarNotes;
   final String? relationType;
 
@@ -26,20 +38,33 @@ class WordMapping {
     required this.arWord,
     this.arWordNormalized,
     required this.origWord,
+    this.origSurface,
     required this.origWordLang,
     this.origMorphology,
+    this.morphPos,
+    this.morphStem,
+    this.morphTense,
+    this.morphVoice,
+    this.morphMood,
+    this.morphPerson,
+    this.morphNumber,
+    this.morphGender,
+    this.morphCase,
     this.transliterationAr,
     this.transliterationLat,
     this.strongsId,
     this.audioUrl,
     this.audioDurationMs,
     required this.isVerified,
+    this.verifiedSource,
+    this.verifiedAt,
     this.grammarNotes,
     this.relationType,
   });
 
   factory WordMapping.fromJson(Map<String, dynamic> j) {
     final orig = j['orig_word']?.toString() ?? '-';
+    final surf = j['orig_surface']?.toString();
     final lang = j['orig_word_lang']?.toString() ?? 'hebrew';
     final isHeb = lang == 'hebrew' || lang == 'aramaic';
 
@@ -54,11 +79,13 @@ class WordMapping {
     }
 
     final rawIsVerified = j['is_verified'];
+    final vSource = j['verified_source']?.toString().trim();
     final sId = j['strongs_id']?.toString().trim();
     final hasValidStrongs = sId != null && sId.isNotEmpty && sId != '---' && sId != '-';
-    final bool isVerified = rawIsVerified == true || rawIsVerified == 1 || rawIsVerified == '1' ||
-        hasValidStrongs ||
-        (orig.trim().isNotEmpty && orig != '-' && orig != '—' && !orig.contains('---'));
+    // Strict provenance rule: only mark verified when explicitly reviewed with a recorded source.
+    final bool isVerified = (rawIsVerified == true || rawIsVerified == 1 || rawIsVerified == '1') &&
+        vSource != null &&
+        vSource.isNotEmpty;
 
     return WordMapping(
       id:                 j['id']?.toString() ?? '',
@@ -72,8 +99,18 @@ class WordMapping {
       arWord:             j['ar_word']?.toString() ?? '-',
       arWordNormalized:   j['ar_word_normalized']?.toString(),
       origWord:           orig,
+      origSurface:        (surf != null && surf.trim().isNotEmpty) ? surf.trim() : null,
       origWordLang:       lang,
       origMorphology:     j['orig_morphology']?.toString(),
+      morphPos:           j['morph_pos']?.toString(),
+      morphStem:          j['morph_stem']?.toString(),
+      morphTense:         j['morph_tense']?.toString(),
+      morphVoice:         j['morph_voice']?.toString(),
+      morphMood:          j['morph_mood']?.toString(),
+      morphPerson:        j['morph_person']?.toString(),
+      morphNumber:        j['morph_number']?.toString(),
+      morphGender:        j['morph_gender']?.toString(),
+      morphCase:          j['morph_case']?.toString(),
       transliterationAr:  j['transliteration_ar']?.toString(),
       transliterationLat: j['transliteration_lat']?.toString(),
       strongsId:          hasValidStrongs ? sId : null,
@@ -82,6 +119,8 @@ class WordMapping {
           ? j['audio_duration_ms'] as int
           : int.tryParse(j['audio_duration_ms']?.toString() ?? ''),
       isVerified:         isVerified,
+      verifiedSource:     (vSource != null && vSource.isNotEmpty) ? vSource : null,
+      verifiedAt:         j['verified_at']?.toString(),
       grammarNotes:       j['grammar_notes']?.toString(),
       relationType:       j['relation_type']?.toString(),
     );

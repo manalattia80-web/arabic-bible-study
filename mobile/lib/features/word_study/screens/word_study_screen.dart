@@ -221,6 +221,7 @@ class _MappingsStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final withStrongs = mappings.where((m) => m.hasStrongs).length;
     final verified = mappings.where((m) => m.isVerified).length;
     final withAudio = mappings.where((m) => m.hasAudio).length;
     return Padding(
@@ -231,7 +232,11 @@ class _MappingsStats extends StatelessWidget {
         children: [
           _stat('${mappings.length}', 'كلمة', AppColors.textSecondary),
           const SizedBox(width: 12),
-          _stat('$verified', 'مُدقق', AppColors.success),
+          _stat('$withStrongs', 'مرتبط بسترونج', AppColors.primary),
+          if (verified > 0) ...[
+            const SizedBox(width: 12),
+            _stat('$verified', 'موثّق', AppColors.success),
+          ],
           const SizedBox(width: 12),
           _stat('$withAudio', 'مع صوت', AppColors.info),
         ],
@@ -444,7 +449,9 @@ class _WordRow extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                mapping.origWord,
+                                (mapping.origSurface != null && mapping.origSurface!.trim().isNotEmpty)
+                                    ? mapping.origSurface!
+                                    : mapping.origWord,
                                 style: mapping.isHebrew
                                     ? AppTheme.hebrewText(size: 17)
                                     : AppTheme.greekText(size: 16),

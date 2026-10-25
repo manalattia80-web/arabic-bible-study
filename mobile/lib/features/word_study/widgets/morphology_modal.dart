@@ -51,8 +51,18 @@ class MorphologyModal extends StatelessWidget {
       language: mapping.origWordLang,
       arWord: mapping.arWord,
       origWord: mapping.origWord,
+      origSurface: mapping.origSurface,
       strongsId: effectiveStrongsId,
       grammarNotes: mapping.grammarNotes,
+      morphPos: mapping.morphPos,
+      morphStem: mapping.morphStem,
+      morphTense: mapping.morphTense,
+      morphVoice: mapping.morphVoice,
+      morphMood: mapping.morphMood,
+      morphPerson: mapping.morphPerson,
+      morphNumber: mapping.morphNumber,
+      morphGender: mapping.morphGender,
+      morphCase: mapping.morphCase,
     );
     final isHebrew = mapping.isHebrew;
 
@@ -169,7 +179,9 @@ class MorphologyModal extends StatelessWidget {
                               child: Directionality(
                                 textDirection: isHebrew ? TextDirection.rtl : TextDirection.ltr,
                                 child: Text(
-                                  mapping.origWord,
+                                  (mapping.origSurface != null && mapping.origSurface!.trim().isNotEmpty)
+                                      ? mapping.origSurface!
+                                      : mapping.origWord,
                                   style: isHebrew
                                       ? AppTheme.hebrewText(size: 32)
                                       : AppTheme.greekText(size: 28),
