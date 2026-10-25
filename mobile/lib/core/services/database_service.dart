@@ -713,7 +713,7 @@ class DatabaseService {
       WHERE wm.strongs_id IN ($placeholders)
          OR wm.id IN (SELECT mapping_id FROM word_mapping_strongs WHERE strongs_id IN ($placeholders))
       ORDER BY v.book_id ASC, v.chapter_num ASC, v.verse_num ASC
-    ''', candidates);
+    ''', [...candidates, ...candidates]);
 
     // Group by verse_id if a word appears multiple times in the same verse
     final Map<String, WordOccurrence> grouped = {};
