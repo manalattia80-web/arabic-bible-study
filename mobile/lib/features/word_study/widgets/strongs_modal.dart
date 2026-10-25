@@ -123,8 +123,8 @@ class StrongsModal extends StatelessWidget {
     } else if (ar == 'قد') {
       origWord = origWord.isNotEmpty ? origWord : '—';
       transliteration = 'حرف تحقيق';
-      definitionAr = 'حرف تحقيق في الصياغة العربية للدلالة على تمام وقوع الفعل وثبوته.';
-      notesAr = 'يؤدي في الترجمة دلالة صيغة الفعل التام في اللغة الأصلية ولا يقابله لفظ معجمي مستقل.';
+      definitionAr = 'حرف تحقيق في الصياغة العربية يدخل على الفعل الماضي لتأكيد وقوعه.';
+      notesAr = 'يدخل على الفعل الماضي في التركيب العربي لتأكيد تحقق وقوع الفعل في السياق، ولا يقابله لفظ معجمي مستقل في النص الأصلي.';
       sId = 'نحوي';
     } else if (ar == 'ان' || ar == 'إن' || ar == 'أن') {
       origWord = origWord.isNotEmpty ? origWord : '—';
@@ -408,6 +408,8 @@ class StrongsModal extends StatelessWidget {
                     arWord: mapping?.arWord,
                     origWord: effectiveOrig,
                     strongsId: effectiveStrongs,
+                    lemmaWord: entry.originalWord,
+                    grammarNotes: mapping?.grammarNotes,
                   );
 
                   return SliverToBoxAdapter(
@@ -483,7 +485,7 @@ class StrongsModal extends StatelessWidget {
               ),
 
               // ── 3-Layer Word Card Architecture ─────────────────
-              // Layer 1: المعنى المعجمي الموثّق
+              // Layer 1: المعنى المعجمي (مع وسم «موثّق» للمداخل التي تمت مقابلتها بمصدر محدد)
               // Layer 2: معنى الكلمة في الآية والسياق
               // Layer 3: تعليق لاهوتي منفصل وموسوم بأنه «شرح تحريري»
               Builder(
@@ -509,7 +511,7 @@ class StrongsModal extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          // ── 1. المعنى المعجمي الموثّق ──────────────────────
+                          // ── 1. المعنى المعجمي ──────────────────────
                           if (lexicalText.isNotEmpty || hasEnLexicon)
                             Directionality(
                               textDirection: TextDirection.rtl,
@@ -529,7 +531,7 @@ class StrongsModal extends StatelessWidget {
                                         const SizedBox(width: 6),
                                         Expanded(
                                           child: Text(
-                                            hasEnLexicon ? 'المعنى المعجمي الموثّق' : 'التعريف اللغوي والنحوي',
+                                            hasEnLexicon ? 'المعنى المعجمي' : 'التعريف اللغوي والنحوي',
                                             style: TextStyle(
                                               color: AppColors.primary,
                                               fontSize: 13.5,
@@ -551,7 +553,7 @@ class StrongsModal extends StatelessWidget {
                                                 Icon(Icons.verified, color: AppColors.success, size: 12),
                                                 SizedBox(width: 4),
                                                 Text(
-                                                  'مُراجع معجميًا',
+                                                  'موثّق',
                                                   style: TextStyle(
                                                     color: AppColors.success,
                                                     fontSize: 10.5,

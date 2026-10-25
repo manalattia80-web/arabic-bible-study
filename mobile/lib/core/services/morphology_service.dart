@@ -57,10 +57,35 @@ class MorphologyService {
     String? arWord,
     String? origWord,
     String? strongsId,
+    String? lemmaWord,
+    String? grammarNotes,
   }) {
     final cleanCode = (code ?? '').trim();
     final lang = language.toLowerCase();
-    final isHebrew = lang == 'hebrew' || lang == 'aramaic' || (strongsId != null && strongsId.startsWith('H'));
+    final sTrim = (strongsId ?? '').trim();
+    final hasValidStrongs = RegExp(r'^[HG]\d+$', caseSensitive: false).hasMatch(sTrim);
+    final origTrim = (origWord ?? '').trim();
+    final isSuppliedOrArabicOnly = origTrim.isEmpty ||
+        origTrim == '-' ||
+        origTrim == '—' ||
+        origTrim == '---' ||
+        RegExp(r'^[\u0600-\u06FF\s\.,;:!?«»()\[\]]+$').hasMatch(origTrim);
+
+    // Never invent Hebrew/Greek Strong's or root analyses for Arabic-only syntactic tokens
+    if (!hasValidStrongs && isSuppliedOrArabicOnly) {
+      final noteSummary = (grammarNotes != null && grammarNotes.trim().isNotEmpty)
+          ? grammarNotes.trim()
+          : 'عنصر نحوي في الصياغة العربية لاستقامة التركيب وأداء معنى الجملة، ولا تقابله كلمة معجمية مستقلة في النص الأصلي.';
+      return MorphologyAnalysis(
+        rawCode: 'SYNTAX-AR',
+        language: lang,
+        partOfSpeech: 'أداة / لفظ في التركيب العربي',
+        summary: noteSummary,
+        tags: const ['تركيب عربي', 'دون مقابل معجمي مستقل'],
+      );
+    }
+
+    final isHebrew = lang == 'hebrew' || lang == 'aramaic' || (hasValidStrongs && sTrim.toUpperCase().startsWith('H'));
 
     if (cleanCode.isNotEmpty && cleanCode != '-' && cleanCode != '—') {
       final parsed = (isHebrew || cleanCode.contains('/') || cleanCode.startsWith('H'))
@@ -87,6 +112,8 @@ class MorphologyService {
         strongsId: strongsId,
         fallbackDef: fallbackDefinition,
         lang: lang,
+        lemmaWord: lemmaWord,
+        grammarNotes: grammarNotes,
       );
     }
   }
@@ -499,6 +526,8 @@ class MorphologyService {
     required String? strongsId,
     required String? fallbackDef,
     required String lang,
+    String? lemmaWord,
+    String? grammarNotes,
   }) {
     final clean = _normalizeGreek(origWord);
     final arClean = (arWord ?? '').replaceAll(RegExp(r'[\u064B-\u065F\u0670\.,;:!?«»()\[\]]'), '').trim();
@@ -828,27 +857,110 @@ class MorphologyService {
     final isVerb = isDefVerb || isArVerb || isKnownVerbStrongs || hasVerbSuffix;
 
     if (isVerb) {
+      final lemmaClean = lemmaWord != null ? _normalizeGreek(lemmaWord) : '';
+      final isCitationLemmaOnly = lemmaClean.isNotEmpty && clean == lemmaClean;
+      final gNote = (grammarNotes ?? '').trim();
+
+      // If grammarNotes documents the exact Greek form in the verse, honor its classification directly
+      if (gNote.contains('الأوريست') || gNote.contains('Aorist') || gNote.contains('مضارع مبني للمعلوم للمذكر المفرد')) {
+        String? noteTense;
+        String? noteVoice;
+        String? noteMood;
+        String? notePerson;
+        String? noteNumber;
+        if (gNote.contains('الأوريست') || gNote.contains('Aorist')) {
+          noteTense = 'الأوريست (Aorist - ἀόριστος)';
+        } else if (gNote.contains('مضارع')) {
+          noteTense = 'المضارع (Present - ἐνεστώς)';
+        }
+        if (gNote.contains('مبني للمجهول في الصيغة')) {
+          noteVoice = 'مبني للمجهول في الصيغة (Passive in form)';
+        } else if (gNote.contains('المبني للمجهول')) {
+          noteVoice = 'مبني للمجهول (Passive Voice)';
+        } else if (gNote.contains('المبني للمعلوم') || gNote.contains('مبني للمعلوم')) {
+          noteVoice = 'مبني للمعلوم (Active Voice)';
+        }
+        if (gNote.contains('الاحتمال') || gNote.contains('Subjunctive')) {
+          noteMood = 'صيغة الاحتمال (Subjunctive)';
+        } else if (gNote.contains('الخبرية') || gNote.contains('Indicative')) {
+          noteMood = 'الصيغة الخبرية (Indicative)';
+        } else if (gNote.contains('مصدر') || gNote.contains('Infinitive')) {
+          noteMood = 'صيغة مصدرية (Infinitive)';
+        } else if (gNote.contains('اسم مفعول') || gNote.contains('اسم فاعل')) {
+          noteMood = 'اسم فاعل / مفعول (Participle)';
+        }
+        if (gNote.contains('للغائب المفرد')) {
+          notePerson = 'الغائب المفرد (3rd Person Singular)';
+          noteNumber = 'مفرد (Singular)';
+        } else if (gNote.contains('للمخاطب المفرد')) {
+          notePerson = 'المخاطب المفرد (2nd Person Singular)';
+          noteNumber = 'مفرد (Singular)';
+        } else if (gNote.contains('المفرد')) {
+          noteNumber = 'مفرد (Singular)';
+        }
+        final vTags = <String>[
+          'فعل يوناني',
+          if (noteTense != null) noteTense,
+          if (noteVoice != null) noteVoice,
+          if (noteMood != null) noteMood,
+          if (notePerson != null) notePerson,
+        ];
+        return MorphologyAnalysis(
+          rawCode: sId.isNotEmpty ? sId : 'V',
+          language: 'greek',
+          partOfSpeech: 'فعل يوناني (Greek Verb)',
+          tense: noteTense,
+          voice: noteVoice,
+          mood: noteMood,
+          person: notePerson,
+          number: noteNumber,
+          summary: gNote,
+          tags: vTags,
+        );
+      }
+
+      // Do not mistake dictionary citation ending (-ω / -ομαι / -μι) for 1st-person singular present in the verse
+      if (isCitationLemmaOnly) {
+        final vVoice = (clean.endsWith('ομαι') || clean.endsWith('μαι'))
+            ? 'صيغة متوسطة أو مجهولة في المدخل المعجمي'
+            : null;
+        return MorphologyAnalysis(
+          rawCode: sId.isNotEmpty ? sId : 'V-LEMMA',
+          language: 'greek',
+          partOfSpeech: 'فعل يوناني (المدخل المعجمي)',
+          voice: vVoice,
+          summary: 'المدخل المعجمي للفعل اليوناني ($origWord)؛ ويُرجع إلى النص اليوناني للآية لتحديد زمن التصريف وصيغته السياقية.',
+          tags: const ['فعل يوناني', 'مدخل معجمي'],
+        );
+      }
+
       final pos = 'فعل يوناني (Greek Verb)';
-      String tense = 'الماضي البسيط / غير المحدد (Aorist - ἀόριστος)';
+      String tense = 'الأوريست (Aorist - ἀόριστος)';
       String voice = 'مبني للمعلوم (Active Voice)';
       String mood = 'صيغة إخبارية واقعية (Indicative)';
       String person = 'الغائب المفرد (هو / هي - 3rd Person Singular)';
       String number = 'مفرد (Singular)';
       String gender = 'مذكر أو مشترك';
+      final hasIotaSubscript = RegExp(r'[ᾳᾴᾶᾷῃῄῆῇῳῴῶῷ\u0345]').hasMatch(origWord);
+      final isSecondAoristPass = hasPastAugment &&
+          (clean.endsWith('φανη') || clean.endsWith('χαρη') || clean.endsWith('κρυβη') ||
+           clean.endsWith('σταλη') || clean.endsWith('γραφη') || clean.endsWith('σπαρη') ||
+           clean.endsWith('στραφη') || clean.endsWith('ηνοιγη'));
 
       // ── Tense (الزمن) ──────────────────────────────────────────────────────
-      if (clean.contains('σα') || clean.contains('σε') || clean.contains('σεν') || clean.contains('σαν') ||
+      if (isSecondAoristPass ||
+          clean.contains('σα') || clean.contains('σε') || clean.contains('σεν') || clean.contains('σαν') ||
           clean.contains('ξε') || clean.contains('ξεν') || clean.contains('ψε') || clean.contains('ψεν') ||
           clean.contains('θη') || clean.contains('θην') || clean.contains('θησαν') ||
           clean.startsWith('ειπ') || clean.startsWith('ελθ') || clean.startsWith('ελαβ') ||
           clean.startsWith('ευρ') || clean.startsWith('ειδ') || clean.startsWith('εγεν') ||
           clean.startsWith('εγνω') || clean.startsWith('εφαγ') || clean.startsWith('εβαλ')) {
-        tense = 'الماضي البسيط / غير المحدد (Aorist - ἀόριστος)';
+        tense = 'الأوريست (Aorist - ἀόριστος)';
       } else if (clean.endsWith('σω') || clean.endsWith('σεις') || clean.endsWith('σει') || clean.endsWith('σομεν') || clean.endsWith('σετε') || clean.endsWith('σουσι') || clean.endsWith('θησεται')) {
         tense = 'المستقبل (Future - μέλλων)';
       } else if (clean.contains('κα') || clean.contains('κας') || clean.contains('κε') || clean.contains('κεν') || clean.contains('κασι') ||
                  clean.startsWith('γεγ') || clean.startsWith('πεπ') || clean.startsWith('τετ') || clean.startsWith('λελ')) {
-        tense = 'التام / الماضي المكتمل (Perfect - παρακείμενος)';
+        tense = 'التام اليوناني (Perfect - παρακείμενος)';
       } else if (hasPastAugment && (clean.endsWith('ον') || clean.endsWith('ες') || clean.endsWith('ε') || clean.endsWith('εν') || clean.endsWith('ετο') || clean.endsWith('οντο'))) {
         tense = 'الماضي المستمر / الناقص (Imperfect - παρατατικός)';
       } else {
@@ -856,12 +968,12 @@ class MorphologyService {
       }
 
       // ── Voice (البناء للمعلوم أو المجهول) ───────────────────────────────────
-      if (clean.contains('θη') || clean.contains('θην') || clean.contains('θης') || clean.contains('θημεν') || clean.contains('θησαν') || clean.contains('θησεται') || clean.endsWith('θεν')) {
-        voice = 'مبني للمجهول (Passive Voice)';
+      if (isSecondAoristPass || clean.contains('θη') || clean.contains('θην') || clean.contains('θης') || clean.contains('θημεν') || clean.contains('θησαν') || clean.contains('θησεται') || clean.endsWith('θεν')) {
+        voice = 'مبني للمجهول في الصيغة (Passive Voice)';
       } else if (clean.endsWith('μαι') || clean.endsWith('ομαι') || clean.endsWith('εται') || clean.endsWith('ονται') ||
-                 clean.endsWith('αتو') || clean.endsWith('αντο') || clean.endsWith('εσθαι') || clean.endsWith('μενος') ||
+                 clean.endsWith('ατο') || clean.endsWith('αντο') || clean.endsWith('εσθαι') || clean.endsWith('μενος') ||
                  def.contains('middle voice') || clean.startsWith('ερχ') || clean.startsWith('γινομ') || clean.startsWith('αποκριν')) {
-        voice = 'صيغة متوسطة / ديبوننت معناه معلوم (Middle / Deponent)';
+        voice = 'صيغة متوسطة / ديبوننت (Middle / Deponent)';
       } else {
         voice = 'مبني للمعلوم (Active Voice)';
       }
@@ -873,24 +985,26 @@ class MorphologyService {
         mood = 'اسم فاعل أو مفعول (Participle)';
       } else if (clean.endsWith('σον') || clean.endsWith('σατε') || clean.endsWith('θητι')) {
         mood = 'صيغة أمر (Imperative)';
+      } else if (hasIotaSubscript || clean.endsWith('ωμεν') || clean.endsWith('ητε') || clean.endsWith('ωσι') || clean.endsWith('ωσιν')) {
+        mood = 'صيغة الاحتمال (Subjunctive)';
       } else {
-        mood = 'صيغة إخبارية واقعية (Indicative)';
+        mood = 'صيغة خبرية (Indicative)';
       }
 
       // ── Person & Number (الضمير والعدد) ────────────────────────────────────
-      if (clean.endsWith('ομεν') || clean.endsWith('αμεν') || clean.endsWith('σαμεν') || clean.endsWith('ομεθα')) {
+      if (clean.endsWith('ομεν') || clean.endsWith('ωμεν') || clean.endsWith('αμεν') || clean.endsWith('σαμεν') || clean.endsWith('ομεθα')) {
         person = 'المتكلمون الجمع (نحن - 1st Person Plural)';
         number = 'جمع (Plural)';
-      } else if (clean.endsWith('ετε') || clean.endsWith('ατε') || clean.endsWith('σατε') || clean.endsWith('εσθε')) {
+      } else if (clean.endsWith('ετε') || clean.endsWith('ητε') || clean.endsWith('ατε') || clean.endsWith('σατε') || clean.endsWith('εσθε')) {
         person = 'المخاطبون الجمع (أنتم - 2nd Person Plural)';
         number = 'جمع (Plural)';
-      } else if (clean.endsWith('ουσι') || clean.endsWith('ουσιν') || clean.endsWith('αν') || clean.endsWith('σαν') || clean.endsWith('οσαν') || clean.endsWith('θησαν') || clean.endsWith('ονται') || clean.endsWith('οντο')) {
+      } else if (clean.endsWith('ουσι') || clean.endsWith('ουσιν') || clean.endsWith('ωσι') || clean.endsWith('ωσιν') || clean.endsWith('αν') || clean.endsWith('σαν') || clean.endsWith('οσαν') || clean.endsWith('θησαν') || clean.endsWith('ονται') || clean.endsWith('οντο')) {
         person = 'الغائبون الجمع (هم - 3rd Person Plural)';
         number = 'جمع (Plural)';
       } else if (clean.endsWith('ον') && hasPastAugment) {
         person = 'الغائبون الجمع (هم) أو المتكلم المفرد (أنا)';
         number = 'جمع أو مفرد';
-      } else if (clean.endsWith('εις') || clean.endsWith('ας') || clean.endsWith('κας')) {
+      } else if (clean.endsWith('εις') || clean.endsWith('ης') || clean.endsWith('ας') || clean.endsWith('κας')) {
         person = 'المخاطب المفرد (أنتَ - 2nd Person Singular)';
         number = 'مفرد (Singular)';
       } else if (clean.endsWith('ω') || clean.endsWith('μαι') || clean.endsWith('μην') || clean.endsWith('σα') || clean.endsWith('κα')) {

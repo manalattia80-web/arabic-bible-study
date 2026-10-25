@@ -52,6 +52,7 @@ class MorphologyModal extends StatelessWidget {
       arWord: mapping.arWord,
       origWord: mapping.origWord,
       strongsId: effectiveStrongsId,
+      grammarNotes: mapping.grammarNotes,
     );
     final isHebrew = mapping.isHebrew;
 
