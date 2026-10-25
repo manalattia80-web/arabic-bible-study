@@ -150,10 +150,15 @@ class AudioButton extends StatelessWidget {
             final isLoadingThis = isPlaying && loading;
 
             final String defaultTooltip;
+            final hasValidId = strongsId != null && strongsId!.isNotEmpty && strongsId != '---' && strongsId != '-';
             if (_isAramaic && isAuthenticAramaic) {
-              defaultTooltip = 'استماع: تسجيل بشري — قيد المراجعة ($strongsId)';
+              defaultTooltip = hasValidId
+                  ? 'استماع: تسجيل بشري — قيد المراجعة ($strongsId)'
+                  : 'استماع: تسجيل بشري — قيد المراجعة';
             } else {
-              defaultTooltip = 'استماع: نطق آلي تقريبي للمدخل المعجمي ($strongsId)';
+              defaultTooltip = hasValidId
+                  ? 'استماع: نطق آلي تقريبي للمدخل المعجمي ($strongsId)'
+                  : 'استماع: نطق آلي تقريبي للصيغة الأصلية';
             }
 
             return IconButton(

@@ -191,9 +191,11 @@ class MorphologyModal extends StatelessWidget {
                                 url: mapping.audioUrl,
                                 tooltip: mapping.isAramaic
                                     ? (AudioPlaybackService.instance.isAuthenticAramaic(mapping.strongsId)
-                                        ? 'استماع: تسجيل بشري — قيد المراجعة (${mapping.strongsId})'
+                                        ? 'استماع: تسجيل بشري — قيد المراجعة (${mapping.strongsId ?? mapping.origWord})'
                                         : 'النطق الآرامي غير متاح حاليًا')
-                                    : 'استماع: نطق المدخل المعجمي (${mapping.strongsId})',
+                                    : (mapping.hasStrongs
+                                        ? 'استماع: نطق آلي تقريبي للمدخل المعجمي (${mapping.strongsId})'
+                                        : 'استماع: نطق آلي تقريبي للصيغة الأصلية'),
                               ),
                               const SizedBox(width: 8),
                               _buildAudioBadge(mapping),
@@ -395,6 +397,50 @@ class MorphologyModal extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
+                  // ── Verse-specific Grammar Notes (when documented) ───
+                  if (mapping.grammarNotes != null && mapping.grammarNotes!.trim().isNotEmpty) ...[
+                    Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: AppColors.info.withOpacity(0.08),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.info.withOpacity(0.25)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Row(
+                              children: [
+                                Icon(Icons.translate_rounded, size: 16, color: AppColors.info),
+                                SizedBox(width: 6),
+                                Text(
+                                  'توضيح الصيغة في سياق الآية',
+                                  style: TextStyle(
+                                    color: AppColors.info,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              mapping.grammarNotes!.trim(),
+                              style: const TextStyle(
+                                fontSize: 13.5,
+                                height: 1.55,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+
                   // ── Synthesized Sentence Summary ─────────────────────
                   Directionality(
                     textDirection: TextDirection.rtl,
@@ -453,7 +499,7 @@ class MorphologyModal extends StatelessWidget {
                       },
                       icon: const Icon(Icons.menu_book_rounded, size: 18),
                       label: Text(
-                        'عرض معجم سترونج ($effectiveStrongsId) والبعد اللاهوتي',
+                        'فتح بطاقة الكلمة ومعجم سترونج ($effectiveStrongsId)',
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                       ),
                     ),

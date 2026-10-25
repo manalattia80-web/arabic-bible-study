@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v28.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v29.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 28; // Database v19 with full scientific audit and linguistic corrections
+    const targetDbVersion = 29; // Database v29: v1.0.287 verse realignments & 3-layer lexicon separation
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -80,6 +80,7 @@ class DatabaseService {
         'bible_study_v25.db',
         'bible_study_v26.db',
         'bible_study_v27.db',
+        'bible_study_v28.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
@@ -97,7 +98,7 @@ class DatabaseService {
       }
 
       final sink = outFile.openWrite();
-      const totalParts = 35;
+      const totalParts = 37;
       for (int i = 0; i < totalParts; i++) {
         final partIndexStr = i.toString().padLeft(2, '0');
         final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
@@ -167,27 +168,25 @@ class DatabaseService {
       debugPrint('Self-healing Ezekiel 40:49 warning: $e');
     }
 
-    // Dynamic Self-Healing: Strong's G1 (Alpha) lexical vs theological distinction
+    // Dynamic Self-Healing: Strong's G1 (Alpha) 3-layer lexical vs contextual vs editorial distinction
     try {
-      final updated = await db.rawUpdate('''
+      await db.rawUpdate('''
         UPDATE strongs_ar_translations
-        SET definition_ar = ?,
+        SET lexical_def_ar = ?,
+            contextual_usage_ar = ?,
+            editorial_commentary_ar = ?,
+            definition_ar = ?,
             notes_ar = ?,
             is_verified = 1
-        WHERE strongs_id IN ('G1', 'G0001', 'G001');
+        WHERE strongs_id IN ('G1', 'G0001', 'G001')
+          AND (lexical_def_ar IS NULL OR lexical_def_ar = '');
       ''', [
-        'ألفا (ἄλφα) — الحرف الأول من الأبجدية اليونانية. يُستعمل رمزياً للدلالة على البداية والأولية، كما يدخل في تركيب الكلمات كسابقة تفيد النفي (Alpha Privative) أو الاجتماع والمصاحبة (Alpha Copulative).',
-        'الاستعمال الثيولوجي في العهد الجديد: يقترن بحرف الأوميجا في سفر الرؤيا (1: 8، 21: 6، 22: 13) كلقب لاهوتي مهيب للرب الإله والرب يسوع المسيح: «الأَلِفُ وَالْيَاءُ، الْبِدَايَةُ وَالنِّهَايَةُ، الأَوَّلُ وَالآخِرُ»، دلالة على الأزلية والأبدية والسيادة المطلقة على كل التاريخ والتدبير الإلهي.'
+        'الحرف الأول من الأبجدية اليونانية (Α, α)؛ يُستعمل للدلالة على البداية والأولية، كما يدخل في اشتقاق الكلمات اليونانية كسابقة تفيد النفي أو المصاحبة.',
+        'ورد في العهد الجديد مقترنًا بالحرف الأخير «أوميجا» (Ω) في سفر الرؤيا (١: ٨؛ ٢١: ٦؛ ٢٢: ١٣) في صيغة «الأَلِفُ وَالْيَاءُ، الْبِدَايَةُ وَالنِّهَايَةُ».',
+        'يُطلق هذا اللقب في سفر الرؤيا للدلالة على الأزلية والأبدية والسيادة الإلهية الشاملة للتاريخ من مبدئه إلى منتهاه.',
+        'الحرف الأول من الأبجدية اليونانية (Α, α)؛ يُستعمل للدلالة على البداية والأولية، كما يدخل في اشتقاق الكلمات اليونانية كسابقة تفيد النفي أو المصاحبة.',
+        'ورد في العهد الجديد مقترنًا بالحرف الأخير «أوميجا» (Ω) في سفر الرؤيا (١: ٨؛ ٢١: ٦؛ ٢٢: ١٣) في صيغة «الأَلِفُ وَالْيَاءُ، الْبِدَايَةُ وَالنِّهَايَةُ».',
       ]);
-      if (updated == 0) {
-        await db.rawInsert('''
-          INSERT OR IGNORE INTO strongs_ar_translations (strongs_id, definition_ar, notes_ar, is_verified)
-          VALUES ('G1', ?, ?, 1);
-        ''', [
-          'ألفا (ἄλفا) — الحرف الأول من الأبجدية اليونانية. يُستعمل رمزياً للدلالة على البداية والأولية، كما يدخل في تركيب الكلمات كسابقة تفيد النفي (Alpha Privative) أو الاجتماع والمصاحبة (Alpha Copulative).',
-          'الاستعمال الثيولوجي في العهد الجديد: يقترن بحرف الأوميجا في سفر الرؤيا (1: 8، 21: 6، 22: 13) كلقب لاهوتي مهيب للرب الإله والرب يسوع المسيح: «الأَلِفُ وَالْيَاءُ، الْبِدَايَةُ وَالنِّهَايَةُ، الأَوَّلُ وَالآخِرُ»، دلالة على الأزلية والأبدية والسيادة المطلقة على كل التاريخ والتدبير الإلهي.'
-        ]);
-      }
     } catch (e) {
       debugPrint('Self-healing Strongs G1 warning: $e');
     }
@@ -547,6 +546,9 @@ class DatabaseService {
         t.pronunciation_ar,
         t.definition_ar,
         t.notes_ar,
+        t.lexical_def_ar,
+        t.contextual_usage_ar,
+        t.editorial_commentary_ar,
         t.is_verified as ar_is_verified
       FROM strongs_entries e
       LEFT JOIN strongs_ar_translations t ON e.strongs_id = t.strongs_id
@@ -571,17 +573,20 @@ class DatabaseService {
     final bool arIsVerified = rawVerified == 1 || rawVerified == true || rawVerified == '1';
 
     return StrongsEntry(
-      strongsId:       r['strongs_id']?.toString() ?? trimmed,
-      language:        lang,
-      originalWord:    orig,
-      transliteration: r['transliteration']?.toString() ?? '',
-      audioUrl:        audio,
-      definitionEn:    r['definition_en']?.toString() ?? '',
-      kjvUsage:        r['kjv_usage']?.toString(),
-      definitionAr:    r['definition_ar']?.toString(),
-      notesAr:         r['notes_ar']?.toString(),
-      pronunciationAr: r['pronunciation_ar']?.toString(),
-      arIsVerified:    arIsVerified,
+      strongsId:             r['strongs_id']?.toString() ?? trimmed,
+      language:              lang,
+      originalWord:          orig,
+      transliteration:       r['transliteration']?.toString() ?? '',
+      audioUrl:              audio,
+      definitionEn:          r['definition_en']?.toString() ?? '',
+      kjvUsage:              r['kjv_usage']?.toString(),
+      definitionAr:          r['definition_ar']?.toString(),
+      notesAr:               r['notes_ar']?.toString(),
+      lexicalDefAr:          r['lexical_def_ar']?.toString(),
+      contextualUsageAr:     r['contextual_usage_ar']?.toString(),
+      editorialCommentaryAr: r['editorial_commentary_ar']?.toString(),
+      pronunciationAr:       r['pronunciation_ar']?.toString(),
+      arIsVerified:          arIsVerified,
     );
   }
 
@@ -602,6 +607,9 @@ class DatabaseService {
         t.pronunciation_ar,
         t.definition_ar,
         t.notes_ar,
+        t.lexical_def_ar,
+        t.contextual_usage_ar,
+        t.editorial_commentary_ar,
         t.is_verified as ar_is_verified
       FROM strongs_entries e
       LEFT JOIN strongs_ar_translations t ON e.strongs_id = t.strongs_id
@@ -627,17 +635,20 @@ class DatabaseService {
     final bool arIsVerified = rawVerified == 1 || rawVerified == true || rawVerified == '1';
 
     return StrongsEntry(
-      strongsId:       r['strongs_id']?.toString() ?? '',
-      language:        lang,
-      originalWord:    orig,
-      transliteration: r['transliteration']?.toString() ?? '',
-      audioUrl:        audio,
-      definitionEn:    r['definition_en']?.toString() ?? '',
-      kjvUsage:        r['kjv_usage']?.toString(),
-      definitionAr:    r['definition_ar']?.toString(),
-      notesAr:         r['notes_ar']?.toString(),
-      pronunciationAr: r['pronunciation_ar']?.toString(),
-      arIsVerified:    arIsVerified,
+      strongsId:             r['strongs_id']?.toString() ?? '',
+      language:              lang,
+      originalWord:          orig,
+      transliteration:       r['transliteration']?.toString() ?? '',
+      audioUrl:              audio,
+      definitionEn:          r['definition_en']?.toString() ?? '',
+      kjvUsage:              r['kjv_usage']?.toString(),
+      definitionAr:          r['definition_ar']?.toString(),
+      notesAr:               r['notes_ar']?.toString(),
+      lexicalDefAr:          r['lexical_def_ar']?.toString(),
+      contextualUsageAr:     r['contextual_usage_ar']?.toString(),
+      editorialCommentaryAr: r['editorial_commentary_ar']?.toString(),
+      pronunciationAr:       r['pronunciation_ar']?.toString(),
+      arIsVerified:          arIsVerified,
     );
   }
 

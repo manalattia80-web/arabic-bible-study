@@ -9,9 +9,12 @@ class StrongsEntry {
   final String? audioUrl;
   final String  definitionEn;
   final String? kjvUsage;
-  // Arabic translation (from admin panel)
+  // Arabic translation & 3-layer separation
   final String? definitionAr;
   final String? notesAr;
+  final String? lexicalDefAr;
+  final String? contextualUsageAr;
+  final String? editorialCommentaryAr;
   final String? pronunciationAr;
   final bool    arIsVerified;
 
@@ -27,6 +30,9 @@ class StrongsEntry {
     this.kjvUsage,
     this.definitionAr,
     this.notesAr,
+    this.lexicalDefAr,
+    this.contextualUsageAr,
+    this.editorialCommentaryAr,
     this.pronunciationAr,
     required this.arIsVerified,
   });
@@ -61,16 +67,24 @@ class StrongsEntry {
       rootWord:        j['root_word']?.toString(),
       pronunciation:   j['pronunciation']?.toString(),
       audioUrl:        audio,
-      definitionEn:    j['definition_en']?.toString() ?? '',
-      kjvUsage:        j['kjv_usage']?.toString(),
-      definitionAr:    j['definition_ar']?.toString(),
-      notesAr:         j['notes_ar']?.toString(),
-      pronunciationAr: j['pronunciation_ar']?.toString(),
-      arIsVerified:    arIsVerified,
+      definitionEn:          j['definition_en']?.toString() ?? '',
+      kjvUsage:              j['kjv_usage']?.toString(),
+      definitionAr:          j['definition_ar']?.toString(),
+      notesAr:               j['notes_ar']?.toString(),
+      lexicalDefAr:          j['lexical_def_ar']?.toString(),
+      contextualUsageAr:     j['contextual_usage_ar']?.toString(),
+      editorialCommentaryAr: j['editorial_commentary_ar']?.toString(),
+      pronunciationAr:       j['pronunciation_ar']?.toString(),
+      arIsVerified:          arIsVerified,
     );
   }
 
   bool get isHebrew       => language == 'hebrew';
   bool get isAramaic      => language == 'aramaic' || definitionEn.contains('(Aramaic)');
-  bool get hasArabicDef   => (definitionAr != null && definitionAr!.isNotEmpty) || (notesAr != null && notesAr!.isNotEmpty);
+  bool get hasArabicDef   =>
+      (lexicalDefAr != null && lexicalDefAr!.trim().isNotEmpty) ||
+      (definitionAr != null && definitionAr!.trim().isNotEmpty) ||
+      (contextualUsageAr != null && contextualUsageAr!.trim().isNotEmpty) ||
+      (notesAr != null && notesAr!.trim().isNotEmpty) ||
+      (editorialCommentaryAr != null && editorialCommentaryAr!.trim().isNotEmpty);
 }

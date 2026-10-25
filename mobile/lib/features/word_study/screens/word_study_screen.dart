@@ -451,13 +451,16 @@ class _WordRow extends StatelessWidget {
                                 textAlign: mapping.isHebrew ? TextAlign.right : TextAlign.right,
                               ),
                               if (hasGrammarNotes)
-                                Text(
-                                  mapping.grammarNotes!,
-                                  style: TextStyle(
-                                    color: AppColors.textMuted,
-                                    fontSize: 10,
+                                Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: Text(
+                                    mapping.grammarNotes!,
+                                    style: TextStyle(
+                                      color: AppColors.textMuted,
+                                      fontSize: 10,
+                                    ),
+                                    textAlign: TextAlign.right,
                                   ),
-                                  textAlign: TextAlign.right,
                                 ),
                             ],
                           ),

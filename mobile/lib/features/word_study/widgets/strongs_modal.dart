@@ -26,17 +26,8 @@ class StrongsModal extends StatelessWidget {
     if (sId != null && sId.isNotEmpty && sId != '---' && sId != '-') {
       return sId;
     }
-    final isHebrew = mapping.isHebrew;
-    final ar = mapping.arWord.replaceAll(RegExp(r'[\u064B-\u065F\u0670]'), '').trim();
-
-    if (ar == 'من') return isHebrew ? 'H4480' : 'G1537';
-    if (ar == 'الى' || ar == 'إلى') return isHebrew ? 'H413' : 'G1519';
-    if (ar == 'على') return isHebrew ? 'H5921' : 'G1909';
-    if (ar == 'في' && !isHebrew) return 'G1722';
-    if (ar == 'و' && !isHebrew) return 'G2532';
-    if (ar == 'ان' || ar == 'إن' || ar == 'أن') return isHebrew ? 'H3588' : 'G3754';
-    if (ar == 'لا' || ar == 'ما') return isHebrew ? 'H3808' : 'G3756';
-
+    // Never invent Strong's IDs for unlinked Arabic particles/affixes;
+    // lexical similarity does not establish token alignment within a verse.
     return null;
   }
 
@@ -100,69 +91,73 @@ class StrongsModal extends StatelessWidget {
       notesAr = 'تقتضي قواعد اللغة العربية في مواضع عدة إظهار روابط أو ضمائر أو أفعال كينونة مقدرة في الجملة الاسمية في اللغتين العبرية واليونانية ليستقيم البناء النحوي العربي.';
       sId = 'مُضافة';
     } else if (ar == 'لم') {
-      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'לֹא / טֶרֶם' : 'οὐ / οὐδείς');
-      transliteration = 'Negative particle (نفي وجزم)';
-      definitionAr = 'أداة نفي وجزم عربية، ترد لنفي الفعل الماضي أو كجزء من تركيب نفي عربي يقابل كلمة أصلية واحدة مثل (οὐδείς = لم يره أحد).';
-      notesAr = 'في التراكيب المندمجة، تُترجم العبارة العربية المكونة من (لم + اسم) كلمة نفي أصلية واحدة، ولا يقابل أداة النفي مدخل معجمي مستقل.';
-      sId = isHebrew ? 'NEG-HEB' : 'NEG-GRK';
+      origWord = origWord.isNotEmpty ? origWord : '—';
+      transliteration = 'أداة نفي وجزم';
+      definitionAr = 'أداة نفي وجزم في الصياغة العربية، ترد لنفي الفعل الماضي أو ضمن تركيب نفي عربي.';
+      notesAr = 'في التراكيب المندمجة، قد تقابل العبارة العربية كلمة نفي أصلية واحدة، ولا يُسند إلى الأداة رقم سترونج مستقل إلا عند ثبوت المقابل اللفظي المباشر في الآية.';
+      sId = 'نحوي';
     } else if (ar == 'في') {
-      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'בְּ' : 'ἐν');
-      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'bᵉ (باء الظرفية)' : 'en');
+      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'בְּ' : '—');
+      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'bᵉ (باء الظرفية)' : 'حرف جر');
       definitionAr = isHebrew
-          ? 'حرف جر عبري أصيل يفيد الظرفية والمكانية، يلحق صدراً بالكلمات في النص العبري.'
-          : 'حرف جر يوناني أساسي يفيد الاستقرار والثبات في المكان أو الزمان.';
+          ? 'حرف جر عبري متصل (בְּ) يفيد الظرفية المكانية أو الزمانية أو السببية، يلحق صدراً بالكلمات في النص العبري.'
+          : 'حرف جر في الصياغة العربية لأداء معنى الظرفية أو التعدية بحسب مقتضى التركيب.';
       notesAr = isHebrew
-          ? 'تتصل باء الجر العبرية مباشرة بالاسم المجرور كبادئة متصلة، وتترجم في العربية بـ (فِي).'
-          : 'يأتي بعده الاسم مجروراً بحالة القابل (Dative) للدلالة على الظرفية المكانية أو الزمانية أو المجازية.';
-      sId = isHebrew ? 'PREP-HEB' : 'G1722';
+          ? 'تتصل باء الجر العبرية مباشرة بالاسم أو الضمير المتصل كبادئة، ولا تحمل رقم سترونج معجميًا مستقلاً.'
+          : 'لا يُسند إليها رقم سترونج مستقل في هذا الموضع لعدم ورود مقابل معجمي منفصل لها في النص اليوناني للآية.';
+      sId = 'نحوي';
     } else if (ar == 'و' || ar == 'ثم' || ar == 'واما' || ar == 'ف') {
-      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'וְ' : 'καί');
-      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'wᵉ (واو العطف)' : 'kai');
+      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'וְ' : '—');
+      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'wᵉ (واو العطف)' : 'أداة عطف / ربط');
       definitionAr = isHebrew
-          ? 'واو العطف والاستئناف في اللغة العبرية، تُلحق صدراً بالكلمة لربط الجمل وتتابع الأحداث.'
-          : 'أداة ربط يونانية أساسية تفيد العطف والمعية والمصاحبة بين المفردات والجمل.';
-      notesAr = 'تُستخدم للربط بين الكلمات والجمل وتتابع السرد التاريخي واللغوي في النص الكتابي.';
-      sId = isHebrew ? 'CONJ-HEB' : 'G2532';
+          ? 'واو العطف والاستئناف في اللغة العبرية (וְ)، تُلحق صدراً بالكلمة لربط الجمل وتتابع الأحداث.'
+          : 'أداة عطف واستئناف في الصياغة العربية لربط الجمل وتتابع السياق.';
+      notesAr = 'تُستخدم للربط النحوي بين الكلمات والجمل دون مدخل سترونج مستقل.';
+      sId = 'نحوي';
     } else if (ar == 'له' || ar == 'لهم' || ar == 'لي' || ar == 'لك' || ar == 'لنا' || ar == 'بها' || ar == 'به' || ar == 'بهم') {
-      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'לְ / בְּ + ضمير' : 'حرف + ضمير');
-      transliteration = transliteration.isNotEmpty ? transliteration : 'Preposition + Suffix';
+      origWord = origWord.isNotEmpty ? origWord : '—';
+      transliteration = transliteration.isNotEmpty ? transliteration : 'جار ومجرور (حرف جر + ضمير)';
       definitionAr = 'شبه جملة تتكون من حرف جر ملحق به ضمير متصل مبني يعود على المذكور في السياق.';
-      notesAr = 'تُعبر التراكيب الأصلية في العبرية واليونانية عن المفعول به غير المباشر أو الملكية بإلحاق الضمير الشخصي بحرف الجر.';
-      sId = isHebrew ? 'PRON-HEB' : 'PRON-GRK';
+      notesAr = 'تُعبر اللغات الأصلية عن هذه الدلالة إما ببادئة حرف جر متصلة بضمير أو بحالة إعرابية (كالقابل في اليونانية)، دون رقم سترونج مستقل للحرف المتصل.';
+      sId = 'نحوي';
     } else if (ar == 'قد') {
-      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'صيغة التمام (Perfect)' : 'ماضٍ تام (Aorist)');
-      transliteration = 'Particle of completion';
-      definitionAr = 'حرف تحقيق وتوكيد باللغة العربية، أضافه المترجم للدلالة على تمام وقوع الفعل وثبوته.';
-      notesAr = 'يقابل في الأصل العبري صيغة الماضي التام (Qal Perfect) الدالة على وقوع الفعل واكتماله نحويًا.';
-      sId = 'PARTICLE';
+      origWord = origWord.isNotEmpty ? origWord : '—';
+      transliteration = 'حرف تحقيق';
+      definitionAr = 'حرف تحقيق في الصياغة العربية للدلالة على تمام وقوع الفعل وثبوته.';
+      notesAr = 'يؤدي في الترجمة دلالة صيغة الفعل التام في اللغة الأصلية ولا يقابله لفظ معجمي مستقل.';
+      sId = 'نحوي';
     } else if (ar == 'ان' || ar == 'إن' || ar == 'أن') {
-      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'כִּי' : 'ὅτι');
-      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'ki' : 'hoti');
-      definitionAr = 'أداة ربط وتوكيد وتعليل، تفيد بيان السبب أو الربط التقريري بين الجمل.';
-      notesAr = 'تفتتح الجمل الخبرية والتعليلية لبيان سبب أو مضمون القول.';
-      sId = isHebrew ? 'H3588' : 'G3754';
+      origWord = origWord.isNotEmpty ? origWord : '—';
+      transliteration = 'أداة ربط / مصدرية';
+      definitionAr = 'أداة ربط أو نصب ومصدرية في التركيب العربي لسبك الجملة أو ربط مقول القول.';
+      notesAr = 'تقتضيها الصياغة العربية في هذا الموضع (مثل سبك المصدر أو جواب الظرف)، ولا يُسند إليها رقم سترونج دون وجود أداة مقابلة صريحة في موضعها من النص الأصلي.';
+      sId = 'نحوي';
     } else if (ar == 'لا' || ar == 'ما' || ar == 'لن') {
-      origWord = origWord.isNotEmpty ? origWord : (isHebrew ? 'לֹא' : 'οὐ');
-      transliteration = transliteration.isNotEmpty ? transliteration : (isHebrew ? 'lo' : 'ou');
-      definitionAr = 'أداة نفي جازمة لنفي الفعل أو التقرير في النص الأصلي.';
-      notesAr = 'تفيد نفي الفعل أو الحدث في سياق الجملة الإسنادية.';
-      sId = isHebrew ? 'H3808' : 'G3756';
+      origWord = origWord.isNotEmpty ? origWord : '—';
+      transliteration = 'أداة نفي';
+      definitionAr = 'أداة نفي في الصياغة العربية.';
+      notesAr = 'يُرجع في تحليلها إلى تركيب الجملة في الآية دون افتراض رقم سترونج غير موثّق.';
+      sId = 'نحوي';
     } else {
       origWord = origWord.isNotEmpty ? origWord : m.arWord;
       transliteration = transliteration.isNotEmpty ? transliteration : m.arWord;
       definitionAr = 'مفردة لغوية واردة في نص الآية (الترجمة العربية: "${m.arWord}").';
       notesAr = 'يُعرض أدناه التحليل النحوي والصرفي المتاح لهذه المفردة بحسب لغتها وسياقها في الآية.';
+      sId = 'نحوي';
     }
 
     return StrongsEntry(
-      strongsId:       sId,
-      language:        m.origWordLang,
-      originalWord:    origWord,
-      transliteration: transliteration,
-      definitionEn:    'Biblical text word: ${m.arWord}',
-      definitionAr:    definitionAr,
-      notesAr:         notesAr,
-      arIsVerified:    true,
+      strongsId:             sId,
+      language:              m.origWordLang,
+      originalWord:          origWord,
+      transliteration:       transliteration,
+      definitionEn:          'Biblical text word: ${m.arWord}',
+      definitionAr:          definitionAr,
+      notesAr:               notesAr,
+      lexicalDefAr:          definitionAr,
+      contextualUsageAr:     notesAr,
+      editorialCommentaryAr: null,
+      arIsVerified:          false,
     );
   }
 
@@ -336,23 +331,37 @@ class StrongsModal extends StatelessWidget {
                         ],
                       ),
                       // Line 2: Audio Button and Verification Badge on a separate line
-                      if (entry.originalWord.isNotEmpty && entry.originalWord != '—') ...[
+                      if (entry.originalWord.isNotEmpty &&
+                          entry.originalWord != '—' &&
+                          !RegExp(r'[\u0600-\u06FF]').hasMatch(entry.originalWord)) ...[
                         const SizedBox(height: 10),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            AudioButton(
-                              strongsId: entry.strongsId,
-                              word: entry.originalWord,
-                              lang: entry.isAramaic ? 'aramaic' : entry.language,
-                              url: entry.audioUrl,
-                              tooltip: entry.isAramaic
-                                  ? 'النطق الآرامي غير متاح حاليًا'
-                                  : 'استماع: نطق آلي تقريبي للمدخل المعجمي (${entry.strongsId})',
-                            ),
-                            const SizedBox(width: 8),
-                            _buildAudioBadge(entry),
-                          ],
+                        Builder(
+                          builder: (context) {
+                            final validStrongs = RegExp(r'^[HG]\d+$', caseSensitive: false).hasMatch(entry.strongsId)
+                                ? entry.strongsId
+                                : null;
+                            final isAuthenticAram = AudioPlaybackService.instance.isAuthenticAramaic(validStrongs);
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AudioButton(
+                                  strongsId: validStrongs,
+                                  word: entry.originalWord,
+                                  lang: entry.isAramaic ? 'aramaic' : entry.language,
+                                  url: entry.audioUrl,
+                                  tooltip: entry.isAramaic
+                                      ? (isAuthenticAram
+                                          ? 'استماع: تسجيل بشري — قيد المراجعة (${validStrongs ?? entry.originalWord})'
+                                          : 'النطق الآرامي غير متاح حاليًا')
+                                      : (validStrongs != null
+                                          ? 'استماع: نطق آلي تقريبي للمدخل المعجمي ($validStrongs)'
+                                          : 'استماع: نطق آلي تقريبي للصيغة الأصلية'),
+                                ),
+                                const SizedBox(width: 8),
+                                _buildAudioBadge(entry),
+                              ],
+                            );
+                          },
                         ),
                       ],
                     ],
@@ -473,141 +482,346 @@ class StrongsModal extends StatelessWidget {
                 ),
               ),
 
-              // ── Arabic Definition (if available) ───────────────
-              if (entry.hasArabicDef) ...[
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: _Section(
-                      label: 'الشرح والتحليل اللغوي',
+              // ── 3-Layer Word Card Architecture ─────────────────
+              // Layer 1: المعنى المعجمي الموثّق
+              // Layer 2: معنى الكلمة في الآية والسياق
+              // Layer 3: تعليق لاهوتي منفصل وموسوم بأنه «شرح تحريري»
+              Builder(
+                builder: (context) {
+                  final lexicalText = (entry.lexicalDefAr != null && entry.lexicalDefAr!.trim().isNotEmpty)
+                      ? entry.lexicalDefAr!.trim()
+                      : (entry.definitionAr?.trim() ?? '');
+                  final contextualText = (entry.contextualUsageAr != null && entry.contextualUsageAr!.trim().isNotEmpty)
+                      ? entry.contextualUsageAr!.trim()
+                      : (entry.notesAr?.trim() ?? '');
+                  final editorialText = entry.editorialCommentaryAr?.trim() ?? '';
+                  final hasEnLexicon = entry.definitionEn.isNotEmpty &&
+                      !entry.definitionEn.startsWith('Biblical text word:');
+                  final hasKjv = entry.kjvUsage != null && entry.kjvUsage!.trim().isNotEmpty;
+                  final verseNote = mapping?.grammarNotes?.trim() ?? '';
+                  final showVerseBox = mapping != null &&
+                      (verseNote.isNotEmpty || RegExp(r'^[HG]\d+$', caseSensitive: false).hasMatch(entry.strongsId));
+                  final isDuplicateFallbackNote = verseNote.isNotEmpty && verseNote == lexicalText;
+
+                  return SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          if (entry.definitionAr != null) ...[
+                          // ── 1. المعنى المعجمي الموثّق ──────────────────────
+                          if (lexicalText.isNotEmpty || hasEnLexicon)
                             Directionality(
                               textDirection: TextDirection.rtl,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.auto_stories, size: 15, color: AppColors.primary),
-                                  const SizedBox(width: 6),
-                                  Text(
-                                    entry.isHebrew ? 'معنى الجذر العبري والبعد اللاهوتي' : 'معنى الجذر اليوناني والبعد اللاهوتي',
-                                    style: TextStyle(
-                                      color:      AppColors.primary,
-                                      fontSize:   13,
-                                      fontWeight: FontWeight.bold,
+                              child: Container(
+                                padding: const EdgeInsets.all(14),
+                                decoration: BoxDecoration(
+                                  color: AppColors.bgSurface,
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(color: AppColors.border),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(Icons.menu_book_rounded, size: 16, color: AppColors.primary),
+                                        const SizedBox(width: 6),
+                                        Expanded(
+                                          child: Text(
+                                            hasEnLexicon ? 'المعنى المعجمي الموثّق' : 'التعريف اللغوي والنحوي',
+                                            style: TextStyle(
+                                              color: AppColors.primary,
+                                              fontSize: 13.5,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        if (entry.arIsVerified)
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.success.withOpacity(0.12),
+                                              borderRadius: BorderRadius.circular(8),
+                                              border: Border.all(color: AppColors.success.withOpacity(0.35)),
+                                            ),
+                                            child: const Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Icon(Icons.verified, color: AppColors.success, size: 12),
+                                                SizedBox(width: 4),
+                                                Text(
+                                                  'مُراجع معجميًا',
+                                                  style: TextStyle(
+                                                    color: AppColors.success,
+                                                    fontSize: 10.5,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Text(
-                                entry.definitionAr!,
-                                style: AppTheme.arabicVerse(size: 22, color: AppColors.arabicText),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                          ],
-                          if (entry.notesAr != null) ...[
-                            const SizedBox(height: 14),
-                            Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.translate, size: 15, color: AppColors.textSecondary),
-                                  const SizedBox(width: 6),
-                                  Text(
-                                    'ملاحظات الاستخدام والترجمات الكتابية',
-                                    style: TextStyle(
-                                      color:      AppColors.textSecondary,
-                                      fontSize:   13,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Text(
-                                entry.notesAr!,
-                                style: TextStyle(color: AppColors.textSecondary, fontSize: 17, height: 1.6),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                          ],
-                          if (entry.arIsVerified || entry.hasArabicDef)
-                            const Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 10),
-                                child: Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.verified, color: AppColors.success, size: 14),
-                                      SizedBox(width: 4),
+                                    if (lexicalText.isNotEmpty) ...[
+                                      const SizedBox(height: 8),
                                       Text(
-                                        'مُدقق لغوياً ومُعتمد',
-                                        style: TextStyle(color: AppColors.success, fontSize: 11, fontWeight: FontWeight.w600),
+                                        lexicalText,
+                                        style: AppTheme.arabicVerse(size: 20, color: AppColors.arabicText),
+                                        textAlign: TextAlign.right,
                                       ),
                                     ],
-                                  ),
+                                    if (hasEnLexicon) ...[
+                                      const SizedBox(height: 10),
+                                      Divider(color: AppColors.borderLight.withOpacity(0.6), height: 14),
+                                      Directionality(
+                                        textDirection: TextDirection.ltr,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Strong\'s Lexicon (${entry.strongsId})',
+                                              style: TextStyle(
+                                                color: AppColors.textMuted,
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              entry.definitionEn,
+                                              style: TextStyle(
+                                                color: AppColors.textSecondary,
+                                                fontSize: 13.5,
+                                                height: 1.55,
+                                              ),
+                                            ),
+                                            if (hasKjv) ...[
+                                              const SizedBox(height: 6),
+                                              Text(
+                                                'KJV Usage: ${entry.kjvUsage!}',
+                                                style: TextStyle(
+                                                  color: AppColors.textMuted,
+                                                  fontSize: 12,
+                                                  fontStyle: FontStyle.italic,
+                                                  height: 1.5,
+                                                ),
+                                              ),
+                                            ],
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ],
                                 ),
                               ),
                             ),
+
+                          // ── 2. معنى الكلمة في الآية والسياق الكتابي ─────────
+                          if (showVerseBox || contextualText.isNotEmpty) ...[
+                            const SizedBox(height: 12),
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Container(
+                                padding: const EdgeInsets.all(14),
+                                decoration: BoxDecoration(
+                                  color: AppColors.bgSurface,
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(color: AppColors.border),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(Icons.translate_rounded, size: 16, color: AppColors.info),
+                                        const SizedBox(width: 6),
+                                        const Expanded(
+                                          child: Text(
+                                            'معنى الكلمة في الآية والسياق الكتابي',
+                                            style: TextStyle(
+                                              color: AppColors.info,
+                                              fontSize: 13.5,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    if (showVerseBox) ...[
+                                      const SizedBox(height: 8),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.info.withOpacity(0.08),
+                                          borderRadius: BorderRadius.circular(10),
+                                          border: Border.all(color: AppColors.info.withOpacity(0.25)),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          children: [
+                                            Wrap(
+                                              spacing: 6,
+                                              runSpacing: 4,
+                                              crossAxisAlignment: WrapCrossAlignment.center,
+                                              children: [
+                                                const Text(
+                                                  'في هذه الآية:',
+                                                  style: TextStyle(
+                                                    color: AppColors.info,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '«${mapping!.arWord}»',
+                                                  style: TextStyle(
+                                                    color: AppColors.textPrimary,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                if (mapping!.origWord.trim().isNotEmpty &&
+                                                    mapping!.origWord != '---' &&
+                                                    mapping!.origWord != '-' &&
+                                                    mapping!.origWord != '—')
+                                                  Text(
+                                                    '(${mapping!.origWord})',
+                                                    style: TextStyle(
+                                                      color: AppColors.textSecondary,
+                                                      fontSize: 13.5,
+                                                    ),
+                                                  ),
+                                                if (mapping!.origWordPosition > 0)
+                                                  Text(
+                                                    '• موضع الأصل: ${mapping!.origWordPosition}',
+                                                    style: TextStyle(
+                                                      color: AppColors.textMuted,
+                                                      fontSize: 11.5,
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                            if (verseNote.isNotEmpty && !isDuplicateFallbackNote) ...[
+                                              const SizedBox(height: 6),
+                                              Text(
+                                                verseNote,
+                                                style: TextStyle(
+                                                  color: AppColors.textPrimary,
+                                                  fontSize: 14.5,
+                                                  height: 1.55,
+                                                ),
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ],
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                    if (contextualText.isNotEmpty) ...[
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        contextualText,
+                                        style: TextStyle(
+                                          color: AppColors.textSecondary,
+                                          fontSize: 16,
+                                          height: 1.65,
+                                        ),
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+
+                          // ── 3. تعليق لاهوتي منفصل وموسوم بأنه «شرح تحريري» ──
+                          if (editorialText.isNotEmpty) ...[
+                            const SizedBox(height: 12),
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Container(
+                                padding: const EdgeInsets.all(14),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF59E0B).withOpacity(0.06),
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(
+                                    color: const Color(0xFFF59E0B).withOpacity(0.35),
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.edit_note_rounded,
+                                          size: 18,
+                                          color: Color(0xFFF59E0B),
+                                        ),
+                                        const SizedBox(width: 6),
+                                        const Expanded(
+                                          child: Text(
+                                            'تعليق لاهوتي وتفسيري',
+                                            style: TextStyle(
+                                              color: Color(0xFFF59E0B),
+                                              fontSize: 13.5,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFF59E0B).withOpacity(0.16),
+                                            borderRadius: BorderRadius.circular(100),
+                                            border: Border.all(
+                                              color: const Color(0xFFF59E0B).withOpacity(0.45),
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            'شرح تحريري',
+                                            style: TextStyle(
+                                              color: Color(0xFFF59E0B),
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'تعليق تحريري مستقل يعبّر عن القراءة التفسيرية للتطبيق، وليس جزءًا من تعريف قاموس سترونج المعجمي.',
+                                      style: TextStyle(
+                                        color: AppColors.textMuted,
+                                        fontSize: 11,
+                                        fontStyle: FontStyle.italic,
+                                        height: 1.4,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      editorialText,
+                                      style: TextStyle(
+                                        color: AppColors.textSecondary,
+                                        fontSize: 15.5,
+                                        height: 1.65,
+                                      ),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
-                    child: Divider(color: AppColors.border),
-                  ),
-                ),
-              ],
-
-              // ── English Definition ─────────────────────────────
-              if (entry.definitionEn.isNotEmpty && !entry.definitionEn.startsWith('Biblical text word:'))
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: _Section(
-                      label: 'English Definition',
-                      child: Text(
-                        entry.definitionEn,
-                        style: TextStyle(color: AppColors.textSecondary, fontSize: 14, height: 1.65),
-                      ),
-                    ),
-                  ),
-                ),
-
-              // KJV Usage
-              if (entry.kjvUsage != null && entry.kjvUsage!.isNotEmpty)
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
-                    child: _Section(
-                      label: 'KJV Usage',
-                      child: Text(
-                        entry.kjvUsage!,
-                        style: TextStyle(
-                          color:      AppColors.textMuted,
-                          fontSize:   12,
-                          fontStyle:  FontStyle.italic,
-                          height:     1.6,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                  );
+                },
+              ),
               // Occurrences
               if (provider.loadingOccurrences)
                 SliverToBoxAdapter(
