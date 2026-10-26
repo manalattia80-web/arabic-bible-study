@@ -106,7 +106,7 @@ class DatabaseService {
       }
 
       final sink = outFile.openWrite();
-      const totalParts = 64;
+      const totalParts = 66;
       for (int i = 0; i < totalParts; i++) {
         final partIndexStr = i.toString().padLeft(2, '0');
         final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
