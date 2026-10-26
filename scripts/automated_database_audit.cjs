@@ -6,18 +6,24 @@ const sqlitePath = path.resolve(__dirname, '../sqlite_dist/sqlite3.exe');
 const dbPath = path.resolve(__dirname, '../mobile/assets/bible_study.db');
 
 function query(sql) {
-  fs.writeFileSync('temp_audit.sql', sql, 'utf8');
-  const res = execSync(`"${sqlitePath}" "${dbPath}" < temp_audit.sql`).toString('utf8').trim();
-  try { fs.unlinkSync('temp_audit.sql'); } catch (_) {}
-  return res;
+  const tmpFile = path.resolve(__dirname, 'temp_audit.sql');
+  fs.writeFileSync(tmpFile, sql, 'utf8');
+  try {
+    const res = execSync(`"${sqlitePath}" "${dbPath}" < "${tmpFile}"`).toString('utf8').trim();
+    return res;
+  } finally {
+    try { fs.unlinkSync(tmpFile); } catch (_) {}
+  }
 }
 
 console.log('========================================================================');
 console.log('         AUTOMATED DATABASE AUDIT & QUALITY GATE REPORT         ');
 console.log('========================================================================\n');
 
+let failureCount = 0;
+
 // -----------------------------------------------------------------------------
-// Test 1: Historical Regression Gate (Checking All 30+ User-Audited Loci)
+// Test 1: Historical Regression Gate (Checking All User-Audited Benchmark Loci)
 // -----------------------------------------------------------------------------
 console.log('▶ TEST 1: Regression Test of All User-Audited Benchmark Loci');
 const benchmarks = [
@@ -39,15 +45,21 @@ const benchmarks = [
   { name: 'Col 1:23 (إن)', book: 51, ch: 1, vs: 23, word: 'إِنْ', expectedStrongs: 'G1487' },
   { name: 'Col 1:23 (منتقلين)', book: 51, ch: 1, vs: 23, word: 'مُنْتَقِلِينَ', expectedStrongs: 'G3334' },
   { name: 'Lev 12:4 (حتى)', book: 3, ch: 12, vs: 4, word: 'حَتَّى', expectedStrongs: 'H5704' },
+  { name: 'Lev 12:4 (كل)', book: 3, ch: 12, vs: 4, word: 'كُلَّ', expectedStrongs: 'H3605' },
   { name: 'Lev 25:52 (بقي)', book: 3, ch: 25, vs: 52, word: 'بَقِيَ', expectedStrongs: 'H7604' },
   { name: 'Judg 14:5 (وأمه)', book: 7, ch: 14, vs: 5, word: 'وَأُمُّهُ', expectedStrongs: 'H517' },
   { name: 'Job 31:14 (أجيبه)', book: 18, ch: 31, vs: 14, word: 'أُجِيبُهُ', expectedStrongs: 'H7725' },
+  { name: 'Isa 17:1 (رجمة)', book: 23, ch: 17, vs: 1, word: 'رُجْمَةَ', expectedStrongs: 'H4596' },
   { name: 'Isa 17:1 (ردم)', book: 23, ch: 17, vs: 1, word: 'رَدْمٍ', expectedStrongs: 'H4654' },
   { name: 'Jer 51:64 (هكذا)', book: 24, ch: 51, vs: 64, word: 'هكَذَا', expectedStrongs: 'H3602' },
+  { name: 'Jer 51:64 (تغرق)', book: 24, ch: 51, vs: 64, word: 'تَغْرَقُ', expectedStrongs: 'H8257' },
+  { name: 'Jer 51:64 (جالبه)', book: 24, ch: 51, vs: 64, word: 'جَالِبُهُ', expectedStrongs: 'H935' },
+  { name: 'Jer 51:64 (ويعيون)', book: 24, ch: 51, vs: 64, word: 'وَيَعْيَوْنَ', expectedStrongs: 'H3286' },
   { name: 'Ezek 40:34 (هنا)', book: 26, ch: 40, vs: 34, word: 'هُنَا', expectedStrongs: 'H6311' },
   { name: 'Luke 4:16 (عادته)', book: 42, ch: 4, vs: 16, word: 'عَادَتِهِ', expectedStrongs: 'G1486' },
   { name: 'John 1:36 (فقال)', book: 43, ch: 1, vs: 36, word: 'فَقَالَ:', expectedStrongs: 'G3004' },
   { name: 'Acts 7:44 (كان)', book: 44, ch: 7, vs: 44, word: 'كَانَ', expectedStrongs: 'G3708' },
+  { name: 'Acts 22:30 (فأحضر)', book: 44, ch: 22, vs: 30, word: 'فَأَحْضَرَ', expectedStrongs: 'G2609' },
   { name: 'Matt 17:20 (تقولون surface)', book: 40, ch: 17, vs: 20, word: 'تَقُولُونَ', expectedStrongs: 'G3004' },
 ];
 
@@ -62,6 +74,7 @@ for (const b of benchmarks) {
     regPass++;
     console.log(`  ✓ ${b.name}: ${actualStrongs} [${actualSurface}]`);
   } else {
+    failureCount++;
     console.error(`  ✗ REGRESSION in ${b.name}: expected ${b.expectedStrongs}, found ${actualStrongs}`);
   }
 }
@@ -98,6 +111,7 @@ for (const c of compoundChecks) {
     compoundPass++;
     console.log(`  ✓ ${c.name}: [${ids.join(', ')}] satisfies required components`);
   } else {
+    failureCount++;
     console.error(`  ✗ Missing components in ${c.name}: missing [${missing.join(', ')}], found [${ids.join(', ')}]`);
   }
 }
@@ -116,7 +130,8 @@ console.log(`  NT records with Hebrew H-numbers: ${ntHebrewCount} (Must be 0)`);
 if (parseInt(otGreekCount) === 0 && parseInt(ntHebrewCount) === 0) {
   console.log('  ✓ Zero cross-testament contamination detected across all 497,000+ words.');
 } else {
-  console.error('  ✗ Warning: Cross-testament contamination detected!');
+  failureCount++;
+  console.error('  ✗ Error: Cross-testament contamination detected!');
 }
 
 
@@ -128,7 +143,12 @@ const nullStrongsSyntactic = query(`SELECT count(*) FROM word_mappings WHERE str
 const nullStrongsOther = query(`SELECT count(*) FROM word_mappings WHERE strongs_id IS NULL AND (morph_pos != 'syntactic_ar' OR morph_pos IS NULL);`);
 console.log(`  Explicitly documented syntactic Arabic tokens (syntactic_ar): ${nullStrongsSyntactic}`);
 console.log(`  Unlinked tokens requiring contextual review: ${nullStrongsOther}`);
-console.log('  ✓ No hidden alignment gaps: unlinked tokens are strictly segregated without guessing.');
+if (parseInt(nullStrongsOther) === 0) {
+  console.log('  ✓ Zero unlinked tokens: every token is strictly classified without guessing.');
+} else {
+  failureCount++;
+  console.error(`  ✗ Error: Found ${nullStrongsOther} unlinked tokens requiring review!`);
+}
 
 
 // -----------------------------------------------------------------------------
@@ -137,11 +157,23 @@ console.log('  ✓ No hidden alignment gaps: unlinked tokens are strictly segreg
 console.log('\n▶ TEST 5: SQLite Database Integrity and Foreign Keys');
 const integrity = query('PRAGMA integrity_check;');
 console.log(`  PRAGMA integrity_check: ${integrity}`);
+if (integrity.trim() !== 'ok') {
+  failureCount++;
+  console.error(`  ✗ Database integrity check failed: ${integrity}`);
+}
 
 const totalMappings = query('SELECT count(*) FROM word_mappings;');
 const totalMulti = query('SELECT count(*) FROM word_mapping_strongs;');
 console.log(`  Total Word Mappings: ${totalMappings}`);
 console.log(`  Total Multi-Strongs Mappings: ${totalMulti}`);
+
 console.log('\n========================================================================');
-console.log('                      AUDIT COMPLETE: ALL CHECKS PASSED                ');
-console.log('========================================================================');
+if (failureCount > 0) {
+  console.error(`                      AUDIT FAILED: ${failureCount} VIOLATIONS DETECTED         `);
+  console.error('========================================================================');
+  process.exit(1);
+} else {
+  console.log('                      AUDIT COMPLETE: ALL CHECKS PASSED                ');
+  console.log('========================================================================');
+  process.exit(0);
+}
