@@ -150,26 +150,20 @@ class MorphologyService {
       }
     }
 
-    // ── Priority 3: Direct Original-Script Fallback (No Arabic-prose inspection) ──
-    if (isHebrew) {
-      return _analyzeBiblicalHebrew(
-        origWord: effectiveOrig,
-        arWord: arWord,
-        strongsId: strongsId,
-        fallbackDef: fallbackDefinition,
-        lang: lang,
-        lemmaWord: lemmaWord,
-      );
-    } else {
-      return _analyzeBiblicalGreek(
-        origWord: effectiveOrig,
-        arWord: arWord,
-        strongsId: strongsId,
-        fallbackDef: fallbackDefinition,
-        lang: lang,
-        lemmaWord: lemmaWord,
-      );
-    }
+    // ── Priority 3: Non-speculative fallback for unreviewed tokens ──
+    final formText = (effectiveOrig.isNotEmpty && effectiveOrig != '-' && effectiveOrig != '—')
+        ? ' للصيغة الأصلية ($effectiveOrig)'
+        : '';
+    final sText = hasValidStrongs ? ' للمدخل المعجمي ($sTrim)' : '';
+    return MorphologyAnalysis(
+      rawCode: cleanCode.isNotEmpty ? cleanCode : (sTrim.isNotEmpty ? sTrim : 'UNVERIFIED'),
+      language: lang,
+      partOfSpeech: 'قيد المراجعة السياقية',
+      summary: 'التحليل الصرفي السياقي الدقيق$formText$sText قيد المراجعة والتحقيق مقابل المدونات النصية المعتمدة، ولا يُعرض له تصنيف تخميني غير موثق.',
+      tags: const ['قيد المراجعة السياقية', 'دون تخمين آلي'],
+      morphSource: null,
+      verifiedLocator: verifiedLocator,
+    );
   }
 
   // ───────────────────────────────────────────────────────────────────────────

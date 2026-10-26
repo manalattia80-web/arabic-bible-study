@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v32.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v33.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 32; // Database v32: v1.0.290 OSHB WLC 4.20 & MorphGNT SBLGNT contextual morphology, Ezek 48:10 H6921 fix, word_mapping_strongs normalized multi-entry relation, strict bibliographic edition citations
+    const targetDbVersion = 33; // Database v33: v1.0.293 Acts 4:18 & Rev 13:5 full verse alignments, Hos 7:3 H3585 fix, non-speculative morphology fallback, 3121 NT proper_noun demotions, parameter-matched getStrongsOccurrences query
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -84,6 +84,7 @@ class DatabaseService {
         'bible_study_v29.db',
         'bible_study_v30.db',
         'bible_study_v31.db',
+        'bible_study_v32.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
