@@ -170,8 +170,21 @@ assertCondition('primary_missing_from_multi: all primary strongs in multi table'
 const multiPrimary = parseInt(query("SELECT count(*) FROM (SELECT mapping_id FROM word_mapping_strongs WHERE link_role='primary' GROUP BY 1 HAVING count(*)>1);"));
 assertCondition("multiple_primary_components: at most 1 primary strongs per word mapping", multiPrimary === 0, `found ${multiPrimary}`);
 
-const conflictPrimary = parseInt(query("SELECT count(*) FROM word_mappings w JOIN word_mapping_strongs x ON w.id=x.mapping_id WHERE x.link_role='primary' AND w.strongs_id != x.strongs_id;"));
-assertCondition("conflict_primary_strongs: primary strongs in multi table must match word_mappings.strongs_id", conflictPrimary === 0, `found ${conflictPrimary}`);
+const conflictPrimary = parseInt(query("SELECT count(*) FROM word_mappings w JOIN word_mapping_strongs x ON w.id=x.mapping_id WHERE x.link_role='primary' AND w.strongs_id IS NOT x.strongs_id;"));
+assertCondition("conflict_primary_strongs: primary strongs in multi table must match word_mappings.strongs_id (null-safe IS NOT)", conflictPrimary === 0, `found ${conflictPrimary}`);
+
+// Morphological consistency and documentation integrity gate
+const gen36Morph = query("SELECT morph_stem, morph_tense, morph_person, morph_gender, orig_morphology FROM word_mappings WHERE id = '48efac3f-9748-4c10-9508-f6da552bf563';");
+const gen36Ok = gen36Morph.includes('hifil') && gen36Morph.includes('infinitive_construct') && gen36Morph.includes('HR/Vhc');
+assertCondition("gen36_morphology_consistency: Gen 3:6 للنظر has Hifil Infinitive Construct and HR/Vhc", gen36Ok, `actual: ${gen36Morph}`);
+
+const matt1720Morph = query("SELECT morph_pos, morph_case, orig_morphology FROM word_mappings WHERE id = '8fc7c281-0e8b-4958-9f0b-8efac2b51cee';");
+const matt1720Ok = matt1720Morph.includes('pronoun') && matt1720Morph.includes('dative') && matt1720Morph.includes('D-DSN');
+assertCondition("matt1720_morphology_consistency: Matt 17:20 لهذا has pronoun dative D-DSN", matt1720Ok, `actual: ${matt1720Morph}`);
+
+const gen318Locator = query("SELECT verified_locator FROM word_mappings WHERE id = 'fba6dab6-e8af-4b6a-8d43-b7a9f0350b40';");
+const gen318Ok = gen318Locator.startsWith('OSHB:');
+assertCondition("gen318_locator_accuracy: Gen 3:18 لك has authentic OSHB locator", gen318Ok, `actual: ${gen318Locator}`);
 
 const syntacticWithStrongs = parseInt(query("SELECT count(*) FROM word_mappings WHERE morph_pos='syntactic_ar' AND strongs_id IS NOT NULL;"));
 assertCondition('syntactic_with_strongs: syntactic_ar must have NULL strongs_id', syntacticWithStrongs === 0, `found ${syntacticWithStrongs}`);

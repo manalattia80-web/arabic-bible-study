@@ -52,7 +52,37 @@ class DatabaseService {
         await Directory(p.dirname(dbPath)).create(recursive: true);
       } catch (_) {}
 
-      // Clean up previous database versions to save space on device
+
+      // Reassemble SQLite database from chunked parts (5 MB each, zero OOM risk)
+      final outFile = File(dbPath);
+      if (await outFile.exists()) {
+        try { await outFile.delete(); } catch (_) {}
+      }
+
+      final sink = outFile.openWrite();
+      const totalParts = 66;
+      for (int i = 0; i < totalParts; i++) {
+        final partIndexStr = i.toString().padLeft(2, '0');
+        final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
+        sink.add(partData.buffer.asUint8List(partData.offsetInBytes, partData.lengthInBytes));
+      }
+      await sink.flush();
+      await sink.close();
+      // Independent SQLite integrity verification on device before accepting version
+      final testDb = await openDatabase(dbPath, readOnly: true);
+      final checkRes = await testDb.rawQuery('PRAGMA integrity_check;');
+      await testDb.close();
+
+      final isOk = checkRes.isNotEmpty && checkRes.first.values.first.toString() == 'ok';
+      if (!isOk) {
+        try { await outFile.delete(); } catch (_) {}
+        throw StateError('Assembled SQLite database failed integrity check: $checkRes');
+      }
+
+      await prefs.setInt('db_version', targetDbVersion);
+      debugPrint('Local SQLite database assembled successfully (${await outFile.length()} bytes).');
+
+      // Safe deferred cleanup: only delete old database versions after new v39 is verified ok to save space on device
       for (final oldVer in [
         'bible_study_v2.db',
         'bible_study_v3.db',
@@ -100,35 +130,6 @@ class DatabaseService {
           }
         } catch (_) {}
       }
-
-      // Reassemble SQLite database from chunked parts (5 MB each, zero OOM risk)
-      final outFile = File(dbPath);
-      if (await outFile.exists()) {
-        try { await outFile.delete(); } catch (_) {}
-      }
-
-      final sink = outFile.openWrite();
-      const totalParts = 66;
-      for (int i = 0; i < totalParts; i++) {
-        final partIndexStr = i.toString().padLeft(2, '0');
-        final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
-        sink.add(partData.buffer.asUint8List(partData.offsetInBytes, partData.lengthInBytes));
-      }
-      await sink.flush();
-      await sink.close();
-      // Independent SQLite integrity verification on device before accepting version
-      final testDb = await openDatabase(dbPath, readOnly: true);
-      final checkRes = await testDb.rawQuery('PRAGMA integrity_check;');
-      await testDb.close();
-
-      final isOk = checkRes.isNotEmpty && checkRes.first.values.first.toString() == 'ok';
-      if (!isOk) {
-        try { await outFile.delete(); } catch (_) {}
-        throw StateError('Assembled SQLite database failed integrity check: $checkRes');
-      }
-
-      await prefs.setInt('db_version', targetDbVersion);
-      debugPrint('Local SQLite database assembled successfully (${await outFile.length()} bytes).');
     }
 
     final db = await openDatabase(dbPath);
