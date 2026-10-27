@@ -74,7 +74,15 @@ const benchmarks = [
   { name: 'John 1:36 (فقال)', book: 43, ch: 1, vs: 36, word: 'فَقَالَ:', expectedStrongs: 'G3004' },
   { name: 'Acts 7:44 (كان)', book: 44, ch: 7, vs: 44, word: 'كَانَ', expectedStrongs: 'G3708' },
   { name: 'Acts 22:30 (فأحضر)', book: 44, ch: 22, vs: 30, word: 'فَأَحْضَرَ', expectedStrongs: 'G2609' },
-  { name: 'Matt 17:20 (تقولون)', book: 40, ch: 17, vs: 20, word: 'تَقُولُونَ', expectedStrongs: 'G3004' }
+  { name: 'Matt 17:20 (تقولون)', book: 40, ch: 17, vs: 20, word: 'تَقُولُونَ', expectedStrongs: 'G3004' },
+  { name: 'Gen 4:18 (عيراد)', book: 1, ch: 4, vs: 18, word: '%عِيرَادُ%', pos: 3, expectedStrongs: 'H5897' },
+  { name: 'Gen 4:18 (متوشائيل)', book: 1, ch: 4, vs: 18, word: '%مَتُوشَائِيلَ%', pos: 9, expectedStrongs: 'H4967' },
+  { name: '1 Cor 1:11 (خلوي)', book: 46, ch: 1, vs: 11, word: '%خُلُوِي%', expectedStrongs: 'G5514' },
+  { name: '1 Cor 2:1 (بسمو)', book: 46, ch: 2, vs: 1, word: '%بِسُمُوِّ%', expectedStrongs: 'G5247' },
+  { name: '2 Cor 1:10 (مثل)', book: 47, ch: 1, vs: 10, word: '%مِثْلِ%', expectedStrongs: 'G5082' },
+  { name: '2 Cor 1:24 (موازرون)', book: 47, ch: 1, vs: 24, word: '%مُوازِرُونَ%', expectedStrongs: 'G4904' },
+  { name: 'Gal 2:4 (الكذبة)', book: 48, ch: 2, vs: 4, word: '%الْكَذَبَةِ%', expectedStrongs: 'G5569' },
+  { name: 'Gal 2:4 (ليتجسسوا)', book: 48, ch: 2, vs: 4, word: '%لِيَتَجَسَّسُوا%', expectedStrongs: 'G2684' }
 ];
 
 let bmPass = 0;
