@@ -1,5 +1,33 @@
 # Arabic Van Dyck Bible Study
 
+[![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
+[![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v38%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-43%2F43%20Passed-success)](scripts/automated_database_audit.cjs)
+
+## Latest Verified Release: v1.0.304 (Run #304)
+
+- **GitHub Actions Run ID:** [`40506974082`](https://github.com/manalattia80-web/arabic-bible-study/actions/runs/40506974082) (Status: **Success / Completed**)
+- **Release Package:** [Arabic Bible Study v1.0.304](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.304)
+- **Commit:** `66132b5` (`feat: normalize primary_* roles, fix Gen 4:18 names, restore 23 placeholder words, and align NT spreadsheet loci`)
+- **Published Artifacts:**
+  - `arabic-bible-study-app.apk` (353.83 MB)
+  - `play-store-bundle.aab` (126.84 MB)
+
+### Automated Scientific Quality Gate Results
+- **Benchmark Regression:** **43 / 43 Passed** (100%)
+- **Compound Affixes & Multi-Strongs:** **8 / 8 Verified** (100%)
+- **Primary Strongs Conflicts:** **0**
+- **Orphan / Null / Cross-testament Anomalies:** **0**
+- **SQLite Database Integrity Check (`PRAGMA integrity_check`):** **OK**
+- **Key Philological Fixes in v1.0.304:**
+  1. **Normalized Roles:** All 31 `primary_*` special roles unified into `primary` in `word_mapping_strongs`.
+  2. **Genesis 4:18:** Corrected `عِيرَادُ` from `H5872` (Ein Gedi) to `H5897` (`עִירָד`), and `مَتُوشَائِيلَ` from `H4968` to `H4967` (`מְתוּשָׁאֵל`).
+  3. **23 Missing Loci Restored:** Replaced all placeholder characters (`---`) with authentic Hebrew/Greek lemmas and inflected forms.
+  4. **10 NT Spreadsheet Loci Fixed:** Realigned Romans 1:20 (`G517`), 1Cor 1:11 (`G5514`), 2Cor 1:10 (`G5082`), 2Cor 1:24 (`G4904`), Gal 2:4 (`G5569` & `G2684`), etc.
+
+---
+
 A comprehensive Arabic Bible Study application similar to the "Blue Letter Bible," based on the Arabic Van Dyck (AVD) translation. This monorepo contains the full stack: Backend API, Admin Panel, and Flutter Mobile App.
 
 ## Architecture
