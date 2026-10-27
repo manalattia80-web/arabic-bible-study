@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v39.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v40.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 39; // Database v39: Full lexical elevation, Gen 3:6 & 4:18 collation, WLC pure scripts, multi-strongs normalization
+    const targetDbVersion = 40; // Database v40: Strict MorphGNT token alignment (Matt 17:20 w22), canonical locators, and safe deferred migration
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -121,6 +121,7 @@ class DatabaseService {
         'bible_study_v36.db',
         'bible_study_v37.db',
         'bible_study_v38.db',
+        'bible_study_v39.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);

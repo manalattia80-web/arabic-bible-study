@@ -178,9 +178,9 @@ const gen36Morph = query("SELECT morph_stem, morph_tense, morph_person, morph_ge
 const gen36Ok = gen36Morph.includes('hifil') && gen36Morph.includes('infinitive_construct') && gen36Morph.includes('HR/Vhc');
 assertCondition("gen36_morphology_consistency: Gen 3:6 للنظر has Hifil Infinitive Construct and HR/Vhc", gen36Ok, `actual: ${gen36Morph}`);
 
-const matt1720Morph = query("SELECT morph_pos, morph_case, orig_morphology FROM word_mappings WHERE id = '8fc7c281-0e8b-4958-9f0b-8efac2b51cee';");
-const matt1720Ok = matt1720Morph.includes('pronoun') && matt1720Morph.includes('dative') && matt1720Morph.includes('D-DSN');
-assertCondition("matt1720_morphology_consistency: Matt 17:20 لهذا has pronoun dative D-DSN", matt1720Ok, `actual: ${matt1720Morph}`);
+const matt1720Data = query("SELECT orig_word_position, morph_pos, morph_case, morph_gender, orig_morphology, verified_locator FROM word_mappings WHERE id = '8fc7c281-0e8b-4958-9f0b-8efac2b51cee';");
+const matt1720Ok = matt1720Data.includes('22|') && matt1720Data.includes('RD ----DSN-') && matt1720Data.includes('SBLGNT:B40.C17.V20.w22') && matt1720Data.includes('dative');
+assertCondition("matt1720_morphology_and_locator_consistency: Matt 17:20 لهذا has pos 22, w22 locator, and raw MorphGNT tag RD ----DSN-", matt1720Ok, `actual: ${matt1720Data}`);
 
 const gen318Locator = query("SELECT verified_locator FROM word_mappings WHERE id = 'fba6dab6-e8af-4b6a-8d43-b7a9f0350b40';");
 const gen318Ok = gen318Locator.startsWith('OSHB:');
