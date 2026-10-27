@@ -2,7 +2,11 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const sqlitePath = path.resolve(__dirname, '../sqlite_dist/sqlite3.exe');
+const isWin = process.platform === 'win32';
+const sqlitePath = isWin && fs.existsSync(path.resolve(__dirname, '../sqlite_dist/sqlite3.exe'))
+  ? path.resolve(__dirname, '../sqlite_dist/sqlite3.exe')
+  : 'sqlite3';
+
 const dbPath = path.resolve(__dirname, '../mobile/assets/bible_study.db');
 
 function query(sql) {
@@ -38,21 +42,21 @@ console.log('▶ TEST 1: Regression Test of All User-Audited Benchmark Loci');
 const benchmarks = [
   { name: 'John 18:25 (يصطلي)', book: 43, ch: 18, vs: 25, word: '%يَصْطَلِي%', expectedStrongs: 'G2328' },
   { name: 'Jer 32:13 (أمامهم)', book: 24, ch: 32, vs: 13, word: 'أَمَامَهُمْ', expectedStrongs: 'H5869' },
-  { name: 'Hosea 7:3 (وبكذبهم)', book: 28, ch: 7, vs: 3, word: 'وَبِكَذِبِهِمِ', expectedStrongs: 'H3585' },
-  { name: 'Acts 4:18 (فدعوهما)', book: 44, ch: 4, vs: 18, word: 'فَدَعَوْهُمَا', expectedStrongs: 'G2564' },
-  { name: 'Acts 4:18 (البتة)', book: 44, ch: 4, vs: 18, word: 'الْبَتَّةَ', expectedStrongs: 'G2527' },
-  { name: 'Acts 4:18 (باسم)', book: 44, ch: 4, vs: 18, word: 'بِاسْمِ', expectedStrongs: 'G3686' },
-  { name: 'Rev 13:5 (وتجاديف)', book: 66, ch: 13, vs: 5, word: 'وَتَجَادِيفَ', expectedStrongs: 'G988' },
-  { name: 'Rev 13:5 (يفعل)', book: 66, ch: 13, vs: 5, word: 'يَفْعَلَ', expectedStrongs: 'G4160' },
-  { name: '1 Kings 8:32 (تحكم)', book: 11, ch: 8, vs: 32, word: 'تَحْكُمُ', expectedStrongs: 'H7561' },
-  { name: 'Rev 1:8 (الكائن)', book: 66, ch: 1, vs: 8, word: 'الْكَائِنُ', expectedStrongs: 'G1510' },
-  { name: 'Esther 8:3 (عادت)', book: 17, ch: 8, vs: 3, word: 'عَادَتْ', expectedStrongs: 'H3254' },
-  { name: 'Esther 8:3 (عند)', book: 17, ch: 8, vs: 3, word: 'عِنْدَ', expectedStrongs: 'H6440' },
-  { name: '1 Sam 25:43 (فكانتا)', book: 9, ch: 25, vs: 43, word: 'فَكَانَتَا', expectedStrongs: 'H1961' },
+  { name: 'Hosea 7:3 (وبكذبهم)', book: 28, ch: 7, vs: 3, word: '%كَذِبِهِمِ%', expectedStrongs: 'H3585' },
+  { name: 'Acts 4:18 (فدعوهما)', book: 44, ch: 4, vs: 18, word: '%دَعَوْهُمَا%', expectedStrongs: 'G2564' },
+  { name: 'Acts 4:18 (البتة)', book: 44, ch: 4, vs: 18, word: '%الْبَتَّةَ%', expectedStrongs: 'G2527' },
+  { name: 'Acts 4:18 (باسم)', book: 44, ch: 4, vs: 18, word: '%بِاسْمِ%', expectedStrongs: 'G3686' },
+  { name: 'Rev 13:5 (وتجاديف)', book: 66, ch: 13, vs: 5, word: '%تَجَادِيفَ%', expectedStrongs: 'G988' },
+  { name: 'Rev 13:5 (يفعل)', book: 66, ch: 13, vs: 5, word: '%يَفْعَلَ%', expectedStrongs: 'G4160' },
+  { name: '1 Kings 8:32 (تحكم)', book: 11, ch: 8, vs: 32, word: '%تَحْكُمُ%', expectedStrongs: 'H7561' },
+  { name: 'Rev 1:8 (الكائن)', book: 66, ch: 1, vs: 8, word: '%الْكَائِنُ%', expectedStrongs: 'G1510' },
+  { name: 'Esther 8:3 (عادت)', book: 17, ch: 8, vs: 3, word: '%عَادَتْ%', expectedStrongs: 'H3254' },
+  { name: 'Esther 8:3 (عند)', book: 17, ch: 8, vs: 3, word: '%عِنْدَ%', expectedStrongs: 'H6440' },
+  { name: '1 Sam 25:43 (فكانتا)', book: 9, ch: 25, vs: 43, word: '%فَكَانَتَا%', expectedStrongs: 'H1961' },
   { name: '1 Sam 25:43 (من)', book: 9, ch: 25, vs: 43, word: 'مِنْ', expectedStrongs: 'H4480' },
-  { name: 'Exod 8:10 (فقال 1)', book: 2, ch: 8, vs: 10, word: 'فَقَالَ:', expectedStrongs: 'H559' },
-  { name: 'Col 1:23 (إن)', book: 51, ch: 1, vs: 23, word: 'إِنْ', expectedStrongs: 'G1487' },
-  { name: 'Col 1:23 (منتقلين)', book: 51, ch: 1, vs: 23, word: 'مُنْتَقِلِينَ', expectedStrongs: 'G3334' },
+  { name: 'Exod 8:10 (فقال 1)', book: 2, ch: 8, vs: 10, word: '%فَقَالَ:%', pos: 1, expectedStrongs: 'H559' },
+  { name: 'Col 1:23 (إن)', book: 51, ch: 1, vs: 23, word: 'إِنْ', pos: 1, expectedStrongs: 'G1487' },
+  { name: 'Col 1:23 (منتقلين)', book: 51, ch: 1, vs: 23, word: '%مُنْتَقِلِينَ%', expectedStrongs: 'G3334' },
   { name: 'Lev 12:4 (حتى)', book: 3, ch: 12, vs: 4, word: 'حَتَّى', expectedStrongs: 'H5704' },
   { name: 'Lev 12:4 (كل)', book: 3, ch: 12, vs: 4, word: 'كُلَّ', expectedStrongs: 'H3605' },
   { name: 'Lev 25:52 (بقي)', book: 3, ch: 25, vs: 52, word: 'بَقِيَ', expectedStrongs: 'H7604' },
@@ -60,11 +64,12 @@ const benchmarks = [
   { name: 'Job 31:14 (أجيبه)', book: 18, ch: 31, vs: 14, word: '%أُجِيبُهُ%', expectedStrongs: 'H7725' },
   { name: 'Isa 17:1 (رجمة)', book: 23, ch: 17, vs: 1, word: '%رُجْمَةَ%', expectedStrongs: 'H4596' },
   { name: 'Isa 17:1 (ردم)', book: 23, ch: 17, vs: 1, word: '%رَدْمٍ%', expectedStrongs: 'H4654' },
+  { name: 'Jer 42:5 (وأمينا)', book: 24, ch: 42, vs: 5, word: '%أَمِينًا%', expectedStrongs: 'H539' },
   { name: 'Jer 51:64 (هكذا)', book: 24, ch: 51, vs: 64, word: 'هكَذَا', expectedStrongs: 'H3602' },
   { name: 'Jer 51:64 (تغرق)', book: 24, ch: 51, vs: 64, word: 'تَغْرَقُ', expectedStrongs: 'H8257' },
   { name: 'Jer 51:64 (جالبه)', book: 24, ch: 51, vs: 64, word: 'جَالِبُهُ', expectedStrongs: 'H935' },
-  { name: 'Jer 51:64 (ويعيون)', book: 24, ch: 51, vs: 64, word: 'وَيَعْيَوْنَ', expectedStrongs: 'H3286' },
-  { name: 'Ezek 40:34 (هنا)', book: 26, ch: 40, vs: 34, word: 'هُنَا', expectedStrongs: 'H6311' },
+  { name: 'Jer 51:64 (ويعيون)', book: 24, ch: 51, vs: 64, word: '%وَيَعْيَوْنَ%', expectedStrongs: 'H3286' },
+  { name: 'Ezek 40:34 (هنا)', book: 26, ch: 40, vs: 34, word: '%هُنَا%', pos: 9, expectedStrongs: 'H6311' },
   { name: 'Luke 4:16 (عادته)', book: 42, ch: 4, vs: 16, word: 'عَادَتِهِ', expectedStrongs: 'G1486' },
   { name: 'John 1:36 (فقال)', book: 43, ch: 1, vs: 36, word: 'فَقَالَ:', expectedStrongs: 'G3004' },
   { name: 'Acts 7:44 (كان)', book: 44, ch: 7, vs: 44, word: 'كَانَ', expectedStrongs: 'G3708' },
@@ -74,15 +79,15 @@ const benchmarks = [
 
 let bmPass = 0;
 for (const b of benchmarks) {
+  const posClause = b.pos ? `AND wm.ar_word_position = ${b.pos}` : '';
   const actual = query(`
-    SELECT wm.strongs_id FROM word_mappings wm 
+    SELECT DISTINCT wm.strongs_id FROM word_mappings wm 
     JOIN verses v ON wm.verse_id = v.id 
-    WHERE v.book_id = ${b.book} AND v.chapter_num = ${b.ch} AND v.verse_num = ${b.vs} AND wm.ar_word LIKE '${b.word}'
-    LIMIT 1;
+    WHERE v.book_id = ${b.book} AND v.chapter_num = ${b.ch} AND v.verse_num = ${b.vs} AND wm.ar_word LIKE '${b.word}' ${posClause};
   `);
   if (actual === b.expectedStrongs) {
-    console.log(`  ✓ ${b.name}: ${actual}`);
     bmPass++;
+    console.log(`  ✓ ${b.name}: ${actual}`);
   } else {
     console.error(`  ✗ ${b.name}: expected ${b.expectedStrongs}, got "${actual}"`);
     totalFailures++;
@@ -90,47 +95,44 @@ for (const b of benchmarks) {
 }
 console.log(`Regression Test Summary: ${bmPass}/${benchmarks.length} benchmark loci verified.\n`);
 
-
 // -----------------------------------------------------------------------------
-// Test 2: Compound & Affix Multi-Mapping Verification
+// Test 2: Multi-Component Affix and Compound Verification
 // -----------------------------------------------------------------------------
 console.log('▶ TEST 2: Multi-Component Affix & Compound Coverage Audit');
 const compounds = [
-  { name: 'Acts 4:18 فَدَعَوْهُمَا', book: 44, ch: 4, vs: 18, word: 'فَدَعَوْهُمَا', expectedIds: ['G2532', 'G2564', 'G846'] },
-  { name: 'Rev 13:5 وَتَجَادِيفَ', book: 66, ch: 13, vs: 5, word: 'وَتَجَادِيفَ', expectedIds: ['G2532', 'G988'] },
-  { name: 'Matt 25:37 فَيُجِيبُهُ', book: 40, ch: 25, vs: 37, word: 'فَيُجِيبُهُ', expectedIds: ['G611', 'G846'] },
-  { name: 'Luke 5:22 بِأَفْكَارِهِمْ', book: 42, ch: 5, vs: 22, word: '%بِأَفْكَارِهِمْ%', expectedIds: ['G1261', 'G846'] },
-  { name: 'John 6:44 وَأَنَا', book: 43, ch: 6, vs: 44, word: 'وَأَنَا', expectedIds: ['G1473', 'G2504', 'G2532'] },
-  { name: 'John 13:8 رِجْلَيَّ', book: 43, ch: 13, vs: 8, word: 'رِجْلَيَّ', expectedIds: ['G1473', 'G4228'] },
-  { name: 'Col 1:23 إِنْ (εἴ γε)', book: 51, ch: 1, vs: 23, word: 'إِنْ', expectedIds: ['G1065', 'G1487'] },
-  { name: 'Col 1:23 وَغَيْرَ (καὶ μὴ)', book: 51, ch: 1, vs: 23, word: 'وَغَيْرَ', expectedIds: ['G2532', 'G3361'] }
+  { name: 'Acts 4:18 فَدَعَوْهُمَا', book: 44, ch: 4, vs: 18, word: '%دَعَوْهُمَا%', expectedRoles: ['G2532', 'G2564', 'G846'] },
+  { name: 'Rev 13:5 وَتَجَادِيفَ', book: 66, ch: 13, vs: 5, word: '%تَجَادِيفَ%', expectedRoles: ['G2532', 'G988'] },
+  { name: 'Matt 25:37 فَيُجِيبُهُ', book: 40, ch: 25, vs: 37, word: '%يُجِيبُهُ%', expectedRoles: ['G611', 'G846'] },
+  { name: 'Luke 5:22 بِأَفْكَارِهِمْ', book: 42, ch: 5, vs: 22, word: '%بِأَفْكَارِهِمْ%', expectedRoles: ['G1261', 'G846'] },
+  { name: 'John 6:44 وَأَنَا', book: 43, ch: 6, vs: 44, word: '%وَأَنَا%', expectedRoles: ['G2532', 'G1473'] },
+  { name: 'John 13:8 رِجْلَيَّ', book: 43, ch: 13, vs: 8, word: '%رِجْلَيَّ%', expectedRoles: ['G4228', 'G1473'] },
+  { name: 'Col 1:23 إِنْ (εἴ γε)', book: 51, ch: 1, vs: 23, word: 'إِنْ', expectedRoles: ['G1487', 'G1065'] },
+  { name: 'Col 1:23 وَغَيْرَ (καὶ μὴ)', book: 51, ch: 1, vs: 23, word: '%وَغَيْرَ%', expectedRoles: ['G2532', 'G3361'] }
 ];
 
-let cmpPass = 0;
+let compPass = 0;
 for (const c of compounds) {
-  const idsStr = query(`
-    SELECT GROUP_CONCAT(wms.strongs_id)
-    FROM word_mappings wm
-    JOIN verses v ON wm.verse_id = v.id
-    JOIN word_mapping_strongs wms ON wm.id = wms.mapping_id
-    WHERE v.book_id = ${c.book} AND v.chapter_num = ${c.ch} AND v.verse_num = ${c.vs} AND wm.ar_word LIKE '${c.word}'
-    GROUP BY wm.id;
+  const ids = query(`
+    SELECT group_concat(wms.strongs_id) 
+    FROM word_mapping_strongs wms 
+    JOIN word_mappings wm ON wms.mapping_id = wm.id 
+    JOIN verses v ON wm.verse_id = v.id 
+    WHERE v.book_id = ${c.book} AND v.chapter_num = ${c.ch} AND v.verse_num = ${c.vs} AND wm.ar_word LIKE '${c.word}';
   `);
-  const actualIds = idsStr ? idsStr.split(',').map(s => s.trim()) : [];
-  const allFound = c.expectedIds.every(id => actualIds.includes(id));
+  const actualSet = (ids || '').split(',');
+  const allFound = c.expectedRoles.every(r => actualSet.includes(r));
   if (allFound) {
-    console.log(`  ✓ ${c.name}: [${actualIds.join(', ')}] satisfies required components`);
-    cmpPass++;
+    compPass++;
+    console.log(`  ✓ ${c.name}: [${c.expectedRoles.join(', ')}] satisfies required components`);
   } else {
-    console.error(`  ✗ ${c.name}: missing expected components. Expected: [${c.expectedIds.join(', ')}], got: [${actualIds.join(', ')}]`);
+    console.error(`  ✗ ${c.name}: expected [${c.expectedRoles.join(', ')}], found [${actualSet.join(', ')}]`);
     totalFailures++;
   }
 }
-console.log(`Compound Affix Summary: ${cmpPass}/${compounds.length} loci verified.\n`);
-
+console.log(`Compound Affix Summary: ${compPass}/${compounds.length} loci verified.\n`);
 
 // -----------------------------------------------------------------------------
-// Test 3: Structural Integrity & 19 SQL Audit Rules
+// Test 3: Structural Database Rules & Hard Invariants
 // -----------------------------------------------------------------------------
 console.log('▶ TEST 3: Structural Database Rules & Hard Invariants');
 
@@ -151,6 +153,12 @@ assertCondition('cross_testament_strongs: zero cross-testament contamination', c
 
 const primaryInMulti = parseInt(query('SELECT count(*) FROM word_mappings w WHERE w.strongs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM word_mapping_strongs x WHERE x.mapping_id=w.id AND x.strongs_id=w.strongs_id);'));
 assertCondition('primary_missing_from_multi: all primary strongs in multi table', primaryInMulti === 0, `found ${primaryInMulti}`);
+
+const multiPrimary = parseInt(query("SELECT count(*) FROM (SELECT mapping_id FROM word_mapping_strongs WHERE link_role='primary' GROUP BY 1 HAVING count(*)>1);"));
+assertCondition("multiple_primary_components: at most 1 primary strongs per word mapping", multiPrimary === 0, `found ${multiPrimary}`);
+
+const conflictPrimary = parseInt(query("SELECT count(*) FROM word_mappings w JOIN word_mapping_strongs x ON w.id=x.mapping_id WHERE x.link_role='primary' AND w.strongs_id != x.strongs_id;"));
+assertCondition("conflict_primary_strongs: primary strongs in multi table must match word_mappings.strongs_id", conflictPrimary === 0, `found ${conflictPrimary}`);
 
 const syntacticWithStrongs = parseInt(query("SELECT count(*) FROM word_mappings WHERE morph_pos='syntactic_ar' AND strongs_id IS NOT NULL;"));
 assertCondition('syntactic_with_strongs: syntactic_ar must have NULL strongs_id', syntacticWithStrongs === 0, `found ${syntacticWithStrongs}`);

@@ -43,13 +43,18 @@ jobs:
         working-directory: ./mobile
         run: dart run flutter_launcher_icons
 
-      - name: Analyze Dart Code
+      - name: Install SQLite3 for Linux Runner
+        run: sudo apt-get update && sudo apt-get install -y sqlite3
+
+      - name: Reassemble SQLite Database from Chunk Parts
+        run: node scripts/assemble_db.cjs
+
+      - name: Run Rigorous Scientific & Database Quality Gate
+        run: node scripts/automated_database_audit.cjs
+
+      - name: Analyze Dart Code (Fail on Fatal Errors)
         working-directory: ./mobile
-        run: |
-          OUT=$(flutter analyze 2>&1 || true)
-          echo "$OUT"
-          ESC_OUT="${OUT//$'\n'/'%0A'}"
-          echo "::warning title=Dart Analyzer::$ESC_OUT"
+        run: flutter analyze --no-fatal-infos
 
       - name: Build APK
         working-directory: ./mobile

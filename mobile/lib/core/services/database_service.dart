@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v37.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v38.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 37; // Database v37: Complete audit reconciliation, 105 contextual corrections, SBLGNT edition tracking
+    const targetDbVersion = 38; // Database v37: Complete audit reconciliation, 105 contextual corrections, SBLGNT edition tracking
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -89,6 +89,7 @@ class DatabaseService {
         'bible_study_v34.db',
         'bible_study_v35.db',
         'bible_study_v36.db',
+        'bible_study_v37.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
@@ -114,6 +115,17 @@ class DatabaseService {
       }
       await sink.flush();
       await sink.close();
+      // Independent SQLite integrity verification on device before accepting version
+      final testDb = await openDatabase(dbPath, readOnly: true);
+      final checkRes = await testDb.rawQuery('PRAGMA integrity_check;');
+      await testDb.close();
+
+      final isOk = checkRes.isNotEmpty && checkRes.first.values.first.toString() == 'ok';
+      if (!isOk) {
+        try { await outFile.delete(); } catch (_) {}
+        throw StateError('Assembled SQLite database failed integrity check: $checkRes');
+      }
+
       await prefs.setInt('db_version', targetDbVersion);
       debugPrint('Local SQLite database assembled successfully (${await outFile.length()} bytes).');
     }
