@@ -2,29 +2,22 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v38%20(Verified)-blue)](mobile/assets/bible_study.db)
-[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-43%2F43%20Passed-success)](scripts/automated_database_audit.cjs)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v39%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-48%2F48%20Passed-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.304 (Run #304)
+## Latest Verified Release: v1.0.307 (Database v39)
 
-- **GitHub Actions Run ID:** [`40506974082`](https://github.com/manalattia80-web/arabic-bible-study/actions/runs/40506974082) (Status: **Success / Completed**)
-- **Release Package:** [Arabic Bible Study v1.0.304](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.304)
-- **Commit:** `66132b5` (`feat: normalize primary_* roles, fix Gen 4:18 names, restore 23 placeholder words, and align NT spreadsheet loci`)
-- **Published Artifacts:**
-  - `arabic-bible-study-app.apk` (353.83 MB)
-  - `play-store-bundle.aab` (126.84 MB)
-
-### Automated Scientific Quality Gate Results
-- **Benchmark Regression:** **43 / 43 Passed** (100%)
-- **Compound Affixes & Multi-Strongs:** **8 / 8 Verified** (100%)
-- **Primary Strongs Conflicts:** **0**
-- **Orphan / Null / Cross-testament Anomalies:** **0**
-- **SQLite Database Integrity Check (`PRAGMA integrity_check`):** **OK**
-- **Key Philological Fixes in v1.0.304:**
-  1. **Normalized Roles:** All 31 `primary_*` special roles unified into `primary` in `word_mapping_strongs`.
-  2. **Genesis 4:18:** Corrected `عِيرَادُ` from `H5872` (Ein Gedi) to `H5897` (`עִירָד`), and `مَتُوشَائِيلَ` from `H4968` to `H4967` (`מְתוּשָׁאֵל`).
-  3. **23 Missing Loci Restored:** Replaced all placeholder characters (`---`) with authentic Hebrew/Greek lemmas and inflected forms.
-  4. **10 NT Spreadsheet Loci Fixed:** Realigned Romans 1:20 (`G517`), 1Cor 1:11 (`G5514`), 2Cor 1:10 (`G5082`), 2Cor 1:24 (`G4904`), Gal 2:4 (`G5569` & `G2684`), etc.
+- **Release Package:** [Arabic Bible Study v1.0.307](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.307)
+- **Database Engine:** **v39** (seamless auto-migration from v38 on client devices with PRAGMA integrity check)
+- **Key Philological & Lexical Fixes:**
+  1. **Genesis 3:6:** "للعيون" corrected to `H5869` (`עַיִן` / eye) instead of `H5879` (place name). "للنظر" aligned to `H7919` (`שָׂכַל` / `לְהַשְׂכִּיל` / to make wise, contemplate) instead of `H7200`. "بهجة" aligned to `H8378` (`תַּאֲוָה`).
+  2. **Colossians 1:23:** "على" classified as `syntactic_ar` (Arabic preposition for "ثبت على", since Greek `ἐπιμένετε τῇ πίστει` uses direct dative without `ἐν`).
+  3. **Jeremiah 52:4:** "وبنوا" purified to 100% Hebrew script `וַיִּבְנוּ` (zero mixed Arabic characters).
+  4. **Job 31:14:** "حين" corrected to `H3588` (`כִּי`) instead of `מִן`.
+  5. **Matthew 17:20:** "لهذا" corrected to `G3778` (`οὗτος` / `τούτῳ`) with obsolete `G1223` link removed.
+  6. **Genesis 3:18:** "لك" original text restored to `לְ` / `לָךְ`.
+  7. **Judges 7:9 & Genesis 41:46:** Obsolete orphan multi-mappings cleaned up.
+- **CI Quality Gate:** **48 / 48 Benchmark Loci Passed (100%)** | 0 Integrity Errors
 
 ---
 

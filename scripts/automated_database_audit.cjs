@@ -83,7 +83,11 @@ const benchmarks = [
   { name: '2 Cor 1:24 (موازرون)', book: 47, ch: 1, vs: 24, word: '%مُوازِرُونَ%', expectedStrongs: 'G4904' },
   { name: 'Gal 2:4 (الكذبة)', book: 48, ch: 2, vs: 4, word: '%الْكَذَبَةِ%', expectedStrongs: 'G5569' },
   { name: 'Gal 2:4 (ليتجسسوا)', book: 48, ch: 2, vs: 4, word: '%لِيَتَجَسَّسُوا%', expectedStrongs: 'G2684' },
-  { name: 'Gen 3:6 (بهجة)', book: 1, ch: 3, vs: 6, word: '%بَهِجَةٌ%', expectedStrongs: 'H8378' }
+  { name: 'Gen 3:6 (بهجة)', book: 1, ch: 3, vs: 6, word: '%بَهِجَةٌ%', expectedStrongs: 'H8378' },
+  { name: 'Gen 3:6 (للعيون)', book: 1, ch: 3, vs: 6, word: '%لِلْعُيُونِ%', expectedStrongs: 'H5869' },
+  { name: 'Gen 3:6 (للنظر)', book: 1, ch: 3, vs: 6, word: '%لِلنَّظَرِ%', expectedStrongs: 'H7919' },
+  { name: 'Matt 17:20 (لهذا)', book: 40, ch: 17, vs: 20, word: '%لِهذَا%', expectedStrongs: 'G3778' },
+  { name: 'Job 31:14 (حين)', book: 18, ch: 31, vs: 14, word: '%حِينَ%', expectedStrongs: 'H3588' }
 ];
 
 let bmPass = 0;
