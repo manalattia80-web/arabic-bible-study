@@ -3,22 +3,28 @@
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
 [![Database Version](https://img.shields.io/badge/SQLite%20Database-v40%20(Verified)-blue)](mobile/assets/bible_study.db)
-[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-48%2F48%20Passed-success)](scripts/automated_database_audit.cjs)
+[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-62%2F62%20Passed-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.309 (Database v40)
+## Latest Verified Release: v1.0.310 (Database v40)
 
-- **Release Package:** [Arabic Bible Study v1.0.309](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.309)
+- **Release Package:** [Arabic Bible Study v1.0.310](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.310)
 - **Database Engine:** **v40** (guaranteed safe upgrade from v38/v39 on client devices with PRAGMA integrity check and deferred cleanup)
 - **Key Philological & Lexical Fixes:**
-  1. **Matthew 17:20 Alignment to MorphGNT SBLGNT:** "لهذا" aligned to Greek token 22 (`τούτῳ`, `RD ----DSN-`, `SBLGNT:B40.C17.V20.w22`), separating raw source morphology from unified app grammar `D-DSN` and correcting original token order to 22.
-  2. **Genesis 3:6 Morphology:** "للنظر" morphological fields updated to Hifil Infinitive Construct (`HR/Vhc`), removing obsolete qal/wayyiqtol and gender/person attributes of "فرأت".
-  3. **Genesis 3:18 Provenance:** "لك" verification locator aligned to OSHB Westminster Leningrad Codex (`OSHB:B1.C3.V18.w4`, `HR/Sp2ms`).
-  4. **Genesis 3:6 Lexicon:** "للعيون" corrected to `H5869` (`עַיִן` / eye). "بهجة" aligned to `H8378` (`תַּאֲוָה`).
-  5. **Colossians 1:23:** "على" classified as `syntactic_ar`.
-  6. **Jeremiah 52:4:** "وبنوا" purified to 100% Hebrew script `וַיִּבְנוּ`.
-  7. **Job 31:14:** "حين" corrected to `H3588` (`כִּי`) instead of `מִן`.
-  8. **Judges 7:9 & Genesis 41:46:** Obsolete orphan multi-mappings cleaned up.
-- **CI Quality Gate:** **48 / 48 Benchmark Loci Passed (100%)** | 0 Integrity Errors
+  1. **Discrete Field-by-Field Quality Gate:** Replaced all substring includes() and prefix checks with exact discrete field comparisons for Gen 3:6 (HR/Vhc, Hifil Inf Const, null person/gender/num), Matt 17:20 (RD ----DSN-, token 22, dative neuter singular), and Gen 3:18 (HR/Sp2ms, OSHB w4).
+  2. **Whole-Verse Unit Alignment (10 Verses / 163 Records):**
+     - **Isaiah 53:5:** Re-aligned major content words ("مجروح" H2490, "آثامنا" H5771, "سلامنا" H7965, "وبحبره" H2250, "شفينا" H7495) from false syntactic_ar.
+     - **Joshua 1:8:** Replaced placeholder H4480 on "لا" with negative particle H3808 (לֹא), and restored distinct particle linkages.
+     - **Psalm 23:1:** Classified "شيء" as syntactic_ar complement without orphan Hebrew tokens.
+     - **John 3:16:** Corrected "هكذا" to adverb G3779 (Οὕτως), and aligned "به" to Greek Accusative masculine singular G846 (αὐτόν).
+     - **Acts 1:8:** Restored participle G1904 (ἐπέρχομαι / ἐπελθόντος) on "حل", and genitive pronoun G3450 (μου) on "لي".
+     - **Ephesians 2:8:** Mapped "وذلك" to G3778 (τοῦτο) and classified "هو" as Arabic copula.
+     - **Hebrews 11:1:** Aligned "فهو" to G1510 (Ἔστιν) and removed spurious G1722 on "بما".
+     - **Revelation 21:4:** Corrected "وجع" to G4192 (πόνος) instead of G4194 (Πόντιος), and "مضت" to G565 (ἀπῆλθον).
+- **CI Quality Gate:** **62 / 62 Checks Passed (100%)** | 0 Integrity Errors
+
+
+
+
 
 ---
 

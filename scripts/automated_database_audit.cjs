@@ -173,18 +173,86 @@ assertCondition("multiple_primary_components: at most 1 primary strongs per word
 const conflictPrimary = parseInt(query("SELECT count(*) FROM word_mappings w JOIN word_mapping_strongs x ON w.id=x.mapping_id WHERE x.link_role='primary' AND w.strongs_id IS NOT x.strongs_id;"));
 assertCondition("conflict_primary_strongs: primary strongs in multi table must match word_mappings.strongs_id (null-safe IS NOT)", conflictPrimary === 0, `found ${conflictPrimary}`);
 
-// Morphological consistency and documentation integrity gate
-const gen36Morph = query("SELECT morph_stem, morph_tense, morph_person, morph_gender, orig_morphology FROM word_mappings WHERE id = '48efac3f-9748-4c10-9508-f6da552bf563';");
-const gen36Ok = gen36Morph.includes('hifil') && gen36Morph.includes('infinitive_construct') && gen36Morph.includes('HR/Vhc');
-assertCondition("gen36_morphology_consistency: Gen 3:6 للنظر has Hifil Infinitive Construct and HR/Vhc", gen36Ok, `actual: ${gen36Morph}`);
+// Strict Discrete Field-by-Field Morphological and Provenance Verification
+const gen36 = JSON.parse(query(`
+  SELECT json_object(
+    'strongs_id', strongs_id,
+    'orig_word', orig_word,
+    'orig_surface', orig_surface,
+    'orig_pos', orig_word_position,
+    'pos', morph_pos,
+    'stem', morph_stem,
+    'tense', morph_tense,
+    'person', morph_person,
+    'gender', morph_gender,
+    'number', morph_number,
+    'orig_morphology', orig_morphology,
+    'locator', verified_locator
+  ) FROM word_mappings WHERE id = '48efac3f-9748-4c10-9508-f6da552bf563';
+`));
+const gen36Ok = gen36.strongs_id === 'H7919' &&
+                gen36.orig_word === 'שָׂכַל' &&
+                gen36.orig_surface === 'לְהַשְׂכִּיל' &&
+                gen36.orig_pos === 13 &&
+                gen36.pos === 'verb' &&
+                gen36.stem === 'hifil' &&
+                gen36.tense === 'infinitive_construct' &&
+                gen36.person === null &&
+                gen36.gender === null &&
+                gen36.number === null &&
+                gen36.orig_morphology === 'HR/Vhc' &&
+                gen36.locator === 'OSHB:B1.C3.V6.w13';
+assertCondition("gen36_morphology_and_locator_exact: Gen 3:6 للنظر exact Hifil Inf Const, null person/gender/num, HR/Vhc, OSHB w13", gen36Ok, JSON.stringify(gen36));
 
-const matt1720Data = query("SELECT orig_word_position, morph_pos, morph_case, morph_gender, orig_morphology, verified_locator FROM word_mappings WHERE id = '8fc7c281-0e8b-4958-9f0b-8efac2b51cee';");
-const matt1720Ok = matt1720Data.includes('22|') && matt1720Data.includes('RD ----DSN-') && matt1720Data.includes('SBLGNT:B40.C17.V20.w22') && matt1720Data.includes('dative');
-assertCondition("matt1720_morphology_and_locator_consistency: Matt 17:20 لهذا has pos 22, w22 locator, and raw MorphGNT tag RD ----DSN-", matt1720Ok, `actual: ${matt1720Data}`);
+const matt1720 = JSON.parse(query(`
+  SELECT json_object(
+    'strongs_id', strongs_id,
+    'orig_word', orig_word,
+    'orig_surface', orig_surface,
+    'orig_pos', orig_word_position,
+    'pos', morph_pos,
+    'case', morph_case,
+    'gender', morph_gender,
+    'number', morph_number,
+    'orig_morphology', orig_morphology,
+    'locator', verified_locator
+  ) FROM word_mappings WHERE id = '8fc7c281-0e8b-4958-9f0b-8efac2b51cee';
+`));
+const matt1720Ok = matt1720.strongs_id === 'G3778' &&
+                   matt1720.orig_word === 'οὗτος' &&
+                   matt1720.orig_surface === 'τούτῳ' &&
+                   matt1720.orig_pos === 22 &&
+                   matt1720.pos === 'pronoun' &&
+                   matt1720.case === 'dative' &&
+                   matt1720.gender === 'neuter' &&
+                   matt1720.number === 'singular' &&
+                   matt1720.orig_morphology === 'RD ----DSN-' &&
+                   matt1720.locator === 'SBLGNT:B40.C17.V20.w22';
+assertCondition("matt1720_morphology_and_locator_exact: Matt 17:20 لهذا exact Greek token 22, dative neuter singular, RD ----DSN-, SBLGNT w22", matt1720Ok, JSON.stringify(matt1720));
 
-const gen318Locator = query("SELECT verified_locator FROM word_mappings WHERE id = 'fba6dab6-e8af-4b6a-8d43-b7a9f0350b40';");
-const gen318Ok = gen318Locator.startsWith('OSHB:');
-assertCondition("gen318_locator_accuracy: Gen 3:18 لك has authentic OSHB locator", gen318Ok, `actual: ${gen318Locator}`);
+const gen318 = JSON.parse(query(`
+  SELECT json_object(
+    'orig_word', orig_word,
+    'orig_surface', orig_surface,
+    'orig_pos', orig_word_position,
+    'pos', morph_pos,
+    'person', morph_person,
+    'gender', morph_gender,
+    'number', morph_number,
+    'orig_morphology', orig_morphology,
+    'locator', verified_locator
+  ) FROM word_mappings WHERE id = 'fba6dab6-e8af-4b6a-8d43-b7a9f0350b40';
+`));
+const gen318Ok = gen318.orig_word === 'לְ' &&
+                 gen318.orig_surface === 'לָךְ' &&
+                 gen318.orig_pos === 4 &&
+                 gen318.pos === 'preposition' &&
+                 gen318.person === '2' &&
+                 gen318.gender === 'masculine' &&
+                 gen318.number === 'singular' &&
+                 gen318.orig_morphology === 'HR/Sp2ms' &&
+                 gen318.locator === 'OSHB:B1.C3.V18.w4';
+assertCondition("gen318_morphology_and_locator_exact: Gen 3:18 لك exact preposition suffix 2ms, HR/Sp2ms, OSHB w4", gen318Ok, JSON.stringify(gen318));
 
 const syntacticWithStrongs = parseInt(query("SELECT count(*) FROM word_mappings WHERE morph_pos='syntactic_ar' AND strongs_id IS NOT NULL;"));
 assertCondition('syntactic_with_strongs: syntactic_ar must have NULL strongs_id', syntacticWithStrongs === 0, `found ${syntacticWithStrongs}`);
@@ -203,9 +271,64 @@ assertCondition('pure_script_original: no mixed Arabic characters in Hebrew or G
 
 
 // -----------------------------------------------------------------------------
-// Test 4: SQLite Database Engine Integrity
+// Test 4: Whole-Verse Unit Regression Tests (The 10 Audited Verses, 163 Records)
 // -----------------------------------------------------------------------------
-console.log('\n▶ TEST 4: SQLite Integrity & Vacuum Check');
+console.log('\n▶ TEST 4: Whole-Verse Unit Regression Tests (10 Verses, 163 Records)');
+
+// 1. Josh 1:8 - Negative particle H3808, Conjunction H9002, Prepositions H9003/H9004, Causal H3588
+const josh18w1 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'word', orig_word, 'pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=6 AND chapter_num=1 AND verse_num=8) AND ar_word_position=1;`));
+assertCondition("josh18_neg_particle: Josh 1:8 لا has H3808 לֹא particle", josh18w1.strongs === 'H3808' && josh18w1.word === 'לֹא' && josh18w1.pos === 'particle', JSON.stringify(josh18w1));
+
+const josh18w8 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'word', orig_word, 'pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=6 AND chapter_num=1 AND verse_num=8) AND ar_word_position=8;`));
+assertCondition("josh18_contrast_conj: Josh 1:8 بل has H9002 וְ conjunction", josh18w8.strongs === 'H9002' && josh18w8.pos === 'conjunction', JSON.stringify(josh18w8));
+
+const josh18w22 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'word', orig_word, 'pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=6 AND chapter_num=1 AND verse_num=8) AND ar_word_position=22;`));
+assertCondition("josh18_causal_conj: Josh 1:8 لأنك has H3588 כִּי conjunction", josh18w22.strongs === 'H3588' && josh18w22.word === 'כִּי' && josh18w22.pos === 'conjunction', JSON.stringify(josh18w22));
+
+// 2. Ps 23:1 - Arabic complement without Hebrew token
+const ps231w5 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'pos', morph_pos, 'word', orig_word) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=19 AND chapter_num=23 AND verse_num=1) AND ar_word_position=5;`));
+assertCondition("ps231_syntactic_ar: Ps 23:1 شيء is syntactic_ar with NULL strongs", ps231w5.strongs === null && ps231w5.pos === 'syntactic_ar' && ps231w5.word === '—', JSON.stringify(ps231w5));
+
+// 3. Isa 53:5 - Re-aligned theological content words
+const isa535w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'stem', morph_stem, 'tense', morph_tense) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=23 AND chapter_num=53 AND verse_num=5) AND ar_word_position=2;`));
+assertCondition("isa535_pierced: Isa 53:5 مجروح has H2490 מְחֹלָל polal participle", isa535w2.strongs === 'H2490' && isa535w2.surface === 'מְחֹלָ֖ל' && isa535w2.stem === 'polal', JSON.stringify(isa535w2));
+
+const isa535w7 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=23 AND chapter_num=53 AND verse_num=5) AND ar_word_position=7;`));
+assertCondition("isa535_iniquities: Isa 53:5 آثامنا has H5771 עֲוֹנֹתֵינוּ noun", isa535w7.strongs === 'H5771' && isa535w7.surface === 'עֲוֹנֹתֵ֑ינוּ' && isa535w7.pos === 'noun', JSON.stringify(isa535w7));
+
+const isa535w11 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=23 AND chapter_num=53 AND verse_num=5) AND ar_word_position=11;`));
+assertCondition("isa535_stripes: Isa 53:5 وبحبره has H2250 וּבַחֲבֻרָתוֹ noun", isa535w11.strongs === 'H2250' && isa535w11.surface === 'וּבַחֲבֻרָתֹ֖ו' && isa535w11.pos === 'noun', JSON.stringify(isa535w11));
+
+const isa535w12 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'stem', morph_stem) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=23 AND chapter_num=53 AND verse_num=5) AND ar_word_position=12;`));
+assertCondition("isa535_healed: Isa 53:5 شفينا has H7495 נִרְפָּא־לָנוּ niphal", isa535w12.strongs === 'H7495' && isa535w12.surface === 'נִרְפָּא־לָֽנוּ' && isa535w12.stem === 'niphal', JSON.stringify(isa535w12));
+
+// 4. John 3:16 - Adverb οὕτως and Greek Accusative αὐτόν
+const jn316w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=3 AND verse_num=16) AND ar_word_position=2;`));
+assertCondition("jn316_adverb: John 3:16 هكذا has G3779 Οὕτως adverb", jn316w2.strongs === 'G3779' && jn316w2.pos === 'adverb', JSON.stringify(jn316w2));
+
+const jn316w16 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', morph_pos, 'case', morph_case, 'gender', morph_gender, 'num', morph_number) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=3 AND verse_num=16) AND ar_word_position=16;`));
+assertCondition("jn316_accusative_pronoun: John 3:16 به has G846 αὐτόν accusative masculine singular", jn316w16.strongs === 'G846' && jn316w16.surface === 'αὐτόν' && jn316w16.case === 'accusative' && jn316w16.gender === 'masculine' && jn316w16.num === 'singular', JSON.stringify(jn316w16));
+
+// 5. Acts 1:8 - Participle ἐπελθόντος G1904 and Genitive pronoun μου G3450
+const acts18w5 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'word', orig_word, 'surface', orig_surface, 'pos', morph_pos, 'tense', morph_tense, 'mood', morph_mood) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=44 AND chapter_num=1 AND verse_num=8) AND ar_word_position=5;`));
+assertCondition("acts18_participle: Acts 1:8 حل has G1904 ἐπέρχομαι / ἐπελθόντος aorist participle", acts18w5.strongs === 'G1904' && acts18w5.word === 'ἐπέρχομαι' && acts18w5.surface === 'ἐπελθόντος' && acts18w5.tense === 'aorist' && acts18w5.mood === 'participle', JSON.stringify(acts18w5));
+
+const acts18w10 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', morph_pos, 'case', morph_case) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=44 AND chapter_num=1 AND verse_num=8) AND ar_word_position=10;`));
+assertCondition("acts18_genitive_pronoun: Acts 1:8 لي has G3450 μου genitive pronoun", acts18w10.strongs === 'G3450' && acts18w10.surface === 'μου' && acts18w10.case === 'genitive', JSON.stringify(acts18w10));
+
+// 6. Eph 2:8 - καὶ τοῦτο G3778 demonstrative and Arabic copula
+const eph28w5 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'case', morph_case, 'gender', morph_gender) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=49 AND chapter_num=2 AND verse_num=8) AND ar_word_position=5;`));
+assertCondition("eph28_demonstrative: Eph 2:8 وذلك has G3778 τοῦτο nominative neuter", eph28w5.strongs === 'G3778' && eph28w5.surface === 'τοῦτο' && eph28w5.case === 'nominative' && eph28w5.gender === 'neuter', JSON.stringify(eph28w5));
+
+// 7. Rev 21:4 - G4192 πόνος (not Pontius Pilate!)
+const rev214w19 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'word', orig_word, 'surface', orig_surface, 'pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=66 AND chapter_num=21 AND verse_num=4) AND ar_word_position=19;`));
+assertCondition("rev214_pain_not_pilate: Rev 21:4 وجع has G4192 πόνος noun (not G4194 Πόντιος)", rev214w19.strongs === 'G4192' && rev214w19.word === 'πόνος' && rev214w19.surface === 'πόνος' && rev214w19.pos === 'noun', JSON.stringify(rev214w19));
+
+
+// -----------------------------------------------------------------------------
+// Test 5: SQLite Database Engine Integrity
+// -----------------------------------------------------------------------------
+console.log('\n▶ TEST 5: SQLite Integrity & Vacuum Check');
 const integrity = query('PRAGMA integrity_check;');
 assertCondition('PRAGMA integrity_check is ok', integrity === 'ok', integrity);
 
