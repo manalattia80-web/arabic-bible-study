@@ -2,10 +2,36 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v45%20(Verified)-blue)](mobile/assets/bible_study.db)
-[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-76%2F76%20Passed-success)](scripts/automated_database_audit.cjs)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v46%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-87%2F87%20Passed-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.316 (Database v45)
+## Latest Verified Release: v1.0.317 (Database v46)
+
+- **Release Package:** [Arabic Bible Study v1.0.317](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.317)
+- **Database Engine:** **v46** (`bible_study_v46.db`, `targetDbVersion = 46`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v45.db` after PRAGMA integrity verification.
+- **Key Philological & Systemic Enhancements Across 10-Verse Independent Sample & Benchmark Verses:**
+  1. **Proverbs 15:6 Root Disambiguation:**
+     - «كَنْزٌ»: Replaced erroneous `H2425` (חָיָה) with authentic **`H2633`** (`חֹסֶן`, `HNcmsa`, token 3, `OSHB:B20.C15.V6.w3`).
+     - «كَدَرٌ»: Replaced proper noun `H5912` (עָכָן Achan) with authentic root **`H5916`** (`עָכַר`, surface `נֶעְכָּֽרֶת׃`, `HVNp3fs`, token 7, `OSHB:B20.C15.V6.w7`).
+  2. **Daniel 3:30 Aramaic Lexicon & Proper Noun Restoration:**
+     - «قَدَّمَ»: Replaced Hebrew `H6700` (צוּרִיאֵל) with authentic Aramaic verb **`H6744`** (`צְלַח`, surface `הַצְלַ֛ח`, `AVhp3ms`, token 3, `OSHB:B27.C3.V30.w3`).
+     - «وَعَبْدَنَغُوَ»: Restored authentic Aramaic proper noun **`H5665`** (`עֲבֵד נְגוֹ`, surface `וַעֲבֵ֥ד נְגֹ֖ו`, `AC/Np`, token 6, `OSHB:B27.C3.V30.w6`).
+  3. **Jeremiah 51:22 Triple Verb Restoration:**
+     - «وَأَسْحَقُ»: Restored authentic root **`H5310`** (`נָפַץ`, surface `וְנִפַּצְתִּ֤י`, `HC/Vpq1cs`) across all three occurrences (tokens w1, w5, w9).
+  4. **John 14:19 Grammatical Person Alignment:**
+     - «سَتَحْيَوْنَ»: Corrected surface from 1st person `ζῶ` to 2nd person plural future **`ζήσετε`** (`G2198`, `V- 2FAI-P--`, token 14, `SBLGNT:B43.C14.V19.w14`).
+  5. **Romans 9:23 Verbal Compound Unification:**
+     - «سَبَقَ فَأَعَدَّهَا»: Unified into single Greek verb **`G4282`** (`προετοιμάζω`, surface `προητοίμασεν`, `V- 3AAI-S--`, token 13, `SBLGNT:B45.C9.V23.w13`), eliminating spurious TR entries.
+  6. **Hebrews 10:18 Verbless Clause Implied Copula:**
+     - «تَكُونُ» & «يَكُونُ»: Correctly classified as Arabic implied copula (`syntactic_ar`, `relation_type = 'copula_implied'`, `orig_word_position = NULL`), removing false audible Greek verb links.
+  7. **1 Samuel 19:15 Systemic Realignment:**
+     - Restored **`H4296`** (`בַמִּטָּ֛ה`, token 11) for «الْفِرَاشِ» and **`H4191`** (`לַהֲמִתֹֽו׃`, token 13) for «أَقْتُلَهُ».
+  8. **James 1:17 & Micah 6:8 Benchmark Integration:**
+     - James 1:17 «تَغْيِيرٌ» -> **`G3883`** (`παραλλαγὴ`, `N- ----NSF-`, token 20); «ظِلُّ» -> **`G644`** (`ἀποσκίασμα`, `N- ----NSN-`, token 23).
+     - Micah 6:8 «مَا» -> **`H4100`** (`מַה־`, `HTi`, token 4).
+- **CI Quality Gate:** **87 / 87 Checks Passed (100%)** | 0 Failures
+
+### Previous Release: v1.0.316 (Database v45)
 
 - **Release Package:** [Arabic Bible Study v1.0.316](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.316)
 - **Database Engine:** **v45** (`bible_study_v45.db`, `targetDbVersion = 45`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v44.db` after PRAGMA integrity verification.

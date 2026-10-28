@@ -451,6 +451,57 @@ assertCondition("heb111_copula: Heb 11:1 فهو has G1510 ἔστιν, exact Mor
 const h3807a = JSON.parse(query(`SELECT json_object('count', count(*), 'def', definition_en) FROM strongs_entries WHERE strongs_id='H3807a';`));
 assertCondition("h3807a_documented: strongs_entries has H3807a declared transparently as internal project syntactic identifier", h3807a.count === 1 && h3807a.def.includes('Internal Project Syntactic Identifier'), JSON.stringify(h3807a));
 
+// 9. Independent 10-Verse & Fresh Benchmark Codex Gate Verifications
+// Prov 15:6 كنز (H2633 חֹסֶן HNcmsa w3) & كدر (H5916 עָכַר HVNp3fs w7)
+const prov156w4 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=20 AND chapter_num=15 AND verse_num=6) AND ar_word_position=4;`));
+assertCondition("prov156_treasure: Prov 15:6 كنز has H2633 חֹסֶן token 3, HNcmsa, OSHB:B20.C15.V6.w3", prov156w4.strongs === 'H2633' && prov156w4.surface === 'חֹ֣סֶן' && prov156w4.pos === 3 && prov156w4.morphology === 'HNcmsa' && prov156w4.locator === 'OSHB:B20.C15.V6.w3', JSON.stringify(prov156w4));
+
+const prov156w9 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=20 AND chapter_num=15 AND verse_num=6) AND ar_word_position=9;`));
+assertCondition("prov156_trouble: Prov 15:6 كدر has H5916 עָכַר token 7, HVNp3fs, OSHB:B20.C15.V6.w7", prov156w9.strongs === 'H5916' && prov156w9.surface === 'נֶעְכָּֽרֶת׃' && prov156w9.pos === 7 && prov156w9.morphology === 'HVNp3fs' && prov156w9.locator === 'OSHB:B20.C15.V6.w7', JSON.stringify(prov156w9));
+
+// Dan 3:30 قدّم (H6744 צְלַח AVhp3ms w3) & وعبدنغو (H5665 AC/Np w6)
+const dan330w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word_position=2;`));
+assertCondition("dan330_promoted: Dan 3:30 قدم has H6744 צְלַח token 3, AVhp3ms, OSHB:B27.C3.V30.w3", dan330w2.strongs === 'H6744' && dan330w2.surface === 'הַצְלַ֛ח' && dan330w2.pos === 3 && dan330w2.morphology === 'AVhp3ms' && dan330w2.locator === 'OSHB:B27.C3.V30.w3', JSON.stringify(dan330w2));
+
+const dan330w6 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word_position=6;`));
+assertCondition("dan330_abednego: Dan 3:30 وعبدنغو restored H5665 עֲבֵד נְגוֹ token 6, AC/Np, OSHB:B27.C3.V30.w6", dan330w6.strongs === 'H5665' && dan330w6.surface === 'וַעֲבֵ֥ד נְגֹ֖ו' && dan330w6.pos === 6 && dan330w6.morphology === 'AC/Np' && dan330w6.locator === 'OSHB:B27.C3.V30.w6', JSON.stringify(dan330w6));
+
+// Jer 51:22 وأسحق (H5310 נָפַץ HC/Vpq1cs occurrences at w1, w5, w9)
+const jer5122w1 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=24 AND chapter_num=51 AND verse_num=22) AND ar_word_position=1;`));
+const jer5122w5 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=24 AND chapter_num=51 AND verse_num=22) AND ar_word_position=5;`));
+const jer5122w9 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=24 AND chapter_num=51 AND verse_num=22) AND ar_word_position=9;`));
+assertCondition("jer5122_shatter_all_three: Jer 51:22 وأسحق restored across all 3 occurrences with H5310 נָפַץ HC/Vpq1cs (w1, w5, w9)",
+  jer5122w1.strongs === 'H5310' && jer5122w1.pos === 1 && jer5122w1.morphology === 'HC/Vpq1cs' &&
+  jer5122w5.strongs === 'H5310' && jer5122w5.pos === 5 && jer5122w5.morphology === 'HC/Vpq1cs' &&
+  jer5122w9.strongs === 'H5310' && jer5122w9.pos === 9 && jer5122w9.morphology === 'HC/Vpq1cs',
+  JSON.stringify({ w1: jer5122w1, w5: jer5122w5, w9: jer5122w9 }));
+
+// John 14:19 ستحيون (G2198 ζήσετε V- 2FAI-P-- w14)
+const jn1419w14 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=14 AND verse_num=19) AND ar_word_position=14;`));
+assertCondition("jn1419_ye_shall_live: John 14:19 ستحيون has G2198 ζήσετε, exact MorphGNT raw tag V- 2FAI-P--, SBLGNT:B43.C14.V19.w14", jn1419w14.strongs === 'G2198' && jn1419w14.surface === 'ζήσετε' && jn1419w14.pos === 14 && jn1419w14.morphology === 'V- 2FAI-P--' && jn1419w14.locator === 'SBLGNT:B43.C14.V19.w14', JSON.stringify(jn1419w14));
+
+// Rom 9:23 سبق فأعدها (G4282 προητοίμασεν V- 3AAI-S-- w13)
+const rom923w10 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=45 AND chapter_num=9 AND verse_num=23) AND ar_word_position=10;`));
+assertCondition("rom923_prepared_before: Rom 9:23 فأعدها has G4282 προητοίμασεν, exact MorphGNT raw tag V- 3AAI-S--, SBLGNT:B45.C9.V23.w13", rom923w10.strongs === 'G4282' && rom923w10.surface === 'προητοίμασεν' && rom923w10.pos === 13 && rom923w10.morphology === 'V- 3AAI-S--' && rom923w10.locator === 'SBLGNT:B45.C9.V23.w13', JSON.stringify(rom923w10));
+
+// Heb 10:18 تكون وييكون (implied copula, syntactic_ar, NULL strongs/orig)
+const heb1018Copula = JSON.parse(query(`SELECT json_object('w3_pos', orig_word_position, 'w3_strongs', strongs_id, 'w3_rel', relation_type) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=58 AND chapter_num=10 AND verse_num=18) AND ar_word_position=3;`));
+assertCondition("heb1018_implied_copula: Heb 10:18 تكون is implied copula with NULL strongs and NULL orig_word_position", heb1018Copula.w3_pos === null && heb1018Copula.w3_strongs === null && heb1018Copula.w3_rel === 'copula_implied', JSON.stringify(heb1018Copula));
+
+// 1 Sam 19:15 الفراش (H4296 בַמִּטָּ֛ה pos 11) & أقتله (H4191 לַהֲמִתֹֽו׃ pos 13)
+const sam1915w12 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=9 AND chapter_num=19 AND verse_num=15) AND ar_word_position=12;`));
+assertCondition("sam1915_bed: 1 Sam 19:15 الفراش restored H4296 בַמִּטָּ֛ה token 11, HR/Td/Ncfsa, OSHB:B9.C19.V15.w11", sam1915w12.strongs === 'H4296' && sam1915w12.surface === 'בַמִּטָּ֛ה' && sam1915w12.pos === 11 && sam1915w12.morphology === 'HR/Td/Ncfsa' && sam1915w12.locator === 'OSHB:B9.C19.V15.w11', JSON.stringify(sam1915w12));
+
+const sam1915w14 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=9 AND chapter_num=19 AND verse_num=15) AND ar_word_position=14;`));
+assertCondition("sam1915_slay: 1 Sam 19:15 أقتله restored H4191 לַהֲמִתֹֽו׃ token 13, HR/Vhc/Sp3ms, OSHB:B9.C19.V15.w13", sam1915w14.strongs === 'H4191' && sam1915w14.surface === 'לַהֲמִתֹֽו׃' && sam1915w14.pos === 13 && sam1915w14.morphology === 'HR/Vhc/Sp3ms' && sam1915w14.locator === 'OSHB:B9.C19.V15.w13', JSON.stringify(sam1915w14));
+
+// James 1:17 تغيير (G3883 παραλλαγὴ N- ----NSF- w20) & ظل (G644 ἀποσκίασμα N- ----NSN- w23)
+const jas117w18 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=59 AND chapter_num=1 AND verse_num=17) AND ar_word_position=18;`));
+assertCondition("jas117_variation: James 1:17 تغيير has G3883 παραλλαγὴ token 20, N- ----NSF-, SBLGNT:B59.C1.V17.w20", jas117w18.strongs === 'G3883' && jas117w18.surface === 'παραλλαγὴ' && jas117w18.pos === 20 && jas117w18.morphology === 'N- ----NSF-' && jas117w18.locator === 'SBLGNT:B59.C1.V17.w20', JSON.stringify(jas117w18));
+
+const jas117w20 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=59 AND chapter_num=1 AND verse_num=17) AND ar_word_position=20;`));
+assertCondition("jas117_shadow: James 1:17 ظل has G644 ἀποσκίασμα token 23, N- ----NSN-, SBLGNT:B59.C1.V17.w23", jas117w20.strongs === 'G644' && jas117w20.surface === 'ἀποσκίασμα' && jas117w20.pos === 23 && jas117w20.morphology === 'N- ----NSN-' && jas117w20.locator === 'SBLGNT:B59.C1.V17.w23', JSON.stringify(jas117w20));
+
 // -----------------------------------------------------------------------------
 // Test 5: SQLite Database Engine Integrity
 // -----------------------------------------------------------------------------
