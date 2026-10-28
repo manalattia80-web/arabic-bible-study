@@ -2,31 +2,32 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v41%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v42%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-66%2F66%20Passed-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.311 (Database v41)
+## Latest Verified Release: v1.0.312 (Database v42)
 
-- **Release Package:** [Arabic Bible Study v1.0.311](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.311)
-- **Database Engine:** **v41** (`bible_study_v41.db`, `targetDbVersion = 41`) — Guaranteed automatic upgrade from v39/v40 with deferred cleanup of `bible_study_v40.db` after PRAGMA integrity verification.
+- **Release Package:** [Arabic Bible Study v1.0.312](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.312)
+- **Database Engine:** **v42** (`bible_study_v42.db`, `targetDbVersion = 42`) — Guaranteed automatic upgrade from v40/v41 with deferred cleanup of `bible_study_v41.db` after PRAGMA integrity verification.
 - **Key Philological & Systemic Enhancements:**
-  1. **Multi-Component Affix & Compound Linkage:**
-     - **John 3:16 (بِهِ):** Linked to both G846 (αὐτόν, primary, token 19) AND prefix preposition G1519 (εἰς).
-     - **Ephesians 2:8 (وَذلِكَ):** Linked to both G3778 (τοῦτο, primary, token 9) AND prefix conjunction G2532 (καί).
-     - **Isaiah 53:5 (شُفِينَا):** Linked to both H7495 (נִרְפָּא, primary, token 10) AND suffix/dative H3807a (לָנוּ).
-  2. **MorphGNT SBLGNT Token Position & Surface Realignment:**
-     - **John 3:16 (بِهِ):** `orig_word_position = 19`, `verified_locator = 'SBLGNT:B43.C3.V16.w19'`.
-     - **Acts 1:8 (لِي):** `orig_word_position = 12`, `verified_locator = 'SBLGNT:B44.C1.V8.w12'`.
-     - **Ephesians 2:8 (وَذلِكَ):** `orig_word_position = 9`, `verified_locator = 'SBLGNT:B49.C2.V8.w9'`.
-     - **Revelation 21:4 (وَجَعٌ):** `orig_word_position = 20`, `verified_locator = 'SBLGNT:B66.C21.V4.w20'`.
-     - **Revelation 21:4 (مَضَتْ):** `orig_surface = 'ἀπῆλθαν'`, `orig_word_position = 26`, `verified_locator = 'SBLGNT:B66.C21.V4.w26'`.
-  3. **Isaiah 53:5 Metadata & UI Realignment:**
-     - Cleared residual `morph_source = 'syntactic_ar'` across all 5 theological words; elevated to `morph_source = 'oshb_wlc'`, `verified_source = 'OSHB'`, and `relation_type = 'primary'`.
-     - Re-indexed token positions in WLC: w1 (وَهُوَ), w2 (مَجْرُوحٌ), w3 (لأَجْلِ / مَعَاصِينَا), w4 (مَسْحُوقٌ), w5 (لأَجْلِ / آثَامِنَا), w6 (تَأْدِيبُ), w7 (سَلاَمِنَا), w8 (عَلَيْهِ), w9 (وَبِحُبُرِهِ), w10 (شُفِينَا).
-  4. **Self-Healing Audio Resilience:**
-     - Validates audio byte streams against error/HTML pages before caching.
-     - Automatically purges corrupted local cache entries on playback errors and cleanly re-fetches.
-- **CI Quality Gate:** **66 / 66 Checks Passed (100%)** | 0 Failures
+  1. **Strict Canonical Raw Morphology (OSHB WLC & MorphGNT SBLGNT):**
+     - **Ephesians 2:8 (وَذلِكَ):** `orig_morphology = 'RD ----NSN-'` (Nominative Singular Neuter).
+     - **Isaiah 53:5 (مَجْرُوحٌ):** `orig_morphology = 'HVOsmsa'` (Polal passive participle masculine singular absolute).
+     - **Isaiah 53:5 (سَلاَمِنَا):** `orig_morphology = 'HNcmsc/Sp1cp'` (construct `c` before suffix).
+     - **Isaiah 53:5 (وَبِحُبُرِهِ):** `orig_morphology = 'HC/R/Ncfsc/Sp3ms'` (construct `c` before suffix).
+  2. **Scholarly Lexicon & Multi-Token Span Documentation:**
+     - **Isaiah 53:5 (شُفِينَا):** Spans WLC tokens w10-w11 (`נִרְפָּא־לָֽנוּ`), `verified_locator = 'OSHB:B23.C53.V5.w10-w11'`.
+     - Documented `H3807a` as an authoritative scholarly extension in `strongs_entries` for `לָנוּ` (preposition + 1cp suffix) to prevent confusion with `H3807` (`כָּתַת`).
+  3. **100% Provenance & Source Reconciliation:**
+     - **1 Sam 25:43 (فَكَانَتَا):** Reconciled to `morph_source = 'oshb_wlc'`, `verified_source = 'OSHB'`, `orig_morphology = 'HC/Vqw3fp'`, locator `OSHB:B9.C25.V43.w6`.
+     - **Acts 1:8 (سَتَنَالُونَ):** Reconciled from `morphgnt_tr` to `morph_source = 'morphgnt_sblgnt'`, `verified_source = 'SBLGNT'`, `orig_morphology = 'V-FDI-2P'`, locator `SBLGNT:B44.C1.V8.w2`.
+     - **Hebrews 11:1 (فَهُوَ):** Reconciled from `morphgnt_tr` to `morph_source = 'morphgnt_sblgnt'`, `verified_source = 'SBLGNT'`, `orig_morphology = 'V-PAI-3S'`, locator `SBLGNT:B58.C11.V1.w1`.
+     - Added hard CI invariants enforcing zero conflicting source/locator pairs and zero verb records assigned to `syntactic_ar`.
+  4. **Unified Persistent Audio Engine & Self-Healing:**
+     - Migrated audio cache to persistent `getApplicationDocumentsDirectory() / audio_cache` to prevent OS eviction.
+     - Strict multi-format byte validation checking MPEG frame sync, RIFF WAV, Ogg, and AAC ADTS headers, with automatic rejection of HTML/error bodies.
+     - Universal self-healing playback helper (`_playFileWithSelfHealing`) protecting both Strong's repository audio and TTS.
+- **CI Quality Gate:** **70 / 70 Checks Passed (100%)** | 0 Failures
 
 
 

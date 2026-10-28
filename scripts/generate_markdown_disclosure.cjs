@@ -7,7 +7,7 @@ const modifiedCount = data.filter(r => r.is_modified).length;
 const unchangedCount = data.length - modifiedCount;
 
 let md = `# كشف التعديلات المقارن (قبل / بعد) لعينّة الـ 163 سجلاً في 10 آيات كاملة\n\n`;
-md += `**الإصدار:** v1.0.311 (قاعدة البيانات v41)\n`;
+md += `**الإصدار:** v1.0.312 (قاعدة البيانات v42)\n`;
 md += `**إجمالي السجلات المفحوصة:** ${data.length} سجلاً\n`;
 md += `**السجلات المصححة:** ${modifiedCount} سجلاً\n`;
 md += `**السجلات المثبتة دون تعديل:** ${unchangedCount} سجلاً\n\n`;
@@ -18,8 +18,8 @@ md += `| :--- | :---: | :---: | :---: | :--- | :--- | :--- |\n`;
 
 for (const r of data) {
   const status = r.is_modified ? '**مُصحَّح**' : 'مُثْبَت';
-  const beforeStr = `Strong: ${r.before.strongs_id || '-'}<br>Orig: ${r.before.orig_surface || '-'}<br>Pos: ${r.before.morph_pos || '-'}<br>Loc: ${r.before.locator || '-'}`;
-  const afterStr = `Strong: ${r.after.strongs_id || '-'}<br>Orig: ${r.after.orig_surface || '-'}<br>Pos: ${r.after.morph_pos || '-'}<br>Loc: ${r.after.locator || '-'}`;
+  const beforeStr = `Strong: ${r.before.strongs_id || '-'}<br>Orig: ${r.before.orig_surface || '-'}<br>Pos: ${r.before.morph_pos || '-'}<br>Morph: ${r.before.orig_morphology || '-'}<br>Loc: ${r.before.locator || '-'}`;
+  const afterStr = `Strong: ${r.after.strongs_id || '-'}<br>Orig: ${r.after.orig_surface || '-'}<br>Pos: ${r.after.morph_pos || '-'}<br>Morph: ${r.after.orig_morphology || '-'}<br>Loc: ${r.after.locator || '-'}`;
   const reason = r.is_modified 
     ? (r.after.notes || r.changes.join('; ')) 
     : 'مطابق للأصل الصرفي والمعجمي';
@@ -27,6 +27,6 @@ for (const r of data) {
   md += `| ${r.ref} | ${r.ar_pos} | ${r.ar_word} | ${status} | ${beforeStr} | ${afterStr} | ${reason} |\n`;
 }
 
-const outPath = 'C:/Users/manal/.gemini/antigravity/brain/6d627a05-53e4-4c46-8d77-9c11b867e94a/v311_163_records_before_after_disclosure.md';
+const outPath = 'C:/Users/manal/.gemini/antigravity/brain/6d627a05-53e4-4c46-8d77-9c11b867e94a/v312_163_records_before_after_disclosure.md';
 fs.writeFileSync(outPath, md, 'utf8');
 console.log(`Generated disclosure report at ${outPath}`);

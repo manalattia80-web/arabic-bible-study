@@ -1951,7 +1951,7 @@
       "morph_tense: null -> participle",
       "morph_gender: null -> masculine",
       "morph_number: null -> singular",
-      "orig_morphology: null -> HVrPrmsa",
+      "orig_morphology: null -> HVOsmsa",
       "locator: AR_SYNTACTIC:B23.C53.V5.w2 -> OSHB:B23.C53.V5.w2"
     ],
     "before": {
@@ -1981,7 +1981,7 @@
       "morph_gender": "masculine",
       "morph_number": "singular",
       "morph_case": null,
-      "orig_morphology": "HVrPrmsa",
+      "orig_morphology": "HVOsmsa",
       "locator": "OSHB:B23.C53.V5.w2",
       "notes": "Polal participle masculine singular of חָלַל (pierced/wounded)."
     }
@@ -2264,7 +2264,7 @@
       "morph_pos: syntactic_ar -> noun",
       "morph_gender: null -> masculine",
       "morph_number: null -> singular",
-      "orig_morphology: null -> HNcmsa/Sp1cp",
+      "orig_morphology: null -> HNcmsc/Sp1cp",
       "locator: AR_SYNTACTIC:B23.C53.V5.w9 -> OSHB:B23.C53.V5.w7"
     ],
     "before": {
@@ -2294,7 +2294,7 @@
       "morph_gender": "masculine",
       "morph_number": "singular",
       "morph_case": null,
-      "orig_morphology": "HNcmsa/Sp1cp",
+      "orig_morphology": "HNcmsc/Sp1cp",
       "locator": "OSHB:B23.C53.V5.w7",
       "notes": "Noun masculine singular with 1cp pronominal suffix (our peace)."
     }
@@ -2355,7 +2355,7 @@
       "morph_pos: syntactic_ar -> noun",
       "morph_gender: null -> feminine",
       "morph_number: null -> singular",
-      "orig_morphology: null -> HC/R/Ncfsa/Sp3ms",
+      "orig_morphology: null -> HC/R/Ncfsc/Sp3ms",
       "locator: AR_SYNTACTIC:B23.C53.V5.w11 -> OSHB:B23.C53.V5.w9"
     ],
     "before": {
@@ -2385,7 +2385,7 @@
       "morph_gender": "feminine",
       "morph_number": "singular",
       "morph_case": null,
-      "orig_morphology": "HC/R/Ncfsa/Sp3ms",
+      "orig_morphology": "HC/R/Ncfsc/Sp3ms",
       "locator": "OSHB:B23.C53.V5.w9",
       "notes": "Conjunction waw + preposition bet + noun feminine singular of חַבּוּרָה (stripe/wound) + 3ms suffix."
     }
@@ -2404,8 +2404,11 @@
       "morph_pos: syntactic_ar -> verb",
       "morph_stem: null -> niphal",
       "morph_tense: null -> perfect",
+      "morph_person: null -> 3",
+      "morph_gender: null -> masculine",
+      "morph_number: null -> singular",
       "orig_morphology: null -> HVNp3ms/R/Sp1cp",
-      "locator: AR_SYNTACTIC:B23.C53.V5.w12 -> OSHB:B23.C53.V5.w10"
+      "locator: AR_SYNTACTIC:B23.C53.V5.w12 -> OSHB:B23.C53.V5.w10-w11"
     ],
     "before": {
       "strongs_id": null,
@@ -2430,13 +2433,13 @@
       "morph_pos": "verb",
       "morph_stem": "niphal",
       "morph_tense": "perfect",
-      "morph_person": null,
-      "morph_gender": null,
-      "morph_number": null,
+      "morph_person": "3",
+      "morph_gender": "masculine",
+      "morph_number": "singular",
       "morph_case": null,
       "orig_morphology": "HVNp3ms/R/Sp1cp",
-      "locator": "OSHB:B23.C53.V5.w10",
-      "notes": "Niphal perfect 3ms of רָפָא + preposition lamed with 1cp suffix (healing was done to us)."
+      "locator": "OSHB:B23.C53.V5.w10-w11",
+      "notes": "مركب فعلي وشبه جملة: الفعل العبري נִרְפָּא (موضع 10، بناء Niphal ماضٍ، H7495) + شبه جملة الجار والمجرور לָנוּ (موضع 11، حرف جر لـ + ضمير المتكلمين الجمع، H3807a)."
     }
   },
   {
@@ -3329,7 +3332,7 @@
       "morph_tense: null -> future",
       "morph_person: null -> 2",
       "morph_number: null -> plural",
-      "orig_morphology: null -> V-FMI-2P",
+      "orig_morphology: null -> V-FDI-2P",
       "locator: TR:B44.C1.V8.w2 -> SBLGNT:B44.C1.V8.w2"
     ],
     "before": {
@@ -3359,7 +3362,7 @@
       "morph_gender": null,
       "morph_number": "plural",
       "morph_case": null,
-      "orig_morphology": "V-FMI-2P",
+      "orig_morphology": "V-FDI-2P",
       "locator": "SBLGNT:B44.C1.V8.w2",
       "notes": "Verb future middle indicative 2p of λαμβάνω (G2983)."
     }
@@ -4904,7 +4907,7 @@
       "morph_gender: null -> neuter",
       "morph_number: null -> singular",
       "morph_case: null -> nominative",
-      "orig_morphology: D- -------- -> RD ----NNN-",
+      "orig_morphology: D- -------- -> RD ----NSN-",
       "locator: SBLGNT:B49.C2.V8.w5 -> SBLGNT:B49.C2.V8.w9"
     ],
     "before": {
@@ -4934,7 +4937,7 @@
       "morph_gender": "neuter",
       "morph_number": "singular",
       "morph_case": "nominative",
-      "orig_morphology": "RD ----NNN-",
+      "orig_morphology": "RD ----NSN-",
       "locator": "SBLGNT:B49.C2.V8.w9",
       "notes": "Demonstrative pronoun nominative neuter singular τοῦτο preceded by καί."
     }

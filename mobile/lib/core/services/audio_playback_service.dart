@@ -133,18 +133,10 @@ class AudioPlaybackService {
       final cacheDir = await _getCacheDir();
       final localFile = File(p.join(cacheDir.path, '$cacheKey.mp3'));
 
-      // 1. Play from local cache if file exists and has valid audio data (with corruption eviction)
+      // 1. Play from persistent local cache if file exists (with self-healing corruption eviction)
       if (await localFile.exists() && (await localFile.length()) > 200) {
-        try {
-          isLoading.value = false;
-          await _player.setFilePath(localFile.path);
-          await _player.play();
-          return true;
-        } catch (playError) {
-          debugPrint('Cached audio failed to play, evicting corrupted file: $playError');
-          try { await localFile.delete(); } catch (_) {}
-          // Continue below to re-download cleanly
-        }
+        final played = await _playFileWithSelfHealing(localFile);
+        if (played) return true;
       }
 
       // 2. Fetch authentic Strong's audio from repository
@@ -155,12 +147,10 @@ class AudioPlaybackService {
           'Accept': 'audio/mpeg, audio/*; q=0.9, */*; q=0.1',
         }).timeout(const Duration(seconds: 4));
 
-        if (res.statusCode == 200 && res.bodyBytes.length > 200) {
+        if (res.statusCode == 200 && _isValidAudioData(res.bodyBytes)) {
           await localFile.writeAsBytes(res.bodyBytes, flush: true);
-          isLoading.value = false;
-          await _player.setFilePath(localFile.path);
-          await _player.play();
-          return true;
+          final played = await _playFileWithSelfHealing(localFile);
+          if (played) return true;
         }
       } catch (e) {
         debugPrint('Trusted audio fetch attempt for $cleanId: $e');
@@ -224,12 +214,10 @@ class AudioPlaybackService {
       final safeFileName = '${base64Url.encode(utf8.encode(cacheKey)).replaceAll('=', '')}.mp3';
       final localFile = File(p.join(cacheDir.path, safeFileName));
 
-      // 1. Play from local cache if file exists and has valid audio data
+      // 1. Play from persistent local cache if file exists (with self-healing corruption eviction)
       if (await localFile.exists() && (await localFile.length()) > 200) {
-        isLoading.value = false;
-        await _player.setFilePath(localFile.path);
-        await _player.play();
-        return true;
+        final played = await _playFileWithSelfHealing(localFile);
+        if (played) return true;
       }
 
       // 2. Not cached: fetch audio bytes via HTTP client
@@ -257,10 +245,8 @@ class AudioPlaybackService {
 
       if (audioBytes != null && audioBytes.isNotEmpty) {
         await localFile.writeAsBytes(audioBytes, flush: true);
-        isLoading.value = false;
-        await _player.setFilePath(localFile.path);
-        await _player.play();
-        return true;
+        final played = await _playFileWithSelfHealing(localFile);
+        if (played) return true;
       } else {
         // Failed to download audio
         debugPrint('Failed to download TTS audio for: $cleanWord ($langCode)');
@@ -304,27 +290,48 @@ class AudioPlaybackService {
     }
   }
 
-    static bool _isValidAudioData(Uint8List bytes) {
+  static bool _isValidAudioData(Uint8List bytes) {
     if (bytes.length < 100) return false;
     final checkLen = bytes.length < 64 ? bytes.length : 64;
     final prefix = String.fromCharCodes(bytes.sublist(0, checkLen)).toLowerCase();
-    if (prefix.contains('<html') || prefix.contains('<!doctype') || prefix.contains('<xml')) {
+    if (prefix.contains('<html') || prefix.contains('<!doctype') || prefix.contains('<xml') || prefix.contains('error')) {
       return false;
     }
-    if (bytes[0] == 0x49 && bytes[1] == 0x44 && bytes[2] == 0x33) return true;
-    if (bytes[0] == 0xFF && (bytes[1] & 0xE0) == 0xE0) return true;
-    if (bytes[0] == 0x52 && bytes[1] == 0x49 && bytes[2] == 0x46 && bytes[3] == 0x46) return true;
-    if (bytes[0] == 0x4F && bytes[1] == 0x67 && bytes[2] == 0x67 && bytes[3] == 0x53) return true;
-    return true;
+    // Strict audio header verification
+    if (bytes[0] == 0x49 && bytes[1] == 0x44 && bytes[2] == 0x33) return true; // ID3
+    if (bytes[0] == 0xFF && (bytes[1] & 0xE0) == 0xE0) return true; // MPEG frame sync
+    if (bytes[0] == 0x52 && bytes[1] == 0x49 && bytes[2] == 0x46 && bytes[3] == 0x46) return true; // RIFF / WAV
+    if (bytes[0] == 0x4F && bytes[1] == 0x67 && bytes[2] == 0x67 && bytes[3] == 0x53) return true; // Ogg
+    if (bytes[0] == 0xFF && (bytes[1] & 0xF6) == 0xF0) return true; // AAC ADTS
+    return false; // Reject unknown payloads without valid audio signatures
   }
 
   Future<Directory> _getCacheDir() async {
-    final temp = await getTemporaryDirectory();
-    final d = Directory(p.join(temp.path, 'audio_cache'));
+    final docs = await getApplicationDocumentsDirectory();
+    final d = Directory(p.join(docs.path, 'audio_cache'));
     if (!await d.exists()) {
       await d.create(recursive: true);
     }
     return d;
+  }
+
+  /// Unified self-healing playback helper that catches playback errors,
+  /// immediately deletes the corrupted local file, and allows clean re-fetching.
+  Future<bool> _playFileWithSelfHealing(File localFile) async {
+    try {
+      isLoading.value = false;
+      await _player.setFilePath(localFile.path);
+      await _player.play();
+      return true;
+    } catch (e) {
+      debugPrint('Local audio failed to play, evicting corrupted file: ${localFile.path}: $e');
+      try {
+        if (await localFile.exists()) {
+          await localFile.delete();
+        }
+      } catch (_) {}
+      return false;
+    }
   }
 
   void dispose() {
