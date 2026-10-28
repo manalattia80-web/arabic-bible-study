@@ -2,10 +2,28 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v44%20(Verified)-blue)](mobile/assets/bible_study.db)
-[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-73%2F73%20Passed-success)](scripts/automated_database_audit.cjs)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v45%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-76%2F76%20Passed-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.315 (Database v44)
+## Latest Verified Release: v1.0.316 (Database v45)
+
+- **Release Package:** [Arabic Bible Study v1.0.316](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.316)
+- **Database Engine:** **v45** (`bible_study_v45.db`, `targetDbVersion = 45`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v44.db` after PRAGMA integrity verification.
+- **Key Philological & Structural Enhancements:**
+  1. **Canonical MorphGNT Raw Code for Ephesians 2:8 (καί):**
+     - Aligned component `G2532` (`καί`, token 8) with authentic MorphGNT SBLGNT adverbial raw tag: **`D- --------`** (previously `C- --------`).
+  2. **Harmonized Surface & Component for John 3:16 (Οὕτως):**
+     - Corrected component surface in `word_mapping_strongs` to exact canonical form **`Οὕτως`** (matching primary `orig_surface` and SBLGNT codex).
+     - Standardized component form for Acts 1:8 `λήμψεσθε`.
+  3. **Methodological Transparency on Field Completeness vs Codex Proof:**
+     - Acknowledged and documented that of 404,700 records in `word_mapping_strongs`, 322,958 have all three structural fields populated while 81,742 have unpopulated attributes (predominantly uninflected base entries in raw sources). Field completeness is strictly distinguished from token-by-token codex verification.
+  4. **Comprehensive Automated Range & Position Quality Gates:**
+     - Enforced non-null `orig_word_position` across all records bearing biblical codex locators.
+     - Validated endpoint ordering (`end >= start`) on all range locators.
+     - Verified bounded component ranges: all components of multi-word range locators fall strictly within `[start, end]`.
+- **CI Quality Gate:** **76 / 76 Checks Passed (100%)** | 0 Failures
+
+### Previous Release: v1.0.315 (Database v44)
 
 - **Release Package:** [Arabic Bible Study v1.0.315](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.315)
 - **Database Engine:** **v44** (`bible_study_v44.db`, `targetDbVersion = 44`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v43.db` after PRAGMA integrity verification.

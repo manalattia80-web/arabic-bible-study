@@ -289,7 +289,15 @@ const singleLocatorMismatches = parseInt(query(`
 `));
 assertCondition('general_single_locator_position_match: all single locators across DB match orig_word_position exactly', singleLocatorMismatches === 0, `found ${singleLocatorMismatches} mismatches`);
 
-// General Consistency Gate: Range locators like .wN1-wN2 must match the start position N1
+// General Consistency Gate: All records with canonical codex locators (OSHB/SBLGNT/TR) must have non-null orig_word_position
+const nullCodexPositions = parseInt(query(`
+  SELECT count(*) FROM word_mappings 
+  WHERE (verified_locator LIKE 'OSHB:%' OR verified_locator LIKE 'SBLGNT:%' OR verified_locator LIKE 'TR:%')
+    AND orig_word_position IS NULL;
+`));
+assertCondition('no_null_position_with_codex_locator: all records with OSHB/SBLGNT/TR locators have non-null orig_word_position', nullCodexPositions === 0, `found ${nullCodexPositions} null positions`);
+
+// General Consistency Gate: Range locators like .wN1-wN2 must match the start position N1 and have valid ordering
 const rangeLocatorMismatches = parseInt(query(`
   SELECT count(*) FROM word_mappings 
   WHERE verified_locator LIKE '%.w%-%'
@@ -297,6 +305,30 @@ const rangeLocatorMismatches = parseInt(query(`
     AND CAST(substr(verified_locator, instr(verified_locator, '.w') + 2, instr(verified_locator, '-') - instr(verified_locator, '.w') - 2) AS INTEGER) != orig_word_position;
 `));
 assertCondition('general_range_locator_position_match: range locators match base orig_word_position', rangeLocatorMismatches === 0, `found ${rangeLocatorMismatches} mismatches`);
+
+// General Consistency Gate: Range locators endpoint ordering validation (end >= start)
+const invalidRangeOrder = parseInt(query(`
+  SELECT count(*) FROM word_mappings 
+  WHERE verified_locator LIKE '%.w%-%'
+    AND CAST(substr(verified_locator, instr(verified_locator, '-w') + 2) AS INTEGER) < 
+        CAST(substr(verified_locator, instr(verified_locator, '.w') + 2, instr(verified_locator, '-') - instr(verified_locator, '.w') - 2) AS INTEGER);
+`));
+assertCondition('range_locator_endpoint_order: all range locators have valid end >= start ordering', invalidRangeOrder === 0, `found ${invalidRangeOrder}`);
+
+// General Consistency Gate: All components in word_mapping_strongs for range locators fall strictly within [start, end]
+const outOfBoundsComponents = parseInt(query(`
+  SELECT count(*) 
+  FROM word_mapping_strongs wms
+  JOIN word_mappings wm ON wms.mapping_id = wm.id
+  WHERE wm.verified_locator LIKE '%.w%-%'
+    AND (
+      wms.orig_word_position IS NULL
+      OR wms.orig_word_position < CAST(substr(wm.verified_locator, instr(wm.verified_locator, '.w') + 2, instr(wm.verified_locator, '-') - instr(wm.verified_locator, '.w') - 2) AS INTEGER)
+      OR wms.orig_word_position > CAST(substr(wm.verified_locator, instr(wm.verified_locator, '-w') + 2) AS INTEGER)
+    );
+`));
+assertCondition('range_component_positions_bounded: all components of range locators fall strictly within [start, end]', outOfBoundsComponents === 0, `found ${outOfBoundsComponents}`);
+
 
 
 
@@ -357,7 +389,16 @@ assertCondition("jn316_conjunction_for: John 3:16 لأنه has G1063 γάρ toke
 
 // Arabic word 2 (هكَذَا) -> Greek token 1 (Οὕτως), D- --------, w1
 const jn316w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'word', orig_word, 'token_pos', orig_word_position, 'locator', verified_locator, 'morphology', orig_morphology) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=3 AND verse_num=16) AND ar_word_position=2;`));
-assertCondition("jn316_adverb: John 3:16 هكذا has G3779 Οὕτως token 1, exact MorphGNT raw tag D- --------, locator w1", jn316w2.strongs === 'G3779' && jn316w2.token_pos === 1 && jn316w2.locator === 'SBLGNT:B43.C3.V16.w1' && jn316w2.morphology === 'D- --------', JSON.stringify(jn316w2));
+const jn316Comp = JSON.parse(query(`
+  SELECT json_object('strongs', strongs_id, 'component', orig_component, 'pos', orig_word_position, 'morphology', orig_morphology)
+  FROM word_mapping_strongs
+  WHERE mapping_id = (SELECT wm.id FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id WHERE v.book_id=43 AND v.chapter_num=3 AND verse_num=16 AND wm.ar_word_position=2)
+  ORDER BY link_order ASC LIMIT 1;
+`));
+assertCondition("jn316_adverb: John 3:16 هكذا has G3779 Οὕτως token 1, exact MorphGNT raw tag D- --------, and matching component Οὕτως", 
+  jn316w2.strongs === 'G3779' && jn316w2.token_pos === 1 && jn316w2.locator === 'SBLGNT:B43.C3.V16.w1' && jn316w2.morphology === 'D- --------' &&
+  jn316Comp && jn316Comp.component === 'Οὕτως' && jn316Comp.pos === 1,
+  JSON.stringify({ wm: jn316w2, wms: jn316Comp }));
 
 const jn316w16 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', morph_pos, 'case', morph_case, 'gender', morph_gender, 'num', morph_number, 'token_pos', orig_word_position, 'locator', verified_locator, 'morphology', orig_morphology) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=3 AND verse_num=16) AND ar_word_position=16;`));
 assertCondition("jn316_accusative_pronoun: John 3:16 به has G846 αὐτόν token 19, exact MorphGNT raw tag RP ----ASM-", jn316w16.strongs === 'G846' && jn316w16.surface === 'αὐτόν' && jn316w16.case === 'accusative' && jn316w16.gender === 'masculine' && jn316w16.num === 'singular' && jn316w16.token_pos === 19 && jn316w16.locator === 'SBLGNT:B43.C3.V16.w19' && jn316w16.morphology === 'RP ----ASM-', JSON.stringify(jn316w16));
@@ -369,9 +410,26 @@ assertCondition("acts18_participle: Acts 1:8 حل has G1904 ἐπέρχομαι 
 const acts18w10 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', morph_pos, 'case', morph_case, 'token_pos', orig_word_position, 'locator', verified_locator, 'morphology', orig_morphology) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=44 AND chapter_num=1 AND verse_num=8) AND ar_word_position=10;`));
 assertCondition("acts18_genitive_pronoun: Acts 1:8 لي has G3450 μου token 12, exact MorphGNT raw tag RP ----GS--", acts18w10.strongs === 'G3450' && acts18w10.surface === 'μου' && acts18w10.case === 'genitive' && acts18w10.token_pos === 12 && acts18w10.locator === 'SBLGNT:B44.C1.V8.w12' && acts18w10.morphology === 'RP ----GS--', JSON.stringify(acts18w10));
 
-// 6. Eph 2:8 - καὶ τοῦτο G3778 demonstrative and Arabic copula
+// 6. Eph 2:8 - καὶ τοῦτο G3778 demonstrative and καί adverbial in MorphGNT
 const eph28w5 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'case', morph_case, 'gender', morph_gender, 'token_pos', orig_word_position, 'locator', verified_locator, 'morphology', orig_morphology) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=49 AND chapter_num=2 AND verse_num=8) AND ar_word_position=5;`));
-assertCondition("eph28_demonstrative: Eph 2:8 وذلك has G3778 τοῦτο token 9, SBLGNT w9, nominative neuter, exact raw morphology RD ----NSN-", eph28w5.strongs === 'G3778' && eph28w5.surface === 'τοῦτο' && eph28w5.case === 'nominative' && eph28w5.gender === 'neuter' && eph28w5.token_pos === 9 && eph28w5.locator === 'SBLGNT:B49.C2.V8.w9' && eph28w5.morphology === 'RD ----NSN-', JSON.stringify(eph28w5));
+const eph28Components = JSON.parse(query(`
+  SELECT json_group_array(json_object(
+    'strongs', strongs_id,
+    'component', orig_component,
+    'pos', orig_word_position,
+    'morphology', orig_morphology,
+    'source', morph_source
+  )) FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT wm.id FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id WHERE v.book_id=49 AND v.chapter_num=2 AND v.verse_num=8 AND wm.ar_word_position=5)
+  ORDER BY link_order ASC;
+`));
+const ephComp1 = eph28Components[0];
+const ephComp2 = eph28Components[1];
+assertCondition("eph28_demonstrative: Eph 2:8 وذلك has G3778 τοῦτο token 9 (RD ----NSN-) & G2532 καί token 8 (D- --------)", 
+  eph28w5.strongs === 'G3778' && eph28w5.surface === 'τοῦτο' && eph28w5.case === 'nominative' && eph28w5.gender === 'neuter' && eph28w5.token_pos === 9 && eph28w5.locator === 'SBLGNT:B49.C2.V8.w9' && eph28w5.morphology === 'RD ----NSN-' &&
+  ephComp1 && ephComp1.strongs === 'G3778' && ephComp1.pos === 9 && ephComp1.morphology === 'RD ----NSN-' &&
+  ephComp2 && ephComp2.strongs === 'G2532' && ephComp2.pos === 8 && ephComp2.morphology === 'D- --------' && ephComp2.source === 'morphgnt_sblgnt',
+  JSON.stringify({ wm: eph28w5, wms: eph28Components }));
 
 // 7. Rev 21:4 - G4192 πόνος (N- ----NSM-) and G565 ἀπῆλθαν (V- 3AAI-P--)
 const rev214w19 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'word', orig_word, 'surface', orig_surface, 'pos', morph_pos, 'token_pos', orig_word_position, 'locator', verified_locator, 'morphology', orig_morphology) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=66 AND chapter_num=21 AND verse_num=4) AND ar_word_position=19;`));

@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v44.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v45.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 44; // Database v44: John 3:16 pos 1-2 alignment, structured word_mapping_strongs components, and DB-wide locator consistency
+    const targetDbVersion = 45; // Database v45: Eph 2:8 kai adverbial tag, John 3:16 Outws component, and bounded range locator validation
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -126,6 +126,7 @@ class DatabaseService {
         'bible_study_v41.db',
         'bible_study_v42.db',
         'bible_study_v43.db',
+        'bible_study_v44.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
