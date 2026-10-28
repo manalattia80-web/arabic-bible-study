@@ -2,10 +2,28 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v43%20(Verified)-blue)](mobile/assets/bible_study.db)
-[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-66%2F66%20Passed-success)](scripts/automated_database_audit.cjs)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v44%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-73%2F73%20Passed-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.314 (Database v43)
+## Latest Verified Release: v1.0.315 (Database v44)
+
+- **Release Package:** [Arabic Bible Study v1.0.315](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.315)
+- **Database Engine:** **v44** (`bible_study_v44.db`, `targetDbVersion = 44`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v43.db` after PRAGMA integrity verification.
+- **Key Philological & Structural Enhancements:**
+  1. **John 3:16 Word Positions 1 & 2 Canonical Alignment:**
+     - **«هكَذَا» (pos 2 in Arabic):** Pointed correctly to SBLGNT token 1 (`Οὕτως`, `orig_word_position = 1`, `verified_locator = SBLGNT:B43.C3.V16.w1`, `orig_morphology = D- --------`).
+     - **«لأَنَّهُ» (pos 1 in Arabic):** Pointed correctly to SBLGNT token 2 (`γάρ`, `orig_word_position = 2`, `verified_locator = SBLGNT:B43.C3.V16.w2`, `orig_morphology = C- --------`).
+  2. **Structured Component Fields in `word_mapping_strongs`:**
+     - Added independent schema columns: `orig_word_position` (INTEGER), `orig_morphology` (TEXT), and `morph_source` (TEXT).
+     - **Isaiah 53:5 (شُفِينَا):** Component 1 (`H7495`, `נִרְפָּא`, pos 10, `HVNp3ms`, `oshb_wlc`), Component 2 (`H3807a`, `לָנוּ`, pos 11, `HR/Sp1cp`, `oshb_wlc`).
+     - Populated structured positions and raw morphologies for compound components (including John 3:16 `بِهِ`, Ephesians 2:8 `وَذلِكَ`, etc.).
+  3. **General Automated Locator & Position Invariant Rules:**
+     - Enforced across the entire 433,681 database records that single locators (`.wN`) strictly match `orig_word_position === N` (0 mismatches database-wide).
+     - Reconciled residual historical locators (1 Sam 25:43 pos 5, Jer 45:5, Jer 51:64, Acts 22:30).
+     - Verified multi-word range locators (`.wN1-wN2`) against composite component tables.
+- **CI Quality Gate:** **73 / 73 Checks Passed (100%)** | 0 Failures
+
+### Previous Release: v1.0.314 (Database v43)
 
 - **Release Package:** [Arabic Bible Study v1.0.314](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.314)
 - **Database Engine:** **v43** (`bible_study_v43.db`, `targetDbVersion = 43`) — Guaranteed automatic upgrade from v41/v42 with deferred cleanup of `bible_study_v42.db` after PRAGMA integrity verification.

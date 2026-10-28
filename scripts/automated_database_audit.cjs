@@ -278,6 +278,27 @@ assertCondition('verb_not_syntactic_ar: verbs with Strongs/original cannot have 
 const mixedArabicOriginal = parseInt(query("SELECT count(*) FROM word_mappings WHERE strongs_id IS NOT NULL AND (orig_surface GLOB '*[ء-ي]*' OR orig_word GLOB '*[ء-ي]*');"));
 assertCondition('pure_script_original: no mixed Arabic characters in Hebrew or Greek original fields', mixedArabicOriginal === 0, `found ${mixedArabicOriginal}`);
 
+// General Consistency Gate: For all single locators across the entire database, orig_word_position must match .wN exactly
+const singleLocatorMismatches = parseInt(query(`
+  SELECT count(*) FROM word_mappings 
+  WHERE verified_locator NOT LIKE '%-%' 
+    AND verified_locator NOT LIKE 'AR_SYNTACTIC:%'
+    AND verified_locator LIKE '%.w%'
+    AND orig_word_position IS NOT NULL
+    AND CAST(substr(verified_locator, instr(verified_locator, '.w') + 2) AS INTEGER) != orig_word_position;
+`));
+assertCondition('general_single_locator_position_match: all single locators across DB match orig_word_position exactly', singleLocatorMismatches === 0, `found ${singleLocatorMismatches} mismatches`);
+
+// General Consistency Gate: Range locators like .wN1-wN2 must match the start position N1
+const rangeLocatorMismatches = parseInt(query(`
+  SELECT count(*) FROM word_mappings 
+  WHERE verified_locator LIKE '%.w%-%'
+    AND orig_word_position IS NOT NULL
+    AND CAST(substr(verified_locator, instr(verified_locator, '.w') + 2, instr(verified_locator, '-') - instr(verified_locator, '.w') - 2) AS INTEGER) != orig_word_position;
+`));
+assertCondition('general_range_locator_position_match: range locators match base orig_word_position', rangeLocatorMismatches === 0, `found ${rangeLocatorMismatches} mismatches`);
+
+
 
 // -----------------------------------------------------------------------------
 // Test 4: Whole-Verse Unit Regression Tests (The 10 Audited Verses, 163 Records)
@@ -314,9 +335,29 @@ assertCondition("isa535_stripes: Isa 53:5 وبحبره exact OSHB raw morphology
 const isa535w12 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'morphology', orig_morphology, 'pos', orig_word_position, 'locator', verified_locator, 'source', morph_source, 'rel', relation_type) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=23 AND chapter_num=53 AND verse_num=5) AND ar_word_position=12;`));
 assertCondition("isa535_healed: Isa 53:5 شفينا spans tokens w10-w11, primary verb HVNp3ms, locator w10-w11", isa535w12.strongs === 'H7495' && isa535w12.morphology === 'HVNp3ms' && isa535w12.pos === 10 && isa535w12.locator === 'OSHB:B23.C53.V5.w10-w11' && isa535w12.source === 'oshb_wlc' && isa535w12.rel === 'primary', JSON.stringify(isa535w12));
 
-// 4. John 3:16 - Exact MorphGNT literal tags: Adverb D- -------- and Greek Accusative αὐτόν RP ----ASM-
-const jn316w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', morph_pos, 'morphology', orig_morphology) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=3 AND verse_num=16) AND ar_word_position=2;`));
-assertCondition("jn316_adverb: John 3:16 هكذا has G3779 Οὕτως, exact MorphGNT raw tag D- --------", jn316w2.strongs === 'G3779' && jn316w2.morphology === 'D- --------', JSON.stringify(jn316w2));
+const isa535Components = JSON.parse(query(`
+  SELECT json_group_array(json_object(
+    'strongs_id', strongs_id,
+    'component', orig_component,
+    'pos', orig_word_position,
+    'morphology', orig_morphology,
+    'source', morph_source
+  )) FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT wm.id FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id WHERE v.book_id=23 AND v.chapter_num=53 AND v.verse_num=5 AND wm.ar_word_position=12)
+  ORDER BY link_order ASC;
+`));
+const comp1Ok = isa535Components[0] && isa535Components[0].strongs_id === 'H7495' && isa535Components[0].component === 'נִרְפָּא' && isa535Components[0].pos === 10 && isa535Components[0].morphology === 'HVNp3ms' && isa535Components[0].source === 'oshb_wlc';
+const comp2Ok = isa535Components[1] && isa535Components[1].strongs_id === 'H3807a' && isa535Components[1].component === 'לָנוּ' && isa535Components[1].pos === 11 && isa535Components[1].morphology === 'HR/Sp1cp' && isa535Components[1].source === 'oshb_wlc';
+assertCondition("isa535_structured_components: Isa 53:5 شفينا has discrete component columns (נִרְפָּא: pos 10, HVNp3ms; לָנוּ: pos 11, HR/Sp1cp)", comp1Ok && comp2Ok, JSON.stringify(isa535Components));
+
+// 4. John 3:16 - Exact MorphGNT literal tags and exact token positions:
+// Arabic word 1 (لأَنَّهُ) -> Greek token 2 (γάρ), C- --------, w2
+const jn316w1 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'word', orig_word, 'token_pos', orig_word_position, 'locator', verified_locator, 'morphology', orig_morphology) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=3 AND verse_num=16) AND ar_word_position=1;`));
+assertCondition("jn316_conjunction_for: John 3:16 لأنه has G1063 γάρ token 2, exact MorphGNT raw tag C- --------, locator w2", jn316w1.strongs === 'G1063' && jn316w1.token_pos === 2 && jn316w1.locator === 'SBLGNT:B43.C3.V16.w2' && jn316w1.morphology === 'C- --------', JSON.stringify(jn316w1));
+
+// Arabic word 2 (هكَذَا) -> Greek token 1 (Οὕτως), D- --------, w1
+const jn316w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'word', orig_word, 'token_pos', orig_word_position, 'locator', verified_locator, 'morphology', orig_morphology) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=3 AND verse_num=16) AND ar_word_position=2;`));
+assertCondition("jn316_adverb: John 3:16 هكذا has G3779 Οὕτως token 1, exact MorphGNT raw tag D- --------, locator w1", jn316w2.strongs === 'G3779' && jn316w2.token_pos === 1 && jn316w2.locator === 'SBLGNT:B43.C3.V16.w1' && jn316w2.morphology === 'D- --------', JSON.stringify(jn316w2));
 
 const jn316w16 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', morph_pos, 'case', morph_case, 'gender', morph_gender, 'num', morph_number, 'token_pos', orig_word_position, 'locator', verified_locator, 'morphology', orig_morphology) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=3 AND verse_num=16) AND ar_word_position=16;`));
 assertCondition("jn316_accusative_pronoun: John 3:16 به has G846 αὐτόν token 19, exact MorphGNT raw tag RP ----ASM-", jn316w16.strongs === 'G846' && jn316w16.surface === 'αὐτόν' && jn316w16.case === 'accusative' && jn316w16.gender === 'masculine' && jn316w16.num === 'singular' && jn316w16.token_pos === 19 && jn316w16.locator === 'SBLGNT:B43.C3.V16.w19' && jn316w16.morphology === 'RP ----ASM-', JSON.stringify(jn316w16));
