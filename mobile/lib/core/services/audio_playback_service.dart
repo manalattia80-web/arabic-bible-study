@@ -133,12 +133,18 @@ class AudioPlaybackService {
       final cacheDir = await _getCacheDir();
       final localFile = File(p.join(cacheDir.path, '$cacheKey.mp3'));
 
-      // 1. Play from local cache if file exists and has valid audio data
+      // 1. Play from local cache if file exists and has valid audio data (with corruption eviction)
       if (await localFile.exists() && (await localFile.length()) > 200) {
-        isLoading.value = false;
-        await _player.setFilePath(localFile.path);
-        await _player.play();
-        return true;
+        try {
+          isLoading.value = false;
+          await _player.setFilePath(localFile.path);
+          await _player.play();
+          return true;
+        } catch (playError) {
+          debugPrint('Cached audio failed to play, evicting corrupted file: $playError');
+          try { await localFile.delete(); } catch (_) {}
+          // Continue below to re-download cleanly
+        }
       }
 
       // 2. Fetch authentic Strong's audio from repository
@@ -242,7 +248,7 @@ class AudioPlaybackService {
       for (final endpoint in endpoints) {
         try {
           final res = await http.get(Uri.parse(endpoint), headers: headers).timeout(const Duration(seconds: 5));
-          if (res.statusCode == 200 && res.bodyBytes.length > 200) {
+          if (res.statusCode == 200 && _isValidAudioData(res.bodyBytes)) {
             audioBytes = res.bodyBytes;
             break;
           }
@@ -296,6 +302,20 @@ class AudioPlaybackService {
       await stop();
       return false;
     }
+  }
+
+    static bool _isValidAudioData(Uint8List bytes) {
+    if (bytes.length < 100) return false;
+    final checkLen = bytes.length < 64 ? bytes.length : 64;
+    final prefix = String.fromCharCodes(bytes.sublist(0, checkLen)).toLowerCase();
+    if (prefix.contains('<html') || prefix.contains('<!doctype') || prefix.contains('<xml')) {
+      return false;
+    }
+    if (bytes[0] == 0x49 && bytes[1] == 0x44 && bytes[2] == 0x33) return true;
+    if (bytes[0] == 0xFF && (bytes[1] & 0xE0) == 0xE0) return true;
+    if (bytes[0] == 0x52 && bytes[1] == 0x49 && bytes[2] == 0x46 && bytes[3] == 0x46) return true;
+    if (bytes[0] == 0x4F && bytes[1] == 0x67 && bytes[2] == 0x67 && bytes[3] == 0x53) return true;
+    return true;
   }
 
   Future<Directory> _getCacheDir() async {

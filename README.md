@@ -2,25 +2,31 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v40%20(Verified)-blue)](mobile/assets/bible_study.db)
-[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-62%2F62%20Passed-success)](scripts/automated_database_audit.cjs)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v41%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-66%2F66%20Passed-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.310 (Database v40)
+## Latest Verified Release: v1.0.311 (Database v41)
 
-- **Release Package:** [Arabic Bible Study v1.0.310](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.310)
-- **Database Engine:** **v40** (guaranteed safe upgrade from v38/v39 on client devices with PRAGMA integrity check and deferred cleanup)
-- **Key Philological & Lexical Fixes:**
-  1. **Discrete Field-by-Field Quality Gate:** Replaced all substring includes() and prefix checks with exact discrete field comparisons for Gen 3:6 (HR/Vhc, Hifil Inf Const, null person/gender/num), Matt 17:20 (RD ----DSN-, token 22, dative neuter singular), and Gen 3:18 (HR/Sp2ms, OSHB w4).
-  2. **Whole-Verse Unit Alignment (10 Verses / 163 Records):**
-     - **Isaiah 53:5:** Re-aligned major content words ("مجروح" H2490, "آثامنا" H5771, "سلامنا" H7965, "وبحبره" H2250, "شفينا" H7495) from false syntactic_ar.
-     - **Joshua 1:8:** Replaced placeholder H4480 on "لا" with negative particle H3808 (לֹא), and restored distinct particle linkages.
-     - **Psalm 23:1:** Classified "شيء" as syntactic_ar complement without orphan Hebrew tokens.
-     - **John 3:16:** Corrected "هكذا" to adverb G3779 (Οὕτως), and aligned "به" to Greek Accusative masculine singular G846 (αὐτόν).
-     - **Acts 1:8:** Restored participle G1904 (ἐπέρχομαι / ἐπελθόντος) on "حل", and genitive pronoun G3450 (μου) on "لي".
-     - **Ephesians 2:8:** Mapped "وذلك" to G3778 (τοῦτο) and classified "هو" as Arabic copula.
-     - **Hebrews 11:1:** Aligned "فهو" to G1510 (Ἔστιν) and removed spurious G1722 on "بما".
-     - **Revelation 21:4:** Corrected "وجع" to G4192 (πόνος) instead of G4194 (Πόντιος), and "مضت" to G565 (ἀπῆλθον).
-- **CI Quality Gate:** **62 / 62 Checks Passed (100%)** | 0 Integrity Errors
+- **Release Package:** [Arabic Bible Study v1.0.311](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.311)
+- **Database Engine:** **v41** (`bible_study_v41.db`, `targetDbVersion = 41`) — Guaranteed automatic upgrade from v39/v40 with deferred cleanup of `bible_study_v40.db` after PRAGMA integrity verification.
+- **Key Philological & Systemic Enhancements:**
+  1. **Multi-Component Affix & Compound Linkage:**
+     - **John 3:16 (بِهِ):** Linked to both G846 (αὐτόν, primary, token 19) AND prefix preposition G1519 (εἰς).
+     - **Ephesians 2:8 (وَذلِكَ):** Linked to both G3778 (τοῦτο, primary, token 9) AND prefix conjunction G2532 (καί).
+     - **Isaiah 53:5 (شُفِينَا):** Linked to both H7495 (נִרְפָּא, primary, token 10) AND suffix/dative H3807a (לָנוּ).
+  2. **MorphGNT SBLGNT Token Position & Surface Realignment:**
+     - **John 3:16 (بِهِ):** `orig_word_position = 19`, `verified_locator = 'SBLGNT:B43.C3.V16.w19'`.
+     - **Acts 1:8 (لِي):** `orig_word_position = 12`, `verified_locator = 'SBLGNT:B44.C1.V8.w12'`.
+     - **Ephesians 2:8 (وَذلِكَ):** `orig_word_position = 9`, `verified_locator = 'SBLGNT:B49.C2.V8.w9'`.
+     - **Revelation 21:4 (وَجَعٌ):** `orig_word_position = 20`, `verified_locator = 'SBLGNT:B66.C21.V4.w20'`.
+     - **Revelation 21:4 (مَضَتْ):** `orig_surface = 'ἀπῆλθαν'`, `orig_word_position = 26`, `verified_locator = 'SBLGNT:B66.C21.V4.w26'`.
+  3. **Isaiah 53:5 Metadata & UI Realignment:**
+     - Cleared residual `morph_source = 'syntactic_ar'` across all 5 theological words; elevated to `morph_source = 'oshb_wlc'`, `verified_source = 'OSHB'`, and `relation_type = 'primary'`.
+     - Re-indexed token positions in WLC: w1 (وَهُوَ), w2 (مَجْرُوحٌ), w3 (لأَجْلِ / مَعَاصِينَا), w4 (مَسْحُوقٌ), w5 (لأَجْلِ / آثَامِنَا), w6 (تَأْدِيبُ), w7 (سَلاَمِنَا), w8 (عَلَيْهِ), w9 (وَبِحُبُرِهِ), w10 (شُفِينَا).
+  4. **Self-Healing Audio Resilience:**
+     - Validates audio byte streams against error/HTML pages before caching.
+     - Automatically purges corrupted local cache entries on playback errors and cleanly re-fetches.
+- **CI Quality Gate:** **66 / 66 Checks Passed (100%)** | 0 Failures
 
 
 

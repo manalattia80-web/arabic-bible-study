@@ -2035,8 +2035,11 @@
     "id": "2e68fe2d-cdf5-42a3-abd9-c64d858def47",
     "ar_pos": 4,
     "ar_word": "مَعَاصِينَا",
-    "is_modified": false,
-    "changes": [],
+    "is_modified": true,
+    "changes": [
+      "orig_pos: 4 -> 3",
+      "locator: OSHB:B23.C53.V5.w4 -> OSHB:B23.C53.V5.w3"
+    ],
     "before": {
       "strongs_id": "H6588",
       "orig_word": "פֶּשַׁע",
@@ -2056,7 +2059,7 @@
       "strongs_id": "H6588",
       "orig_word": "פֶּשַׁע",
       "orig_surface": "מִפְּשָׁעֵ֔נוּ",
-      "orig_pos": 4,
+      "orig_pos": 3,
       "morph_pos": "noun",
       "morph_stem": null,
       "morph_tense": null,
@@ -2065,7 +2068,7 @@
       "morph_number": "plural",
       "morph_case": "construct",
       "orig_morphology": "HR/Ncmpc/Sp1cp",
-      "locator": "OSHB:B23.C53.V5.w4",
+      "locator": "OSHB:B23.C53.V5.w3",
       "notes": null
     }
   },
@@ -2074,8 +2077,11 @@
     "id": "47ef4568-045d-4fd8-b54f-cc983e590c6e",
     "ar_pos": 5,
     "ar_word": "مَسْحُوقٌ",
-    "is_modified": false,
-    "changes": [],
+    "is_modified": true,
+    "changes": [
+      "orig_pos: 5 -> 4",
+      "locator: OSHB:B23.C53.V5.w5 -> OSHB:B23.C53.V5.w4"
+    ],
     "before": {
       "strongs_id": "H1792",
       "orig_word": "דָּכָא",
@@ -2095,7 +2101,7 @@
       "strongs_id": "H1792",
       "orig_word": "דָּכָא",
       "orig_surface": "מְדֻכָּ֖א",
-      "orig_pos": 5,
+      "orig_pos": 4,
       "morph_pos": "verb",
       "morph_stem": "pual",
       "morph_tense": null,
@@ -2104,7 +2110,7 @@
       "morph_number": "singular",
       "morph_case": "absolute",
       "orig_morphology": "HVPsmsa",
-      "locator": "OSHB:B23.C53.V5.w5",
+      "locator": "OSHB:B23.C53.V5.w4",
       "notes": null
     }
   },
@@ -2207,8 +2213,11 @@
     "id": "1eb26404-f1a5-4de6-a37e-6e892b44509a",
     "ar_pos": 8,
     "ar_word": "تَأْدِيبُ",
-    "is_modified": false,
-    "changes": [],
+    "is_modified": true,
+    "changes": [
+      "orig_pos: 8 -> 6",
+      "locator: OSHB:B23.C53.V5.w8 -> OSHB:B23.C53.V5.w6"
+    ],
     "before": {
       "strongs_id": "H4148",
       "orig_word": "מוּסָר",
@@ -2228,7 +2237,7 @@
       "strongs_id": "H4148",
       "orig_word": "מוּסָר",
       "orig_surface": "מוּסַ֤ר",
-      "orig_pos": 8,
+      "orig_pos": 6,
       "morph_pos": "noun",
       "morph_stem": null,
       "morph_tense": null,
@@ -2237,7 +2246,7 @@
       "morph_number": "singular",
       "morph_case": "construct",
       "orig_morphology": "HNcmsc",
-      "locator": "OSHB:B23.C53.V5.w8",
+      "locator": "OSHB:B23.C53.V5.w6",
       "notes": null
     }
   },
@@ -3029,13 +3038,13 @@
       "strongs: G1519 -> G846",
       "orig_word: εἰς -> αὐτός",
       "orig_surface: εἰς -> αὐτόν",
-      "orig_pos: 16 -> 18",
+      "orig_pos: 16 -> 19",
       "morph_pos: preposition -> pronoun",
       "morph_gender: null -> masculine",
       "morph_number: null -> singular",
       "morph_case: null -> accusative",
       "orig_morphology: P- -------- -> RP --ASM-",
-      "locator: SBLGNT:B43.C3.V16.w16 -> SBLGNT:B43.C3.V16.w18"
+      "locator: SBLGNT:B43.C3.V16.w16 -> SBLGNT:B43.C3.V16.w19"
     ],
     "before": {
       "strongs_id": "G1519",
@@ -3056,7 +3065,7 @@
       "strongs_id": "G846",
       "orig_word": "αὐτός",
       "orig_surface": "αὐτόν",
-      "orig_pos": 18,
+      "orig_pos": 19,
       "morph_pos": "pronoun",
       "morph_stem": null,
       "morph_tense": null,
@@ -3065,7 +3074,7 @@
       "morph_number": "singular",
       "morph_case": "accusative",
       "orig_morphology": "RP --ASM-",
-      "locator": "SBLGNT:B43.C3.V16.w18",
+      "locator": "SBLGNT:B43.C3.V16.w19",
       "notes": "Personal pronoun in accusative masculine singular governed by preposition εἰς (believing INTO HIM)."
     }
   },
@@ -3656,13 +3665,13 @@
       "strongs: G1510 -> G3450",
       "orig_word: εἰμί -> ἐγώ",
       "orig_surface: ἔσεσθέ -> μου",
-      "orig_pos: 10 -> 11",
+      "orig_pos: 10 -> 12",
       "morph_pos: verb -> pronoun",
       "morph_person: 2 -> 1",
       "morph_number: plural -> singular",
       "morph_case: null -> genitive",
       "orig_morphology: V- 2FMI-P-- -> RP --GS1-",
-      "locator: SBLGNT:B44.C1.V8.w10 -> SBLGNT:B44.C1.V8.w11"
+      "locator: SBLGNT:B44.C1.V8.w10 -> SBLGNT:B44.C1.V8.w12"
     ],
     "before": {
       "strongs_id": "G1510",
@@ -3683,7 +3692,7 @@
       "strongs_id": "G3450",
       "orig_word": "ἐγώ",
       "orig_surface": "μου",
-      "orig_pos": 11,
+      "orig_pos": 12,
       "morph_pos": "pronoun",
       "morph_stem": null,
       "morph_tense": "future",
@@ -3692,7 +3701,7 @@
       "morph_number": "singular",
       "morph_case": "genitive",
       "orig_morphology": "RP --GS1-",
-      "locator": "SBLGNT:B44.C1.V8.w11",
+      "locator": "SBLGNT:B44.C1.V8.w12",
       "notes": "Personal pronoun 1st person singular genitive μου (my witnesses / witnesses unto me)."
     }
   },
@@ -4890,13 +4899,13 @@
       "strongs: G2532 -> G3778",
       "orig_word: καί -> οὗτος",
       "orig_surface: καὶ -> τοῦτο",
-      "orig_pos: 5 -> 8",
+      "orig_pos: 5 -> 9",
       "morph_pos: adverb -> demonstrative",
       "morph_gender: null -> neuter",
       "morph_number: null -> singular",
       "morph_case: null -> nominative",
       "orig_morphology: D- -------- -> RD ----NNN-",
-      "locator: SBLGNT:B49.C2.V8.w5 -> SBLGNT:B49.C2.V8.w8"
+      "locator: SBLGNT:B49.C2.V8.w5 -> SBLGNT:B49.C2.V8.w9"
     ],
     "before": {
       "strongs_id": "G2532",
@@ -4917,7 +4926,7 @@
       "strongs_id": "G3778",
       "orig_word": "οὗτος",
       "orig_surface": "τοῦτο",
-      "orig_pos": 8,
+      "orig_pos": 9,
       "morph_pos": "demonstrative",
       "morph_stem": null,
       "morph_tense": null,
@@ -4926,7 +4935,7 @@
       "morph_number": "singular",
       "morph_case": "nominative",
       "orig_morphology": "RD ----NNN-",
-      "locator": "SBLGNT:B49.C2.V8.w8",
+      "locator": "SBLGNT:B49.C2.V8.w9",
       "notes": "Demonstrative pronoun nominative neuter singular τοῦτο preceded by καί."
     }
   },
@@ -6251,13 +6260,13 @@
       "strongs: G4194 -> G4192",
       "orig_word: Πόντιος -> πόνος",
       "orig_surface: Πόντιος -> πόνος",
-      "orig_pos: 19 -> 17",
+      "orig_pos: 19 -> 20",
       "morph_pos: proper_noun -> noun",
       "morph_gender: null -> masculine",
       "morph_number: null -> singular",
       "morph_case: null -> nominative",
       "orig_morphology: null -> N-NMS",
-      "locator: TR:B66.C21.V4.w19 -> SBLGNT:B66.C21.V4.w17"
+      "locator: TR:B66.C21.V4.w19 -> SBLGNT:B66.C21.V4.w20"
     ],
     "before": {
       "strongs_id": "G4194",
@@ -6278,7 +6287,7 @@
       "strongs_id": "G4192",
       "orig_word": "πόνος",
       "orig_surface": "πόνος",
-      "orig_pos": 17,
+      "orig_pos": 20,
       "morph_pos": "noun",
       "morph_stem": null,
       "morph_tense": null,
@@ -6287,7 +6296,7 @@
       "morph_number": "singular",
       "morph_case": "nominative",
       "orig_morphology": "N-NMS",
-      "locator": "SBLGNT:B66.C21.V4.w17",
+      "locator": "SBLGNT:B66.C21.V4.w20",
       "notes": "Noun nominative masculine singular of πόνος (pain, sorrow, distress)."
     }
   },
@@ -6574,13 +6583,13 @@
     "ar_word": "مَضَتْ",
     "is_modified": true,
     "changes": [
-      "orig_surface: ἀπέρχομαι -> ἀπῆλθον",
-      "orig_pos: 27 -> 22",
+      "orig_surface: ἀπέρχομαι -> ἀπῆλθαν",
+      "orig_pos: 27 -> 26",
       "morph_tense: null -> aorist",
       "morph_person: null -> 3",
       "morph_number: null -> plural",
       "orig_morphology: null -> V-AAI-3P",
-      "locator: TR:B66.C21.V4.w27 -> SBLGNT:B66.C21.V4.w22"
+      "locator: TR:B66.C21.V4.w27 -> SBLGNT:B66.C21.V4.w26"
     ],
     "before": {
       "strongs_id": "G565",
@@ -6600,8 +6609,8 @@
     "after": {
       "strongs_id": "G565",
       "orig_word": "ἀπέρχομαι",
-      "orig_surface": "ἀπῆλθον",
-      "orig_pos": 22,
+      "orig_surface": "ἀπῆλθαν",
+      "orig_pos": 26,
       "morph_pos": "verb",
       "morph_stem": null,
       "morph_tense": "aorist",
@@ -6610,7 +6619,7 @@
       "morph_number": "plural",
       "morph_case": null,
       "orig_morphology": "V-AAI-3P",
-      "locator": "SBLGNT:B66.C21.V4.w22",
+      "locator": "SBLGNT:B66.C21.V4.w26",
       "notes": "Verb aorist active indicative 3p of ἀπέρχομαι (passed away)."
     }
   }
