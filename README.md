@@ -2,31 +2,32 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v42%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v43%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-66%2F66%20Passed-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.312 (Database v42)
+## Latest Verified Release: v1.0.314 (Database v43)
 
-- **Release Package:** [Arabic Bible Study v1.0.312](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.312)
-- **Database Engine:** **v42** (`bible_study_v42.db`, `targetDbVersion = 42`) — Guaranteed automatic upgrade from v40/v41 with deferred cleanup of `bible_study_v41.db` after PRAGMA integrity verification.
+- **Release Package:** [Arabic Bible Study v1.0.314](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.314)
+- **Database Engine:** **v43** (`bible_study_v43.db`, `targetDbVersion = 43`) — Guaranteed automatic upgrade from v41/v42 with deferred cleanup of `bible_study_v42.db` after PRAGMA integrity verification.
 - **Key Philological & Systemic Enhancements:**
-  1. **Strict Canonical Raw Morphology (OSHB WLC & MorphGNT SBLGNT):**
-     - **Ephesians 2:8 (وَذلِكَ):** `orig_morphology = 'RD ----NSN-'` (Nominative Singular Neuter).
-     - **Isaiah 53:5 (مَجْرُوحٌ):** `orig_morphology = 'HVOsmsa'` (Polal passive participle masculine singular absolute).
-     - **Isaiah 53:5 (سَلاَمِنَا):** `orig_morphology = 'HNcmsc/Sp1cp'` (construct `c` before suffix).
-     - **Isaiah 53:5 (وَبِحُبُرِهِ):** `orig_morphology = 'HC/R/Ncfsc/Sp3ms'` (construct `c` before suffix).
-  2. **Scholarly Lexicon & Multi-Token Span Documentation:**
-     - **Isaiah 53:5 (شُفِينَا):** Spans WLC tokens w10-w11 (`נִרְפָּא־לָֽנוּ`), `verified_locator = 'OSHB:B23.C53.V5.w10-w11'`.
-     - Documented `H3807a` as an authoritative scholarly extension in `strongs_entries` for `לָנוּ` (preposition + 1cp suffix) to prevent confusion with `H3807` (`כָּתַת`).
-  3. **100% Provenance & Source Reconciliation:**
-     - **1 Sam 25:43 (فَكَانَتَا):** Reconciled to `morph_source = 'oshb_wlc'`, `verified_source = 'OSHB'`, `orig_morphology = 'HC/Vqw3fp'`, locator `OSHB:B9.C25.V43.w6`.
-     - **Acts 1:8 (سَتَنَالُونَ):** Reconciled from `morphgnt_tr` to `morph_source = 'morphgnt_sblgnt'`, `verified_source = 'SBLGNT'`, `orig_morphology = 'V-FDI-2P'`, locator `SBLGNT:B44.C1.V8.w2`.
-     - **Hebrews 11:1 (فَهُوَ):** Reconciled from `morphgnt_tr` to `morph_source = 'morphgnt_sblgnt'`, `verified_source = 'SBLGNT'`, `orig_morphology = 'V-PAI-3S'`, locator `SBLGNT:B58.C11.V1.w1`.
-     - Added hard CI invariants enforcing zero conflicting source/locator pairs and zero verb records assigned to `syntactic_ar`.
-  4. **Unified Persistent Audio Engine & Self-Healing:**
-     - Migrated audio cache to persistent `getApplicationDocumentsDirectory() / audio_cache` to prevent OS eviction.
-     - Strict multi-format byte validation checking MPEG frame sync, RIFF WAV, Ogg, and AAC ADTS headers, with automatic rejection of HTML/error bodies.
-     - Universal self-healing playback helper (`_playFileWithSelfHealing`) protecting both Strong's repository audio and TTS.
+  1. **Canonical MorphGNT SBLGNT Raw Morphology Tags:**
+     - **Acts 1:8 (سَتَنَالُونَ):** Replaced Robinson tag with literal MorphGNT SBLGNT tag `V- 2FMI-P--` (Verb, 2nd Person Future Middle Indicative Plural).
+     - **Acts 1:8 (حَلَّ):** Literal MorphGNT tag `V- -AAPGSN-`.
+     - **Acts 1:8 (لِي):** Literal MorphGNT tag `RP ----GS--`.
+     - **Hebrews 11:1 (فَهُوَ):** Replaced Robinson tag with literal MorphGNT SBLGNT tag `V- 3PAI-S--` (Verb, 3rd Person Present Active Indicative Singular).
+     - **Hebrews 11:1 (يُرْجَى):** Literal MorphGNT tag `V- -PPPGPN-`.
+     - **John 3:16 (هكَذَا):** Literal MorphGNT tag `D- --------`.
+     - **John 3:16 (بِهِ):** Literal MorphGNT tag `RP ----ASM-`.
+     - **Revelation 21:4 (وَجَعٌ):** Literal MorphGNT tag `N- ----NSM-`.
+     - **Revelation 21:4 (مَضَتْ):** Literal MorphGNT tag `V- 3AAI-P--`.
+  2. **1 Samuel 25:43 (فَكَانَتَا) Position Verification:**
+     - Populated `orig_word_position = 6` corresponding to WLC token 6 (`וַתִּהְיֶ֧יןָ`), with strict test assertion.
+  3. **Isaiah 53:5 (شُفِينَا) Raw Morphology Separation & Transparent H3807a Definition:**
+     - Separated composite morphology: `word_mappings.orig_morphology = 'HVNp3ms'` (primary verb token w10 `נִרְפָּא`).
+     - Preserved individual components in `word_mapping_strongs`: component 1 (`H7495`, `נִרְפָּא`), component 2 (`H3807a`, `לָנוּ`).
+     - Transparently declared `H3807a` in `strongs_entries` as an internal project syntactic identifier (`معرّف نحوي داخلي للمشروع`) representing `לָנוּ` (preposition Lamed + 1cp suffix; OSHB `HR/Sp1cp`, WLC w11) to avoid numeric collision with primitive verbal root `H3807` (`כָּתַת`).
+  4. **Strict Methodology on Claims & Provenance:**
+     - Formally distinguished between discrete token-by-token codex-verified benchmarks and database-wide structural invariant checks.
 - **CI Quality Gate:** **70 / 70 Checks Passed (100%)** | 0 Failures
 
 

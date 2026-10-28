@@ -2407,7 +2407,7 @@
       "morph_person: null -> 3",
       "morph_gender: null -> masculine",
       "morph_number: null -> singular",
-      "orig_morphology: null -> HVNp3ms/R/Sp1cp",
+      "orig_morphology: null -> HVNp3ms",
       "locator: AR_SYNTACTIC:B23.C53.V5.w12 -> OSHB:B23.C53.V5.w10-w11"
     ],
     "before": {
@@ -2437,7 +2437,7 @@
       "morph_gender": "masculine",
       "morph_number": "singular",
       "morph_case": null,
-      "orig_morphology": "HVNp3ms/R/Sp1cp",
+      "orig_morphology": "HVNp3ms",
       "locator": "OSHB:B23.C53.V5.w10-w11",
       "notes": "مركب فعلي وشبه جملة: الفعل العبري נִרְפָּא (موضع 10، بناء Niphal ماضٍ، H7495) + شبه جملة الجار والمجرور לָנוּ (موضع 11، حرف جر لـ + ضمير المتكلمين الجمع، H3807a)."
     }
@@ -2490,7 +2490,8 @@
     "changes": [
       "orig_surface: Οὕτω -> Οὕτως",
       "morph_pos: verb -> adverb",
-      "orig_morphology: null -> ADV"
+      "orig_morphology: null -> D- --------",
+      "locator: TR:B43.C3.V16.w2 -> SBLGNT:B43.C3.V16.w1"
     ],
     "before": {
       "strongs_id": "G3779",
@@ -2519,8 +2520,8 @@
       "morph_gender": null,
       "morph_number": null,
       "morph_case": null,
-      "orig_morphology": "ADV",
-      "locator": "TR:B43.C3.V16.w2",
+      "orig_morphology": "D- --------",
+      "locator": "SBLGNT:B43.C3.V16.w1",
       "notes": "Demonstrative adverb οὕτως (in this manner, so)."
     }
   },
@@ -3046,7 +3047,7 @@
       "morph_gender: null -> masculine",
       "morph_number: null -> singular",
       "morph_case: null -> accusative",
-      "orig_morphology: P- -------- -> RP --ASM-",
+      "orig_morphology: P- -------- -> RP ----ASM-",
       "locator: SBLGNT:B43.C3.V16.w16 -> SBLGNT:B43.C3.V16.w19"
     ],
     "before": {
@@ -3076,7 +3077,7 @@
       "morph_gender": "masculine",
       "morph_number": "singular",
       "morph_case": "accusative",
-      "orig_morphology": "RP --ASM-",
+      "orig_morphology": "RP ----ASM-",
       "locator": "SBLGNT:B43.C3.V16.w19",
       "notes": "Personal pronoun in accusative masculine singular governed by preposition εἰς (believing INTO HIM)."
     }
@@ -3332,7 +3333,7 @@
       "morph_tense: null -> future",
       "morph_person: null -> 2",
       "morph_number: null -> plural",
-      "orig_morphology: null -> V-FDI-2P",
+      "orig_morphology: null -> V- 2FMI-P--",
       "locator: TR:B44.C1.V8.w2 -> SBLGNT:B44.C1.V8.w2"
     ],
     "before": {
@@ -3362,7 +3363,7 @@
       "morph_gender": null,
       "morph_number": "plural",
       "morph_case": null,
-      "orig_morphology": "V-FDI-2P",
+      "orig_morphology": "V- 2FMI-P--",
       "locator": "SBLGNT:B44.C1.V8.w2",
       "notes": "Verb future middle indicative 2p of λαμβάνω (G2983)."
     }
@@ -3467,7 +3468,7 @@
       "morph_gender: null -> neuter",
       "morph_number: null -> singular",
       "morph_case: null -> genitive",
-      "orig_morphology: P- -------- -> V-AAP-GSN",
+      "orig_morphology: P- -------- -> V- -AAPGSN-",
       "locator: SBLGNT:B44.C1.V8.w5 -> SBLGNT:B44.C1.V8.w4"
     ],
     "before": {
@@ -3497,7 +3498,7 @@
       "morph_gender": "neuter",
       "morph_number": "singular",
       "morph_case": "genitive",
-      "orig_morphology": "V-AAP-GSN",
+      "orig_morphology": "V- -AAPGSN-",
       "locator": "SBLGNT:B44.C1.V8.w4",
       "notes": "Aorist active participle genitive neuter singular of ἐπέρχομαι (come upon), forming genitive absolute with τοῦ ἁγίου πνεύματος."
     }
@@ -3673,7 +3674,7 @@
       "morph_person: 2 -> 1",
       "morph_number: plural -> singular",
       "morph_case: null -> genitive",
-      "orig_morphology: V- 2FMI-P-- -> RP --GS1-",
+      "orig_morphology: V- 2FMI-P-- -> RP ----GS--",
       "locator: SBLGNT:B44.C1.V8.w10 -> SBLGNT:B44.C1.V8.w12"
     ],
     "before": {
@@ -3703,7 +3704,7 @@
       "morph_gender": null,
       "morph_number": "singular",
       "morph_case": "genitive",
-      "orig_morphology": "RP --GS1-",
+      "orig_morphology": "RP ----GS--",
       "locator": "SBLGNT:B44.C1.V8.w12",
       "notes": "Personal pronoun 1st person singular genitive μου (my witnesses / witnesses unto me)."
     }
@@ -5233,7 +5234,7 @@
       "morph_tense: null -> present",
       "morph_person: null -> 3",
       "morph_number: null -> singular",
-      "orig_morphology: null -> V-PAI-3S",
+      "orig_morphology: null -> V- 3PAI-S--",
       "locator: TR:B58.C11.V1.w3 -> SBLGNT:B58.C11.V1.w1"
     ],
     "before": {
@@ -5263,7 +5264,7 @@
       "morph_gender": null,
       "morph_number": "singular",
       "morph_case": null,
-      "orig_morphology": "V-PAI-3S",
+      "orig_morphology": "V- 3PAI-S--",
       "locator": "SBLGNT:B58.C11.V1.w1",
       "notes": "Verb present active indicative 3s of εἰμί (Ἔστιν)."
     }
@@ -5360,7 +5361,6 @@
     "is_modified": true,
     "changes": [
       "orig_pos: 6 -> 4",
-      "orig_morphology: V- -PPPGPN- -> V-PPP-GPN",
       "locator: SBLGNT:B58.C11.V1.w6 -> SBLGNT:B58.C11.V1.w4"
     ],
     "before": {
@@ -5390,7 +5390,7 @@
       "morph_gender": "neuter",
       "morph_number": "plural",
       "morph_case": "genitive",
-      "orig_morphology": "V-PPP-GPN",
+      "orig_morphology": "V- -PPPGPN-",
       "locator": "SBLGNT:B58.C11.V1.w4",
       "notes": null
     }
@@ -6268,7 +6268,7 @@
       "morph_gender: null -> masculine",
       "morph_number: null -> singular",
       "morph_case: null -> nominative",
-      "orig_morphology: null -> N-NMS",
+      "orig_morphology: null -> N- ----NSM-",
       "locator: TR:B66.C21.V4.w19 -> SBLGNT:B66.C21.V4.w20"
     ],
     "before": {
@@ -6298,7 +6298,7 @@
       "morph_gender": "masculine",
       "morph_number": "singular",
       "morph_case": "nominative",
-      "orig_morphology": "N-NMS",
+      "orig_morphology": "N- ----NSM-",
       "locator": "SBLGNT:B66.C21.V4.w20",
       "notes": "Noun nominative masculine singular of πόνος (pain, sorrow, distress)."
     }
@@ -6591,7 +6591,7 @@
       "morph_tense: null -> aorist",
       "morph_person: null -> 3",
       "morph_number: null -> plural",
-      "orig_morphology: null -> V-AAI-3P",
+      "orig_morphology: null -> V- 3AAI-P--",
       "locator: TR:B66.C21.V4.w27 -> SBLGNT:B66.C21.V4.w26"
     ],
     "before": {
@@ -6621,7 +6621,7 @@
       "morph_gender": null,
       "morph_number": "plural",
       "morph_case": null,
-      "orig_morphology": "V-AAI-3P",
+      "orig_morphology": "V- 3AAI-P--",
       "locator": "SBLGNT:B66.C21.V4.w26",
       "notes": "Verb aorist active indicative 3p of ἀπέρχομαι (passed away)."
     }
