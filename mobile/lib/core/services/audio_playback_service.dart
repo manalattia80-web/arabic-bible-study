@@ -9,6 +9,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
@@ -247,6 +248,8 @@ class AudioPlaybackService {
         await localFile.writeAsBytes(audioBytes, flush: true);
         final played = await _playFileWithSelfHealing(localFile);
         if (played) return true;
+        await stop();
+        return false;
       } else {
         // Failed to download audio
         debugPrint('Failed to download TTS audio for: $cleanWord ($langCode)');
