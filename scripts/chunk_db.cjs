@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const dbPath = path.resolve('mobile/assets/bible_study.db');
-const outDir = path.resolve('mobile/assets/db_parts');
+const dbPath = path.resolve(__dirname, '../mobile/assets/bible_study.db');
+const outDir = path.resolve(__dirname, '../mobile/assets/db_parts');
 const chunkSize = 5 * 1024 * 1024; // 5 MB
 
 const buffer = fs.readFileSync(dbPath);

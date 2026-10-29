@@ -2,10 +2,42 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v46%20(Verified)-blue)](mobile/assets/bible_study.db)
-[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-87%2F87%20Passed-success)](scripts/automated_database_audit.cjs)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v47%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.317 (Database v46)
+## Latest Verified Release: v1.0.318 (Database v47)
+
+- **Release Package:** [Arabic Bible Study v1.0.318](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.318)
+- **Database Engine:** **v47** (`bible_study_v47.db`, `targetDbVersion = 47`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v46.db` after PRAGMA integrity verification.
+- **Key Philological, Morphological & Alignment Harmonization Across 10-Verse Independent Audit & Benchmarks:**
+  1. **Proverbs 15:6 Exhaustive Attribute Purity & Codex Alignment:**
+     - «كَنْزٌ»: Classified strictly as `noun` (`HNcmsa`, masculine singular absolute), clearing all obsolete verbal attributes.
+     - «كَدَرٌ»: Exact OSHB Niphal participle raw tag **`HVNrfsa`** (`morph_pos = 'participle'`, `morph_stem = 'niphal'`, `morph_tense = 'participle'`, feminine singular absolute), clearing proper noun fields.
+     - «وَفِي»: Aligned with compound conjunction/preposition prefix `וּ/בִ` in `וּבִתְבוּאַ֖ת` (`H9003`, `HC/R`, token 5, `OSHB:B20.C15.V6.w5`).
+  2. **Daniel 3:30 Verb Property Cleanup & Abednego Compound Range:**
+     - «قَدَّمَ»: Correctly classified as Aramaic `verb` (`AVhp3ms`, Hafel perfect 3ms), clearing inherited noun fields.
+     - «وَعَبْدَنَغُوَ»: Expanded to full codex range locator **`OSHB:B27.C3.V30.w6-w7`** (`וַעֲבֵ֥ד נְגֹ֖ו`) with structured components for w6 (`וַעֲבֵ֥ד`, `AC/Ncmpc`) and w7 (`נְגֹ֖ו`, `Np`).
+     - «الْمَلِكُ»: Corrected token position to **w2** (`מַלְכָּ֗א`, `OSHB:B27.C3.V30.w2`).
+     - «فِي»: Aligned with preposition prefix `בִּ` in `בִּמְدִינַ֥ת` (`H9003`, `AR`, token 8).
+  3. **John 14:19 True Greek Codex Positions & Full Conjugation:**
+     - «سَتَحْيَوْنَ»: Aligned to genuine MorphGNT SBLGNT position **w18** (`SBLGNT:B43.C14.V19.w18`, `ζήσετε`, `V- 2FAI-P--`, future active indicative 2nd person plural), eliminating internal Arabic ordering distortion.
+     - «أَنَا»: Aligned to position **w14** (`SBLGNT:B43.C14.V19.w14`, `ἐγὼ`, exact raw tag **`RP ----NS--`**, nominative singular 1st person).
+     - Full verse alignment synchronized: w1 `ἔτι`, w2 `μικρὸν`, w5 `κόσμος`, w7 `οὐκέτι`, w8 `θεωρεῖ`, w9 `ὑμεῖς`, w10 `δὲ`, w11 `θεωρεῖτέ`, w13 `ὅτι`, w15 `ζῶ`, w17 `ὑμεῖς`, w18 `ζήσετε`.
+  4. **James 1:17 (تَغْيِيرٌ) Grammatical Category Realignment:**
+     - Reclassified as `noun` (`G3883`, `παραλλαγὴ`, `N- ----NSF-`, nominative feminine singular, token 20), clearing all stale verbal attributes.
+  5. **1 Samuel 19:15 Strict Codex Source Tagging & Structural Purity:**
+     - «الْفِرَاشِ»: Canonical OSHB raw tag **`HRd/Ncfsa`** (`H4296`, token 11, `OSHB:B9.C19.V15.w11`).
+     - «ثُمَّ», «عَلَى», «لِكَيْ»: Transparently mapped to respective source prefixes (vav `H9002`, bet `H9003`, lamed `H9005`) with all stale verbal/nominal properties scrubbed.
+  6. **Complete Alignment across Genesis 7:3, Amos 1:4, and Acts 6:8:**
+     - Gen 7:3: All 14 words reconciled with WLC source tokens w1–w13 (including «أَيْضًا» at w1 `גַּם`).
+     - Amos 1:4: Reconciled with OSHB tokens w1–w8 (including compound name «بَنْهَدَدَ» spanning w7–w8).
+     - Acts 6:8: Reconciled with SBLGNT / TR tokens w1–w14 (including «اسْتِفَانُوسُ» at w1 `Στέφανος`, and TR reading «إِيمَانًا» at w4 `πίστεως`).
+  7. **Lexical Metadata Transparency:**
+     - Documented extended lexical identifiers `H9002`, `H9003`, and `H9005` in `strongs_entries` to distinguish them clearly from core Strong's numeric roots.
+  8. **Independent CI Quality Gate:**
+     - Assertions verify discrete values strictly against codex source benchmarks rather than self-referential script writes.
+
+### Previous Release: v1.0.317 (Database v46)
 
 - **Release Package:** [Arabic Bible Study v1.0.317](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.317)
 - **Database Engine:** **v46** (`bible_study_v46.db`, `targetDbVersion = 46`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v45.db` after PRAGMA integrity verification.
