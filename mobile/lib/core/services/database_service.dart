@@ -43,7 +43,7 @@ class DatabaseService {
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 52; // Database v52: Pure SBLGNT alignment for 1 Cor 7:7, negative quality gate CI suite
+    const targetDbVersion = 53; // Database v53: Full 21/21 SBLGNT token coverage, textual variant notes, real audit negative gate
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {

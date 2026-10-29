@@ -7,7 +7,7 @@ const sqlitePath = isWin && fs.existsSync(path.resolve(__dirname, '../sqlite_dis
   ? path.resolve(__dirname, '../sqlite_dist/sqlite3.exe')
   : 'sqlite3';
 
-const dbPath = path.resolve(__dirname, '../mobile/assets/bible_study.db');
+const dbPath = process.env.AUDIT_DB_PATH || path.resolve(__dirname, '../mobile/assets/bible_study.db');
 
 function query(sql) {
   const tmpFile = path.resolve(__dirname, 'temp_audit_ci.sql');
@@ -564,8 +564,8 @@ assertCondition("deut232_mamzer: Deut 23:2 ابن زنى unit has H4464 מַמְ
 const deut232MaxPos = Number(query(`SELECT MAX(orig_word_position) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=5 AND chapter_num=23 AND verse_num=2);`));
 assertCondition("deut232_tokens_bound: Deut 23:2 source contains exactly 13 tokens (not 17)", deut232MaxPos === 13, `maxPos=${deut232MaxPos}`);
 
-// 1 Cor 7:7 Pure SBLGNT Alignment
-const cor77w1 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'pos', orig_word_position, 'locator', verified_locator, 'surface', orig_surface) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=1;`));
+// 1 Cor 7:7 Pure SBLGNT Alignment & Full Token Coverage (Tokens 1-21)
+const cor77w1 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'pos', orig_word_position, 'locator', verified_locator, 'surface', orig_surface, 'notes', grammar_notes) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=1;`));
 const cor77w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'pos', orig_word_position, 'locator', verified_locator, 'surface', orig_surface) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=2;`));
 const cor77w4 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'pos', orig_word_position, 'locator', verified_locator, 'surface', orig_surface) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=4;`));
 const cor77w5 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'pos', orig_word_position, 'locator', verified_locator, 'surface', orig_surface) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=5;`));
@@ -576,16 +576,26 @@ const cor77w14 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'po
 const cor77w16 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'pos', orig_word_position, 'locator', verified_locator, 'surface', orig_surface) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=16;`));
 
 assertCondition("cor77_word_order: 1 Cor 7:7 أريد is token 1 (θέλω), لأني is token 2 (δὲ SBLGNT)", cor77w2.strongs === 'G2309' && cor77w2.pos === 1 && cor77w1.strongs === 'G1161' && cor77w1.pos === 2 && cor77w1.surface === 'δὲ', JSON.stringify({ w1: cor77w1, w2: cor77w2 }));
+assertCondition("cor77_variant_reader_note: 1 Cor 7:7 لأني carries textual variant note on TR γάρ vs SBLGNT δὲ", cor77w1.notes && cor77w1.notes.includes('Textus Receptus') && cor77w1.notes.includes('SBLGNT'), JSON.stringify(cor77w1));
+
 assertCondition("cor77_tokens_3456: 1 Cor 7:7 πάντας w3, ἀνθρώπους w4, εἶναι w5, ὡς w6", cor77w5.pos === 3 && cor77w6.pos === 4 && cor77w4.pos === 5 && cor77w7.pos === 6, JSON.stringify({ w4: cor77w4, w5: cor77w5, w6: cor77w6, w7: cor77w7 }));
 assertCondition("cor77_tokens_10_11_15: 1 Cor 7:7 ἕκαστος w10, ἴδιον w11, θεοῦ w15", cor77w11.pos === 10 && cor77w14.pos === 11 && cor77w16.pos === 15, JSON.stringify({ w11: cor77w11, w14: cor77w14, w16: cor77w16 }));
 
 const cor77w8 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=8;`));
-assertCondition("cor77_myself: 1 Cor 7:7 أنا has G1683 ἐماυτόν token 8, literal MorphGNT raw tag RP ----ASM-, pronoun (not verb)", cor77w8.strongs === 'G1683' && cor77w8.pos === 8 && cor77w8.morphology === 'RP ----ASM-' && cor77w8.morph_pos === 'pronoun', JSON.stringify(cor77w8));
+assertCondition("cor77_myself: 1 Cor 7:7 أنا has G1683 ἐμαυτόν token 8, literal MorphGNT raw tag RP ----ASM-, pronoun (not verb)", cor77w8.strongs === 'G1683' && cor77w8.surface === 'ἐμαυτόν' && cor77w8.pos === 8 && cor77w8.morphology === 'RP ----ASM-' && cor77w8.morph_pos === 'pronoun', JSON.stringify(cor77w8));
 
 const cor77w17 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=17;`));
 const cor77w18 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=18;`));
 const cor77w20 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=20;`));
 assertCondition("cor77_one_so: 1 Cor 7:7 الواحد has G3588 ὁ article (token 16 in SBLGNT), هكذا is G3779 οὕτως adverb D- -------- (tokens 18, 21)", cor77w17.strongs === 'G3588' && cor77w17.morph_pos === 'article' && cor77w17.pos === 16 && cor77w18.strongs === 'G3779' && cor77w18.morph_pos === 'adverb' && cor77w18.morphology === 'D- --------' && cor77w18.pos === 18 && cor77w20.strongs === 'G3779' && cor77w20.morph_pos === 'adverb' && cor77w20.morphology === 'D- --------' && cor77w20.pos === 21, JSON.stringify({ w17: cor77w17, w18: cor77w18, w20: cor77w20 }));
+
+const cor77TokensCount = parseInt(query(`
+  SELECT count(DISTINCT wms.orig_word_position) 
+  FROM word_mapping_strongs wms
+  JOIN word_mappings wm ON wms.mapping_id = wm.id
+  WHERE wm.verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7);
+`));
+assertCondition("cor77_all_21_tokens_covered: 1 Cor 7:7 covers all 21 SBLGNT tokens (including καὶ w7 and μὲν w17)", cor77TokensCount === 21, `found ${cor77TokensCount}/21 tokens`);
 
 // -----------------------------------------------------------------------------
 // Test 5: SQLite Database Engine Integrity

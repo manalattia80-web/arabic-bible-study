@@ -30,7 +30,8 @@ UPDATE word_mappings SET
   morph_stem = NULL, morph_tense = NULL, morph_voice = NULL, morph_mood = NULL,
   morph_person = NULL, morph_number = NULL, morph_gender = NULL, morph_case = NULL,
   morph_source = 'morphgnt_sblgnt', verified_source = 'SBLGNT', verified_locator = 'SBLGNT:B46.C7.V7.w2',
-  relation_type = 'primary'
+  relation_type = 'primary',
+  grammar_notes = 'تنبيه لاختلاف القراءة المصدرية: النص العربي للترجمة البستانية-فاندايك يتبع قراءة النص المتلقى (Textus Receptus) التي تقرأ حرف التعليل γάρ («لأن»)، بينما طبعة SBLGNT النقدية المعتمدة هنا تسجل δὲ (حرف عطف/استدراك: «ولكن/وأما»). الربط الموضعي يطابق الكلمة في موضعها بطبعة SBLGNT.'
 WHERE id = ${subqueryMappingId(46, 7, 7, 1)};
 
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
@@ -112,19 +113,23 @@ INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role,
 VALUES (${subqueryMappingId(46, 7, 7, 6)}, 'G444', 1, 'primary', 'ἀνθρώπους', 4, 'N- ----APM-', 'morphgnt_sblgnt');
 `);
 
-// 7. كَمَا -> ὡς (token 6 in SBLGNT, G5613, C- --------)
+// 7. كَمَا -> ὡς (token 6 in SBLGNT, G5613) + καὶ (token 7 in SBLGNT, G2532)
 sql.push(`
 UPDATE word_mappings SET
   strongs_id = 'G5613', orig_word = 'ὡς', orig_surface = 'ὡς', orig_word_position = 6,
   orig_morphology = 'C- --------', morph_pos = 'conjunction',
   morph_stem = NULL, morph_tense = NULL, morph_voice = NULL, morph_mood = NULL,
   morph_person = NULL, morph_number = NULL, morph_gender = NULL, morph_case = NULL,
-  morph_source = 'morphgnt_sblgnt', verified_source = 'SBLGNT', verified_locator = 'SBLGNT:B46.C7.V7.w6',
-  relation_type = 'primary'
+  morph_source = 'morphgnt_sblgnt', verified_source = 'SBLGNT', verified_locator = 'SBLGNT:B46.C7.V7.w6-w7',
+  relation_type = 'compound_phrase',
+  grammar_notes = 'العبارة اليونانية الأصلية هي ὡς καὶ (الموضعان 6 و7: كما أيضاً / كـ)، واكتفت الصياغة العربية بـ «كَمَا» مؤدية المعنى التركيبي.'
 WHERE id = ${subqueryMappingId(46, 7, 7, 7)};
 
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
 VALUES (${subqueryMappingId(46, 7, 7, 7)}, 'G5613', 1, 'primary', 'ὡς', 6, 'C- --------', 'morphgnt_sblgnt');
+
+INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
+VALUES (${subqueryMappingId(46, 7, 7, 7)}, 'G2532', 2, 'secondary', 'καὶ', 7, 'D- --------', 'morphgnt_sblgnt');
 `);
 
 // 8. أَنَا -> ἐμαυτόν (token 8 in SBLGNT, G1683, RP ----ASM-)
@@ -251,18 +256,22 @@ INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role,
 VALUES (${subqueryMappingId(46, 7, 7, 16)}, 'G2316', 1, 'primary', 'θεοῦ', 15, 'N- ----GSM-', 'morphgnt_sblgnt');
 `);
 
-// 17. الْوَاحِدُ -> ὁ (token 16 in SBLGNT, G3588, RA ----NSM-)
+// 17. الْوَاحِدُ -> ὁ (token 16 in SBLGNT, G3588) + μὲν (token 17 in SBLGNT, G3303)
 sql.push(`
 UPDATE word_mappings SET
   strongs_id = 'G3588', orig_word = 'ὁ', orig_surface = 'ὁ', orig_word_position = 16,
   orig_morphology = 'RA ----NSM-', morph_pos = 'article',
   morph_number = 'singular', morph_gender = 'masculine', morph_case = 'nominative',
-  morph_source = 'morphgnt_sblgnt', verified_source = 'SBLGNT', verified_locator = 'SBLGNT:B46.C7.V7.w16',
-  relation_type = 'primary'
+  morph_source = 'morphgnt_sblgnt', verified_source = 'SBLGNT', verified_locator = 'SBLGNT:B46.C7.V7.w16-w17',
+  relation_type = 'compound_phrase',
+  grammar_notes = 'التركيب اليوناني هو ὁ μὲν (الموضعان 16 و17)، حيث μὲν أداة مقابلة تقابلها δὲ اللاحقة في ὁ δὲ. ترجمت البستانية-فاندايك قراءة النص المتلقى ὃς μὲν بـ «الْوَاحِدُ».'
 WHERE id = ${subqueryMappingId(46, 7, 7, 17)};
 
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
 VALUES (${subqueryMappingId(46, 7, 7, 17)}, 'G3588', 1, 'primary', 'ὁ', 16, 'RA ----NSM-', 'morphgnt_sblgnt');
+
+INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
+VALUES (${subqueryMappingId(46, 7, 7, 17)}, 'G3303', 2, 'secondary', 'μὲν', 17, 'C- --------', 'morphgnt_sblgnt');
 `);
 
 // 18. هكَذَا -> οὕτως (token 18 in SBLGNT, G3779, D- --------)
@@ -284,8 +293,9 @@ UPDATE word_mappings SET
   strongs_id = 'G3588', orig_word = 'ὁ', orig_surface = 'ὁ', orig_word_position = 19,
   orig_morphology = 'RA ----NSM-', morph_pos = 'article',
   morph_number = 'singular', morph_gender = 'masculine', morph_case = 'nominative',
-  morph_source = 'morphgnt_sblgnt', verified_source = 'SBLGNT', verified_locator = 'SBLGNT:B46.C7.V7.w19',
-  relation_type = 'primary'
+  morph_source = 'morphgnt_sblgnt', verified_source = 'SBLGNT', verified_locator = 'SBLGNT:B46.C7.V7.w19-w20',
+  relation_type = 'compound_phrase',
+  grammar_notes = 'التركيب اليوناني هو ὁ δὲ (الموضعان 19 و20)، حيث تقابل أداة العطف/المقابلة δὲ أداة μὲν السابقة. ترجمت البستانية-فاندايك قراءة النص المتلقى ὃς δὲ بـ «وَالآخَرُ».'
 WHERE id = ${subqueryMappingId(46, 7, 7, 19)};
 
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)

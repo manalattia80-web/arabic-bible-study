@@ -2,14 +2,29 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v52%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v53%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.326 (Database v52)
+## Latest Verified Release: v1.0.327 (Database v53)
 
-- **Release Package:** [Arabic Bible Study v1.0.326](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.326)
-- **Database Engine:** **v52** (`bible_study_v52.db`, `targetDbVersion = 52`) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
-- **Key Enhancements in v1.0.326 (Database v52):**
+- **Release Package:** [Arabic Bible Study v1.0.327](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.327)
+- **Database Engine:** **v53** (`bible_study_v53.db`, `targetDbVersion = 53`) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
+- **Key Enhancements in v1.0.327 (Database v53):**
+  1. **Complete 21/21 SBLGNT Token Coverage for 1 Corinthians 7:7:**
+     - Included missing token 7 `καὶ` (`G2532`, `D- --------`) as secondary component of «كَمَا» (`SBLGNT:B46.C7.V7.w6-w7`).
+     - Included missing token 17 `μὲν` (`G3303`, `C- --------`) as secondary component of «الْوَاحِدُ» (`SBLGNT:B46.C7.V7.w16-w17`).
+     - Zero unmapped tokens: all 21 authentic SBLGNT tokens are fully bound and verified in `word_mapping_strongs`.
+  2. **Explanatory Textual Variant Notes for the Reader (`grammar_notes`):**
+     - «لأَنِّي» (word 1): Documented that the Arabic Van Dyck translates the Textus Receptus reading `γάρ` ("for"), whereas SBLGNT reads `δὲ` ("but/and"). The positional link follows SBLGNT while explaining the semantic distinction.
+     - «الْوَاحِدُ» (word 17) and «وَالآخَرُ» (word 19): Documented the correlation with Greek correlatives `ὁ μὲν ... ὁ δὲ` versus TR `ὃς μὲν ... ὃς δὲ`.
+  3. **Rigorous Negative CI Quality Gate Executing Actual Production Audit:**
+     - `scripts/test_negative_rules.cjs` runs the actual `automated_database_audit.cjs` against scratch mutated copies, mathematically proving that the production quality gate actively fails and blocks CI for all 5 forbidden states.
+     - Restored explicit `cor77w8.surface === 'ἐμαυτόν'` assertion.
+  4. **Transparent Historical Sample Independence Scanner & Tracked Report:**
+     - Enhanced `scripts/scan_all_historical_files.cjs` to distinguish configured vs found vs missing files.
+     - Committed `scripts/historical_overlap_report.json` to repository (eliminating 404).
+
+### Previous Release: v1.0.326 (Database v52)
   1. **Pure SBLGNT Alignment & Edition Harmonization for 1 Corinthians 7:7:**
      - Unified completely with authentic MorphGNT SBLGNT source:
        - «لأَنِّي» (word 1): Aligned to token 2 `δὲ` (`G1161`, `C- --------`, `SBLGNT:B46.C7.V7.w2`), resolving edition clash.
