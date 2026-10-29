@@ -5,11 +5,11 @@
 [![Database Version](https://img.shields.io/badge/SQLite%20Database-v52%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.323 (Database v52)
+## Latest Verified Release: v1.0.326 (Database v52)
 
-- **Release Package:** [Arabic Bible Study v1.0.323](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.323)
+- **Release Package:** [Arabic Bible Study v1.0.326](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.326)
 - **Database Engine:** **v52** (`bible_study_v52.db`, `targetDbVersion = 52`) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
-- **Key Enhancements in v1.0.323 (Database v52):**
+- **Key Enhancements in v1.0.326 (Database v52):**
   1. **Pure SBLGNT Alignment & Edition Harmonization for 1 Corinthians 7:7:**
      - Unified completely with authentic MorphGNT SBLGNT source:
        - «لأَنِّي» (word 1): Aligned to token 2 `δὲ` (`G1161`, `C- --------`, `SBLGNT:B46.C7.V7.w2`), resolving edition clash.

@@ -2,13 +2,29 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const sqlite = path.resolve(__dirname, '../sqlite_dist/sqlite3.exe');
-const testDb = path.resolve(__dirname, 'test_negative_audit.db');
-const tmpSql = path.resolve(__dirname, 'tmp_negative_test.sql');
+const isWin = process.platform === 'win32';
+const sqlitePath = isWin && fs.existsSync(path.resolve(__dirname, '../sqlite_dist/sqlite3.exe'))
+  ? path.resolve(__dirname, '../sqlite_dist/sqlite3.exe')
+  : 'sqlite3';
 
-if (fs.existsSync(testDb)) fs.unlinkSync(testDb);
+const testDb = path.resolve(__dirname, 'test_negative_audit.db');
+
+if (fs.existsSync(testDb)) {
+  try { fs.unlinkSync(testDb); } catch (_) {}
+}
 
 console.log('=== Running Negative Quality Gate Suite (5 Deliberate Forbidden States) ===');
+
+function query(sql) {
+  const tmpFile = path.resolve(__dirname, 'temp_neg_query.sql');
+  fs.writeFileSync(tmpFile, sql, 'utf8');
+  try {
+    const res = execSync(`"${sqlitePath}" "${testDb}" < "${tmpFile}"`, { maxBuffer: 10 * 1024 * 1024 });
+    return res.toString('utf8').trim();
+  } finally {
+    try { if (fs.existsSync(tmpFile)) fs.unlinkSync(tmpFile); } catch (_) {}
+  }
+}
 
 // Setup minimal database schema
 const schemaSql = `
@@ -65,14 +81,7 @@ INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role,
 VALUES ('wm2', 'H7225', 1, 'primary', 'רֵאשִׁית', 2, 'HNcfsa', 'oshb_wlc');
 `;
 
-fs.writeFileSync(tmpSql, schemaSql, 'utf8');
-execSync(`"${sqlite}" "${testDb}" < "${tmpSql}"`, { encoding: 'utf8', shell: 'cmd.exe' });
-if (fs.existsSync(tmpSql)) fs.unlinkSync(tmpSql);
-
-function query(sql) {
-  const cleanSql = sql.replace(/[\r\n]+/g, ' ').trim();
-  return execSync(`"${sqlite}" "${testDb}" "${cleanSql.replace(/"/g, '""')}"`, { encoding: 'utf8', shell: 'cmd.exe' }).trim();
-}
+query(schemaSql);
 
 let passed = 0;
 let total = 5;
