@@ -2,12 +2,74 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const dbPath = path.resolve(__dirname, '../mobile/assets/bible_study.db');
+const targetDb = process.argv[2] 
+  ? path.resolve(process.argv[2]) 
+  : path.resolve(__dirname, '../mobile/assets/bible_study.db');
+
 const sqlite = path.resolve(__dirname, '../sqlite_dist/sqlite3.exe');
 const tmpSql = path.resolve(__dirname, 'apply_v319_robust.sql');
 
-// Subquery helpers for unambiguous mapping ID resolution
-const subqueryMappingId = (book, ch, vs, wordPos) => `(SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=${book} AND chapter_num=${ch} AND verse_num=${vs}) AND ar_word_position=${wordPos})`;
+if (!fs.existsSync(targetDb)) {
+  console.error(`Target database not found: ${targetDb}`);
+  process.exit(1);
+}
+
+console.log(`=== Applying v319 Harmonization & Codex Component Alignment to: ${path.basename(targetDb)} ===`);
+
+// Helper to query sqlite synchronously
+function querySql(sql) {
+  const tmp = path.resolve(__dirname, 'tmp_subquery.sql');
+  fs.writeFileSync(tmp, sql, 'utf8');
+  try {
+    const res = execSync(`"${sqlite}" "${targetDb}" < "${tmp}"`, { encoding: 'utf8', windowsHide: true });
+    if (fs.existsSync(tmp)) fs.unlinkSync(tmp);
+    return res.trim();
+  } catch (e) {
+    if (fs.existsSync(tmp)) fs.unlinkSync(tmp);
+    throw e;
+  }
+}
+
+// Strict unambiguous mapping ID resolver with single-row assertion
+function getVerifiedMappingId(bookId, ch, vs, wordPos) {
+  const sql = `
+    SELECT wm.id
+    FROM word_mappings wm
+    JOIN verses v ON wm.verse_id = v.id
+    WHERE v.book_id = ${bookId} AND v.chapter_num = ${ch} AND v.verse_num = ${vs} AND wm.ar_word_position = ${wordPos};
+  `;
+  const result = querySql(sql);
+  const rows = result.split('\n').map(s => s.trim()).filter(Boolean);
+  if (rows.length !== 1) {
+    throw new Error(`Assertion failed: expected exactly 1 mapping for Book ${bookId} ${ch}:${vs} pos ${wordPos}, found ${rows.length} rows (${result})`);
+  }
+  return `'${rows[0]}'`;
+}
+
+// Subquery string helper for batch statements
+const subqueryMappingId = (book, ch, vs, wordPos) => 
+  `(SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=${book} AND chapter_num=${ch} AND verse_num=${vs}) AND ar_word_position=${wordPos})`;
+
+// Verify critical targets resolve to exactly 1 record before generating SQL
+console.log('Verifying dynamic single-row uniqueness across all targets...');
+const targetsToVerify = [
+  { book: 27, ch: 3, vs: 30, pos: 6, label: 'Dan 3:30 عبدَنغو' },
+  { book: 27, ch: 3, vs: 30, pos: 4, label: 'Dan 3:30 شدرخ' },
+  { book: 30, ch: 1, vs: 4,  pos: 8, label: 'Amos 1:4 بنهدد' },
+  { book: 9,  ch: 19, vs: 15, pos: 14, label: '1 Sam 19:15 أقتله' },
+  { book: 43, ch: 14, vs: 19, pos: 4, label: 'John 14:19 يراني' },
+  { book: 43, ch: 14, vs: 19, pos: 9, label: 'John 14:19 فترونني' },
+  { book: 45, ch: 9,  vs: 23, pos: 1, label: 'Rom 9:23 ولكي' },
+  { book: 45, ch: 9,  vs: 23, pos: 4, label: 'Rom 9:23 مجده' },
+  { book: 45, ch: 9,  vs: 23, pos: 11, label: 'Rom 9:23 للمجد' },
+  { book: 44, ch: 6,  vs: 8,  pos: 7, label: 'Acts 6:8 وقوة' },
+  { book: 44, ch: 6,  vs: 8,  pos: 11, label: 'Acts 6:8 وآيات' },
+];
+
+for (const t of targetsToVerify) {
+  const id = getVerifiedMappingId(t.book, t.ch, t.vs, t.pos);
+  console.log(`  ✓ ${t.label} strictly resolved to unique ID: ${id}`);
+}
 
 let sqlStatements = [];
 
@@ -37,6 +99,7 @@ ALTER TABLE word_mapping_strongs_v2 RENAME TO word_mapping_strongs;
 
 CREATE INDEX IF NOT EXISTS idx_wms_strongs_id ON word_mapping_strongs(strongs_id);
 CREATE INDEX IF NOT EXISTS idx_wms_mapping_id ON word_mapping_strongs(mapping_id, link_order);
+CREATE INDEX IF NOT EXISTS idx_wms_mapping_strongs ON word_mapping_strongs(mapping_id, strongs_id);
 `);
 
 // 1. Synchronize primary wms fields from word_mappings across all 10 audit verses dynamically
@@ -84,7 +147,7 @@ SET morph_source = 'syntactic_ar', orig_word_lang = NULL, verified_source = NULL
 WHERE verse_id LIKE '%-0044-%006008' AND ar_word_position IN (3, 4);
 `);
 
-// 4. Dan 3:30 عبدَنغو: expand into w6 and w7 under single lexicon entry H5665
+// 4. Dan 3:30 عبدَنغو (ar_word_position = 6): expand into w6 and w7 under single lexicon entry H5665
 sqlStatements.push(`
 DELETE FROM word_mapping_strongs WHERE mapping_id = ${subqueryMappingId(27, 3, 30, 6)};
 
@@ -93,9 +156,28 @@ VALUES (${subqueryMappingId(27, 3, 30, 6)}, 'H5665', 1, 'primary', 'וַעֲבֵ
 
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
 VALUES (${subqueryMappingId(27, 3, 30, 6)}, 'H5665', 2, 'compound', 'נְגֹ֖ו', 7, 'ANp', 'oshb_wlc');
+
+UPDATE word_mappings 
+SET strongs_id = 'H5665', orig_word_position = 6, verified_locator = 'OSHB:B27.C3.V30.w6-w7', orig_morphology = 'AC/Np'
+WHERE id = ${subqueryMappingId(27, 3, 30, 6)};
 `);
 
-// 5. Dan 3:30 شدرخ: update to Aramaic H7715, AR/Np
+// 5. Amos 1:4 بنهدد (ar_word_position = 8): expand into w7 and w8 under single lexicon entry H1130
+sqlStatements.push(`
+DELETE FROM word_mapping_strongs WHERE mapping_id = ${subqueryMappingId(30, 1, 4, 8)};
+
+INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
+VALUES (${subqueryMappingId(30, 1, 4, 8)}, 'H1130', 1, 'primary', 'בֶּן־', 7, 'HNp', 'oshb_wlc');
+
+INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
+VALUES (${subqueryMappingId(30, 1, 4, 8)}, 'H1130', 2, 'compound', 'הֲדָֽד׃', 8, 'HNp', 'oshb_wlc');
+
+UPDATE word_mappings 
+SET strongs_id = 'H1130', orig_word_position = 7, verified_locator = 'OSHB:B30.C1.V4.w7-w8', orig_morphology = 'HNp'
+WHERE id = ${subqueryMappingId(30, 1, 4, 8)};
+`);
+
+// 6. Dan 3:30 شدرخ (ar_word_position = 4): update to Aramaic H7715, AR/Np
 sqlStatements.push(`
 UPDATE word_mappings 
 SET strongs_id = 'H7715', orig_morphology = 'AR/Np', morph_pos = 'proper_noun', morph_stem = NULL, morph_tense = NULL
@@ -104,10 +186,10 @@ WHERE id = ${subqueryMappingId(27, 3, 30, 4)};
 DELETE FROM word_mapping_strongs WHERE mapping_id = ${subqueryMappingId(27, 3, 30, 4)};
 
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
-VALUES (${subqueryMappingId(27, 3, 30, 4)}, 'H7715', 1, 'primary', 'לְשַׁדְרַ֧ךְ', 4, 'AR/Np', 'oshb_wlc');
+VALUES (${subqueryMappingId(27, 3, 30, 4)}, 'H7715', 1, 'primary', 'לְשַׁדְרַךְ', 4, 'AR/Np', 'oshb_wlc');
 `);
 
-// 6. 1 Sam 19:15 أَقْتُلَهُ: clear verbal person/gender/number (Infinitive Construct)
+// 7. 1 Sam 19:15 أَقْتُلَهُ: clear verbal person/gender/number (Infinitive Construct)
 sqlStatements.push(`
 UPDATE word_mappings 
 SET morph_pos = 'verb', morph_stem = 'hifil', morph_tense = 'infinitive_construct',
@@ -115,7 +197,7 @@ SET morph_pos = 'verb', morph_stem = 'hifil', morph_tense = 'infinitive_construc
 WHERE id = ${subqueryMappingId(9, 19, 15, 14)};
 `);
 
-// 7. Add Greek secondary components using accurate MorphGNT raw tags:
+// 8. Add Greek secondary components using canonical MorphGNT literal raw tags (RP ----AS-- for clitic με):
 // John 14:19 «يَرَانِي» (ar pos 4) -> add secondary με (G3165, pos 6, RP ----AS--, morphgnt_sblgnt)
 sqlStatements.push(`
 DELETE FROM word_mapping_strongs WHERE mapping_id = ${subqueryMappingId(43, 14, 19, 4)} AND link_role = 'secondary';
@@ -176,5 +258,5 @@ sqlStatements.push('COMMIT;');
 fs.writeFileSync(tmpSql, sqlStatements.join('\n'), 'utf8');
 
 console.log(`Executing ${sqlStatements.length} robust dynamic SQL steps...`);
-execSync(`"${sqlite}" "${dbPath}" < "${tmpSql}"`, { encoding: 'utf8', shell: 'cmd.exe' });
+execSync(`"${sqlite}" "${targetDb}" < "${tmpSql}"`, { encoding: 'utf8', shell: 'cmd.exe' });
 console.log('Successfully applied all harmonizations cleanly and idempotently!');
