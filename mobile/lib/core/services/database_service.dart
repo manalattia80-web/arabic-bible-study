@@ -43,7 +43,7 @@ class DatabaseService {
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 51; // Database v51: Complete codex alignment for Deut 23:2 (v3 OSHB) and 1 Cor 7:7
+    const targetDbVersion = 52; // Database v52: Pure SBLGNT alignment for 1 Cor 7:7, negative quality gate CI suite
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {

@@ -2,10 +2,40 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v51%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v52%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.322 (Database v51)
+## Latest Verified Release: v1.0.323 (Database v52)
+
+- **Release Package:** [Arabic Bible Study v1.0.323](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.323)
+- **Database Engine:** **v52** (`bible_study_v52.db`, `targetDbVersion = 52`) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
+- **Key Enhancements in v1.0.323 (Database v52):**
+  1. **Pure SBLGNT Alignment & Edition Harmonization for 1 Corinthians 7:7:**
+     - Unified completely with authentic MorphGNT SBLGNT source:
+       - «لأَنِّي» (word 1): Aligned to token 2 `δὲ` (`G1161`, `C- --------`, `SBLGNT:B46.C7.V7.w2`), resolving edition clash.
+       - «أُرِيدُ» (word 2): Aligned to token 1 `θέλω` (`G2309`, `V- 1PAI-S--`, `SBLGNT:B46.C7.V7.w1`).
+       - «أَنْ يَكُونَ» (words 3-4): Realigned to token 5 `εἶναι` (`G1510`, `V- -PAN----`, `SBLGNT:B46.C7.V7.w5`).
+       - «جَمِيعُ» (word 5): Realigned to token 3 `πάντας` (`G3956`, `A- ----APM-`, `SBLGNT:B46.C7.V7.w3`).
+       - «النَّاسِ» (word 6): Realigned to token 4 `ἀνθρώπους` (`G444`, `N- ----APM-`, `SBLGNT:B46.C7.V7.w4`).
+       - «كَمَا» (word 7): Realigned to token 6 `ὡς` (`G5613`, `C- --------`, `SBLGNT:B46.C7.V7.w6`).
+       - «أَنَا» (word 8): Exact MorphGNT literal raw tag `RP ----ASM-` (pronoun `ἐμαυτόν`, token 8, no speculative person digit injected).
+       - «كُلَّ وَاحِدٍ» (words 10-11): Realigned to token 10 `ἕκαστος` (`G1538`, `A- ----NSM-`, `SBLGNT:B46.C7.V7.w10`).
+       - «الْخَاصَّةُ» (word 14): Realigned to token 11 `ἴδιον` (`G2398`, `A- ----ASN-`, `SBLGNT:B46.C7.V7.w11`).
+       - «اللهِ» (word 16): Realigned to token 15 `θεοῦ` (`G2316`, `N- ----GSM-`, `SBLGNT:B46.C7.V7.w15`).
+       - «الْوَاحِدُ» (word 17): Realigned to token 16 `ὁ` (`G3588`, `RA ----NSM-`, `SBLGNT:B46.C7.V7.w16`), resolving TR variant `ὃς`.
+       - «وَالآخَرُ» (word 19): Realigned to token 19 `ὁ` (`G3588`, `RA ----NSM-`, `SBLGNT:B46.C7.V7.w19`) with secondary token 20 `δὲ`.
+  2. **Dedicated Negative Quality Gate Suite (`scripts/test_negative_rules.cjs`):**
+     - Deliberately injects and asserts rejection of 5 forbidden database states:
+       - Gate 1: `syntactic_ar` with Strong's ID.
+       - Gate 2: Codex locator with NULL position.
+       - Gate 3: Range locator with component position out of bounds.
+       - Gate 4: Cross-testament Strong's contamination.
+       - Gate 5: Duplicate Arabic word position per verse.
+  3. **Methodological Independence & Transparent 4D Reporting:**
+     - Historical overlap audit conducted across all 16 project measurement files.
+     - Sample frozen without in-flight replacements; metrics reported with explicit counts and denominators.
+
+### Previous Release: v1.0.322 (Database v51)
 
 - **Release Package:** [Arabic Bible Study v1.0.322](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.322)
 - **Database Engine:** **v51** (`bible_study_v51.db`, `targetDbVersion = 51`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v50.db` after PRAGMA integrity verification.
