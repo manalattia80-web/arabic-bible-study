@@ -1,63 +1,63 @@
 {
-  "scan_timestamp": "2026-10-29T17:59:47.903Z",
-  "files_configured_to_search": 17,
+  "scan_timestamp": "2026-10-29T18:18:10.003Z",
+  "files_configured_to_search": 16,
   "files_found_count": 16,
-  "files_missing_count": 1,
+  "files_missing_count": 0,
   "files_found": [
     {
       "path": "gold_benchmark_300_verses.json",
       "size_bytes": 2682726,
-      "extracted_verses": 300
+      "extracted_verses": 12688
     },
     {
       "path": "alignment_audit_v299/gold_benchmark_300_verses.json",
       "size_bytes": 2682726,
-      "extracted_verses": 300
+      "extracted_verses": 12688
     },
     {
       "path": "alignment_audit_v299/measurement_sample_1000_tokens.json",
       "size_bytes": 642465,
-      "extracted_verses": 1000
+      "extracted_verses": 2913
     },
     {
       "path": "measurement_sample_1000_tokens.json",
       "size_bytes": 642465,
-      "extracted_verses": 1000
+      "extracted_verses": 2913
     },
     {
       "path": "phase1_targets.json",
       "size_bytes": 47864,
-      "extracted_verses": 0
+      "extracted_verses": 606
     },
     {
       "path": "phase2_targets.json",
       "size_bytes": 17724,
-      "extracted_verses": 25
+      "extracted_verses": 159
     },
     {
       "path": "phase2_verified_targets.json",
       "size_bytes": 20221,
-      "extracted_verses": 0
+      "extracted_verses": 243
     },
     {
       "path": "review.json",
       "size_bytes": 224988,
-      "extracted_verses": 0
+      "extracted_verses": 687
     },
     {
       "path": "scripts/whole_verses_audit_sample.json",
       "size_bytes": 128868,
-      "extracted_verses": 0
+      "extracted_verses": 183
     },
     {
       "path": "scripts/fresh_sample_audit.json",
       "size_bytes": 29044,
-      "extracted_verses": 0
+      "extracted_verses": 180
     },
     {
       "path": "scripts/independent_40word_sample_raw.json",
       "size_bytes": 196740,
-      "extracted_verses": 40
+      "extracted_verses": 160
     },
     {
       "path": "scripts/sample_data.json",
@@ -67,12 +67,12 @@
     {
       "path": "scratch/review_v317_evidence/review.json",
       "size_bytes": 224988,
-      "extracted_verses": 0
+      "extracted_verses": 687
     },
     {
       "path": "scratch/review_v317_evidence/baseline/review.json",
       "size_bytes": 224988,
-      "extracted_verses": 0
+      "extracted_verses": 687
     },
     {
       "path": "baselines/benchmark_300_verses_eval.json",
@@ -82,13 +82,11 @@
     {
       "path": "scripts/user_10_verses_dump.json",
       "size_bytes": 108557,
-      "extracted_verses": 0
+      "extracted_verses": 369
     }
   ],
-  "files_missing": [
-    "user_10_verses_dump.json"
-  ],
-  "total_historical_unique_verses": 1330,
+  "files_missing": [],
+  "total_historical_unique_verses": 1603,
   "sample_verses_count": 60,
   "overlap_count": 3,
   "overlaps": [

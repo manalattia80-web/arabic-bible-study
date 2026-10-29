@@ -43,7 +43,7 @@ class DatabaseService {
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 53; // Database v53: Full 21/21 SBLGNT token coverage, textual variant notes, real audit negative gate
+    const targetDbVersion = 54; // Database v54: Exact [1..21] SBLGNT sequence matching, fresh-copy negative gates, full historical reference extractor
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {

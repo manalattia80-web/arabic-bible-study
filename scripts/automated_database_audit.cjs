@@ -589,13 +589,64 @@ const cor77w18 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'su
 const cor77w20 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7) AND ar_word_position=20;`));
 assertCondition("cor77_one_so: 1 Cor 7:7 الواحد has G3588 ὁ article (token 16 in SBLGNT), هكذا is G3779 οὕτως adverb D- -------- (tokens 18, 21)", cor77w17.strongs === 'G3588' && cor77w17.morph_pos === 'article' && cor77w17.pos === 16 && cor77w18.strongs === 'G3779' && cor77w18.morph_pos === 'adverb' && cor77w18.morphology === 'D- --------' && cor77w18.pos === 18 && cor77w20.strongs === 'G3779' && cor77w20.morph_pos === 'adverb' && cor77w20.morphology === 'D- --------' && cor77w20.pos === 21, JSON.stringify({ w17: cor77w17, w18: cor77w18, w20: cor77w20 }));
 
-const cor77TokensCount = parseInt(query(`
-  SELECT count(DISTINCT wms.orig_word_position) 
-  FROM word_mapping_strongs wms
-  JOIN word_mappings wm ON wms.mapping_id = wm.id
-  WHERE wm.verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7);
+const expectedSblgntTokens1Cor77 = [
+  { pos: 1, word: 'θέλω', morph: 'V- 1PAI-S--', strongs: 'G2309' },
+  { pos: 2, word: 'δὲ', morph: 'C- --------', strongs: 'G1161' },
+  { pos: 3, word: 'πάντας', morph: 'A- ----APM-', strongs: 'G3956' },
+  { pos: 4, word: 'ἀνθρώπους', morph: 'N- ----APM-', strongs: 'G444' },
+  { pos: 5, word: 'εἶναι', morph: 'V- -PAN----', strongs: 'G1510' },
+  { pos: 6, word: 'ὡς', morph: 'C- --------', strongs: 'G5613' },
+  { pos: 7, word: 'καὶ', morph: 'D- --------', strongs: 'G2532' },
+  { pos: 8, word: 'ἐμαυτόν', morph: 'RP ----ASM-', strongs: 'G1683' },
+  { pos: 9, word: 'ἀλλὰ', morph: 'C- --------', strongs: 'G235' },
+  { pos: 10, word: 'ἕκαστος', morph: 'A- ----NSM-', strongs: 'G1538' },
+  { pos: 11, word: 'ἴδιον', morph: 'A- ----ASN-', strongs: 'G2398' },
+  { pos: 12, word: 'ἔχει', morph: 'V- 3PAI-S--', strongs: 'G2192' },
+  { pos: 13, word: 'χάρισμα', morph: 'N- ----ASN-', strongs: 'G5486' },
+  { pos: 14, word: 'ἐκ', morph: 'P- --------', strongs: 'G1537' },
+  { pos: 15, word: 'θεοῦ', morph: 'N- ----GSM-', strongs: 'G2316' },
+  { pos: 16, word: 'ὁ', morph: 'RA ----NSM-', strongs: 'G3588' },
+  { pos: 17, word: 'μὲν', morph: 'C- --------', strongs: 'G3303' },
+  { pos: 18, word: 'οὕτως', morph: 'D- --------', strongs: 'G3779' },
+  { pos: 19, word: 'ὁ', morph: 'RA ----NSM-', strongs: 'G3588' },
+  { pos: 20, word: 'δὲ', morph: 'C- --------', strongs: 'G1161' },
+  { pos: 21, word: 'οὕτως', morph: 'D- --------', strongs: 'G3779' }
+];
+
+const actualTokens = JSON.parse(query(`
+  SELECT json_group_array(json_object(
+    'pos', wms.orig_word_position,
+    'word', wms.orig_component,
+    'morph', wms.orig_morphology,
+    'strongs', wms.strongs_id
+  ))
+  FROM (
+    SELECT DISTINCT wms.orig_word_position, wms.orig_component, wms.orig_morphology, wms.strongs_id
+    FROM word_mapping_strongs wms
+    JOIN word_mappings wm ON wms.mapping_id = wm.id
+    WHERE wm.verse_id IN (SELECT id FROM verses WHERE book_id=46 AND chapter_num=7 AND verse_num=7)
+    ORDER BY wms.orig_word_position
+  ) wms;
 `));
-assertCondition("cor77_all_21_tokens_covered: 1 Cor 7:7 covers all 21 SBLGNT tokens (including καὶ w7 and μὲν w17)", cor77TokensCount === 21, `found ${cor77TokensCount}/21 tokens`);
+
+const actualPositions = actualTokens.map(t => t.pos);
+const expectedPositions = Array.from({ length: 21 }, (_, i) => i + 1);
+const positionsExact = JSON.stringify(actualPositions) === JSON.stringify(expectedPositions);
+
+let tokenDetailsMatch = true;
+let mismatchDetail = '';
+for (let i = 0; i < 21; i++) {
+  const exp = expectedSblgntTokens1Cor77[i];
+  const act = actualTokens[i];
+  if (!act || act.pos !== exp.pos || act.word !== exp.word || act.morph !== exp.morph || act.strongs !== exp.strongs) {
+    tokenDetailsMatch = false;
+    mismatchDetail = `pos ${exp ? exp.pos : i+1}: expected ${JSON.stringify(exp)}, got ${JSON.stringify(act)}`;
+    break;
+  }
+}
+
+assertCondition("cor77_exact_21_tokens_positions_1_to_21: 1 Cor 7:7 positions match [1..21] exactly", positionsExact, `positions=${JSON.stringify(actualPositions)}`);
+assertCondition("cor77_exact_21_tokens_surface_and_morph: 1 Cor 7:7 every token matches authentic SBLGNT surface, MorphGNT tag, and Strongs", tokenDetailsMatch, mismatchDetail);
 
 // -----------------------------------------------------------------------------
 // Test 5: SQLite Database Engine Integrity
