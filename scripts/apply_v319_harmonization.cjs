@@ -64,6 +64,7 @@ const targetsToVerify = [
   { book: 45, ch: 9,  vs: 23, pos: 11, label: 'Rom 9:23 للمجد' },
   { book: 44, ch: 6,  vs: 8,  pos: 7, label: 'Acts 6:8 وقوة' },
   { book: 44, ch: 6,  vs: 8,  pos: 11, label: 'Acts 6:8 وآيات' },
+  { book: 5,  ch: 23, vs: 2,  pos: 2,  label: 'Deut 23:2 يدخل' },
 ];
 
 for (const t of targetsToVerify) {
@@ -251,6 +252,32 @@ VALUES (${subqueryMappingId(44, 6, 8, 11)}, 'G2532', 2, 'secondary', 'καὶ', 
 sqlStatements.push(`
 UPDATE word_mappings SET verified_locator = 'AR_SYNTACTIC:B51.C1.V23.w3' 
 WHERE verse_id IN (SELECT id FROM verses WHERE book_id=51 AND chapter_num=1 AND verse_num=23) AND ar_word_position=3;
+`);
+
+// Deut 23:2 «يَدْخُلِ» (ar pos 2) -> restore H935 יָבֹ֥א token 2, HVqi3ms, verb qal imperfect 3ms
+sqlStatements.push(`
+UPDATE word_mappings 
+SET strongs_id = 'H935',
+    orig_word = 'בּוֹא',
+    orig_surface = 'יָבֹ֥א',
+    orig_word_position = 2,
+    orig_morphology = 'HVqi3ms',
+    morph_pos = 'verb',
+    morph_stem = 'qal',
+    morph_tense = 'imperfect',
+    morph_person = '3',
+    morph_gender = 'masculine',
+    morph_number = 'singular',
+    morph_source = 'oshb_wlc',
+    verified_source = 'OSHB',
+    verified_locator = 'OSHB:B5.C23.V2.w2',
+    is_verified = 1,
+    relation_type = 'primary'
+WHERE id = ${subqueryMappingId(5, 23, 2, 2)};
+
+DELETE FROM word_mapping_strongs WHERE mapping_id = ${subqueryMappingId(5, 23, 2, 2)};
+INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
+VALUES (${subqueryMappingId(5, 23, 2, 2)}, 'H935', 1, 'primary', 'יָבֹ֥א', 2, 'HVqi3ms', 'oshb_wlc');
 `);
 
 sqlStatements.push('COMMIT;');

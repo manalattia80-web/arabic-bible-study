@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v49.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v50.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 49; // Database v49: Deconstructed multi-word composite Strongs & strict MorphGNT literal morphology
+    const targetDbVersion = 50; // Database v50: Restored Deuteronomy 23:2 verb alignment (H935, HVqi3ms)
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {

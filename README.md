@@ -2,10 +2,25 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v49%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v50%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.320 (Database v49)
+## Latest Verified Release: v1.0.321 (Database v50)
+
+- **Release Package:** [Arabic Bible Study v1.0.321](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.321)
+- **Database Engine:** **v50** (`bible_study_v50.db`, `targetDbVersion = 50`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v49.db` after PRAGMA integrity verification.
+- **Key Enhancements in v1.0.321 (Database v50):**
+  1. **Deuteronomy 23:2 «يَدْخُلِ» Verbal Linkage & Morphological Restoration:**
+     - Restored authentic Hebrew verb linkage to Strong's **`H935`** (`בּוֹא`), surface form `יָבֹ֥א`, token 2 in WLC (`OSHB:B5.C23.V2.w2`).
+     - Corrected morphological analysis to `HVqi3ms` (Qal imperfect 3rd person masculine singular) with authentic `oshb_wlc` provenance, removing erroneous `syntactic_ar` classification.
+     - Harmonized synchronously across `word_mappings` and primary entry in `word_mapping_strongs`.
+  2. **Harmonization Pipeline & Reproducibility Enhancement:**
+     - Verified single-row dynamic query resolution for all audit targets across baseline builds.
+     - Added Amos 1:4 two-component deconstruction (`H1130`) and Deuteronomy 23:2 verbal alignment to idempotent migration suite.
+  3. **100% CI Automated Quality Gate Pass:**
+     - All 8 comprehensive validation suites verified with **0 failures**.
+
+### Previous Release: v1.0.320 (Database v49)
 
 - **Release Package:** [Arabic Bible Study v1.0.320](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.320)
 - **Database Engine:** **v49** (`bible_study_v49.db`, `targetDbVersion = 49`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v48.db` after PRAGMA integrity verification.

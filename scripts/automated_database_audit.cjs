@@ -553,6 +553,10 @@ assertCondition("acts68_stephen: Acts 6:8 استفانوس has G4736 Στέφα�
 const acts68w6 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos, 'gender', morph_gender, 'case', morph_case) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=44 AND chapter_num=6 AND verse_num=8) AND ar_word_position=6;`));
 assertCondition("acts68_faith_tr: Acts 6:8 إيمانا has G4102 πίστεως (Scrivener TR) token 4, N- ----GSF-, noun feminine genitive", acts68w6.strongs === 'G4102' && acts68w6.surface === 'πίστεως' && acts68w6.pos === 4 && acts68w6.morphology === 'N- ----GSF-' && acts68w6.locator === 'TR:B44.C6.V8.w4' && acts68w6.morph_pos === 'noun' && acts68w6.gender === 'feminine' && acts68w6.case === 'genitive', JSON.stringify(acts68w6));
 
+// Deut 23:2 w2 (OSHB WLC alignment)
+const deut232w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos, 'stem', morph_stem, 'tense', morph_tense) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=5 AND chapter_num=23 AND verse_num=2) AND ar_word_position=2;`));
+assertCondition("deut232_enter: Deut 23:2 يدخل has H935 יָבֹ֥א token 2, HVqi3ms, verb qal imperfect 3ms", deut232w2.strongs === 'H935' && deut232w2.pos === 2 && deut232w2.morphology === 'HVqi3ms' && deut232w2.locator === 'OSHB:B5.C23.V2.w2' && deut232w2.morph_pos === 'verb' && deut232w2.stem === 'qal' && deut232w2.tense === 'imperfect', JSON.stringify(deut232w2));
+
 // -----------------------------------------------------------------------------
 // Test 5: SQLite Database Engine Integrity
 // -----------------------------------------------------------------------------
