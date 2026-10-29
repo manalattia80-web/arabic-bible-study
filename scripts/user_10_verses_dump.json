@@ -1,0 +1,3261 @@
+{
+  "Gen 7:3": {
+    "book": 1,
+    "chapter": 7,
+    "verse": 3,
+    "verse_id": "11111111-0000-0000-0001-000000007003",
+    "text_ar": "وَمِنْ طُيُورِ السَّمَاءِ أَيْضًا سَبْعَةً سَبْعَةً: ذَكَرًا وَأُنْثَى. لاسْتِبْقَاءِ نَسْل عَلَى وَجْهِ كُلِّ الأَرْضِ.",
+    "text_orig": "גַּ֣ם מֵעֹ֧וף הַשָּׁמַ֛יִם שִׁבְעָ֥ה שִׁבְעָ֖ה זָכָ֣ר וּנְקֵבָ֑ה לְחַיֹּ֥ות זֶ֖רַע עַל־פְּנֵ֥י כָל־הָאָֽרֶץ׃",
+    "count": 14,
+    "words": [
+      {
+        "id": "a366e3ac-1f2e-40e0-a069-a142f6450b76",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 1,
+        "orig_word_position": 1,
+        "ar_word": "وَمِنْ",
+        "orig_word": "מִן",
+        "orig_surface": "מִן",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H4480",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w1",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "a366e3ac-1f2e-40e0-a069-a142f6450b76",
+            "strongs_id": "H4480",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "מִן",
+            "orig_word_position": 1,
+            "orig_morphology": null,
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "87d47eae-a6c4-407d-8c6b-7c09bbe55ed0",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 2,
+        "orig_word_position": 2,
+        "ar_word": "طُيُورِ",
+        "orig_word": "עוֹף",
+        "orig_surface": "מֵע֧וֹף",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H5775",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w2",
+        "orig_morphology": "HR/Ncmsc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "87d47eae-a6c4-407d-8c6b-7c09bbe55ed0",
+            "strongs_id": "H5775",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "מֵע֧וֹף",
+            "orig_word_position": 2,
+            "orig_morphology": "HR/Ncmsc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "bb215285-ad5b-4862-986c-9dbaabef93e8",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 3,
+        "orig_word_position": 3,
+        "ar_word": "السَّمَاءِ",
+        "orig_word": "שָׁמַיִם",
+        "orig_surface": "הַשָּׁמַ֛יִם",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H8064",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w3",
+        "orig_morphology": "HTd/Ncmpa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "bb215285-ad5b-4862-986c-9dbaabef93e8",
+            "strongs_id": "H8064",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "הַשָּׁמַ֛יִם",
+            "orig_word_position": 3,
+            "orig_morphology": "HTd/Ncmpa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "fb317164-be5f-40a1-9819-1b46d396e18c",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "أَيْضًا",
+        "orig_word": "גַּם",
+        "orig_surface": "גַּ֣ם",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H1571",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w4",
+        "orig_morphology": "HTa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "fb317164-be5f-40a1-9819-1b46d396e18c",
+            "strongs_id": "H1571",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "גַּ֣ם",
+            "orig_word_position": 4,
+            "orig_morphology": "HTa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "1c22f257-b90a-48e1-ac28-c3dfc60f5bec",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "سَبْعَةً",
+        "orig_word": "שֶׁבַע",
+        "orig_surface": "שִׁבְעָ֥ה",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H7651",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w5",
+        "orig_morphology": "HAcmsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "1c22f257-b90a-48e1-ac28-c3dfc60f5bec",
+            "strongs_id": "H7651",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "שִׁבְעָ֥ה",
+            "orig_word_position": 5,
+            "orig_morphology": "HAcmsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "eb3376ed-e20b-4716-86b2-6fa3c8e6f231",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 6,
+        "orig_word_position": 6,
+        "ar_word": "سَبْعَةً",
+        "orig_word": "שֶׁבַע",
+        "orig_surface": "שִׁבְעָ֖ה",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H7651",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w6",
+        "orig_morphology": "HAcmsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "eb3376ed-e20b-4716-86b2-6fa3c8e6f231",
+            "strongs_id": "H7651",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "שִׁבְעָ֖ה",
+            "orig_word_position": 6,
+            "orig_morphology": "HAcmsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "8cdd8cf9-33e2-4bfc-98bf-eccacb32058d",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 7,
+        "orig_word_position": 7,
+        "ar_word": "ذَكَرًا",
+        "orig_word": "זָכָר",
+        "orig_surface": "זָכָ֣ר",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H2145",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w7",
+        "orig_morphology": "HAamsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "8cdd8cf9-33e2-4bfc-98bf-eccacb32058d",
+            "strongs_id": "H2145",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "זָכָ֣ר",
+            "orig_word_position": 7,
+            "orig_morphology": "HAamsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "5f92e6b4-4aa7-4eb2-9d8c-6906dc13bad0",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 8,
+        "orig_word_position": 8,
+        "ar_word": "وَأُنْثَى",
+        "orig_word": "נְקֵבָה",
+        "orig_surface": "וּנְקֵבָ֑ה",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H5347",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w8",
+        "orig_morphology": "HC/Ncfsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "5f92e6b4-4aa7-4eb2-9d8c-6906dc13bad0",
+            "strongs_id": "H5347",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "וּנְקֵבָ֑ה",
+            "orig_word_position": 8,
+            "orig_morphology": "HC/Ncfsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "1e3bc11a-34f3-4f30-a54c-ea1f8443b03a",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 9,
+        "orig_word_position": 9,
+        "ar_word": "لاسْتِبْقَاءِ",
+        "orig_word": "חָיָה",
+        "orig_surface": "לְחַיּ֥וֹת",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H2421",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w9",
+        "orig_morphology": "HR/Vpc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "1e3bc11a-34f3-4f30-a54c-ea1f8443b03a",
+            "strongs_id": "H2421",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "לְחַיּ֥וֹת",
+            "orig_word_position": 9,
+            "orig_morphology": "HR/Vpc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "5c7907ba-5bee-4e12-a04b-0fc9461c97e5",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 10,
+        "orig_word_position": 10,
+        "ar_word": "نَسْل",
+        "orig_word": "זֶרַע",
+        "orig_surface": "זֶ֖רַע",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H2233",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w10",
+        "orig_morphology": "HNcmsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "5c7907ba-5bee-4e12-a04b-0fc9461c97e5",
+            "strongs_id": "H2233",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "זֶ֖רַע",
+            "orig_word_position": 10,
+            "orig_morphology": "HNcmsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "08ca72fe-b60d-4955-a571-12e33752bf94",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 11,
+        "orig_word_position": 11,
+        "ar_word": "عَلَى",
+        "orig_word": "עַל",
+        "orig_surface": "עַל",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H5921",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w11",
+        "orig_morphology": "HR",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "08ca72fe-b60d-4955-a571-12e33752bf94",
+            "strongs_id": "H5921",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "עַל",
+            "orig_word_position": 11,
+            "orig_morphology": "HR",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "dbcccbe3-58e6-4cba-9ae5-dae6b802d368",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 12,
+        "orig_word_position": 12,
+        "ar_word": "وَجْهِ",
+        "orig_word": "פָּנִים",
+        "orig_surface": "פְּנֵ֥י",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H6440",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w12",
+        "orig_morphology": "HNcbpc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "dbcccbe3-58e6-4cba-9ae5-dae6b802d368",
+            "strongs_id": "H6440",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "פְּנֵ֥י",
+            "orig_word_position": 12,
+            "orig_morphology": "HNcbpc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "d0df1ddd-96a0-4636-9731-8312edff3ddb",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 13,
+        "orig_word_position": 13,
+        "ar_word": "كُلِّ",
+        "orig_word": "כֹּל",
+        "orig_surface": "כָל",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H3605",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w13",
+        "orig_morphology": "HNcmsc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "d0df1ddd-96a0-4636-9731-8312edff3ddb",
+            "strongs_id": "H3605",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "כָל",
+            "orig_word_position": 13,
+            "orig_morphology": "HNcmsc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "498a67c9-4420-4c1b-83ba-0f3e94308455",
+        "verse_id": "11111111-0000-0000-0001-000000007003",
+        "ar_word_position": 14,
+        "orig_word_position": 14,
+        "ar_word": "الأَرْضِ",
+        "orig_word": "אֶרֶץ",
+        "orig_surface": "הָאָֽרֶץ",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H776",
+        "relation_type": null,
+        "verified_locator": "OSHB:B1.C7.V3.w14",
+        "orig_morphology": "HTd/Ncbsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "498a67c9-4420-4c1b-83ba-0f3e94308455",
+            "strongs_id": "H776",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "הָאָֽרֶץ",
+            "orig_word_position": 14,
+            "orig_morphology": "HTd/Ncbsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      }
+    ]
+  },
+  "1 Sam 19:15": {
+    "book": 9,
+    "chapter": 19,
+    "verse": 15,
+    "verse_id": "11111111-0000-0000-0009-000000019015",
+    "text_ar": "ثُمَّ أَرْسَلَ شَاوُلُ الرُّسُلَ لِيَرَوْا دَاوُدَ قَائِلاً: «اصْعَدُوا بِهِ إِلَيَّ عَلَى الْفِرَاشِ لِكَيْ أَقْتُلَهُ».",
+    "text_orig": "וַיִּשְׁלַ֤ח שָׁאוּל֙ אֶת־הַמַּלְאָכִ֔ים לִרְאֹ֥ות אֶת־דָּוִ֖ד לֵאמֹ֑ר הַעֲל֨וּ אֹתֹ֧ו בַמִּטָּ֛ה אֵלַ֖י לַהֲמִתֹֽו׃",
+    "count": 14,
+    "words": [
+      {
+        "id": "1b3cf38c-6068-4032-920e-7558986e492a",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 1,
+        "orig_word_position": 8,
+        "ar_word": "ثُمَّ",
+        "orig_word": "אָמַר",
+        "orig_surface": "לֵאמֹר",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H559",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w8",
+        "orig_morphology": "HR/Vqc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "1b3cf38c-6068-4032-920e-7558986e492a",
+            "strongs_id": "H559",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "לֵאמֹר",
+            "orig_word_position": 8,
+            "orig_morphology": "HR/Vqc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "af6e9890-1f86-4231-acbf-af5c63b722e9",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 2,
+        "orig_word_position": 1,
+        "ar_word": "أَرْسَلَ",
+        "orig_word": "שָׁלַח",
+        "orig_surface": "וַיִּשְׁלַ֤ח",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H7971",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w1",
+        "orig_morphology": "HC/Vqw3ms",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "af6e9890-1f86-4231-acbf-af5c63b722e9",
+            "strongs_id": "H7971",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "וַיִּשְׁלַ֤ח",
+            "orig_word_position": 1,
+            "orig_morphology": "HC/Vqw3ms",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "d6a4c854-508e-4553-ad0c-7a2c6fe22b45",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 3,
+        "orig_word_position": 2,
+        "ar_word": "شَاوُلُ",
+        "orig_word": "שָׁאוּל",
+        "orig_surface": "שָׁאוּל֙",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H7586",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w2",
+        "orig_morphology": "HNp",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "d6a4c854-508e-4553-ad0c-7a2c6fe22b45",
+            "strongs_id": "H7586",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "שָׁאוּל֙",
+            "orig_word_position": 2,
+            "orig_morphology": "HNp",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "a67c9928-a944-46f2-bb50-f9ea1c4c1fbe",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "الرُّسُلَ",
+        "orig_word": "מֲלְאָךְ",
+        "orig_surface": "הַמַּלְאָכִ֔ים",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H4397",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w4",
+        "orig_morphology": "HTd/Ncmpa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "a67c9928-a944-46f2-bb50-f9ea1c4c1fbe",
+            "strongs_id": "H4397",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "הַמַּלְאָכִ֔ים",
+            "orig_word_position": 4,
+            "orig_morphology": "HTd/Ncmpa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "26258bee-d50b-4dfe-a4f6-46a097d8cbef",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "لِيَرَوْا",
+        "orig_word": "רָאָה",
+        "orig_surface": "לִרְא֥וֹת",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H7200",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w5",
+        "orig_morphology": "HR/Vqc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "26258bee-d50b-4dfe-a4f6-46a097d8cbef",
+            "strongs_id": "H7200",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "לִרְא֥וֹת",
+            "orig_word_position": 5,
+            "orig_morphology": "HR/Vqc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "540fba0a-3d57-4312-ad7b-1f06950a3925",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 6,
+        "orig_word_position": 7,
+        "ar_word": "دَاوُدَ",
+        "orig_word": "דָּוִד",
+        "orig_surface": "דָּוִ֖ד",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H1732",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w7",
+        "orig_morphology": "HNp",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "540fba0a-3d57-4312-ad7b-1f06950a3925",
+            "strongs_id": "H1732",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "דָּוִ֖ד",
+            "orig_word_position": 7,
+            "orig_morphology": "HNp",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "a42ecfed-d81a-4b93-bfea-5d9000eab915",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 7,
+        "orig_word_position": 8,
+        "ar_word": "قَائِلاً",
+        "orig_word": "אָמַר",
+        "orig_surface": "לֵאמֹר",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H559",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w8",
+        "orig_morphology": "HR/Vqc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "a42ecfed-d81a-4b93-bfea-5d9000eab915",
+            "strongs_id": "H559",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "לֵאמֹר",
+            "orig_word_position": 8,
+            "orig_morphology": "HR/Vqc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "64a9a8bd-6cef-4469-8915-9de817a172be",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 8,
+        "orig_word_position": 9,
+        "ar_word": "اصْعَدُوا",
+        "orig_word": "עָלָה",
+        "orig_surface": "הַעֲל֨וּ",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H5927",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w9",
+        "orig_morphology": "HVhv2mp",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "64a9a8bd-6cef-4469-8915-9de817a172be",
+            "strongs_id": "H5927",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "הַעֲל֨וּ",
+            "orig_word_position": 9,
+            "orig_morphology": "HVhv2mp",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "fdfd83fb-a234-419b-a3c1-ed4ea42f9543",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 9,
+        "orig_word_position": 0,
+        "ar_word": "بِهِ",
+        "orig_word": "—",
+        "orig_surface": "—",
+        "orig_word_lang": "hebrew",
+        "strongs_id": null,
+        "relation_type": "preposition_pronoun_compound",
+        "verified_locator": "AR_SYNTACTIC:B9.C19.V15.w9",
+        "orig_morphology": null,
+        "verified_source": "syntactic_audit_v36",
+        "morph_source": "oshb_wlc",
+        "wms": []
+      },
+      {
+        "id": "bd4bbc09-d111-4c25-a71f-2756fece22ab",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 10,
+        "orig_word_position": 12,
+        "ar_word": "إِلَيَّ",
+        "orig_word": "אֵל",
+        "orig_surface": "אֵלַ֖י",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H413",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w12",
+        "orig_morphology": "HR/Sp1cs",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "bd4bbc09-d111-4c25-a71f-2756fece22ab",
+            "strongs_id": "H413",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "אֵלַ֖י",
+            "orig_word_position": 12,
+            "orig_morphology": "HR/Sp1cs",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "394cea70-edfa-4072-8e7f-ab64b084fa81",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 11,
+        "orig_word_position": 12,
+        "ar_word": "عَلَى",
+        "orig_word": "אֵל",
+        "orig_surface": "אֵלַ֖י",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H413",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w12",
+        "orig_morphology": "HR/Sp1cs",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "394cea70-edfa-4072-8e7f-ab64b084fa81",
+            "strongs_id": "H413",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "אֵלַ֖י",
+            "orig_word_position": 12,
+            "orig_morphology": "HR/Sp1cs",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "172d7699-6486-4128-9fd4-e6694e4bb0e5",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 12,
+        "orig_word_position": null,
+        "ar_word": "الْفِرَاشِ",
+        "orig_word": "—",
+        "orig_surface": "—",
+        "orig_word_lang": "hebrew",
+        "strongs_id": null,
+        "relation_type": "contextual_rendering",
+        "verified_locator": "AR_SYNTACTIC:B9.C19.V15.w12",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "syntactic_ar",
+        "wms": []
+      },
+      {
+        "id": "1cb62f26-5c43-4526-a66d-f683edb7991f",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 13,
+        "orig_word_position": 12,
+        "ar_word": "لِكَيْ",
+        "orig_word": "אֵל",
+        "orig_surface": "אֵלַ֖י",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H413",
+        "relation_type": null,
+        "verified_locator": "OSHB:B9.C19.V15.w12",
+        "orig_morphology": "HR/Sp1cs",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "1cb62f26-5c43-4526-a66d-f683edb7991f",
+            "strongs_id": "H413",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "אֵלַ֖י",
+            "orig_word_position": 12,
+            "orig_morphology": "HR/Sp1cs",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "29500450-6498-495e-bdd0-1f9289df739d",
+        "verse_id": "11111111-0000-0000-0009-000000019015",
+        "ar_word_position": 14,
+        "orig_word_position": null,
+        "ar_word": "أَقْتُلَهُ",
+        "orig_word": "—",
+        "orig_surface": "—",
+        "orig_word_lang": "hebrew",
+        "strongs_id": null,
+        "relation_type": "contextual_rendering",
+        "verified_locator": "AR_SYNTACTIC:B9.C19.V15.w14",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "syntactic_ar",
+        "wms": []
+      }
+    ]
+  },
+  "Prov 15:6": {
+    "book": 20,
+    "chapter": 15,
+    "verse": 6,
+    "verse_id": "11111111-0000-0000-0020-000000015006",
+    "text_ar": "فِي بَيْتِ الصِّدِّيقِ كَنْزٌ عَظِيمٌ، وَفِي دَخْلِ الأَشْرَارِ كَدَرٌ.",
+    "text_orig": "בֵּ֣ית צַ֭דִּיק חֹ֣סֶן רָ֑ב וּבִתְבוּאַ֖ת רָשָׁ֣ע נֶעְכָּֽרֶת׃",
+    "count": 9,
+    "words": [
+      {
+        "id": "a073066c-d1a9-4635-9b6a-89dfb93a0217",
+        "verse_id": "11111111-0000-0000-0020-000000015006",
+        "ar_word_position": 1,
+        "orig_word_position": 1,
+        "ar_word": "فِي",
+        "orig_word": "—",
+        "orig_surface": "—",
+        "orig_word_lang": "hebrew",
+        "strongs_id": null,
+        "relation_type": "preposition_particle",
+        "verified_locator": "AR_SYNTACTIC:B20.C15.V6.w1",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "syntactic_ar",
+        "wms": []
+      },
+      {
+        "id": "29d141c2-ad30-49de-9a96-5a6aec1fced7",
+        "verse_id": "11111111-0000-0000-0020-000000015006",
+        "ar_word_position": 2,
+        "orig_word_position": 2,
+        "ar_word": "بَيْتِ",
+        "orig_word": "בַּיִת",
+        "orig_surface": "בֵּית",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H1004",
+        "relation_type": null,
+        "verified_locator": "OSHB:B20.C15.V6.w2",
+        "orig_morphology": "HNcmsc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "29d141c2-ad30-49de-9a96-5a6aec1fced7",
+            "strongs_id": "H1004",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "בֵּית",
+            "orig_word_position": 2,
+            "orig_morphology": "HNcmsc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "ccbc9770-a6c8-48a5-bea9-60a68f0a6425",
+        "verse_id": "11111111-0000-0000-0020-000000015006",
+        "ar_word_position": 3,
+        "orig_word_position": 3,
+        "ar_word": "الصِّدِّيقِ",
+        "orig_word": "צַדִּיק",
+        "orig_surface": "צַ֭דִּיק",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H6662",
+        "relation_type": null,
+        "verified_locator": "OSHB:B20.C15.V6.w3",
+        "orig_morphology": "HAamsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "ccbc9770-a6c8-48a5-bea9-60a68f0a6425",
+            "strongs_id": "H6662",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "צַ֭דִּיק",
+            "orig_word_position": 3,
+            "orig_morphology": "HAamsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "0315dcaa-4cdc-4f74-99fc-54a53a76c77d",
+        "verse_id": "11111111-0000-0000-0020-000000015006",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "كَنْزٌ",
+        "orig_word": "חָיַי",
+        "orig_surface": "חָיַי",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H2425",
+        "relation_type": null,
+        "verified_locator": "OSHB:B20.C15.V6.w4",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "0315dcaa-4cdc-4f74-99fc-54a53a76c77d",
+            "strongs_id": "H2425",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "חָיַי",
+            "orig_word_position": 4,
+            "orig_morphology": null,
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "67292fe0-82f9-4958-96dc-e2ca4c910a11",
+        "verse_id": "11111111-0000-0000-0020-000000015006",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "عَظِيمٌ",
+        "orig_word": "רַב",
+        "orig_surface": "רָ֑ב",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H7227",
+        "relation_type": null,
+        "verified_locator": "OSHB:B20.C15.V6.w5",
+        "orig_morphology": "HAamsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "67292fe0-82f9-4958-96dc-e2ca4c910a11",
+            "strongs_id": "H7227",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "רָ֑ב",
+            "orig_word_position": 5,
+            "orig_morphology": "HAamsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "76084465-4004-4fc8-8b17-4f86b2220f69",
+        "verse_id": "11111111-0000-0000-0020-000000015006",
+        "ar_word_position": 6,
+        "orig_word_position": 6,
+        "ar_word": "وَفِي",
+        "orig_word": "בַּיִת",
+        "orig_surface": "בֵּית",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H1004",
+        "relation_type": null,
+        "verified_locator": "OSHB:B20.C15.V6.w6",
+        "orig_morphology": "HNcmsc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "76084465-4004-4fc8-8b17-4f86b2220f69",
+            "strongs_id": "H1004",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "בֵּית",
+            "orig_word_position": 6,
+            "orig_morphology": "HNcmsc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "71cbae63-83c2-4df4-99d3-fcb9dff9963b",
+        "verse_id": "11111111-0000-0000-0020-000000015006",
+        "ar_word_position": 7,
+        "orig_word_position": 7,
+        "ar_word": "دَخْلِ",
+        "orig_word": "תְּבוּאָה",
+        "orig_surface": "וּבִתְבוּאַ֖ת",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H8393",
+        "relation_type": null,
+        "verified_locator": "OSHB:B20.C15.V6.w7",
+        "orig_morphology": "HC/R/Ncfsc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "71cbae63-83c2-4df4-99d3-fcb9dff9963b",
+            "strongs_id": "H8393",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "וּבִתְבוּאַ֖ת",
+            "orig_word_position": 7,
+            "orig_morphology": "HC/R/Ncfsc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "020e7dbd-b99e-4cbe-be86-3310b3445f6d",
+        "verse_id": "11111111-0000-0000-0020-000000015006",
+        "ar_word_position": 8,
+        "orig_word_position": 8,
+        "ar_word": "الأَشْرَارِ",
+        "orig_word": "רָשָׁע",
+        "orig_surface": "רָשָׁ֣ע",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H7563",
+        "relation_type": null,
+        "verified_locator": "OSHB:B20.C15.V6.w8",
+        "orig_morphology": "HAamsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "020e7dbd-b99e-4cbe-be86-3310b3445f6d",
+            "strongs_id": "H7563",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "רָשָׁ֣ע",
+            "orig_word_position": 8,
+            "orig_morphology": "HAamsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "b73f410c-1194-4d91-b1c3-300b4590e7c8",
+        "verse_id": "11111111-0000-0000-0020-000000015006",
+        "ar_word_position": 9,
+        "orig_word_position": 9,
+        "ar_word": "كَدَرٌ",
+        "orig_word": "עָכָן",
+        "orig_surface": "עָכָן",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H5912",
+        "relation_type": null,
+        "verified_locator": "OSHB:B20.C15.V6.w9",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "b73f410c-1194-4d91-b1c3-300b4590e7c8",
+            "strongs_id": "H5912",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "עָכָן",
+            "orig_word_position": 9,
+            "orig_morphology": null,
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      }
+    ]
+  },
+  "Jer 51:22": {
+    "book": 24,
+    "chapter": 51,
+    "verse": 22,
+    "verse_id": "11111111-0000-0000-0024-000000051022",
+    "text_ar": "وَأَسْحَقُ بِكَ الرَّجُلَ وَالْمَرْأَةَ، وَأَسْحَقُ بِكَ الشَّيْخَ وَالْفَتَى، وَأَسْحَقُ بِكَ الْغُلاَمَ وَالْعَذْرَاءَ،",
+    "text_orig": "וְנִפַּצְתִּ֤י בְךָ֙ אִ֣ישׁ וְאִשָּׁ֔ה וְנִפַּצְתִּ֥י בְךָ֖ זָקֵ֣ן וָנָ֑עַר וְנִפַּצְתִּ֣י בְךָ֔ בָּח֖וּר וּבְתוּלָֽה׃",
+    "count": 12,
+    "words": [
+      {
+        "id": "51548913-6648-449c-b86b-1eab1c6fb339",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 1,
+        "orig_word_position": 1,
+        "ar_word": "وَأَسْحَقُ",
+        "orig_word": "—",
+        "orig_surface": "—",
+        "orig_word_lang": "hebrew",
+        "strongs_id": null,
+        "relation_type": "contextual_rendering",
+        "verified_locator": "AR_SYNTACTIC:B24.C51.V22.w1",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "syntactic_ar",
+        "wms": []
+      },
+      {
+        "id": "53a432d5-ad1e-474f-bd22-5c0f32c92c73",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 2,
+        "orig_word_position": 2,
+        "ar_word": "بِكَ",
+        "orig_word": "אֵל",
+        "orig_surface": "אֵל",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H413",
+        "relation_type": null,
+        "verified_locator": "OSHB:B24.C51.V22.w2",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "53a432d5-ad1e-474f-bd22-5c0f32c92c73",
+            "strongs_id": "H413",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "אֵל",
+            "orig_word_position": 2,
+            "orig_morphology": null,
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "0208fc9f-6a66-4787-830b-e0f56a7e00ce",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 3,
+        "orig_word_position": 3,
+        "ar_word": "الرَّجُلَ",
+        "orig_word": "אִישׁ",
+        "orig_surface": "אִ֣ישׁ",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H376",
+        "relation_type": null,
+        "verified_locator": "OSHB:B24.C51.V22.w3",
+        "orig_morphology": "HNcmsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "0208fc9f-6a66-4787-830b-e0f56a7e00ce",
+            "strongs_id": "H376",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "אִ֣ישׁ",
+            "orig_word_position": 3,
+            "orig_morphology": "HNcmsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "ab1f20d6-e70c-4f3d-bae1-d3b49be017b9",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "وَالْمَرْأَةَ",
+        "orig_word": "אִשָּׁה",
+        "orig_surface": "וְאִשָּׁ֔ה",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H802",
+        "relation_type": null,
+        "verified_locator": "OSHB:B24.C51.V22.w4",
+        "orig_morphology": "HC/Ncfsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "ab1f20d6-e70c-4f3d-bae1-d3b49be017b9",
+            "strongs_id": "H802",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "וְאִשָּׁ֔ה",
+            "orig_word_position": 4,
+            "orig_morphology": "HC/Ncfsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "b3f36314-db67-4191-a393-5124ed65ad33",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "وَأَسْحَقُ",
+        "orig_word": "—",
+        "orig_surface": "—",
+        "orig_word_lang": "hebrew",
+        "strongs_id": null,
+        "relation_type": "contextual_rendering",
+        "verified_locator": "AR_SYNTACTIC:B24.C51.V22.w5",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "syntactic_ar",
+        "wms": []
+      },
+      {
+        "id": "2aef4946-b17d-41df-bb18-3c1d727568d9",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 6,
+        "orig_word_position": 6,
+        "ar_word": "بِكَ",
+        "orig_word": "אֵל",
+        "orig_surface": "אֵל",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H413",
+        "relation_type": null,
+        "verified_locator": "OSHB:B24.C51.V22.w6",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "2aef4946-b17d-41df-bb18-3c1d727568d9",
+            "strongs_id": "H413",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "אֵל",
+            "orig_word_position": 6,
+            "orig_morphology": null,
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "7f9b127f-a6f6-47b4-89c1-6703e06dca20",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 7,
+        "orig_word_position": 7,
+        "ar_word": "الشَّيْخَ",
+        "orig_word": "זָקֵן",
+        "orig_surface": "זָקֵ֣ן",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H2205",
+        "relation_type": null,
+        "verified_locator": "OSHB:B24.C51.V22.w7",
+        "orig_morphology": "HAamsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "7f9b127f-a6f6-47b4-89c1-6703e06dca20",
+            "strongs_id": "H2205",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "זָקֵ֣ן",
+            "orig_word_position": 7,
+            "orig_morphology": "HAamsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "a5396f96-bd33-4630-8500-887d1a940a18",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 8,
+        "orig_word_position": 8,
+        "ar_word": "وَالْفَتَى",
+        "orig_word": "נַעַר",
+        "orig_surface": "וָנָעַר",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H5288",
+        "relation_type": null,
+        "verified_locator": "OSHB:B24.C51.V22.w8",
+        "orig_morphology": "HC/Ncmsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "a5396f96-bd33-4630-8500-887d1a940a18",
+            "strongs_id": "H5288",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "וָנָעַר",
+            "orig_word_position": 8,
+            "orig_morphology": "HC/Ncmsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "71272fcb-a562-4355-95a8-728d5bc3d187",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 9,
+        "orig_word_position": 9,
+        "ar_word": "وَأَسْحَقُ",
+        "orig_word": "—",
+        "orig_surface": "—",
+        "orig_word_lang": "hebrew",
+        "strongs_id": null,
+        "relation_type": "contextual_rendering",
+        "verified_locator": "AR_SYNTACTIC:B24.C51.V22.w9",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "syntactic_ar",
+        "wms": []
+      },
+      {
+        "id": "a0d323f6-65ef-4596-8221-3b9f60c9fdba",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 10,
+        "orig_word_position": 10,
+        "ar_word": "بِكَ",
+        "orig_word": "אֵל",
+        "orig_surface": "אֵל",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H413",
+        "relation_type": null,
+        "verified_locator": "OSHB:B24.C51.V22.w10",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "a0d323f6-65ef-4596-8221-3b9f60c9fdba",
+            "strongs_id": "H413",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "אֵל",
+            "orig_word_position": 10,
+            "orig_morphology": null,
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "f568487a-9ce2-4f61-a500-94e82db82d47",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 11,
+        "orig_word_position": 11,
+        "ar_word": "الْغُلاَمَ",
+        "orig_word": "נַעַר",
+        "orig_surface": "וָנָעַר",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H5288",
+        "relation_type": null,
+        "verified_locator": "OSHB:B24.C51.V22.w11",
+        "orig_morphology": "HC/Ncmsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "f568487a-9ce2-4f61-a500-94e82db82d47",
+            "strongs_id": "H5288",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "וָנָעַר",
+            "orig_word_position": 11,
+            "orig_morphology": "HC/Ncmsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "d6449cda-457c-4c40-8f99-03b13e9f3ba1",
+        "verse_id": "11111111-0000-0000-0024-000000051022",
+        "ar_word_position": 12,
+        "orig_word_position": 12,
+        "ar_word": "وَالْعَذْرَاءَ",
+        "orig_word": "בְּתוּלָה",
+        "orig_surface": "וּבְתוּלָֽה",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H1330",
+        "relation_type": null,
+        "verified_locator": "OSHB:B24.C51.V22.w12",
+        "orig_morphology": "HC/Ncfsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "d6449cda-457c-4c40-8f99-03b13e9f3ba1",
+            "strongs_id": "H1330",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "וּבְתוּלָֽה",
+            "orig_word_position": 12,
+            "orig_morphology": "HC/Ncfsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      }
+    ]
+  },
+  "Amos 1:4": {
+    "book": 30,
+    "chapter": 1,
+    "verse": 4,
+    "verse_id": "11111111-0000-0000-0030-000000001004",
+    "text_ar": "فَأُرْسِلُ نَارًا عَلَى بَيْتِ حَزَائِيلَ فَتَأْكُلُ قُصُورَ بَنْهَدَدَ.",
+    "text_orig": "וְשִׁלַּ֥חְתִּי אֵ֖שׁ בְּבֵ֣ית חֲזָאֵ֑ל וְאָכְלָ֖ה אַרְמְנֹ֥ות בֶּן־הֲדָֽד׃",
+    "count": 8,
+    "words": [
+      {
+        "id": "7fc4445b-01d3-47e3-a463-e348dd835cda",
+        "verse_id": "11111111-0000-0000-0030-000000001004",
+        "ar_word_position": 1,
+        "orig_word_position": 1,
+        "ar_word": "فَأُرْسِلُ",
+        "orig_word": "שָׁלַח",
+        "orig_surface": "וְשִׁלַּ֥חְתִּי",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H7971",
+        "relation_type": null,
+        "verified_locator": "OSHB:B30.C1.V4.w1",
+        "orig_morphology": "HC/Vpq1cs",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "7fc4445b-01d3-47e3-a463-e348dd835cda",
+            "strongs_id": "H7971",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "וְשִׁלַּ֥חְתִּי",
+            "orig_word_position": 1,
+            "orig_morphology": "HC/Vpq1cs",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "5ae0c53f-485a-4afb-baf7-b4e3734db5c5",
+        "verse_id": "11111111-0000-0000-0030-000000001004",
+        "ar_word_position": 2,
+        "orig_word_position": 2,
+        "ar_word": "نَارًا",
+        "orig_word": "אֵשׁ",
+        "orig_surface": "אֵ֖שׁ",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H784",
+        "relation_type": null,
+        "verified_locator": "OSHB:B30.C1.V4.w2",
+        "orig_morphology": "HNcbsa",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "5ae0c53f-485a-4afb-baf7-b4e3734db5c5",
+            "strongs_id": "H784",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "אֵ֖שׁ",
+            "orig_word_position": 2,
+            "orig_morphology": "HNcbsa",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "20da672a-3871-4c6e-89a4-169f41dd0714",
+        "verse_id": "11111111-0000-0000-0030-000000001004",
+        "ar_word_position": 3,
+        "orig_word_position": 3,
+        "ar_word": "عَلَى",
+        "orig_word": "עַל",
+        "orig_surface": "עַל",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H5921",
+        "relation_type": null,
+        "verified_locator": "OSHB:B30.C1.V4.w3",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "20da672a-3871-4c6e-89a4-169f41dd0714",
+            "strongs_id": "H5921",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "עַל",
+            "orig_word_position": 3,
+            "orig_morphology": null,
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "d35b9df4-e908-4ab4-a3b5-fc10f828c82f",
+        "verse_id": "11111111-0000-0000-0030-000000001004",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "بَيْتِ",
+        "orig_word": "בַּיִת",
+        "orig_surface": "בְּבֵ֣ית",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H1004",
+        "relation_type": null,
+        "verified_locator": "OSHB:B30.C1.V4.w4",
+        "orig_morphology": "HR/Ncmsc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "d35b9df4-e908-4ab4-a3b5-fc10f828c82f",
+            "strongs_id": "H1004",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "בְּבֵ֣ית",
+            "orig_word_position": 4,
+            "orig_morphology": "HR/Ncmsc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "55d9446a-bfda-49ab-902e-16c58aea711d",
+        "verse_id": "11111111-0000-0000-0030-000000001004",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "حَزَائِيلَ",
+        "orig_word": "חֲזָאֵל",
+        "orig_surface": "חֲזָאֵ֑ל",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H2371",
+        "relation_type": null,
+        "verified_locator": "OSHB:B30.C1.V4.w5",
+        "orig_morphology": "HNp",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "55d9446a-bfda-49ab-902e-16c58aea711d",
+            "strongs_id": "H2371",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "חֲזָאֵ֑ל",
+            "orig_word_position": 5,
+            "orig_morphology": "HNp",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "32bf51a9-93ae-459f-83d6-917f548621ff",
+        "verse_id": "11111111-0000-0000-0030-000000001004",
+        "ar_word_position": 6,
+        "orig_word_position": 6,
+        "ar_word": "فَتَأْكُلُ",
+        "orig_word": "אָכַל",
+        "orig_surface": "וְאָכְלָ֖ה",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H398",
+        "relation_type": null,
+        "verified_locator": "OSHB:B30.C1.V4.w6",
+        "orig_morphology": "HC/Vqq3fs",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "32bf51a9-93ae-459f-83d6-917f548621ff",
+            "strongs_id": "H398",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "וְאָכְלָ֖ה",
+            "orig_word_position": 6,
+            "orig_morphology": "HC/Vqq3fs",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "35572b3e-08bc-41e2-b12e-12ad3ade0fab",
+        "verse_id": "11111111-0000-0000-0030-000000001004",
+        "ar_word_position": 7,
+        "orig_word_position": 7,
+        "ar_word": "قُصُورَ",
+        "orig_word": "אַרְמוֹן",
+        "orig_surface": "אַרְמְנ֥וֹת",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H759",
+        "relation_type": null,
+        "verified_locator": "OSHB:B30.C1.V4.w7",
+        "orig_morphology": "HNcmpc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "35572b3e-08bc-41e2-b12e-12ad3ade0fab",
+            "strongs_id": "H759",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "אַרְמְנ֥וֹת",
+            "orig_word_position": 7,
+            "orig_morphology": "HNcmpc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "a4211c67-ff7a-43d3-a6fa-5beec4aae91e",
+        "verse_id": "11111111-0000-0000-0030-000000001004",
+        "ar_word_position": 8,
+        "orig_word_position": 8,
+        "ar_word": "بَنْهَدَدَ",
+        "orig_word": "בֶּן־הֲדַד",
+        "orig_surface": "בֶּן־הֲדַד",
+        "orig_word_lang": "hebrew",
+        "strongs_id": "H1130",
+        "relation_type": null,
+        "verified_locator": "OSHB:B30.C1.V4.w8",
+        "orig_morphology": "HNp",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "a4211c67-ff7a-43d3-a6fa-5beec4aae91e",
+            "strongs_id": "H1130",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "בֶּן־הֲדַד",
+            "orig_word_position": 8,
+            "orig_morphology": "HNp",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      }
+    ]
+  },
+  "Dan 3:30": {
+    "book": 27,
+    "chapter": 3,
+    "verse": 30,
+    "verse_id": "11111111-0000-0000-0027-000000003030",
+    "text_ar": "حِينَئِذٍ قَدَّمَ الْمَلِكُ شَدْرَخَ وَمِيشَخَ وَعَبْدَنَغُوَ فِي وِلاَيَةِ بَابِلَ.",
+    "text_orig": "בֵּאדַ֣יִן מַלְכָּ֗א הַצְלַ֛ח לְשַׁדְרַ֥ךְ מֵישַׁ֛ךְ וַעֲבֵ֥ד נְגֹ֖ו בִּמְדִינַ֥ת בָּבֶֽל׃  פ",
+    "count": 9,
+    "words": [
+      {
+        "id": "3d626ce1-2102-44e6-95c0-2e8a4d077955",
+        "verse_id": "11111111-0000-0000-0027-000000003030",
+        "ar_word_position": 1,
+        "orig_word_position": 1,
+        "ar_word": "حِينَئِذٍ",
+        "orig_word": "אֱדַיִן",
+        "orig_surface": "בֵּאדַ֣יִן",
+        "orig_word_lang": "aramaic",
+        "strongs_id": "H116",
+        "relation_type": null,
+        "verified_locator": "OSHB:B27.C3.V30.w1",
+        "orig_morphology": "AR/D",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "3d626ce1-2102-44e6-95c0-2e8a4d077955",
+            "strongs_id": "H116",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "בֵּאדַ֣יִן",
+            "orig_word_position": 1,
+            "orig_morphology": "AR/D",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "8ac22d97-4644-421b-a4de-1376fb551905",
+        "verse_id": "11111111-0000-0000-0027-000000003030",
+        "ar_word_position": 2,
+        "orig_word_position": 2,
+        "ar_word": "قَدَّمَ",
+        "orig_word": "צוּרִיאֵל",
+        "orig_surface": "צוּרִיאֵל",
+        "orig_word_lang": "aramaic",
+        "strongs_id": "H6700",
+        "relation_type": null,
+        "verified_locator": "OSHB:B27.C3.V30.w2",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "strongs_lexicon",
+        "wms": [
+          {
+            "mapping_id": "8ac22d97-4644-421b-a4de-1376fb551905",
+            "strongs_id": "H6700",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "צוּרִיאֵל",
+            "orig_word_position": 2,
+            "orig_morphology": null,
+            "morph_source": "strongs_lexicon"
+          }
+        ]
+      },
+      {
+        "id": "a945752c-e73e-4e94-b3b0-002d7fefc1a5",
+        "verse_id": "11111111-0000-0000-0027-000000003030",
+        "ar_word_position": 3,
+        "orig_word_position": 3,
+        "ar_word": "الْمَلِكُ",
+        "orig_word": "מֶלֶךְ",
+        "orig_surface": "מַלְכָּ֗א",
+        "orig_word_lang": "aramaic",
+        "strongs_id": "H4430",
+        "relation_type": null,
+        "verified_locator": "OSHB:B27.C3.V30.w3",
+        "orig_morphology": "ANcmsd/Td",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "a945752c-e73e-4e94-b3b0-002d7fefc1a5",
+            "strongs_id": "H4430",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "מַלְכָּ֗א",
+            "orig_word_position": 3,
+            "orig_morphology": "ANcmsd/Td",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "54c174af-b1da-4fd3-9088-f75240894d83",
+        "verse_id": "11111111-0000-0000-0027-000000003030",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "شَدْرَخَ",
+        "orig_word": "שַׁדְרַךְ",
+        "orig_surface": "לְשַׁדְרַךְ",
+        "orig_word_lang": "aramaic",
+        "strongs_id": "H7714",
+        "relation_type": null,
+        "verified_locator": "OSHB:B27.C3.V30.w4",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "54c174af-b1da-4fd3-9088-f75240894d83",
+            "strongs_id": "H7714",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "לְשַׁדְרַךְ",
+            "orig_word_position": 4,
+            "orig_morphology": null,
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "27edc4c4-1476-487e-b8f7-9f32f6a8adfe",
+        "verse_id": "11111111-0000-0000-0027-000000003030",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "وَمِيشَخَ",
+        "orig_word": "מֵישַׁךְ",
+        "orig_surface": "מֵישַׁ֛ךְ",
+        "orig_word_lang": "aramaic",
+        "strongs_id": "H4336",
+        "relation_type": null,
+        "verified_locator": "OSHB:B27.C3.V30.w5",
+        "orig_morphology": "ANp",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "27edc4c4-1476-487e-b8f7-9f32f6a8adfe",
+            "strongs_id": "H4336",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "מֵישַׁ֛ךְ",
+            "orig_word_position": 5,
+            "orig_morphology": "ANp",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "b841eb2c-0023-42cf-9e55-815d0ffb0755",
+        "verse_id": "11111111-0000-0000-0027-000000003030",
+        "ar_word_position": 6,
+        "orig_word_position": null,
+        "ar_word": "وَعَبْدَنَغُوَ",
+        "orig_word": "—",
+        "orig_surface": "—",
+        "orig_word_lang": "hebrew",
+        "strongs_id": null,
+        "relation_type": "repeated_token",
+        "verified_locator": "AR_SYNTACTIC:B27.C3.V30.w6",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "syntactic_ar",
+        "wms": []
+      },
+      {
+        "id": "082ac59b-f5c6-4cbb-8513-c4b72d7ee0bd",
+        "verse_id": "11111111-0000-0000-0027-000000003030",
+        "ar_word_position": 7,
+        "orig_word_position": 8,
+        "ar_word": "فِي",
+        "orig_word": "מִן",
+        "orig_surface": "מִן",
+        "orig_word_lang": "aramaic",
+        "strongs_id": "H4481",
+        "relation_type": null,
+        "verified_locator": "OSHB:B27.C3.V30.w8",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "082ac59b-f5c6-4cbb-8513-c4b72d7ee0bd",
+            "strongs_id": "H4481",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "מִן",
+            "orig_word_position": 8,
+            "orig_morphology": null,
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "cd2b1af2-a18f-47d8-ad7d-7e1fbd9c49fa",
+        "verse_id": "11111111-0000-0000-0027-000000003030",
+        "ar_word_position": 8,
+        "orig_word_position": 9,
+        "ar_word": "وِلاَيَةِ",
+        "orig_word": "מְדִינָה",
+        "orig_surface": "בִּמְדִינַ֥ת",
+        "orig_word_lang": "aramaic",
+        "strongs_id": "H4083",
+        "relation_type": null,
+        "verified_locator": "OSHB:B27.C3.V30.w9",
+        "orig_morphology": "AR/Ncfsc",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "cd2b1af2-a18f-47d8-ad7d-7e1fbd9c49fa",
+            "strongs_id": "H4083",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "בִּמְדִינַ֥ת",
+            "orig_word_position": 9,
+            "orig_morphology": "AR/Ncfsc",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      },
+      {
+        "id": "181d2588-b314-48a1-8dec-e5b9f3b27840",
+        "verse_id": "11111111-0000-0000-0027-000000003030",
+        "ar_word_position": 9,
+        "orig_word_position": 10,
+        "ar_word": "بَابِلَ.",
+        "orig_word": "בַּבֶל",
+        "orig_surface": "בָּבֶֽל",
+        "orig_word_lang": "aramaic",
+        "strongs_id": "H895",
+        "relation_type": null,
+        "verified_locator": "OSHB:B27.C3.V30.w10",
+        "orig_morphology": "ANp",
+        "verified_source": null,
+        "morph_source": "oshb_wlc",
+        "wms": [
+          {
+            "mapping_id": "181d2588-b314-48a1-8dec-e5b9f3b27840",
+            "strongs_id": "H895",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "בָּבֶֽל",
+            "orig_word_position": 10,
+            "orig_morphology": "ANp",
+            "morph_source": "oshb_wlc"
+          }
+        ]
+      }
+    ]
+  },
+  "John 14:19": {
+    "book": 43,
+    "chapter": 14,
+    "verse": 19,
+    "verse_id": "11111111-0000-0000-0043-000000014019",
+    "text_ar": "بَعْدَ قَلِيل لاَ يَرَانِي الْعَالَمُ أَيْضًا، وَأَمَّا أَنْتُمْ فَتَرَوْنَنِي. إِنِّي أَنَا حَيٌّ فَأَنْتُمْ سَتَحْيَوْنَ.",
+    "text_orig": "ἔτι μικρὸν καὶ ὁ κόσμος με οὐκέτι θεωρεῖ, ὑμεῖς δὲ θεωρεῖτέ με· ὅτι ἐγὼ ζῶ, καὶ ὑμεῖς ζήσεσθε.",
+    "count": 14,
+    "words": [
+      {
+        "id": "d78bcbb1-5158-44cd-a9b2-1b30d1521a70",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 1,
+        "orig_word_position": 1,
+        "ar_word": "بَعْدَ",
+        "orig_word": "ἔτι",
+        "orig_surface": "ἔτι",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2089",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w1",
+        "orig_morphology": "D- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "d78bcbb1-5158-44cd-a9b2-1b30d1521a70",
+            "strongs_id": "G2089",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἔτι",
+            "orig_word_position": 1,
+            "orig_morphology": "D- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "ca40d455-0fde-4450-937f-5784cd15510b",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 2,
+        "orig_word_position": 2,
+        "ar_word": "قَلِيل",
+        "orig_word": "μικρός",
+        "orig_surface": "μικρὸν",
+        "orig_word_lang": "greek",
+        "strongs_id": "G3398",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w2",
+        "orig_morphology": "A- ----ASN-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "ca40d455-0fde-4450-937f-5784cd15510b",
+            "strongs_id": "G3398",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "μικρὸν",
+            "orig_word_position": 2,
+            "orig_morphology": "A- ----ASN-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "b9e87423-efe9-45cb-b5e9-b4568bad6048",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 3,
+        "orig_word_position": 3,
+        "ar_word": "لاَ",
+        "orig_word": "οὐκέτι",
+        "orig_surface": "οὐκέτι",
+        "orig_word_lang": "greek",
+        "strongs_id": "G3765",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w3",
+        "orig_morphology": "D- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "b9e87423-efe9-45cb-b5e9-b4568bad6048",
+            "strongs_id": "G3765",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "οὐκέτι",
+            "orig_word_position": 3,
+            "orig_morphology": "D- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "c9ed6a0d-024c-4513-ab28-c3189b483c08",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "يَرَانِي",
+        "orig_word": "θεωρέω",
+        "orig_surface": "θεωρεῖ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2334",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w4",
+        "orig_morphology": "V- 3PAI-S--",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "c9ed6a0d-024c-4513-ab28-c3189b483c08",
+            "strongs_id": "G2334",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "θεωρεῖ",
+            "orig_word_position": 4,
+            "orig_morphology": "V- 3PAI-S--",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "a49050c3-3331-49f3-ab9c-666d6c1424d9",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "الْعَالَمُ",
+        "orig_word": "κόσμος",
+        "orig_surface": "κόσμος",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2889",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w5",
+        "orig_morphology": "N- ----NSM-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "a49050c3-3331-49f3-ab9c-666d6c1424d9",
+            "strongs_id": "G2889",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "κόσμος",
+            "orig_word_position": 5,
+            "orig_morphology": "N- ----NSM-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "ab195d95-4b96-4ae4-adb5-19af52dd46d6",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 6,
+        "orig_word_position": 6,
+        "ar_word": "أَيْضًا",
+        "orig_word": "καί",
+        "orig_surface": "καὶ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2532",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w6",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "ab195d95-4b96-4ae4-adb5-19af52dd46d6",
+            "strongs_id": "G2532",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "καὶ",
+            "orig_word_position": 6,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "e44592ee-c60d-4767-a9b5-58674e9a31d0",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 7,
+        "orig_word_position": 7,
+        "ar_word": "وَأَمَّا",
+        "orig_word": "δέ",
+        "orig_surface": "δὲ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1161",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w7",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "e44592ee-c60d-4767-a9b5-58674e9a31d0",
+            "strongs_id": "G1161",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "δὲ",
+            "orig_word_position": 7,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "7385d162-fe37-456b-b174-6b3942c58de4",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 8,
+        "orig_word_position": 8,
+        "ar_word": "أَنْتُمْ",
+        "orig_word": "σύ",
+        "orig_surface": "σύ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4771",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w8",
+        "orig_morphology": "RP ----NP--",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "7385d162-fe37-456b-b174-6b3942c58de4",
+            "strongs_id": "G4771",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "σύ",
+            "orig_word_position": 8,
+            "orig_morphology": "RP ----NP--",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "f4347f31-26f1-4f00-b811-0fad09b96cc4",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 9,
+        "orig_word_position": 9,
+        "ar_word": "فَتَرَوْنَنِي",
+        "orig_word": "θεωρέω",
+        "orig_surface": "θεωρεῖτέ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2334",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w9",
+        "orig_morphology": "V- 2PAI-P--",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "f4347f31-26f1-4f00-b811-0fad09b96cc4",
+            "strongs_id": "G2334",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "θεωρεῖτέ",
+            "orig_word_position": 9,
+            "orig_morphology": "V- 2PAI-P--",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "9e50921f-fc2d-4b44-b966-5dfe2eaeec17",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 10,
+        "orig_word_position": 10,
+        "ar_word": "إِنِّي",
+        "orig_word": "ὅτι",
+        "orig_surface": "ὅτι",
+        "orig_word_lang": "greek",
+        "strongs_id": "G3754",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w10",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "9e50921f-fc2d-4b44-b966-5dfe2eaeec17",
+            "strongs_id": "G3754",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ὅτι",
+            "orig_word_position": 10,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "32804810-9519-40b5-b093-7990635c7bdd",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 11,
+        "orig_word_position": 11,
+        "ar_word": "أَنَا",
+        "orig_word": "ἐγώ",
+        "orig_surface": "ἐγὼ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1473",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w11",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "32804810-9519-40b5-b093-7990635c7bdd",
+            "strongs_id": "G1473",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἐγὼ",
+            "orig_word_position": 11,
+            "orig_morphology": null,
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "75ad57d3-0f01-470b-b50b-3c6d2d0396ac",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 12,
+        "orig_word_position": 12,
+        "ar_word": "حَيٌّ",
+        "orig_word": "ζάω",
+        "orig_surface": "ζῶ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2198",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w12",
+        "orig_morphology": "V- 1PAI-S--",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "75ad57d3-0f01-470b-b50b-3c6d2d0396ac",
+            "strongs_id": "G2198",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ζῶ",
+            "orig_word_position": 12,
+            "orig_morphology": "V- 1PAI-S--",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "f65627e4-43f2-4c0a-8653-d4952f551708",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 13,
+        "orig_word_position": 13,
+        "ar_word": "فَأَنْتُمْ",
+        "orig_word": "καί",
+        "orig_surface": "καὶ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2532",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w13",
+        "orig_morphology": "D- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "f65627e4-43f2-4c0a-8653-d4952f551708",
+            "strongs_id": "G2532",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "καὶ",
+            "orig_word_position": 13,
+            "orig_morphology": "D- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "1586b245-fb10-4da7-90b7-e0a086425abf",
+        "verse_id": "11111111-0000-0000-0043-000000014019",
+        "ar_word_position": 14,
+        "orig_word_position": 14,
+        "ar_word": "سَتَحْيَوْنَ",
+        "orig_word": "ζάω",
+        "orig_surface": "ζῶ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2198",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B43.C14.V19.w14",
+        "orig_morphology": "V- 1PAI-S--",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "1586b245-fb10-4da7-90b7-e0a086425abf",
+            "strongs_id": "G2198",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ζῶ",
+            "orig_word_position": 14,
+            "orig_morphology": "V- 1PAI-S--",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      }
+    ]
+  },
+  "Acts 6:8": {
+    "book": 44,
+    "chapter": 6,
+    "verse": 8,
+    "verse_id": "11111111-0000-0000-0044-000000006008",
+    "text_ar": "وَأَمَّا اسْتِفَانُوسُ فَإِذْ كَانَ مَمْلُوًّا إِيمَانًا وَقُوَّةً، كَانَ يَصْنَعُ عَجَائِبَ وَآيَاتٍ عَظِيمَةً فِي الشَّعْبِ.",
+    "text_orig": "Στέφανος δὲ πλήρης πίστεως καὶ δυνάμεως ἐποίει τέρατα καὶ σημεῖα μεγάλα ἐν τῷ λαῷ.",
+    "count": 14,
+    "words": [
+      {
+        "id": "c7b67599-0479-49fb-9b35-a806ca8e829e",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 1,
+        "orig_word_position": 1,
+        "ar_word": "وَأَمَّا",
+        "orig_word": "δέ",
+        "orig_surface": "δὲ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1161",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w1",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "c7b67599-0479-49fb-9b35-a806ca8e829e",
+            "strongs_id": "G1161",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "δὲ",
+            "orig_word_position": 1,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "bda2b63e-4e81-45cf-98c9-902a89aa690a",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 2,
+        "orig_word_position": 2,
+        "ar_word": "اسْتِفَانُوسُ",
+        "orig_word": "Στέφανος",
+        "orig_surface": "Στέφανος",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4736",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w2",
+        "orig_morphology": "N- ----NSM-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "bda2b63e-4e81-45cf-98c9-902a89aa690a",
+            "strongs_id": "G4736",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "Στέφανος",
+            "orig_word_position": 2,
+            "orig_morphology": "N- ----NSM-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "552b6614-6125-4d3b-9ef3-d5f9d8c1c11d",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 3,
+        "orig_word_position": 3,
+        "ar_word": "فَإِذْ",
+        "orig_word": "δέ",
+        "orig_surface": "δὲ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1161",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w3",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "552b6614-6125-4d3b-9ef3-d5f9d8c1c11d",
+            "strongs_id": "G1161",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "δὲ",
+            "orig_word_position": 3,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "d84ff8c2-5570-4706-b321-80b3134056f7",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "كَانَ",
+        "orig_word": "δέ",
+        "orig_surface": "δὲ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1161",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w4",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "d84ff8c2-5570-4706-b321-80b3134056f7",
+            "strongs_id": "G1161",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "δὲ",
+            "orig_word_position": 4,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "fdfb2c97-632f-425a-be0b-02f886014d6f",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "مَمْلُوًّا",
+        "orig_word": "πλήρης",
+        "orig_surface": "πλήρης",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4134",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w5",
+        "orig_morphology": "A- ----NSM-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "fdfb2c97-632f-425a-be0b-02f886014d6f",
+            "strongs_id": "G4134",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "πλήρης",
+            "orig_word_position": 5,
+            "orig_morphology": "A- ----NSM-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "faf5feaa-b389-4ab8-a1b3-db249c4eace1",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 6,
+        "orig_word_position": 6,
+        "ar_word": "إِيمَانًا",
+        "orig_word": "πίστις",
+        "orig_surface": "πίστεως",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4102",
+        "relation_type": null,
+        "verified_locator": "TR:B44.C6.V8.w6",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "morphgnt_tr",
+        "wms": [
+          {
+            "mapping_id": "faf5feaa-b389-4ab8-a1b3-db249c4eace1",
+            "strongs_id": "G4102",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "πίστεως",
+            "orig_word_position": 6,
+            "orig_morphology": null,
+            "morph_source": "morphgnt_tr"
+          }
+        ]
+      },
+      {
+        "id": "6638e79a-9c19-4dee-8a3e-478fc53dedf4",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 7,
+        "orig_word_position": 7,
+        "ar_word": "وَقُوَّةً،",
+        "orig_word": "δύναμις",
+        "orig_surface": "δυνάμεως",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1411",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w7",
+        "orig_morphology": "N- ----GSF-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "6638e79a-9c19-4dee-8a3e-478fc53dedf4",
+            "strongs_id": "G1411",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "δυνάμεως",
+            "orig_word_position": 7,
+            "orig_morphology": "N- ----GSF-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "d9362d06-5ef3-4148-ad70-8b6080756845",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 8,
+        "orig_word_position": 4,
+        "ar_word": "كَانَ",
+        "orig_word": "δέ",
+        "orig_surface": "δὲ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1161",
+        "relation_type": "repeated_referent",
+        "verified_locator": "SBLGNT:B44.C6.V8.w4",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "d9362d06-5ef3-4148-ad70-8b6080756845",
+            "strongs_id": "G1161",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "δὲ",
+            "orig_word_position": 4,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "d9312e7f-1323-46c3-a353-09f514cc1aa3",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 9,
+        "orig_word_position": 8,
+        "ar_word": "يَصْنَعُ",
+        "orig_word": "ποιέω",
+        "orig_surface": "ἐποίει",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4160",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w8",
+        "orig_morphology": "V- 3IAI-S--",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "d9312e7f-1323-46c3-a353-09f514cc1aa3",
+            "strongs_id": "G4160",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἐποίει",
+            "orig_word_position": 8,
+            "orig_morphology": "V- 3IAI-S--",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "bc599f1a-429a-412d-85d6-699a373580c7",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 10,
+        "orig_word_position": 9,
+        "ar_word": "عَجَائِبَ",
+        "orig_word": "τέρας",
+        "orig_surface": "τέρατα",
+        "orig_word_lang": "greek",
+        "strongs_id": "G5059",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w9",
+        "orig_morphology": "N- ----APN-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "bc599f1a-429a-412d-85d6-699a373580c7",
+            "strongs_id": "G5059",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "τέρατα",
+            "orig_word_position": 9,
+            "orig_morphology": "N- ----APN-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "00c53b15-437c-49cd-b524-24b73eb5c676",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 11,
+        "orig_word_position": 10,
+        "ar_word": "وَآيَاتٍ",
+        "orig_word": "σημεῖον",
+        "orig_surface": "σημεῖα",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4592",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w10",
+        "orig_morphology": "N- ----APN-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "00c53b15-437c-49cd-b524-24b73eb5c676",
+            "strongs_id": "G4592",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "σημεῖα",
+            "orig_word_position": 10,
+            "orig_morphology": "N- ----APN-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "d0bf66ba-8e1c-4318-8844-796b8fe7f19e",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 12,
+        "orig_word_position": 11,
+        "ar_word": "عَظِيمَةً",
+        "orig_word": "μέγας",
+        "orig_surface": "μεγάλα",
+        "orig_word_lang": "greek",
+        "strongs_id": "G3173",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w11",
+        "orig_morphology": "A- ----APN-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "d0bf66ba-8e1c-4318-8844-796b8fe7f19e",
+            "strongs_id": "G3173",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "μεγάλα",
+            "orig_word_position": 11,
+            "orig_morphology": "A- ----APN-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "b9a42caf-e73b-4f4d-9649-b47f7a73b66b",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 13,
+        "orig_word_position": 12,
+        "ar_word": "فِي",
+        "orig_word": "ἐν",
+        "orig_surface": "ἐν",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1722",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w12",
+        "orig_morphology": "P- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "b9a42caf-e73b-4f4d-9649-b47f7a73b66b",
+            "strongs_id": "G1722",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἐν",
+            "orig_word_position": 12,
+            "orig_morphology": "P- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "202eabc4-b4fc-4726-beef-571589635650",
+        "verse_id": "11111111-0000-0000-0044-000000006008",
+        "ar_word_position": 14,
+        "orig_word_position": 13,
+        "ar_word": "الشَّعْبِ.",
+        "orig_word": "λαός",
+        "orig_surface": "λαῷ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2992",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B44.C6.V8.w13",
+        "orig_morphology": "N- ----DSM-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "202eabc4-b4fc-4726-beef-571589635650",
+            "strongs_id": "G2992",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "λαῷ",
+            "orig_word_position": 13,
+            "orig_morphology": "N- ----DSM-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      }
+    ]
+  },
+  "Rom 9:23": {
+    "book": 45,
+    "chapter": 9,
+    "verse": 23,
+    "verse_id": "11111111-0000-0000-0045-000000009023",
+    "text_ar": "وَلِكَيْ يُبَيِّنَ غِنَى مَجْدِهِ عَلَى آنِيَةِ رَحْمَةٍ قَدْ سَبَقَ فَأَعَدَّهَا لِلْمَجْدِ،",
+    "text_orig": "καὶ ἵνα γνωρίσῃ τὸν πλοῦτον τῆς δόξης αὐτοῦ ἐπὶ σκεύη ἐλέους, ἃ προητοίμασεν εἰς δόξαν,",
+    "count": 11,
+    "words": [
+      {
+        "id": "ebb6202d-7af4-4cea-9904-5826836d7b8f",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 1,
+        "orig_word_position": 1,
+        "ar_word": "وَلِكَيْ",
+        "orig_word": "ἵνα",
+        "orig_surface": "ἵνα",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2443",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B45.C9.V23.w1",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "ebb6202d-7af4-4cea-9904-5826836d7b8f",
+            "strongs_id": "G2443",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἵνα",
+            "orig_word_position": 1,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "22603ae2-9066-4fbb-8cb5-8d7d8af5a47b",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 2,
+        "orig_word_position": 2,
+        "ar_word": "يُبَيِّنَ",
+        "orig_word": "γνωρίζω",
+        "orig_surface": "γνωρίσῃ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1107",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B45.C9.V23.w2",
+        "orig_morphology": "V- 3AAS-S--",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "22603ae2-9066-4fbb-8cb5-8d7d8af5a47b",
+            "strongs_id": "G1107",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "γνωρίσῃ",
+            "orig_word_position": 2,
+            "orig_morphology": "V- 3AAS-S--",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "1934d5f3-7e56-4d37-8aba-51b28feb77fb",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 3,
+        "orig_word_position": 3,
+        "ar_word": "غِنَى",
+        "orig_word": "πλοῦτος",
+        "orig_surface": "πλοῦτον",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4149",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B45.C9.V23.w3",
+        "orig_morphology": "N- ----ASM-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "1934d5f3-7e56-4d37-8aba-51b28feb77fb",
+            "strongs_id": "G4149",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "πλοῦτον",
+            "orig_word_position": 3,
+            "orig_morphology": "N- ----ASM-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "6ada1b2c-1c04-4858-8018-5a527bfaadeb",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "مَجْدِهِ",
+        "orig_word": "δόξα",
+        "orig_surface": "δόξης",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1391",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B45.C9.V23.w4",
+        "orig_morphology": "N- ----GSF-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "6ada1b2c-1c04-4858-8018-5a527bfaadeb",
+            "strongs_id": "G1391",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "δόξης",
+            "orig_word_position": 4,
+            "orig_morphology": "N- ----GSF-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "8da58b85-040b-4614-89b7-48a7d3d0ec89",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "عَلَى",
+        "orig_word": "ἐπί",
+        "orig_surface": "ἐπὶ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1909",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B45.C9.V23.w5",
+        "orig_morphology": "P- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "8da58b85-040b-4614-89b7-48a7d3d0ec89",
+            "strongs_id": "G1909",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἐπὶ",
+            "orig_word_position": 5,
+            "orig_morphology": "P- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "2b4bd42a-228c-4715-870f-b3037a195226",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 6,
+        "orig_word_position": 6,
+        "ar_word": "آنِيَةِ",
+        "orig_word": "σκεῦος",
+        "orig_surface": "σκεύη",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4632",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B45.C9.V23.w6",
+        "orig_morphology": "N- ----APN-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "2b4bd42a-228c-4715-870f-b3037a195226",
+            "strongs_id": "G4632",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "σκεύη",
+            "orig_word_position": 6,
+            "orig_morphology": "N- ----APN-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "131d17ba-6038-4d4a-8111-9368d717ccd8",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 7,
+        "orig_word_position": 7,
+        "ar_word": "رَحْمَةٍ",
+        "orig_word": "ἔλεος",
+        "orig_surface": "ἐλέους",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1656",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B45.C9.V23.w7",
+        "orig_morphology": "N- ----GSN-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "131d17ba-6038-4d4a-8111-9368d717ccd8",
+            "strongs_id": "G1656",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἐλέους",
+            "orig_word_position": 7,
+            "orig_morphology": "N- ----GSN-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "40ab16e9-3386-4510-889a-0826238e3332",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 8,
+        "orig_word_position": 8,
+        "ar_word": "قَدْ",
+        "orig_word": "—",
+        "orig_surface": "—",
+        "orig_word_lang": "greek",
+        "strongs_id": null,
+        "relation_type": "verbal_particle",
+        "verified_locator": "AR_SYNTACTIC:B45.C9.V23.w8",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "syntactic_ar",
+        "wms": []
+      },
+      {
+        "id": "c2ce25bd-9391-4fba-8d74-74d3678e2df0",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 9,
+        "orig_word_position": 9,
+        "ar_word": "سَبَقَ",
+        "orig_word": "προκηρύσσω",
+        "orig_surface": "προκηρύσσω",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4296",
+        "relation_type": null,
+        "verified_locator": "TR:B45.C9.V23.w9",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "morphgnt_tr",
+        "wms": [
+          {
+            "mapping_id": "c2ce25bd-9391-4fba-8d74-74d3678e2df0",
+            "strongs_id": "G4296",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "προκηρύσσω",
+            "orig_word_position": 9,
+            "orig_morphology": null,
+            "morph_source": "morphgnt_tr"
+          }
+        ]
+      },
+      {
+        "id": "d45d43bf-ea6a-4075-b5cf-df63e9750f52",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 10,
+        "orig_word_position": 10,
+        "ar_word": "فَأَعَدَّهَا",
+        "orig_word": "ἑτοιμάζω",
+        "orig_surface": "ἑτοιμάζω",
+        "orig_word_lang": "greek",
+        "strongs_id": "G2090",
+        "relation_type": null,
+        "verified_locator": "TR:B45.C9.V23.w10",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "morphgnt_tr",
+        "wms": [
+          {
+            "mapping_id": "d45d43bf-ea6a-4075-b5cf-df63e9750f52",
+            "strongs_id": "G2090",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἑτοιμάζω",
+            "orig_word_position": 10,
+            "orig_morphology": null,
+            "morph_source": "morphgnt_tr"
+          }
+        ]
+      },
+      {
+        "id": "84a5e83a-1ad9-4362-be51-ddd36569a1ac",
+        "verse_id": "11111111-0000-0000-0045-000000009023",
+        "ar_word_position": 11,
+        "orig_word_position": 11,
+        "ar_word": "لِلْمَجْدِ",
+        "orig_word": "δόξα",
+        "orig_surface": "δόξαν",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1391",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B45.C9.V23.w11",
+        "orig_morphology": "N- ----ASF-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "84a5e83a-1ad9-4362-be51-ddd36569a1ac",
+            "strongs_id": "G1391",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "δόξαν",
+            "orig_word_position": 11,
+            "orig_morphology": "N- ----ASF-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      }
+    ]
+  },
+  "Heb 10:18": {
+    "book": 58,
+    "chapter": 10,
+    "verse": 18,
+    "verse_id": "11111111-0000-0000-0058-000000010018",
+    "text_ar": "وَإِنَّمَا حَيْثُ تَكُونُ مَغْفِرَةٌ لِهذِهِ لاَ يَكُونُ بَعْدُ قُرْبَانٌ عَنِ الْخَطِيَّةِ.",
+    "text_orig": "ὅπου δὲ ἄφεσις τούτων, οὐκέτι προσφορὰ περὶ ἁμαρτίας.",
+    "count": 11,
+    "words": [
+      {
+        "id": "3dfa8b09-ad0f-407b-a1ba-c1c26f708b13",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 1,
+        "orig_word_position": 1,
+        "ar_word": "وَإِنَّمَا",
+        "orig_word": "δέ",
+        "orig_surface": "δὲ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1161",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B58.C10.V18.w1",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "3dfa8b09-ad0f-407b-a1ba-c1c26f708b13",
+            "strongs_id": "G1161",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "δὲ",
+            "orig_word_position": 1,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "12decd70-ed11-40c6-9e87-50deefd943c0",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 2,
+        "orig_word_position": 2,
+        "ar_word": "حَيْثُ",
+        "orig_word": "ὅπου",
+        "orig_surface": "ὅπου",
+        "orig_word_lang": "greek",
+        "strongs_id": "G3699",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B58.C10.V18.w2",
+        "orig_morphology": "C- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "12decd70-ed11-40c6-9e87-50deefd943c0",
+            "strongs_id": "G3699",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ὅπου",
+            "orig_word_position": 2,
+            "orig_morphology": "C- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "e2c5a1ae-852d-4fdc-893f-a0a4131496c3",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 3,
+        "orig_word_position": 3,
+        "ar_word": "تَكُونُ",
+        "orig_word": "εἰμί",
+        "orig_surface": "εἰμί",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1510",
+        "relation_type": null,
+        "verified_locator": "TR:B58.C10.V18.w3",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "morphgnt_tr",
+        "wms": [
+          {
+            "mapping_id": "e2c5a1ae-852d-4fdc-893f-a0a4131496c3",
+            "strongs_id": "G1510",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "εἰμί",
+            "orig_word_position": 3,
+            "orig_morphology": null,
+            "morph_source": "morphgnt_tr"
+          }
+        ]
+      },
+      {
+        "id": "156f37bd-3d4a-4de5-8274-b584f0bce843",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 4,
+        "orig_word_position": 4,
+        "ar_word": "مَغْفِرَةٌ",
+        "orig_word": "ἄφεσις",
+        "orig_surface": "ἄφεσις",
+        "orig_word_lang": "greek",
+        "strongs_id": "G859",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B58.C10.V18.w4",
+        "orig_morphology": "N- ----NSF-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "156f37bd-3d4a-4de5-8274-b584f0bce843",
+            "strongs_id": "G859",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἄφεσις",
+            "orig_word_position": 4,
+            "orig_morphology": "N- ----NSF-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "c6680035-7695-4fca-967b-12bb02996e7e",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 5,
+        "orig_word_position": 5,
+        "ar_word": "لِهذِهِ",
+        "orig_word": "οὗτος",
+        "orig_surface": "τούτων",
+        "orig_word_lang": "greek",
+        "strongs_id": "G3778",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B58.C10.V18.w5",
+        "orig_morphology": "RD ----GPF-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "c6680035-7695-4fca-967b-12bb02996e7e",
+            "strongs_id": "G3778",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "τούτων",
+            "orig_word_position": 5,
+            "orig_morphology": "RD ----GPF-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "c2c21533-1165-47f6-a77f-408cfdfc8c68",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 6,
+        "orig_word_position": 6,
+        "ar_word": "لاَ",
+        "orig_word": "οὐκέτι",
+        "orig_surface": "οὐκέτι",
+        "orig_word_lang": "greek",
+        "strongs_id": "G3765",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B58.C10.V18.w6",
+        "orig_morphology": "D- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "c2c21533-1165-47f6-a77f-408cfdfc8c68",
+            "strongs_id": "G3765",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "οὐκέτι",
+            "orig_word_position": 6,
+            "orig_morphology": "D- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "0c972f97-c889-4551-8d1e-c3a62c634794",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 7,
+        "orig_word_position": 7,
+        "ar_word": "يَكُونُ",
+        "orig_word": "εἰμί",
+        "orig_surface": "εἰμί",
+        "orig_word_lang": "greek",
+        "strongs_id": "G1510",
+        "relation_type": null,
+        "verified_locator": "TR:B58.C10.V18.w7",
+        "orig_morphology": null,
+        "verified_source": null,
+        "morph_source": "morphgnt_tr",
+        "wms": [
+          {
+            "mapping_id": "0c972f97-c889-4551-8d1e-c3a62c634794",
+            "strongs_id": "G1510",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "εἰμί",
+            "orig_word_position": 7,
+            "orig_morphology": null,
+            "morph_source": "morphgnt_tr"
+          }
+        ]
+      },
+      {
+        "id": "5051a622-e970-4dd0-a073-e1c0d00b1f62",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 8,
+        "orig_word_position": 8,
+        "ar_word": "بَعْدُ",
+        "orig_word": "οὐκέτι",
+        "orig_surface": "οὐκέτι",
+        "orig_word_lang": "greek",
+        "strongs_id": "G3765",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B58.C10.V18.w8",
+        "orig_morphology": "D- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "5051a622-e970-4dd0-a073-e1c0d00b1f62",
+            "strongs_id": "G3765",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "οὐκέτι",
+            "orig_word_position": 8,
+            "orig_morphology": "D- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "735fddef-3c23-4723-9635-c6f3635f6a77",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 9,
+        "orig_word_position": 9,
+        "ar_word": "قُرْبَانٌ",
+        "orig_word": "προσφορά",
+        "orig_surface": "προσφορὰ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4376",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B58.C10.V18.w9",
+        "orig_morphology": "N- ----NSF-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "735fddef-3c23-4723-9635-c6f3635f6a77",
+            "strongs_id": "G4376",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "προσφορὰ",
+            "orig_word_position": 9,
+            "orig_morphology": "N- ----NSF-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "ca52e5a4-1bca-44e1-924a-a0469373c873",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 10,
+        "orig_word_position": 10,
+        "ar_word": "عَنِ",
+        "orig_word": "περί",
+        "orig_surface": "περὶ",
+        "orig_word_lang": "greek",
+        "strongs_id": "G4012",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B58.C10.V18.w10",
+        "orig_morphology": "P- --------",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "ca52e5a4-1bca-44e1-924a-a0469373c873",
+            "strongs_id": "G4012",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "περὶ",
+            "orig_word_position": 10,
+            "orig_morphology": "P- --------",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      },
+      {
+        "id": "fab1336f-10cc-45d6-9b90-35bedca82d00",
+        "verse_id": "11111111-0000-0000-0058-000000010018",
+        "ar_word_position": 11,
+        "orig_word_position": 11,
+        "ar_word": "الْخَطِيَّةِ",
+        "orig_word": "ἁμαρτία",
+        "orig_surface": "ἁμαρτίας",
+        "orig_word_lang": "greek",
+        "strongs_id": "G266",
+        "relation_type": null,
+        "verified_locator": "SBLGNT:B58.C10.V18.w11",
+        "orig_morphology": "N- ----GSF-",
+        "verified_source": null,
+        "morph_source": "morphgnt_sblgnt",
+        "wms": [
+          {
+            "mapping_id": "fab1336f-10cc-45d6-9b90-35bedca82d00",
+            "strongs_id": "G266",
+            "link_order": 1,
+            "link_role": "primary",
+            "orig_component": "ἁμαρτίας",
+            "orig_word_position": 11,
+            "orig_morphology": "N- ----GSF-",
+            "morph_source": "morphgnt_sblgnt"
+          }
+        ]
+      }
+    ]
+  }
+}

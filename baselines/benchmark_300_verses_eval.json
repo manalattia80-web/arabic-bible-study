@@ -1,0 +1,90 @@
+{
+  "baseline": {
+    "label": "v299 Frozen Baseline",
+    "total_tokens": 4133,
+    "strongs_accuracy": {
+      "rate": "99.93",
+      "margin": "0.08",
+      "lower": "99.85",
+      "upper": "100.01",
+      "count": 4130,
+      "total": 4133
+    },
+    "surface_grounding": {
+      "rate": "82.48",
+      "margin": "1.16",
+      "lower": "81.32",
+      "upper": "83.64",
+      "count": 3409,
+      "total": 4133
+    },
+    "morph_completeness": {
+      "rate": "100.00",
+      "margin": "0.00",
+      "lower": "100.00",
+      "upper": "100.00",
+      "count": 4133,
+      "total": 4133
+    },
+    "multi_affix_recall": {
+      "rate": "100.00",
+      "margin": "0.00",
+      "lower": "100.00",
+      "upper": "100.00",
+      "count": 4133,
+      "total": 4133
+    },
+    "canonical_locators": {
+      "rate": "100.00",
+      "margin": "0.00",
+      "lower": "100.00",
+      "upper": "100.00",
+      "count": 4133,
+      "total": 4133
+    }
+  },
+  "active": {
+    "label": "Active Database",
+    "total_tokens": 4133,
+    "strongs_accuracy": {
+      "rate": "99.93",
+      "margin": "0.08",
+      "lower": "99.85",
+      "upper": "100.01",
+      "count": 4130,
+      "total": 4133
+    },
+    "surface_grounding": {
+      "rate": "81.51",
+      "margin": "1.18",
+      "lower": "80.33",
+      "upper": "82.70",
+      "count": 3369,
+      "total": 4133
+    },
+    "morph_completeness": {
+      "rate": "100.00",
+      "margin": "0.00",
+      "lower": "100.00",
+      "upper": "100.00",
+      "count": 4133,
+      "total": 4133
+    },
+    "multi_affix_recall": {
+      "rate": "100.00",
+      "margin": "0.00",
+      "lower": "100.00",
+      "upper": "100.00",
+      "count": 4133,
+      "total": 4133
+    },
+    "canonical_locators": {
+      "rate": "100.00",
+      "margin": "0.00",
+      "lower": "100.00",
+      "upper": "100.00",
+      "count": 4133,
+      "total": 4133
+    }
+  }
+}

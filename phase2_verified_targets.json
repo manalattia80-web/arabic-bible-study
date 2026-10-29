@@ -1,0 +1,731 @@
+[
+  {
+    "id": "52610137-61cd-492e-b4f3-e084408ddb57",
+    "citation": "الملوك الأول 6:4",
+    "ar_word": "كوى",
+    "orig_word": "חַלּוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2474",
+    "desc": "اسم: كوى (חַלּוֹן - H2474)"
+  },
+  {
+    "id": "58c385ce-027f-4635-a0aa-b64e450051ea",
+    "citation": "المزامير 76:7",
+    "ar_word": "مَهُوبٌ",
+    "orig_word": "יָרֵא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3372",
+    "desc": "صفة: مهوب (יָרֵא - H3372)"
+  },
+  {
+    "id": "96360306-1e5c-4374-8307-9c5ae98f9de3",
+    "citation": "المزامير 76:12",
+    "ar_word": "مَهُوبٌ",
+    "orig_word": "יָרֵא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3372",
+    "desc": "صفة: مهوب (יָרֵא - H3372)"
+  },
+  {
+    "id": "d5a82e1c-4d0c-4b9b-bd32-d70400efd9ef",
+    "citation": "المزامير 78:4",
+    "ar_word": "وَعَجَائِبِهِ",
+    "orig_word": "פָּלָא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6381",
+    "desc": "اسم: وعجائبه (פָּלָא - H6381)"
+  },
+  {
+    "id": "e03eda8f-db33-4494-bff1-9dbff5ce689b",
+    "citation": "المزامير 78:11",
+    "ar_word": "وَعَجَائِبَهُ",
+    "orig_word": "פָּלָא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6381",
+    "desc": "اسم: وعجائبه (פָּלָא - H6381)"
+  },
+  {
+    "id": "db5a4ddd-8a9f-405c-916d-2102bde9e233",
+    "citation": "المزامير 86:14",
+    "ar_word": "الْمُتَكَبِّرُونَ",
+    "orig_word": "זֵד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2086",
+    "desc": "اسم: المتكبرون (זֵד - H2086)"
+  },
+  {
+    "id": "a7921d61-b6cf-42a2-8282-bc76f243ef82",
+    "citation": "المزامير 89:7",
+    "ar_word": "مَهُوبٌ",
+    "orig_word": "יָרֵא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3372",
+    "desc": "صفة: مهوب (יָרֵא - H3372)"
+  },
+  {
+    "id": "dd1d21c1-41b1-4359-b8bf-bc3be009b41c",
+    "citation": "المزامير 96:4",
+    "ar_word": "مَهُوبٌ",
+    "orig_word": "יָרֵא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3372",
+    "desc": "صفة: مهوب (יָרֵא - H3372)"
+  },
+  {
+    "id": "2c298d67-9de4-4afb-9a67-f27d3cd40f84",
+    "citation": "المزامير 99:3",
+    "ar_word": "وَالْمَهُوبَ،",
+    "orig_word": "יָרֵא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3372",
+    "desc": "صفة: والمهوب (יָרֵא - H3372)"
+  },
+  {
+    "id": "a6b40f69-6283-4f2e-a699-5d4e7ce34946",
+    "citation": "المزامير 105:14",
+    "ar_word": "مُلُوكًا",
+    "orig_word": "מֶלֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4428",
+    "desc": "اسم: ملوكاً (מֶלֶךְ - H4428)"
+  },
+  {
+    "id": "53b6710b-5154-44d4-b0d7-08c7ce86a655",
+    "citation": "المزامير 107:8",
+    "ar_word": "فَلْيَحْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: فليحمدوا (יָדָה - H3034)"
+  },
+  {
+    "id": "b45c2252-c377-45e2-b22b-dc02d339d0cc",
+    "citation": "المزامير 107:8",
+    "ar_word": "وَعَجَائِبِهِ",
+    "orig_word": "פָּלָא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6381",
+    "desc": "اسم: وعجائبه (פָּלָא - H6381)"
+  },
+  {
+    "id": "ee91e411-c2ca-4350-ae0f-16410947940f",
+    "citation": "المزامير 107:15",
+    "ar_word": "فَلْيَحْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: فليحمدوا (יָדָה - H3034)"
+  },
+  {
+    "id": "f20c5f73-524f-4ef7-b766-e97091afbfc8",
+    "citation": "المزامير 107:15",
+    "ar_word": "وَعَجَائِبِهِ",
+    "orig_word": "פָּלָא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6381",
+    "desc": "اسم: وعجائبه (פָּלָא - H6381)"
+  },
+  {
+    "id": "c5239f2b-bbf6-423c-978c-2b597135c0e7",
+    "citation": "المزامير 107:21",
+    "ar_word": "فَلْيَحْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: فليحمدوا (יָדָה - H3034)"
+  },
+  {
+    "id": "e1814c6e-3e47-46a6-891b-265f29a13d68",
+    "citation": "المزامير 107:21",
+    "ar_word": "وَعَجَائِبِهِ",
+    "orig_word": "פָּלָא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6381",
+    "desc": "اسم: وعجائبه (פָּלָא - H6381)"
+  },
+  {
+    "id": "e2ebb787-b1ea-40fa-91c2-5c4457963c34",
+    "citation": "المزامير 107:24",
+    "ar_word": "وَعَجَائِبَهُ",
+    "orig_word": "פָּלָא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6381",
+    "desc": "اسم: وعجائبه (פָּלָא - H6381)"
+  },
+  {
+    "id": "dbeb3f97-a88f-4445-92ef-8d984987d6cf",
+    "citation": "المزامير 107:31",
+    "ar_word": "فَلْيَحْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: فليحمدوا (יָדָה - H3034)"
+  },
+  {
+    "id": "f70138d5-6690-46c0-8348-aaa6e8038d08",
+    "citation": "المزامير 107:31",
+    "ar_word": "وَعَجَائِبِهِ",
+    "orig_word": "פָּלָא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6381",
+    "desc": "اسم: وعجائبه (פָּלָא - H6381)"
+  },
+  {
+    "id": "f3e2fb87-af38-44e3-882b-f8b25d20c256",
+    "citation": "المزامير 110:5",
+    "ar_word": "مُلُوكًا.",
+    "orig_word": "מֶלֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4428",
+    "desc": "اسم: ملوكاً (מֶלֶךְ - H4428)"
+  },
+  {
+    "id": "c3f2b225-cb34-4cbb-b709-22e3576a0448",
+    "citation": "المزامير 111:9",
+    "ar_word": "وَمَهُوبٌ",
+    "orig_word": "יָרֵא",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3372",
+    "desc": "صفة: ومهوب (יָרֵא - H3372)"
+  },
+  {
+    "id": "5c6a3d5e-8f95-4d51-a496-2b2c8c2a2190",
+    "citation": "المزامير 116:10",
+    "ar_word": "تَذَلَّلْتُ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6031",
+    "desc": "فعل: تذللت (עָנָה - H6031)"
+  },
+  {
+    "id": "11dd8bab-e25c-447e-ac90-190bc1e03129",
+    "citation": "المزامير 119:51",
+    "ar_word": "الْمُتَكَبِّرُونَ",
+    "orig_word": "זֵד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2086",
+    "desc": "اسم: المتكبرون (זֵד - H2086)"
+  },
+  {
+    "id": "1ba44baa-7a5a-401e-bef4-7ab027804669",
+    "citation": "المزامير 119:69",
+    "ar_word": "الْمُتَكَبِّرُونَ",
+    "orig_word": "זֵד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2086",
+    "desc": "اسم: المتكبرون (זֵד - H2086)"
+  },
+  {
+    "id": "39bf1118-6eb0-459a-9ca1-27f1f93c5d4b",
+    "citation": "المزامير 119:71",
+    "ar_word": "تَذَلَّلْتُ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6031",
+    "desc": "فعل: تذللت (עָנָה - H6031)"
+  },
+  {
+    "id": "45e35c66-aaf0-4019-a5f2-5578143e0be4",
+    "citation": "المزامير 119:78",
+    "ar_word": "الْمُتَكَبِّرُونَ",
+    "orig_word": "זֵד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2086",
+    "desc": "اسم: المتكبرون (זֵד - H2086)"
+  },
+  {
+    "id": "d06513f7-bd95-4c6f-875e-692e77a854f5",
+    "citation": "المزامير 119:85",
+    "ar_word": "الْمُتَكَبِّرُونَ",
+    "orig_word": "זֵד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2086",
+    "desc": "اسم: المتكبرون (זֵד - H2086)"
+  },
+  {
+    "id": "b8b5e1e8-6a1d-44a6-b66e-5fd1fbfd5c36",
+    "citation": "المزامير 119:107",
+    "ar_word": "تَذَلَّلْتُ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6031",
+    "desc": "فعل: تذللت (עָנָה - H6031)"
+  },
+  {
+    "id": "f0593b92-222f-4dfe-af7e-c7fe8a383568",
+    "citation": "المزامير 135:10",
+    "ar_word": "مُلُوكًا",
+    "orig_word": "מֶלֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4428",
+    "desc": "اسم: ملوكاً (מֶלֶךְ - H4428)"
+  },
+  {
+    "id": "12f27c3a-53ba-49d2-a8b7-68adb4c0ff77",
+    "citation": "المزامير 136:17",
+    "ar_word": "مُلُوكًا",
+    "orig_word": "מֶלֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4428",
+    "desc": "اسم: ملوكاً (מֶלֶךְ - H4428)"
+  },
+  {
+    "id": "fa02a224-da08-466e-9af7-89d90566ecd0",
+    "citation": "المزامير 136:18",
+    "ar_word": "مُلُوكًا",
+    "orig_word": "מֶלֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4428",
+    "desc": "اسم: ملوكاً (מֶלֶךְ - H4428)"
+  },
+  {
+    "id": "427f76c6-d7c6-45ff-9cc4-7345e3d00fc4",
+    "citation": "إرميا 22:14",
+    "ar_word": "كوى",
+    "orig_word": "חַלּוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2474",
+    "desc": "اسم: كوى (חַלּוֹן - H2474)"
+  },
+  {
+    "id": "6079d4df-e453-4670-ac04-693f34115832",
+    "citation": "إرميا 44:17",
+    "ar_word": "وَنَسْكُبُ",
+    "orig_word": "נָסַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5258",
+    "desc": "فعل: ونسكب (נָסַךְ - H5258)"
+  },
+  {
+    "id": "af1feeff-efb2-4bc8-9f03-79b7684f791f",
+    "citation": "إرميا 44:19",
+    "ar_word": "وَنَسْكُبُ",
+    "orig_word": "נָסַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5258",
+    "desc": "فعل: ونسكب (נָסַךְ - H5258)"
+  },
+  {
+    "id": "c586b434-f4e9-4153-a1ed-3c6b183912b2",
+    "citation": "إرميا 44:19",
+    "ar_word": "وَنَسْكُبُ",
+    "orig_word": "נָסַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5258",
+    "desc": "فعل: ونسكب (נָסַךְ - H5258)"
+  },
+  {
+    "id": "211b0667-c22d-41b5-8ebb-2b12aa6f070f",
+    "citation": "إرميا 44:25",
+    "ar_word": "وَنَسْكُبُ",
+    "orig_word": "נָסַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5258",
+    "desc": "فعل: ونسكب (נָסַךְ - H5258)"
+  },
+  {
+    "id": "4b5abae3-b3c1-4eaa-8244-63d0a4f11d18",
+    "citation": "حزقيال 40:9",
+    "ar_word": "وَعَضَائِدَهُ",
+    "orig_word": "אַיִל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H352",
+    "desc": "اسم: وعضائده (אַיִל - H352)"
+  },
+  {
+    "id": "b13fc1a2-4498-424b-bcc6-7f2f58734aa9",
+    "citation": "حزقيال 40:11",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "34bfd5fb-2b77-49a5-a628-44893b092441",
+    "citation": "حزقيال 40:13",
+    "ar_word": "قَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: قاس (מָדַד - H4058)"
+  },
+  {
+    "id": "84a41c50-0974-4726-8359-8e0ef9506ebc",
+    "citation": "حزقيال 40:16",
+    "ar_word": "كُوًى",
+    "orig_word": "חַלּוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2474",
+    "desc": "اسم: كوى (חַלּוֹן - H2474)"
+  },
+  {
+    "id": "c794a8ce-c12b-45bf-9107-7c032474ca79",
+    "citation": "حزقيال 40:16",
+    "ar_word": "كُوًى",
+    "orig_word": "חַלּוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2474",
+    "desc": "اسم: كوى (חַלּוֹן - H2474)"
+  },
+  {
+    "id": "76d69ead-ae9f-4c6d-92b1-5f8e9db58df4",
+    "citation": "حزقيال 40:17",
+    "ar_word": "الْخَارِجِيَّةِ،",
+    "orig_word": "חִיצוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2435",
+    "desc": "صفة: الخارجية (חִיצוֹן - H2435)"
+  },
+  {
+    "id": "1ef007cc-5e41-4e1e-ade3-cb93a356e5b3",
+    "citation": "حزقيال 40:20",
+    "ar_word": "الْخَارِجِيَّةِ",
+    "orig_word": "חִיצוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2435",
+    "desc": "صفة: الخارجية (חִיצוֹן - H2435)"
+  },
+  {
+    "id": "5c74882e-2000-4d1d-b3c7-584480d166dc",
+    "citation": "حزقيال 40:20",
+    "ar_word": "قَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: قاس (מָדַד - H4058)"
+  },
+  {
+    "id": "ec491c72-a0b0-4058-82cd-fd5f01f487e1",
+    "citation": "حزقيال 40:21",
+    "ar_word": "وَعَضَائِدُهُ",
+    "orig_word": "אַיִל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H352",
+    "desc": "اسم: وعضائده (אַיִל - H352)"
+  },
+  {
+    "id": "870e6469-3a01-4d73-be8a-5484a97d3cff",
+    "citation": "حزقيال 40:25",
+    "ar_word": "كُوًى",
+    "orig_word": "חַלּוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2474",
+    "desc": "اسم: كوى (חַלּוֹן - H2474)"
+  },
+  {
+    "id": "bcca1fdb-a24b-4499-ac66-39f78c9a5a37",
+    "citation": "حزقيال 40:27",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "5d13c7f3-7ba4-474a-b1d5-c71897d4683e",
+    "citation": "حزقيال 40:28",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "d492a58b-099b-4bc6-85b4-befb1bdd72d8",
+    "citation": "حزقيال 40:29",
+    "ar_word": "وَعَضَائِدُهُ",
+    "orig_word": "אַיִל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H352",
+    "desc": "اسم: وعضائده (אַיִל - H352)"
+  },
+  {
+    "id": "be8f6d93-90e3-42e6-bc9b-81b50cd56c19",
+    "citation": "حزقيال 40:29",
+    "ar_word": "كُوًى",
+    "orig_word": "חַלּוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2474",
+    "desc": "اسم: كوى (חַלּוֹן - H2474)"
+  },
+  {
+    "id": "22d1f271-b915-4735-8cea-c58bfc101410",
+    "citation": "حزقيال 40:32",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "4612e59b-1d98-4970-a2e5-19e46a6a2789",
+    "citation": "حزقيال 40:33",
+    "ar_word": "كُوًى",
+    "orig_word": "חַלּוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2474",
+    "desc": "اسم: كوى (חַלּוֹן - H2474)"
+  },
+  {
+    "id": "27acaa5c-0a57-479d-add4-0d83cba15f2c",
+    "citation": "حزقيال 40:34",
+    "ar_word": "الْخَارِجِيَّةِ،",
+    "orig_word": "חִיצוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2435",
+    "desc": "صفة: الخارجية (חִיצוֹן - H2435)"
+  },
+  {
+    "id": "d3b24084-20af-4445-897c-a012e22f8e58",
+    "citation": "حزقيال 40:35",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "9ab694ea-0c7b-44d0-9c34-71cc550b138b",
+    "citation": "حزقيال 40:37",
+    "ar_word": "وَعَضَائِدُهُ",
+    "orig_word": "אַיִל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H352",
+    "desc": "اسم: وعضائده (אַיִל - H352)"
+  },
+  {
+    "id": "7cb92374-db1c-465c-a4ae-7ad19c6baab9",
+    "citation": "حزقيال 40:37",
+    "ar_word": "الْخَارِجِيَّةِ،",
+    "orig_word": "חִיצוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2435",
+    "desc": "صفة: الخارجية (חִיצוֹן - H2435)"
+  },
+  {
+    "id": "b5e51253-40f8-4e2e-a874-8829fc783ac3",
+    "citation": "حزقيال 40:48",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "27a30978-0ddb-4b55-a8d8-9ed9743c3659",
+    "citation": "حزقيال 41:1",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "f3f20245-be9f-4042-afde-92ddc05749be",
+    "citation": "حزقيال 41:5",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "3655159a-3a0e-4dea-9876-88e2653050db",
+    "citation": "حزقيال 41:10",
+    "ar_word": "الْمَخَادِعِ",
+    "orig_word": "לִשְׁכָּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3957",
+    "desc": "اسم: المخادع (לִשְׁכָּה - H3957)"
+  },
+  {
+    "id": "d44f156d-29ca-48f8-91a3-3143e13b3804",
+    "citation": "حزقيال 42:1",
+    "ar_word": "الْخَارِجِيَّةِ",
+    "orig_word": "חִיצוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2435",
+    "desc": "صفة: الخارجية (חִיצוֹן - H2435)"
+  },
+  {
+    "id": "0a28288a-acdf-4de1-a458-4b8f0e5f6ab0",
+    "citation": "حزقيال 42:3",
+    "ar_word": "الْخَارِجِيَّةِ",
+    "orig_word": "חִיצוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2435",
+    "desc": "صفة: الخارجية (חִיצוֹן - H2435)"
+  },
+  {
+    "id": "7c39628c-d3e8-4e80-ba4f-a905fe6e8d10",
+    "citation": "حزقيال 42:4",
+    "ar_word": "الْمَخَادِعِ",
+    "orig_word": "לִשְׁכָּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3957",
+    "desc": "اسم: المخادع (לִשְׁכָּה - H3957)"
+  },
+  {
+    "id": "797a483b-5e5c-4c51-8356-e16a5d7e62da",
+    "citation": "حزقيال 42:7",
+    "ar_word": "الْمَخَادِعِ",
+    "orig_word": "לִשְׁכָּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3957",
+    "desc": "اسم: المخادع (לִשְׁכָּה - H3957)"
+  },
+  {
+    "id": "8918caa7-fd99-4ea5-b8e8-d409d05bb52f",
+    "citation": "حزقيال 42:7",
+    "ar_word": "الْمَخَادِعِ،",
+    "orig_word": "לִשְׁכָּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3957",
+    "desc": "اسم: المخادع (לִשְׁכָּה - H3957)"
+  },
+  {
+    "id": "a28e0706-1968-4684-87ea-9b9d6d1daf9a",
+    "citation": "حزقيال 42:8",
+    "ar_word": "الْمَخَادِعِ",
+    "orig_word": "לִשְׁכָּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3957",
+    "desc": "اسم: المخادع (לִשְׁכָּה - H3957)"
+  },
+  {
+    "id": "4fc05947-9bf9-4391-b395-64c764a58f98",
+    "citation": "حزقيال 42:9",
+    "ar_word": "الْمَخَادِعِ",
+    "orig_word": "לִשְׁכָּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3957",
+    "desc": "اسم: المخادع (לִשְׁכָּה - H3957)"
+  },
+  {
+    "id": "71e27f01-6d91-4587-bcfc-52a1604327f4",
+    "citation": "حزقيال 42:10",
+    "ar_word": "اَلْمَخَادِعُ",
+    "orig_word": "לִשְׁכָּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3957",
+    "desc": "اسم: المخادع (לִשְׁכָּה - H3957)"
+  },
+  {
+    "id": "ef59a3c3-ca89-4972-9f2e-2287e02c8c10",
+    "citation": "حزقيال 42:11",
+    "ar_word": "الْمَخَادِعِ",
+    "orig_word": "לִשְׁכָּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3957",
+    "desc": "اسم: المخادع (לִשְׁכָּה - H3957)"
+  },
+  {
+    "id": "50c8c1f6-750d-40e2-bdf8-ce5c731bd26e",
+    "citation": "حزقيال 42:12",
+    "ar_word": "الْمَخَادِعِ",
+    "orig_word": "לִשְׁכָּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3957",
+    "desc": "اسم: المخادع (לִשְׁכָּה - H3957)"
+  },
+  {
+    "id": "2ca71570-32bd-4021-a882-0d2c68154442",
+    "citation": "حزقيال 42:16",
+    "ar_word": "قَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: قاس (מָדַד - H4058)"
+  },
+  {
+    "id": "168d2ffd-c06b-4aaa-bed6-ee3521b44d9d",
+    "citation": "حزقيال 42:17",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "b7b207df-142b-4973-a14d-cafb336345c4",
+    "citation": "حزقيال 42:18",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "cebef165-f6fb-4b3c-befe-1d21b9c000b2",
+    "citation": "حزقيال 42:19",
+    "ar_word": "وَقَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: وقاس (מָדַד - H4058)"
+  },
+  {
+    "id": "da6b05e1-ec62-42e3-9185-5c5270014a2a",
+    "citation": "حزقيال 44:19",
+    "ar_word": "الْخَارِجِيَّةِ،",
+    "orig_word": "חִיצוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2435",
+    "desc": "صفة: الخارجية (חִיצוֹן - H2435)"
+  },
+  {
+    "id": "68aa836c-792a-494c-a587-140d6842d980",
+    "citation": "حزقيال 44:19",
+    "ar_word": "الْخَارِجِيَّةِ،",
+    "orig_word": "חִיצוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2435",
+    "desc": "صفة: الخارجية (חִיצוֹן - H2435)"
+  },
+  {
+    "id": "fa49cc80-c14b-4b18-a4e5-6bc0158c18b0",
+    "citation": "حزقيال 46:20",
+    "ar_word": "الْخَارِجِيَّةِ",
+    "orig_word": "חִיצוֹן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H2435",
+    "desc": "صفة: الخارجية (חִיצוֹן - H2435)"
+  },
+  {
+    "id": "7e022ad1-1bc8-4246-9a6f-ba397df85418",
+    "citation": "حزقيال 47:3",
+    "ar_word": "قَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: قاس (מָדַד - H4058)"
+  },
+  {
+    "id": "c7f97adf-431d-4fb9-a7df-f85b3e1dc85e",
+    "citation": "حزقيال 47:4",
+    "ar_word": "قَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: قاس (מָדַד - H4058)"
+  },
+  {
+    "id": "f8f25f9b-e131-4aba-8da9-d213ea549b43",
+    "citation": "حزقيال 47:4",
+    "ar_word": "قَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: قاس (מָדַד - H4058)"
+  },
+  {
+    "id": "2f9eff12-96e0-4d5d-a5ac-826258aad469",
+    "citation": "حزقيال 47:5",
+    "ar_word": "قَاسَ",
+    "orig_word": "מָדַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4058",
+    "desc": "فعل: قاس (מָדַד - H4058)"
+  }
+]

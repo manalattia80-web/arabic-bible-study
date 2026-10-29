@@ -1,0 +1,458 @@
+{
+  "greek": [
+    {
+      "strongs_id": "G129",
+      "original_word": "αἷμα",
+      "transliteration": "haîma",
+      "definition_en": "of uncertain derivation;"
+    },
+    {
+      "strongs_id": "G1343",
+      "original_word": "δικαιοσύνη",
+      "transliteration": "dikaiosýnē",
+      "definition_en": "from G1342 (δίκαιος);"
+    },
+    {
+      "strongs_id": "G1391",
+      "original_word": "δόξα",
+      "transliteration": "dóxa",
+      "definition_en": "from the base of G1380 (δοκέω);"
+    },
+    {
+      "strongs_id": "G1411",
+      "original_word": "δύναμις",
+      "transliteration": "dýnamis",
+      "definition_en": "from G1410 (δύναμαι);"
+    },
+    {
+      "strongs_id": "G1515",
+      "original_word": "εἰρήνη",
+      "transliteration": "eirḗnē",
+      "definition_en": "probably from a primary verb (to join);"
+    },
+    {
+      "strongs_id": "G1577",
+      "original_word": "ἐκκλησία",
+      "transliteration": "ekklēsía",
+      "definition_en": "from a compound of G1537 (ἐκ) and a derivative of G2564 (καλέω);"
+    },
+    {
+      "strongs_id": "G2041",
+      "original_word": "ἔργον",
+      "transliteration": "érgon",
+      "definition_en": "from a primary (but obsolete) (to work);"
+    },
+    {
+      "strongs_id": "G2098",
+      "original_word": "εὐαγγέλιον",
+      "transliteration": "euangélion",
+      "definition_en": "from the same as G2097 (εὐαγγελίζω);"
+    },
+    {
+      "strongs_id": "G2222",
+      "original_word": "ζωή",
+      "transliteration": "zōḗ",
+      "definition_en": "from G2198 (ζάω);"
+    },
+    {
+      "strongs_id": "G225",
+      "original_word": "ἀλήθεια",
+      "transliteration": "alḗtheia",
+      "definition_en": "from G227 (ἀληθής);"
+    },
+    {
+      "strongs_id": "G2316",
+      "original_word": "θεός",
+      "transliteration": "theós",
+      "definition_en": "of uncertain affinity; a deity, especially (with G3588 (ὁ)) the supreme Divinity;"
+    },
+    {
+      "strongs_id": "G2424",
+      "original_word": "Ἰησοῦς",
+      "transliteration": "Iēsoûs",
+      "definition_en": "of Hebrew origin (H03091);"
+    },
+    {
+      "strongs_id": "G2588",
+      "original_word": "καρδία",
+      "transliteration": "kardía",
+      "definition_en": "prolonged from a primary (Latin cor, \"heart\");"
+    },
+    {
+      "strongs_id": "G26",
+      "original_word": "ἀγάπη",
+      "transliteration": "agápē",
+      "definition_en": "from G25 (ἀγαπάω);"
+    },
+    {
+      "strongs_id": "G2889",
+      "original_word": "κόσμος",
+      "transliteration": "kósmos",
+      "definition_en": "probably from the base of G2865 (κομίζω);"
+    },
+    {
+      "strongs_id": "G2962",
+      "original_word": "κύριος",
+      "transliteration": "kýrios",
+      "definition_en": "from (supremacy);"
+    },
+    {
+      "strongs_id": "G3056",
+      "original_word": "λόγος",
+      "transliteration": "lógos",
+      "definition_en": "from G3004 (λέγω);"
+    },
+    {
+      "strongs_id": "G3772",
+      "original_word": "οὐρανός",
+      "transliteration": "ouranós",
+      "definition_en": "perhaps from the same as G3735 (ὄρος) (through the idea of elevation);"
+    },
+    {
+      "strongs_id": "G386",
+      "original_word": "ἀνάστασις",
+      "transliteration": "anástasis",
+      "definition_en": "from G450 (ἀνίστημι);"
+    },
+    {
+      "strongs_id": "G40",
+      "original_word": "ἅγιος",
+      "transliteration": "hágios",
+      "definition_en": "from (an awful thing) (compare G53 (ἁγνός), G2282 (θάλπω));"
+    },
+    {
+      "strongs_id": "G4102",
+      "original_word": "πίστις",
+      "transliteration": "pístis",
+      "definition_en": "from G3982 (πείθω);"
+    },
+    {
+      "strongs_id": "G4151",
+      "original_word": "πνεῦμα",
+      "transliteration": "pneûma",
+      "definition_en": "from G4154 (πνέω);"
+    },
+    {
+      "strongs_id": "G4561",
+      "original_word": "σάρξ",
+      "transliteration": "sárx",
+      "definition_en": "probably from the base of G4563 (σαρόω);"
+    },
+    {
+      "strongs_id": "G4991",
+      "original_word": "σωτηρία",
+      "transliteration": "sōtēría",
+      "definition_en": "feminine of a derivative of G4990 (σωτήρ) as (properly, abstract) noun;"
+    },
+    {
+      "strongs_id": "G5207",
+      "original_word": "υἱός",
+      "transliteration": "huiós",
+      "definition_en": "apparently a primary word;"
+    },
+    {
+      "strongs_id": "G5457",
+      "original_word": "φῶς",
+      "transliteration": "phōs",
+      "definition_en": "from an obsolete (to shine or make manifest, especially by rays;"
+    },
+    {
+      "strongs_id": "G5485",
+      "original_word": "χάρις",
+      "transliteration": "cháris",
+      "definition_en": "from G5463 (χαίρω);"
+    },
+    {
+      "strongs_id": "G5547",
+      "original_word": "Χριστός",
+      "transliteration": "Christós",
+      "definition_en": "from G5548 (χρίω);"
+    },
+    {
+      "strongs_id": "G907",
+      "original_word": "βαπτίζω",
+      "transliteration": "baptízō",
+      "definition_en": "from a derivative of G911 (βάπτω);"
+    },
+    {
+      "strongs_id": "G932",
+      "original_word": "βασιλεία",
+      "transliteration": "basileía",
+      "definition_en": "from G935 (βασιλεύς);"
+    }
+  ],
+  "hebrew": [
+    {
+      "strongs_id": "H120",
+      "original_word": "אָדָם",
+      "transliteration": "ʼâdâm",
+      "definition_en": "from H119 (אָדַם);"
+    },
+    {
+      "strongs_id": "H1254",
+      "original_word": "בָּרָא",
+      "transliteration": "bârâʼ",
+      "definition_en": "a primitive root;"
+    },
+    {
+      "strongs_id": "H1285",
+      "original_word": "בְּרִית",
+      "transliteration": "bᵉrîyth",
+      "definition_en": "from H1262 (בָּרָה) (in the sense of cutting (like H1254 (בָּרָא)));"
+    },
+    {
+      "strongs_id": "H1732",
+      "original_word": "דָּוִד",
+      "transliteration": "Dâvid",
+      "definition_en": "rarely (fully); דָּוִיד; from the same as H1730 (דּוֹד); loving;"
+    },
+    {
+      "strongs_id": "H2077",
+      "original_word": "זֶבַח",
+      "transliteration": "zebach",
+      "definition_en": "from H2076 (זָבַח);"
+    },
+    {
+      "strongs_id": "H216",
+      "original_word": "אוֹר",
+      "transliteration": "ʼôwr",
+      "definition_en": "from H215 (אוֹר);"
+    },
+    {
+      "strongs_id": "H2617",
+      "original_word": "חֵסֵד",
+      "transliteration": "chêçêd",
+      "definition_en": "from H2616 (חָסַד);"
+    },
+    {
+      "strongs_id": "H3068",
+      "original_word": "יְהֹוָה",
+      "transliteration": "Yᵉhôvâh",
+      "definition_en": "from H1961 (הָיָה); (the) self-Existent or Eternal;"
+    },
+    {
+      "strongs_id": "H3117",
+      "original_word": "יוֹם",
+      "transliteration": "yôwm",
+      "definition_en": "from an unused root meaning to be hot;"
+    },
+    {
+      "strongs_id": "H3478",
+      "original_word": "יִשְׂרָאֵל",
+      "transliteration": "Yisrâʼêl",
+      "definition_en": "from H8280 (שָׂרָה) and H410 (אֵל); he will rule as God;"
+    },
+    {
+      "strongs_id": "H3548",
+      "original_word": "כֹּהֵן",
+      "transliteration": "kôhên",
+      "definition_en": "active participle of H3547 (כָּהַן);"
+    },
+    {
+      "strongs_id": "H3824",
+      "original_word": "לֵבָב",
+      "transliteration": "lêbâb",
+      "definition_en": "from H3823 (לָבַב); used also like H3820 (לֵב)"
+    },
+    {
+      "strongs_id": "H4196",
+      "original_word": "מִזְבֵּחַ",
+      "transliteration": "mizbêach",
+      "definition_en": "from H2076 (זָבַח);"
+    },
+    {
+      "strongs_id": "H430",
+      "original_word": "אֱלֹהִים",
+      "transliteration": "ʼĕlôhîym",
+      "definition_en": "plural of H433 (אֱלוֹהַּ);"
+    },
+    {
+      "strongs_id": "H4325",
+      "original_word": "מַיִם",
+      "transliteration": "mayim",
+      "definition_en": "dual of a primitive noun (but used in a singular sense);"
+    },
+    {
+      "strongs_id": "H4428",
+      "original_word": "מֶלֶךְ",
+      "transliteration": "melek",
+      "definition_en": "from H4427 (מָלַךְ);"
+    },
+    {
+      "strongs_id": "H4872",
+      "original_word": "מֹשֶׁה",
+      "transliteration": "Môsheh",
+      "definition_en": "from H4871 (מָשָׁה); drawing out (of the water), i.e. rescued;"
+    },
+    {
+      "strongs_id": "H5030",
+      "original_word": "נָבִיא",
+      "transliteration": "nâbîyʼ",
+      "definition_en": "from H5012 (נָבָא);"
+    },
+    {
+      "strongs_id": "H5315",
+      "original_word": "נֶפֶשׁ",
+      "transliteration": "nephesh",
+      "definition_en": "from H5314 (נָפַשׁ);"
+    },
+    {
+      "strongs_id": "H5769",
+      "original_word": "עוֹלָם",
+      "transliteration": "ʻôwlâm",
+      "definition_en": "or עֹלָם; from H5956 (עָלַם);"
+    },
+    {
+      "strongs_id": "H6086",
+      "original_word": "עֵץ",
+      "transliteration": "ʻêts",
+      "definition_en": "from H6095 (עָצָה);"
+    },
+    {
+      "strongs_id": "H6664",
+      "original_word": "צֶדֶק",
+      "transliteration": "tsedeq",
+      "definition_en": "from H6663 (צָדַק);"
+    },
+    {
+      "strongs_id": "H6918",
+      "original_word": "קָדוֹשׁ",
+      "transliteration": "qâdôwsh",
+      "definition_en": "or קָדֹשׁ; from H6942 (קָדַשׁ);"
+    },
+    {
+      "strongs_id": "H7225",
+      "original_word": "רֵאשִׁית",
+      "transliteration": "rêʼshîyth",
+      "definition_en": "from the same as H7218 (רֹאשׁ);"
+    },
+    {
+      "strongs_id": "H7307",
+      "original_word": "רוּחַ",
+      "transliteration": "rûwach",
+      "definition_en": "from H7306 (רוּחַ);"
+    },
+    {
+      "strongs_id": "H776",
+      "original_word": "אֶרֶץ",
+      "transliteration": "ʼerets",
+      "definition_en": "from an unused root probably meaning to be firm;"
+    },
+    {
+      "strongs_id": "H7965",
+      "original_word": "שָׁלוֹם",
+      "transliteration": "shâlôwm",
+      "definition_en": "or שָׁלֹם; from H7999 (שָׁלַם);"
+    },
+    {
+      "strongs_id": "H8064",
+      "original_word": "שָׁמַיִם",
+      "transliteration": "shâmayim",
+      "definition_en": "dual of an unused singular שָׁמֶה; from an unused root meaning to be lofty;"
+    },
+    {
+      "strongs_id": "H8451",
+      "original_word": "תּוֹרָה",
+      "transliteration": "tôwrâh",
+      "definition_en": "or תֹּרָה; from H3384 (יָרָה);"
+    },
+    {
+      "strongs_id": "H85",
+      "original_word": "אַבְרָהָם",
+      "transliteration": "ʼAbrâhâm",
+      "definition_en": "contracted from H1 (אָב) and an unused root (probably meaning to be populous); father of a multitude;"
+    }
+  ],
+  "aramaic": [
+    {
+      "strongs_id": "H1247",
+      "original_word": "בַּר",
+      "transliteration": "bar",
+      "definition_en": "(Aramaic) corresponding to H1121 (בֵּן);"
+    },
+    {
+      "strongs_id": "H1722",
+      "original_word": "דְּהַב",
+      "transliteration": "dᵉhab",
+      "definition_en": "(Aramaic) corresponding to H2091 (זָהָב);"
+    },
+    {
+      "strongs_id": "H2493",
+      "original_word": "חֵלֶם",
+      "transliteration": "chêlem",
+      "definition_en": "(Aramaic) from a root corresponding to H2492 (חָלַם);"
+    },
+    {
+      "strongs_id": "H2635",
+      "original_word": "חֲסַף",
+      "transliteration": "chăçaph",
+      "definition_en": "(Aramaic) from a root corresponding to that of H2636 (חַסְפַּס);"
+    },
+    {
+      "strongs_id": "H3606",
+      "original_word": "כֹּל",
+      "transliteration": "kôl",
+      "definition_en": "(Aramaic) corresponding to H3605 (כֹּל)"
+    },
+    {
+      "strongs_id": "H3702",
+      "original_word": "כְּסַף",
+      "transliteration": "kᵉçaph",
+      "definition_en": "(Aramaic) corresponding to H3701 (כֶּסֶף)"
+    },
+    {
+      "strongs_id": "H426",
+      "original_word": "אֱלָהּ",
+      "transliteration": "ʼĕlâhh",
+      "definition_en": "(Aramaic) corresponding to H433 (אֱלוֹהַּ);"
+    },
+    {
+      "strongs_id": "H4437",
+      "original_word": "מַלְכוּ",
+      "transliteration": "malkûw",
+      "definition_en": "(Aramaic) corresponding to H4438 (מַלְכוּת);"
+    },
+    {
+      "strongs_id": "H5174",
+      "original_word": "נְחָשׁ",
+      "transliteration": "nᵉchâsh",
+      "definition_en": "(Aramaic) corresponding to H5154 (נְחוּשָׁה);"
+    },
+    {
+      "strongs_id": "H5957",
+      "original_word": "עָלַם",
+      "transliteration": "ʻâlam",
+      "definition_en": "(Aramaic) corresponding to H5769 (עוֹלָם);"
+    },
+    {
+      "strongs_id": "H6523",
+      "original_word": "פַּרְזֶל",
+      "transliteration": "parzel",
+      "definition_en": "(Aramaic) corresponding to H1270 (בַּרְזֶל);"
+    },
+    {
+      "strongs_id": "H6922",
+      "original_word": "קַדִּישׁ",
+      "transliteration": "qaddîysh",
+      "definition_en": "(Aramaic) corresponding to H6918 (קָדוֹשׁ)."
+    },
+    {
+      "strongs_id": "H7261",
+      "original_word": "רַבְרְבָן",
+      "transliteration": "rabrᵉbân",
+      "definition_en": "(Aramaic) from H7260 (רַבְרַב);"
+    },
+    {
+      "strongs_id": "H7985",
+      "original_word": "שׇׁלְטָן",
+      "transliteration": "sholṭân",
+      "definition_en": "(Aramaic) from H7981 (שְׁלֵט);"
+    },
+    {
+      "strongs_id": "H8065",
+      "original_word": "שָׁמַיִן",
+      "transliteration": "shâmayin",
+      "definition_en": "(Aramaic) corresponding to H8064 (שָׁמַיִם)"
+    }
+  ]
+}

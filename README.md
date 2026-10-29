@@ -5,11 +5,22 @@
 [![Database Version](https://img.shields.io/badge/SQLite%20Database-v54%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.328 (Database v54)
+## Latest Verified Release: v1.0.329 (Database v54)
 
-- **Release Package:** [Arabic Bible Study v1.0.328](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.328)
+- **Release Package:** [Arabic Bible Study v1.0.329](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.329)
 - **Database Engine:** **v54** (`bible_study_v54.db`, `targetDbVersion = 54`) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
-- **Key Enhancements in v1.0.328 (Database v54):**
+- **Key Enhancements in v1.0.329 (Database v54):**
+  1. **All 14 Historical Exclusion Manifest Files Committed to Repository:**
+     - Included all historical sample, benchmark, and review files directly in the repository for 100% independent external reproducibility.
+     - Documented explicit nature of each file (lexical dictionaries vs statistical summaries vs verse corpora).
+  2. **Complete Historical Reference Extractor & Authoritative Overlap Audit:**
+     - Scanner extracts 1,603 unique historical verses across the full corpus of 16 historical files.
+     - Confirmed exactly 3 historical overlaps with `measurement_sample_1000_tokens.json` (John 1:49, Rom 7:19, Eph 5:25), with the remaining 57 sample verses (95%) verified as completely independent.
+  3. **Strict [1..21] SBLGNT Token Sequence Matching & Isolated Fresh-Copy Negative Gates:**
+     - Full token-by-token sequence matching for 1 Cor 7:7.
+     - Rigorous negative CI quality gates testing fresh database copies with specific `[FAIL]` rejection assertions.
+
+### Previous Release: v1.0.328 (Database v54)
   1. **Strict Token-by-Token SBLGNT Verification for 1 Corinthians 7:7:**
      - Upgraded quality gate from simple count check to strict set-matching of positions `[1, 2, ..., 21]`.
      - Verified every single position individually against authentic Greek surface, exact MorphGNT raw tag, and Strong's ID.

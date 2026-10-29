@@ -1,5 +1,5 @@
 {
-  "scan_timestamp": "2026-10-29T18:18:10.003Z",
+  "scan_timestamp": "2026-10-29T18:41:59.493Z",
   "files_configured_to_search": 16,
   "files_found_count": 16,
   "files_missing_count": 0,
@@ -7,82 +7,98 @@
     {
       "path": "gold_benchmark_300_verses.json",
       "size_bytes": 2682726,
-      "extracted_verses": 12688
+      "extracted_verses": 12688,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "alignment_audit_v299/gold_benchmark_300_verses.json",
       "size_bytes": 2682726,
-      "extracted_verses": 12688
+      "extracted_verses": 12688,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "alignment_audit_v299/measurement_sample_1000_tokens.json",
       "size_bytes": 642465,
-      "extracted_verses": 2913
+      "extracted_verses": 2913,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "measurement_sample_1000_tokens.json",
       "size_bytes": 642465,
-      "extracted_verses": 2913
+      "extracted_verses": 2913,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "phase1_targets.json",
       "size_bytes": 47864,
-      "extracted_verses": 606
+      "extracted_verses": 606,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "phase2_targets.json",
       "size_bytes": 17724,
-      "extracted_verses": 159
+      "extracted_verses": 159,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "phase2_verified_targets.json",
       "size_bytes": 20221,
-      "extracted_verses": 243
+      "extracted_verses": 243,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "review.json",
       "size_bytes": 224988,
-      "extracted_verses": 687
+      "extracted_verses": 687,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "scripts/whole_verses_audit_sample.json",
       "size_bytes": 128868,
-      "extracted_verses": 183
+      "extracted_verses": 183,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "scripts/fresh_sample_audit.json",
       "size_bytes": 29044,
-      "extracted_verses": 180
+      "extracted_verses": 180,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "scripts/independent_40word_sample_raw.json",
       "size_bytes": 196740,
-      "extracted_verses": 160
+      "extracted_verses": 160,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "scripts/sample_data.json",
       "size_bytes": 13053,
-      "extracted_verses": 0
+      "extracted_verses": 0,
+      "nature": "مفردات معجمية لأرقام سترونغ (قائمة كلمات وليس سجل آيات)"
     },
     {
       "path": "scratch/review_v317_evidence/review.json",
       "size_bytes": 224988,
-      "extracted_verses": 687
+      "extracted_verses": 687,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "scratch/review_v317_evidence/baseline/review.json",
       "size_bytes": 224988,
-      "extracted_verses": 687
+      "extracted_verses": 687,
+      "nature": "سجل آيات وشواهد تاريخية"
     },
     {
       "path": "baselines/benchmark_300_verses_eval.json",
       "size_bytes": 1885,
-      "extracted_verses": 0
+      "extracted_verses": 0,
+      "nature": "ملخص إحصائي ونسب دقة تقييمية (بيانات ملخصة وليس قائمة شواهد آيات)"
     },
     {
       "path": "scripts/user_10_verses_dump.json",
       "size_bytes": 108557,
-      "extracted_verses": 369
+      "extracted_verses": 369,
+      "nature": "سجل آيات وشواهد تاريخية"
     }
   ],
   "files_missing": [],

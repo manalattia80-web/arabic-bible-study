@@ -1,0 +1,1829 @@
+[
+  {
+    "id": "80e3c4cb-17eb-4648-88da-de9be2dc76a7",
+    "citation": "التكوين 28:11",
+    "ar_word": "حِجَارَةِ",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "17b6bfc7-29a6-4e3e-927d-f71d5925aa3d",
+    "citation": "التكوين 29:8",
+    "ar_word": "الْحَجَرَ",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: الحجر"
+  },
+  {
+    "id": "0822b6d3-3eab-4971-8e63-7be04a0e162d",
+    "citation": "الخروج 17:12",
+    "ar_word": "حَجَرًا",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجر"
+  },
+  {
+    "id": "ef75065f-9658-42a1-ac18-3834d6cf8a0a",
+    "citation": "اللاويين 26:26",
+    "ar_word": "عصا",
+    "orig_word": "מַטֶּה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4294",
+    "desc": "اسم: عصا"
+  },
+  {
+    "id": "26ed3977-2eb5-43f6-a040-6680f4de1fb3",
+    "citation": "العدد 9:13",
+    "ar_word": "تقرّب",
+    "orig_word": "קָרַב",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H7126",
+    "desc": "فعل: تقرب"
+  },
+  {
+    "id": "60bd4091-38c8-4d18-ab55-9411fb34b9e3",
+    "citation": "العدد 14:36",
+    "ar_word": "ارسلهم",
+    "orig_word": "שָׁלַח",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H7971",
+    "desc": "فعل: ارسلهم"
+  },
+  {
+    "id": "332ad9fe-553a-40f7-97fd-560f296375bf",
+    "citation": "العدد 14:36",
+    "ar_word": "الارض",
+    "orig_word": "אֶרֶץ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H776",
+    "desc": "اسم: الأرض"
+  },
+  {
+    "id": "c42de989-d0ae-46bb-8175-834d0e4a7c7e",
+    "citation": "العدد 14:36",
+    "ar_word": "الارض",
+    "orig_word": "אֶרֶץ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H776",
+    "desc": "اسم: الأرض"
+  },
+  {
+    "id": "bfdc5073-3a07-4b18-b42c-cf2503b21ab2",
+    "citation": "العدد 14:37",
+    "ar_word": "الارض",
+    "orig_word": "אֶרֶץ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H776",
+    "desc": "اسم: الأرض"
+  },
+  {
+    "id": "552d9fcb-0a98-4ae3-bc8b-538515ed1701",
+    "citation": "العدد 14:38",
+    "ar_word": "الارض",
+    "orig_word": "אֶרֶץ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H776",
+    "desc": "اسم: الأرض"
+  },
+  {
+    "id": "aa248c2c-3dee-48e9-b7d9-63afb419396a",
+    "citation": "العدد 26:61",
+    "ar_word": "نارا",
+    "orig_word": "אֵשׁ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H784",
+    "desc": "اسم: نار"
+  },
+  {
+    "id": "f3170580-655d-4310-abc0-38cc6cf9dbcf",
+    "citation": "التثنية 4:26",
+    "ar_word": "تَبِيدُونَ",
+    "orig_word": "אָבַד",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6",
+    "desc": "فعل: تبيدون"
+  },
+  {
+    "id": "390ca489-eaeb-401d-8d7d-8f7fc742f76d",
+    "citation": "يشوع 4:3",
+    "ar_word": "حجرا",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجر"
+  },
+  {
+    "id": "01cf179f-0305-4c1a-9c89-18ed9cc8bb62",
+    "citation": "يشوع 8:29",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "f05aa08d-dd76-452c-a6a3-ee7bb73ebab1",
+    "citation": "صموئيل الثاني 13:22",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "4c98b201-1b0b-416d-9115-4dcc56e1a26a",
+    "citation": "صموئيل الثاني 13:26",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "6842d10a-1568-4012-a7e6-513ee0250df8",
+    "citation": "صموئيل الثاني 13:32",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "58542969-502c-4c34-8152-8791cec00f59",
+    "citation": "صموئيل الثاني 13:34",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "0db97f9a-590c-4f57-9e20-be196310b493",
+    "citation": "صموئيل الثاني 13:37",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "07f412df-9b6a-4de9-971d-52ae00552f51",
+    "citation": "صموئيل الثاني 13:38",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "d977ca4b-ce4c-496f-973a-47c3c47d1a54",
+    "citation": "صموئيل الثاني 13:39",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "ae234199-3326-41f9-b73a-fe3e40fb8227",
+    "citation": "صموئيل الثاني 14:1",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "75006082-8dc4-47fa-a451-e1d6aa8c5d4b",
+    "citation": "صموئيل الثاني 14:21",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "13068809-942c-454f-b04a-28e1aceff8a0",
+    "citation": "صموئيل الثاني 14:24",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "225ab2a8-6f5c-4682-b5dc-e7e209411afc",
+    "citation": "صموئيل الثاني 15:1",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "7d74b97b-5a17-4ac3-9e49-f17f0c94289f",
+    "citation": "صموئيل الثاني 15:2",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "21455983-d0a0-4905-9bda-49d500392062",
+    "citation": "صموئيل الثاني 15:2",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "1606f6e9-c79d-4a42-86fb-0b8f051234e4",
+    "citation": "صموئيل الثاني 15:3",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "ac74de99-2cb3-4269-aa34-8075c6f0b63b",
+    "citation": "صموئيل الثاني 15:4",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "e4fd7b3c-77b8-45b1-b95f-922763970904",
+    "citation": "صموئيل الثاني 15:6",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "88197b22-154d-458a-8500-bd2e86985c29",
+    "citation": "صموئيل الثاني 15:6",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "ccc54bab-3b52-4f68-a0c7-978d444794c6",
+    "citation": "صموئيل الثاني 15:7",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "c42bcd13-f152-453b-a865-c8b86a3c6b0a",
+    "citation": "صموئيل الثاني 15:10",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "a7122b77-e10c-49aa-93f4-01e2620d67a7",
+    "citation": "صموئيل الثاني 15:10",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "d67d37ca-9e7f-4a0e-985c-3b60e4891ef7",
+    "citation": "صموئيل الثاني 17:4",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "bf5cbdd8-107b-42a5-96d3-f34deeb16d1c",
+    "citation": "صموئيل الثاني 17:5",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "fddc8691-174f-4337-b390-634f1a4e7de4",
+    "citation": "صموئيل الثاني 17:14",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "f5980082-bc07-4c6b-a3db-b443d7a03c1a",
+    "citation": "صموئيل الثاني 17:18",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "64e56e06-d36b-4d40-8f25-2dd34ed09593",
+    "citation": "صموئيل الثاني 17:20",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "b8b50183-a966-4e23-91a2-167749e0800f",
+    "citation": "صموئيل الثاني 17:24",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "dfd85abb-9a02-4557-9261-ff302ed88232",
+    "citation": "صموئيل الثاني 17:25",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "b64b5b5b-b935-4da0-ad21-432e35c53b7e",
+    "citation": "صموئيل الثاني 18:5",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "3a7ba0a2-ca13-4907-b3c4-3bf3438bc669",
+    "citation": "صموئيل الثاني 18:9",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "1fa7b5c0-12c4-44cf-affe-c284683f1064",
+    "citation": "صموئيل الثاني 18:9",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "c3c97a89-2864-4fd0-aa6c-36aa1a2b3a0b",
+    "citation": "صموئيل الثاني 18:10",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "45301d03-8087-4cb1-a78b-7917ef256875",
+    "citation": "صموئيل الثاني 18:12",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "29381bab-0239-4d5c-95d4-a551203bc38b",
+    "citation": "صموئيل الثاني 18:14",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "1c227c7a-1d45-4be3-a497-e747028ea6ce",
+    "citation": "صموئيل الثاني 18:15",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "8c332a55-59a6-4aee-8c5a-b457653a542c",
+    "citation": "صموئيل الثاني 18:29",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "0bf44a7f-0f3f-4160-9aee-1eb294ddf069",
+    "citation": "صموئيل الثاني 18:32",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "3af06e42-3a35-40f6-9e3c-1688615a422a",
+    "citation": "صموئيل الثاني 19:1",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "aafaf163-3f6b-414a-95e2-601d50d7bff1",
+    "citation": "صموئيل الثاني 19:4",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "972f277a-fb73-4c23-b22f-eac3fe7595fe",
+    "citation": "صموئيل الثاني 19:4",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "8d1cc0c5-60e2-4248-85ac-07d8edc47685",
+    "citation": "صموئيل الثاني 19:6",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "1db72dd9-f855-4f83-916b-6c5ee4af7aec",
+    "citation": "صموئيل الثاني 20:6",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "60289085-353b-429a-9448-36924f983fb9",
+    "citation": "الملوك الأول 1:6",
+    "ar_word": "ابشالوم",
+    "orig_word": "אֲבִישָׁלוֹם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H53",
+    "desc": "اسم علم: ابشالوم"
+  },
+  {
+    "id": "f241c716-f034-42d1-9d3a-8f1213e1aadd",
+    "citation": "الملوك الأول 5:17",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "276917d1-0d83-4d04-96e8-93ce12573f58",
+    "citation": "الملوك الأول 15:22",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "64250200-4854-498c-abd9-2db885f830e0",
+    "citation": "أخبار الأيام الأول 12:2",
+    "ar_word": "الحجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: الحجارة"
+  },
+  {
+    "id": "12951e6e-5bf8-43f2-8d26-3c382f000115",
+    "citation": "أخبار الأيام الثاني 34:11",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "a20a8df9-e70b-4844-a9f8-7050abdd8de2",
+    "citation": "عزرا 6:4",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "e267c1cb-f585-485c-b740-844b467762f2",
+    "citation": "أيوب 14:19",
+    "ar_word": "الحجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: الحجارة"
+  },
+  {
+    "id": "8a487e1e-4faf-4df2-9111-e8c0ee25eff2",
+    "citation": "أيوب 40:14",
+    "ar_word": "أَحْمَدُكَ",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: أحمدك"
+  },
+  {
+    "id": "19ca8a15-81e4-4519-a782-30a6c83aa7dd",
+    "citation": "أيوب 41:28",
+    "ar_word": "حِجَارَةُ",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "da5ac1f0-53cd-4b4a-90ec-83adc1f35e5d",
+    "citation": "المزامير 69:13",
+    "ar_word": "اسْتَجِبْ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6030",
+    "desc": "فعل: استجب"
+  },
+  {
+    "id": "c4dea689-da1f-4980-91d1-54e161f522a8",
+    "citation": "المزامير 69:16",
+    "ar_word": "اسْتَجِبْ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6030",
+    "desc": "فعل: استجب"
+  },
+  {
+    "id": "ee40df1c-1cc7-477b-8674-1cf1eb80c9d8",
+    "citation": "المزامير 69:17",
+    "ar_word": "اسْتَجِبْ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6030",
+    "desc": "فعل: استجب"
+  },
+  {
+    "id": "c4022bbf-9082-4b9b-b977-27b30fac0d0e",
+    "citation": "المزامير 71:22",
+    "ar_word": "أَحْمَدُكَ",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: أحمدك"
+  },
+  {
+    "id": "4a7ef6df-da67-4eae-a748-a5953ed5f491",
+    "citation": "المزامير 74:7",
+    "ar_word": "اسْمِكَ.",
+    "orig_word": "שֵׁם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8034",
+    "desc": "اسم: اسمك"
+  },
+  {
+    "id": "731b7708-2e10-4826-9a48-9e4be85464c0",
+    "citation": "المزامير 75:1",
+    "ar_word": "نَحْمَدُكَ،",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: نحمدك"
+  },
+  {
+    "id": "14c71c1a-3a61-4d88-b6c5-62264698bb07",
+    "citation": "المزامير 75:1",
+    "ar_word": "نَحْمَدُكَ،",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: نحمدك"
+  },
+  {
+    "id": "80aad658-d9aa-4862-855b-c19fcaf2b52e",
+    "citation": "المزامير 79:9",
+    "ar_word": "اسْمِكَ،",
+    "orig_word": "שֵׁם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8034",
+    "desc": "اسم: اسمك"
+  },
+  {
+    "id": "70642aed-5f44-4326-b8e0-374ed2f978fb",
+    "citation": "المزامير 79:9",
+    "ar_word": "اسْمِكَ.",
+    "orig_word": "שֵׁם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8034",
+    "desc": "اسم: اسمك"
+  },
+  {
+    "id": "affd52be-74e8-4953-81f2-48fc3a6f501e",
+    "citation": "المزامير 79:13",
+    "ar_word": "نَحْمَدُكَ",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: نحمدك"
+  },
+  {
+    "id": "bc93c030-8ff2-4e0d-a43b-6046795a477e",
+    "citation": "المزامير 81:13",
+    "ar_word": "طُرُقِي،",
+    "orig_word": "דֶּרֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1870",
+    "desc": "اسم: طرقي"
+  },
+  {
+    "id": "fc91f86f-e708-4954-b54e-c3052c4ee182",
+    "citation": "المزامير 86:1",
+    "ar_word": "اسْتَجِبْ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6030",
+    "desc": "فعل: استجب"
+  },
+  {
+    "id": "d8e70d90-a427-4bee-8883-b7cb1456c326",
+    "citation": "المزامير 86:6",
+    "ar_word": "تَضَرُّعَاتِي.",
+    "orig_word": "תַּחֲנוּן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8469",
+    "desc": "اسم: تضرعاتي"
+  },
+  {
+    "id": "b3e1b7b7-c6df-47bb-9e18-2a1cd1a934ed",
+    "citation": "المزامير 86:11",
+    "ar_word": "اسْمِكَ.",
+    "orig_word": "שֵׁם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8034",
+    "desc": "اسم: اسمك"
+  },
+  {
+    "id": "c54b27f5-16a3-4a15-b3b2-e8c5ea227292",
+    "citation": "المزامير 86:12",
+    "ar_word": "أَحْمَدُكَ",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: أحمدك"
+  },
+  {
+    "id": "d7a31fef-de34-44d3-b39a-e6c08859b7bb",
+    "citation": "المزامير 93:5",
+    "ar_word": "شَهَادَاتُكَ",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "48a993b6-23a1-44bc-9090-ac3193ab0392",
+    "citation": "المزامير 96:2",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "715dbfe1-dfeb-4dda-97e3-195826affeae",
+    "citation": "المزامير 100:4",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "cf2490c5-8240-4e71-b638-2b6be25a45d0",
+    "citation": "المزامير 102:2",
+    "ar_word": "اسْتَجِبْ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6030",
+    "desc": "فعل: استجب"
+  },
+  {
+    "id": "3f231754-6b1f-4b41-88f4-2d70a6b266b8",
+    "citation": "المزامير 103:1",
+    "ar_word": "بَارِكِي",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركي"
+  },
+  {
+    "id": "7cf075c0-f870-45ea-ab46-7578d1bca09a",
+    "citation": "المزامير 103:2",
+    "ar_word": "بَارِكِي",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركي"
+  },
+  {
+    "id": "e14c62b6-8fc3-447e-871f-6fc55867ec7c",
+    "citation": "المزامير 103:20",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "3e3af879-6d02-41f3-8be7-a779b439246a",
+    "citation": "المزامير 103:21",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "528aaad2-5583-4baa-af35-60e0212ec92d",
+    "citation": "المزامير 103:22",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "8620245d-967d-43a0-8d5c-c2977539700a",
+    "citation": "المزامير 103:22",
+    "ar_word": "بَارِكِي",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركي"
+  },
+  {
+    "id": "8401c168-5b2e-4f43-b8ef-95826e7cafa6",
+    "citation": "المزامير 104:1",
+    "ar_word": "بَارِكِي",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركي"
+  },
+  {
+    "id": "fa1ee7d6-5127-4bef-a3d7-cd759b2d9258",
+    "citation": "المزامير 104:35",
+    "ar_word": "بَارِكِي",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركي"
+  },
+  {
+    "id": "0dcf44a2-efd3-45a8-adf2-3fb456f0625e",
+    "citation": "المزامير 104:35",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "e964e58d-7f19-43de-be12-ae08671d481c",
+    "citation": "المزامير 105:1",
+    "ar_word": "اِحْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: احمدوا"
+  },
+  {
+    "id": "296df61f-d360-4792-8d9b-94cb3f82b116",
+    "citation": "المزامير 105:45",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "cffa84b6-7eb8-459a-a03f-6ff374e752dd",
+    "citation": "المزامير 106:1",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "fb43cbd9-dd80-4f02-b14d-b0c0ad32f022",
+    "citation": "المزامير 106:1",
+    "ar_word": "اِحْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: احمدوا"
+  },
+  {
+    "id": "b4f1eaf5-2912-4fe7-9b91-fbc6cc798c65",
+    "citation": "المزامير 106:48",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "6ca75f79-1601-4af6-bc5a-41e8347c6933",
+    "citation": "المزامير 107:1",
+    "ar_word": "اِحْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: احمدوا"
+  },
+  {
+    "id": "6348c93e-fd45-49ae-ad9f-1cb32564b344",
+    "citation": "المزامير 108:3",
+    "ar_word": "أَحْمَدُكَ",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: أحمدك"
+  },
+  {
+    "id": "063a550b-9e62-488e-9591-47ef8b25902b",
+    "citation": "المزامير 109:21",
+    "ar_word": "اسْمِكَ.",
+    "orig_word": "שֵׁם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8034",
+    "desc": "اسم: اسمك"
+  },
+  {
+    "id": "328d85a1-4132-4be6-9fa4-5eac395153f3",
+    "citation": "المزامير 111:1",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "bc8b7455-573e-4128-8356-d2cf9d0c376e",
+    "citation": "المزامير 112:1",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "df232141-405d-4f96-9762-9944ee40172c",
+    "citation": "المزامير 113:1",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "21e41872-0ec0-4bfd-baf4-687420c8cfad",
+    "citation": "المزامير 113:9",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "dce7f180-915e-40ca-a759-4c9416b75d4a",
+    "citation": "المزامير 115:18",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "b6a23444-c0e1-4db4-9a49-45dad1b1b34b",
+    "citation": "المزامير 116:1",
+    "ar_word": "تَضَرُّعَاتِي.",
+    "orig_word": "תַּחֲנוּן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8469",
+    "desc": "اسم: تضرعاتي"
+  },
+  {
+    "id": "8ef0fbf5-6f86-4436-9620-0c5295da4b1b",
+    "citation": "المزامير 116:19",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "f30c0312-9ee0-47f2-a5e8-cb4337cb5066",
+    "citation": "المزامير 117:2",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "549d99f4-9d0b-4984-a23e-297c55376368",
+    "citation": "المزامير 118:1",
+    "ar_word": "اِحْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: احمدوا"
+  },
+  {
+    "id": "e56a0866-e65b-4ad2-962b-30a9bf97ba3e",
+    "citation": "المزامير 118:21",
+    "ar_word": "أَحْمَدُكَ",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: أحمدك"
+  },
+  {
+    "id": "8242c067-a0eb-49b1-a34f-fcec429e3ca7",
+    "citation": "المزامير 118:29",
+    "ar_word": "احْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: احمدوا"
+  },
+  {
+    "id": "67b186c8-1ba9-4d74-9776-5679b2165b65",
+    "citation": "المزامير 119:5",
+    "ar_word": "طُرُقِي",
+    "orig_word": "דֶּרֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1870",
+    "desc": "اسم: طرقي"
+  },
+  {
+    "id": "72838013-8340-4edc-b5be-25b41308f392",
+    "citation": "المزامير 119:7",
+    "ar_word": "أَحْمَدُكَ",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: أحمدك"
+  },
+  {
+    "id": "75779767-743f-47bb-b9ed-578e71431e4e",
+    "citation": "المزامير 119:8",
+    "ar_word": "وَصَايَاكَ",
+    "orig_word": "מִצְוָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4687",
+    "desc": "اسم: وصاياك"
+  },
+  {
+    "id": "23c2f0a6-1ee1-4f32-9380-3fe2339d624c",
+    "citation": "المزامير 119:22",
+    "ar_word": "شَهَادَاتِكَ.",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "42f79605-3ea5-4550-b197-fe92c0973577",
+    "citation": "المزامير 119:24",
+    "ar_word": "شَهَادَاتُكَ",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "1799eb12-3b55-4ff1-8ab5-77f0cd01f07e",
+    "citation": "المزامير 119:40",
+    "ar_word": "وَصَايَاكَ.",
+    "orig_word": "מִצְוָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4687",
+    "desc": "اسم: وصاياك"
+  },
+  {
+    "id": "dd1c5d3a-27dc-45ac-9825-29b7a17710a4",
+    "citation": "المزامير 119:45",
+    "ar_word": "وَصَايَاكَ.",
+    "orig_word": "מִצְוָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4687",
+    "desc": "اسم: وصاياك"
+  },
+  {
+    "id": "23f7163b-f399-4133-8d0e-87b19720bab4",
+    "citation": "المزامير 119:56",
+    "ar_word": "وَصَايَاكَ.",
+    "orig_word": "מִצְוָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4687",
+    "desc": "اسم: وصاياك"
+  },
+  {
+    "id": "cab0093e-2ce9-4c38-839b-a0ff70cfaf29",
+    "citation": "المزامير 119:59",
+    "ar_word": "طُرُقِي،",
+    "orig_word": "דֶּרֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1870",
+    "desc": "اسم: طرقي"
+  },
+  {
+    "id": "8413d10d-d3bb-4576-8fa0-9576e05da297",
+    "citation": "المزامير 119:59",
+    "ar_word": "شَهَادَاتِكَ.",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "06c8ba2d-5d54-4266-93c6-82798ffb0847",
+    "citation": "المزامير 119:79",
+    "ar_word": "شَهَادَاتِكَ.",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "7fbf5049-5aeb-45f9-910f-aa187dc611d7",
+    "citation": "المزامير 119:119",
+    "ar_word": "شَهَادَاتِكَ.",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "c4e925ab-289c-41f7-bf71-bef766b7e553",
+    "citation": "المزامير 119:125",
+    "ar_word": "شَهَادَاتِكَ.",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "c20b1a62-4478-428f-b9c9-736c2d3550b5",
+    "citation": "المزامير 119:132",
+    "ar_word": "اسْمِكَ.",
+    "orig_word": "שֵׁם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8034",
+    "desc": "اسم: اسمك"
+  },
+  {
+    "id": "f3c2a4f4-59d2-4a04-8fda-9cc6aee12c55",
+    "citation": "المزامير 119:141",
+    "ar_word": "وَصَايَاكَ",
+    "orig_word": "מִצְוָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H4687",
+    "desc": "اسم: وصاياك"
+  },
+  {
+    "id": "bde6123f-420d-4d27-aa62-8dec3620991c",
+    "citation": "المزامير 119:145",
+    "ar_word": "اسْتَجِبْ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6030",
+    "desc": "فعل: استجب"
+  },
+  {
+    "id": "0d486073-96e2-4641-a0be-3940df5f1dc9",
+    "citation": "المزامير 119:146",
+    "ar_word": "شَهَادَاتِكَ.",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "bac3d0aa-997c-460e-a983-a6a44e98cd5a",
+    "citation": "المزامير 119:152",
+    "ar_word": "شَهَادَاتِكَ",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "d7a88a87-501f-4cb8-83b6-5fb8f2765f1a",
+    "citation": "المزامير 119:167",
+    "ar_word": "شَهَادَاتِكَ،",
+    "orig_word": "עֵדוּת",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H5713",
+    "desc": "اسم: شهاداتك"
+  },
+  {
+    "id": "849a94a3-6202-4c6d-976b-bd10a71eec53",
+    "citation": "المزامير 119:168",
+    "ar_word": "طُرُقِي",
+    "orig_word": "דֶּרֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1870",
+    "desc": "اسم: طرقي"
+  },
+  {
+    "id": "0d21d1be-c6b3-4f6e-8d3f-57f0c059b436",
+    "citation": "المزامير 130:2",
+    "ar_word": "تَضَرُّعَاتِي.",
+    "orig_word": "תַּחֲנוּן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8469",
+    "desc": "اسم: تضرعاتي"
+  },
+  {
+    "id": "d45c5782-1e13-40bf-ac80-421650ee493d",
+    "citation": "المزامير 134:1",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "8769208c-cbfd-4376-9f93-e9d3254f5f7a",
+    "citation": "المزامير 135:1",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "1d1447bc-c09d-4e03-9e34-094214fed58d",
+    "citation": "المزامير 135:19",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "55d3eb5e-aa0f-4459-840c-3afe60f6910f",
+    "citation": "المزامير 135:19",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "9a296c9a-0d44-4641-8f89-0b6d9c328c49",
+    "citation": "المزامير 135:20",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "00e4411b-6bb5-4c0a-8d1e-43dcc390f187",
+    "citation": "المزامير 135:20",
+    "ar_word": "بَارِكُوا",
+    "orig_word": "בָּרַךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1288",
+    "desc": "فعل: باركوا"
+  },
+  {
+    "id": "e590b60e-dcf8-4917-a8e8-7f13da52e825",
+    "citation": "المزامير 135:21",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "effc2f86-9d44-42ed-a397-8dc008847709",
+    "citation": "المزامير 136:1",
+    "ar_word": "اِحْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: احمدوا"
+  },
+  {
+    "id": "7ede738b-09ae-40ab-a8a9-b00c5851c7f1",
+    "citation": "المزامير 136:2",
+    "ar_word": "احْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: احمدوا"
+  },
+  {
+    "id": "22d77af3-2e44-43e6-8f78-f63c61154b61",
+    "citation": "المزامير 136:3",
+    "ar_word": "احْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: احمدوا"
+  },
+  {
+    "id": "d13f66eb-d7f1-4d7d-b872-fb1cbeaf7995",
+    "citation": "المزامير 136:26",
+    "ar_word": "احْمَدُوا",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: احمدوا"
+  },
+  {
+    "id": "4e5cf6ae-9f4f-429b-825c-9cdd19d1d6eb",
+    "citation": "المزامير 138:1",
+    "ar_word": "أَحْمَدُكَ",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: أحمدك"
+  },
+  {
+    "id": "bf16933c-7e9c-41cb-ae4a-26a2e0c40fcf",
+    "citation": "المزامير 138:2",
+    "ar_word": "اسْمِكَ.",
+    "orig_word": "שֵׁם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8034",
+    "desc": "اسم: اسمك"
+  },
+  {
+    "id": "5c76b27f-e76b-4d89-bdd6-08709d53a398",
+    "citation": "المزامير 139:14",
+    "ar_word": "أَحْمَدُكَ",
+    "orig_word": "יָדָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H3034",
+    "desc": "فعل: أحمدك"
+  },
+  {
+    "id": "9abe93f7-883f-4afa-9753-69930da82653",
+    "citation": "المزامير 140:6",
+    "ar_word": "تَضَرُّعَاتِي.",
+    "orig_word": "תַּחֲנוּן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8469",
+    "desc": "اسم: تضرعاتي"
+  },
+  {
+    "id": "f5bc0e22-2513-4c70-91ee-44681c6aec2c",
+    "citation": "المزامير 142:7",
+    "ar_word": "اسْمِكَ.",
+    "orig_word": "שֵׁם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8034",
+    "desc": "اسم: اسمك"
+  },
+  {
+    "id": "27591f34-50d3-4762-a877-270732cb3716",
+    "citation": "المزامير 143:1",
+    "ar_word": "تَضَرُّعَاتِي.",
+    "orig_word": "תַּחֲנוּן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8469",
+    "desc": "اسم: تضرعاتي"
+  },
+  {
+    "id": "4a4d2140-3658-4042-b965-5eaeb3b5d0d1",
+    "citation": "المزامير 143:1",
+    "ar_word": "اسْتَجِبْ",
+    "orig_word": "עָנָה",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H6030",
+    "desc": "فعل: استجب"
+  },
+  {
+    "id": "5b592d6a-8d01-4c10-864b-38f35bcbae32",
+    "citation": "المزامير 143:11",
+    "ar_word": "اسْمِكَ",
+    "orig_word": "שֵׁם",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H8034",
+    "desc": "اسم: اسمك"
+  },
+  {
+    "id": "5a8c58a7-7d2d-4f72-8f75-bf956792ff65",
+    "citation": "المزامير 146:1",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "71d84f01-bd84-48de-ba40-f4ef1c359871",
+    "citation": "المزامير 146:10",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "6300267f-d584-45ad-b2d8-9c307d03ec6d",
+    "citation": "المزامير 147:20",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "3a1bc553-7cea-44df-a7ac-ed05323330c8",
+    "citation": "المزامير 148:1",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "eab8b7ec-0402-413c-bc33-8e8f8393be7a",
+    "citation": "المزامير 148:14",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "a907ba95-57bc-436d-874d-63ea2a07052e",
+    "citation": "المزامير 149:1",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "939cc5fb-c36d-49e8-bd13-b08ac0b0f5ea",
+    "citation": "المزامير 149:9",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "8b6d3da3-b57c-4843-8352-c689999bd104",
+    "citation": "المزامير 150:1",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "afb4340d-6e00-418f-83f6-a35dc38caa95",
+    "citation": "المزامير 150:5",
+    "ar_word": "هَلِّلُويَا.",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "fa65dc8d-bb37-461e-be3b-6a6d63bdfa32",
+    "citation": "المزامير 150:6",
+    "ar_word": "هللويا",
+    "orig_word": "הָלַל",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1984",
+    "desc": "تسبيح: هللويا"
+  },
+  {
+    "id": "71a93563-7f7b-42d4-9173-8f6826af3d22",
+    "citation": "إشعياء 27:9",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "2ec5c9c9-ed41-41cd-b7cd-c161987035ac",
+    "citation": "إشعياء 55:8",
+    "ar_word": "طُرُقِي،",
+    "orig_word": "דֶּרֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1870",
+    "desc": "اسم: طرقي"
+  },
+  {
+    "id": "84f73c61-8ce0-4eeb-82e8-d9c0a8b6818a",
+    "citation": "إشعياء 55:9",
+    "ar_word": "طُرُقِي",
+    "orig_word": "דֶּרֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1870",
+    "desc": "اسم: طرقي"
+  },
+  {
+    "id": "6add6317-70a7-4260-8dc8-afafd5632c75",
+    "citation": "إشعياء 57:6",
+    "ar_word": "حِجَارَةِ",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "fe0b38e6-3ae1-44c5-b11b-0f005b76ec17",
+    "citation": "إشعياء 58:2",
+    "ar_word": "طُرُقِي",
+    "orig_word": "דֶּרֶךְ",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H1870",
+    "desc": "اسم: طرقي"
+  },
+  {
+    "id": "ae0fde3d-3395-4d3c-a3f3-3b118ad126a9",
+    "citation": "مراثي إرميا 4:1",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "d7365b58-821b-41a4-912a-fd9b58be920c",
+    "citation": "حزقيال 13:11",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "98f2b23a-acec-4cc9-bbeb-1471454a361e",
+    "citation": "حزقيال 28:16",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "5870f860-d5d6-449d-9bf0-d6f48fb1b509",
+    "citation": "دانيال 2:35",
+    "ar_word": "الحجر",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: الحجر"
+  },
+  {
+    "id": "399b1da2-4815-4c61-a3b8-2864ff8335ce",
+    "citation": "عاموس 5:11",
+    "ar_word": "حجارة",
+    "orig_word": "אֶבֶן",
+    "orig_word_lang": "hebrew",
+    "strongs_id": "H68",
+    "desc": "اسم: حجارة"
+  },
+  {
+    "id": "cd60a0a2-a191-471b-a137-450b691c86c1",
+    "citation": "متى 5:20",
+    "ar_word": "الْكَتَبَةِ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "f1f37fd3-36a9-41ce-942d-4a0f358245fa",
+    "citation": "متى 9:3",
+    "ar_word": "الْكَتَبَةِ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "b5300d94-2630-4b0b-8bb8-ff962d071a36",
+    "citation": "متى 12:38",
+    "ar_word": "الْكَتَبَةِ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "cfed15ce-8598-40cd-b74b-ae2099a9afe6",
+    "citation": "متى 17:10",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "949479ac-94bb-41da-8fec-64bf091623b5",
+    "citation": "متى 23:2",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "e4a64c2e-2565-4447-b808-a70297366a22",
+    "citation": "متى 23:13",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "5558b2ef-4aae-4698-9b5d-8db1e2e3351a",
+    "citation": "متى 23:14",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "c59ecdb0-8868-4fd0-b029-0fdfab35d6b8",
+    "citation": "متى 23:15",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "31c3f261-9716-4787-b2b8-76785c32a2db",
+    "citation": "متى 23:23",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "31ea2667-25c0-46ff-8333-726b9677366a",
+    "citation": "متى 23:25",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "7bd930f0-58ba-4aef-b19a-f08873bd64ab",
+    "citation": "متى 23:27",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "08dc320e-d644-45e7-bd28-c3e863641e1f",
+    "citation": "متى 23:29",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "93608ff8-5eb1-41aa-ae9c-31215f28a199",
+    "citation": "متى 26:57",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "92d7c393-561b-4d88-bdcc-559445da836e",
+    "citation": "متى 27:41",
+    "ar_word": "الْكَتَبَةِ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "f0d82db2-e360-4460-a0d3-ce5387605e0c",
+    "citation": "مرقس 2:6",
+    "ar_word": "الْكَتَبَةِ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "46de8748-7c15-4fc8-a4f8-7a4f8cc5800b",
+    "citation": "مرقس 2:16",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "ecf6000f-6bdc-4fe9-95ae-23f5f31e6baf",
+    "citation": "مرقس 3:22",
+    "ar_word": "الْكَتَبَةُ",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "b7e66d98-cf86-4566-b2a7-fe2a378169bf",
+    "citation": "مرقس 7:1",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "ba445d9b-2c08-4968-8aa0-667548359921",
+    "citation": "مرقس 9:11",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "b9fba11d-5f92-4f73-a72b-7d1164324ca9",
+    "citation": "مرقس 9:16",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "c4013d88-b30e-425b-b25a-7f366570788c",
+    "citation": "مرقس 11:18",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "f307c954-8114-46ce-8a91-7f2af48daa52",
+    "citation": "مرقس 12:28",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "b7ba8aa1-9f6f-44fd-aaf7-2d7e1ed2b58c",
+    "citation": "مرقس 12:35",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "66cb70a2-a7bd-4e7b-a8e5-3ccbb82ebf0b",
+    "citation": "مرقس 12:38",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "90b47cc1-bdc5-4000-a176-8e465fba25cf",
+    "citation": "مرقس 15:31",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "16d328c3-f467-44af-a559-078f6c89639b",
+    "citation": "لوقا 5:21",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "09c138f4-982b-4ab8-8291-20d24bb8e4d1",
+    "citation": "لوقا 6:7",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "fb3e877a-1b62-49d8-ace4-5b5f20221cc3",
+    "citation": "لوقا 11:44",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "f6993183-e8bd-4fc9-adf0-2a8fe1e792f8",
+    "citation": "لوقا 11:53",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "d068e248-20fd-47aa-8250-619c965852ff",
+    "citation": "لوقا 20:39",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "edf7575c-d572-4c1c-a943-4f8b410f43fa",
+    "citation": "لوقا 20:46",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  },
+  {
+    "id": "5e778c6b-98d4-4d9b-bf5f-60690abb9187",
+    "citation": "يوحنا 8:3",
+    "ar_word": "الكتبة",
+    "orig_word": "γραμματεύς",
+    "orig_word_lang": "greek",
+    "strongs_id": "G1122",
+    "desc": "مصطلح كتابي: الكتبة"
+  }
+]

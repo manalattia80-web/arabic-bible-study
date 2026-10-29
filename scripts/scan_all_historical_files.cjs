@@ -277,8 +277,18 @@ for (const relPath of historicalFileCandidates) {
 
     inspect(data);
 
-    filesFound.push({ path: relPath, size_bytes: raw.length, extracted_verses: extractedCount });
-    console.log(`  [SCANNED] ${relPath} (extracted ${extractedCount} verse references)`);
+    const fileDescriptions = {
+      'scripts/sample_data.json': 'مفردات معجمية لأرقام سترونغ (قائمة كلمات وليس سجل آيات)',
+      'baselines/benchmark_300_verses_eval.json': 'ملخص إحصائي ونسب دقة تقييمية (بيانات ملخصة وليس قائمة شواهد آيات)'
+    };
+
+    filesFound.push({
+      path: relPath,
+      size_bytes: raw.length,
+      extracted_verses: extractedCount,
+      nature: fileDescriptions[relPath] || 'سجل آيات وشواهد تاريخية'
+    });
+    console.log(`  [SCANNED] ${relPath} (extracted ${extractedCount} verse references)${fileDescriptions[relPath] ? ' - ' + fileDescriptions[relPath] : ''}`);
   } catch (e) {
     console.error(`  [ERROR] Parsing failed for ${relPath}: ${e.message}`);
     filesMissing.push(relPath);
