@@ -2,10 +2,29 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v48%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v49%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.319 (Database v48)
+## Latest Verified Release: v1.0.320 (Database v49)
+
+- **Release Package:** [Arabic Bible Study v1.0.320](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.320)
+- **Database Engine:** **v49** (`bible_study_v49.db`, `targetDbVersion = 49`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v48.db` after PRAGMA integrity verification.
+- **Key Enhancements in v1.0.320 (Database v49):**
+  1. **Flexible Multi-Component Strong's Schema Evolution:**
+     - Migrated `word_mapping_strongs` primary key from `(mapping_id, strongs_id)` to `PRIMARY KEY (mapping_id, link_order)` with explicit index `idx_wms_mapping_strongs(mapping_id, strongs_id)`.
+     - Overcomes the relational bottleneck where multi-word original codex tokens sharing a single Strong's lexeme were previously blocked by uniqueness constraints.
+  2. **Daniel 3:30 «عَبْدَنَغُوَ» Lexical & Token Re-mapping:**
+     - Removed erroneous Strong's `H5049` (נֶגֶד: opposite/before) from token «نغو».
+     - Both original words (w6 `וַעֲבֵ֥ד` pos 6, role 'primary', `AC/Np` and w7 `נְגֹ֖ו` pos 7, role 'compound', `ANp`) now correctly reference the unified Aramaic entry **`H5665`** (`עֲבֵד נְגוֹ`).
+     - Similarly unified Amos 1:4 «بَنْهَدَدَ» across w7 (`בֶּן־`) and w8 (`הֲדָֽד׃`) under **`H1130`** (`בֶּן־הֲדַד`).
+  3. **Strict Canonical MorphGNT SBLGNT Raw Tagging:**
+     - Standardized the raw morphology tag for enclitic pronoun `με` in John 14:19 («يَرَانِي» w6, «فَتَرَوْنَنِي» w12) to **`RP ----AS--`**, matching the authentic literal MorphGNT SBLGNT codex standard.
+  4. **Fully Portable & Idempotent Harmonization Engine:**
+     - Eliminated static UUID literals from database scripts, adopting robust dynamic relational lookups `(SELECT id FROM word_mappings WHERE ...)`.
+  5. **100% CI Automated Quality Gate Pass:**
+     - All 8 comprehensive validation suites verified with **0 failures**.
+
+### Previous Release: v1.0.319 (Database v48)
 
 - **Release Package:** [Arabic Bible Study v1.0.319](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.319)
 - **Database Engine:** **v48** (`bible_study_v48.db`, `targetDbVersion = 48`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v47.db` after PRAGMA integrity verification.

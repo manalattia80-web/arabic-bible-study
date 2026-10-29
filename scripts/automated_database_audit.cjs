@@ -378,8 +378,10 @@ const isa535Components = JSON.parse(query(`
   WHERE mapping_id = (SELECT wm.id FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id WHERE v.book_id=23 AND v.chapter_num=53 AND v.verse_num=5 AND wm.ar_word_position=12)
   ORDER BY link_order ASC;
 `));
-const comp1Ok = isa535Components[0] && isa535Components[0].strongs_id === 'H7495' && isa535Components[0].component === 'נִרְפָּא' && isa535Components[0].pos === 10 && isa535Components[0].morphology === 'HVNp3ms' && isa535Components[0].source === 'oshb_wlc';
-const comp2Ok = isa535Components[1] && isa535Components[1].strongs_id === 'H3807a' && isa535Components[1].component === 'לָנוּ' && isa535Components[1].pos === 11 && isa535Components[1].morphology === 'HR/Sp1cp' && isa535Components[1].source === 'oshb_wlc';
+const c1 = isa535Components.find(c => c.strongs_id === 'H7495');
+const c2 = isa535Components.find(c => c.strongs_id === 'H3807a');
+const comp1Ok = c1 && c1.component === 'נִרְפָּא' && c1.pos === 10 && c1.morphology === 'HVNp3ms' && c1.source === 'oshb_wlc';
+const comp2Ok = c2 && c2.component === 'לָנוּ' && c2.pos === 11 && c2.morphology === 'HR/Sp1cp' && c2.source === 'oshb_wlc';
 assertCondition("isa535_structured_components: Isa 53:5 شفينا has discrete component columns (נִרְפָּא: pos 10, HVNp3ms; לָנוּ: pos 11, HR/Sp1cp)", comp1Ok && comp2Ok, JSON.stringify(isa535Components));
 
 // 4. John 3:16 - Exact MorphGNT literal tags and exact token positions:
@@ -423,8 +425,8 @@ const eph28Components = JSON.parse(query(`
   WHERE mapping_id = (SELECT wm.id FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id WHERE v.book_id=49 AND v.chapter_num=2 AND v.verse_num=8 AND wm.ar_word_position=5)
   ORDER BY link_order ASC;
 `));
-const ephComp1 = eph28Components[0];
-const ephComp2 = eph28Components[1];
+const ephComp1 = eph28Components.find(c => c.strongs === 'G3778');
+const ephComp2 = eph28Components.find(c => c.strongs === 'G2532');
 assertCondition("eph28_demonstrative: Eph 2:8 وذلك has G3778 τοῦτο token 9 (RD ----NSN-) & G2532 καί token 8 (D- --------)", 
   eph28w5.strongs === 'G3778' && eph28w5.surface === 'τοῦτο' && eph28w5.case === 'nominative' && eph28w5.gender === 'neuter' && eph28w5.token_pos === 9 && eph28w5.locator === 'SBLGNT:B49.C2.V8.w9' && eph28w5.morphology === 'RD ----NSN-' &&
   ephComp1 && ephComp1.strongs === 'G3778' && ephComp1.pos === 9 && ephComp1.morphology === 'RD ----NSN-' &&
@@ -620,17 +622,17 @@ assertCondition('1 Sam 19:15 أقتله infinitive construct has null person/gen
 // -----------------------------------------------------------------------------
 console.log('\n▶ TEST 8: Composite Token Deconstruction & Secondary Component Completeness');
 
-// Dan 3:30 عبدَنغو: w6 וַעֲבֵ֥ד (AC/Np, H5665) + w7 נְגֹ֖ו (ANp, H5049)
+// Dan 3:30 عبدَنغو: w6 וַעֲבֵ֥ד (AC/Np, H5665) + w7 נְגֹ֖ו (ANp, H5665) under single Aramaic lexicon entry H5665
 const abedComp = JSON.parse(query(`
   SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'order', link_order, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
   FROM word_mapping_strongs 
   WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word = 'وَعَبْدَنَغُوَ')
   ORDER BY link_order;
 `));
-assertCondition('Dan 3:30 عبدَنغو completely decomposed into w6 (H5665 וַעֲבֵ֥ד AC/Np) and w7 (H5049 נְגֹ֖ו ANp)', 
+assertCondition('Dan 3:30 عبدَنغو completely decomposed into w6 (H5665 וַעֲבֵ֥ד AC/Np) and w7 (H5665 נְגֹ֖ו ANp)', 
   abedComp.length === 2 && 
   abedComp[0].strongs === 'H5665' && abedComp[0].pos === 6 && abedComp[0].morph === 'AC/Np' &&
-  abedComp[1].strongs === 'H5049' && abedComp[1].pos === 7 && abedComp[1].morph === 'ANp', 
+  abedComp[1].strongs === 'H5665' && abedComp[1].pos === 7 && abedComp[1].morph === 'ANp', 
   JSON.stringify(abedComp));
 
 // Dan 3:30 شدرخ: H7715 AR/Np
@@ -644,6 +646,19 @@ assertCondition('Dan 3:30 شدرخ mapped to Aramaic H7715 AR/Np',
   shadrachComp.strongs === 'H7715' && shadrachComp.morph === 'AR/Np' && shadrachComp.pos === 4, 
   JSON.stringify(shadrachComp));
 
+// Amos 1:4 بنهدد: w7 בֶּן־ (HNp, H1130) + w8 הֲדָֽד׃ (HNp, H1130) under single lexicon entry H1130
+const benhadadComp = JSON.parse(query(`
+  SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'order', link_order, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=30 AND chapter_num=1 AND verse_num=4) AND ar_word LIKE '%بَنْهَدَدَ%')
+  ORDER BY link_order;
+`));
+assertCondition('Amos 1:4 بنهدد completely decomposed into w7 (H1130 בֶּן־ HNp) and w8 (H1130 הֲדָֽד׃ HNp)', 
+  benhadadComp.length === 2 && 
+  benhadadComp[0].strongs === 'H1130' && benhadadComp[0].pos === 7 && benhadadComp[0].morph === 'HNp' &&
+  benhadadComp[1].strongs === 'H1130' && benhadadComp[1].pos === 8 && benhadadComp[1].morph === 'HNp', 
+  JSON.stringify(benhadadComp));
+
 // John 14:19 يراني: primary w8 θεωρεῖ (G2334) + secondary w6 με (G3165)
 const yaraniComp = JSON.parse(query(`
   SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
@@ -651,10 +666,10 @@ const yaraniComp = JSON.parse(query(`
   WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=14 AND verse_num=19) AND ar_word = 'يَرَانِي')
   ORDER BY link_order;
 `));
-assertCondition('John 14:19 يراني contains primary w8 θεωρεῖ and secondary w6 με (G3165 RP ----1AS-)', 
+assertCondition('John 14:19 يراني contains primary w8 θεωρεῖ and secondary w6 με (G3165 exact MorphGNT tag RP ----AS--)', 
   yaraniComp.length === 2 && 
   yaraniComp[0].strongs === 'G2334' && yaraniComp[0].pos === 8 &&
-  yaraniComp[1].strongs === 'G3165' && yaraniComp[1].pos === 6 && yaraniComp[1].morph === 'RP ----1AS-', 
+  yaraniComp[1].strongs === 'G3165' && yaraniComp[1].pos === 6 && yaraniComp[1].morph === 'RP ----AS--', 
   JSON.stringify(yaraniComp));
 
 // John 14:19 فترونني: primary w11 θεωρεῖτέ (G2334) + secondary w12 με (G3165)
@@ -664,10 +679,10 @@ const fatarawnaniComp = JSON.parse(query(`
   WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=14 AND verse_num=19) AND ar_word = 'فَتَرَوْنَنِي')
   ORDER BY link_order;
 `));
-assertCondition('John 14:19 فترونني contains primary w11 θεωρεῖτέ and secondary w12 με (G3165 RP ----1AS-)', 
+assertCondition('John 14:19 فترونني contains primary w11 θεωρεῖτέ and secondary w12 με (G3165 exact MorphGNT tag RP ----AS--)', 
   fatarawnaniComp.length === 2 && 
   fatarawnaniComp[0].strongs === 'G2334' && fatarawnaniComp[0].pos === 11 &&
-  fatarawnaniComp[1].strongs === 'G3165' && fatarawnaniComp[1].pos === 12 && fatarawnaniComp[1].morph === 'RP ----1AS-', 
+  fatarawnaniComp[1].strongs === 'G3165' && fatarawnaniComp[1].pos === 12 && fatarawnaniComp[1].morph === 'RP ----AS--', 
   JSON.stringify(fatarawnaniComp));
 
 // Rom 9:23 مجده: primary w7 δόξης (G1391) + secondary w8 αὐτοῦ (G846)
@@ -729,10 +744,12 @@ const waayatinComp = JSON.parse(query(`
   WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=44 AND chapter_num=6 AND verse_num=8) AND ar_word = 'وَآيَاتٍ')
   ORDER BY link_order;
 `));
+const wPrim = waayatinComp.find(c => c.role === 'primary');
+const wSec = waayatinComp.find(c => c.role === 'secondary');
 assertCondition('Acts 6:8 وآيات contains primary w10 σημεῖα and secondary w9 καὶ (G2532 C- --------)', 
   waayatinComp.length === 2 && 
-  waayatinComp[0].strongs === 'G4592' && waayatinComp[0].pos === 10 &&
-  waayatinComp[1].strongs === 'G2532' && waayatinComp[1].pos === 9 && waayatinComp[1].morph === 'C- --------', 
+  wPrim && wPrim.strongs === 'G4592' && wPrim.pos === 10 &&
+  wSec && wSec.strongs === 'G2532' && wSec.pos === 9 && wSec.morph === 'C- --------', 
   JSON.stringify(waayatinComp));
 
 console.log('\n========================================================================');

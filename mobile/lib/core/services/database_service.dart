@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v48.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v49.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 48; // Database v47: Full codex, morphological, and alignment harmonization across user sample and benchmarks
+    const targetDbVersion = 49; // Database v49: Deconstructed multi-word composite Strongs & strict MorphGNT literal morphology
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -60,7 +60,7 @@ class DatabaseService {
       }
 
       final sink = outFile.openWrite();
-      const totalParts = 66;
+      const totalParts = 70;
       for (int i = 0; i < totalParts; i++) {
         final partIndexStr = i.toString().padLeft(2, '0');
         final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
@@ -130,6 +130,7 @@ class DatabaseService {
         'bible_study_v45.db',
         'bible_study_v46.db',
         'bible_study_v47.db',
+        'bible_study_v48.db',
       ]) {
         try {
           final oldPath = p.join(databasesPath, oldVer);
