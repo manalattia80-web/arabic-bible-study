@@ -290,7 +290,7 @@ VALUES (${subqueryMappingId(46, 7, 7, 2)}, 'G2309', 1, 'primary', 'θέλω', 1,
 sql.push(`
 UPDATE word_mappings SET
   strongs_id = 'G1683', orig_word = 'ἐμαυτοῦ', orig_surface = 'ἐμαυτόν', orig_word_position = 8,
-  orig_morphology = 'RP ----1ASM-', morph_pos = 'pronoun',
+  orig_morphology = 'RP ----ASM-', morph_pos = 'pronoun',
   morph_stem = NULL, morph_tense = NULL, morph_voice = NULL, morph_mood = NULL,
   morph_person = '1', morph_number = 'singular', morph_gender = 'masculine', morph_case = 'accusative',
   morph_source = 'morphgnt_sblgnt', verified_source = 'SBLGNT', verified_locator = 'SBLGNT:B46.C7.V7.w8',
@@ -298,7 +298,7 @@ UPDATE word_mappings SET
 WHERE id = ${subqueryMappingId(46, 7, 7, 8)};
 
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
-VALUES (${subqueryMappingId(46, 7, 7, 8)}, 'G1683', 1, 'primary', 'ἐμαυτόν', 8, 'RP ----1ASM-', 'morphgnt_sblgnt');
+VALUES (${subqueryMappingId(46, 7, 7, 8)}, 'G1683', 1, 'primary', 'ἐμαυτόν', 8, 'RP ----ASM-', 'morphgnt_sblgnt');
 `);
 
 // 17. الْوَاحِدُ -> ὃς (token 16 in Greek, G3739, relative/demonstrative pronoun, NOT οὕτως verb!)

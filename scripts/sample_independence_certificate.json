@@ -1,0 +1,18 @@
+{
+  "verification_date": "2026-10-29T15:21:24.546Z",
+  "exclusion_manifest": {
+    "total_verses": 2125,
+    "sha256": "b41e7c9980aa2d1da3f2bb37c00aa97297c6fe11d69699304b6a42e6aca0756a"
+  },
+  "held_out_sample": {
+    "total_verses": 60,
+    "languages": {
+      "hebrew": 30,
+      "greek": 24,
+      "aramaic": 6
+    },
+    "sha256": "5c9f9daf604968dad930fcfe40523576fe6b3391f09e0f3377bf0979bebf5f87"
+  },
+  "intersection_size": 0,
+  "status": "STRICTLY_DISJOINT_AND_FROZEN"
+}
