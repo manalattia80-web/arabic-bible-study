@@ -1,5 +1,5 @@
 {
-  "scan_timestamp": "2026-10-29T18:41:59.493Z",
+  "scan_timestamp": "2026-10-29T18:52:17.761Z",
   "files_configured_to_search": 16,
   "files_found_count": 16,
   "files_missing_count": 0,
@@ -104,28 +104,6 @@
   "files_missing": [],
   "total_historical_unique_verses": 1603,
   "sample_verses_count": 60,
-  "overlap_count": 3,
-  "overlaps": [
-    {
-      "book_id": 43,
-      "chapter": 1,
-      "verse": 49,
-      "name_en": "John",
-      "matched_historical_file": "measurement_sample_1000_tokens.json"
-    },
-    {
-      "book_id": 45,
-      "chapter": 7,
-      "verse": 19,
-      "name_en": "Romans",
-      "matched_historical_file": "measurement_sample_1000_tokens.json"
-    },
-    {
-      "book_id": 49,
-      "chapter": 5,
-      "verse": 25,
-      "name_en": "Ephesians",
-      "matched_historical_file": "measurement_sample_1000_tokens.json"
-    }
-  ]
+  "overlap_count": 0,
+  "overlaps": []
 }

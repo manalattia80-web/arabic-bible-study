@@ -1,0 +1,32 @@
+{
+  "manifest_title": "بيان تجميد العينة (صفر تداخل مع سجل الاستبعاد الموثق)",
+  "sample_version": "2.0.0",
+  "freeze_timestamp": "2026-10-29T18:52:16.016Z",
+  "git_commit_base": "b5f6f90230f1b890562e89e3eb58cdc29cb77ca1",
+  "database_sha256": "e0db0f51e40bb1341ec896255ffabffb00b586e578e82a7a47c9813daa53c93b",
+  "exclusion_manifest_sha256": "2bfa8fdfcd68433b556414f6f59a714646c548884cbd646d8cd3db83d91e7914",
+  "sample_v2_sha256": "7c0342ac9016732059dde9bed93899b1ff0842926c9378627f4cd20a2d27c365",
+  "distribution": {
+    "hebrew_verses": 30,
+    "greek_verses": 24,
+    "aramaic_verses": 6,
+    "total_verses": 60
+  },
+  "replacement_record": [
+    {
+      "old_verse": "John 1:49 (Book 43, Ch 1, Vs 49)",
+      "reason": "Historical overlap with measurement_sample_1000_tokens.json",
+      "new_verse": "Acts 12:7"
+    },
+    {
+      "old_verse": "Romans 7:19 (Book 45, Ch 7, Vs 19)",
+      "reason": "Historical overlap with measurement_sample_1000_tokens.json",
+      "new_verse": "Revelation 9:14"
+    },
+    {
+      "old_verse": "Ephesians 5:25 (Book 49, Ch 5, Vs 25)",
+      "reason": "Historical overlap with measurement_sample_1000_tokens.json",
+      "new_verse": "2 Corinthians 6:5"
+    }
+  ]
+}

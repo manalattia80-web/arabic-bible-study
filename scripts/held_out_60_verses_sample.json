@@ -1,15 +1,32 @@
 {
-  "metadata": {
-    "generated_at": "2026-10-29T12:59:12.751Z",
-    "random_seed": 20261029,
-    "algorithm": "mulberry32_uniform_shuffle",
-    "total_verses": 60,
-    "languages": {
-      "hebrew": 30,
-      "greek": 24,
-      "aramaic": 6
+  "sample_name": "عينة القياس المجمدة (صفر تداخل مع سجل الاستبعاد الموثق)",
+  "version": "2.0.0",
+  "description": "Held-out 60-verse benchmark with strictly 0.0% overlap against all 16 historical project files.",
+  "provenance": {
+    "prng_seed": "ABS-FROZEN-BENCHMARK-SEED-20261029-ROUND2",
+    "distribution": {
+      "hebrew_count": 30,
+      "greek_count": 24,
+      "aramaic_count": 6,
+      "total_verses": 60
     },
-    "exclusion_criteria": "All previously verified, corrected, or benchmarked loci (including audit suite and video verses)"
+    "replacements_from_v1": [
+      {
+        "old_verse": "John 1:49 (Book 43, Ch 1, Vs 49)",
+        "reason": "Historical overlap with measurement_sample_1000_tokens.json",
+        "new_verse": "Acts 12:7"
+      },
+      {
+        "old_verse": "Romans 7:19 (Book 45, Ch 7, Vs 19)",
+        "reason": "Historical overlap with measurement_sample_1000_tokens.json",
+        "new_verse": "Revelation 9:14"
+      },
+      {
+        "old_verse": "Ephesians 5:25 (Book 49, Ch 5, Vs 25)",
+        "reason": "Historical overlap with measurement_sample_1000_tokens.json",
+        "new_verse": "2 Corinthians 6:5"
+      }
+    ]
   },
   "hebrew": [
     {
@@ -284,13 +301,6 @@
       "book_id": 43,
       "name_ar": "يوحنا",
       "name_en": "John",
-      "chapter": 1,
-      "verse": 49
-    },
-    {
-      "book_id": 43,
-      "name_ar": "يوحنا",
-      "name_en": "John",
       "chapter": 6,
       "verse": 22
     },
@@ -324,6 +334,13 @@
     },
     {
       "book_id": 44,
+      "chapter": 12,
+      "verse": 7,
+      "name_en": "Acts",
+      "text_ar": "وَإِذَا مَلاَكُ الرَّبِّ أَقْبَلَ، وَنُورٌ أَضَاءَ فِي الْبَيْتِ، فَضَرَبَ جَنْبَ بُطْرُسَ وَأَيْقَظَهُ قَائِلاً: «قُمْ عَاجِلاً!». فَسَقَطَتِ السِّلْسِلَتَانِ مِنْ يَدَيْهِ."
+    },
+    {
+      "book_id": 44,
       "name_ar": "أعمال الرسل",
       "name_en": "Acts",
       "chapter": 26,
@@ -340,13 +357,6 @@
       "book_id": 45,
       "name_ar": "رومية",
       "name_en": "Romans",
-      "chapter": 7,
-      "verse": 19
-    },
-    {
-      "book_id": 45,
-      "name_ar": "رومية",
-      "name_en": "Romans",
       "chapter": 10,
       "verse": 12
     },
@@ -358,11 +368,11 @@
       "verse": 2
     },
     {
-      "book_id": 49,
-      "name_ar": "أفسس",
-      "name_en": "Ephesians",
-      "chapter": 5,
-      "verse": 25
+      "book_id": 47,
+      "chapter": 6,
+      "verse": 5,
+      "name_en": "2 Corinthians",
+      "text_ar": "فِي ضَرَبَاتٍ، فِي سُجُونٍ، فِي اضْطِرَابَاتٍ، فِي أَتْعَابٍ، فِي أَسْهَارٍ، فِي أَصْوَامٍ،"
     },
     {
       "book_id": 51,
@@ -384,6 +394,13 @@
       "name_en": "1 Timothy",
       "chapter": 6,
       "verse": 9
+    },
+    {
+      "book_id": 66,
+      "chapter": 9,
+      "verse": 14,
+      "name_en": "Revelation",
+      "text_ar": "قَائِلاً لِلْمَلاَكِ السَّادِسِ الَّذِي مَعَهُ الْبُوقُ: «فُكَّ الأَرْبَعَةَ الْمَلاَئِكَةَ الْمُقَيَّدِينَ عِنْدَ النَّهْرِ الْعَظِيمِ الْفُرَاتِ»."
     },
     {
       "book_id": 66,

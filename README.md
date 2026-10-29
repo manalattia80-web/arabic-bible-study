@@ -5,7 +5,23 @@
 [![Database Version](https://img.shields.io/badge/SQLite%20Database-v54%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.329 (Database v54)
+## Latest Verified Release: v1.0.330 (Database v54)
+
+- **Release Package:** [Arabic Bible Study v1.0.330](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.330)
+- **Database Engine:** **v54** (`bible_study_v54.db`, `targetDbVersion = 54`) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
+- **Key Enhancements in v1.0.330 (Database v54):**
+  1. **Option B Implementation: Deterministic Blind Replacement of 3 Overlapping Verses:**
+     - Applied declared seed `ABS-FROZEN-BENCHMARK-SEED-20261029-ROUND2` to replace John 1:49, Rom 7:19, Eph 5:25 with Acts 12:7, Rev 9:14, 2 Cor 6:5.
+     - Preserved exact distribution (30 Hebrew, 24 Greek, 6 Aramaic).
+     - Verified strictly 0.0% overlap with all 1,603 historical verses across all 16 historical files.
+     - Archived previous sample in `scripts/held_out_60_verses_sample_v1_with_3_overlaps.json` and froze v2 in `scripts/frozen_sample_v2_manifest.json`.
+  2. **Empirical 4D Measurement across all 897 Token Positions:**
+     - Lexical: 897/897 (100.00%)
+     - Surface: 897/897 (100.00%)
+     - Morphology: 659/897 (73.47% passed), 0 failed, 238 pending (26.53%)
+     - Locator: 897/897 (100.00%)
+
+### Previous Release: v1.0.329 (Database v54)
 
 - **Release Package:** [Arabic Bible Study v1.0.329](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.329)
 - **Database Engine:** **v54** (`bible_study_v54.db`, `targetDbVersion = 54`) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
