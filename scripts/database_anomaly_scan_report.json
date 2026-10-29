@@ -1,0 +1,89 @@
+{
+  "scan_date": "2026-10-29T12:59:46.890Z",
+  "total_records_scanned": 434351,
+  "categories": {
+    "cross_testament_strongs": {
+      "count": 0,
+      "description": "Strong's prefix contradicts Testament (Greek in OT or Hebrew in NT)",
+      "samples": []
+    },
+    "morphology_pos_conflicts": {
+      "count": 1,
+      "description": "Raw morphology tag fundamentally contradicts displayed morph_pos (Noun tagged as Verb or Verb tagged as Noun)",
+      "samples": [
+        "f992625f-1042-405f-89ef-5d191c7d1368|Jeremiah|42|5|14|أَمْرٍ|H1697|HVqp3cp|noun"
+      ]
+    },
+    "single_locator_position_mismatches": {
+      "count": 5116,
+      "description": "Single-token locator suffix (.wN) does not equal orig_word_position",
+      "samples": [
+        "9800b9f1-d84a-43a7-b1a9-c53c6c06d9fe|Genesis|6|1|9|4|AR_SYNTACTIC:B1.C6.V1.w9\r",
+        "40afaca1-a09b-4614-864a-1f81532ec0d2|Genesis|6|3|8|0|AR_SYNTACTIC:B1.C6.V3.w8\r",
+        "b1dd3d03-e16d-4e81-9e7e-a733806a3458|Genesis|6|21|11|2|AR_SYNTACTIC:B1.C6.V21.w11\r",
+        "d5bc9974-e625-45c2-8ee2-3013e5b31c4d|Genesis|10|1|9|8|AR_SYNTACTIC:B1.C10.V1.w9\r",
+        "f636b15f-a855-4be7-a484-ee22e8e921d3|Genesis|12|14|5|0|AR_SYNTACTIC:B1.C12.V14.w5\r",
+        "f9bfa2cb-d69e-432c-a9bd-26b3e05e4d9a|Genesis|12|19|7|1|AR_SYNTACTIC:B1.C12.V19.w7\r",
+        "7f5ac88b-a1bb-47c6-970f-e7a0586bea13|Genesis|12|20|9|0|AR_SYNTACTIC:B1.C12.V20.w9\r",
+        "638e89e6-b833-411a-989b-f515ed7e600e|Genesis|13|1|10|0|AR_SYNTACTIC:B1.C13.V1.w10\r",
+        "939111b2-e1f9-45b0-9378-d010ff703c27|Genesis|13|1|13|0|AR_SYNTACTIC:B1.C13.V1.w13\r",
+        "4afec8b8-6d3f-4e83-8214-b5e8ed13b8d7|Genesis|13|10|22|0|AR_SYNTACTIC:B1.C13.V10.w22\r",
+        "f8aff27e-a874-4e7f-b7ee-4d82aa4503db|Genesis|13|15|7|5|AR_SYNTACTIC:B1.C13.V15.w7\r",
+        "4d3b99b7-0b45-4af4-8d4d-fa8fc2d8bbe1|Genesis|13|17|8|7|AR_SYNTACTIC:B1.C13.V17.w8\r",
+        "c33bbfcc-90bf-4c1c-a327-635f748f03b4|Genesis|14|10|16|0|AR_SYNTACTIC:B1.C14.V10.w16\r",
+        "7bae07fb-6c07-4632-a740-0f3818f59ee9|Genesis|17|20|5|0|AR_SYNTACTIC:B1.C17.V20.w5\r",
+        "333f4e50-c39b-46d3-a798-5329bd15d434|Genesis|18|1|2|0|AR_SYNTACTIC:B1.C18.V1.w2\r",
+        "8987191d-1f57-4421-a921-104659632e6b|Genesis|18|7|1|0|AR_SYNTACTIC:B1.C18.V7.w1\r",
+        "d6c8aff7-818a-4f10-a0a1-8345c77c0427|Genesis|18|8|1|0|AR_SYNTACTIC:B1.C18.V8.w1\r",
+        "d191187a-a6ac-4900-b707-a46d141aa3a7|Genesis|19|9|3|0|AR_SYNTACTIC:B1.C19.V9.w3\r",
+        "252b6e9e-b543-457a-9fcb-164d9ff799bd|Genesis|19|9|5|0|AR_SYNTACTIC:B1.C19.V9.w5\r",
+        "42e21f05-38d1-44bc-9f81-b5ccbd9a2af4|Genesis|19|11|11|0|AR_SYNTACTIC:B1.C19.V11.w11\r",
+        "62b22b24-6eb5-49e9-b064-7a376eaf285b|Genesis|19|19|20|0|AR_SYNTACTIC:B1.C19.V19.w20\r",
+        "6d970b2c-9468-4d11-a2f0-de79776e7210|Genesis|19|20|10|0|AR_SYNTACTIC:B1.C19.V20.w10\r",
+        "9aa1bd38-18d8-4c7c-b145-757a9f4df4f2|Genesis|19|37|10|0|AR_SYNTACTIC:B1.C19.V37.w10\r",
+        "4bb150b5-2f6f-48bd-b7fb-298921b9f46f|Genesis|20|1|5|0|AR_SYNTACTIC:B1.C20.V1.w5\r",
+        "4c5883a0-d91b-45ca-b336-eca09310b87b|Genesis|20|3|9|8|AR_SYNTACTIC:B1.C20.V3.w9\r",
+        "da1ecf05-6066-476d-86b6-92a03bbfad82|Genesis|20|4|9|0|AR_SYNTACTIC:B1.C20.V4.w9\r",
+        "e9751f84-11cb-469a-b0fb-fd1a6f22df9a|Genesis|20|7|21|0|AR_SYNTACTIC:B1.C20.V7.w21\r",
+        "07b5fdc9-1f54-4d3e-a7a6-ec17534bd30e|Genesis|20|12|13|6|AR_SYNTACTIC:B1.C20.V12.w13\r",
+        "3acbfbb8-8571-4e8b-9104-d6d54a3a25ca|Genesis|20|13|10|9|AR_SYNTACTIC:B1.C20.V13.w10\r",
+        "435bec05-c8f3-4d23-891c-2a39583b0cb5|Genesis|20|18|3|0|AR_SYNTACTIC:B1.C20.V18.w3\r",
+        "f9edebf5-d144-44d8-ab32-505b497fb9a4|Genesis|21|18|6|0|AR_SYNTACTIC:B1.C21.V18.w6\r",
+        "eeb0c06a-e70a-4995-83fb-16c3d5a44af0|Genesis|21|32|6|0|AR_SYNTACTIC:B1.C21.V32.w6\r",
+        "ee8deeb5-32ad-4903-ada0-02a0f5204457|Genesis|22|5|16|0|AR_SYNTACTIC:B1.C22.V5.w16\r",
+        "87dcc055-b35f-4225-8e33-903969e5daf2|Genesis|23|13|9|0|AR_SYNTACTIC:B1.C23.V13.w9\r",
+        "6e844ed7-1fe5-4a98-b139-8bd3420e3e93|Genesis|24|8|16|0|AR_SYNTACTIC:B1.C24.V8.w16\r",
+        "2ff53519-8b43-4725-9826-940dd9ab7871|Genesis|24|16|11|0|AR_SYNTACTIC:B1.C24.V16.w11\r",
+        "c30590fe-3212-452f-8986-d7b7437d8eda|Genesis|24|32|3|0|AR_SYNTACTIC:B1.C24.V32.w3\r",
+        "49ee98b9-cfbf-453e-82b3-77fac19580ce|Genesis|24|40|3|0|AR_SYNTACTIC:B1.C24.V40.w3\r",
+        "79e8bb30-2e8c-4efd-a666-2f8f5a3c2a7d|Genesis|24|42|11|0|AR_SYNTACTIC:B1.C24.V42.w11\r",
+        "35e6ddb3-22d7-461f-b37f-f9c17d23c43b|Genesis|24|42|12|0|AR_SYNTACTIC:B1.C24.V42.w12\r",
+        "c93e1152-443c-4953-bade-512cfbd63a7d|Genesis|24|44|2|6|AR_SYNTACTIC:B1.C24.V44.w2\r",
+        "ce5603c5-4f48-45e0-82d0-801e48d2d991|Genesis|24|54|8|0|AR_SYNTACTIC:B1.C24.V54.w8\r",
+        "ee5caff9-1404-4bbc-9825-823cd314a05b|Genesis|24|66|1|0|AR_SYNTACTIC:B1.C24.V66.w1\r",
+        "a3dcde8b-5f19-432d-93c5-29fc5431eb92|Genesis|25|6|5|0|AR_SYNTACTIC:B1.C25.V6.w5\r",
+        "98695e60-4a00-4e09-bd09-1a4a4027661e|Genesis|25|11|12|0|AR_SYNTACTIC:B1.C25.V11.w12\r",
+        "35b38dc1-f41b-4ef3-9a20-f48a2d5888c9|Genesis|25|21|11|0|AR_SYNTACTIC:B1.C25.V21.w11\r",
+        "7867b6ee-e52e-48f6-bc80-e5d7863ca98e|Genesis|26|23|1|0|AR_SYNTACTIC:B1.C26.V23.w1\r",
+        "6e1b66c9-8911-4af0-843e-8c052c5ba64e|Genesis|26|23|5|0|AR_SYNTACTIC:B1.C26.V23.w5\r",
+        "d00c2e13-a1d3-4967-b3ea-2cc17604f0d1|Genesis|26|32|15|8|AR_SYNTACTIC:B1.C26.V32.w15\r",
+        "51948a65-60dd-4dba-a9a7-3d5fe3dbb7bb|Genesis|27|10|2|0|AR_SYNTACTIC:B1.C27.V10.w2"
+      ]
+    },
+    "syntactic_ar_with_strongs": {
+      "count": 0,
+      "description": "Words classified as syntactic_ar or translation additions that retain a Strong's ID",
+      "samples": []
+    },
+    "verb_with_syntactic_ar_source": {
+      "count": 0,
+      "description": "Verbs with valid Strong's IDs that are labeled as syntactic_ar provenance",
+      "samples": []
+    },
+    "primary_component_mismatches": {
+      "count": 0,
+      "description": "Inconsistencies between word_mappings and its corresponding primary entry in word_mapping_strongs",
+      "samples": []
+    }
+  }
+}

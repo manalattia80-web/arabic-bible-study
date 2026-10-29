@@ -2,10 +2,29 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v50%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v51%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.321 (Database v50)
+## Latest Verified Release: v1.0.322 (Database v51)
+
+- **Release Package:** [Arabic Bible Study v1.0.322](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.322)
+- **Database Engine:** **v51** (`bible_study_v51.db`, `targetDbVersion = 51`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v50.db` after PRAGMA integrity verification.
+- **Key Enhancements in v1.0.322 (Database v51):**
+  1. **Complete Philological Alignment of Deuteronomy 23:2 (Masoretic OSHB Deut 23:3):**
+     - Mapped all 17 Arabic words to the authentic 13 Hebrew tokens in the Masoretic source (WLC/OSHB).
+     - Resolved versification difference: explicitly documented that Arabic AVD Deut 23:2 corresponds to Hebrew OSHB Deut 23:3 (`OSHB:B5.C23.V3.w1` to `w13`).
+     - «ابْنُ زِنًى» (words 3-4): Reunified as a compound phrase unit representing Hebrew `מַמְזֵר` (**`H4464`**, `HNcmsa`, token 3), eliminating erroneous `H1121` and `syntactic_ar`.
+     - «فِي» (words 5 and 15): Realigned to Hebrew preposition prefix `בְּ` (`HR`) of `בִּקְהַל` (tokens 4 and 12), eliminating corrupted linkage to `H1755` (`דּוֹר`).
+     - «مِنْهُ أَحَدٌ» (words 13-14): Realigned to the authentic Hebrew idiom `ל֖וֹ` (`HR/Sp3ms`, token 11), eliminating invented `H4480` (`מִן`) and `H376` (`אִישׁ`).
+  2. **1 Corinthians 7:7 Philological & Word-Order Reconciliation:**
+     - «أَنَا» (word 8): Correctly linked to the reflexive personal pronoun `ἐμαυτόν` (**`G1683`**, `RP ----1ASM-`, pronoun, token 8), removing erroneous verb classification and linkage to `εἶναι`.
+     - «الْوَاحِدُ» (word 17): Correctly linked to the pronoun `ὃς` (**`G3739`**, `R- ----NSM-`, token 16), removing erroneous mapping to `οὕτως`.
+     - «هكَذَا» (words 18 and 20): Standardized to adverb **`G3779`** (`οὕτως`, **`D- --------`**, tokens 18 and 21), eliminating verbal misclassification.
+     - Word Order: Realigned «أُرِيدُ» to token 1 (`θέλω`, `G2309`) and «لأَنِّي» to postpositive conjunction token 2 (`γάρ`, `G1063`).
+  3. **Rigorous CI Quality Gate Pass:**
+     - All 8 comprehensive validation suites verified with **0 failures**.
+
+### Previous Release: v1.0.321 (Database v50)
 
 - **Release Package:** [Arabic Bible Study v1.0.321](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.321)
 - **Database Engine:** **v50** (`bible_study_v50.db`, `targetDbVersion = 50`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v49.db` after PRAGMA integrity verification.

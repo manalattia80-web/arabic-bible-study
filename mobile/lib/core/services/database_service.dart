@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v50.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v51.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 50; // Database v50: Restored Deuteronomy 23:2 verb alignment (H935, HVqi3ms)
+    const targetDbVersion = 51; // Database v51: Complete codex alignment for Deut 23:2 (v3 OSHB) and 1 Cor 7:7
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
