@@ -561,6 +561,180 @@ assertCondition('PRAGMA integrity_check is ok', integrity === 'ok', integrity);
 const fkCheck = query('PRAGMA foreign_key_check;');
 assertCondition('PRAGMA foreign_key_check is ok', fkCheck === '', fkCheck);
 
+// -----------------------------------------------------------------------------
+// Test 6: Primary Component Synchronization & Alignment Invariant
+// -----------------------------------------------------------------------------
+console.log('\n▶ TEST 6: Primary Component Synchronization Invariant (word_mappings vs word_mapping_strongs)');
+const primaryMismatches = parseInt(query(`
+  SELECT COUNT(*) 
+  FROM word_mappings wm 
+  JOIN word_mapping_strongs wms ON wm.id = wms.mapping_id 
+  WHERE wms.link_role = 'primary' 
+    AND (
+      (wm.orig_word_position != wms.orig_word_position) 
+      OR (wm.orig_word_position IS NULL AND wms.orig_word_position IS NOT NULL) 
+      OR (wm.orig_word_position IS NOT NULL AND wms.orig_word_position IS NULL) 
+      OR (wm.strongs_id != wms.strongs_id) 
+      OR (COALESCE(wm.orig_morphology, '') != COALESCE(wms.orig_morphology, '')) 
+      OR (COALESCE(wm.morph_source, '') != COALESCE(wms.morph_source, ''))
+    );
+`), 10);
+assertCondition('Zero mismatches between word_mappings and primary word_mapping_strongs across full DB', primaryMismatches === 0, `found ${primaryMismatches} mismatches`);
+
+// -----------------------------------------------------------------------------
+// Test 7: Source Provenance & Attribute Purity Invariant
+// -----------------------------------------------------------------------------
+console.log('\n▶ TEST 7: Source Provenance & Attribute Purity Invariant');
+
+// Check that OSHB/SBLGNT locators never have morph_source = 'syntactic_ar'
+const invalidSyntacticSources = parseInt(query(`
+  SELECT COUNT(*) FROM word_mappings 
+  WHERE (verified_locator LIKE 'OSHB:%' OR verified_locator LIKE 'SBLGNT:%') 
+    AND morph_source = 'syntactic_ar';
+`), 10);
+assertCondition('OSHB/SBLGNT verified locators never carry morph_source syntactic_ar', invalidSyntacticSources === 0, `found ${invalidSyntacticSources}`);
+
+// Acts 6:8 words without Greek token must not have morph_source = morphgnt_sblgnt
+const acts68Syntactic = parseInt(query(`
+  SELECT COUNT(*) FROM word_mappings 
+  WHERE verse_id IN (SELECT id FROM verses WHERE book_id=44 AND chapter_num=6 AND verse_num=8) 
+    AND ar_word_position IN (3, 4) 
+    AND morph_source = 'morphgnt_sblgnt';
+`), 10);
+assertCondition('Acts 6:8 pure translation additions (pos 3, 4) do not claim morphgnt_sblgnt provenance', acts68Syntactic === 0, `found ${acts68Syntactic}`);
+
+// 1 Sam 19:15 أقتله infinitive construct has null person/gender/number
+const sam1915Infinitive = JSON.parse(query(`
+  SELECT json_object('stem', morph_stem, 'tense', morph_tense, 'person', morph_person, 'gender', morph_gender, 'number', morph_number)
+  FROM word_mappings 
+  WHERE verse_id IN (SELECT id FROM verses WHERE book_id=9 AND chapter_num=19 AND verse_num=15) 
+    AND ar_word LIKE '%أَقْتُلَهُ%';
+`));
+assertCondition('1 Sam 19:15 أقتله infinitive construct has null person/gender/number attributes', 
+  sam1915Infinitive.stem === 'hifil' && sam1915Infinitive.tense === 'infinitive_construct' && 
+  sam1915Infinitive.person === null && sam1915Infinitive.gender === null && sam1915Infinitive.number === null, 
+  JSON.stringify(sam1915Infinitive));
+
+// -----------------------------------------------------------------------------
+// Test 8: Composite Token Deconstruction & Component Completeness Gate
+// -----------------------------------------------------------------------------
+console.log('\n▶ TEST 8: Composite Token Deconstruction & Secondary Component Completeness');
+
+// Dan 3:30 عبدَنغو: w6 וַעֲבֵ֥ד (AC/Np, H5665) + w7 נְגֹ֖ו (ANp, H5049)
+const abedComp = JSON.parse(query(`
+  SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'order', link_order, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word = 'وَعَبْدَنَغُوَ')
+  ORDER BY link_order;
+`));
+assertCondition('Dan 3:30 عبدَنغو completely decomposed into w6 (H5665 וַעֲבֵ֥ד AC/Np) and w7 (H5049 נְגֹ֖ו ANp)', 
+  abedComp.length === 2 && 
+  abedComp[0].strongs === 'H5665' && abedComp[0].pos === 6 && abedComp[0].morph === 'AC/Np' &&
+  abedComp[1].strongs === 'H5049' && abedComp[1].pos === 7 && abedComp[1].morph === 'ANp', 
+  JSON.stringify(abedComp));
+
+// Dan 3:30 شدرخ: H7715 AR/Np
+const shadrachComp = JSON.parse(query(`
+  SELECT json_object('strongs', strongs_id, 'morph', orig_morphology, 'pos', orig_word_position)
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word LIKE '%شَدْرَخَ%')
+    AND link_role = 'primary';
+`));
+assertCondition('Dan 3:30 شدرخ mapped to Aramaic H7715 AR/Np', 
+  shadrachComp.strongs === 'H7715' && shadrachComp.morph === 'AR/Np' && shadrachComp.pos === 4, 
+  JSON.stringify(shadrachComp));
+
+// John 14:19 يراني: primary w8 θεωρεῖ (G2334) + secondary w6 με (G3165)
+const yaraniComp = JSON.parse(query(`
+  SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=14 AND verse_num=19) AND ar_word = 'يَرَانِي')
+  ORDER BY link_order;
+`));
+assertCondition('John 14:19 يراني contains primary w8 θεωρεῖ and secondary w6 με (G3165 RP ----1AS-)', 
+  yaraniComp.length === 2 && 
+  yaraniComp[0].strongs === 'G2334' && yaraniComp[0].pos === 8 &&
+  yaraniComp[1].strongs === 'G3165' && yaraniComp[1].pos === 6 && yaraniComp[1].morph === 'RP ----1AS-', 
+  JSON.stringify(yaraniComp));
+
+// John 14:19 فترونني: primary w11 θεωρεῖτέ (G2334) + secondary w12 με (G3165)
+const fatarawnaniComp = JSON.parse(query(`
+  SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=43 AND chapter_num=14 AND verse_num=19) AND ar_word = 'فَتَرَوْنَنِي')
+  ORDER BY link_order;
+`));
+assertCondition('John 14:19 فترونني contains primary w11 θεωρεῖτέ and secondary w12 με (G3165 RP ----1AS-)', 
+  fatarawnaniComp.length === 2 && 
+  fatarawnaniComp[0].strongs === 'G2334' && fatarawnaniComp[0].pos === 11 &&
+  fatarawnaniComp[1].strongs === 'G3165' && fatarawnaniComp[1].pos === 12 && fatarawnaniComp[1].morph === 'RP ----1AS-', 
+  JSON.stringify(fatarawnaniComp));
+
+// Rom 9:23 مجده: primary w7 δόξης (G1391) + secondary w8 αὐτοῦ (G846)
+const majdihiComp = JSON.parse(query(`
+  SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=45 AND chapter_num=9 AND verse_num=23) AND ar_word = 'مَجْدِهِ')
+  ORDER BY link_order;
+`));
+assertCondition('Rom 9:23 مجده contains primary w7 δόξης and secondary w8 αὐτοῦ (G846 RP ----GSM-)', 
+  majdihiComp.length === 2 && 
+  majdihiComp[0].strongs === 'G1391' && majdihiComp[0].pos === 7 &&
+  majdihiComp[1].strongs === 'G846' && majdihiComp[1].pos === 8 && majdihiComp[1].morph === 'RP ----GSM-', 
+  JSON.stringify(majdihiComp));
+
+// Rom 9:23 للمجد: primary w15 δόξαν (G1391) + secondary w14 εἰς (G1519)
+const lilmajdiComp = JSON.parse(query(`
+  SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=45 AND chapter_num=9 AND verse_num=23) AND ar_word = 'لِلْمَجْدِ')
+  ORDER BY link_order;
+`));
+assertCondition('Rom 9:23 للمجد contains primary w15 δόξαν and secondary w14 εἰς (G1519 P- --------)', 
+  lilmajdiComp.length === 2 && 
+  lilmajdiComp[0].strongs === 'G1391' && lilmajdiComp[0].pos === 15 &&
+  lilmajdiComp[1].strongs === 'G1519' && lilmajdiComp[1].pos === 14 && lilmajdiComp[1].morph === 'P- --------', 
+  JSON.stringify(lilmajdiComp));
+
+// Rom 9:23 ولكي: primary w2 ἵνα (G2443) + secondary w1 καὶ (G2532)
+const walikayComp = JSON.parse(query(`
+  SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=45 AND chapter_num=9 AND verse_num=23) AND ar_word = 'وَلِكَيْ')
+  ORDER BY link_order;
+`));
+assertCondition('Rom 9:23 ولكي contains primary w2 ἵνα and secondary w1 καὶ (G2532 C- --------)', 
+  walikayComp.length === 2 && 
+  walikayComp[0].strongs === 'G2443' && walikayComp[0].pos === 2 &&
+  walikayComp[1].strongs === 'G2532' && walikayComp[1].pos === 1 && walikayComp[1].morph === 'C- --------', 
+  JSON.stringify(walikayComp));
+
+// Acts 6:8 وقوة: primary w6 δυνάμεως (G1411) + secondary w5 καὶ (G2532)
+const waquwwatanComp = JSON.parse(query(`
+  SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=44 AND chapter_num=6 AND verse_num=8) AND ar_word = 'وَقُوَّةً،')
+  ORDER BY link_order;
+`));
+assertCondition('Acts 6:8 وقوة contains primary w6 δυνάμεως and secondary w5 καὶ (G2532 C- --------)', 
+  waquwwatanComp.length === 2 && 
+  waquwwatanComp[0].strongs === 'G1411' && waquwwatanComp[0].pos === 6 &&
+  waquwwatanComp[1].strongs === 'G2532' && waquwwatanComp[1].pos === 5 && waquwwatanComp[1].morph === 'C- --------', 
+  JSON.stringify(waquwwatanComp));
+
+// Acts 6:8 وآيات: primary w10 σημεῖα (G4592) + secondary w9 καὶ (G2532)
+const waayatinComp = JSON.parse(query(`
+  SELECT json_group_array(json_object('strongs', strongs_id, 'role', link_role, 'comp', orig_component, 'pos', orig_word_position, 'morph', orig_morphology))
+  FROM word_mapping_strongs 
+  WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=44 AND chapter_num=6 AND verse_num=8) AND ar_word = 'وَآيَاتٍ')
+  ORDER BY link_order;
+`));
+assertCondition('Acts 6:8 وآيات contains primary w10 σημεῖα and secondary w9 καὶ (G2532 C- --------)', 
+  waayatinComp.length === 2 && 
+  waayatinComp[0].strongs === 'G4592' && waayatinComp[0].pos === 10 &&
+  waayatinComp[1].strongs === 'G2532' && waayatinComp[1].pos === 9 && waayatinComp[1].morph === 'C- --------', 
+  JSON.stringify(waayatinComp));
+
 console.log('\n========================================================================');
 if (totalFailures === 0) {
   console.log('              ALL QUALITY GATE CHECKS PASSED (0 FAILURES)               ');

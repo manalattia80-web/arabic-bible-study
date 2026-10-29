@@ -2,10 +2,34 @@
 
 [![Build & Release APK](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml/badge.svg)](https://github.com/manalattia80-web/arabic-bible-study/actions/workflows/build-apk.yml)
 [![Latest Release](https://img.shields.io/github/v/release/manalattia80-web/arabic-bible-study?label=Release&color=brightgreen)](https://github.com/manalattia80-web/arabic-bible-study/releases/latest)
-[![Database Version](https://img.shields.io/badge/SQLite%20Database-v47%20(Verified)-blue)](mobile/assets/bible_study.db)
+[![Database Version](https://img.shields.io/badge/SQLite%20Database-v48%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.318 (Database v47)
+## Latest Verified Release: v1.0.319 (Database v48)
+
+- **Release Package:** [Arabic Bible Study v1.0.319](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.319)
+- **Database Engine:** **v48** (`bible_study_v48.db`, `targetDbVersion = 48`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v47.db` after PRAGMA integrity verification.
+- **Key Enhancements in v1.0.319 (Database v48):**
+  1. **Full Primary Component Synchronization Across Full Database:**
+     - 100% harmonization between `word_mappings` and primary entries in `word_mapping_strongs` across all 404,700 records (0 mismatches in `orig_word_position`, `strongs_id`, `orig_morphology`, and `morph_source`).
+     - Fixed all 53 position mismatches identified in independent audit (Gen 7:3, 1 Sam 19:15, Prov 15:6, Amos 1:4, Dan 3:30, John 14:19, Acts 6:8, Rom 9:23, Heb 10:18).
+  2. **Source Provenance Harmonization:**
+     - Restored authentic `oshb_wlc` provenance to Hebrew/Aramaic prefix words: «ثُمَّ», «عَلَى», «لِكَيْ» (1 Sam 19:15), «وَفِي» (Prov 15:6), «فِي» (Dan 3:30).
+     - Standardized Arabic translation additions without Greek token counterparts (e.g. Acts 6:8 «فَإِذْ», «كَانَ») so they do not falsely claim `morphgnt_sblgnt` codex provenance.
+  3. **Complete Composite Token Deconstruction & Greek Clitic Representation:**
+     - Dan 3:30 «وَعَبْدَنَغُوَ»: Fully decomposed into w6 (`וַעֲבֵ֥ד`, H5665, `AC/Np`) and w7 (`נְגֹ֖ו`, H5049, `ANp`).
+     - Dan 3:30 «شَدْرَخَ»: Standardized to Aramaic entry `H7715`, `AR/Np`.
+     - 1 Sam 19:15 «أَقْتُلَهُ»: Clarified infinitive construct properties (`HVhc`), clearing inherited personal agreement from verbal fields.
+     - John 14:19 «يَرَانِي» and «فَتَرَوْنَنِي»: Explicit secondary component representation for enclitic pronoun `με` (G3165, `RP ----1AS-`, tokens 6 and 12).
+     - Romans 9:23 «مَجْدِهِ»: Explicit secondary component for pronoun `αὐτοῦ` (G846, `RP ----GSM-`, token 8).
+     - Romans 9:23 «لِلْمَجْدِ»: Explicit secondary component for preposition `εἰς` (G1519, token 14).
+     - Romans 9:23 «وَلِكَيْ»: Explicit secondary component for conjunction `καὶ` (G2532, token 1).
+     - Acts 6:8 «وَقُوَّةً،» and «وَآيَاتٍ»: Explicit secondary component for conjunction `καὶ` (G2532, tokens 5 and 9).
+  4. **Strict CI Quality Gates Enforced:**
+     - Zero mismatches between `word_mappings` and primary `word_mapping_strongs` enforced as a blocking gate.
+     - Component completeness gate enforced for all composite locators.
+
+### Previous Release: v1.0.318 (Database v47)
 
 - **Release Package:** [Arabic Bible Study v1.0.318](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.318)
 - **Database Engine:** **v47** (`bible_study_v47.db`, `targetDbVersion = 47`) — Guaranteed automatic upgrade with deferred cleanup of `bible_study_v46.db` after PRAGMA integrity verification.
