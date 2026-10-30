@@ -1,7 +1,7 @@
 name: arabic_bible_study
 description: Arabic Van Dyck Bible Study — Flutter Mobile App
 publish_to: 'none'
-version: 1.0.332+332
+version: 1.0.333+333
 
 environment:
   sdk: '>=3.2.0 <4.0.0'

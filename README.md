@@ -5,31 +5,32 @@
 [![Database Version](https://img.shields.io/badge/SQLite%20Database-v54%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.332 (Database v54)
+## Latest Verified Release: v1.0.333 (Database v54)
 
-- **Release Package:** [Arabic Bible Study v1.0.332](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.332)
+- **Release Package:** [Arabic Bible Study v1.0.333](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.333)
+- **Direct APK Download:** [arabic-bible-study-app.apk (v1.0.333)](https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.333/arabic-bible-study-app.apk)
 - **Database Engine:** **v54** (`bible_study_v54.db`, `targetDbVersion = 54`) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
-- **Key Enhancements in v1.0.332 (Database v54):**
+- **Key Enhancements in v1.0.333 (Database v54):**
   1. **Comprehensive Field Alignment & Precision Leap to 87.85% Exact Match:**
      - Realigned 511 displaced word positions across the 60-verse benchmark to authentic codex coordinates (SBLGNT for Greek, WLC/OSHB for Hebrew/Aramaic).
-     - Exact codex position matching skyrocketed from **31.33% (281 tokens)** in v330 to **87.85% (788 tokens)** in v332.
+     - Exact codex position matching skyrocketed from **31.33% (281 tokens)** in v330 to **87.85% (788 tokens)** in v333.
      - Displaced position count plummeted from 482 down to **3 (0.33%)**.
   2. **Substantive Philological Error Corrections & Lemma Surface Restorations:**
-     - Repaired confirmed lexical and digit-typo Strong's errors (e.g. Acts 12:7 ἔλαμψεν G2989, ἁλύσεις G254; 2 Cor 6:5 ἀγρυπνίαις G70; Col 2:15 ἀπεκδυσάμενος G554; Lev 6:15 בְּקֻמְצוֹ H7062 replacing fake H7036; Dan 5:5 נֶבְרַשְׁתָּא H5043, כְּתַל H3797; Ps 55:11 תֹּךְ H8496).
+     - Repaired confirmed lexical and digit-typo Strong's errors (e.g. Acts 12:7 ἔلاμψεν G2989, ἁλύσεις G254; 2 Cor 6:5 ἀγρυπνίαις G70; Col 2:15 ἀπεκδυσάμενος G554; Lev 6:15 בְּקֻמְצוֹ H7062 replacing fake H7036; Dan 5:5 נֶבְרַשְׁתָּא H5043, כְּתַל H3797; Ps 55:11 תֹּךְ H8496).
      - Replaced dictionary lemmas in OT surface forms with authentic inflected surface tokens (e.g., וְהֵרִים for רוּם, עִמּוֹ for עִמָּהּ in Ex 22:15).
      - Reduced substantive errors from 116 down to 76 (8.47%).
   3. **Restoration of Falsely Labeled Syntactic Additions & Full 20-Token Rev 9:14 Alignment:**
      - Completely restored content words erroneously dumped into `syntactic_ar` (e.g., John 20:21 «سَلاَمٌ» $\leftrightarrow$ Εἰρήνη G1515, «أَيْضًا» $\leftrightarrow$ πάλιν G3825; Mark 9:19, Luke 22:59, 1 Sam 26:16, Isa 54:4, Isa 60:5, Jer 52:21).
-     - Full alignment of Revelation 9:14 accounting for all 20 Greek tokens in SBLGNT order: «فُكَّ» $\leftrightarrow$ Λῦσον G3089, «الْفُرَاتِ» $\leftrightarrow$ Εὐφράτῃ G2166, «الْمُقَيَّدِينَ» $\leftrightarrow$ τοὺς δεδεμένους (G1210 + G3588).
+     - Full alignment of Revelation 9:14 accounting for all 20 Greek tokens in SBLGNT order: «فُكَّ» $\leftrightarrow$ Λῦσον G3089, «الْفُرَاتِ» $\leftrightarrow$ Εὐφράتῃ G2166, «الْمُقَيَّدِينَ» $\leftrightarrow$ τοὺς δεδεμένους (G1210 + G3588).
   4. **Multi-Component Composite Token Linkages (1:N and N:1):**
      - Full multi-component chip integration verified in `word_mapping_strongs` across both testaments.
-     - Genesis 22:16 w7 («مِنْ») classified as `compound_phrase` linked to כִּי יַעַן אֲשֶׁר (OSHB w6-w8).
+     - Genesis 22:16 w7 («مِنْ») classified as `compound_phrase` linked to כִּי יַعַן אֲשֶׁר (OSHB w6-w8).
   5. **Canonical Morphology Tag Enrichment:**
      - Enriched 185 missing morphological records directly from canonical MorphGNT and OSHB databases without guesswork.
   6. **100% Quality Gate Validation:**
      - All 48 regression tests and database invariant checks passed with 0 failures.
 
-### Previous Release: v1.0.331 (Database v54)
+### Previous Release: v1.0.332 (Database v54)
 
 - **Release Package:** [Arabic Bible Study v1.0.331](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.331)
 - **Database Engine:** **v54** (ible_study_v54.db, 	argetDbVersion = 54) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
