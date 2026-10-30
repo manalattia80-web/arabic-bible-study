@@ -5,7 +5,20 @@
 [![Database Version](https://img.shields.io/badge/SQLite%20Database-v54%20(Verified)-blue)](mobile/assets/bible_study.db)
 [![Quality Gate](https://img.shields.io/badge/CI%20Quality%20Gate-Passed%20(0%20Failures)-success)](scripts/automated_database_audit.cjs)
 
-## Latest Verified Release: v1.0.330 (Database v54)
+## Latest Verified Release: v1.0.331 (Database v54)
+
+- **Release Package:** [Arabic Bible Study v1.0.331](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.331)
+- **Database Engine:** **v54** (ible_study_v54.db, 	argetDbVersion = 54) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
+- **Key Enhancements in v1.0.331 (Database v54):**
+  1. **Philological Alignment Auditor & Separation of Error Tiers:**
+     - Strictly separated pure codex position offsets (55.63%) from true substantive lexical/semantic mismatches (13.04%).
+     - Verified anchor cases: Matthew 14:27 (pure position offset + compound pronouns) vs Genesis 22:16 (true lexical/content mismatch).
+  2. **Multi-Component Compound Alignment (1:N and N:1) Implementation:**
+     - Implemented compound mappings in word_mapping_strongs for Matthew 14:27 (linking both verb ἐλάλησεν and pronoun αὐτοῖς to كَلَّمَهُمْ).
+     - Restored Genesis 22:16 accurately (בִּ֥י for بِذَاتِي, הַדָּבָ֣ר for الأَمْرَ, object marker אֶת־, clearing fake Strongs IDs).
+     - Exact position match improved by +17 tokens on benchmark sample.
+
+### Previous Release: v1.0.330 (Database v54)
 
 - **Release Package:** [Arabic Bible Study v1.0.330](https://github.com/manalattia80-web/arabic-bible-study/releases/tag/v1.0.330)
 - **Database Engine:** **v54** (`bible_study_v54.db`, `targetDbVersion = 54`) — Guaranteed automatic upgrade with deferred cleanup of earlier versions after PRAGMA integrity verification.
