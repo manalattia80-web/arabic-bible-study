@@ -1,0 +1,612 @@
+[
+  {
+    "verse": "التكوين ١: ١ (التوراة العبرية)",
+    "pos": 1,
+    "word": "فِي",
+    "original": "—",
+    "strongs": "إضافة صياغية",
+    "transliteration": "",
+    "meaning": "أداة ربط / حرف في الصياغة العربية",
+    "components_count": 0
+  },
+  {
+    "verse": "التكوين ١: ١ (التوراة العبرية)",
+    "pos": 2,
+    "word": "الْبَدْءِ",
+    "original": "בְּרֵאשִׁית",
+    "strongs": "H7225",
+    "transliteration": "rêʼshîyth",
+    "meaning": "مشتقة من جذر يعني \"الرأس\"، وتشير لغويّاً",
+    "components_count": 1
+  },
+  {
+    "verse": "التكوين ١: ١ (التوراة العبرية)",
+    "pos": 3,
+    "word": "خَلَقَ",
+    "original": "בָּרָא",
+    "strongs": "H1254",
+    "transliteration": "bârâʼ",
+    "meaning": "جذر بدائي يعني 'يخلق' أو 'يُبدع' من العد",
+    "components_count": 1
+  },
+  {
+    "verse": "التكوين ١: ١ (التوراة العبرية)",
+    "pos": 4,
+    "word": "اللهُ",
+    "original": "אֱלֹהִים",
+    "strongs": "H430",
+    "transliteration": "ʼĕlôhîym",
+    "meaning": "يأتي من الجذر المفرد (إلُوَه) بمعنى القو",
+    "components_count": 1
+  },
+  {
+    "verse": "التكوين ١: ١ (التوراة العبرية)",
+    "pos": 5,
+    "word": "السَّمَاوَاتِ",
+    "original": "הַשָּׁמַיִם",
+    "strongs": "H8064",
+    "transliteration": "shâmayim",
+    "meaning": "صيغة تثنية مشتقة من جذر غير مستخدم يعني:",
+    "components_count": 1
+  },
+  {
+    "verse": "التكوين ١: ١ (التوراة العبرية)",
+    "pos": 6,
+    "word": "وَالأَرْضَ",
+    "original": "הָאָרֶץ",
+    "strongs": "H776",
+    "transliteration": "ʼerets",
+    "meaning": "الأرض ككيان مادي صلب وثابت.",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 1,
+    "word": "لأَنَّهُ",
+    "original": "כִּי",
+    "strongs": "H3588",
+    "transliteration": "kîy",
+    "meaning": "أداة ربط (حرف تعليل أو شرط أو تأكيد).",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 2,
+    "word": "يُولَدُ",
+    "original": "יָלַד",
+    "strongs": "H3205",
+    "transliteration": "yâlad",
+    "meaning": "جذر بدائي يعني الولادة، الإنجاب، أو التو",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 3,
+    "word": "لَنَا",
+    "original": "—",
+    "strongs": "إضافة صياغية",
+    "transliteration": "",
+    "meaning": "أداة ربط / حرف في الصياغة العربية",
+    "components_count": 0
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 4,
+    "word": "وَلَدٌ",
+    "original": "יֶלֶד",
+    "strongs": "H3206",
+    "transliteration": "yeled",
+    "meaning": "اسم مشتق من الجذر الفعلي (יָלַד - يَالَد",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 5,
+    "word": "وَنُعْطَى",
+    "original": "נִתַּן",
+    "strongs": "H5414",
+    "transliteration": "nâthan",
+    "meaning": "فعل عبري مركزي وشامل يعني 'أَعْطَى'، 'وَ",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 6,
+    "word": "ابْنًا",
+    "original": "בֵּן",
+    "strongs": "H1121",
+    "transliteration": "bên",
+    "meaning": "مشتق من الفعل (בָּנָה - باناه) الذي يعني",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 7,
+    "word": "وَتَكُونُ",
+    "original": "הָיָה",
+    "strongs": "H1961",
+    "transliteration": "hâyâh",
+    "meaning": "جذر بدائي يعني 'يصبح'، 'يحدث'، أو 'يكون'",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 8,
+    "word": "الرِّيَاسَةُ",
+    "original": "הַמִּשְׂרָ֜ה",
+    "strongs": "H4951",
+    "transliteration": "misrâh",
+    "meaning": "مشتق من (سَرَى) بمعنى السلطة أو السيادة ",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 9,
+    "word": "عَلَى",
+    "original": "עַל",
+    "strongs": "H5921",
+    "transliteration": "ʻal",
+    "meaning": "حرف جر عبري أساسي (עַל) يدل أصلًا على ال",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 10,
+    "word": "كَتِفِهِ",
+    "original": "שְׁכֶם",
+    "strongs": "H7926",
+    "transliteration": "shᵉkem",
+    "meaning": "مشتق من الجذر (שָׁכַם) الذي يعني 'النهوض",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 11,
+    "word": "وَيُدْعَى",
+    "original": "נִתַּן",
+    "strongs": "H5414",
+    "transliteration": "nâthan",
+    "meaning": "فعل عبري مركزي وشامل يعني 'أَعْطَى'، 'وَ",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 12,
+    "word": "اسْمُهُ",
+    "original": "שֵׁם",
+    "strongs": "H8034",
+    "transliteration": "shêm",
+    "meaning": "يعني الاسم، السمعة، الشهرة، الصيت، أو ال",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 13,
+    "word": "عَجِيبًا",
+    "original": "פֶּלֶא",
+    "strongs": "H6382",
+    "transliteration": "peleʼ",
+    "meaning": "شيء مذهل، معجزة، أو أمر يفوق الفهم البشر",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 14,
+    "word": "مُشِيرًا",
+    "original": "יָעַץ",
+    "strongs": "H3289",
+    "transliteration": "yâʻats",
+    "meaning": "فعل جذري أولى يعني: يُشير، ينصح، يُدبر، ",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 15,
+    "word": "إِلهًا",
+    "original": "אֵל",
+    "strongs": "H410",
+    "transliteration": "ʼêl",
+    "meaning": "اسم مشتق من الجذر الذي يعني القوة، القدر",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 16,
+    "word": "قَدِيرًا",
+    "original": "גִּבּוֹר",
+    "strongs": "H1368",
+    "transliteration": "gibbôwr",
+    "meaning": "مشتق من جذر يعني القوة والقدرة، ويشير إل",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 17,
+    "word": "أَبًا",
+    "original": "אָב",
+    "strongs": "H1",
+    "transliteration": "ʼâb",
+    "meaning": "كلمة بدائية تعني الأب، المصدر، أو الأصل.",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 18,
+    "word": "أَبَدِيًّا",
+    "original": "עַד",
+    "strongs": "H5703",
+    "transliteration": "ʻad",
+    "meaning": "اسم وحرف جر ظرفي مشتق من الجذر (عَدَه) ا",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 19,
+    "word": "رَئِيسَ",
+    "original": "שַׂר",
+    "strongs": "H8269",
+    "transliteration": "sar",
+    "meaning": "شَرْحٌ تَفْصِيلِيٌّ:\n1. المَعْنَى المُعْ",
+    "components_count": 1
+  },
+  {
+    "verse": "إشعياء ٩: ٦ (النبوات العبرية)",
+    "pos": 20,
+    "word": "السَّلاَمِ",
+    "original": "וּלְשָׁל֣וֹם",
+    "strongs": "H7965",
+    "transliteration": "shâlôwm",
+    "meaning": "كلمة مركزية وعميقة في اللاهوت الكتابي، ت",
+    "components_count": 1
+  },
+  {
+    "verse": "متى ٥: ٣ (الموعظة على الجبل - اليونانية)",
+    "pos": 1,
+    "word": "طُوبَى",
+    "original": "Μακάριοι",
+    "strongs": "G3107",
+    "transliteration": "makários",
+    "meaning": "تعني كلمة (μακάριος) في أصلها اللغوي الس",
+    "components_count": 1
+  },
+  {
+    "verse": "متى ٥: ٣ (الموعظة على الجبل - اليونانية)",
+    "pos": 2,
+    "word": "لِلْمَسَاكِينِ",
+    "original": "πτωχοὶ",
+    "strongs": "G4434",
+    "transliteration": "ptōchós",
+    "meaning": "الشخص الذي يرتجف أو ينحني من شدة الفقر، ",
+    "components_count": 1
+  },
+  {
+    "verse": "متى ٥: ٣ (الموعظة على الجبل - اليونانية)",
+    "pos": 3,
+    "word": "بِالرُّوحِ",
+    "original": "πνεύματι",
+    "strongs": "G4151",
+    "transliteration": "pneûma",
+    "meaning": "مشتق من الفعل 'بْنِيو' (ينفخ أو يهب)، وي",
+    "components_count": 1
+  },
+  {
+    "verse": "متى ٥: ٣ (الموعظة على الجبل - اليونانية)",
+    "pos": 4,
+    "word": "لأَنَّ",
+    "original": "ὅτι",
+    "strongs": "G3754",
+    "transliteration": "hóti",
+    "meaning": "أدة ربط وموصول تعني \"أَنَّ\"، \"لِأَنَّ\"، ",
+    "components_count": 1
+  },
+  {
+    "verse": "متى ٥: ٣ (الموعظة على الجبل - اليونانية)",
+    "pos": 5,
+    "word": "لَهُمْ",
+    "original": "αὐτῶν",
+    "strongs": "G846",
+    "transliteration": "autós",
+    "meaning": "ضمير شخصي يعني 'هو' أو 'هي' أو 'ذاته'.",
+    "components_count": 1
+  },
+  {
+    "verse": "متى ٥: ٣ (الموعظة على الجبل - اليونانية)",
+    "pos": 6,
+    "word": "مَلَكُوتَ",
+    "original": "βασιλεία",
+    "strongs": "G932",
+    "transliteration": "basileía",
+    "meaning": "تعني الملك، السلطة الملكية، أو النطاق ال",
+    "components_count": 1
+  },
+  {
+    "verse": "متى ٥: ٣ (الموعظة على الجبل - اليونانية)",
+    "pos": 7,
+    "word": "السَّمَاوَاتِ",
+    "original": "οὐρανῶν",
+    "strongs": "G3772",
+    "transliteration": "ouranós",
+    "meaning": "يشير الجذر إلى الارتفاع والسمو، وهو المك",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 1,
+    "word": "وَنَحْنُ",
+    "original": "—",
+    "strongs": "إضافة صياغية",
+    "transliteration": "",
+    "meaning": "أداة ربط / حرف في الصياغة العربية",
+    "components_count": 0
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 2,
+    "word": "نَعْلَمُ",
+    "original": "Οἴδαμεν",
+    "strongs": "G1492",
+    "transliteration": "eídō",
+    "meaning": "فعل يعني الرؤية، الإدراك، المعرفة، أو ال",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 3,
+    "word": "أَنَّ",
+    "original": "ὅτι",
+    "strongs": "G3754",
+    "transliteration": "hóti",
+    "meaning": "أدة ربط وموصول تعني \"أَنَّ\"، \"لِأَنَّ\"، ",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 4,
+    "word": "كُلَّ",
+    "original": "πάντα",
+    "strongs": "G3956",
+    "transliteration": "pâs",
+    "meaning": "صفة تعني 'كل'، 'جميع'، 'الكل'.",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 5,
+    "word": "الأَشْيَاءِ",
+    "original": "πάντα",
+    "strongs": "G3956",
+    "transliteration": "pâs",
+    "meaning": "صفة تعني 'كل'، 'جميع'، 'الكل'.",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 6,
+    "word": "تَعْمَلُ",
+    "original": "συνεργεῖ",
+    "strongs": "G4903",
+    "transliteration": "synergéō",
+    "meaning": "فعل مشتق من 'سُونيرغوس' (عامل مع)، ويعني",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 7,
+    "word": "مَعًا",
+    "original": "σύν",
+    "strongs": "G4862",
+    "transliteration": "sýn",
+    "meaning": "حرف جر أساسي يفيد الاتحاد، المصاحبة، أو ",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 8,
+    "word": "لِلْخَيْرِ",
+    "original": "ἀγαθόν",
+    "strongs": "G18",
+    "transliteration": "agathós",
+    "meaning": "صفة يونانية أولية تعني: صالح، حسن، نافع،",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 9,
+    "word": "لِلَّذِينَ",
+    "original": "ὁ",
+    "strongs": "G3588",
+    "transliteration": "ho",
+    "meaning": "أداة التعريف المعيارية (الـ) في اللغة ال",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 10,
+    "word": "يُحِبُّونَ",
+    "original": "ἀγαπῶσι",
+    "strongs": "G25",
+    "transliteration": "agapáō",
+    "meaning": "المحبة غير المشروطة، الباذلة، والمضحية.",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 11,
+    "word": "اللهَ",
+    "original": "θεὸν",
+    "strongs": "G2316",
+    "transliteration": "theós",
+    "meaning": "الكلمة اليونانية العامة للإله، وتُستخدم ",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 12,
+    "word": "الَّذِينَ",
+    "original": "ὁ",
+    "strongs": "G3588",
+    "transliteration": "ho",
+    "meaning": "أداة التعريف المعيارية (الـ) في اللغة ال",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 13,
+    "word": "هُمْ",
+    "original": "οὖσιν",
+    "strongs": "G1510",
+    "transliteration": "eimí",
+    "meaning": "هو الفعل الكينوني الأساسي الذي يعبر عن ا",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 14,
+    "word": "مَدْعُوُّونَ",
+    "original": "κλητοῖς",
+    "strongs": "G2822",
+    "transliteration": "klētós",
+    "meaning": "صفة مشتقة من الفعل 'كاليو' (يدعو)، وتعني",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 15,
+    "word": "حَسَبَ",
+    "original": "κατὰ",
+    "strongs": "G2596",
+    "transliteration": "katá",
+    "meaning": "حرف جر يعني 'حسب' أو 'بموجب' أو 'ضد' أو ",
+    "components_count": 1
+  },
+  {
+    "verse": "رومية ٨: ٢٨ (الرسائل التعليمية - اليونانية)",
+    "pos": 16,
+    "word": "قَصْدِهِ",
+    "original": "πρόθεσιν",
+    "strongs": "G4286",
+    "transliteration": "próthesis",
+    "meaning": "مشتق من الفعل 'بروتيثيمي' (pro-tithemi)،",
+    "components_count": 1
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 1,
+    "word": "يَقُولُ",
+    "original": "Λέγει",
+    "strongs": "G3004",
+    "transliteration": "légō",
+    "meaning": "فعل أساسي يعني القول، التحدث، أو التعبير",
+    "components_count": 1
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 2,
+    "word": "الشَّاهِدُ",
+    "original": "μαρτυρῶν",
+    "strongs": "G3140",
+    "transliteration": "martyréō",
+    "meaning": "فعل يوناني يعني «يَشْهَد»، «يُقدم شهادة ",
+    "components_count": 1
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 3,
+    "word": "بِهذَا:",
+    "original": "—",
+    "strongs": "إضافة صياغية",
+    "transliteration": "",
+    "meaning": "أداة ربط / حرف في الصياغة العربية",
+    "components_count": 0
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 4,
+    "word": "«نَعَمْ!",
+    "original": "—",
+    "strongs": "إضافة صياغية",
+    "transliteration": "",
+    "meaning": "أداة ربط / حرف في الصياغة العربية",
+    "components_count": 0
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 5,
+    "word": "أَنَا",
+    "original": "—",
+    "strongs": "إضافة صياغية",
+    "transliteration": "",
+    "meaning": "أداة ربط / حرف في الصياغة العربية",
+    "components_count": 0
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 6,
+    "word": "آتِي",
+    "original": "ἔρχομαι",
+    "strongs": "G2064",
+    "transliteration": "érchomai",
+    "meaning": "فعل يعني 'يأتي' أو 'يذهب'.",
+    "components_count": 1
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 7,
+    "word": "سَرِيعًا».",
+    "original": "ταχύ",
+    "strongs": "G5035",
+    "transliteration": "tachý",
+    "meaning": "ظرف يعني بسرعة، عاجلاً، أو في وقت قصير.",
+    "components_count": 1
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 8,
+    "word": "آمِينَ.",
+    "original": "Ἀμήν",
+    "strongs": "G281",
+    "transliteration": "amḗn",
+    "meaning": "المعنى المعجمي الأصلي للجذر (أصل عبري H0",
+    "components_count": 1
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 9,
+    "word": "تَعَالَ",
+    "original": "ἔρχου",
+    "strongs": "G2064",
+    "transliteration": "érchomai",
+    "meaning": "فعل يعني 'يأتي' أو 'يذهب'.",
+    "components_count": 1
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 10,
+    "word": "أَيُّهَا",
+    "original": "ὁ",
+    "strongs": "G3588",
+    "transliteration": "ho",
+    "meaning": "أداة التعريف المعيارية (الـ) في اللغة ال",
+    "components_count": 1
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 11,
+    "word": "الرَّبُّ",
+    "original": "κύριε",
+    "strongs": "G2962",
+    "transliteration": "kýrios",
+    "meaning": "تعني السيد، المالك، أو صاحب السلطة المطل",
+    "components_count": 1
+  },
+  {
+    "verse": "رؤيا ٢٢: ٢٠ (سفر الرؤيا - ختام العهد الجديد)",
+    "pos": 12,
+    "word": "يَسُوعُ.",
+    "original": "Ἰησοῦ",
+    "strongs": "G2424",
+    "transliteration": "Iēsoûs",
+    "meaning": "هو المقابل اليوناني للاسم العبري 'يَهْشُ",
+    "components_count": 1
+  }
+]
