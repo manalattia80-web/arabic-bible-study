@@ -1,12 +1,12 @@
 {
   "totalTokens": 897,
-  "tier1_exactMatches": 816,
-  "tier2_displacedLegitimate": 52,
+  "tier1_exactMatches": 820,
+  "tier2_displacedLegitimate": 49,
   "tier3_substantiveMismatches": 0,
-  "tier4_syntacticAdditions": 29,
+  "tier4_syntacticAdditions": 28,
   "rates": {
-    "exactPositionRate": "90.97",
-    "displacedRate": "5.80",
+    "exactPositionRate": "91.42",
+    "displacedRate": "5.46",
     "substantiveErrorRate": "0.00",
     "semanticConcordanceRate": "100.00"
   },
@@ -1922,7 +1922,7 @@
           "orig_surface": "אֲדֹנָיו",
           "pos": 10,
           "classification": "EXACT_MATCH",
-          "strongs": "H136"
+          "strongs": "H113"
         },
         {
           "ar_pos": 11,
@@ -4202,7 +4202,7 @@
       "ref": "Matthew 22:30",
       "lang": "greek",
       "arWordsCount": 13,
-      "origTokensCount": 17,
+      "origTokensCount": 16,
       "tokens": [
         {
           "ar_pos": 1,
@@ -4269,17 +4269,12 @@
           "strongs": "G235"
         },
         {
-          "ref": "Matthew 22:30",
           "ar_pos": 9,
           "ar_word": "يَكُونُونَ",
           "orig_surface": "εἰσίν",
-          "assigned_pos": 16,
-          "actual_pos": [
-            17
-          ],
-          "strongs": "G1510",
-          "classification": "DISPLACED_IN_VERSE",
-          "detail": "Valid word in verse, but shifted from pos [17] to pos 16"
+          "pos": 16,
+          "classification": "EXACT_MATCH",
+          "strongs": "G1510"
         },
         {
           "ar_pos": 10,
@@ -4293,7 +4288,7 @@
           "ar_pos": 11,
           "ar_word": "اللهِ",
           "orig_surface": "θεοῦ",
-          "pos": 13,
+          "pos": 12,
           "classification": "EXACT_MATCH",
           "strongs": "G2316"
         },
@@ -4301,22 +4296,17 @@
           "ar_pos": 12,
           "ar_word": "فِي",
           "orig_surface": "ἐν",
-          "pos": 14,
+          "pos": 13,
           "classification": "EXACT_MATCH",
           "strongs": "G1722"
         },
         {
-          "ref": "Matthew 22:30",
           "ar_pos": 13,
           "ar_word": "السَّمَاءِ.",
           "orig_surface": "οὐρανῷ",
-          "assigned_pos": 15,
-          "actual_pos": [
-            16
-          ],
-          "strongs": "G3772",
-          "classification": "DISPLACED_IN_VERSE",
-          "detail": "Valid word in verse, but shifted from pos [16] to pos 15"
+          "pos": 15,
+          "classification": "EXACT_MATCH",
+          "strongs": "G3772"
         }
       ]
     },
@@ -7135,8 +7125,10 @@
         {
           "ar_pos": 7,
           "ar_word": "إِلَى",
-          "classification": "SYNTACTIC_ADDITION",
-          "detail": "Arabic stylistic/grammatical addition"
+          "orig_surface": "לְכֹל",
+          "pos": 7,
+          "classification": "EXACT_MATCH",
+          "strongs": null
         },
         {
           "ar_pos": 8,
@@ -7163,17 +7155,12 @@
           "strongs": "H1768"
         },
         {
-          "ref": "Ezra 7:21",
           "ar_pos": 11,
           "ar_word": "فِي",
           "orig_surface": "בַּעֲבַר",
-          "assigned_pos": 12,
-          "actual_pos": [
-            10
-          ],
-          "strongs": "H5675",
-          "classification": "DISPLACED_IN_VERSE",
-          "detail": "Valid word in verse, but shifted from pos [10] to pos 12"
+          "pos": 10,
+          "classification": "EXACT_MATCH",
+          "strongs": null
         },
         {
           "ar_pos": 12,
@@ -7189,7 +7176,7 @@
           "orig_surface": "נַהֲרָה",
           "pos": 11,
           "classification": "EXACT_MATCH",
-          "strongs": "H5105"
+          "strongs": "H5103"
         },
         {
           "ref": "Ezra 7:21",
