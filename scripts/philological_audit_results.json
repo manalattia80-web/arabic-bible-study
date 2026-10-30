@@ -1,12 +1,12 @@
 {
   "totalTokens": 897,
-  "tier1_exactMatches": 813,
-  "tier2_displacedLegitimate": 54,
+  "tier1_exactMatches": 816,
+  "tier2_displacedLegitimate": 52,
   "tier3_substantiveMismatches": 0,
-  "tier4_syntacticAdditions": 30,
+  "tier4_syntacticAdditions": 29,
   "rates": {
-    "exactPositionRate": "90.64",
-    "displacedRate": "6.02",
+    "exactPositionRate": "90.97",
+    "displacedRate": "5.80",
     "substantiveErrorRate": "0.00",
     "semanticConcordanceRate": "100.00"
   },
@@ -79,34 +79,6 @@
       "strongs": "H4763",
       "classification": "DISPLACED_IN_VERSE",
       "detail": "Valid word in verse, but shifted from pos [22,33] to pos 25"
-    },
-    {
-      "ref": "2 Kings 5:1",
-      "ar_pos": 14,
-      "ar_word": "عَنْ",
-      "orig_surface": "בֹ֛ו",
-      "assigned_pos": 8,
-      "actual_pos": [
-        14,
-        21
-      ],
-      "strongs": "H9003",
-      "classification": "DISPLACED_IN_VERSE",
-      "detail": "Valid word in verse, but shifted from pos [14,21] to pos 8"
-    },
-    {
-      "ref": "2 Kings 5:1",
-      "ar_pos": 15,
-      "ar_word": "يَدِهِ",
-      "orig_surface": "בֹ֛ו",
-      "assigned_pos": 8,
-      "actual_pos": [
-        14,
-        21
-      ],
-      "strongs": "H1992",
-      "classification": "DISPLACED_IN_VERSE",
-      "detail": "Valid word in verse, but shifted from pos [14,21] to pos 8"
     },
     {
       "ref": "2 Kings 10:30",
@@ -213,6 +185,32 @@
       "strongs": "H1892",
       "classification": "DISPLACED_IN_VERSE",
       "detail": "Valid word in verse, but shifted from pos [2,11] to pos 10"
+    },
+    {
+      "ref": "Psalms 65:3",
+      "ar_pos": 8,
+      "ar_word": "عَنْهَا",
+      "orig_surface": "תְּכַפְּרֵם",
+      "assigned_pos": 6,
+      "actual_pos": [
+        7
+      ],
+      "strongs": "H3722",
+      "classification": "DISPLACED_IN_VERSE",
+      "detail": "Valid word in verse, but shifted from pos [7] to pos 6"
+    },
+    {
+      "ref": "Jeremiah 52:21",
+      "ar_pos": 15,
+      "ar_word": "بِهِ",
+      "orig_surface": "יְסֻבֶּנּוּ",
+      "assigned_pos": 10,
+      "actual_pos": [
+        11
+      ],
+      "strongs": "H5437",
+      "classification": "DISPLACED_IN_VERSE",
+      "detail": "Valid word in verse, but shifted from pos [11] to pos 10"
     }
   ],
   "auditedVerses": [
@@ -1873,10 +1871,10 @@
         {
           "ar_pos": 4,
           "ar_word": "جَيْشِ",
-          "orig_surface": "חַיִל",
-          "pos": 22,
+          "orig_surface": "צְבָ֨א",
+          "pos": 3,
           "classification": "EXACT_MATCH",
-          "strongs": "H2428"
+          "strongs": "H6635"
         },
         {
           "ar_pos": 5,
@@ -1945,38 +1943,26 @@
         {
           "ar_pos": 13,
           "ar_word": "لأَنَّهُ",
-          "orig_surface": "מִן",
-          "pos": 1,
+          "orig_surface": "כִּֽי־",
+          "pos": 13,
           "classification": "EXACT_MATCH",
-          "strongs": "H4480"
+          "strongs": "H3588"
         },
         {
-          "ref": "2 Kings 5:1",
           "ar_pos": 14,
           "ar_word": "عَنْ",
           "orig_surface": "בֹ֛ו",
-          "assigned_pos": 8,
-          "actual_pos": [
-            14,
-            21
-          ],
-          "strongs": "H9003",
-          "classification": "DISPLACED_IN_VERSE",
-          "detail": "Valid word in verse, but shifted from pos [14,21] to pos 8"
+          "pos": 14,
+          "classification": "EXACT_MATCH",
+          "strongs": "H9003"
         },
         {
-          "ref": "2 Kings 5:1",
           "ar_pos": 15,
           "ar_word": "يَدِهِ",
           "orig_surface": "בֹ֛ו",
-          "assigned_pos": 8,
-          "actual_pos": [
-            14,
-            21
-          ],
-          "strongs": "H1992",
-          "classification": "DISPLACED_IN_VERSE",
-          "detail": "Valid word in verse, but shifted from pos [14,21] to pos 8"
+          "pos": 14,
+          "classification": "EXACT_MATCH",
+          "strongs": "H9003"
         },
         {
           "ar_pos": 16,
@@ -1989,10 +1975,10 @@
         {
           "ar_pos": 17,
           "ar_word": "الرَّبُّ",
-          "orig_surface": "אֲדֹנָיו",
-          "pos": 10,
+          "orig_surface": "יְהוָ֥ה",
+          "pos": 16,
           "classification": "EXACT_MATCH",
-          "strongs": "H136"
+          "strongs": "H3068"
         },
         {
           "ar_pos": 18,
@@ -4216,7 +4202,7 @@
       "ref": "Matthew 22:30",
       "lang": "greek",
       "arWordsCount": 13,
-      "origTokensCount": 16,
+      "origTokensCount": 17,
       "tokens": [
         {
           "ar_pos": 1,
@@ -4230,7 +4216,7 @@
           "ar_pos": 2,
           "ar_word": "فِي",
           "orig_surface": "ἐν",
-          "pos": 14,
+          "pos": 1,
           "classification": "EXACT_MATCH",
           "strongs": "G1722"
         },
@@ -4245,8 +4231,10 @@
         {
           "ar_pos": 4,
           "ar_word": "لاَ",
-          "classification": "SYNTACTIC_ADDITION",
-          "detail": "Arabic stylistic/grammatical addition"
+          "orig_surface": "οὔτε",
+          "pos": 5,
+          "classification": "EXACT_MATCH",
+          "strongs": "G3777"
         },
         {
           "ar_pos": 5,
@@ -4267,36 +4255,31 @@
         {
           "ar_pos": 7,
           "ar_word": "يَتَزَوَّجُونَ،",
-          "orig_surface": "γαμοῦσιν",
-          "pos": 6,
+          "orig_surface": "γαμίζονται",
+          "pos": 8,
           "classification": "EXACT_MATCH",
-          "strongs": "G1060"
+          "strongs": "G1061"
         },
         {
-          "ref": "Matthew 22:30",
           "ar_pos": 8,
           "ar_word": "بَلْ",
           "orig_surface": "ἀλλ᾽",
-          "assigned_pos": 8,
-          "actual_pos": [
-            9
-          ],
-          "strongs": "G235",
-          "classification": "DISPLACED_IN_VERSE",
-          "detail": "Valid word in verse, but shifted from pos [9] to pos 8"
+          "pos": 9,
+          "classification": "EXACT_MATCH",
+          "strongs": "G235"
         },
         {
           "ref": "Matthew 22:30",
           "ar_pos": 9,
           "ar_word": "يَكُونُونَ",
           "orig_surface": "εἰσίν",
-          "assigned_pos": 10,
+          "assigned_pos": 16,
           "actual_pos": [
-            16
+            17
           ],
           "strongs": "G1510",
           "classification": "DISPLACED_IN_VERSE",
-          "detail": "Valid word in verse, but shifted from pos [16] to pos 10"
+          "detail": "Valid word in verse, but shifted from pos [17] to pos 16"
         },
         {
           "ar_pos": 10,
@@ -4323,12 +4306,17 @@
           "strongs": "G1722"
         },
         {
+          "ref": "Matthew 22:30",
           "ar_pos": 13,
           "ar_word": "السَّمَاءِ.",
           "orig_surface": "οὐρανῷ",
-          "pos": 15,
-          "classification": "EXACT_MATCH",
-          "strongs": "G3772"
+          "assigned_pos": 15,
+          "actual_pos": [
+            16
+          ],
+          "strongs": "G3772",
+          "classification": "DISPLACED_IN_VERSE",
+          "detail": "Valid word in verse, but shifted from pos [16] to pos 15"
         }
       ]
     },
@@ -7099,10 +7087,10 @@
         {
           "ar_pos": 1,
           "ar_word": "وَمِنِّي",
-          "orig_surface": "דִּי",
-          "pos": 9,
+          "orig_surface": "וּ֠מִנִּי",
+          "pos": 1,
           "classification": "EXACT_MATCH",
-          "strongs": "H1768"
+          "strongs": "H4481"
         },
         {
           "ar_pos": 2,
@@ -7247,7 +7235,7 @@
         {
           "ar_pos": 17,
           "ar_word": "يَطْلُبُهُ",
-          "orig_surface": "יִ֠שְׁאֲלֶנְכוֹן",
+          "orig_surface": "יִ֠שְׁאֲלֶנְכֹון",
           "pos": 15,
           "classification": "EXACT_MATCH",
           "strongs": "H7593"
@@ -7258,7 +7246,7 @@
           "orig_surface": "יִ֠שְׁאֲלֶנְכֹון",
           "pos": 15,
           "classification": "EXACT_MATCH",
-          "strongs": "H4481"
+          "strongs": "H7593"
         },
         {
           "ar_pos": 19,
