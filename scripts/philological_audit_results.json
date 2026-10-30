@@ -1,127 +1,16 @@
 {
   "totalTokens": 897,
-  "tier1_exactMatches": 810,
-  "tier2_displacedLegitimate": 46,
-  "tier3_substantiveMismatches": 11,
+  "tier1_exactMatches": 813,
+  "tier2_displacedLegitimate": 54,
+  "tier3_substantiveMismatches": 0,
   "tier4_syntacticAdditions": 30,
   "rates": {
-    "exactPositionRate": "90.30",
-    "displacedRate": "5.13",
-    "substantiveErrorRate": "1.23",
-    "semanticConcordanceRate": "98.77"
+    "exactPositionRate": "90.64",
+    "displacedRate": "6.02",
+    "substantiveErrorRate": "0.00",
+    "semanticConcordanceRate": "100.00"
   },
-  "substantiveErrorList": [
-    {
-      "ref": "Joshua 3:12",
-      "ar_pos": 6,
-      "ar_word": "مِنْ",
-      "orig_surface": "מִכֹּל",
-      "assigned_pos": 7,
-      "strongs": "H3605",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'מִכֹּל' does not exist in verse codex text"
-    },
-    {
-      "ref": "Judges 20:42",
-      "ar_pos": 3,
-      "ar_word": "بَنِي",
-      "orig_surface": "בְּנֵי",
-      "assigned_pos": 3,
-      "strongs": "H1121",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'בְּנֵי' does not exist in verse codex text"
-    },
-    {
-      "ref": "Judges 20:42",
-      "ar_pos": 12,
-      "ar_word": "مِنَ",
-      "orig_surface": "מִן־הֶעָרִים",
-      "assigned_pos": 11,
-      "strongs": "H5892",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'מִן־הֶעָרִים' does not exist in verse codex text"
-    },
-    {
-      "ref": "2 Kings 5:1",
-      "ar_pos": 14,
-      "ar_word": "عَنْ",
-      "orig_surface": "בְיָדוֹ",
-      "assigned_pos": 11,
-      "strongs": "H3027",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'בְיָדוֹ' does not exist in verse codex text"
-    },
-    {
-      "ref": "2 Kings 5:1",
-      "ar_pos": 15,
-      "ar_word": "يَدِهِ",
-      "orig_surface": "בְיָדוֹ",
-      "assigned_pos": 11,
-      "strongs": "H3027",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'בְיָדוֹ' does not exist in verse codex text"
-    },
-    {
-      "ref": "Matthew 22:30",
-      "ar_pos": 8,
-      "ar_word": "بَلْ",
-      "orig_surface": "ἀλλ’",
-      "assigned_pos": 8,
-      "strongs": "G235",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'ἀλλ’' does not exist in verse codex text"
-    },
-    {
-      "ref": "Luke 1:12",
-      "ar_pos": 6,
-      "ar_word": "عَلَيْهِ",
-      "orig_surface": "ἐπ’",
-      "assigned_pos": 6,
-      "strongs": "G1909",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'ἐπ’' does not exist in verse codex text"
-    },
-    {
-      "ref": "Acts 11:28",
-      "ar_pos": 10,
-      "ar_word": "عَظِيمًا",
-      "orig_surface": "μεγάλην",
-      "assigned_pos": 10,
-      "strongs": "G3173",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'μεγάλην' does not exist in verse codex text"
-    },
-    {
-      "ref": "1 Corinthians 3:2",
-      "ar_pos": 10,
-      "ar_word": "بَلِ",
-      "orig_surface": "ἀλλ’",
-      "assigned_pos": 9,
-      "strongs": "G235",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'ἀλλ’' does not exist in verse codex text"
-    },
-    {
-      "ref": "Ezra 7:21",
-      "ar_pos": 18,
-      "ar_word": "مِنْكُمْ",
-      "orig_surface": "מִנְכוֹן",
-      "assigned_pos": 19,
-      "strongs": "H4481",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'מִנְכוֹן' does not exist in verse codex text"
-    },
-    {
-      "ref": "Daniel 2:38",
-      "ar_pos": 17,
-      "ar_word": "مِنْ",
-      "orig_surface": "מִן־",
-      "assigned_pos": 17,
-      "strongs": "H4481",
-      "classification": "SUBSTANTIVE_MISMATCH",
-      "detail": "Word 'מִן־' does not exist in verse codex text"
-    }
-  ],
+  "substantiveErrorList": [],
   "positionOffsetSample": [
     {
       "ref": "Joshua 3:12",
@@ -148,6 +37,19 @@
       "strongs": "H310",
       "classification": "DISPLACED_IN_VERSE",
       "detail": "Valid word in verse, but shifted from pos [5] to pos 4"
+    },
+    {
+      "ref": "Judges 20:42",
+      "ar_pos": 12,
+      "ar_word": "مِنَ",
+      "orig_surface": "מֵהֶ֣עָרִ֔ים",
+      "assigned_pos": 10,
+      "actual_pos": [
+        11
+      ],
+      "strongs": "H4480",
+      "classification": "DISPLACED_IN_VERSE",
+      "detail": "Valid word in verse, but shifted from pos [11] to pos 10"
     },
     {
       "ref": "1 Samuel 26:16",
@@ -177,6 +79,34 @@
       "strongs": "H4763",
       "classification": "DISPLACED_IN_VERSE",
       "detail": "Valid word in verse, but shifted from pos [22,33] to pos 25"
+    },
+    {
+      "ref": "2 Kings 5:1",
+      "ar_pos": 14,
+      "ar_word": "عَنْ",
+      "orig_surface": "בֹ֛ו",
+      "assigned_pos": 8,
+      "actual_pos": [
+        14,
+        21
+      ],
+      "strongs": "H9003",
+      "classification": "DISPLACED_IN_VERSE",
+      "detail": "Valid word in verse, but shifted from pos [14,21] to pos 8"
+    },
+    {
+      "ref": "2 Kings 5:1",
+      "ar_pos": 15,
+      "ar_word": "يَدِهِ",
+      "orig_surface": "בֹ֛ו",
+      "assigned_pos": 8,
+      "actual_pos": [
+        14,
+        21
+      ],
+      "strongs": "H1992",
+      "classification": "DISPLACED_IN_VERSE",
+      "detail": "Valid word in verse, but shifted from pos [14,21] to pos 8"
     },
     {
       "ref": "2 Kings 10:30",
@@ -283,45 +213,6 @@
       "strongs": "H1892",
       "classification": "DISPLACED_IN_VERSE",
       "detail": "Valid word in verse, but shifted from pos [2,11] to pos 10"
-    },
-    {
-      "ref": "Psalms 65:3",
-      "ar_pos": 8,
-      "ar_word": "عَنْهَا",
-      "orig_surface": "תְּכַפְּרֵם",
-      "assigned_pos": 6,
-      "actual_pos": [
-        7
-      ],
-      "strongs": "H3722",
-      "classification": "DISPLACED_IN_VERSE",
-      "detail": "Valid word in verse, but shifted from pos [7] to pos 6"
-    },
-    {
-      "ref": "Jeremiah 52:21",
-      "ar_pos": 15,
-      "ar_word": "بِهِ",
-      "orig_surface": "יְסֻבֶּנּוּ",
-      "assigned_pos": 10,
-      "actual_pos": [
-        11
-      ],
-      "strongs": "H5437",
-      "classification": "DISPLACED_IN_VERSE",
-      "detail": "Valid word in verse, but shifted from pos [11] to pos 10"
-    },
-    {
-      "ref": "Jeremiah 52:21",
-      "ar_pos": 16,
-      "ar_word": "وَغِلَظُهُ",
-      "orig_surface": "וְעָבְיוֹ",
-      "assigned_pos": 11,
-      "actual_pos": [
-        12
-      ],
-      "strongs": "H5672",
-      "classification": "DISPLACED_IN_VERSE",
-      "detail": "Valid word in verse, but shifted from pos [12] to pos 11"
     }
   ],
   "auditedVerses": [
@@ -954,14 +845,12 @@
           "strongs": "H376"
         },
         {
-          "ref": "Joshua 3:12",
           "ar_pos": 6,
           "ar_word": "مِنْ",
-          "orig_surface": "מִכֹּל",
-          "assigned_pos": 7,
-          "strongs": "H3605",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'מִכֹּל' does not exist in verse codex text"
+          "orig_surface": "מִשִּׁבְטֵ֖י",
+          "pos": 7,
+          "classification": "EXACT_MATCH",
+          "strongs": "H4480"
         },
         {
           "ar_pos": 7,
@@ -1222,14 +1111,12 @@
           "strongs": "H6440"
         },
         {
-          "ref": "Judges 20:42",
           "ar_pos": 3,
           "ar_word": "بَنِي",
-          "orig_surface": "בְּנֵי",
-          "assigned_pos": 3,
-          "strongs": "H1121",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'בְּנֵי' does not exist in verse codex text"
+          "orig_surface": "אִ֤ישׁ",
+          "pos": 3,
+          "classification": "EXACT_MATCH",
+          "strongs": "H376"
         },
         {
           "ar_pos": 4,
@@ -1297,11 +1184,14 @@
           "ref": "Judges 20:42",
           "ar_pos": 12,
           "ar_word": "مِنَ",
-          "orig_surface": "מִן־הֶעָרִים",
-          "assigned_pos": 11,
-          "strongs": "H5892",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'מִן־הֶעָרִים' does not exist in verse codex text"
+          "orig_surface": "מֵהֶ֣עָרִ֔ים",
+          "assigned_pos": 10,
+          "actual_pos": [
+            11
+          ],
+          "strongs": "H4480",
+          "classification": "DISPLACED_IN_VERSE",
+          "detail": "Valid word in verse, but shifted from pos [11] to pos 10"
         },
         {
           "ar_pos": 13,
@@ -2064,21 +1954,29 @@
           "ref": "2 Kings 5:1",
           "ar_pos": 14,
           "ar_word": "عَنْ",
-          "orig_surface": "בְיָדוֹ",
-          "assigned_pos": 11,
-          "strongs": "H3027",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'בְיָדוֹ' does not exist in verse codex text"
+          "orig_surface": "בֹ֛ו",
+          "assigned_pos": 8,
+          "actual_pos": [
+            14,
+            21
+          ],
+          "strongs": "H9003",
+          "classification": "DISPLACED_IN_VERSE",
+          "detail": "Valid word in verse, but shifted from pos [14,21] to pos 8"
         },
         {
           "ref": "2 Kings 5:1",
           "ar_pos": 15,
           "ar_word": "يَدِهِ",
-          "orig_surface": "בְיָדוֹ",
-          "assigned_pos": 11,
-          "strongs": "H3027",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'בְיָדוֹ' does not exist in verse codex text"
+          "orig_surface": "בֹ֛ו",
+          "assigned_pos": 8,
+          "actual_pos": [
+            14,
+            21
+          ],
+          "strongs": "H1992",
+          "classification": "DISPLACED_IN_VERSE",
+          "detail": "Valid word in verse, but shifted from pos [14,21] to pos 8"
         },
         {
           "ar_pos": 16,
@@ -4378,11 +4276,14 @@
           "ref": "Matthew 22:30",
           "ar_pos": 8,
           "ar_word": "بَلْ",
-          "orig_surface": "ἀλλ’",
+          "orig_surface": "ἀλλ᾽",
           "assigned_pos": 8,
+          "actual_pos": [
+            9
+          ],
           "strongs": "G235",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'ἀλλ’' does not exist in verse codex text"
+          "classification": "DISPLACED_IN_VERSE",
+          "detail": "Valid word in verse, but shifted from pos [9] to pos 8"
         },
         {
           "ref": "Matthew 22:30",
@@ -4858,11 +4759,14 @@
           "ref": "Luke 1:12",
           "ar_pos": 6,
           "ar_word": "عَلَيْهِ",
-          "orig_surface": "ἐπ’",
+          "orig_surface": "ἐπ᾽",
           "assigned_pos": 6,
+          "actual_pos": [
+            8
+          ],
           "strongs": "G1909",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'ἐπ’' does not exist in verse codex text"
+          "classification": "DISPLACED_IN_VERSE",
+          "detail": "Valid word in verse, but shifted from pos [8] to pos 6"
         },
         {
           "ar_pos": 7,
@@ -5769,11 +5673,14 @@
           "ref": "Acts 11:28",
           "ar_pos": 10,
           "ar_word": "عَظِيمًا",
-          "orig_surface": "μεγάλην",
+          "orig_surface": "μέγαν",
           "assigned_pos": 10,
+          "actual_pos": [
+            13
+          ],
           "strongs": "G3173",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'μεγάλην' does not exist in verse codex text"
+          "classification": "DISPLACED_IN_VERSE",
+          "detail": "Valid word in verse, but shifted from pos [13] to pos 10"
         },
         {
           "ar_pos": 11,
@@ -6465,11 +6372,14 @@
           "ref": "1 Corinthians 3:2",
           "ar_pos": 10,
           "ar_word": "بَلِ",
-          "orig_surface": "ἀλλ’",
+          "orig_surface": "ἀλλ᾽",
           "assigned_pos": 9,
+          "actual_pos": [
+            10
+          ],
           "strongs": "G235",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'ἀλλ’' does not exist in verse codex text"
+          "classification": "DISPLACED_IN_VERSE",
+          "detail": "Valid word in verse, but shifted from pos [10] to pos 9"
         },
         {
           "ar_pos": 11,
@@ -6989,7 +6899,7 @@
         {
           "ar_pos": 1,
           "ar_word": "قَائِلاً",
-          "orig_surface": "λέγουσαν",
+          "orig_surface": "λέγοντα",
           "pos": 1,
           "classification": "EXACT_MATCH",
           "strongs": "G3004"
@@ -7343,14 +7253,12 @@
           "strongs": "H7593"
         },
         {
-          "ref": "Ezra 7:21",
           "ar_pos": 18,
           "ar_word": "مِنْكُمْ",
-          "orig_surface": "מִנְכוֹן",
-          "assigned_pos": 19,
-          "strongs": "H4481",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'מִנְכוֹן' does not exist in verse codex text"
+          "orig_surface": "יִ֠שְׁאֲלֶנְכֹון",
+          "pos": 15,
+          "classification": "EXACT_MATCH",
+          "strongs": "H4481"
         },
         {
           "ar_pos": 19,
@@ -7743,11 +7651,16 @@
           "ref": "Daniel 2:38",
           "ar_pos": 17,
           "ar_word": "مِنْ",
-          "orig_surface": "מִן־",
-          "assigned_pos": 17,
-          "strongs": "H4481",
-          "classification": "SUBSTANTIVE_MISMATCH",
-          "detail": "Word 'מִן־' does not exist in verse codex text"
+          "orig_surface": "דִּ֥י",
+          "assigned_pos": 21,
+          "actual_pos": [
+            2,
+            5,
+            23
+          ],
+          "strongs": "H1768",
+          "classification": "DISPLACED_IN_VERSE",
+          "detail": "Valid word in verse, but shifted from pos [2,5,23] to pos 21"
         },
         {
           "ar_pos": 18,
