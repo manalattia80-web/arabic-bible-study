@@ -446,10 +446,8 @@ class DatabaseService {
     try {
       final rows = await db.rawQuery(
         '''SELECT wm.*, 
-                  (SELECT GROUP_CONCAT(wms.strongs_id, ',') 
-                   FROM word_mapping_strongs wms 
-                   WHERE wms.mapping_id = wm.id 
-                   ORDER BY wms.link_order ASC) AS all_strongs_ids
+                  (SELECT GROUP_CONCAT(sub.strongs_id, ',') 
+                   FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub) AS all_strongs_ids
            FROM word_mappings wm 
            WHERE wm.verse_id = ? 
            ORDER BY wm.ar_word_position ASC''',

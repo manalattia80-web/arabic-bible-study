@@ -895,6 +895,43 @@ const jammedCount = parseInt(query(`
 `), 10);
 assertCondition('Global check: zero jammed unspaced Ketiv/Qere patterns in verses', jammedCount === 0, `found ${jammedCount} jammed verses`);
 
+// -----------------------------------------------------------------------------
+// Test 10: Multi-Strongs Link Order Preservation & Subquery Determinism
+// -----------------------------------------------------------------------------
+console.log('\n▶ TEST 10: Multi-Strongs Link Order Preservation Invariant');
+
+const test10Cases = [
+  { ref: 'Gen 16:14 (لذلك)', book: 1, ch: 16, vs: 14, pos: 1, expected: 'H5921,H3651' },
+  { ref: 'Gen 22:16 (الأمر)', book: 1, ch: 22, vs: 16, pos: 12, expected: 'H1697,H853,H1697' },
+  { ref: 'Gen 25:30 (لذلك)', book: 1, ch: 25, vs: 30, pos: 11, expected: 'H5921,H3651' },
+  { ref: 'Acts 4:18 (فدعوهما)', book: 44, ch: 4, vs: 18, pos: 1, expected: 'G2564,G846,G2532' }
+];
+
+for (const tc of test10Cases) {
+  const actual = query(`
+    SELECT (SELECT GROUP_CONCAT(sub.strongs_id, ',') 
+            FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub)
+    FROM word_mappings wm
+    JOIN verses v ON wm.verse_id = v.id
+    WHERE v.book_id = ${tc.book} AND v.chapter_num = ${tc.ch} AND v.verse_num = ${tc.vs} AND wm.ar_word_position = ${tc.pos};
+  `).trim();
+  assertCondition(`${tc.ref} returns exact ordered sequence ${tc.expected}`, actual === tc.expected, `actual: ${actual}`);
+}
+
+const globalOrderingDeviations = parseInt(query(`
+  SELECT COUNT(*)
+  FROM word_mappings wm
+  WHERE (
+    SELECT GROUP_CONCAT(sub.strongs_id, ',')
+    FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub
+  ) != (
+    SELECT GROUP_CONCAT(sub2.strongs_id, ',')
+    FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub2
+  );
+`), 10);
+assertCondition('Global check: 0 ordering divergences across all multi-strongs records in DB', globalOrderingDeviations === 0, `found ${globalOrderingDeviations} divergences`);
+
+
 console.log('\n========================================================================');
 if (totalFailures === 0) {
   console.log('              ALL QUALITY GATE CHECKS PASSED (0 FAILURES)               ');
