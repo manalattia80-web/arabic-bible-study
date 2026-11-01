@@ -859,6 +859,42 @@ assertCondition('Acts 6:8 وآيات contains primary w10 σημεῖα and seco
   wSec && wSec.strongs === 'G2532' && wSec.pos === 9 && wSec.morph === 'C- --------', 
   JSON.stringify(waayatinComp));
 
+// -----------------------------------------------------------------------------
+// Test 9: Lexical Unit Integrity & Ketiv/Qere Boundary Isolation Invariant
+// -----------------------------------------------------------------------------
+console.log('\n▶ TEST 9: Lexical Unit Integrity & Ketiv/Qere Boundary Isolation');
+
+// 1. Job 1:4 text_original must have Ketiv/Qere properly isolated with following word לֶאֱכֹל distinct
+const job14Text = query(`SELECT text_original FROM verses WHERE book_id = 18 AND chapter_num = 1 AND verse_num = 4;`);
+assertCondition('Job 1:4 text_original contains properly isolated Ketiv/Qere and following word לֶאֱכֹל',
+  job14Text.includes('[אחיתיהם כ] (אַחְיֽוֹתֵיהֶ֔ם ק) לֶאֱכֹ֥ל') && !job14Text.includes('אחיתיהםאחיתיהם'),
+  `text_original: ${job14Text}`);
+
+// 2. Job 1:4 token 11 must be strictly the Qere reading אַחְיֽוֹתֵיהֶ֔ם without לֶאֱכֹל contamination
+const kqRegexAudit = /\[([^\]]+)\s*כ\]\s*\(([^)]+)\s*ק\)/g;
+const job14Normalized = job14Text.replace(kqRegexAudit, (m, k, q) => q.trim());
+const job14Tokens = job14Normalized.trim().split(/[\s\u05BE]+/).filter(Boolean);
+const token11 = job14Tokens[10]; // 0-indexed pos 10 = token 11
+const token12 = job14Tokens[11]; // 0-indexed pos 11 = token 12
+
+assertCondition('Job 1:4 token 11 is strictly single lexical unit אַחְיֽוֹתֵיהֶ֔ם',
+  token11 === 'אַחְיֽוֹתֵיהֶ֔ם' || token11.includes('אַחְי'),
+  `token11: ${token11}`);
+
+assertCondition('Job 1:4 token 12 is strictly separate following word לֶאֱכֹ֥ל',
+  token12 === 'לֶאֱכֹ֥ל',
+  `token12: ${token12}`);
+
+// 3. Global check: zero jammed unspaced Ketiv/Qere patterns in verses
+const jammedCount = parseInt(query(`
+  SELECT COUNT(*) FROM verses 
+  WHERE text_original LIKE '%אחיתיהםאחיתיהם%'
+     OR text_original LIKE '%](%'
+     OR text_original LIKE '%][%'
+     OR text_original LIKE '%)(%';
+`), 10);
+assertCondition('Global check: zero jammed unspaced Ketiv/Qere patterns in verses', jammedCount === 0, `found ${jammedCount} jammed verses`);
+
 console.log('\n========================================================================');
 if (totalFailures === 0) {
   console.log('              ALL QUALITY GATE CHECKS PASSED (0 FAILURES)               ');

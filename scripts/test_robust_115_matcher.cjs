@@ -83,9 +83,17 @@ lines.forEach((l, idx) => {
   }
 
   const lang = v.text_original_lang || (bookId >= 40 ? 'greek' : 'hebrew');
-  const tokens = lang === 'greek' 
-    ? v.text_original.trim().split(/\s+/).filter(Boolean)
-    : v.text_original.trim().split(/[\s\u05BE]+/).filter(Boolean);
+  let tokens = [];
+  if (lang === 'greek') {
+    tokens = v.text_original.trim().split(/\s+/).filter(Boolean);
+  } else {
+    // Robust Ketiv/Qere handling: resolve [ketiv כ] (qere ק) to the canonical reading token
+    const kqRegex = /\[([^\]]+)\s*כ\]\s*\(([^)]+)\s*ק\)/g;
+    const normalizedText = v.text_original.replace(kqRegex, (m, ketiv, qere) => {
+      return qere.trim();
+    });
+    tokens = normalizedText.trim().split(/[\s\u05BE]+/).filter(Boolean);
+  }
 
   if (match) {
     matchedCount++;
