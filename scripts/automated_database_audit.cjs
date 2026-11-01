@@ -95,7 +95,11 @@ const benchmarks = [
   { name: 'Psalm 116:10 (آمنت H539)', book: 19, ch: 116, vs: 10, word: '%آمَنْتُ%', expectedStrongs: 'H539' },
   { name: 'Heb 6:18 (الموضوع G4295)', book: 58, ch: 6, vs: 18, word: '%الْمَوْضُوعِ%', expectedStrongs: 'G4295' },
   { name: 'Num 15:18 (إليها H8033)', book: 4, ch: 15, vs: 18, word: '%إِلَيْهَا%', expectedStrongs: 'H8033' },
-  { name: 'Deut 2:24 (حربا H4421)', book: 5, ch: 2, vs: 24, word: '%حَرْبًا%', expectedStrongs: 'H4421' }
+  { name: 'Deut 2:24 (حربا H4421)', book: 5, ch: 2, vs: 24, word: '%حَرْبًا%', expectedStrongs: 'H4421' },
+  { name: 'Num 25:18 (قتلت H5221)', book: 4, ch: 25, vs: 18, word: '%قُتِلَتْ%', expectedStrongs: 'H5221' },
+  { name: 'Job 22:5 (نهاية H7093)', book: 18, ch: 22, vs: 5, word: '%نِهَايَةَ%', expectedStrongs: 'H7093' },
+  { name: 'Job 1:4 (أخواتهم H269)', book: 18, ch: 1, vs: 4, word: '%أَخَوَاتِهِمِ%', expectedStrongs: 'H269' },
+  { name: 'Deut 2:24 (وأثر w19 H1624)', book: 5, ch: 2, vs: 24, word: '%وَأَثِرْ%', expectedStrongs: 'H1624' }
 ];
 
 let bmPass = 0;
