@@ -87,7 +87,15 @@ const benchmarks = [
   { name: 'Gen 3:6 (للعيون)', book: 1, ch: 3, vs: 6, word: '%لِلْعُيُونِ%', expectedStrongs: 'H5869' },
   { name: 'Gen 3:6 (للنظر)', book: 1, ch: 3, vs: 6, word: '%لِلنَّظَرِ%', expectedStrongs: 'H7919' },
   { name: 'Matt 17:20 (لهذا)', book: 40, ch: 17, vs: 20, word: '%لِهذَا%', expectedStrongs: 'G3778' },
-  { name: 'Job 31:14 (حين)', book: 18, ch: 31, vs: 14, word: '%حِينَ%', expectedStrongs: 'H3588' }
+  { name: 'Job 31:14 (حين)', book: 18, ch: 31, vs: 14, word: '%حِينَ%', expectedStrongs: 'H3588' },
+  { name: '1 Chron 12:19 (سيده H113)', book: 13, ch: 12, vs: 19, word: '%سَيِّدِهِ%', expectedStrongs: 'H113' },
+  { name: '2 Sam 17:9 (كسرة H4046)', book: 10, ch: 17, vs: 9, word: '%كَسْرَةٌ%', expectedStrongs: 'H4046' },
+  { name: 'Isa 28:16 (آمن H539)', book: 23, ch: 28, vs: 16, word: '%آمَنَ%', expectedStrongs: 'H539' },
+  { name: 'Jonah 3:5 (فآمن H539)', book: 32, ch: 3, vs: 5, word: '%فَآمَنَ%', expectedStrongs: 'H539' },
+  { name: 'Psalm 116:10 (آمنت H539)', book: 19, ch: 116, vs: 10, word: '%آمَنْتُ%', expectedStrongs: 'H539' },
+  { name: 'Heb 6:18 (الموضوع G4295)', book: 58, ch: 6, vs: 18, word: '%الْمَوْضُوعِ%', expectedStrongs: 'G4295' },
+  { name: 'Num 15:18 (إليها H8033)', book: 4, ch: 15, vs: 18, word: '%إِلَيْهَا%', expectedStrongs: 'H8033' },
+  { name: 'Deut 2:24 (حربا H4421)', book: 5, ch: 2, vs: 24, word: '%حَرْبًا%', expectedStrongs: 'H4421' }
 ];
 
 let bmPass = 0;
