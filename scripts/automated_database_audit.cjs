@@ -895,11 +895,109 @@ const jammedCount = parseInt(query(`
 `), 10);
 assertCondition('Global check: zero jammed unspaced Ketiv/Qere patterns in verses', jammedCount === 0, `found ${jammedCount} jammed verses`);
 
-// -----------------------------------------------------------------------------
+/// -----------------------------------------------------------------------------
 // Test 10: Multi-Strongs Link Order Preservation & Subquery Determinism
 // -----------------------------------------------------------------------------
-console.log('\n▶ TEST 10: Multi-Strongs Link Order Preservation Invariant');
+console.log('\n▶ TEST 10: Multi-Strongs Link Order Preservation Invariant (Independent Reference Benchmark)');
 
+// 1. Empirical verification that zero link_order ties exist
+const tieCount = parseInt(query(`
+  SELECT COUNT(*) FROM (
+    SELECT mapping_id, link_order
+    FROM word_mapping_strongs
+    GROUP BY mapping_id, link_order
+    HAVING COUNT(*) > 1
+  );
+`), 10);
+assertCondition('Zero link_order ties exist across word_mapping_strongs', tieCount === 0, `found ${tieCount} ties`);
+
+// 2. Load ground truth links and construct independent JS expected sequence
+const rawLinksJson = query(`
+  SELECT mapping_id, link_order, strongs_id
+  FROM word_mapping_strongs
+  WHERE mapping_id IN (
+    SELECT mapping_id FROM word_mapping_strongs GROUP BY mapping_id HAVING COUNT(*) > 1
+  );
+`);
+
+const groundTruthMap = new Map();
+for (const rawLine of rawLinksJson.split('\n')) {
+  const line = rawLine.trim();
+  if (!line) continue;
+  const parts = line.split('|');
+  if (parts.length >= 3) {
+    const mId = parts[0].trim();
+    const order = parseInt(parts[1].trim(), 10);
+    const sId = parts[2].trim();
+    if (!groundTruthMap.has(mId)) groundTruthMap.set(mId, []);
+    groundTruthMap.get(mId).push({ link_order: order, strongs_id: sId });
+  }
+}
+
+function expectedStrongOrder(rows) {
+  return [...rows]
+    .sort((a, b) => a.link_order - b.link_order)
+    .map(r => r.strongs_id)
+    .join(',');
+}
+
+// 3. Positive Test: v1.0.345 deterministic subquery matches independent JS reference 100%
+const subqueryResults = query(`
+  SELECT wm.id,
+         (SELECT GROUP_CONCAT(sub.strongs_id, ',') 
+          FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub)
+  FROM word_mappings wm
+  WHERE wm.id IN (
+    SELECT mapping_id FROM word_mapping_strongs GROUP BY mapping_id HAVING COUNT(*) > 1
+  );
+`);
+
+let positiveMismatches = 0;
+for (const rawLine of subqueryResults.split('\n')) {
+  const line = rawLine.trim();
+  if (!line) continue;
+  const parts = line.split('|');
+  if (parts.length >= 2) {
+    const mId = parts[0].trim();
+    const actual = parts[1].trim();
+    const expected = expectedStrongOrder(groundTruthMap.get(mId) || []);
+    if (actual !== expected) {
+      positiveMismatches++;
+    }
+  }
+}
+assertCondition('Positive Gate: 0 deviations between v1.0.345 subquery and independent JS reference', positiveMismatches === 0, `found ${positiveMismatches} deviations`);
+
+// 4. Negative Test: Confirm that old un-nested v1.0.344 query fails on exactly 195 cases
+const oldQueryResults = query(`
+  SELECT wm.id,
+         (SELECT GROUP_CONCAT(wms.strongs_id, ',') 
+          FROM word_mapping_strongs wms 
+          WHERE wms.mapping_id = wm.id 
+          ORDER BY wms.link_order ASC)
+  FROM word_mappings wm
+  WHERE wm.id IN (
+    SELECT mapping_id FROM word_mapping_strongs GROUP BY mapping_id HAVING COUNT(*) > 1
+  );
+`);
+
+let oldMismatches = 0;
+for (const rawLine of oldQueryResults.split('\n')) {
+  const line = rawLine.trim();
+  if (!line) continue;
+  const parts = line.split('|');
+  if (parts.length >= 2) {
+    const mId = parts[0].trim();
+    const actualOld = parts[1].trim();
+    const expected = expectedStrongOrder(groundTruthMap.get(mId) || []);
+    if (actualOld !== expected) {
+      oldMismatches++;
+    }
+  }
+}
+assertCondition('Negative Gate: Old un-nested v1.0.344 query correctly detected failing on 195 cases', oldMismatches === 195, `detected ${oldMismatches} mismatches`);
+
+// 5. Benchmark Specific Multi-Strongs Cases
 const test10Cases = [
   { ref: 'Gen 16:14 (لذلك)', book: 1, ch: 16, vs: 14, pos: 1, expected: 'H5921,H3651' },
   { ref: 'Gen 22:16 (الأمر)', book: 1, ch: 22, vs: 16, pos: 12, expected: 'H1697,H853,H1697' },
@@ -917,19 +1015,6 @@ for (const tc of test10Cases) {
   `).trim();
   assertCondition(`${tc.ref} returns exact ordered sequence ${tc.expected}`, actual === tc.expected, `actual: ${actual}`);
 }
-
-const globalOrderingDeviations = parseInt(query(`
-  SELECT COUNT(*)
-  FROM word_mappings wm
-  WHERE (
-    SELECT GROUP_CONCAT(sub.strongs_id, ',')
-    FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub
-  ) != (
-    SELECT GROUP_CONCAT(sub2.strongs_id, ',')
-    FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub2
-  );
-`), 10);
-assertCondition('Global check: 0 ordering divergences across all multi-strongs records in DB', globalOrderingDeviations === 0, `found ${globalOrderingDeviations} divergences`);
 
 
 console.log('\n========================================================================');
