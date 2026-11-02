@@ -98,7 +98,7 @@ class WordMapping {
     if (rawAllStrongs != null && rawAllStrongs.isNotEmpty) {
       for (final part in rawAllStrongs.split(',')) {
         final pt = part.trim();
-        if (pt.isNotEmpty && pt != '-' && pt != '---' && !allStrongs.contains(pt)) {
+        if (pt.isNotEmpty && pt != '-' && pt != '---') {
           allStrongs.add(pt);
         }
       }

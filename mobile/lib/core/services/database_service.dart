@@ -39,11 +39,11 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final dbPath = p.join(databasesPath, 'bible_study_v51.db');
+    const targetDbVersion = 346; // v1.0.346: Upgrade reconciliation, preserved repeated strongs, and auto-cleanup of stranded DBs
+    final dbPath = p.join(databasesPath, 'bible_study_v' + targetDbVersion + '.db');
 
     final prefs = await SharedPreferences.getInstance();
-    final currentDbVersion = prefs.getInt('db_version') ?? 0;
-    const targetDbVersion = 54; // Database v54: Exact [1..21] SBLGNT sequence matching, fresh-copy negative gates, full historical reference extractor
+    final currentDbVersion = prefs.getInt('db_version') ?? 0; // Database v54: Exact [1..21] SBLGNT sequence matching, fresh-copy negative gates, full historical reference extractor
 
     final exists = await databaseExists(dbPath);
     if (!exists || currentDbVersion < targetDbVersion) {
@@ -82,64 +82,19 @@ class DatabaseService {
       await prefs.setInt('db_version', targetDbVersion);
       debugPrint('Local SQLite database assembled successfully (${await outFile.length()} bytes).');
 
-      // Safe deferred cleanup: only delete old database versions after new v39 is verified ok to save space on device
-      for (final oldVer in [
-        'bible_study_v2.db',
-        'bible_study_v3.db',
-        'bible_study_v4.db',
-        'bible_study_v5.db',
-        'bible_study_v6.db',
-        'bible_study_v7.db',
-        'bible_study_v8.db',
-        'bible_study_v9.db',
-        'bible_study_v10.db',
-        'bible_study_v11.db',
-        'bible_study_v12.db',
-        'bible_study_v13.db',
-        'bible_study_v14.db',
-        'bible_study_v15.db',
-        'bible_study_v16.db',
-        'bible_study_v17.db',
-        'bible_study_v18.db',
-        'bible_study_v19.db',
-        'bible_study_v20.db',
-        'bible_study_v21.db',
-        'bible_study_v22.db',
-        'bible_study_v23.db',
-        'bible_study_v24.db',
-        'bible_study_v25.db',
-        'bible_study_v26.db',
-        'bible_study_v27.db',
-        'bible_study_v28.db',
-        'bible_study_v29.db',
-        'bible_study_v30.db',
-        'bible_study_v31.db',
-        'bible_study_v32.db',
-        'bible_study_v33.db',
-        'bible_study_v34.db',
-        'bible_study_v35.db',
-        'bible_study_v36.db',
-        'bible_study_v37.db',
-        'bible_study_v38.db',
-        'bible_study_v39.db',
-        'bible_study_v40.db',
-        'bible_study_v41.db',
-        'bible_study_v42.db',
-        'bible_study_v43.db',
-        'bible_study_v44.db',
-        'bible_study_v45.db',
-        'bible_study_v46.db',
-        'bible_study_v47.db',
-        'bible_study_v48.db',
-      ]) {
-        try {
-          final oldPath = p.join(databasesPath, oldVer);
-          final oldFile = File(oldPath);
-          if (await oldFile.exists()) {
-            await oldFile.delete();
+      // Safe deferred cleanup: delete old stranded database versions after new targetDbVersion is verified ok
+      try {
+        final dbDir = Directory(databasesPath);
+        if (await dbDir.exists()) {
+          final entries = dbDir.listSync();
+          for (final f in entries) {
+            final fileName = p.basename(f.path);
+            if (fileName.startsWith('bible_study_v') && fileName.endsWith('.db') && fileName != 'bible_study_v' + targetDbVersion + '.db') {
+              try { f.deleteSync(); } catch (_) {}
+            }
           }
-        } catch (_) {}
-      }
+        }
+      } catch (_) {}
     }
 
     final db = await openDatabase(dbPath);
