@@ -40,7 +40,7 @@ class DatabaseService {
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
     const targetDbVersion = 346; // v1.0.346: Upgrade reconciliation, preserved repeated strongs, and auto-cleanup of stranded DBs
-    final dbPath = p.join(databasesPath, 'bible_study_v' + targetDbVersion + '.db');
+    final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();
     final currentDbVersion = prefs.getInt('db_version') ?? 0; // Database v54: Exact [1..21] SBLGNT sequence matching, fresh-copy negative gates, full historical reference extractor
@@ -89,7 +89,7 @@ class DatabaseService {
           final entries = dbDir.listSync();
           for (final f in entries) {
             final fileName = p.basename(f.path);
-            if (fileName.startsWith('bible_study_v') && fileName.endsWith('.db') && fileName != 'bible_study_v' + targetDbVersion + '.db') {
+            if (fileName.startsWith('bible_study_v') && fileName.endsWith('.db') && fileName != 'bible_study_v$targetDbVersion.db') {
               try { f.deleteSync(); } catch (_) {}
             }
           }
