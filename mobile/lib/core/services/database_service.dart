@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 346; // v1.0.346: Upgrade reconciliation, preserved repeated strongs, and auto-cleanup of stranded DBs
+    const targetDbVersion = 347; // v1.0.347: Full Aramaic corpus remediation and Greek NT punctuation-affected contextual alignment
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();
