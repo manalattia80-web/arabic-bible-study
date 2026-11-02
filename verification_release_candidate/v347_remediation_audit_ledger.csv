@@ -1,0 +1,274 @@
+case_id,ref,ar_word_pos,ar_word,orig_word,orig_surface,prev_val,new_val,reason,independent_source
+1,دانيال 2: 21,2,يُغَيِّرُ,שְׁנָא,מְהַשְׁנֵא,H8138,H8133,Biblical Aramaic root shena (H8133) replaced Hebrew shanah (H8138),OSHB Dan 2:21; BDB Aramaic 1116a
+2,دانيال 2: 21,5,يَعْزِلُ,עֲדָה,מְהַעְדֵּה,H5757,H5709,Biblical Aramaic verb adah (H5709) replaced Hebrew proper noun Avvim (H5757),OSHB Dan 2:21; BDB Aramaic 1105b
+3,دانيال 2: 21,12,وَيُعَلِّمُ,מַנְדַּע,וּמַנְדְּעָא,H3046,H4486,Biblical Aramaic noun manda (H4486) disentangled from adjacent verb yeda (H3046),OSHB Dan 2:21; BDB Aramaic 1099b
+4,إرميا 10: 11,4,الآلِهَةُ,אֱלָהּ,אֱלָהַיָּא,H410,H426,Aramaic Elah (H426) replaced Hebrew El (H410),OSHB Jer 10:11; BDB Aramaic 1080b
+5,إرميا 10: 11,5,الَّتِي,דִּי,דִּי,H834,H1768,Aramaic relative pronoun di (H1768) replaced Hebrew asher (H834),OSHB Jer 10:11; BDB Aramaic 1088a
+6,إرميا 10: 11,7,تَصْنَعِ,עֲבַד,עֲבַדוּ,H5647,H5648,Aramaic verb avad (H5648) replaced Hebrew avad (H5647),OSHB Jer 10:11; BDB Aramaic 1105a
+7,إرميا 10: 11,10,تَبِيدُ,אָבַד,יֵאבַדוּ,NULL,H7,Aramaic verb avad/yeveidu (H7) restored from dropped NULL mapping,OSHB Jer 10:11; BDB Aramaic 1077a
+8,إرميا 10: 11,14,تَحْتِ,תְּחוֹת,תְּחוֹת,H8479,H8460,Aramaic preposition techoth (H8460) replaced Hebrew tachath (H8479),OSHB Jer 10:11; BDB Aramaic 1118a
+9,Book 15 4: 14,2,بِمَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+10,Book 15 4: 19,8,أَنَّ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+11,Book 15 4: 22,3,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+12,Book 15 5: 4,10,الَّذِينَ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+13,Book 15 5: 11,14,الَّذِي,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+14,Book 15 5: 12,3,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+15,Book 15 5: 12,14,الَّذِي,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+16,Book 15 5: 13,2,أَنَّهُ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+17,Book 15 5: 14,3,آنِيَةَ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+18,Book 15 5: 14,20,بِهَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+19,Book 15 6: 3,18,الَّذِي,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+20,Book 15 6: 9,18,الَّذِينَ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+21,Book 15 6: 18,11,الَّتِي,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+22,Book 15 6: 18,14,كَمَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+23,Book 15 7: 13,5,أَنَّ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+24,Book 15 7: 13,16,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+25,Book 15 7: 14,3,أَنَّكَ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+26,Book 27 2: 6,1,وَإِنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+27,Book 27 2: 10,11,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+28,Book 27 2: 26,12,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+29,Book 27 2: 27,7,الَّذِي,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+30,Book 27 2: 27,20,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+31,Book 27 2: 31,6,وَإِذَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+32,Book 27 3: 5,13,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+33,Book 27 3: 10,7,بِأَنَّ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+34,Book 27 3: 15,24,وَإِنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+35,Book 27 3: 29,5,بِأَنَّ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+36,Book 27 3: 29,17,فَإِنَّهُمْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+37,Book 27 3: 29,29,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+38,Book 27 4: 12,5,وَفِيهَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+39,Book 27 4: 17,11,أَنَّ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+40,Book 27 4: 21,5,وَفِيهَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+41,Book 27 4: 23,1,وَحَيْثُ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+42,Book 27 4: 25,22,أَنَّ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+43,Book 27 4: 26,1,وَحَيْثُ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+44,Book 27 4: 32,19,أَنَّ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+45,Book 27 4: 35,9,كَمَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+46,Book 27 4: 37,21,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+47,Book 27 5: 2,21,بِهَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+48,Book 27 5: 3,3,آنِيَةَ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+49,Book 27 5: 3,15,بِهَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+50,Book 27 5: 16,5,أَنَّكَ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+51,Book 27 5: 16,7,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+52,Book 27 5: 16,15,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+53,Book 27 5: 21,22,أَنَّ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+54,Book 27 5: 21,29,وَأَنَّهُ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+55,Book 27 5: 23,10,وَأَنْتَ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+56,Book 27 5: 29,4,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+57,Book 27 6: 1,4,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+58,Book 27 6: 4,16,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+59,Book 27 6: 14,1,فَلَمَّا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+60,Book 27 6: 23,6,بِأَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+61,Book 27 6: 26,5,بِأَنَّهُ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+62,Book 27 7: 2,9,وَإِذَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+63,Book 27 7: 5,1,وَإِذَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+64,Book 27 7: 7,8,وَإِذَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+65,Book 27 7: 8,4,وَإِذَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+66,Book 27 7: 8,17,وَإِذَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+67,Book 27 7: 9,3,أَنَّهُ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+68,Book 27 7: 12,7,وَلكِنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+69,Book 27 7: 13,6,وَإِذَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+70,Book 27 7: 14,14,مَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+71,Book 27 7: 14,18,مَا,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+72,Book 27 7: 19,8,الَّذِي,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+73,Book 15 7: 19,2,الَّتِي,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+74,Book 27 3: 16,11,أَنْ,דִּי,אֲשֶׁר,H834,H1768,Aramaic di (H1768) replaced Hebrew asher (H834),Biblical Aramaic Corpus OSHB Lexicon
+75,Book 15 4: 11,6,إِلَيْهِ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+76,Book 15 4: 12,3,أَنَّ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+77,Book 15 4: 12,9,إِلَيْنَا,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+78,Book 15 4: 15,1,لِكَيْ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+79,Book 15 4: 15,12,أَنَّ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+80,Book 15 4: 15,25,مُنْذُ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+81,Book 15 4: 16,13,لَكَ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+82,Book 15 4: 18,4,إِلَيْنَا,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+83,Book 15 4: 19,11,مُنْذُ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+84,Book 15 5: 4,3,عَلَى,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+85,Book 15 5: 7,2,إِلَيْهِ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+86,Book 15 5: 11,16,قَبْلَ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+87,Book 15 5: 12,1,وَلكِنْ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+88,Book 15 5: 12,2,بَعْدَ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+89,Book 15 5: 13,1,عَلَى,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+90,Book 15 5: 14,1,حَتَّى,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+91,Book 15 5: 17,16,هَلْ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+92,Book 15 5: 17,32,إِلَيْنَا,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+93,Book 15 6: 2,12,فِيهِ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+94,Book 15 6: 3,10,جِهَةِ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+95,Book 15 6: 3,20,فِيهِ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+96,Book 15 6: 8,3,مِنِّي,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+97,Book 15 6: 8,16,فَمِنْ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+98,Book 15 6: 11,3,مِنِّي,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+99,Book 15 6: 17,22,حَسَبَ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+100,Book 15 7: 13,3,مِنِّي,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+101,Book 15 7: 22,20,دُونِ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+102,Book 15 7: 26,10,عَلَيْهِ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+103,Book 27 2: 5,7,مِنِّي,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+104,Book 27 2: 24,18,لاَ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+105,Book 27 3: 5,1,عِنْدَمَا,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+106,Book 27 3: 11,1,وَمَنْ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+107,Book 27 3: 11,5,فَإِنَّهُ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+108,Book 27 4: 12,18,مِنْهَا,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+109,Book 27 5: 10,18,لاَ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+110,Book 27 7: 16,7,مِنْهُ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+111,Book 27 7: 24,11,بَعْدَهُمْ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+112,Book 27 2: 15,4,مِنْ,מִן,מִן,H4480,H4481,Aramaic min (H4481) replaced Hebrew min (H4480),Biblical Aramaic Corpus OSHB Lexicon
+113,Book 15 6: 8,14,اللهِ,אֱלָהּ,אֵל,H410,H426,Aramaic Elah (H426) replaced Hebrew El (H410),Biblical Aramaic Corpus OSHB Lexicon
+114,Book 15 6: 8,28,حَتَّى,אֱלָהּ,אֵל,H410,H426,Aramaic Elah (H426) replaced Hebrew El (H410),Biblical Aramaic Corpus OSHB Lexicon
+115,Book 15 6: 9,25,حَتَّى,אֱלָהּ,אֵל,H410,H426,Aramaic Elah (H426) replaced Hebrew El (H410),Biblical Aramaic Corpus OSHB Lexicon
+116,Book 27 2: 11,12,الآلِهَةِ,אֱלָהּ,אֵל,H410,H426,Aramaic Elah (H426) replaced Hebrew El (H410),Biblical Aramaic Corpus OSHB Lexicon
+117,Book 27 7: 8,20,الإِنْسَانِ,אֱלָהּ,אֵל,H410,H426,Aramaic Elah (H426) replaced Hebrew El (H410),Biblical Aramaic Corpus OSHB Lexicon
+118,Book 15 7: 19,10,إِلهِ,אֱלָהּ,אֵל,H410,H426,Aramaic Elah (H426) replaced Hebrew El (H410),Biblical Aramaic Corpus OSHB Lexicon
+119,Book 15 5: 15,17,مَكَانِهِ,תְּחוֹת,תַּחַת,H8479,H8460,Aramaic techoth (H8460) replaced Hebrew tachath (H8479),Biblical Aramaic Corpus OSHB Lexicon
+120,Book 27 4: 12,8,وَتَحْتَهَا,תְּחוֹת,תְּחֹתוֹהִי,H8479,H8460,Aramaic techoth (H8460) replaced Hebrew tachath (H8479),Biblical Aramaic Corpus OSHB Lexicon
+121,Book 27 4: 14,16,تَحْتِهَا,תְּחוֹת,תַּחְתּוֹהִי,H8479,H8460,Aramaic techoth (H8460) replaced Hebrew tachath (H8479),Biblical Aramaic Corpus OSHB Lexicon
+122,Book 27 4: 21,8,وَتَحْتَهَا,תְּחוֹת,תְּחֹתוֹהִי,H8479,H8460,Aramaic techoth (H8460) replaced Hebrew tachath (H8479),Biblical Aramaic Corpus OSHB Lexicon
+123,Book 27 5: 22,6,تَضَعْ,תְּחוֹת,תַּחַת,H8479,H8460,Aramaic techoth (H8460) replaced Hebrew tachath (H8479),Biblical Aramaic Corpus OSHB Lexicon
+124,Book 27 7: 27,5,تَحْتَ,תְּחוֹת,תַּחַת,H8479,H8460,Aramaic techoth (H8460) replaced Hebrew tachath (H8479),Biblical Aramaic Corpus OSHB Lexicon
+125,Book 27 4: 17,1,هذَا,מִלָּה,דִּבְרַת,H1697,H4406,Aramaic millah (H4406) replaced Hebrew dabar (H1697),Biblical Aramaic Corpus OSHB Lexicon
+126,Book 27 4: 17,5,وَالْحُكْمُ,מִלָּה,דִּבְרַת,H1697,H4406,Aramaic millah (H4406) replaced Hebrew dabar (H1697),Biblical Aramaic Corpus OSHB Lexicon
+127,Book 27 4: 17,6,بِكَلِمَةِ,מִלָּה,דִּבְרַת,H1697,H4406,Aramaic millah (H4406) replaced Hebrew dabar (H1697),Biblical Aramaic Corpus OSHB Lexicon
+128,Book 27 4: 36,2,ذلِكَ,מִלָּה,הַדָּֽבְרַי,H1697,H4406,Aramaic millah (H4406) replaced Hebrew dabar (H1697),Biblical Aramaic Corpus OSHB Lexicon
+129,Book 27 2: 15,3,الأَمْرُ,מִלָּה,דָּבָר,H1697,H4406,Aramaic millah (H4406) replaced Hebrew dabar (H1697),Biblical Aramaic Corpus OSHB Lexicon
+130,Book 27 2: 14,16,وَقَالَ,אֲמַר,אָמַר,H559,H560,Aramaic amar (H560) replaced Hebrew amar (H559),Biblical Aramaic Corpus OSHB Lexicon
+131,Book 27 2: 15,8,أَخْبَرَ,אֲמַר,וְאָמַר,H559,H560,Aramaic amar (H560) replaced Hebrew amar (H559),Biblical Aramaic Corpus OSHB Lexicon
+132,Book 27 2: 4,3,الْمَلِكَ,מֶלֶךְ,לַמֶּ֖לֶךְ,H4428,H4430,Aramaic melekh (H4430) replaced Hebrew melekh (H4428),Biblical Aramaic Corpus OSHB Lexicon
+133,Book 27 2: 14,19,الْمَلِكِ:,מֶלֶךְ,מֶלֶךְ,H4428,H4430,Aramaic melekh (H4430) replaced Hebrew melekh (H4428),Biblical Aramaic Corpus OSHB Lexicon
+134,Book 27 2: 14,15,أَجَابَ,עֲנָה,עָנָה,H6030,H6032,Aramaic anah (H6032) replaced Hebrew anah (H6030),Biblical Aramaic Corpus OSHB Lexicon
+135,Book 27 2: 15,7,حِينَئِذٍ,אֱדַיִן,אָז,H227,H116,Aramaic edayin (H116) replaced Hebrew az (H227),Biblical Aramaic Corpus OSHB Lexicon
+136,متى 27: 61,8,تُجَاهَ,ἀπέναντι,ἀπέναντι,NULL,G561,Greek preposition apenanti (G561) restored from dropped contextual NULL mapping,NA28 / SBLGNT Matt 27:61; BDAG 95b
+137,Book 42 22: 48,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+138,Book 42 23: 43,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+139,Book 40 4: 7,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+140,Book 40 4: 10,4,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+141,Book 40 8: 4,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+142,Book 40 9: 15,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+143,Book 40 9: 28,10,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+144,Book 40 14: 16,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+145,Book 40 15: 16,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+146,Book 40 16: 6,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+147,Book 40 17: 22,8,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+148,Book 40 17: 25,32,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+149,Book 40 18: 22,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+150,Book 40 19: 21,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+151,Book 40 19: 28,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+152,Book 40 21: 16,9,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+153,Book 40 21: 31,11,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+154,Book 40 21: 42,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+155,Book 40 24: 2,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+156,Book 40 26: 31,4,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+157,Book 40 26: 34,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+158,Book 40 26: 64,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+159,Book 40 27: 11,13,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+160,Book 40 28: 10,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+161,Book 41 1: 17,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+162,Book 41 2: 19,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+163,Book 41 6: 4,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+164,Book 41 9: 23,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+165,Book 41 9: 39,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+166,Book 41 10: 18,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+167,Book 41 10: 38,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+168,Book 41 10: 39,6,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+169,Book 41 10: 52,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+170,Book 41 12: 29,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+171,Book 41 14: 27,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+172,Book 41 14: 62,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+173,Book 41 14: 72,10,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+174,Book 42 6: 9,4,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+175,Book 42 8: 45,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+176,Book 42 8: 46,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+177,Book 42 9: 50,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+178,Book 42 9: 58,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+179,Book 42 9: 60,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+180,Book 42 9: 62,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+181,Book 42 18: 19,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+182,Book 42 19: 9,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+183,Book 42 20: 8,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+184,Book 42 20: 34,4,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+185,Book 43 2: 4,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+186,Book 43 2: 7,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+187,Book 43 3: 5,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+188,Book 43 4: 7,9,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+189,Book 43 4: 16,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+190,Book 43 4: 21,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+191,Book 43 4: 34,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+192,Book 43 4: 48,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+193,Book 43 4: 50,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+194,Book 43 4: 53,11,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+195,Book 43 5: 17,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+196,Book 43 6: 10,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+197,Book 43 6: 32,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+198,Book 43 6: 35,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+199,Book 43 6: 53,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+200,Book 43 6: 70,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+201,Book 43 7: 6,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+202,Book 43 7: 33,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+203,Book 43 8: 11,8,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+204,Book 43 8: 25,7,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+205,Book 43 8: 28,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+206,Book 43 8: 34,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+207,Book 43 8: 39,9,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+208,Book 43 8: 42,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+209,Book 43 8: 49,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+210,Book 43 8: 54,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+211,Book 43 8: 58,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+212,Book 43 9: 39,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+213,Book 43 9: 41,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+214,Book 43 10: 25,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+215,Book 43 10: 32,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+216,Book 43 11: 9,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+217,Book 43 11: 25,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+218,Book 43 11: 40,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+219,Book 43 11: 44,12,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+220,Book 43 12: 7,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+221,Book 43 12: 35,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+222,Book 43 13: 10,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+223,Book 43 13: 26,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+224,Book 43 13: 31,4,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+225,Book 43 13: 36,11,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+226,Book 43 13: 38,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+227,Book 43 14: 9,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+228,Book 43 18: 20,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+229,Book 43 18: 23,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+230,Book 43 18: 34,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+231,Book 43 18: 37,8,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+232,Book 43 20: 15,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+233,Book 43 20: 16,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+234,Book 43 20: 17,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+235,Book 43 20: 29,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+236,Book 43 21: 10,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+237,Book 43 21: 12,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+238,Book 43 21: 22,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+239,Book 40 19: 18,6,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+240,Book 40 22: 37,3,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+241,Book 43 9: 3,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+242,Book 43 11: 39,2,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+243,Book 43 21: 17,29,يَسُوعُ:,Ἰησοῦς,Ἰησοῦς,NULL,G2424,Contextually verified Greek lemma Ἰησοῦς (G2424) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+244,Book 40 27: 17,6,بِيلاَطُسُ:,Πιλᾶτος,Πιλᾶτος,NULL,G4091,Contextually verified Greek lemma Πιλᾶτος (G4091) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+245,Book 40 27: 65,3,بِيلاَطُسُ:,Πιλᾶτος,Πιλᾶτος,NULL,G4091,Contextually verified Greek lemma Πιλᾶτος (G4091) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+246,Book 40 27: 13,3,بِيلاَطُسُ:,Πιλᾶτος,Πιλᾶτος,NULL,G4091,Contextually verified Greek lemma Πιλᾶτος (G4091) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+247,Book 43 18: 31,3,بِيلاَطُسُ:,Πιλᾶτος,Πιλᾶτος,NULL,G4091,Contextually verified Greek lemma Πιλᾶτος (G4091) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+248,Book 43 18: 38,3,بِيلاَطُسُ:,Πιλᾶτος,Πιλᾶτος,NULL,G4091,Contextually verified Greek lemma Πιλᾶτος (G4091) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+249,Book 43 19: 6,12,بِيلاَطُسُ:,Πιλᾶτος,Πιλᾶτος,NULL,G4091,Contextually verified Greek lemma Πιλᾶτος (G4091) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+250,Book 41 15: 9,2,بِيلاَطُسُ:,Πιλᾶτος,Πιλᾶτος,NULL,G4091,Contextually verified Greek lemma Πιλᾶτος (G4091) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+251,Book 40 21: 11,2,الْجُمُوعُ:,ὄχλος,ὄχλος,NULL,G3793,Contextually verified Greek lemma ὄχλος (G3793) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+252,Book 42 3: 16,5,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+253,Book 43 1: 23,2,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+254,Book 43 1: 26,4,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+255,Book 43 4: 32,3,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+256,Book 43 8: 21,5,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+257,Book 43 8: 49,3,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+258,Book 43 18: 20,3,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+259,Book 43 18: 38,16,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+260,Book 44 21: 39,3,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+261,Book 45 10: 19,10,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+262,Book 46 1: 12,9,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+263,Book 58 1: 5,13,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+264,Book 46 1: 12,18,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+265,Book 46 1: 12,15,«أَنَا,ἐγώ,ἐγώ,NULL,G1473,Contextually verified Greek lemma ἐγώ (G1473) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+266,Book 40 12: 24,6,«هذَا,οὗτος,οὗτος,NULL,G3778,Contextually verified Greek lemma οὗτος (G3778) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+267,Book 40 14: 2,3,«هذَا,οὗτος,οὗτος,NULL,G3778,Contextually verified Greek lemma οὗτος (G3778) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+268,Book 40 19: 26,6,«هذَا,οὗτος,οὗτος,NULL,G3778,Contextually verified Greek lemma οὗτος (G3778) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+269,Book 40 26: 61,2,«هذَا,οὗτος,οὗτος,NULL,G3778,Contextually verified Greek lemma οὗτος (G3778) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+270,Book 42 15: 2,5,«هذَا,οὗτος,οὗτος,NULL,G3778,Contextually verified Greek lemma οὗτος (G3778) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+271,Book 43 1: 15,6,«هذَا,οὗτος,οὗτος,NULL,G3778,Contextually verified Greek lemma οὗτος (G3778) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+272,Book 43 9: 16,5,«هذَا,οὗτος,οὗτος,NULL,G3778,Contextually verified Greek lemma οὗτος (G3778) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
+273,Book 44 6: 13,5,«هذَا,οὗτος,οὗτος,NULL,G3778,Contextually verified Greek lemma οὗτος (G3778) matched in verse text while preserving Van Dyck punctuation in ar_word,SBLGNT / NA28 Contextual Greek Verse Alignment
