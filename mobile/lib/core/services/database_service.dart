@@ -53,48 +53,66 @@ class DatabaseService {
       } catch (_) {}
 
 
-      // Reassemble SQLite database from chunked parts (5 MB each, zero OOM risk)
-      final outFile = File(dbPath);
-      if (await outFile.exists()) {
-        try { await outFile.delete(); } catch (_) {}
+      // Write to a temporary file first (atomic upgrade guarantee: Condition 2)
+      final tmpPath = '$dbPath.tmp';
+      final tmpFile = File(tmpPath);
+      if (await tmpFile.exists()) {
+        try { await tmpFile.delete(); } catch (_) {}
       }
 
-      final sink = outFile.openWrite();
-      const totalParts = 70;
-      for (int i = 0; i < totalParts; i++) {
-        final partIndexStr = i.toString().padLeft(2, '0');
-        final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
-        sink.add(partData.buffer.asUint8List(partData.offsetInBytes, partData.lengthInBytes));
-      }
-      await sink.flush();
-      await sink.close();
-      // Independent SQLite integrity verification on device before accepting version
-      final testDb = await openDatabase(dbPath, readOnly: true);
-      final checkRes = await testDb.rawQuery('PRAGMA integrity_check;');
-      await testDb.close();
-
-      final isOk = checkRes.isNotEmpty && checkRes.first.values.first.toString() == 'ok';
-      if (!isOk) {
-        try { await outFile.delete(); } catch (_) {}
-        throw StateError('Assembled SQLite database failed integrity check: $checkRes');
-      }
-
-      await prefs.setInt('db_version', targetDbVersion);
-      debugPrint('Local SQLite database assembled successfully (${await outFile.length()} bytes).');
-
-      // Safe deferred cleanup: delete old stranded database versions after new targetDbVersion is verified ok
       try {
+        final sink = tmpFile.openWrite();
+        const totalParts = 70;
+        for (int i = 0; i < totalParts; i++) {
+          final partIndexStr = i.toString().padLeft(2, '0');
+          final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
+          sink.add(partData.buffer.asUint8List(partData.offsetInBytes, partData.lengthInBytes));
+        }
+        await sink.flush();
+        await sink.close();
+
+        // Condition 1: Verify integrity on the temp file BEFORE registering version or deleting anything
+        final testDb = await openDatabase(tmpPath, readOnly: true);
+        final checkRes = await testDb.rawQuery('PRAGMA integrity_check;');
+        await testDb.close();
+
+        final isOk = checkRes.isNotEmpty && checkRes.first.values.first.toString() == 'ok';
+        if (!isOk) {
+          try { await tmpFile.delete(); } catch (_) {}
+          throw StateError('Assembled SQLite database failed integrity check: $checkRes');
+        }
+
+        // Rename temp file to destination path atomically
+        final outFile = File(dbPath);
+        if (await outFile.exists()) {
+          try { await outFile.delete(); } catch (_) {}
+        }
+        await tmpFile.rename(dbPath);
+        await prefs.setInt('db_version', targetDbVersion);
+        debugPrint('Local SQLite database assembled and verified successfully (${await outFile.length()} bytes).');
+      } catch (e) {
+        debugPrint('CRITICAL: Database assembly interrupted or failed ($e). Cleaning temp file.');
+        try {
+          if (await tmpFile.exists()) await tmpFile.delete();
+        } catch (_) {}
+
+        // Fault-tolerant fallback: if assembly failed (e.g. disk full), fallback to opening old DB rather than crash
         final dbDir = Directory(databasesPath);
         if (await dbDir.exists()) {
           final entries = dbDir.listSync();
-          for (final f in entries) {
-            final fileName = p.basename(f.path);
-            if (fileName.startsWith('bible_study_v') && fileName.endsWith('.db') && fileName != 'bible_study_v$targetDbVersion.db') {
-              try { f.deleteSync(); } catch (_) {}
-            }
+          final oldDbs = entries
+              .map((e) => p.basename(e.path))
+              .where((name) => name.startsWith('bible_study_v') && name.endsWith('.db') && name != p.basename(dbPath))
+              .toList();
+          if (oldDbs.isNotEmpty) {
+            oldDbs.sort();
+            final fallbackDbPath = p.join(databasesPath, oldDbs.last);
+            debugPrint('FALLBACK: Opening existing older database at $fallbackDbPath');
+            return await openDatabase(fallbackDbPath);
           }
         }
-      } catch (_) {}
+        rethrow;
+      }
     }
 
     final db = await openDatabase(dbPath);
@@ -178,6 +196,22 @@ class DatabaseService {
       ]);
     } catch (e) {
       debugPrint('Self-healing Strongs G1 warning: $e');
+    }
+
+    // Conditions 1 & 3: Only delete old stranded databases AFTER the new database is 100% opened and verified operational
+    if (prefs.getInt('db_version') == targetDbVersion) {
+      try {
+        final dbDir = Directory(databasesPath);
+        if (await dbDir.exists()) {
+          final entries = dbDir.listSync();
+          for (final f in entries) {
+            final fileName = p.basename(f.path);
+            if (fileName.startsWith('bible_study_v') && fileName.endsWith('.db') && fileName != 'bible_study_v$targetDbVersion.db') {
+              try { f.deleteSync(); } catch (_) {}
+            }
+          }
+        }
+      } catch (_) {}
     }
 
     return db;

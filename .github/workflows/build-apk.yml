@@ -59,6 +59,10 @@ jobs:
         working-directory: ./mobile
         run: flutter analyze --no-fatal-warnings --no-fatal-infos
 
+      - name: Run Flutter Unit Tests (WordMapping & Models Invariant)
+        working-directory: ./mobile
+        run: flutter test
+
       - name: Extract Canonical App Version from pubspec.yaml
         run: |
           RAW_VER=$(grep '^version:' mobile/pubspec.yaml | sed 's/version: //' | tr -d ' \r\n')
