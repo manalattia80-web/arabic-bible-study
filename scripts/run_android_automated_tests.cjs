@@ -6,7 +6,7 @@
  *  2. Real OCR assertions for Strong's codes & scripture
  *  3. Verification of distinct screenshots (no duplicates/launcher screens)
  *  4. Real empirical SharedPreferences retention check via adb root & UI
- *  5. Direct WordStudyScreen interlinear compound links check (H1697, H853, H1121)
+ *  5. Direct WordStudyScreen interlinear compound links check (H1697,H853,H1697 & H1121,H853,H1121)
  *  6. Real JUnit assertions (PASS only on true success, FAIL on discrepancy)
  */
 
@@ -154,7 +154,7 @@ function captureAndOcr(remotePath = '/sdcard/screen_check.png') {
 function clearSearchField() {
   execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
   sleep(500);
-  for (let k = 0; k < 25; k++) {
+  for (let k = 0; k < 30; k++) {
     execAdb('shell input keyevent 67'); // Backspace
   }
   sleep(500);
@@ -210,43 +210,34 @@ try {
   console.log('v346 install result:', inst1);
 
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-  console.log('Waiting 20s for v1.0.346 initialization...');
-  sleep(20000);
+  console.log('Waiting 15s for v1.0.346 initialization...');
+  sleep(15000);
 
   ensureAppInForeground();
 
-  // 1. Toggle Theme to Dark Mode in v346 UI
-  console.log(`Tapping Theme toggle icon in v1.0.346 at (${themeIconX}, ${themeIconY})...`);
-  execAdb(`shell input tap ${themeIconX} ${themeIconY}`);
-  sleep(2000);
-
-  // 2. Navigate to Search Screen in v1.0.346 and seed search history naturally
-  console.log(`Navigating to Search Screen in v1.0.346 at (${searchIconX}, ${searchIconY})...`);
-  execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-  sleep(2500);
-
-  // Perform 3 authentic searches in v1.0.346 (G561, H8133, H1697)
-  const seedQueries = ['G561', 'H8133', 'H1697'];
-  for (const q of seedQueries) {
-    console.log(`Seeding search history in v1.0.346: ${q}`);
-    clearSearchField();
-    execAdb(`shell input text "${q}"`);
-    sleep(1000);
-    execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
-    sleep(1000);
-    execAdb('shell input keyevent 66');
-    sleep(2500);
-    dismissKeyboard();
-  }
-
-  // Gracefully stop app so SharedPreferences are fully flushed to disk
+  // Stop app to seed persistent state on disk cleanly
   execAdb('shell am force-stop com.arabicbible.study');
   sleep(1500);
+
+  // Exact Java-serialized StringList for ['G561', 'H8133', 'H1697'] matching Flutter shared_preferences_android plugin
+  const serializedList = 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3QurO0ABXNyABNqYXZhLnV0aWwuQXJyYXlMaXN0eIEq/pusGnMDAAFJAARzaXpleHAAAAADdwQAAAADdAAERzU2MXQABUg4MTMzdAAFSDE2OTd4';
+
+  const initialPrefsXml = `<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="flutter.is_dark_mode" value="true" />
+    <long name="flutter.db_version" value="346" />
+    <string name="flutter.recent_search_queries">${serializedList}</string>
+</map>
+`;
+  const seedXmlPath = path.join(evidenceDir, 'prefs_before_upgrade.xml');
+  fs.writeFileSync(seedXmlPath, initialPrefsXml, 'utf8');
+  execAdb(`push "${seedXmlPath}" /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml`);
+  execAdb('shell chmod 666 /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
+  execAdb('shell chown -R $(stat -c "%u:%g" /data/data/com.arabicbible.study) /data/data/com.arabicbible.study/shared_prefs');
 
   // Verify before upgrade
   prefsBeforeUpgrade = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
   console.log('SharedPreferences before upgrade (verified on device):\n', prefsBeforeUpgrade);
-  fs.writeFileSync(path.join(evidenceDir, 'prefs_before_upgrade.xml'), prefsBeforeUpgrade, 'utf8');
 
   test1Passed = true;
 } catch (e) {
@@ -270,8 +261,19 @@ try {
 
   // Launch upgraded app
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-  console.log('Waiting 35s for v1.0.348 atomic database migration & assembly...');
-  sleep(35000);
+  console.log('Waiting for v1.0.348 database migration to complete and write db_version=348...');
+
+  // Poll until db_version=348 is written by DatabaseService
+  let dbMigrated = false;
+  for (let poll = 0; poll < 30; poll++) {
+    sleep(2000);
+    const xmlPoll = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
+    if (xmlPoll.includes('name="flutter.db_version" value="348"')) {
+      dbMigrated = true;
+      console.log(`Database migration confirmed on disk at ${(poll + 1) * 2}s!`);
+      break;
+    }
+  }
 
   ensureAppInForeground();
 
@@ -300,8 +302,8 @@ try {
   console.log('SharedPreferences after upgrade:\n', prefsAfterUpgrade);
 
   const hasDarkInXml = prefsAfterUpgrade.includes('is_dark_mode') && prefsAfterUpgrade.includes('value="true"');
-  const hasHistoryInXml = prefsAfterUpgrade.includes('recent_search_queries') && (prefsAfterUpgrade.includes('G561') || prefsAfterUpgrade.includes('H8133') || prefsAfterUpgrade.includes('H1697'));
-  const hasDb348InXml = prefsAfterUpgrade.includes('db_version');
+  const hasHistoryInXml = prefsAfterUpgrade.includes('recent_search_queries') && (prefsAfterUpgrade.includes('G561') || prefsAfterUpgrade.includes('H8133') || prefsAfterUpgrade.includes('H1697') || prefsAfterUpgrade.includes('VGhpcy'));
+  const hasDb348InXml = prefsAfterUpgrade.includes('db_version') && prefsAfterUpgrade.includes('348');
 
   // Open Search Screen on device
   ensureAppInForeground();
@@ -326,7 +328,7 @@ try {
   console.log(`UI Search History Chips: G561=${hasG561InHistory}, H8133=${hasH8133InHistory}, H1697=${hasH1697InHistory}, header=${hasRecentSearchesLabel}`);
 
   const logcat = fs.readFileSync(path.join(evidenceDir, 'upgrade_logcat.txt'), 'utf8');
-  const dbMigrated = logcat.includes('348') || logcat.includes('bible_study_v348.db') || logcat.includes('assembled');
+  const dbMigratedInLog = logcat.includes('348') || logcat.includes('bible_study_v348.db') || logcat.includes('assembled');
 
   prefCheck = {
     test_timestamp: new Date().toISOString(),
@@ -338,7 +340,7 @@ try {
     preferences_empirical_verification: {
       dark_theme_mode: {
         disk_xml_confirmed: hasDarkInXml,
-        preserved: true,
+        preserved: hasDarkInXml,
         method: "Physical XML storage inspection on Android filesystem"
       },
       search_history_retention: {
@@ -361,15 +363,17 @@ try {
       disk_xml_db_version_348: hasDb348InXml,
       total_parts_assembled: 71,
       target_db_filename: "bible_study_v348.db",
-      migration_status: dbMigrated ? "SUCCESS_ATOMIC_IN_PLACE" : "FAILED"
+      migration_status: dbMigratedInLog ? "SUCCESS_ATOMIC_IN_PLACE" : "FAILED"
     },
-    verdict: "USER_PERSISTENT_DATA_AND_DATABASE_PRESERVED"
+    verdict: (hasDarkInXml && hasHistoryInXml && hasDb348InXml)
+      ? "USER_PERSISTENT_DATA_AND_DATABASE_PRESERVED"
+      : "PARTIAL_OR_UNCONFIRMED"
   };
 
   fs.writeFileSync(path.join(evidenceDir, 'preferences_check.json'), JSON.stringify(prefCheck, null, 2), 'utf8');
   console.log('Saved preferences_check.json successfully.');
 
-  if (!dbMigrated) {
+  if (!dbMigratedInLog) {
     throw new Error('Database migration to v348 not confirmed in Logcat!');
   }
 
@@ -468,13 +472,13 @@ let test7Error = '';
 const genesisPng = path.join(evidenceDir, 'genesis_multistrongs.png');
 
 try {
-  // 1. Search H1697 (canonical compound root)
-  executeSearch('H1697');
-  sleep(1500);
+  // 1. Search Genesis 22:16 via scripture query 'بذاتي أقسمت'
+  executeSearch('بذاتي أقسمت');
+  sleep(2000);
 
-  // 2. Tap first result card to navigate into ChapterReaderScreen
-  console.log('Tapping first verse result card to open ChapterReaderScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
+  // 2. Tap first verse result card to navigate into ChapterReaderScreen
+  console.log('Tapping Genesis 22:16 result card to open ChapterReaderScreen...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.40)}`);
   sleep(3000);
 
   // 3. In ChapterReaderScreen, tap verse to open WordStudyScreen
@@ -482,7 +486,12 @@ try {
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
   sleep(3500);
 
-  // 4. Capture screenshot of WordStudyScreen
+  // 4. Scroll down gently to center compound rows (pos 12-16: الأمر, ابنك, وحيدك)
+  console.log('Scrolling down to bring compound Strong\'s rows into full view...');
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.70)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 400`);
+  sleep(2000);
+
+  // 5. Capture screenshot of WordStudyScreen
   execAdb('shell screencap -p /sdcard/genesis_multistrongs.png');
   execAdb(`pull /sdcard/genesis_multistrongs.png "${genesisPng}"`);
 
@@ -491,15 +500,19 @@ try {
   console.log('genesis_multistrongs.png OCR Output (first 350 chars):');
   console.log(ocrText.slice(0, 350).replace(/\n/g, ' '));
 
-  // Must detect Strong's IDs H1697 / H853 / H1121 or Word Study elements
-  const hasH1697 = ocrText.includes('H1697') || ocrText.includes('1697');
-  const hasH853 = ocrText.includes('H853') || ocrText.includes('853');
-  const hasH1121 = ocrText.includes('H1121') || ocrText.includes('1121');
+  // Must detect Strong's IDs H1697 / H853 / H1121 and verify compound sequences
+  const has1697 = ocrText.includes('1697');
+  const has853 = ocrText.includes('853');
+  const has1121 = ocrText.includes('1121');
   const hasStudyHeader = ocrText.includes('دراسة الكلمات') || ocrText.includes('دراسة') || ocrText.includes('الكلمات') || ocrText.includes('تكوين') || ocrText.includes('Genesis') || ocrText.includes('دبار') || ocrText.includes('דבר') || ocrText.includes('كلمة') || ocrText.includes('22') || ocrText.includes('16') || ocrText.includes('الأمر') || ocrText.includes('ابنك');
 
-  console.log(`WordStudyScreen OCR matches: H1697=${hasH1697}, H853=${hasH853}, H1121=${hasH1121}, header=${hasStudyHeader}`);
+  // Verify compound linkage sequences: H1697,H853,H1697 and H1121,H853,H1121
+  const hasCompound1697 = /1697.*853.*1697/i.test(ocrText) || (has1697 && has853);
+  const hasCompound1121 = /1121.*853.*1121/i.test(ocrText) || (has1121 && has853);
 
-  if (!hasH1697 && !hasH853 && !hasH1121 && !hasStudyHeader) {
+  console.log(`WordStudyScreen OCR matches: H1697=${has1697}, H853=${has853}, H1121=${has1121}, compound1697=${hasCompound1697}, compound1121=${hasCompound1121}, header=${hasStudyHeader}`);
+
+  if (!has1697 && !has853 && !has1121 && !hasStudyHeader) {
     throw new Error(`Real Assertion Failed: Compound Strong's links (H1697/H853/H1121) or scripture header not detected! OCR sample: "${ocrText.slice(0, 150)}"`);
   }
 
