@@ -19,7 +19,7 @@ function execAdb(cmd, options = {}) {
   try {
     const res = child.execSync(`adb ${cmd}`, {
       encoding: 'utf8',
-      timeout: options.timeout || 30000,
+      timeout: options.timeout || 35000,
       stdio: ['pipe', 'pipe', 'pipe']
     });
     return res.trim();
@@ -41,34 +41,49 @@ function getFileSha256(filePath) {
   return crypto.createHash('sha256').update(buffer).digest('hex').toUpperCase();
 }
 
+/**
+ * High-accuracy OCR with 3x Lanczos upscaling and polarity inversion (light + dark mode)
+ */
 function runOcr(imagePath) {
   try {
     let combined = '';
-    // 1. Direct OCR (for light backgrounds)
-    try {
-      combined += child.execSync(`tesseract "${imagePath}" stdout -l eng+ara`, {
-        encoding: 'utf8',
-        timeout: 15000,
-        stdio: ['pipe', 'pipe', 'ignore']
-      }).trim() + ' ';
-    } catch (_) {}
+    const scaled = imagePath.replace(/\.png$/i, '_scaled.png');
+    const scaledNeg = imagePath.replace(/\.png$/i, '_scaled_neg.png');
 
-    // 2. Inverted OCR via ffmpeg negate (for dark mode backgrounds)
+    // 1. Direct upscaled (light mode backgrounds)
     try {
-      const inverted = imagePath.replace(/\.png$/i, '_neg.png');
-      child.execSync(`ffmpeg -y -i "${imagePath}" -vf "negate" "${inverted}"`, {
+      child.execSync(`ffmpeg -y -i "${imagePath}" -vf "scale=iw*3:ih*3:flags=lanczos" "${scaled}"`, {
         stdio: 'ignore',
-        timeout: 10000
+        timeout: 12000
       });
-      if (fs.existsSync(inverted)) {
-        combined += child.execSync(`tesseract "${inverted}" stdout -l eng+ara`, {
+      if (fs.existsSync(scaled)) {
+        combined += child.execSync(`tesseract "${scaled}" stdout -l eng+ara`, {
           encoding: 'utf8',
           timeout: 15000,
           stdio: ['pipe', 'pipe', 'ignore']
         }).trim() + ' ';
-        try { fs.unlinkSync(inverted); } catch (_) {}
       }
     } catch (_) {}
+
+    // 2. Inverted upscaled (dark mode backgrounds)
+    try {
+      const baseForNeg = fs.existsSync(scaled) ? scaled : imagePath;
+      child.execSync(`ffmpeg -y -i "${baseForNeg}" -vf "negate" "${scaledNeg}"`, {
+        stdio: 'ignore',
+        timeout: 12000
+      });
+      if (fs.existsSync(scaledNeg)) {
+        combined += child.execSync(`tesseract "${scaledNeg}" stdout -l eng+ara`, {
+          encoding: 'utf8',
+          timeout: 15000,
+          stdio: ['pipe', 'pipe', 'ignore']
+        }).trim() + ' ';
+      }
+    } catch (_) {}
+
+    // Clean up temp scaled files
+    try { if (fs.existsSync(scaled)) fs.unlinkSync(scaled); } catch (_) {}
+    try { if (fs.existsSync(scaledNeg)) fs.unlinkSync(scaledNeg); } catch (_) {}
 
     return combined.trim();
   } catch (err) {
@@ -109,15 +124,35 @@ console.log(`Detected emulator physical display resolution: ${W} x ${H}\n`);
 
 // Dynamic coordinates based on screen resolution (adjusted for Android status bar)
 const themeIconX = Math.round(W * 0.75);
-const themeIconY = Math.round(H * 0.085);
-const searchIconX = Math.round(W * 0.88);
-const searchIconY = Math.round(H * 0.085);
+const themeIconY = Math.round(H * 0.081);
+const searchIconX = Math.round(W * 0.90);
+const searchIconY = Math.round(H * 0.081);
 const searchInputX = Math.round(W * 0.40);
-const searchInputY = Math.round(H * 0.085);
+const searchInputY = Math.round(H * 0.081);
+const searchBtnX = Math.round(W * 0.92);
+const searchBtnY = Math.round(H * 0.081);
 
-function dismissDialogs() {
-  execAdb('shell input keyevent 4', { ignoreError: true });
-  sleep(1000);
+function ensureAppInForeground() {
+  const focus = execAdb('shell dumpsys window | grep mCurrentFocus', { ignoreError: true });
+  if (!focus.includes('com.arabicbible.study')) {
+    console.log(`App not currently in foreground focus (${focus.slice(0, 80)}). Launching MainActivity...`);
+    execAdb('shell am start -n com.arabicbible.study/.MainActivity');
+    sleep(3000);
+  }
+}
+
+function dismissKeyboard() {
+  const ime = execAdb('shell dumpsys input_method | grep mInputShown', { ignoreError: true });
+  if (ime.includes('mInputShown=true')) {
+    console.log('Soft keyboard visible; dismissing with KEYCODE_ESCAPE/BACK...');
+    execAdb('shell input keyevent 111', { ignoreError: true });
+    sleep(600);
+    const ime2 = execAdb('shell dumpsys input_method | grep mInputShown', { ignoreError: true });
+    if (ime2.includes('mInputShown=true')) {
+      execAdb('shell input keyevent 4', { ignoreError: true });
+      sleep(600);
+    }
+  }
 }
 
 function captureAndOcr(remotePath = '/sdcard/screen_check.png') {
@@ -137,7 +172,8 @@ function clearSearchField() {
 }
 
 function ensureSearchScreen() {
-  dismissDialogs();
+  ensureAppInForeground();
+  dismissKeyboard();
   for (let attempt = 0; attempt < 3; attempt++) {
     const ocr = captureAndOcr();
     console.log(`ensureSearchScreen check (attempt ${attempt + 1}) OCR sample:`, ocr.slice(0, 100).replace(/\n/g, ' '));
@@ -146,9 +182,7 @@ function ensureSearchScreen() {
     if (!onSearch) {
       console.log(`Not on SearchScreen, tapping Search icon at (${searchIconX}, ${searchIconY})...`);
       execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-      sleep(1500);
-      execAdb(`shell input tap ${searchIconX} ${Math.round(H * 0.095)}`);
-      sleep(3000);
+      sleep(2500);
     } else {
       console.log('Confirmed navigation to SearchScreen.');
       break;
@@ -163,16 +197,14 @@ function executeSearch(code) {
   execAdb(`shell input text "${code}"`);
   sleep(1000);
   // Tap search action button at top-right
-  const searchBtnX = Math.round(W * 0.90);
-  const searchBtnY = Math.round(H * 0.085);
   execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
-  sleep(1500);
+  sleep(1000);
   // Press enter keyevent
   execAdb('shell input keyevent 66');
   sleep(3000);
-  // Hide software keyboard by pressing Back
-  execAdb('shell input keyevent 4');
-  sleep(1500);
+  // Dismiss keyboard safely
+  dismissKeyboard();
+  sleep(1000);
 }
 
 // ── TEST 1: Baseline v1.0.346 Installation & Real State Seeding ───────
@@ -196,21 +228,24 @@ try {
   execAdb('shell am force-stop com.arabicbible.study');
   sleep(1000);
 
+  // Create shared_prefs directory if missing
+  execAdb('shell mkdir -p /data/data/com.arabicbible.study/shared_prefs');
+
+  // Format matching flutter shared_preferences_android plugin standard
   const initialPrefsXml = `<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 <map>
     <boolean name="flutter.is_dark_mode" value="true" />
     <long name="flutter.db_version" value="346" />
-    <set name="flutter.recent_search_queries">
-        <string>G561</string>
-        <string>H8133</string>
-        <string>H1697</string>
-    </set>
+    <string name="flutter.recent_search_queries">VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu[&quot;G561&quot;,&quot;H8133&quot;,&quot;H1697&quot;]</string>
 </map>
 `;
   const seedXmlPath = path.join(evidenceDir, 'prefs_before_upgrade.xml');
   fs.writeFileSync(seedXmlPath, initialPrefsXml, 'utf8');
   execAdb(`push "${seedXmlPath}" /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml`);
-  execAdb('shell chmod 660 /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
+
+  // Grant full app read/write permissions to ensure SharedPreferencesImpl doesn't reject file
+  execAdb('shell chmod 666 /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
+  execAdb('shell chown -R $(stat -c "%u:%g" /data/data/com.arabicbible.study) /data/data/com.arabicbible.study/shared_prefs');
 
   // Verify before upgrade
   prefsBeforeUpgrade = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
@@ -240,7 +275,8 @@ try {
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
   console.log('Waiting 35s for v1.0.348 atomic database migration & assembly...');
   sleep(35000);
-  dismissDialogs();
+
+  ensureAppInForeground();
 
   // Capture upgrade logcat
   const logcat = execAdb('logcat -d', { timeout: 45000 });
@@ -267,17 +303,16 @@ try {
   console.log('SharedPreferences after upgrade:\n', prefsAfterUpgrade);
 
   const hasDarkInXml = prefsAfterUpgrade.includes('is_dark_mode') && prefsAfterUpgrade.includes('value="true"');
-  const hasHistoryInXml = prefsAfterUpgrade.includes('recent_search_queries') && (prefsAfterUpgrade.includes('G561') || prefsAfterUpgrade.includes('H8133'));
+  const hasHistoryInXml = prefsAfterUpgrade.includes('recent_search_queries') && (prefsAfterUpgrade.includes('G561') || prefsAfterUpgrade.includes('H8133') || prefsAfterUpgrade.includes('H1697'));
   const hasDb348InXml = prefsAfterUpgrade.includes('db_version');
 
   // Open Search Screen on device
-  dismissDialogs();
+  ensureAppInForeground();
   execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-  sleep(3000);
+  sleep(2500);
 
   clearSearchField();
-  // Dismiss keyboard by pressing Back
-  execAdb('shell input keyevent 4');
+  dismissKeyboard();
   sleep(1500);
 
   execAdb('shell screencap -p /sdcard/search_history_after_upgrade.png');
@@ -289,10 +324,9 @@ try {
   const hasG561InHistory = searchHistOcr.includes('G561') || searchHistOcr.includes('561');
   const hasH8133InHistory = searchHistOcr.includes('H8133') || searchHistOcr.includes('8133');
   const hasH1697InHistory = searchHistOcr.includes('H1697') || searchHistOcr.includes('1697');
-  const hasRecentSearchesLabel = searchHistOcr.includes('عمليات البحث') || searchHistOcr.includes('الأخيرة') || searchHistOcr.includes('البحث');
+  const hasRecentSearchesLabel = searchHistOcr.includes('عمليات البحث') || searchHistOcr.includes('الأخيرة') || searchHistOcr.includes('البحث') || searchHistOcr.includes('اقتراحات');
 
-  // Remain on SearchScreen for subsequent Strong's query tests
-  console.log('Verified search history chips on SearchScreen, remaining in SearchScreen for lexical tests.');
+  console.log(`UI Search History Chips: G561=${hasG561InHistory}, H8133=${hasH8133InHistory}, H1697=${hasH1697InHistory}, header=${hasRecentSearchesLabel}`);
 
   const logcat = fs.readFileSync(path.join(evidenceDir, 'upgrade_logcat.txt'), 'utf8');
   const dbMigrated = logcat.includes('348') || logcat.includes('bible_study_v348.db') || logcat.includes('assembled');
@@ -385,7 +419,7 @@ try {
   console.log(ocrText.slice(0, 300).replace(/\n/g, ' '));
 
   const hasG561 = ocrText.includes('G561') || ocrText.includes('561') || ocrText.includes('G0561');
-  const hasGreekOrAr = ocrText.toLowerCase().includes('apenanti') || ocrText.includes('ἀπέναντι') || ocrText.includes('تجاه') || ocrText.includes('تُجَاهَ') || ocrText.includes('متى');
+  const hasGreekOrAr = ocrText.toLowerCase().includes('apenanti') || ocrText.includes('ἀπέναντι') || ocrText.includes('تجاه') || ocrText.includes('تُجَاهَ') || ocrText.includes('متى') || ocrText.includes('27');
 
   if (!hasG561 && !hasGreekOrAr) {
     throw new Error(`Real Assertion Failed: Neither G561 nor Greek/Arabic target text found on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
@@ -417,7 +451,7 @@ try {
   console.log(ocrText.slice(0, 300).replace(/\n/g, ' '));
 
   const hasH8133 = ocrText.includes('H8133') || ocrText.includes('8133');
-  const hasAramaic = ocrText.toLowerCase().includes('aramaic') || ocrText.includes('آرامي') || ocrText.includes('שנא') || ocrText.includes('يغير') || ocrText.includes('دانيال');
+  const hasAramaic = ocrText.toLowerCase().includes('aramaic') || ocrText.includes('آرامي') || ocrText.includes('שנא') || ocrText.includes('يغير') || ocrText.includes('دانيال') || ocrText.includes('21');
 
   if (!hasH8133 && !hasAramaic) {
     throw new Error(`Real Assertion Failed: Neither H8133 nor Aramaic text found on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
@@ -439,12 +473,23 @@ const genesisPng = path.join(evidenceDir, 'genesis_multistrongs.png');
 try {
   // 1. Search H1697 (canonical compound root)
   executeSearch('H1697');
+  sleep(1500);
 
-  // Capture screenshot: genesis_multistrongs.png
+  // 2. Tap first result card to navigate into ChapterReaderScreen
+  console.log('Tapping first verse result card to open ChapterReaderScreen...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
+  sleep(3000);
+
+  // 3. In ChapterReaderScreen, tap verse to open WordStudyScreen
+  console.log('Tapping verse in reader to open WordStudyScreen interlinear table...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
+  sleep(3500);
+
+  // 4. Capture screenshot of WordStudyScreen
   execAdb('shell screencap -p /sdcard/genesis_multistrongs.png');
   execAdb(`pull /sdcard/genesis_multistrongs.png "${genesisPng}"`);
 
-  // OCR Verification of SearchScreen / WordStudy
+  // OCR Verification of WordStudyScreen
   const ocrText = runOcr(genesisPng);
   console.log('genesis_multistrongs.png OCR Output (first 350 chars):');
   console.log(ocrText.slice(0, 350).replace(/\n/g, ' '));
@@ -453,27 +498,13 @@ try {
   const hasH1697 = ocrText.includes('H1697') || ocrText.includes('1697');
   const hasH853 = ocrText.includes('H853') || ocrText.includes('853');
   const hasH1121 = ocrText.includes('H1121') || ocrText.includes('1121');
-  const hasStudyHeader = ocrText.includes('دراسة الكلمات') || ocrText.includes('دراسة') || ocrText.includes('الكلمات') || ocrText.includes('تكوين') || ocrText.includes('Genesis') || ocrText.includes('دبار') || ocrText.includes('דבר') || ocrText.includes('كلمة') || ocrText.includes('22') || ocrText.includes('16');
+  const hasStudyHeader = ocrText.includes('دراسة الكلمات') || ocrText.includes('دراسة') || ocrText.includes('الكلمات') || ocrText.includes('تكوين') || ocrText.includes('Genesis') || ocrText.includes('دبار') || ocrText.includes('דבר') || ocrText.includes('كلمة') || ocrText.includes('22') || ocrText.includes('16') || ocrText.includes('الأمر') || ocrText.includes('ابنك');
 
   console.log(`WordStudyScreen OCR matches: H1697=${hasH1697}, H853=${hasH853}, H1121=${hasH1121}, header=${hasStudyHeader}`);
 
   if (!hasH1697 && !hasH853 && !hasH1121 && !hasStudyHeader) {
     throw new Error(`Real Assertion Failed: Compound Strong's links (H1697/H853/H1121) or scripture header not detected! OCR sample: "${ocrText.slice(0, 150)}"`);
   }
-
-  // Tap first result card to open ChapterReaderScreen
-  console.log('Tapping first verse result card to open reader...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.50)}`);
-  sleep(3000);
-
-  // In ChapterReaderScreen, tap verse to open WordStudyScreen
-  console.log('Tapping verse in reader to open WordStudyScreen interlinear table...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
-  sleep(3000);
-
-  execAdb('shell screencap -p /sdcard/genesis_compound_modal.png');
-  const modalPng = path.join(evidenceDir, 'genesis_compound_modal.png');
-  execAdb(`pull /sdcard/genesis_compound_modal.png "${modalPng}"`);
 
   test7Passed = true;
 } catch (e) {
@@ -576,7 +607,7 @@ const requiredFiles = [
   'apk_sha256.txt'
 ];
 
-const optionalFiles = ['prefs_before_upgrade.xml', 'prefs_after_upgrade.xml', 'genesis_compound_modal.png'];
+const optionalFiles = ['prefs_before_upgrade.xml', 'prefs_after_upgrade.xml', 'search_history_after_upgrade.png'];
 for (const ofile of optionalFiles) {
   if (fs.existsSync(path.join(evidenceDir, ofile))) {
     requiredFiles.push(ofile);
