@@ -23,7 +23,7 @@ jobs:
       - name: Install System Dependencies (SQLite3, FFmpeg, Zip, Tesseract OCR)
         run: |
           sudo apt-get update
-          sudo apt-get install -y sqlite3 ffmpeg zip tesseract-ocr tesseract-ocr-ara
+          sudo apt-get install -y sqlite3 ffmpeg zip tesseract-ocr
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -87,9 +87,24 @@ jobs:
             echo "=== Launching Automated Test Suite on Live Android API 33 Emulator ==="
             node scripts/run_android_automated_tests.cjs
 
-      - name: Generate Automated Test Execution Summary
+      - name: Display Test Results & Execution Summary
         if: always()
         run: |
+          echo "========================================================================"
+          echo "  AUTOMATED TEST RESULTS (test-results.xml)"
+          echo "========================================================================"
+          cat emulator_evidence/test-results.xml || true
+          
+          echo "========================================================================"
+          echo "  PREFERENCES & BOOKMARKS CHECK (preferences_check.json)"
+          echo "========================================================================"
+          cat emulator_evidence/preferences_check.json || true
+          
+          echo "========================================================================"
+          echo "  APK SHA-256 FINGERPRINT (apk_sha256.txt)"
+          echo "========================================================================"
+          cat emulator_evidence/apk_sha256.txt || true
+          
           cat << 'EOF' > emulator_evidence/execution_report.md
           # Official Automated Android Verification Report — v1.0.348
           
