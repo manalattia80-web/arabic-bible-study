@@ -22,10 +22,10 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Install System Dependencies (SQLite3, FFmpeg, Zip, Tesseract OCR)
+      - name: Install System Dependencies (SQLite3, FFmpeg, Zip, Tesseract OCR with Arabic)
         run: |
           sudo apt-get update
-          sudo apt-get install -y sqlite3 ffmpeg zip tesseract-ocr
+          sudo apt-get install -y sqlite3 ffmpeg zip tesseract-ocr tesseract-ocr-ara
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -147,11 +147,9 @@ jobs:
 
       - name: Attach Evidence Archive to Official Release v1.0.348
         if: always()
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: "v1.0.348"
-          files: |
-            android_automated_test_evidence_v1.0.348.zip
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f "android_automated_test_evidence_v1.0.348.zip" ]; then
+            gh release upload v1.0.348 android_automated_test_evidence_v1.0.348.zip --clobber
+          fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
