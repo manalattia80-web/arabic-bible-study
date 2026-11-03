@@ -9,6 +9,8 @@ jobs:
   verify-android-emulator:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -142,3 +144,14 @@ jobs:
           path: |
             android_automated_test_evidence_v1.0.348.zip
             emulator_evidence/
+
+      - name: Attach Evidence Archive to Official Release v1.0.348
+        if: always()
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v1.0.348"
+          files: |
+            android_automated_test_evidence_v1.0.348.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
