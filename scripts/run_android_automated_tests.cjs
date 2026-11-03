@@ -31,8 +31,7 @@ function execAdb(cmd, options = {}) {
 }
 
 function sleep(ms) {
-  const end = Date.now() + ms;
-  while (Date.now() < end) {}
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 }
 
 function getFileSha256(filePath) {
@@ -265,12 +264,12 @@ try {
 
   // Poll until db_version=348 is written by DatabaseService
   let dbMigrated = false;
-  for (let poll = 0; poll < 45; poll++) {
-    sleep(2000);
+  for (let poll = 0; poll < 35; poll++) {
+    sleep(1500);
     const xmlPoll = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
     if (xmlPoll.includes('name="flutter.db_version" value="348"')) {
       dbMigrated = true;
-      console.log(`Database migration confirmed on disk at ${(poll + 1) * 2}s!`);
+      console.log(`Database migration confirmed on disk at ${(poll + 1) * 1.5}s!`);
       break;
     }
   }
