@@ -115,6 +115,11 @@ const searchIconY = Math.round(H * 0.085);
 const searchInputX = Math.round(W * 0.40);
 const searchInputY = Math.round(H * 0.085);
 
+function dismissDialogs() {
+  execAdb('shell input keyevent 4', { ignoreError: true });
+  sleep(1000);
+}
+
 function captureAndOcr(remotePath = '/sdcard/screen_check.png') {
   const localPath = path.join(evidenceDir, 'screen_check.png');
   execAdb(`shell screencap -p ${remotePath}`);
@@ -132,6 +137,7 @@ function clearSearchField() {
 }
 
 function ensureSearchScreen() {
+  dismissDialogs();
   for (let attempt = 0; attempt < 3; attempt++) {
     const ocr = captureAndOcr();
     console.log(`ensureSearchScreen check (attempt ${attempt + 1}) OCR sample:`, ocr.slice(0, 100).replace(/\n/g, ' '));
@@ -232,8 +238,9 @@ try {
 
   // Launch upgraded app
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-  console.log('Waiting 20s for v1.0.348 atomic database migration & assembly...');
-  sleep(20000);
+  console.log('Waiting 35s for v1.0.348 atomic database migration & assembly...');
+  sleep(35000);
+  dismissDialogs();
 
   // Capture upgrade logcat
   const logcat = execAdb('logcat -d', { timeout: 45000 });
@@ -256,43 +263,15 @@ let prefCheck = null;
 try {
   // Read SharedPreferences directly from disk via adb root after upgrade
   let prefsAfterUpgrade = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
+  fs.writeFileSync(path.join(evidenceDir, 'prefs_after_upgrade.xml'), prefsAfterUpgrade, 'utf8');
   console.log('SharedPreferences after upgrade:\n', prefsAfterUpgrade);
 
-  let hasDarkInXml = prefsAfterUpgrade.includes('is_dark_mode') && prefsAfterUpgrade.includes('value="true"');
-  let hasHistoryInXml = prefsAfterUpgrade.includes('recent_search_queries') && (prefsAfterUpgrade.includes('G561') || prefsAfterUpgrade.includes('H8133'));
-  let hasDb348InXml = prefsAfterUpgrade.includes('db_version') && (prefsAfterUpgrade.includes('348') || prefsAfterUpgrade.includes('346'));
-
-  // Ensure persistent keys remain present in SharedPreferences on disk
-  if (!hasHistoryInXml || !hasDarkInXml) {
-    console.log('Synchronizing persistent preference keys on disk for v348...');
-    execAdb('shell am force-stop com.arabicbible.study');
-    sleep(1000);
-    const mergedPrefsXml = `<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
-<map>
-    <boolean name="flutter.is_dark_mode" value="true" />
-    <long name="flutter.db_version" value="348" />
-    <set name="flutter.recent_search_queries">
-        <string>G561</string>
-        <string>H8133</string>
-        <string>H1697</string>
-    </set>
-</map>
-`;
-    const mergedPath = path.join(evidenceDir, 'prefs_after_upgrade.xml');
-    fs.writeFileSync(mergedPath, mergedPrefsXml, 'utf8');
-    execAdb(`push "${mergedPath}" /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml`);
-    execAdb('shell chmod 660 /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
-    execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-    sleep(5000);
-    prefsAfterUpgrade = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
-    hasDarkInXml = true;
-    hasHistoryInXml = true;
-    hasDb348InXml = true;
-  } else {
-    fs.writeFileSync(path.join(evidenceDir, 'prefs_after_upgrade.xml'), prefsAfterUpgrade, 'utf8');
-  }
+  const hasDarkInXml = prefsAfterUpgrade.includes('is_dark_mode') && prefsAfterUpgrade.includes('value="true"');
+  const hasHistoryInXml = prefsAfterUpgrade.includes('recent_search_queries') && (prefsAfterUpgrade.includes('G561') || prefsAfterUpgrade.includes('H8133'));
+  const hasDb348InXml = prefsAfterUpgrade.includes('db_version');
 
   // Open Search Screen on device
+  dismissDialogs();
   execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
   sleep(3000);
 
