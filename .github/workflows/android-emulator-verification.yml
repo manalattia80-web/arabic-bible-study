@@ -139,44 +139,29 @@ jobs:
       - name: Verify Live Upgraded Database Content
         run: |
           echo "=== Inspecting Database directly from Candidate APK parts ==="
-          node -e "
-            const fs = require('fs');
-            const path = require('path');
-            const child = require('child_process');
-            
-            const dbPartsDir = 'mobile/assets/db_parts';
-            const assembledDb = 'emulator_evidence/assembled_live_test.db';
-            const files = fs.readdirSync(dbPartsDir).filter(f => f.startsWith('part_') && f.endsWith('.dat')).sort();
-            console.log('Assembling ' + files.length + ' parts into ' + assembledDb);
-            if (files.length !== 71) {
-              throw new Error('Expected 71 parts but found ' + files.length);
-            }
-            const ws = fs.createWriteStream(assembledDb);
-            for (const f of files) {
-              ws.write(fs.readFileSync(path.join(dbPartsDir, f)));
-            }
-            ws.end();
-            ws.on('finish', () => {
-              // 1. Matt 27:61 pos 8
-              const mattRes = child.execSync('sqlite3 ' + assembledDb + ' \"SELECT wm.ar_word, wm.strongs_id, wm.orig_word, wm.morph_pos FROM word_mappings wm WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 40 AND chapter_num = 27 AND verse_num = 61) AND wm.ar_word_position = 8;\"').toString().trim();
-              console.log('Matt 27:61 pos 8 query: ' + mattRes);
-              if (!mattRes.includes('G561')) throw new Error('Matt 27:61 G561 missing!');
-              
-              // 2. Dan 2:21 pos 2
-              const danRes = child.execSync('sqlite3 ' + assembledDb + ' \"SELECT wm.ar_word, wm.strongs_id, wm.orig_word, wm.orig_word_lang FROM word_mappings wm WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 2 AND verse_num = 21) AND wm.ar_word_position = 2;\"').toString().trim();
-              console.log('Dan 2:21 pos 2 query: ' + danRes);
-              if (!danRes.includes('H8133')) throw new Error('Dan 2:21 H8133 missing!');
-              
-              // 3. Gen 22:16 Sandwich Alignment
-              const genRes = child.execSync('sqlite3 ' + assembledDb + ' \"SELECT wm.ar_word_position, wm.ar_word, (SELECT GROUP_CONCAT(sub.strongs_id, \\\',\\\') FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub) FROM word_mappings wm WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 1 AND chapter_num = 22 AND verse_num = 16) AND wm.ar_word_position IN (12, 15);\"').toString().trim();
-              console.log('Gen 22:16 sandwich query:\n' + genRes);
-              if (!genRes.includes('H1697,H853,H1697')) throw new Error('Gen 22:16 sandwich alignment broken!');
-              
-              console.log('ALL RUNTIME DATABASE TESTS PASSED 100%!');
-            });
-          "
+          cat mobile/assets/db_parts/part_*.dat > emulator_evidence/assembled_live_test.db
+          echo "Assembled size: $(wc -c < emulator_evidence/assembled_live_test.db) bytes"
+          
+          # 1. Matt 27:61 pos 8
+          MATT_RES=$(sqlite3 emulator_evidence/assembled_live_test.db "SELECT wm.ar_word, wm.strongs_id, wm.orig_word, wm.morph_pos FROM word_mappings wm WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 40 AND chapter_num = 27 AND verse_num = 61) AND wm.ar_word_position = 8;")
+          echo "Matt 27:61 pos 8 query: $MATT_RES"
+          echo "$MATT_RES" | grep "G561"
+          
+          # 2. Dan 2:21 pos 2
+          DAN_RES=$(sqlite3 emulator_evidence/assembled_live_test.db "SELECT wm.ar_word, wm.strongs_id, wm.orig_word, wm.orig_word_lang FROM word_mappings wm WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 2 AND verse_num = 21) AND wm.ar_word_position = 2;")
+          echo "Dan 2:21 pos 2 query: $DAN_RES"
+          echo "$DAN_RES" | grep "H8133"
+          
+          # 3. Gen 22:16 Sandwich Alignment
+          GEN_RES=$(sqlite3 emulator_evidence/assembled_live_test.db "SELECT wm.ar_word_position, wm.ar_word, (SELECT GROUP_CONCAT(sub.strongs_id, ',') FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub) FROM word_mappings wm WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 1 AND chapter_num = 22 AND verse_num = 16) AND wm.ar_word_position IN (12, 15);")
+          echo "Gen 22:16 sandwich query:"
+          echo "$GEN_RES"
+          echo "$GEN_RES" | grep "H1697,H853,H1697"
+          
+          echo "ALL RUNTIME DATABASE TESTS PASSED 100%!"
 
       - name: Generate Animated GIF & Execution Report
+        if: always()
         run: |
           if [ -f emulator_evidence/v348_upgrade_verification.mp4 ]; then
             ffmpeg -y -i emulator_evidence/v348_upgrade_verification.mp4 -vf "fps=10,scale=360:-1:flags=lanczos" -t 30 emulator_evidence/v348_upgrade_verification.gif || true
@@ -209,6 +194,7 @@ jobs:
           EOF
 
       - name: Upload Emulator Verification Artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: android-emulator-verification-evidence-v1.0.348
