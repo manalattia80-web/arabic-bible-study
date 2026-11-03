@@ -470,6 +470,13 @@
   },
   {
     "book_id": 1,
+    "chapter": 22,
+    "verse": 16,
+    "label": "Genesis 22:16\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 1,
     "chapter": 23,
     "verse": 5,
     "label": "Genesis 23:5\r",
@@ -1446,6 +1453,13 @@
     "chapter": 8,
     "verse": 27,
     "label": "Exodus 8:27\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 2,
+    "chapter": 8,
+    "verse": 31,
+    "label": "Exodus 8:31\r",
     "source": "database_verified_flag"
   },
   {
@@ -3033,6 +3047,13 @@
   {
     "book_id": 4,
     "chapter": 15,
+    "verse": 18,
+    "label": "Numbers 15:18\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 4,
+    "chapter": 15,
     "verse": 22,
     "label": "Numbers 15:22\r",
     "source": "database_verified_flag"
@@ -3285,6 +3306,13 @@
   {
     "book_id": 4,
     "chapter": 22,
+    "verse": 23,
+    "label": "Numbers 22:23\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 4,
+    "chapter": 22,
     "verse": 28,
     "label": "Numbers 22:28\r",
     "source": "database_verified_flag"
@@ -3329,6 +3357,13 @@
     "chapter": 25,
     "verse": 13,
     "label": "Numbers 25:13\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 4,
+    "chapter": 25,
+    "verse": 18,
+    "label": "Numbers 25:18\r",
     "source": "database_verified_flag"
   },
   {
@@ -3511,6 +3546,13 @@
     "chapter": 31,
     "verse": 21,
     "label": "Numbers 31:21\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 4,
+    "chapter": 31,
+    "verse": 35,
+    "label": "Numbers 31:35\r",
     "source": "database_verified_flag"
   },
   {
@@ -3805,6 +3847,13 @@
     "chapter": 2,
     "verse": 14,
     "label": "Deuteronomy 2:14\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 5,
+    "chapter": 2,
+    "verse": 24,
+    "label": "Deuteronomy 2:24\r",
     "source": "database_verified_flag"
   },
   {
@@ -4978,9 +5027,23 @@
   },
   {
     "book_id": 6,
+    "chapter": 21,
+    "verse": 40,
+    "label": "Joshua 21:40\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 6,
     "chapter": 22,
     "verse": 4,
     "label": "Joshua 22:4\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 6,
+    "chapter": 22,
+    "verse": 10,
+    "label": "Joshua 22:10\r",
     "source": "database_verified_flag"
   },
   {
@@ -5408,6 +5471,13 @@
     "chapter": 14,
     "verse": 15,
     "label": "Judges 14:15\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 7,
+    "chapter": 14,
+    "verse": 16,
+    "label": "Judges 14:16\r",
     "source": "database_verified_flag"
   },
   {
@@ -6617,6 +6687,13 @@
   {
     "book_id": 10,
     "chapter": 14,
+    "verse": 2,
+    "label": "2 Samuel 14:2\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 10,
+    "chapter": 14,
     "verse": 5,
     "label": "2 Samuel 14:5\r",
     "source": "database_verified_flag"
@@ -6710,6 +6787,13 @@
     "chapter": 17,
     "verse": 7,
     "label": "2 Samuel 17:7\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 10,
+    "chapter": 17,
+    "verse": 9,
+    "label": "2 Samuel 17:9\r",
     "source": "database_verified_flag"
   },
   {
@@ -7046,6 +7130,13 @@
     "chapter": 4,
     "verse": 24,
     "label": "1 Kings 4:24\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 11,
+    "chapter": 6,
+    "verse": 14,
+    "label": "1 Kings 6:14\r",
     "source": "database_verified_flag"
   },
   {
@@ -7807,6 +7898,13 @@
   {
     "book_id": 13,
     "chapter": 12,
+    "verse": 19,
+    "label": "1 Chronicles 12:19\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 13,
+    "chapter": 12,
     "verse": 39,
     "label": "1 Chronicles 12:39\r",
     "source": "database_verified_flag"
@@ -8387,6 +8485,13 @@
   },
   {
     "book_id": 14,
+    "chapter": 35,
+    "verse": 26,
+    "label": "2 Chronicles 35:26\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 14,
     "chapter": 36,
     "verse": 18,
     "label": "2 Chronicles 36:18\r",
@@ -8871,6 +8976,13 @@
   {
     "book_id": 18,
     "chapter": 1,
+    "verse": 4,
+    "label": "Job 1:4\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 18,
+    "chapter": 1,
     "verse": 10,
     "label": "Job 1:10\r",
     "source": "database_verified_flag"
@@ -9095,6 +9207,13 @@
   {
     "book_id": 18,
     "chapter": 22,
+    "verse": 5,
+    "label": "Job 22:5\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 18,
+    "chapter": 22,
     "verse": 14,
     "label": "Job 22:14\r",
     "source": "database_verified_flag"
@@ -9188,6 +9307,13 @@
     "chapter": 28,
     "verse": 27,
     "label": "Job 28:27\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 18,
+    "chapter": 29,
+    "verse": 2,
+    "label": "Job 29:2\r",
     "source": "database_verified_flag"
   },
   {
@@ -9732,6 +9858,13 @@
   {
     "book_id": 19,
     "chapter": 44,
+    "verse": 19,
+    "label": "Psalms 44:19\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 19,
+    "chapter": 44,
     "verse": 26,
     "label": "Psalms 44:26\r",
     "source": "database_verified_flag"
@@ -10179,6 +10312,13 @@
   },
   {
     "book_id": 19,
+    "chapter": 116,
+    "verse": 10,
+    "label": "Psalms 116:10\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 19,
     "chapter": 118,
     "verse": 6,
     "label": "Psalms 118:6\r",
@@ -10280,6 +10420,13 @@
     "chapter": 146,
     "verse": 2,
     "label": "Psalms 146:2\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 19,
+    "chapter": 147,
+    "verse": 5,
+    "label": "Psalms 147:5\r",
     "source": "database_verified_flag"
   },
   {
@@ -10467,6 +10614,13 @@
   {
     "book_id": 20,
     "chapter": 17,
+    "verse": 12,
+    "label": "Proverbs 17:12\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 20,
+    "chapter": 17,
     "verse": 16,
     "label": "Proverbs 17:16\r",
     "source": "database_verified_flag"
@@ -10490,6 +10644,13 @@
     "chapter": 19,
     "verse": 7,
     "label": "Proverbs 19:7\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 20,
+    "chapter": 19,
+    "verse": 20,
+    "label": "Proverbs 19:20\r",
     "source": "database_verified_flag"
   },
   {
@@ -10831,6 +10992,13 @@
   {
     "book_id": 23,
     "chapter": 1,
+    "verse": 6,
+    "label": "Isaiah 1:6\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 23,
+    "chapter": 1,
     "verse": 9,
     "label": "Isaiah 1:9\r",
     "source": "database_verified_flag"
@@ -11085,6 +11253,13 @@
     "chapter": 28,
     "verse": 13,
     "label": "Isaiah 28:13\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 23,
+    "chapter": 28,
+    "verse": 16,
+    "label": "Isaiah 28:16\r",
     "source": "database_verified_flag"
   },
   {
@@ -11376,6 +11551,13 @@
   },
   {
     "book_id": 23,
+    "chapter": 47,
+    "verse": 15,
+    "label": "Isaiah 47:15\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 23,
     "chapter": 48,
     "verse": 3,
     "label": "Isaiah 48:3\r",
@@ -11561,6 +11743,13 @@
     "chapter": 2,
     "verse": 21,
     "label": "Jeremiah 2:21\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 24,
+    "chapter": 2,
+    "verse": 31,
+    "label": "Jeremiah 2:31\r",
     "source": "database_verified_flag"
   },
   {
@@ -12163,6 +12352,13 @@
     "chapter": 36,
     "verse": 18,
     "label": "Jeremiah 36:18\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 24,
+    "chapter": 36,
+    "verse": 23,
+    "label": "Jeremiah 36:23\r",
     "source": "database_verified_flag"
   },
   {
@@ -13246,6 +13442,13 @@
   {
     "book_id": 26,
     "chapter": 37,
+    "verse": 16,
+    "label": "Ezekiel 37:16\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 26,
+    "chapter": 37,
     "verse": 21,
     "label": "Ezekiel 37:21\r",
     "source": "database_verified_flag"
@@ -13666,6 +13869,13 @@
   {
     "book_id": 27,
     "chapter": 3,
+    "verse": 17,
+    "label": "Daniel 3:17\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 27,
+    "chapter": 3,
     "verse": 25,
     "label": "Daniel 3:25\r",
     "source": "database_verified_flag"
@@ -13773,6 +13983,13 @@
     "chapter": 11,
     "verse": 45,
     "label": "Daniel 11:45\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 27,
+    "chapter": 12,
+    "verse": 12,
+    "label": "Daniel 12:12\r",
     "source": "database_verified_flag"
   },
   {
@@ -14091,6 +14308,13 @@
     "source": "database_verified_flag"
   },
   {
+    "book_id": 32,
+    "chapter": 3,
+    "verse": 5,
+    "label": "Jonah 3:5\r",
+    "source": "database_verified_flag"
+  },
+  {
     "book_id": 33,
     "chapter": 3,
     "verse": 1,
@@ -14316,6 +14540,13 @@
   },
   {
     "book_id": 40,
+    "chapter": 14,
+    "verse": 27,
+    "label": "Matthew 14:27\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 40,
     "chapter": 16,
     "verse": 3,
     "label": "Matthew 16:3\r",
@@ -14333,6 +14564,13 @@
     "chapter": 17,
     "verse": 20,
     "label": "Matthew 17:20\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 40,
+    "chapter": 22,
+    "verse": 30,
+    "label": "Matthew 22:30\r",
     "source": "database_verified_flag"
   },
   {
@@ -14617,6 +14855,13 @@
   },
   {
     "book_id": 45,
+    "chapter": 8,
+    "verse": 1,
+    "label": "Romans 8:1\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 45,
     "chapter": 9,
     "verse": 23,
     "label": "Rom 9:23",
@@ -14764,6 +15009,13 @@
   },
   {
     "book_id": 58,
+    "chapter": 6,
+    "verse": 18,
+    "label": "Hebrews 6:18\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 58,
     "chapter": 9,
     "verse": 15,
     "label": "Hebrews 9:15\r",
@@ -14816,6 +15068,13 @@
     "chapter": 1,
     "verse": 17,
     "label": "James 1:17\r",
+    "source": "database_verified_flag"
+  },
+  {
+    "book_id": 59,
+    "chapter": 1,
+    "verse": 19,
+    "label": "James 1:19\r",
     "source": "database_verified_flag"
   },
   {

@@ -1,8 +1,8 @@
 {
-  "verification_date": "2026-10-29T15:21:24.546Z",
+  "verification_date": "2026-11-03T10:09:42.728Z",
   "exclusion_manifest": {
-    "total_verses": 2125,
-    "sha256": "b41e7c9980aa2d1da3f2bb37c00aa97297c6fe11d69699304b6a42e6aca0756a"
+    "total_verses": 2162,
+    "sha256": "c85cce83e33ea291b0ccd9ccef0c6d30f15e49e85c99adcf7296e466c9e515ce"
   },
   "held_out_sample": {
     "total_verses": 60,
@@ -11,7 +11,7 @@
       "greek": 24,
       "aramaic": 6
     },
-    "sha256": "5c9f9daf604968dad930fcfe40523576fe6b3391f09e0f3377bf0979bebf5f87"
+    "sha256": "c2e08076897f77cb6ea731581e63c70e07cc1aea945b9dcd023f4c083fa0cb19"
   },
   "intersection_size": 0,
   "status": "STRICTLY_DISJOINT_AND_FROZEN"

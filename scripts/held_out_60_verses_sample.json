@@ -30,11 +30,11 @@
   },
   "hebrew": [
     {
-      "book_id": 1,
-      "name_ar": "التكوين",
-      "name_en": "Genesis",
-      "chapter": 22,
-      "verse": 16
+      "book_id": 6,
+      "name_ar": "يشوع",
+      "name_en": "Joshua",
+      "chapter": 1,
+      "verse": 9
     },
     {
       "book_id": 2,
@@ -334,6 +334,7 @@
     },
     {
       "book_id": 44,
+      "name_ar": "أعمال الرسل",
       "chapter": 12,
       "verse": 7,
       "name_en": "Acts",
@@ -369,6 +370,7 @@
     },
     {
       "book_id": 47,
+      "name_ar": "كورنثوس الثانية",
       "chapter": 6,
       "verse": 5,
       "name_en": "2 Corinthians",
@@ -397,6 +399,7 @@
     },
     {
       "book_id": 66,
+      "name_ar": "رؤيا يوحنا",
       "chapter": 9,
       "verse": 14,
       "name_en": "Revelation",
