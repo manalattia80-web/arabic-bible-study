@@ -185,10 +185,11 @@ function executeSearch(code) {
   console.log(`Typing search query: ${code}`);
   execAdb(`shell input text "${code}"`);
   sleep(1000);
-  // Trigger search via IME keyevent 66 (Enter) and top-left RTL AppBar action button
-  execAdb('shell input keyevent 66');
+  // Tap search action button at top-right
+  execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
   sleep(1000);
-  execAdb(`shell input tap ${Math.round(W * 0.08)} ${Math.round(H * 0.081)}`);
+  // Press enter keyevent
+  execAdb('shell input keyevent 66');
   sleep(3000);
   // Dismiss keyboard safely
   dismissKeyboard();
@@ -471,13 +472,13 @@ let test7Error = '';
 const genesisPng = path.join(evidenceDir, 'genesis_multistrongs.png');
 
 try {
-  // 1. Search Genesis 22:16 via scripture query 'بذاتي أقسمت'
-  executeSearch('بذاتي أقسمت');
+  // 1. Search H1697 (canonical compound root)
+  executeSearch('H1697');
   sleep(2000);
 
   // 2. Tap first verse result card to navigate into ChapterReaderScreen
-  console.log('Tapping Genesis 22:16 result card to open ChapterReaderScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.40)}`);
+  console.log('Tapping first verse result card to open ChapterReaderScreen...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
   sleep(3000);
 
   // 3. In ChapterReaderScreen, tap verse to open WordStudyScreen
