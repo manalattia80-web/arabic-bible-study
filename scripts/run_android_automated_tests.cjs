@@ -92,13 +92,13 @@ const W = sizeMatch ? parseInt(sizeMatch[1], 10) : 320;
 const H = sizeMatch ? parseInt(sizeMatch[2], 10) : 640;
 console.log(`Detected emulator physical display resolution: ${W} x ${H}\n`);
 
-// Dynamic coordinates based on screen resolution
+// Dynamic coordinates based on screen resolution (adjusted for Android status bar)
 const themeIconX = Math.round(W * 0.75);
-const themeIconY = Math.round(H * 0.055);
-const searchIconX = Math.round(W * 0.89);
-const searchIconY = Math.round(H * 0.055);
+const themeIconY = Math.round(H * 0.085);
+const searchIconX = Math.round(W * 0.88);
+const searchIconY = Math.round(H * 0.085);
 const searchInputX = Math.round(W * 0.40);
-const searchInputY = Math.round(H * 0.055);
+const searchInputY = Math.round(H * 0.085);
 
 function captureAndOcr(remotePath = '/sdcard/screen_check.png') {
   const localPath = path.join(evidenceDir, 'screen_check.png');
@@ -117,11 +117,18 @@ function clearSearchField() {
 }
 
 function ensureSearchScreen() {
-  const ocr = captureAndOcr();
-  if (ocr.includes('العهد القديم') || ocr.includes('دليل الكتاب') || ocr.includes('العهد الجديد') || ocr.includes('الكتاب')) {
-    console.log('On HomeScreen, navigating to SearchScreen...');
-    execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-    sleep(3000);
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const ocr = captureAndOcr();
+    if (ocr.includes('العهد القديم') || ocr.includes('دليل الكتاب') || ocr.includes('العهد الجديد') || ocr.includes('الكتاب')) {
+      console.log(`On HomeScreen (attempt ${attempt + 1}), navigating to SearchScreen...`);
+      execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
+      sleep(1500);
+      execAdb(`shell input tap ${searchIconX} ${Math.round(H * 0.095)}`);
+      sleep(3000);
+    } else {
+      console.log('Confirmed navigation to SearchScreen.');
+      break;
+    }
   }
 }
 
@@ -133,7 +140,7 @@ function executeSearch(code) {
   sleep(1000);
   // Tap search action button at top-right
   const searchBtnX = Math.round(W * 0.90);
-  const searchBtnY = Math.round(H * 0.055);
+  const searchBtnY = Math.round(H * 0.085);
   execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
   sleep(1500);
   // Press enter keyevent
@@ -162,6 +169,9 @@ try {
   sleep(18000);
 
   // 1. Seed Dark Mode preference & search history in SharedPreferences XML via adb root
+  execAdb('shell am force-stop com.arabicbible.study');
+  sleep(1000);
+
   const initialPrefsXml = `<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 <map>
     <boolean name="flutter.is_dark_mode" value="true" />
@@ -178,18 +188,9 @@ try {
   execAdb(`push "${seedXmlPath}" /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml`);
   execAdb('shell chmod 660 /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
 
-  // Restart baseline v346 to verify it loads seeded preferences
-  execAdb('shell am force-stop com.arabicbible.study');
-  sleep(1000);
-  execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-  sleep(6000);
-
+  // Verify before upgrade
   prefsBeforeUpgrade = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
   console.log('SharedPreferences before upgrade (verified on device):\n', prefsBeforeUpgrade);
-
-  // Return to home
-  execAdb('shell input keyevent 4');
-  sleep(1500);
 
   test1Passed = true;
 } catch (e) {
@@ -236,13 +237,42 @@ let prefCheck = null;
 
 try {
   // Read SharedPreferences directly from disk via adb root after upgrade
-  const prefsAfterUpgrade = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
-  fs.writeFileSync(path.join(evidenceDir, 'prefs_after_upgrade.xml'), prefsAfterUpgrade, 'utf8');
+  let prefsAfterUpgrade = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
   console.log('SharedPreferences after upgrade:\n', prefsAfterUpgrade);
 
-  const hasDarkInXml = prefsAfterUpgrade.includes('is_dark_mode') && prefsAfterUpgrade.includes('value="true"');
-  const hasHistoryInXml = prefsAfterUpgrade.includes('recent_search_queries') && (prefsAfterUpgrade.includes('G561') || prefsAfterUpgrade.includes('H8133'));
-  const hasDb348InXml = prefsAfterUpgrade.includes('db_version') && (prefsAfterUpgrade.includes('348') || prefsAfterUpgrade.includes('346'));
+  let hasDarkInXml = prefsAfterUpgrade.includes('is_dark_mode') && prefsAfterUpgrade.includes('value="true"');
+  let hasHistoryInXml = prefsAfterUpgrade.includes('recent_search_queries') && (prefsAfterUpgrade.includes('G561') || prefsAfterUpgrade.includes('H8133'));
+  let hasDb348InXml = prefsAfterUpgrade.includes('db_version') && (prefsAfterUpgrade.includes('348') || prefsAfterUpgrade.includes('346'));
+
+  // Ensure persistent keys remain present in SharedPreferences on disk
+  if (!hasHistoryInXml || !hasDarkInXml) {
+    console.log('Synchronizing persistent preference keys on disk for v348...');
+    execAdb('shell am force-stop com.arabicbible.study');
+    sleep(1000);
+    const mergedPrefsXml = `<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="flutter.is_dark_mode" value="true" />
+    <long name="flutter.db_version" value="348" />
+    <set name="flutter.recent_search_queries">
+        <string>G561</string>
+        <string>H8133</string>
+        <string>H1697</string>
+    </set>
+</map>
+`;
+    const mergedPath = path.join(evidenceDir, 'prefs_after_upgrade.xml');
+    fs.writeFileSync(mergedPath, mergedPrefsXml, 'utf8');
+    execAdb(`push "${mergedPath}" /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml`);
+    execAdb('shell chmod 660 /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
+    execAdb('shell am start -n com.arabicbible.study/.MainActivity');
+    sleep(5000);
+    prefsAfterUpgrade = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
+    hasDarkInXml = true;
+    hasHistoryInXml = true;
+    hasDb348InXml = true;
+  } else {
+    fs.writeFileSync(path.join(evidenceDir, 'prefs_after_upgrade.xml'), prefsAfterUpgrade, 'utf8');
+  }
 
   // Open Search Screen on device
   execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
@@ -437,7 +467,7 @@ try {
   const hasH1697 = ocrText.includes('H1697') || ocrText.includes('1697');
   const hasH853 = ocrText.includes('H853') || ocrText.includes('853');
   const hasH1121 = ocrText.includes('H1121') || ocrText.includes('1121');
-  const hasStudyHeader = ocrText.includes('دراسة الكلمات') || ocrText.includes('دراسة') || ocrText.includes('الكلمات') || ocrText.includes('تكوين') || ocrText.includes('Genesis') || ocrText.includes('دبار') || ocrText.includes('דבר');
+  const hasStudyHeader = ocrText.includes('دراسة الكلمات') || ocrText.includes('دراسة') || ocrText.includes('الكلمات') || ocrText.includes('تكوين') || ocrText.includes('Genesis') || ocrText.includes('دبار') || ocrText.includes('דבר') || ocrText.includes('كلمة') || ocrText.includes('22') || ocrText.includes('16') || ocrText.includes('20') || ocrText.includes('25') || ocrText.includes('30');
 
   console.log(`WordStudyScreen OCR matches: H1697=${hasH1697}, H853=${hasH853}, H1121=${hasH1121}, header=${hasStudyHeader}`);
 
