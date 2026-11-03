@@ -42,48 +42,37 @@ function getFileSha256(filePath) {
 }
 
 /**
- * High-accuracy OCR with 3x Lanczos upscaling and polarity inversion (light + dark mode)
+ * Dual-polarity OCR (standard + negated) with 30s timeout
  */
 function runOcr(imagePath) {
   try {
     let combined = '';
-    const scaled = imagePath.replace(/\.png$/i, '_scaled.png');
-    const scaledNeg = imagePath.replace(/\.png$/i, '_scaled_neg.png');
 
-    // 1. Direct upscaled (light mode backgrounds)
+    // 1. Direct OCR (for light backgrounds)
     try {
-      child.execSync(`ffmpeg -y -i "${imagePath}" -vf "scale=iw*3:ih*3:flags=lanczos" "${scaled}"`, {
-        stdio: 'ignore',
-        timeout: 12000
-      });
-      if (fs.existsSync(scaled)) {
-        combined += child.execSync(`tesseract "${scaled}" stdout -l eng+ara`, {
-          encoding: 'utf8',
-          timeout: 15000,
-          stdio: ['pipe', 'pipe', 'ignore']
-        }).trim() + ' ';
-      }
+      combined += child.execSync(`tesseract "${imagePath}" stdout -l eng+ara`, {
+        encoding: 'utf8',
+        timeout: 30000,
+        stdio: ['pipe', 'pipe', 'ignore']
+      }).trim() + ' ';
     } catch (_) {}
 
-    // 2. Inverted upscaled (dark mode backgrounds)
+    // 2. Inverted OCR via ffmpeg negate (for dark mode backgrounds)
     try {
-      const baseForNeg = fs.existsSync(scaled) ? scaled : imagePath;
-      child.execSync(`ffmpeg -y -i "${baseForNeg}" -vf "negate" "${scaledNeg}"`, {
+      const inverted = imagePath.replace(/\.png$/i, '_neg.png');
+      child.execSync(`ffmpeg -y -i "${imagePath}" -vf "negate" "${inverted}"`, {
         stdio: 'ignore',
-        timeout: 12000
+        timeout: 15000
       });
-      if (fs.existsSync(scaledNeg)) {
-        combined += child.execSync(`tesseract "${scaledNeg}" stdout -l eng+ara`, {
+      if (fs.existsSync(inverted)) {
+        combined += child.execSync(`tesseract "${inverted}" stdout -l eng+ara`, {
           encoding: 'utf8',
-          timeout: 15000,
+          timeout: 30000,
           stdio: ['pipe', 'pipe', 'ignore']
         }).trim() + ' ';
+        try { fs.unlinkSync(inverted); } catch (_) {}
       }
     } catch (_) {}
-
-    // Clean up temp scaled files
-    try { if (fs.existsSync(scaled)) fs.unlinkSync(scaled); } catch (_) {}
-    try { if (fs.existsSync(scaledNeg)) fs.unlinkSync(scaledNeg); } catch (_) {}
 
     return combined.trim();
   } catch (err) {
@@ -221,35 +210,43 @@ try {
   console.log('v346 install result:', inst1);
 
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-  console.log('Waiting 18s for v1.0.346 initialization...');
-  sleep(18000);
+  console.log('Waiting 20s for v1.0.346 initialization...');
+  sleep(20000);
 
-  // 1. Seed Dark Mode preference & search history in SharedPreferences XML via adb root
+  ensureAppInForeground();
+
+  // 1. Toggle Theme to Dark Mode in v346 UI
+  console.log(`Tapping Theme toggle icon in v1.0.346 at (${themeIconX}, ${themeIconY})...`);
+  execAdb(`shell input tap ${themeIconX} ${themeIconY}`);
+  sleep(2000);
+
+  // 2. Navigate to Search Screen in v1.0.346 and seed search history naturally
+  console.log(`Navigating to Search Screen in v1.0.346 at (${searchIconX}, ${searchIconY})...`);
+  execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
+  sleep(2500);
+
+  // Perform 3 authentic searches in v1.0.346 (G561, H8133, H1697)
+  const seedQueries = ['G561', 'H8133', 'H1697'];
+  for (const q of seedQueries) {
+    console.log(`Seeding search history in v1.0.346: ${q}`);
+    clearSearchField();
+    execAdb(`shell input text "${q}"`);
+    sleep(1000);
+    execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
+    sleep(1000);
+    execAdb('shell input keyevent 66');
+    sleep(2500);
+    dismissKeyboard();
+  }
+
+  // Gracefully stop app so SharedPreferences are fully flushed to disk
   execAdb('shell am force-stop com.arabicbible.study');
-  sleep(1000);
-
-  // Create shared_prefs directory if missing
-  execAdb('shell mkdir -p /data/data/com.arabicbible.study/shared_prefs');
-
-  // Format matching flutter shared_preferences_android plugin standard
-  const initialPrefsXml = `<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
-<map>
-    <boolean name="flutter.is_dark_mode" value="true" />
-    <long name="flutter.db_version" value="346" />
-    <string name="flutter.recent_search_queries">VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu[&quot;G561&quot;,&quot;H8133&quot;,&quot;H1697&quot;]</string>
-</map>
-`;
-  const seedXmlPath = path.join(evidenceDir, 'prefs_before_upgrade.xml');
-  fs.writeFileSync(seedXmlPath, initialPrefsXml, 'utf8');
-  execAdb(`push "${seedXmlPath}" /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml`);
-
-  // Grant full app read/write permissions to ensure SharedPreferencesImpl doesn't reject file
-  execAdb('shell chmod 666 /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
-  execAdb('shell chown -R $(stat -c "%u:%g" /data/data/com.arabicbible.study) /data/data/com.arabicbible.study/shared_prefs');
+  sleep(1500);
 
   // Verify before upgrade
   prefsBeforeUpgrade = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
   console.log('SharedPreferences before upgrade (verified on device):\n', prefsBeforeUpgrade);
+  fs.writeFileSync(path.join(evidenceDir, 'prefs_before_upgrade.xml'), prefsBeforeUpgrade, 'utf8');
 
   test1Passed = true;
 } catch (e) {
