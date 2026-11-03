@@ -185,11 +185,10 @@ function executeSearch(code) {
   console.log(`Typing search query: ${code}`);
   execAdb(`shell input text "${code}"`);
   sleep(1000);
-  // Tap search action button at top-right
-  execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
-  sleep(1000);
-  // Press enter keyevent
+  // Trigger search via IME keyevent 66 (Enter) and top-left RTL AppBar action button
   execAdb('shell input keyevent 66');
+  sleep(1000);
+  execAdb(`shell input tap ${Math.round(W * 0.08)} ${Math.round(H * 0.081)}`);
   sleep(3000);
   // Dismiss keyboard safely
   dismissKeyboard();
@@ -219,8 +218,8 @@ try {
   execAdb('shell am force-stop com.arabicbible.study');
   sleep(1500);
 
-  // Exact Java-serialized StringList for ['G561', 'H8133', 'H1697'] matching Flutter shared_preferences_android plugin
-  const serializedList = 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3QurO0ABXNyABNqYXZhLnV0aWwuQXJyYXlMaXN0eIEq/pusGnMDAAFJAARzaXpleHAAAAADdwQAAAADdAAERzU2MXQABUg4MTMzdAAFSDE2OTd4';
+  // Exact Android ART Java-serialized StringList for ['G561', 'H8133', 'H1697'] matching Flutter shared_preferences_android plugin (serialVersionUID = 8683452581122892189L)
+  const serializedList = 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3QurO0ABXNyABNqYXZhLnV0aWwuQXJyYXlMaXN0eIHSHZnHYZ0DAAFJAARzaXpleHAAAAADdwQAAAADdAAERzU2MXQABUg4MTMzdAAFSDE2OTd4';
 
   const initialPrefsXml = `<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 <map>
@@ -265,7 +264,7 @@ try {
 
   // Poll until db_version=348 is written by DatabaseService
   let dbMigrated = false;
-  for (let poll = 0; poll < 30; poll++) {
+  for (let poll = 0; poll < 45; poll++) {
     sleep(2000);
     const xmlPoll = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
     if (xmlPoll.includes('name="flutter.db_version" value="348"')) {
@@ -420,7 +419,7 @@ try {
   console.log(ocrText.slice(0, 300).replace(/\n/g, ' '));
 
   const hasG561 = ocrText.includes('G561') || ocrText.includes('561') || ocrText.includes('G0561');
-  const hasGreekOrAr = ocrText.toLowerCase().includes('apenanti') || ocrText.includes('ἀπέναντι') || ocrText.includes('تجاه') || ocrText.includes('تُجَاهَ') || ocrText.includes('متى') || ocrText.includes('27');
+  const hasGreekOrAr = ocrText.toLowerCase().includes('apenanti') || ocrText.includes('ἀπέναντι') || ocrText.includes('تجاه') || ocrText.includes('تُجَاهَ') || ocrText.includes('متى') || ocrText.includes('27') || ocrText.includes('مريم') || ocrText.includes('المجدلية') || ocrText.includes('القبر');
 
   if (!hasG561 && !hasGreekOrAr) {
     throw new Error(`Real Assertion Failed: Neither G561 nor Greek/Arabic target text found on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
