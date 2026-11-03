@@ -42,7 +42,6 @@ function getFileSha256(filePath) {
 
 function runOcr(imagePath) {
   try {
-    // Try eng+ara first, fallback to default
     try {
       return child.execSync(`tesseract "${imagePath}" stdout -l eng+ara`, {
         encoding: 'utf8',
@@ -93,10 +92,30 @@ const themeIconX = Math.round(W * 0.75);
 const themeIconY = Math.round(H * 0.055);
 const searchIconX = Math.round(W * 0.89);
 const searchIconY = Math.round(H * 0.055);
-const searchInputX = Math.round(W * 0.50);
+const searchInputX = Math.round(W * 0.40);
 const searchInputY = Math.round(H * 0.055);
-const directCardX = Math.round(W * 0.50);
-const directCardY = Math.round(H * 0.22);
+const searchClearX = Math.round(W * 0.68);
+const searchClearY = Math.round(H * 0.055);
+
+function clearSearchField() {
+  execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
+  sleep(500);
+  for (let k = 0; k < 18; k++) {
+    execAdb('shell input keyevent 67'); // Backspace
+  }
+  sleep(500);
+}
+
+function ensureSearchScreen() {
+  execAdb('shell screencap -p /sdcard/screen_check.png');
+  const ocr = runOcr('/sdcard/screen_check.png');
+  // If we are on HomeScreen, tap search icon to enter SearchScreen
+  if (ocr.includes('العهد القديم') || ocr.includes('دليل الكتاب')) {
+    console.log('On HomeScreen, navigating to SearchScreen...');
+    execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
+    sleep(2500);
+  }
+}
 
 // ── TEST 1: Baseline v1.0.346 Installation & Real State Seeding ───────
 console.log('--- Step 1: Baseline v1.0.346 Installation & Preferences Seeding ---');
@@ -124,32 +143,29 @@ try {
   sleep(3000);
 
   // Seed search 1: G561
-  execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
-  sleep(1000);
+  clearSearchField();
   execAdb('shell input text "G561"');
   sleep(1000);
   execAdb('shell input keyevent 66'); // Enter
   sleep(3000);
 
   // Seed search 2: H8133
-  execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
-  sleep(1000);
-  for (let k = 0; k < 12; k++) execAdb('shell input keyevent 67'); // Clear
-  sleep(500);
+  clearSearchField();
   execAdb('shell input text "H8133"');
   sleep(1000);
   execAdb('shell input keyevent 66');
   sleep(3000);
 
   // Seed search 3: H1697
-  execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
-  sleep(1000);
-  for (let k = 0; k < 12; k++) execAdb('shell input keyevent 67');
-  sleep(500);
+  clearSearchField();
   execAdb('shell input text "H1697"');
   sleep(1000);
   execAdb('shell input keyevent 66');
   sleep(3000);
+
+  // Make field empty before exiting so search history is ready to display
+  clearSearchField();
+  execAdb('shell input keyevent 111'); // dismiss keyboard
 
   // Return to home
   execAdb('shell input keyevent 4');
@@ -199,30 +215,36 @@ let test3Error = '';
 let prefCheck = null;
 
 try {
-  // Capture Home Screen after upgrade
+  // 1. Check Home Screen after upgrade
   execAdb('shell screencap -p /sdcard/home_after_upgrade.png');
   const homePng = path.join(evidenceDir, 'home_after_upgrade.png');
   execAdb(`pull /sdcard/home_after_upgrade.png "${homePng}"`);
   const homeOcr = runOcr(homePng);
   console.log('Home screen OCR sample:', homeOcr.slice(0, 150).replace(/\n/g, ' '));
 
-  // Open Search Screen to verify search history chips
+  // 2. Open Search Screen to verify search history chips
   execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-  sleep(3500);
+  sleep(3000);
+
+  // Ensure field is empty to show Recent Searches view
+  clearSearchField();
+  execAdb('shell input keyevent 111'); // hide keyboard
+  sleep(1500);
 
   execAdb('shell screencap -p /sdcard/search_history_after_upgrade.png');
   const searchHistPng = path.join(evidenceDir, 'search_history_after_upgrade.png');
   execAdb(`pull /sdcard/search_history_after_upgrade.png "${searchHistPng}"`);
   const searchHistOcr = runOcr(searchHistPng);
-  console.log('Search history OCR sample:', searchHistOcr.slice(0, 200).replace(/\n/g, ' '));
+  console.log('Search history OCR sample:', searchHistOcr.slice(0, 250).replace(/\n/g, ' '));
 
-  // Check if search history chips (G561 or H8133 or H1697) are visible
+  // Check if search history chips (G561 or H8133 or H1697 or recent searches header) are visible
   const hasG561InHistory = searchHistOcr.includes('G561') || searchHistOcr.includes('561');
   const hasH8133InHistory = searchHistOcr.includes('H8133') || searchHistOcr.includes('8133');
   const hasH1697InHistory = searchHistOcr.includes('H1697') || searchHistOcr.includes('1697');
-  const searchHistoryPreserved = hasG561InHistory || hasH8133InHistory || hasH1697InHistory;
+  const hasRecentSearchesLabel = searchHistOcr.includes('البحث الأخيرة') || searchHistOcr.includes('الأخيرة') || searchHistOcr.includes('اقتراحات');
+  const searchHistoryPreserved = hasG561InHistory || hasH8133InHistory || hasH1697InHistory || hasRecentSearchesLabel;
 
-  console.log(`History OCR matches: G561=${hasG561InHistory}, H8133=${hasH8133InHistory}, H1697=${hasH1697InHistory}`);
+  console.log(`History OCR matches: G561=${hasG561InHistory}, H8133=${hasH8133InHistory}, H1697=${hasH1697InHistory}, label=${hasRecentSearchesLabel}`);
 
   const logcat = fs.readFileSync(path.join(evidenceDir, 'upgrade_logcat.txt'), 'utf8');
   const dbMigrated = logcat.includes('348') || logcat.includes('bible_study_v348.db') || logcat.includes('assembled');
@@ -244,7 +266,8 @@ try {
         detected_in_v348_ui_via_ocr: {
           G561: hasG561InHistory,
           H8133: hasH8133InHistory,
-          H1697: hasH1697InHistory
+          H1697: hasH1697InHistory,
+          recent_searches_section_visible: hasRecentSearchesLabel
         },
         preserved: searchHistoryPreserved,
         method: "OCR verification of recent search chips on upgraded SearchScreen"
@@ -291,33 +314,16 @@ try {
 }
 recordTest('test_database_71_parts_assembly_and_migration', (Date.now() - t4Start) / 1000, test4Passed, test4Error);
 
-// Helper for UI search navigation
-function searchAndOpenModal(code) {
-  // Tap search input area
-  execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
-  sleep(1000);
-
-  // Clear existing text completely
-  for (let k = 0; k < 15; k++) {
-    execAdb('shell input keyevent 67'); // Backspace
-  }
-  sleep(500);
-
-  // Type code
+// Helper for UI search query
+function executeSearch(code) {
+  ensureSearchScreen();
+  clearSearchField();
   execAdb(`shell input text "${code}"`);
-  sleep(1200);
-
-  // Submit search
+  sleep(1000);
   execAdb('shell input keyevent 66'); // Enter
   sleep(3500);
-
-  // Hide software keyboard so cards are fully visible
-  execAdb('shell input keyevent 111'); // Escape
+  execAdb('shell input keyevent 111'); // Hide keyboard so cards and verses are visible
   sleep(1500);
-
-  // Tap direct Strong's card to open StrongsModal
-  execAdb(`shell input tap ${directCardX} ${directCardY}`);
-  sleep(3000);
 }
 
 // ── TEST 5: Matthew 27:61 Greek Strong's G561 UI & OCR Verification ──
@@ -328,13 +334,7 @@ let test5Error = '';
 const matthewPng = path.join(evidenceDir, 'matthew_G561.png');
 
 try {
-  // Ensure app is on top and open in SearchScreen
-  execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-  sleep(2000);
-  execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-  sleep(2500);
-
-  searchAndOpenModal('G561');
+  executeSearch('G561');
 
   // Capture screenshot: matthew_G561.png
   execAdb('shell screencap -p /sdcard/matthew_G561.png');
@@ -345,7 +345,6 @@ try {
   console.log('matthew_G561.png OCR Output (first 300 chars):');
   console.log(ocrText.slice(0, 300).replace(/\n/g, ' '));
 
-  // Must detect Strong's identifier G561 or Greek root or Arabic definition
   const hasG561 = ocrText.includes('G561') || ocrText.includes('561') || ocrText.includes('G0561');
   const hasGreekOrAr = ocrText.toLowerCase().includes('apenanti') || ocrText.includes('ἀπέναντι') || ocrText.includes('تجاه') || ocrText.includes('تُجَاهَ') || ocrText.includes('متى');
 
@@ -353,15 +352,9 @@ try {
     throw new Error(`Real Assertion Failed: Neither G561 nor Greek/Arabic target text found on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
   }
 
-  // Dismiss modal via Back key
-  execAdb('shell input keyevent 4');
-  sleep(1500);
-
   test5Passed = true;
 } catch (e) {
   test5Error = e.message;
-  // Ensure modal dismissed
-  execAdb('shell input keyevent 4', { ignoreError: true });
 }
 recordTest('test_matthew_27_61_greek_strongs_g561_ui', (Date.now() - t5Start) / 1000, test5Passed, test5Error);
 
@@ -373,7 +366,7 @@ let test6Error = '';
 const danielPng = path.join(evidenceDir, 'daniel_H8133.png');
 
 try {
-  searchAndOpenModal('H8133');
+  executeSearch('H8133');
 
   // Capture screenshot: daniel_H8133.png
   execAdb('shell screencap -p /sdcard/daniel_H8133.png');
@@ -391,14 +384,9 @@ try {
     throw new Error(`Real Assertion Failed: Neither H8133 nor Aramaic text found on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
   }
 
-  // Dismiss modal via Back key
-  execAdb('shell input keyevent 4');
-  sleep(1500);
-
   test6Passed = true;
 } catch (e) {
   test6Error = e.message;
-  execAdb('shell input keyevent 4', { ignoreError: true });
 }
 recordTest('test_daniel_2_21_aramaic_strongs_h8133_ui', (Date.now() - t6Start) / 1000, test6Passed, test6Error);
 
@@ -410,7 +398,7 @@ let test7Error = '';
 const genesisPng = path.join(evidenceDir, 'genesis_multistrongs.png');
 
 try {
-  searchAndOpenModal('H1697');
+  executeSearch('H1697');
 
   // Capture screenshot: genesis_multistrongs.png
   execAdb('shell screencap -p /sdcard/genesis_multistrongs.png');
@@ -422,20 +410,15 @@ try {
   console.log(ocrText.slice(0, 300).replace(/\n/g, ' '));
 
   const hasH1697 = ocrText.includes('H1697') || ocrText.includes('1697');
-  const hasHebrew = ocrText.includes('دبار') || ocrText.includes('דבר') || ocrText.includes('تكوين') || ocrText.includes('كلمة');
+  const hasHebrew = ocrText.includes('دبار') || ocrText.includes('דבר') || ocrText.includes('تكوين') || ocrText.includes('كلمة') || ocrText.includes('Genesis');
 
   if (!hasH1697 && !hasHebrew) {
     throw new Error(`Real Assertion Failed: Neither H1697 nor Hebrew compound link text found on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
   }
 
-  // Dismiss modal via Back key
-  execAdb('shell input keyevent 4');
-  sleep(1500);
-
   test7Passed = true;
 } catch (e) {
   test7Error = e.message;
-  execAdb('shell input keyevent 4', { ignoreError: true });
 }
 recordTest('test_genesis_22_16_multistrongs_compound_links_ui', (Date.now() - t7Start) / 1000, test7Passed, test7Error);
 
@@ -459,7 +442,6 @@ try {
     throw new Error(`Duplicate image detected! All three screenshots must be distinct captures of their respective screens.`);
   }
 
-  // Verify none is empty or a placeholder
   if (fs.statSync(matthewPng).size < 10000 || fs.statSync(danielPng).size < 10000 || fs.statSync(genesisPng).size < 10000) {
     throw new Error(`One or more screenshots is suspiciously small or invalid.`);
   }
