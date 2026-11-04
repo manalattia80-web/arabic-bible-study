@@ -17,17 +17,17 @@ class AppColors {
   static const Color lightBgCard      = Color(0xFFF1F5F9); // slightly darker elevated card
   static const Color lightBgCardHov   = Color(0xFFE2E8F0); // hovered card
 
-  static const Color lightPrimary     = Color(0xFFB48512); // darker manuscript gold for light bg
-  static const Color lightPrimaryDim  = Color(0xFF8A640D);
+  static const Color lightPrimary     = Color(0xFF9A6E0A); // darker manuscript gold for high contrast on light bg
+  static const Color lightPrimaryDim  = Color(0xFF78350F);
   static const Color lightPrimaryGlow = Color(0x20B48512);
-  static const Color lightPrimaryText = Color(0xFF926707); // dark warm gold text
+  static const Color lightPrimaryText = Color(0xFF78350F); // deep warm gold text (contrast > 7:1)
 
   static const Color lightBorder      = Color(0xFFCBD5E1); // light gray border
   static const Color lightBorderLight = Color(0xFF94A3B8);
 
-  static const Color lightTextPrimary   = Color(0xFF0F172A); // almost black
-  static const Color lightTextSecondary = Color(0xFF475569); // dark slate gray
-  static const Color lightTextMuted     = Color(0xFF94A3B8); // light gray text
+  static const Color lightTextPrimary   = Color(0xFF0F172A); // almost black (contrast > 16:1)
+  static const Color lightTextSecondary = Color(0xFF334155); // dark slate gray (contrast > 9:1)
+  static const Color lightTextMuted     = Color(0xFF475569); // slate gray text (contrast > 5:1 for WCAG AA 4.5:1 compliance)
 
   static const Color lightArabicText  = Color(0xFF1C1917); // very dark warm gray/black
   static const Color lightHebrewText  = Color(0xFF0C4A6E); // dark blue
@@ -42,14 +42,14 @@ class AppColors {
   static const Color darkPrimary     = Color(0xFFD4A017); // vibrant manuscript gold
   static const Color darkPrimaryDim  = Color(0xFFA07810);
   static const Color darkPrimaryGlow = Color(0x30D4A017);
-  static const Color darkPrimaryText = Color(0xFFFCD34D); // warm gold text
+  static const Color darkPrimaryText = Color(0xFFFDE68A); // bright warm gold text (contrast > 12:1)
 
   static const Color darkBorder      = Color(0xFF1E2D45); // dark navy border
-  static const Color darkBorderLight = Color(0xFF263548);
+  static const Color darkBorderLight = Color(0xFF334155);
 
-  static const Color darkTextPrimary   = Color(0xFFF1F5F9); // bright off-white
-  static const Color darkTextSecondary = Color(0xFF94A3B8); // muted slate
-  static const Color darkTextMuted     = Color(0xFF64748B); // dark muted slate
+  static const Color darkTextPrimary   = Color(0xFFF8FAFC); // bright off-white (contrast > 15:1)
+  static const Color darkTextSecondary = Color(0xFFCBD5E1); // light slate (contrast > 9:1)
+  static const Color darkTextMuted     = Color(0xFF94A3B8); // clear slate text (contrast > 5:1 for WCAG AA 4.5:1 compliance)
 
   static const Color darkArabicText  = Color(0xFFF1F5F9); // clear high-contrast white/ivory for diacritics
   static const Color darkHebrewText  = Color(0xFFA5F3FC); // soft cyan

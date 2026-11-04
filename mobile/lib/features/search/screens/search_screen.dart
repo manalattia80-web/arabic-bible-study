@@ -950,28 +950,16 @@ class _SearchResultCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(100),
                           border:       Border.all(color: AppColors.primary.withOpacity(0.3)),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                        child: Directionality(
                           textDirection: TextDirection.rtl,
-                          children: [
-                            Text(
-                              verse.displayBookName,
-                              style: TextStyle(
-                                color:      AppColors.primaryText,
-                                fontSize:   12,
-                                fontWeight: FontWeight.w700,
-                              ),
+                          child: Text(
+                            '${verse.displayBookName} — الإصحاح ${verse.chapterNum} — الآية ${verse.verseNum}',
+                            style: TextStyle(
+                              color:      AppColors.primaryText,
+                              fontSize:   12,
+                              fontWeight: FontWeight.w700,
                             ),
-                            const SizedBox(width: 5),
-                            Text(
-                              '${verse.chapterNum}:${verse.verseNum}',
-                              style: TextStyle(
-                                color:      AppColors.primaryText,
-                                fontSize:   12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -1011,8 +999,8 @@ class _SearchResultCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Icon(Icons.chevron_right, size: 14, color: AppColors.textMuted),
-                    Text('الانتقال للأصحاح', style: TextStyle(color: AppColors.textMuted, fontSize: 10)),
+                    Icon(Icons.chevron_right, size: 14, color: AppColors.primary),
+                    Text('فتح في القارئ', style: TextStyle(color: AppColors.textSecondary, fontSize: 11, fontWeight: FontWeight.w600)),
                   ],
                 ),
               ],

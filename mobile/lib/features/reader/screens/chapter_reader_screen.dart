@@ -38,6 +38,7 @@ class ChapterReaderScreen extends StatefulWidget {
 
 class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
   final Map<int, GlobalKey> _verseKeys = {};
+  final ScrollController _scrollController = ScrollController();
   bool _hasScrolledToTarget = false;
 
   @override
@@ -48,23 +49,49 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void _scrollToTargetVerseIfNeeded(ReaderProvider reader) {
     if (_hasScrolledToTarget || widget.initialVerseNum == null || reader.loading || reader.verses.isEmpty) return;
 
-    final targetKey = _verseKeys[widget.initialVerseNum];
-    if (targetKey?.currentContext != null) {
-      _hasScrolledToTarget = true;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (targetKey?.currentContext != null) {
-          Scrollable.ensureVisible(
-            targetKey!.currentContext!,
-            duration: const Duration(milliseconds: 600),
-            curve: Curves.easeInOut,
-            alignment: 0.1,
-          );
-        }
-      });
-    }
+    final targetIndex = reader.verses.indexWhere((v) => v.verseNum == widget.initialVerseNum);
+    if (targetIndex < 0) return;
+
+    _hasScrolledToTarget = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final targetKey = _verseKeys[widget.initialVerseNum];
+      if (targetKey?.currentContext != null) {
+        Scrollable.ensureVisible(
+          targetKey!.currentContext!,
+          duration: const Duration(milliseconds: 600),
+          curve: Curves.easeInOut,
+          alignment: 0.15,
+        );
+      } else if (_scrollController.hasClients) {
+        final estimatedOffset = (targetIndex * 180.0).clamp(0.0, _scrollController.position.maxScrollExtent);
+        _scrollController.animateTo(
+          estimatedOffset,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+        ).then((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final keyNow = _verseKeys[widget.initialVerseNum];
+            if (keyNow?.currentContext != null) {
+              Scrollable.ensureVisible(
+                keyNow!.currentContext!,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                alignment: 0.15,
+              );
+            }
+          });
+        });
+      }
+    });
   }
 
   void _navigatePrev(ReaderProvider reader) {
@@ -100,20 +127,22 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: book != null
-            ? Column(
-                children: [
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Text(book.nameArShort, style: AppTheme.arabicLabel(size: 16)),
-                  ),
-                  Text(
-                    'Chapter ${widget.chapterNum}',
-                    style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
-                  ),
-                ],
-              )
-            : Text('Chapter ${widget.chapterNum}'),
+        title: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                book != null ? '${book.nameAr} — الإصحاح ${widget.chapterNum}' : 'الإصحاح ${widget.chapterNum}',
+                style: AppTheme.arabicLabel(size: 16),
+              ),
+              Text(
+                '${widget.chapterNum} من $totalCh',
+                style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+              ),
+            ],
+          ),
+        ),
         actions: [
           // Theme toggle
           Consumer<ThemeProvider>(
@@ -130,12 +159,12 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
           IconButton(
             icon: const Icon(Icons.text_decrease, size: 20),
             onPressed: reader.decreaseFontSize,
-            tooltip: 'Decrease font',
+            tooltip: 'تصغير الخط',
           ),
           IconButton(
             icon: const Icon(Icons.text_increase, size: 20),
             onPressed: reader.increaseFontSize,
-            tooltip: 'Increase font',
+            tooltip: 'تكبير الخط',
           ),
           // Toggle original text
           IconButton(
@@ -145,7 +174,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
               color: reader.showOriginal ? AppColors.primary : AppColors.textMuted,
             ),
             onPressed: reader.toggleOriginalText,
-            tooltip: 'Toggle original text',
+            tooltip: 'النص الأصلي (عبري/يوناني)',
           ),
           // Search
           IconButton(
@@ -161,8 +190,10 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
           : reader.error.isNotEmpty
               ? _ErrorRetry(reader.error, () => reader.loadChapter(widget.bookId, widget.chapterNum))
               : reader.verses.isEmpty
-                  ? Center(child: Text('No verses found', style: TextStyle(color: AppColors.textMuted)))
+                  ? Center(child: Text('لم يتم العثور على آيات', style: TextStyle(color: AppColors.textMuted)))
                   : ListView.builder(
+                      controller: _scrollController,
+                      cacheExtent: 5000.0,
                       padding: const EdgeInsets.fromLTRB(12, 8, 12, 100),
                       itemCount: reader.verses.length,
                       itemBuilder: (ctx, i) {
@@ -177,6 +208,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
                             fontSize:      reader.fontSize,
                             showOrig:      reader.showOriginal,
                             chapterNum:    widget.chapterNum,
+                            bookName:      book?.nameAr ?? '',
                             isHighlighted: isHighlighted,
                           ),
                         );
@@ -197,7 +229,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
               child: TextButton.icon(
                 onPressed: widget.chapterNum > 1 ? () => _navigatePrev(reader) : null,
                 icon: const Icon(Icons.chevron_left, size: 20),
-                label: const Text('Prev'),
+                label: const Text('السابق', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                 style: TextButton.styleFrom(
                   foregroundColor: widget.chapterNum > 1 ? AppColors.primary : AppColors.textMuted,
                 ),
@@ -223,7 +255,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
               child: TextButton.icon(
                 onPressed: widget.chapterNum < totalCh ? () => _navigateNext(reader, totalCh) : null,
                 icon: const Icon(Icons.chevron_right, size: 20),
-                label: const Text('Next'),
+                label: const Text('التالي', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                 style: TextButton.styleFrom(
                   foregroundColor: widget.chapterNum < totalCh ? AppColors.primary : AppColors.textMuted,
                 ),
@@ -242,6 +274,7 @@ class _VerseCard extends StatelessWidget {
   final double fontSize;
   final bool   showOrig;
   final int    chapterNum;
+  final String bookName;
   final bool   isHighlighted;
 
   const _VerseCard({
@@ -249,6 +282,7 @@ class _VerseCard extends StatelessWidget {
     required this.fontSize,
     required this.showOrig,
     required this.chapterNum,
+    this.bookName = '',
     this.isHighlighted = false,
   });
 
@@ -317,41 +351,24 @@ class _VerseCard extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                         decoration: BoxDecoration(
                           color:        AppColors.primaryGlow,
                           borderRadius: BorderRadius.circular(100),
-                          border:       Border.all(color: AppColors.primary.withOpacity(0.35)),
+                          border:       Border.all(color: AppColors.primary.withOpacity(0.4)),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                        child: Directionality(
                           textDirection: TextDirection.rtl,
-                          children: [
-                            Text(
-                              '$chapterNum',
-                              style: TextStyle(
-                                color:      AppColors.primaryText,
-                                fontSize:   11,
-                                fontWeight: FontWeight.w700,
-                              ),
+                          child: Text(
+                            bookName.isNotEmpty
+                                ? '$bookName — الإصحاح $chapterNum — الآية ${verse.verseNum}'
+                                : 'الإصحاح $chapterNum — الآية ${verse.verseNum}',
+                            style: TextStyle(
+                              color:      AppColors.primaryText,
+                              fontSize:   12,
+                              fontWeight: FontWeight.w700,
                             ),
-                            Text(
-                              ': ',
-                              style: TextStyle(
-                                color:      AppColors.primaryText,
-                                fontSize:   11,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              '${verse.verseNum}',
-                              style: TextStyle(
-                                color:      AppColors.primaryText,
-                                fontSize:   11,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                       Icon(Icons.chevron_left_rounded, color: AppColors.textMuted, size: 16),
@@ -400,6 +417,8 @@ class _VerseCard extends StatelessWidget {
                           extra: {
                             'verse_num':  verse.verseNum,
                             'chapter_num': chapterNum,
+                            'book_name':   bookName,
+                            'book_id':     verse.bookId,
                             'text_avd_ar': verse.textAvdAr,
                             'text_original': verse.textManuscript ?? verse.textOriginal,
                             'text_original_lang': verse.textOriginalLang,

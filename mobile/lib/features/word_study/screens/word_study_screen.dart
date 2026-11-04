@@ -53,34 +53,40 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider  = context.watch<WordStudyProvider>();
-    final verse     = _verseData ?? widget.verse;
+    final provider   = context.watch<WordStudyProvider>();
+    final nav        = context.watch<NavigationProvider>();
+    final verse      = _verseData ?? widget.verse;
     final chapterNum = verse?['chapter_num'] as int? ?? 0;
     final verseNum   = verse?['verse_num']   as int? ?? 0;
+    final bookId     = verse?['book_id']     as int? ?? 0;
+    final passedBook = verse?['book_name']   as String? ?? '';
+    final bookObj    = bookId > 0 ? nav.getBook(bookId) : null;
+    final bookName   = passedBook.isNotEmpty ? passedBook : (bookObj?.nameAr ?? '');
     final lang       = verse?['text_original_lang'] as String? ?? 'hebrew';
 
     return Scaffold(
       appBar: AppBar(
         title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             Directionality(
               textDirection: TextDirection.rtl,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('دراسة الكلمات'),
-                  if (verseNum > 0) ...[
-                    const Text(' · '),
-                    Text('$chapterNum'),
-                    const Text(': '),
-                    Text('$verseNum'),
-                  ],
-                ],
+              child: Text(
+                bookName.isNotEmpty
+                    ? '$bookName — الإصحاح $chapterNum — الآية $verseNum'
+                    : (verseNum > 0 ? 'الإصحاح $chapterNum — الآية $verseNum' : 'دراسة الكلمات'),
+                style: AppTheme.arabicLabel(size: 15),
               ),
             ),
-            Text('Tap any row for Strong\'s definition', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
+            const SizedBox(height: 2),
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: Text(
+                'اضغط على الرمز المعجمي لعرض تعريف سترونج',
+                style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+              ),
+            ),
           ],
         ),
       ),
@@ -496,20 +502,40 @@ class _WordRow extends StatelessWidget {
                           ),
                         if (mapping.hasStrongs)
                           Wrap(
-                            spacing: 4,
+                            spacing: 6,
+                            runSpacing: 4,
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              ...mapping.strongsIds.map((sId) => Text(
-                                sId,
-                                style: const TextStyle(
-                                  color:      AppColors.info,
-                                  fontSize:   11,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'monospace',
+                              ...mapping.strongsIds.map((sId) => InkWell(
+                                onTap: () => StrongsModal.show(context, sId, mapping: mapping),
+                                borderRadius: BorderRadius.circular(6),
+                                child: Container(
+                                  constraints: const BoxConstraints(minWidth: 44, minHeight: 32),
+                                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.info.withOpacity(0.12),
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(color: AppColors.info.withOpacity(0.5)),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      sId,
+                                      style: const TextStyle(
+                                        color:      AppColors.info,
+                                        fontSize:   12,
+                                        fontWeight: FontWeight.w800,
+                                        fontFamily: 'monospace',
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               )),
-                              if (mapping.isVerified) const SizedBox(width: 3),
-                              if (mapping.isVerified) const Icon(Icons.verified, size: 13, color: AppColors.success),
+                              if (mapping.isVerified) const SizedBox(width: 2),
+                              if (mapping.isVerified)
+                                const Tooltip(
+                                  message: 'موثق ومعتمد معجمياً',
+                                  child: Icon(Icons.verified, size: 15, color: AppColors.success),
+                                ),
                             ],
                           )
                         else if (mapping.relationType != null && mapping.relationType!.isNotEmpty)
@@ -576,35 +602,39 @@ class _WordRow extends StatelessWidget {
 
                   // Action icons (Audio button + Study icon)
                   SizedBox(
-                    width: 56,
+                    width: 76,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         if (mapping.hasAudio)
                           InkWell(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(20),
                             onTap: () => provider.playWordMapping(mapping),
-                            child: Padding(
-                              padding: const EdgeInsets.all(3),
-                              child: Icon(
-                                provider.isMappingPlaying(mapping)
-                                    ? Icons.stop_circle_rounded
-                                    : Icons.volume_up_rounded,
-                                size: 18,
-                                color: AppColors.primary,
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+                              child: Center(
+                                child: Icon(
+                                  provider.isMappingPlaying(mapping)
+                                      ? Icons.stop_circle_rounded
+                                      : Icons.volume_up_rounded,
+                                  size: 21,
+                                  color: AppColors.primary,
+                                ),
                               ),
                             ),
                           ),
                         InkWell(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(20),
                           onTap: onTap,
-                          child: Padding(
-                            padding: const EdgeInsets.all(3),
-                            child: Icon(
-                              Icons.menu_book_rounded,
-                              size: 19,
-                              color: AppColors.primary,
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+                            child: Center(
+                              child: Icon(
+                                Icons.menu_book_rounded,
+                                size: 21,
+                                color: AppColors.primary,
+                              ),
                             ),
                           ),
                         ),
