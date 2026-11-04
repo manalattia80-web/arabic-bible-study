@@ -341,7 +341,9 @@ try {
   const hasH1697InHistory = searchHistOcr.includes('H1697') || searchHistOcr.includes('1697');
   const hasRecentSearchesLabel = searchHistOcr.includes('عمليات البحث') || searchHistOcr.includes('الأخيرة') || searchHistOcr.includes('البحث') || searchHistOcr.includes('اقتراحات') || searchHistOcr.includes('OrUS');
 
-  console.log(`UI Search History Chips: G561=${hasG561InHistory}, H8133=${hasH8133InHistory}, H1697=${hasH1697InHistory}, header=${hasRecentSearchesLabel}`);
+  const allChipsVisible = hasG561InHistory && hasH8133InHistory && hasH1697InHistory && hasRecentSearchesLabel;
+
+  console.log(`UI Search History Chips: G561=${hasG561InHistory}, H8133=${hasH8133InHistory}, H1697=${hasH1697InHistory}, header=${hasRecentSearchesLabel}, allChipsVisible=${allChipsVisible}`);
 
   const logcat = fs.readFileSync(path.join(evidenceDir, 'upgrade_logcat.txt'), 'utf8');
   const dbMigratedInLog = logcat.includes('348') || logcat.includes('bible_study_v348.db') || logcat.includes('assembled');
@@ -368,8 +370,8 @@ try {
           H1697: hasH1697InHistory,
           header_visible: hasRecentSearchesLabel
         },
-        preserved: hasHistoryInXml,
-        method: "Organic searches in v346 UI, physical XML retention, and post-upgrade UI chip assertions"
+        preserved: hasHistoryInXml && allChipsVisible,
+        method: "Organic searches in v346 UI, physical XML retention, and mandatory post-upgrade UI chip assertions"
       },
       note_on_bookmarks: "Clarified per codebase audit: app uses persistent search history and theme preferences; no bookmarks table exists in sqlite schema."
     },
@@ -381,7 +383,7 @@ try {
       target_db_filename: "bible_study_v348.db",
       migration_status: dbMigratedInLog ? "SUCCESS_ATOMIC_IN_PLACE" : "FAILED"
     },
-    verdict: (hasDarkInXml && hasHistoryInXml && hasDb348InXml)
+    verdict: (hasDarkInXml && hasHistoryInXml && hasDb348InXml && allChipsVisible)
       ? "USER_PERSISTENT_DATA_AND_DATABASE_PRESERVED"
       : "PARTIAL_OR_UNCONFIRMED"
   };
@@ -391,6 +393,9 @@ try {
 
   if (!hasDarkInXml || !hasHistoryInXml || !hasDb348InXml) {
     throw new Error('SharedPreferences XML retention failure after upgrade!');
+  }
+  if (!allChipsVisible) {
+    throw new Error(`Real Assertion Failed: Visual UI search chips not visible on screen! (G561=${hasG561InHistory}, H8133=${hasH8133InHistory}, H1697=${hasH1697InHistory}, header=${hasRecentSearchesLabel})`);
   }
   if (!dbMigratedInLog) {
     throw new Error('Database migration to v348 not confirmed in Logcat!');
@@ -403,16 +408,55 @@ try {
 recordTest('test_preferences_and_search_history_retention', (Date.now() - t3Start) / 1000, test3Passed, test3Error);
 
 // ── TEST 4: Database 71 Parts Assembly & Migration Verification ───────
-console.log('\n--- Step 4: Database 71 Parts Assembly Verification ---');
+console.log('\n--- Step 4: Database 71 Parts Assembly & Integrity Verification ---');
 const t4Start = Date.now();
 let test4Passed = false;
 let test4Error = '';
 try {
-  const logcat = fs.readFileSync(path.join(evidenceDir, 'upgrade_logcat.txt'), 'utf8');
-  const dbLines = logcat.split('\n').filter(l => l.includes('DatabaseService') || l.includes('bible_study') || l.includes('assembled'));
-  console.log('DatabaseService log lines in logcat (sample):');
-  console.log(dbLines.slice(0, 10).join('\n'));
+  const dbOnDevice = '/data/data/com.arabicbible.study/databases/bible_study_v348.db';
+  console.log(`Inspecting database file on device: ${dbOnDevice}`);
 
+  // 1. Verify database file exists and check file size (> 360 MB for all 71 parts)
+  const lsOut = execAdb(`shell ls -l ${dbOnDevice}`, { timeout: 15000 });
+  console.log('Database ls -l output:', lsOut);
+  if (!lsOut || lsOut.includes('No such file')) {
+    throw new Error(`Database file ${dbOnDevice} does not exist on device!`);
+  }
+
+  const sizeMatch = lsOut.match(/\s+(\d{8,11})\s+/);
+  const dbBytes = sizeMatch ? parseInt(sizeMatch[1], 10) : 0;
+  console.log(`Physical SQLite database size on disk: ${dbBytes.toLocaleString()} bytes`);
+  if (dbBytes < 360000000) {
+    throw new Error(`Physical database size (${dbBytes} bytes) is less than expected ~380MB for 71 assembled parts!`);
+  }
+
+  // 2. Run PRAGMA integrity_check directly via sqlite3 on emulator
+  console.log('Running PRAGMA integrity_check on live assembled database...');
+  const integrityOut = execAdb(`shell sqlite3 ${dbOnDevice} "PRAGMA integrity_check;"`, { timeout: 45000 });
+  console.log('PRAGMA integrity_check result:', integrityOut);
+  if (!integrityOut.toLowerCase().includes('ok')) {
+    throw new Error(`Database integrity check failed: ${integrityOut}`);
+  }
+
+  // 3. Verify total verses count matches canonical 31,102
+  console.log('Verifying canonical verses count in assembled database...');
+  const verseCountOut = execAdb(`shell sqlite3 ${dbOnDevice} "SELECT count(*) FROM verses;"`, { timeout: 15000 });
+  console.log('Verses count result:', verseCountOut);
+  const verseCount = parseInt(verseCountOut.replace(/\D/g, ''), 10);
+  if (verseCount !== 31102) {
+    throw new Error(`Verses count mismatch: expected 31,102, got ${verseCount}`);
+  }
+
+  // 4. Verify word_mappings table is populated
+  console.log('Verifying word_mappings count in assembled database...');
+  const mappingCountOut = execAdb(`shell sqlite3 ${dbOnDevice} "SELECT count(*) FROM word_mappings;"`, { timeout: 25000 });
+  console.log('Word mappings count result:', mappingCountOut);
+  const mappingCount = parseInt(mappingCountOut.replace(/\D/g, ''), 10);
+  if (isNaN(mappingCount) || mappingCount < 400000) {
+    throw new Error(`Word mappings count suspicious or too low: ${mappingCount}`);
+  }
+
+  console.log(`Database 71 parts assembly & integrity empirically verified: Size=${dbBytes} bytes, Integrity=OK, Verses=${verseCount}, Mappings=${mappingCount}`);
   test4Passed = true;
 } catch (e) {
   test4Error = e.message;
@@ -461,20 +505,44 @@ const danielPng = path.join(evidenceDir, 'daniel_H8133.png');
 try {
   executeSearch('H8133');
 
+  // Dismiss keyboard gently
+  dismissKeyboard();
+  sleep(1000);
+
+  // In search results for H8133, Ezra cards appear first. Scroll down to bring Daniel 2:21 into view.
+  console.log('Scrolling search results to bring Daniel 2:21 into view...');
+  let danielFound = false;
+  for (let s = 0; s < 4; s++) {
+    const ocrSample = captureAndOcr('/sdcard/daniel_scroll_check.png');
+    console.log(`Daniel search scroll ${s} OCR sample:`, ocrSample.slice(0, 150).replace(/\n/g, ' '));
+    if (ocrSample.includes('دانيال') || ocrSample.includes('Daniel') || ocrSample.includes('يغير') || ocrSample.includes('الأوقات')) {
+      danielFound = true;
+      console.log('Daniel 2:21 detected on screen!');
+      break;
+    }
+    // Firm swipe up to scroll down past Ezra cards
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.30)} 350`);
+    sleep(1500);
+  }
+
   // Capture screenshot: daniel_H8133.png
   execAdb('shell screencap -p /sdcard/daniel_H8133.png');
   execAdb(`pull /sdcard/daniel_H8133.png "${danielPng}"`);
 
   // OCR Verification
   const ocrText = runOcr(danielPng);
-  console.log('daniel_H8133.png OCR Output (first 300 chars):');
-  console.log(ocrText.slice(0, 300).replace(/\n/g, ' '));
+  console.log('daniel_H8133.png OCR Output (first 350 chars):');
+  console.log(ocrText.slice(0, 350).replace(/\n/g, ' '));
 
+  const hasDaniel = ocrText.includes('دانيال') || ocrText.includes('Daniel');
+  const hasDanText = ocrText.includes('يغير') || ocrText.includes('الأوقات') || ocrText.includes('الأزمنة') || ocrText.includes('الملوك') || ocrText.includes('21');
   const hasH8133 = ocrText.includes('H8133') || ocrText.includes('8133');
-  const hasAramaic = ocrText.toLowerCase().includes('aramaic') || ocrText.includes('آرامي') || ocrText.includes('שנא') || ocrText.includes('يغير') || ocrText.includes('دانيال') || ocrText.includes('21');
 
-  if (!hasH8133 && !hasAramaic) {
-    throw new Error(`Real Assertion Failed: Neither H8133 nor Aramaic text found on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
+  if (!hasDaniel) {
+    throw new Error(`Real Assertion Failed: Book "دانيال" not visible on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
+  }
+  if (!hasDanText && !hasH8133) {
+    throw new Error(`Real Assertion Failed: Neither Daniel 2:21 text nor H8133 found on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
   }
 
   test6Passed = true;
@@ -484,48 +552,67 @@ try {
 recordTest('test_daniel_2_21_aramaic_strongs_h8133_ui', (Date.now() - t6Start) / 1000, test6Passed, test6Error);
 
 // ── TEST 7: WordStudyScreen Multi-Strong's Compound Links Verification ─
-console.log('\n--- Step 7: WordStudyScreen Multi-Strong\'s Automation & Capture ---');
+console.log('\n--- Step 7: WordStudyScreen Multi-Strong\'s Automation & Capture (Genesis 22:16) ---');
 const t7Start = Date.now();
 let test7Passed = false;
 let test7Error = '';
 const genesisPng = path.join(evidenceDir, 'genesis_multistrongs.png');
 
 try {
-  // Navigate directly via Scripture Navigation to Genesis 22:16 (avoids Strong's search banner)
-  ensureAppInForeground();
+  // CRITICAL: Clean slate restart to reset GoRouter navigation stack from SearchScreen
+  console.log('Force-stopping app to clear navigation stack and guarantee clean HomeScreen start...');
+  execAdb('shell am force-stop com.arabicbible.study');
+  sleep(1500);
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-  sleep(2000);
+  console.log('Waiting 5s for clean HomeScreen initialization...');
+  sleep(5000);
 
+  ensureAppInForeground();
+  dismissKeyboard();
+
+  // Navigation Approach: Direct Scripture Navigation
   // 1. Tap Old Testament ("العهد القديم") on HomeScreen
   console.log('Navigating to Old Testament book list...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.38)}`);
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.40)}`);
   sleep(2500);
 
   // 2. Tap Genesis ("التكوين") in BookListScreen (top-right card in RTL 3-column grid)
   console.log('Tapping Genesis (التكوين)...');
-  execAdb(`shell input tap ${Math.round(W * 0.80)} ${Math.round(H * 0.25)}`);
+  execAdb(`shell input tap ${Math.round(W * 0.82)} ${Math.round(H * 0.25)}`);
   sleep(2500);
 
-  // 3. Tap Chapter 22 in ChapterListScreen (Row 5, Col 2 in RTL 5-column grid)
-  console.log('Tapping Chapter 22...');
-  execAdb(`shell input tap ${Math.round(W * 0.67)} ${Math.round(H * 0.64)}`);
+  // 3. Tap Chapter 22 in ChapterListScreen (Row 5, Col 2 in RTL 5-column grid: X=0.68, Y=0.63)
+  console.log('Tapping Chapter 22 at dynamic coordinates...');
+  execAdb(`shell input tap ${Math.round(W * 0.68)} ${Math.round(H * 0.63)}`);
   sleep(3000);
 
-  // 4. In ChapterReaderScreen (Genesis 22), scroll down to reach verse 16
-  console.log('Scrolling down to verse 16...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 300`);
-  sleep(1000);
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 300`);
-  sleep(2000);
+  // 4. In ChapterReaderScreen (Genesis 22), scroll down to bring verse 16 into view
+  console.log('Scrolling down to verse 16 in Genesis 22 Chapter Reader...');
+  for (let s = 0; s < 3; s++) {
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 300`);
+    sleep(1200);
+  }
 
   // 5. Tap verse 16 to open WordStudyScreen
   console.log('Tapping verse 16 to open WordStudyScreen interlinear table...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.38)}`);
   sleep(3500);
 
-  // 6. In WordStudyScreen, scroll down to bring compound rows into view
+  // Verify we reached WordStudyScreen for Genesis 22:16
+  let curOcr = captureAndOcr('/sdcard/study_nav_check.png');
+  console.log('WordStudyScreen initial OCR check:', curOcr.slice(0, 250).replace(/\n/g, ' '));
+
+  // If tap missed verse 16 or remained on reader, retry tap with adjustment
+  if (!curOcr.includes('دراسة الكلمات') && !curOcr.includes('22')) {
+    console.log('Retrying verse tap at slightly lower coordinate...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.48)}`);
+    sleep(3500);
+    curOcr = captureAndOcr('/sdcard/study_nav_check.png');
+  }
+
+  // 6. In WordStudyScreen, scroll down to bring compound Strong's rows into view
   console.log('Scrolling down in WordStudyScreen to center compound Strong\'s rows...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.70)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 400`);
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 350`);
   sleep(2500);
 
   // 7. Capture screenshot of WordStudyScreen
@@ -538,16 +625,27 @@ try {
   console.log('genesis_multistrongs.png OCR Output (first 350 chars):');
   console.log(ocrText.slice(0, 350).replace(/\n/g, ' '));
 
+  // STRICT ASSERTIONS FOR GENESIS 22:16
+  const isGen2216 = (ocrText.includes('22') && ocrText.includes('16')) ||
+                    ocrText.includes('بذاتي') ||
+                    ocrText.includes('أقسمت') ||
+                    ocrText.includes('الأمر') ||
+                    ocrText.includes('ابنك') ||
+                    ocrText.includes('وحيدك');
+
   const has1697 = ocrText.includes('1697');
   const has853 = ocrText.includes('853');
   const has1121 = ocrText.includes('1121');
   const has3173 = ocrText.includes('3173');
-  const hasStudyHeader = ocrText.includes('دراسة الكلمات') || ocrText.includes('دراسة') || ocrText.includes('الكلمات') || ocrText.includes('تكوين') || ocrText.includes('Genesis') || ocrText.includes('دبار') || ocrText.includes('דבר') || ocrText.includes('كلمة') || ocrText.includes('22') || ocrText.includes('16') || ocrText.includes('الأمر') || ocrText.includes('ابنك') || ocrText.includes('Hebrew') || ocrText.includes('Arabic');
 
-  console.log(`WordStudyScreen OCR matches: H1697=${has1697}, H853=${has853}, H1121=${has1121}, H3173=${has3173}, header=${hasStudyHeader}`);
+  console.log(`Genesis 22:16 assertions: isGen2216=${isGen2216}, H1697=${has1697}, H853=${has853}, H1121=${has1121}, H3173=${has3173}`);
 
-  if (!hasStudyHeader && !has1697 && !has853 && !has1121 && !has3173) {
-    throw new Error(`Real Assertion Failed: Compound Strong's links or scripture header not detected! OCR sample: "${ocrText.slice(0, 150)}"`);
+  if (!isGen2216) {
+    throw new Error(`Real Assertion Failed: Screen is NOT Genesis 22:16! OCR sample: "${ocrText.slice(0, 150)}"`);
+  }
+
+  if (!has1697 && !has853 && !has1121) {
+    throw new Error(`Real Assertion Failed: Compound Strong's codes (H1697, H853, H1121) not detected in Genesis 22:16! OCR sample: "${ocrText.slice(0, 150)}"`);
   }
 
   test7Passed = true;
@@ -587,16 +685,20 @@ try {
 recordTest('test_distinct_screenshots_verification', (Date.now() - t8Start) / 1000, test8Passed, test8Error);
 
 // ── TEST 9: Zero Fatal Crashes Verification ──────────────────────────
-console.log('\n--- Step 9: Zero Fatal Crashes & Clean Logcat Check ---');
+console.log('\n--- Step 9: Zero Fatal Crashes & Final Full Logcat Check ---');
 const t9Start = Date.now();
 let test9Passed = false;
 let test9Error = '';
 
 try {
-  const logcat = fs.existsSync(path.join(evidenceDir, 'upgrade_logcat.txt'))
-    ? fs.readFileSync(path.join(evidenceDir, 'upgrade_logcat.txt'), 'utf8')
-    : execAdb('logcat -d', { timeout: 30000 });
-  const hasFatal = logcat.includes('FATAL EXCEPTION: main') || logcat.includes('AndroidRuntime: FATAL');
+  // Capture the FULL final logcat covering the entire test run up to the end
+  console.log('Capturing full final Logcat after all UI interactions...');
+  const fullLogcat = execAdb('logcat -d', { timeout: 60000 });
+  fs.writeFileSync(path.join(evidenceDir, 'upgrade_logcat.txt'), fullLogcat, 'utf8');
+  fs.writeFileSync(path.join(evidenceDir, 'final_logcat.txt'), fullLogcat, 'utf8');
+  console.log(`Saved full upgrade_logcat.txt (${fullLogcat.length} chars) covering complete test execution.`);
+
+  const hasFatal = fullLogcat.includes('FATAL EXCEPTION: main') || fullLogcat.includes('AndroidRuntime: FATAL');
   if (hasFatal) {
     throw new Error('Detected FATAL EXCEPTION in Logcat!');
   }
@@ -648,6 +750,7 @@ const requiredFiles = [
   'genesis_multistrongs.png',
   'search_history_after_upgrade.png',
   'upgrade_logcat.txt',
+  'final_logcat.txt',
   'preferences_check.json',
   'prefs_before_upgrade.xml',
   'prefs_after_upgrade.xml',
@@ -655,13 +758,6 @@ const requiredFiles = [
   'genesis_multistrongs_ocr_raw.txt',
   'apk_sha256.txt'
 ];
-
-const optionalFiles = ['prefs_before_upgrade.xml', 'prefs_after_upgrade.xml', 'search_history_after_upgrade.png'];
-for (const ofile of optionalFiles) {
-  if (fs.existsSync(path.join(evidenceDir, ofile))) {
-    requiredFiles.push(ofile);
-  }
-}
 
 console.log('Verifying required files in evidence directory:');
 for (const rf of requiredFiles) {
