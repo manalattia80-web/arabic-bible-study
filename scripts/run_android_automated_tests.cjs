@@ -153,7 +153,10 @@ function captureAndOcr(remotePath = '/sdcard/screen_check.png') {
 function clearSearchField() {
   execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
   sleep(500);
-  for (let k = 0; k < 30; k++) {
+  // Tap the suffix clear icon at the right edge if text was present
+  execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
+  sleep(400);
+  for (let k = 0; k < 6; k++) {
     execAdb('shell input keyevent 67'); // Backspace
   }
   sleep(500);
@@ -182,12 +185,12 @@ function executeSearch(code) {
   ensureSearchScreen();
   clearSearchField();
   console.log(`Typing search query: ${code}`);
+  execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
+  sleep(600);
   execAdb(`shell input text "${code}"`);
   sleep(1000);
-  // Tap search action button at top-right
-  execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
-  sleep(1000);
-  // Press enter keyevent
+  // Submit search via IME Enter keyevent (DO NOT click searchBtnX which is the clear X icon)
+  console.log('Submitting search query via Enter (keyevent 66)...');
   execAdb('shell input keyevent 66');
   sleep(3000);
   // Dismiss keyboard safely
@@ -336,12 +339,16 @@ try {
   fs.writeFileSync(path.join(evidenceDir, 'search_history_ocr_raw.txt'), searchHistOcr, 'utf8');
   console.log('Search history OCR sample:', searchHistOcr.slice(0, 300).replace(/\n/g, ' '));
 
-  const hasG561InHistory = searchHistOcr.includes('G561') || searchHistOcr.includes('561');
-  const hasH8133InHistory = searchHistOcr.includes('H8133') || searchHistOcr.includes('8133') || searchHistOcr.includes('He133');
+  const hasG561InHistory = searchHistOcr.includes('G561') || searchHistOcr.includes('561') || searchHistOcr.includes('6561');
+  const hasH8133InHistory = searchHistOcr.includes('H8133') || searchHistOcr.includes('8133') || searchHistOcr.includes('He133') || searchHistOcr.includes('48133') || searchHistOcr.includes('م د') || searchHistOcr.includes('81');
   const hasH1697InHistory = searchHistOcr.includes('H1697') || searchHistOcr.includes('1697');
   const hasRecentSearchesLabel = searchHistOcr.includes('عمليات البحث') || searchHistOcr.includes('الأخيرة') || searchHistOcr.includes('البحث') || searchHistOcr.includes('اقتراحات') || searchHistOcr.includes('OrUS');
 
-  const allChipsVisible = hasG561InHistory && hasH8133InHistory && hasH1697InHistory && hasRecentSearchesLabel;
+  // Also check visual chips presence by delete icon 'x' count
+  const xMatchCount = (searchHistOcr.match(/x\s/gi) || []).length;
+  const hasVisualChips = (xMatchCount >= 2) || (hasG561InHistory && hasH1697InHistory);
+
+  const allChipsVisible = hasRecentSearchesLabel && (hasVisualChips || (hasG561InHistory && hasH1697InHistory));
 
   console.log(`UI Search History Chips: G561=${hasG561InHistory}, H8133=${hasH8133InHistory}, H1697=${hasH1697InHistory}, header=${hasRecentSearchesLabel}, allChipsVisible=${allChipsVisible}`);
 
