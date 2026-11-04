@@ -570,21 +570,31 @@ try {
   sleep(2000);
 
   // In search results for H3173, Genesis 22 cards are displayed.
-  // Tap the Genesis 22 result card below the Strong's banner (Y ≈ 250px, H * 0.38)
+  // Tap the Genesis 22 result card below the Strong's banner (Y ≈ 370px, H * 0.58)
   console.log('Tapping Genesis 22 result card to open Chapter Reader...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.38)}`);
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.58)}`);
   sleep(3500);
+
+  let inReader = captureAndOcr('/sdcard/reader_check.png');
+  console.log('Reader check OCR:', inReader.slice(0, 150).replace(/\n/g, ' '));
+  if (!inReader.includes('تكوين') && !inReader.includes('التكوين') && !inReader.includes('Genesis') && !inReader.includes('22')) {
+    console.log('Swiping up on SearchScreen to bring card further up and tapping again...');
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 350`);
+    sleep(1500);
+    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
+    sleep(3500);
+  }
 
   // In ChapterReaderScreen (Genesis 22), scroll down to bring verse 16 into view
   console.log('Scrolling down to verse 16 in Genesis 22 Chapter Reader...');
-  for (let s = 0; s < 3; s++) {
-    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 300`);
+  for (let s = 0; s < 4; s++) {
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 300`);
     sleep(1200);
   }
 
-  // Tap verse 16 card (starts in upper half: Y ≈ 240px, H * 0.38)
+  // Tap verse 16 card (starts in upper-middle: Y ≈ 250px, H * 0.40)
   console.log('Tapping verse 16 card to open WordStudyScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.38)}`);
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.40)}`);
   sleep(3500);
 
   // Scroll down in WordStudyScreen to center compound Strong's rows (words 12-16)
