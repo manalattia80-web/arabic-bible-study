@@ -578,24 +578,26 @@ try {
   sleep(1500);
 
   // In search results for H3173:
-  // Card 1 is Genesis 22:2. Card 2 is Genesis 22:12. Card 3 is Genesis 22:16.
-  // Swipe up firmly on SearchScreen to scroll past Card 1 & Card 2 and bring Card 3 (Genesis 22:16) into view.
-  console.log('Scrolling SearchScreen to bring Genesis 22:16 card into view...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 350`);
+  // _DirectStrongsCard is pinned at top (Y < H * 0.38).
+  // The scrollable results list is below it (Y >= H * 0.42).
+  // In the results: Card 1 is Genesis 22:2, Card 2 is Genesis 22:12, Card 3 is Genesis 22:16.
+  // Swipe inside the results list (from 85% to 50%) to bring Genesis 22:16 card into view
+  console.log('Scrolling results list below Strong\'s banner to bring Genesis 22:16 card into view...');
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.85)} ${Math.round(W * 0.50)} ${Math.round(H * 0.50)} 350`);
   sleep(2000);
 
-  // Check if Genesis 22:16 is on screen via OCR
-  let searchCardOcr = captureAndOcr('/sdcard/search_card_check.png');
-  console.log('SearchScreen Card Check OCR:', searchCardOcr.slice(0, 180).replace(/\n/g, ' '));
-  if (!searchCardOcr.includes('16') && !searchCardOcr.includes('بذاتي') && !searchCardOcr.includes('أقسمت') && !searchCardOcr.includes('الأمر')) {
-    console.log('Swiping once more to bring Genesis 22:16 into center...');
-    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.65)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 350`);
+  // If a modal was inadvertently opened, dismiss with KEYCODE_BACK (4)
+  let initialCheck = captureAndOcr('/sdcard/search_card_check.png');
+  console.log('SearchScreen Card Check OCR:', initialCheck.slice(0, 180).replace(/\n/g, ' '));
+  if (initialCheck.includes('المعنى المعجمي') || initialCheck.includes('الرمز القياسي')) {
+    console.log('Dismissing modal to return to search results list...');
+    execAdb('shell input keyevent 4');
     sleep(1500);
   }
 
-  // Tap Genesis 22:16 card in SearchScreen (centered at Y ≈ H * 0.45)
-  console.log('Tapping Genesis 22:16 card to open Chapter Reader...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
+  // Tap Genesis 22:16 card in the lower area of results list (Y ≈ H * 0.65)
+  console.log('Tapping Genesis 22:16 card at H * 0.65 to open Chapter Reader...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.65)}`);
   sleep(3500);
 
   // In ChapterReaderScreen:
@@ -604,11 +606,21 @@ try {
   let readerOcr = captureAndOcr('/sdcard/reader_verse16_check.png');
   console.log('Reader screen check OCR:', readerOcr.slice(0, 180).replace(/\n/g, ' '));
 
+  // If modal was opened instead of reader, dismiss and try tapping at H * 0.55
+  if (readerOcr.includes('المعنى المعجمي') || readerOcr.includes('الرمز القياسي')) {
+    execAdb('shell input keyevent 4');
+    sleep(1500);
+    console.log('Re-tapping Genesis 22:16 card at H * 0.55...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.55)}`);
+    sleep(3500);
+    readerOcr = captureAndOcr('/sdcard/reader_verse16_check.png');
+  }
+
   // Tap Verse 16 card in ChapterReaderScreen to open WordStudyScreen.
-  // With alignment: 0.15, Verse 16 card is located in the upper-middle area (Y ≈ H * 0.30)
+  // With alignment: 0.15, Verse 16 card is located at Y ≈ H * 0.28
   if (!readerOcr.includes('دراسة الكلمات')) {
     console.log('Tapping Verse 16 card in ChapterReaderScreen to open WordStudyScreen...');
-    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.30)}`);
+    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.28)}`);
     sleep(3500);
   }
 
@@ -616,16 +628,16 @@ try {
   let wordStudyOcr = captureAndOcr('/sdcard/wordstudy_verify.png');
   console.log('WordStudy screen initial OCR:', wordStudyOcr.slice(0, 200).replace(/\n/g, ' '));
 
-  // If not yet in WordStudyScreen, try tapping at H * 0.45
+  // If not yet in WordStudyScreen, try tapping at H * 0.40
   if (!wordStudyOcr.includes('دراسة الكلمات') && !wordStudyOcr.includes('بذاتي') && !wordStudyOcr.includes('16')) {
-    console.log('Retrying tap on Verse 16 card at H * 0.45...');
-    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
+    console.log('Retrying tap on Verse 16 card at H * 0.40...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.40)}`);
     sleep(3500);
   }
 
   // In WordStudyScreen, gently swipe up to bring compound Strong's rows into view
   console.log('Scrolling in WordStudyScreen to center Strong\'s rows...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.65)} ${Math.round(W * 0.50)} ${Math.round(H * 0.38)} 350`);
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.70)} ${Math.round(W * 0.50)} ${Math.round(H * 0.45)} 350`);
   sleep(2000);
 
   // Capture screenshot of WordStudyScreen
