@@ -2,9 +2,10 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "feature/**" ]
     paths:
       - 'mobile/**'
+      - '.github/workflows/build-apk.yml'
   workflow_dispatch:
 
 permissions:
@@ -114,6 +115,7 @@ jobs:
             play-store-bundle.aab
 
       - name: Create Release
+        if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "${{ env.APP_RELEASE_TAG }}"
