@@ -9,8 +9,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../providers/theme_provider.dart';
 import '../../../core/services/api_service.dart';
 import '../../../core/services/database_service.dart';
 import '../../../core/services/search_history_service.dart';
@@ -370,6 +372,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,

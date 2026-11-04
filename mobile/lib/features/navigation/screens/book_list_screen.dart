@@ -61,7 +61,7 @@ class _BookListScreenState extends State<BookListScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(testament?.nameAr ?? 'Books'),
+            Text(testament?.nameAr ?? 'الأسفار'),
             Text(testament?.nameEn ?? '', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
           ],
         ),

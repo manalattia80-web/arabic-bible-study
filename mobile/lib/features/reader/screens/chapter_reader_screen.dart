@@ -17,6 +17,7 @@ import '../../../providers/reader_provider.dart';
 import '../../../providers/navigation_provider.dart';
 import '../../../providers/theme_provider.dart';
 import '../../../models/verse.dart';
+import '../../../core/services/database_service.dart';
 import '../widgets/verse_comparison_modal.dart';
 import '../widgets/cross_references_modal.dart';
 
@@ -62,33 +63,36 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
     if (targetIndex < 0) return;
 
     _hasScrolledToTarget = true;
+    _attemptScrollToVerse(widget.initialVerseNum!, targetIndex, 0);
+  }
+
+  void _attemptScrollToVerse(int verseNum, int targetIndex, int attempt) {
+    if (!mounted) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final targetKey = _verseKeys[widget.initialVerseNum];
+      if (!mounted) return;
+      final targetKey = _verseKeys[verseNum];
       if (targetKey?.currentContext != null) {
         Scrollable.ensureVisible(
           targetKey!.currentContext!,
-          duration: const Duration(milliseconds: 600),
+          duration: const Duration(milliseconds: 350),
           curve: Curves.easeInOut,
           alignment: 0.15,
         );
-      } else if (_scrollController.hasClients) {
-        final estimatedOffset = (targetIndex * 180.0).clamp(0.0, _scrollController.position.maxScrollExtent);
-        _scrollController.animateTo(
-          estimatedOffset,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
-        ).then((_) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            final keyNow = _verseKeys[widget.initialVerseNum];
-            if (keyNow?.currentContext != null) {
-              Scrollable.ensureVisible(
-                keyNow!.currentContext!,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                alignment: 0.15,
-              );
-            }
-          });
+        return;
+      }
+
+      if (_scrollController.hasClients && attempt < 25) {
+        final maxScroll = _scrollController.position.maxScrollExtent;
+        final currentOffset = _scrollController.offset;
+        final estimated = (targetIndex * 150.0);
+        final jumpTarget = estimated < maxScroll ? estimated : maxScroll;
+
+        if ((jumpTarget - currentOffset).abs() > 10) {
+          _scrollController.jumpTo(jumpTarget);
+        }
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _attemptScrollToVerse(verseNum, targetIndex, attempt + 1);
         });
       }
     });
@@ -118,8 +122,10 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
   Widget build(BuildContext context) {
     final reader  = context.watch<ReaderProvider>();
     final nav     = context.watch<NavigationProvider>();
+    final theme   = context.watch<ThemeProvider>();
     final book    = nav.getBook(widget.bookId);
-    final totalCh = book?.chapterCount ?? 999;
+    final bookName = book?.nameAr ?? Verse.defaultBookNames[widget.bookId] ?? 'سفر ${widget.bookId}';
+    final totalCh = book?.chapterCount ?? DatabaseService.defaultChapterCounts[widget.bookId] ?? 1;
 
     if (!reader.loading && reader.verses.isNotEmpty) {
       _scrollToTargetVerseIfNeeded(reader);
@@ -133,11 +139,11 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                book != null ? '${book.nameAr} — الإصحاح ${widget.chapterNum}' : 'الإصحاح ${widget.chapterNum}',
+                '$bookName — الإصحاح ${widget.chapterNum}',
                 style: AppTheme.arabicLabel(size: 16),
               ),
               Text(
-                '${widget.chapterNum} من $totalCh',
+                'الإصحاح ${widget.chapterNum} من $totalCh',
                 style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
               ),
             ],
@@ -208,7 +214,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
                             fontSize:      reader.fontSize,
                             showOrig:      reader.showOriginal,
                             chapterNum:    widget.chapterNum,
-                            bookName:      book?.nameAr ?? '',
+                            bookName:      bookName,
                             isHighlighted: isHighlighted,
                           ),
                         );
@@ -244,9 +250,12 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
                 borderRadius: BorderRadius.circular(20),
                 border:       Border.all(color: AppColors.primary.withOpacity(0.4)),
               ),
-              child: Text(
-                '${widget.chapterNum} / $totalCh',
-                style: TextStyle(color: AppColors.primaryText, fontSize: 13, fontWeight: FontWeight.w600),
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Text(
+                  'الإصحاح ${widget.chapterNum} من $totalCh',
+                  style: TextStyle(color: AppColors.primaryText, fontSize: 13, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
 

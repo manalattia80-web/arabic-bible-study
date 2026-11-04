@@ -10,6 +10,9 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
+import '../../../providers/navigation_provider.dart';
+import '../../../providers/theme_provider.dart';
+import '../../../models/verse.dart';
 import '../../../core/services/database_service.dart';
 import '../../../models/word_mapping.dart';
 import '../widgets/strongs_modal.dart';
@@ -55,13 +58,14 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
   Widget build(BuildContext context) {
     final provider   = context.watch<WordStudyProvider>();
     final nav        = context.watch<NavigationProvider>();
+    final theme      = context.watch<ThemeProvider>();
     final verse      = _verseData ?? widget.verse;
     final chapterNum = verse?['chapter_num'] as int? ?? 0;
     final verseNum   = verse?['verse_num']   as int? ?? 0;
     final bookId     = verse?['book_id']     as int? ?? 0;
     final passedBook = verse?['book_name']   as String? ?? '';
     final bookObj    = bookId > 0 ? nav.getBook(bookId) : null;
-    final bookName   = passedBook.isNotEmpty ? passedBook : (bookObj?.nameAr ?? '');
+    final bookName   = passedBook.isNotEmpty ? passedBook : (bookObj?.nameAr ?? (bookId > 0 ? (Verse.defaultBookNames[bookId] ?? '') : ''));
     final lang       = verse?['text_original_lang'] as String? ?? 'hebrew';
 
     return Scaffold(
@@ -506,8 +510,13 @@ class _WordRow extends StatelessWidget {
                             runSpacing: 4,
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              ...mapping.strongsIds.map((sId) => InkWell(
-                                onTap: () => StrongsModal.show(context, sId, mapping: mapping),
+                              ...mapping.strongsIds.asMap().entries.map((entry) => InkWell(
+                                onTap: () => StrongsModal.show(
+                                  context,
+                                  entry.value,
+                                  mapping: mapping,
+                                  selectedComponentIndex: entry.key,
+                                ),
                                 borderRadius: BorderRadius.circular(6),
                                 child: Container(
                                   constraints: const BoxConstraints(minWidth: 44, minHeight: 32),
@@ -519,7 +528,7 @@ class _WordRow extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      sId,
+                                      entry.value,
                                       style: const TextStyle(
                                         color:      AppColors.info,
                                         fontSize:   12,

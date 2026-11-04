@@ -27,7 +27,27 @@ class NavigationProvider extends ChangeNotifier {
   bool            get loading    => _loading;
   String          get error      => _error;
 
-  Book?     getBook(int id)      => _allBooks.where((b) => b.id == id).firstOrNull;
+  NavigationProvider() {
+    ensureAllBooks();
+  }
+
+  Future<void> ensureAllBooks() async {
+    if (_allBooks.length >= 66) return;
+    try {
+      final books = await DatabaseService.instance.getBooks();
+      if (books.isNotEmpty) {
+        _allBooks = books;
+        notifyListeners();
+      }
+    } catch (_) {}
+  }
+
+  Book? getBook(int id) {
+    if (_allBooks.isEmpty) {
+      ensureAllBooks();
+    }
+    return _allBooks.where((b) => b.id == id).firstOrNull;
+  }
   Testament? getTestament(int id) => _testaments.where((t) => t.id == id).firstOrNull;
 
   // ── Actions ────────────────────────────────────────────────

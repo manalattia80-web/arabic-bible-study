@@ -10,28 +10,39 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/word_study_provider.dart';
+import '../../../providers/theme_provider.dart';
 import '../../../core/services/morphology_service.dart';
 import '../../../models/word_mapping.dart';
 import '../../../models/strongs_entry.dart';
 import 'audio_button.dart';
 import '../../../core/services/audio_playback_service.dart';
 
-class StrongsModal extends StatelessWidget {
+class StrongsModal extends StatefulWidget {
   final String strongsId;
   final WordMapping? mapping;
-  const StrongsModal({super.key, required this.strongsId, this.mapping});
+  final int? selectedComponentIndex;
+
+  const StrongsModal({
+    super.key,
+    required this.strongsId,
+    this.mapping,
+    this.selectedComponentIndex,
+  });
 
   static String? deduceStrongsId(WordMapping mapping) {
     final sId = mapping.strongsId?.trim();
     if (sId != null && sId.isNotEmpty && sId != '---' && sId != '-') {
       return sId;
     }
-    // Never invent Strong's IDs for unlinked Arabic particles/affixes;
-    // lexical similarity does not establish token alignment within a verse.
     return null;
   }
 
-  static Future<void> show(BuildContext context, String strongsId, {WordMapping? mapping}) {
+  static Future<void> show(
+    BuildContext context,
+    String strongsId, {
+    WordMapping? mapping,
+    int? selectedComponentIndex,
+  }) {
     final provider = context.read<WordStudyProvider>();
     String targetId = strongsId.trim();
     if ((targetId.isEmpty || targetId == '---' || targetId == '-') && mapping != null) {
@@ -42,14 +53,31 @@ class StrongsModal extends StatelessWidget {
     }
     provider.loadStrongsEntry(targetId, mapping: mapping);
     return showModalBottomSheet(
-      context:        context,
+      context: context,
       isScrollControlled: true,
-      useSafeArea:    true,
+      useSafeArea: true,
       builder: (_) => ChangeNotifierProvider.value(
         value: provider,
-        child: StrongsModal(strongsId: targetId, mapping: mapping),
+        child: StrongsModal(
+          strongsId: targetId,
+          mapping: mapping,
+          selectedComponentIndex: selectedComponentIndex,
+        ),
       ),
     );
+  }
+
+  @override
+  State<StrongsModal> createState() => _StrongsModalState();
+}
+
+class _StrongsModalState extends State<StrongsModal> {
+  late int _selectedComponentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedComponentIndex = widget.selectedComponentIndex ?? 0;
   }
 
   StrongsEntry _buildFallbackEntry(WordMapping m) {
@@ -164,6 +192,8 @@ class StrongsModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<WordStudyProvider>();
+    final theme    = context.watch<ThemeProvider>();
+    final mapping  = widget.mapping;
     final entry    = provider.selectedStrongs ?? (mapping != null ? _buildFallbackEntry(mapping!) : null);
 
     return DraggableScrollableSheet(
@@ -255,8 +285,10 @@ class StrongsModal extends StatelessWidget {
                             Wrap(
                               spacing: 8,
                               runSpacing: 6,
-                              children: mapping!.strongsIds.map((sId) {
-                                final isSelected = sId.toUpperCase() == entry.strongsId.toUpperCase();
+                              children: mapping!.strongsIds.asMap().entries.map((item) {
+                                final idx = item.key;
+                                final sId = item.value;
+                                final isSelected = (idx == _selectedComponentIndex);
                                 return FilterChip(
                                   selected: isSelected,
                                   showCheckmark: false,
@@ -273,7 +305,9 @@ class StrongsModal extends StatelessWidget {
                                     ),
                                   ),
                                   label: Text(
-                                    sId,
+                                    mapping!.strongsIds.where((id) => id == sId).length > 1
+                                        ? 'المكوّن ${idx + 1}: $sId'
+                                        : sId,
                                     style: TextStyle(
                                       fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
                                       color: isSelected ? Colors.white : AppColors.textPrimary,
@@ -287,11 +321,19 @@ class StrongsModal extends StatelessWidget {
                                   ),
                                   onSelected: (_) {
                                     if (!isSelected) {
+                                      setState(() {
+                                        _selectedComponentIndex = idx;
+                                      });
                                       provider.loadStrongsEntry(sId, mapping: mapping);
                                     }
                                   },
                                 );
                               }).toList(),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              'ملاحظة: تُمثل هذه الرموز المكونات المعجمية المرتبطة باللفظ العربي، وقد يختلف ترتيبها المعجمي عن التسلسل الحرفي في النص الأصلي.',
+                              style: TextStyle(fontSize: 10, color: AppColors.textMuted),
                             ),
                           ],
                         ),
@@ -457,7 +499,7 @@ class StrongsModal extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
                     child: Row(
                       children: [
-                        Text('Root: ', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
+                        Text('الجذر: ', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
                         Directionality(
                           textDirection: entry.isHebrew ? TextDirection.rtl : TextDirection.ltr,
                           child: Text(
@@ -482,25 +524,33 @@ class StrongsModal extends StatelessWidget {
                       ? mapping!.strongsId
                       : entry.strongsId;
 
+                  final isSecondaryComp = mapping != null &&
+                      mapping!.strongsIds.length > 1 &&
+                      entry.strongsId.toUpperCase() != mapping!.strongsId?.toUpperCase();
+
+                  final effectiveCode = (isSecondaryComp && entry.strongsId.toUpperCase() == 'H853')
+                      ? 'To'
+                      : (isSecondaryComp ? null : mapping?.origMorphology);
+
                   final morphAnalysis = MorphologyService.parse(
-                    code: mapping?.origMorphology,
+                    code: effectiveCode,
                     language: entry.language,
                     fallbackDefinition: entry.definitionEn,
                     arWord: mapping?.arWord,
-                    origWord: effectiveOrig,
-                    origSurface: mapping?.origSurface,
-                    strongsId: effectiveStrongs,
+                    origWord: isSecondaryComp ? entry.originalWord : effectiveOrig,
+                    origSurface: isSecondaryComp ? entry.originalWord : mapping?.origSurface,
+                    strongsId: entry.strongsId,
                     lemmaWord: entry.originalWord,
-                    grammarNotes: mapping?.grammarNotes,
-                    morphPos: mapping?.morphPos,
-                    morphStem: mapping?.morphStem,
-                    morphTense: mapping?.morphTense,
-                    morphVoice: mapping?.morphVoice,
-                    morphMood: mapping?.morphMood,
-                    morphPerson: mapping?.morphPerson,
-                    morphNumber: mapping?.morphNumber,
-                    morphGender: mapping?.morphGender,
-                    morphCase: mapping?.morphCase,
+                    grammarNotes: isSecondaryComp ? null : mapping?.grammarNotes,
+                    morphPos: isSecondaryComp ? (entry.strongsId.toUpperCase() == 'H853' ? 'أداة مفعولية صريحة' : null) : mapping?.morphPos,
+                    morphStem: isSecondaryComp ? null : mapping?.morphStem,
+                    morphTense: isSecondaryComp ? null : mapping?.morphTense,
+                    morphVoice: isSecondaryComp ? null : mapping?.morphVoice,
+                    morphMood: isSecondaryComp ? null : mapping?.morphMood,
+                    morphPerson: isSecondaryComp ? null : mapping?.morphPerson,
+                    morphNumber: isSecondaryComp ? null : mapping?.morphNumber,
+                    morphGender: isSecondaryComp ? null : mapping?.morphGender,
+                    morphCase: isSecondaryComp ? null : mapping?.morphCase,
                   );
 
                   return SliverToBoxAdapter(
@@ -517,6 +567,27 @@ class StrongsModal extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
+                              if (isSecondaryComp)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.info.withOpacity(0.12),
+                                    borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                                    border: Border(bottom: BorderSide(color: AppColors.info.withOpacity(0.3))),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.info_outline, size: 16, color: AppColors.info),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          'تنبيه: التحليل الصرفي الأصلي المقترن بالآية («${mapping?.arWord}») يعود إلى اللفظ الأساسي «${mapping?.origWord}» (${mapping?.strongsId}). المكوّن المعروض حالياً هو: ${entry.strongsId} (${entry.originalWord}).',
+                                          style: TextStyle(fontSize: 11, color: AppColors.textPrimary, height: 1.3),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                                 decoration: BoxDecoration(

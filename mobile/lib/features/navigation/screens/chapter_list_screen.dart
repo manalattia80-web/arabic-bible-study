@@ -41,7 +41,7 @@ class _ChapterListScreenState extends State<ChapterListScreen> {
                     textDirection: TextDirection.rtl,
                     child: Text(book.nameAr, style: AppTheme.arabicLabel(size: 18)),
                   )
-                : const Text('Chapters'),
+                : const Text('الأصحاحات'),
             if (book != null)
               Text(book.nameEn, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
           ],

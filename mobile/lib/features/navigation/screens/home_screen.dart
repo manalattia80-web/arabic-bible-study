@@ -437,7 +437,7 @@ class _ErrorWidget extends StatelessWidget {
           const SizedBox(height: 12),
           Text(message, style: TextStyle(color: AppColors.textSecondary), textAlign: TextAlign.center),
           const SizedBox(height: 16),
-          ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
+          ElevatedButton(onPressed: onRetry, child: const Text('إعادة المحاولة')),
         ],
       ),
     ),
