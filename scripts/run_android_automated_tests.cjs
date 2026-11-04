@@ -602,7 +602,7 @@ try {
   // Scroll down until Verse 16 text («بِذَاتِي أَقْسَمْتُ... وَحِيدَكَ») is confirmed on screen
   console.log('In ChapterReaderScreen: scrolling down to locate Verse 16 card («بِذَاتِي أَقْسَمْتُ»)...');
   let foundVerse16 = false;
-  for (let s = 0; s < 10; s++) {
+  for (let s = 0; s < 20; s++) {
     const readerScan = captureAndOcr('/sdcard/reader_scroll_check.png');
     console.log(`Reader scroll scan ${s + 1}:`, readerScan.slice(0, 150).replace(/\n/g, ' '));
     const isVerse16 = readerScan.includes('بذاتي') || readerScan.includes('أقسمت') || readerScan.includes('اقسمت') || readerScan.includes('هذا الأمر') || (readerScan.includes('بذات') && readerScan.includes('16'));
@@ -611,9 +611,13 @@ try {
       foundVerse16 = true;
       break;
     }
-    // Scroll down 1/2 screen
-    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 350`);
+    // Scroll down firmly
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 300`);
     sleep(1200);
+  }
+
+  if (!foundVerse16) {
+    throw new Error('Could not navigate to Genesis 22:16 in ChapterReaderScreen after scrolling.');
   }
 
   // Tap Verse 16 card to open WordStudyScreen.
