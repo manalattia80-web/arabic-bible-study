@@ -125,7 +125,7 @@ function ensureAppInForeground() {
 function waitForDatabaseAndAppReady() {
   console.log('Ensuring app is running and database is fully assembled on device...');
   ensureAppInForeground();
-  for (let poll = 0; poll < 35; poll++) {
+  for (let poll = 0; poll < 40; poll++) {
     const prefs = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
     const dbCheck = execAdb('shell ls -l /data/data/com.arabicbible.study/databases/bible_study_v348.db', { ignoreError: true });
     if ((prefs.includes('db_version') && prefs.includes('348')) || dbCheck.includes('bible_study_v348.db')) {
@@ -171,8 +171,11 @@ function searchAndSubmit(query) {
   console.log(`Typing search query: "${query}"`);
   execAdb(`shell input text "${query}"`);
   sleep(800);
-  console.log('Submitting search via Enter key (66)...');
-  execAdb('shell input keyevent 66');
+  // Tap search action button at top right
+  console.log(`Tapping search action button at (${searchIconX}, ${searchIconY})...`);
+  execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
+  sleep(500);
+  execAdb('shell input keyevent 66'); // Also send Enter key
   sleep(3000);
   dismissKeyboard();
 }
@@ -191,9 +194,9 @@ try {
   searchAndSubmit('22:16');
   sleep(2000);
 
-  // In search results, Card 1 is Genesis 22:16! Tap Card 1 at ~H*0.48
-  console.log('Tapping Card 1 in search results (Genesis 22:16)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.48)}`);
+  // In search results, Card 1 is Genesis 22:16, centered at Y ~ H * 0.35 (224px)
+  console.log('Tapping Card 1 in search results (Genesis 22:16) at (160, 224)...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
   sleep(3500); // Allow direct mount & scroll routine to center verse 16
 
   const snap1 = captureScreenshot('scenario1_genesis_22_16_direct_nav.png');
@@ -232,17 +235,19 @@ const t2 = Date.now();
 try {
   console.log('\n--- Executing Scenario 2: Independent Selection of Repeated H1697 Chips ---');
   // From Reader with Verse 16 on screen, tap Verse 16 card to open WordStudy
-  console.log('Tapping Verse 16 card to open WordStudyScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
+  console.log('Tapping Verse 16 card to open WordStudyScreen at (160, 230)...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.36)}`);
   sleep(3500);
 
-  // In WordStudy, scroll down slightly to bring row for 'الأمر' into clear view
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.70)} ${Math.round(W * 0.50)} ${Math.round(H * 0.40)} 300`);
-  sleep(1500);
+  // In WordStudy, scroll down to bring row for 'الأمر' into clear view
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 300`);
+  sleep(1200);
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 300`);
+  sleep(1200);
 
-  // Tap first H1697 chip at row ~H*0.50
-  console.log('Tapping first H1697 chip in WordStudyScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.65)} ${Math.round(H * 0.50)}`);
+  // Tap row for 'الأمر' to open StrongsModal
+  console.log('Tapping row for "الأمر" in WordStudyScreen...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.40)}`);
   sleep(3000);
 
   const snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
@@ -270,9 +275,9 @@ try {
 const t3 = Date.now();
 try {
   console.log('\n--- Executing Scenario 3: H853 Morphology Disclosure & Correct Part of Speech ---');
-  // Inside the open StrongsModal, tap Chip 2 (H853) at ~H*0.35, W*0.50
+  // Inside the open StrongsModal, tap Chip 2 (H853) at ~H*0.38, W*0.50
   console.log('Tapping H853 component chip in modal...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.38)}`);
   sleep(2500);
 
   // Scroll down to morphology card in bottom sheet
@@ -350,9 +355,9 @@ try {
   searchAndSubmit('119:160');
   sleep(2000);
 
-  // Tap search result Card 1 for Psalm 119:160
-  console.log('Tapping Card 1 for Psalm 119:160...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.48)}`);
+  // Tap search result Card 1 for Psalm 119:160 at (160, 224)
+  console.log('Tapping Card 1 for Psalm 119:160 at (160, 224)...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
   sleep(4000); // Allow iterative jump down to verse 160
 
   const snap5 = captureScreenshot('scenario5_psalm_119_160_direct_jump.png');

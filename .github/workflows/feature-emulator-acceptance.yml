@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Enable KVM Hardware Acceleration
         run: |
@@ -97,17 +99,15 @@ jobs:
             cd ..
           fi
 
-      - name: Publish Public Acceptance Release & Artifacts
+      - name: Commit and Push Acceptance Evidence to Branch
         if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -f "feature_acceptance_evidence.zip" ]; then
-            gh release delete acceptance-evidence-350 --yes || true
-            gh release create acceptance-evidence-350 feature_acceptance_evidence.zip \
-              --title "Acceptance Evidence 350" \
-              --notes "Empirical verification evidence on Android Emulator across 5 Acceptance Scenarios" \
-              --clobber || true
+          if [ -d "acceptance_evidence" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add acceptance_evidence/
+            git commit -m "docs(evidence): emulator acceptance verification run artifacts [skip ci]" || true
+            git push origin feature/ui-ux-refinement || true
           fi
 
       - name: Upload Acceptance Verification Artifacts
