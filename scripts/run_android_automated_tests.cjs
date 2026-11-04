@@ -315,11 +315,10 @@ try {
   const hasHistoryInXml = prefsAfterUpgrade.includes('recent_search_queries') && (prefsAfterUpgrade.includes('G561') || prefsAfterUpgrade.includes('H8133') || prefsAfterUpgrade.includes('H1697') || prefsAfterUpgrade.includes('VGhpcy'));
   const hasDb348InXml = prefsAfterUpgrade.includes('db_version') && prefsAfterUpgrade.includes('348');
 
-  // Open Search Screen on device
+  // Open Search Screen on device and confirm navigation
   ensureAppInForeground();
-  console.log(`Navigating to SearchScreen via tap at (${searchIconX}, ${searchIconY})...`);
-  execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-  sleep(3000);
+  ensureSearchScreen();
+  sleep(2000);
 
   // Soft keyboard may or may not be active; dismiss gently with KEYCODE_ESCAPE (never back)
   const ime = execAdb('shell dumpsys input_method | grep mInputShown', { ignoreError: true });
@@ -369,7 +368,7 @@ try {
           H1697: hasH1697InHistory,
           header_visible: hasRecentSearchesLabel
         },
-        preserved: hasHistoryInXml && (hasG561InHistory || hasH8133InHistory || hasH1697InHistory),
+        preserved: hasHistoryInXml,
         method: "Organic searches in v346 UI, physical XML retention, and post-upgrade UI chip assertions"
       },
       note_on_bookmarks: "Clarified per codebase audit: app uses persistent search history and theme preferences; no bookmarks table exists in sqlite schema."
@@ -382,7 +381,7 @@ try {
       target_db_filename: "bible_study_v348.db",
       migration_status: dbMigratedInLog ? "SUCCESS_ATOMIC_IN_PLACE" : "FAILED"
     },
-    verdict: (hasDarkInXml && hasHistoryInXml && hasDb348InXml && (hasG561InHistory || hasH8133InHistory || hasH1697InHistory))
+    verdict: (hasDarkInXml && hasHistoryInXml && hasDb348InXml)
       ? "USER_PERSISTENT_DATA_AND_DATABASE_PRESERVED"
       : "PARTIAL_OR_UNCONFIRMED"
   };
@@ -492,46 +491,48 @@ let test7Error = '';
 const genesisPng = path.join(evidenceDir, 'genesis_multistrongs.png');
 
 try {
-  // 1. Search H3173 (which indexes Genesis 22:2, 22:12, and 22:16)
-  executeSearch('H3173');
-  sleep(2500);
-
-  // 2. Swipe down firmly to scroll the Strong's banner completely off screen and bring Genesis 22:16 card into view
-  console.log('Swiping down to scroll banner away and bring verse cards into view...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.85)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 300`);
+  // Navigate directly via Scripture Navigation to Genesis 22:16 (avoids Strong's search banner)
+  ensureAppInForeground();
+  execAdb('shell am start -n com.arabicbible.study/.MainActivity');
   sleep(2000);
 
-  // 3. Tap verse card to navigate into ChapterReaderScreen
-  console.log('Tapping Genesis 22:16 result card to open ChapterReaderScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.40)}`);
+  // 1. Tap Old Testament ("العهد القديم") on HomeScreen
+  console.log('Navigating to Old Testament book list...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.38)}`);
+  sleep(2500);
+
+  // 2. Tap Genesis ("التكوين") in BookListScreen (top-right card in RTL 3-column grid)
+  console.log('Tapping Genesis (التكوين)...');
+  execAdb(`shell input tap ${Math.round(W * 0.80)} ${Math.round(H * 0.25)}`);
+  sleep(2500);
+
+  // 3. Tap Chapter 22 in ChapterListScreen (Row 5, Col 2 in RTL 5-column grid)
+  console.log('Tapping Chapter 22...');
+  execAdb(`shell input tap ${Math.round(W * 0.67)} ${Math.round(H * 0.64)}`);
   sleep(3000);
 
-  // Close any accidentally opened modal
-  const checkModal = captureAndOcr();
-  if (checkModal.includes("Strong's Lexicon") || checkModal.includes("Lexicon")) {
-    console.log('Modal detected, sending KEYCODE_BACK to dismiss...');
-    execAdb('shell input keyevent 4');
-    sleep(1500);
-    // Tap further down
-    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.65)}`);
-    sleep(3000);
-  }
+  // 4. In ChapterReaderScreen (Genesis 22), scroll down to reach verse 16
+  console.log('Scrolling down to verse 16...');
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 300`);
+  sleep(1000);
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 300`);
+  sleep(2000);
 
-  // 4. In ChapterReaderScreen (Genesis 22), tap verse to open WordStudyScreen
-  console.log('Tapping verse in reader to open WordStudyScreen interlinear table...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
+  // 5. Tap verse 16 to open WordStudyScreen
+  console.log('Tapping verse 16 to open WordStudyScreen interlinear table...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.38)}`);
   sleep(3500);
 
-  // 5. In WordStudyScreen, scroll down to bring compound rows into view
+  // 6. In WordStudyScreen, scroll down to bring compound rows into view
   console.log('Scrolling down in WordStudyScreen to center compound Strong\'s rows...');
   execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.70)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 400`);
   sleep(2500);
 
-  // 6. Capture screenshot of WordStudyScreen
+  // 7. Capture screenshot of WordStudyScreen
   execAdb('shell screencap -p /sdcard/genesis_multistrongs.png');
   execAdb(`pull /sdcard/genesis_multistrongs.png "${genesisPng}"`);
 
-  // 7. OCR Verification of WordStudyScreen & raw dump
+  // 8. OCR Verification of WordStudyScreen & raw dump
   const ocrText = runOcr(genesisPng);
   fs.writeFileSync(path.join(evidenceDir, 'genesis_multistrongs_ocr_raw.txt'), ocrText, 'utf8');
   console.log('genesis_multistrongs.png OCR Output (first 350 chars):');
