@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="AcceptanceScenariosSuite" tests="5" failures="3" errors="0" time="306.4">
+  <testsuite name="ArbitrationAcceptance" tests="5" failures="3" errors="0">
+    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="109.8">
+    </testcase>
+    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="32.4">
+      <failure message="Failed: Strong's modal or component chips not detected! OCR: ‎ED‏ المدخل المعجمي / الجذر
+
+‎wi Hebrew‏ 2 ا
+
+‎shdba’ + ‏(شافع)‎ ab
+| GSD
+
+‏© التحليل النحوي والصرفي ‎gels‏
+‏نوع الكلمة [القسم ‎(sal‏ فعل ‎eo‏
+
+‏وزن ن">Failed: Strong's modal or component chips not detected! OCR: ‎ED‏ المدخل المعجمي / الجذر
+
+‎wi Hebrew‏ 2 ا
+
+‎shdba’ + ‏(شافع)‎ ab
+| GSD
+
+‏© التحليل النحوي والصرفي ‎gels‏
+‏نوع الكلمة [القسم ‎(sal‏ فعل ‎eo‏
+
+‏وزن ن</failure>
+    </testcase>
+    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="16.4">
+      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: © التحليل النحوي والصرفي  ‎Seb‏
+
+gow ‏قعل‎
+
+وزن نيفعل المطاوع /
+المجهول ‎(Niphal)‏
+
+الماضي التام العبدي
+‎(Qatal / Perfect)‏
+
+ميتي للمجهول
+‎(Passive)‏
+">Failed: H853 morphology disclosure banner not detected! OCR: © التحليل النحوي والصرفي  ‎Seb‏
+
+gow ‏قعل‎
+
+وزن نيفعل المطاوع /
+المجهول ‎(Niphal)‏
+
+الماضي التام العبدي
+‎(Qatal / Perfect)‏
+
+ميتي للمجهول
+‎(Passive)‏
+</failure>
+    </testcase>
+    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="63.6">
+    </testcase>
+    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="84.3">
+      <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: 8:40 © v4
+
+ه © عم ‎A‏
+
+dines Bi das eal Jus Js
+
+فَوَاسِعَةٌ جدًا.
+
+‎NIN yp NN N29N 222‏ ريصق
+‎TTA‏
+
+‏89 دراسة ‎Ay SUS‏ شواهد ‎١‏ “ب مقارنة الترجمات
+
+‏">Failed: Psalm 119:160 text not positioned directly! OCR: 8:40 © v4
+
+ه © عم ‎A‏
+
+dines Bi das eal Jus Js
+
+فَوَاسِعَةٌ جدًا.
+
+‎NIN yp NN N29N 222‏ ريصق
+‎TTA‏
+
+‏89 دراسة ‎Ay SUS‏ شواهد ‎١‏ “ب مقارنة الترجمات
+
+‏</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
