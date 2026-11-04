@@ -91,8 +91,10 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
           _scrollController.jumpTo(jumpTarget);
         }
 
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _attemptScrollToVerse(verseNum, targetIndex, attempt + 1);
+        Future.delayed(const Duration(milliseconds: 60), () {
+          if (mounted) {
+            _attemptScrollToVerse(verseNum, targetIndex, attempt + 1);
+          }
         });
       }
     });

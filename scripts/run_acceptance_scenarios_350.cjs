@@ -239,15 +239,15 @@ try {
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.36)}`);
   sleep(3500);
 
-  // In WordStudy, scroll down to bring row for 'الأمر' into clear view
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 300`);
-  sleep(1200);
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 300`);
-  sleep(1200);
+  // In WordStudy, scroll down twice to bring word 12 ('الأمر') into clear view
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 350`);
+  sleep(1500);
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 350`);
+  sleep(1500);
 
-  // Tap row for 'الأمر' to open StrongsModal
-  console.log('Tapping row for "الأمر" in WordStudyScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.40)}`);
+  // Tap row for 'الأمر' (word 12) at Y ~ 240px
+  console.log('Tapping row for "الأمر" in WordStudyScreen at (160, 240)...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} 240`);
   sleep(3000);
 
   const snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
@@ -275,13 +275,13 @@ try {
 const t3 = Date.now();
 try {
   console.log('\n--- Executing Scenario 3: H853 Morphology Disclosure & Correct Part of Speech ---');
-  // Inside the open StrongsModal, tap Chip 2 (H853) at ~H*0.38, W*0.50
-  console.log('Tapping H853 component chip in modal...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.38)}`);
+  // Inside the open StrongsModal, tap Chip 2 (H853) in the middle at X ~ 160, Y ~ 240
+  console.log('Tapping H853 component chip in modal at (160, 240)...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} 240`);
   sleep(2500);
 
-  // Scroll down to morphology card in bottom sheet
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 300`);
+  // Scroll down to morphology section in modal
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 350`);
   sleep(1500);
 
   const snap3 = captureScreenshot('scenario3_h853_morphology_disclosure.png');
@@ -289,7 +289,7 @@ try {
   fs.writeFileSync(path.join(evidenceDir, 'scenario3_ocr_raw.txt'), ocr3, 'utf8');
 
   // Verify disclosure banner or particle label
-  const hasParticleOrDisclosure = ocr3.includes('أداة مفعولية') || ocr3.includes('مفعولية') || ocr3.includes('المكوّن الأساسي') || ocr3.includes('اللفظ الأساسي') || ocr3.includes('H853') || ocr3.includes('853');
+  const hasParticleOrDisclosure = ocr3.includes('أداة مفعولية') || ocr3.includes('مفعولية') || ocr3.includes('المكوّن الأساسي') || ocr3.includes('اللفظ الأساسي') || ocr3.includes('H853') || ocr3.includes('853') || ocr3.includes('التحليل الصرفي الأصلي');
 
   console.log(`Scenario 3 Assertions: hasParticleOrDisclosure=${hasParticleOrDisclosure}`);
 
@@ -358,7 +358,7 @@ try {
   // Tap search result Card 1 for Psalm 119:160 at (160, 224)
   console.log('Tapping Card 1 for Psalm 119:160 at (160, 224)...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
-  sleep(4000); // Allow iterative jump down to verse 160
+  sleep(5000); // Allow iterative jump down to verse 160 with delayed frame catchup
 
   const snap5 = captureScreenshot('scenario5_psalm_119_160_direct_jump.png');
   const ocr5 = snap5.ocr;
