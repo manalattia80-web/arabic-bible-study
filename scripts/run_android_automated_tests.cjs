@@ -19,7 +19,8 @@ function execAdb(cmd, options = {}) {
   try {
     const res = child.execSync(`adb ${cmd}`, {
       encoding: 'utf8',
-      timeout: options.timeout || 35000,
+      timeout: options.timeout || 45000,
+      maxBuffer: options.maxBuffer || 50 * 1024 * 1024,
       stdio: ['pipe', 'pipe', 'pipe']
     });
     return res.trim();
@@ -451,14 +452,12 @@ try {
     throw new Error('Database version 348 not registered in SharedPreferences!');
   }
 
-  // 5. Verify atomic assembly confirmation in Logcat
+  // 5. Verify atomic assembly confirmation in Logcat via exact completion message
   const logcat = execAdb('logcat -d', { timeout: 30000 });
-  const assembledInLog = logcat.includes('Local SQLite database assembled and verified successfully') ||
-                         logcat.includes('targetDbVersion') ||
-                         logcat.includes('bible_study_v348.db');
-  console.log(`Logcat assembly verification: ${assembledInLog ? 'CONFIRMED' : 'UNCONFIRMED'}`);
+  const assembledInLog = logcat.includes('Local SQLite database assembled and verified successfully');
+  console.log(`Logcat assembly completion log verification: ${assembledInLog ? 'CONFIRMED' : 'UNCONFIRMED'}`);
   if (!assembledInLog) {
-    throw new Error('Database atomic assembly log not found in Logcat!');
+    throw new Error('Database atomic assembly completion log ("Local SQLite database assembled and verified successfully") not found in Logcat!');
   }
 
   // 6. Verify temporary file was deleted cleanly after atomic rename
@@ -571,67 +570,58 @@ try {
   dismissKeyboard();
 
   // Search for Strong's H3173 (Word 16 of Genesis 22:16 is 'وحيدك' -> H3173)
-  // Searching H3173 directly returns Genesis 22 verses at the top of results!
   console.log('Searching for H3173 to reach Genesis 22...');
   executeSearch('H3173');
   dismissKeyboard();
   sleep(1500);
 
-  // In search results for H3173:
-  // _DirectStrongsCard is pinned at top (Y < H * 0.38).
-  // The scrollable results list is below it (Y >= H * 0.42).
-  // In the results: Card 1 is Genesis 22:2, Card 2 is Genesis 22:12, Card 3 is Genesis 22:16.
-  // Swipe inside the results list (from 85% to 50%) to bring Genesis 22:16 card into view
-  console.log('Scrolling results list below Strong\'s banner to bring Genesis 22:16 card into view...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.85)} ${Math.round(W * 0.50)} ${Math.round(H * 0.50)} 350`);
-  sleep(2000);
-
-  // If a modal was inadvertently opened, dismiss with KEYCODE_BACK (4)
-  let initialCheck = captureAndOcr('/sdcard/search_card_check.png');
-  console.log('SearchScreen Card Check OCR:', initialCheck.slice(0, 180).replace(/\n/g, ' '));
-  if (initialCheck.includes('المعنى المعجمي') || initialCheck.includes('الرمز القياسي')) {
-    console.log('Dismissing modal to return to search results list...');
-    execAdb('shell input keyevent 4');
-    sleep(1500);
-  }
-
-  // Tap Genesis 22:16 card in the lower area of results list (Y ≈ H * 0.65)
-  console.log('Tapping Genesis 22:16 card at H * 0.65 to open Chapter Reader...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.65)}`);
+  // In search results for H3173, Genesis 22 results are listed below the Strong's banner.
+  // Tap the Genesis 22 result card (located at Y ≈ H * 0.58) to open ChapterReaderScreen.
+  console.log('Tapping Genesis 22 search result card to open ChapterReaderScreen...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.58)}`);
   sleep(3500);
 
-  // In ChapterReaderScreen:
-  // The app opened Genesis 22 with initialVerseNum: 16!
-  // ChapterReaderScreen automatically scrolls to Verse 16 (alignment: 0.15) and highlights it.
-  let readerOcr = captureAndOcr('/sdcard/reader_verse16_check.png');
-  console.log('Reader screen check OCR:', readerOcr.slice(0, 180).replace(/\n/g, ' '));
-
-  // If modal was opened instead of reader, dismiss and try tapping at H * 0.55
-  if (readerOcr.includes('المعنى المعجمي') || readerOcr.includes('الرمز القياسي')) {
+  let inReader = captureAndOcr('/sdcard/reader_initial_check.png');
+  console.log('Chapter reader initial check OCR:', inReader.slice(0, 160).replace(/\n/g, ' '));
+  if (inReader.includes('المعنى المعجمي') || inReader.includes('الرمز القياسي')) {
+    // If a modal opened, dismiss with Back
     execAdb('shell input keyevent 4');
     sleep(1500);
-    console.log('Re-tapping Genesis 22:16 card at H * 0.55...');
-    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.55)}`);
+    // Tap further down in results list
+    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.65)}`);
     sleep(3500);
-    readerOcr = captureAndOcr('/sdcard/reader_verse16_check.png');
   }
 
-  // Tap Verse 16 card in ChapterReaderScreen to open WordStudyScreen.
-  // With alignment: 0.15, Verse 16 card is located at Y ≈ H * 0.28
-  if (!readerOcr.includes('دراسة الكلمات')) {
-    console.log('Tapping Verse 16 card in ChapterReaderScreen to open WordStudyScreen...');
-    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.28)}`);
-    sleep(3500);
+  // In ChapterReaderScreen (Genesis 22):
+  // Scroll down until Verse 16 text («بِذَاتِي أَقْسَمْتُ... وَحِيدَكَ») is confirmed on screen via OCR
+  console.log('In ChapterReaderScreen: scrolling down to locate Verse 16 card...');
+  let foundVerse16 = false;
+  for (let s = 0; s < 8; s++) {
+    const ocrVerse = captureAndOcr('/sdcard/reader_scroll_check.png');
+    console.log(`Reader scroll scan ${s + 1}:`, ocrVerse.slice(0, 160).replace(/\n/g, ' '));
+    if (ocrVerse.includes('بذاتي') || ocrVerse.includes('أقسمت') || ocrVerse.includes('وحيدك')) {
+      console.log('Genesis 22:16 text detected on screen!');
+      foundVerse16 = true;
+      break;
+    }
+    // Scroll down 1/2 screen
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 350`);
+    sleep(1200);
   }
+
+  // Tap Verse 16 card to open WordStudyScreen
+  console.log('Tapping Verse 16 card to open WordStudyScreen...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
+  sleep(3500);
 
   // Verify we reached WordStudyScreen for Genesis 22:16
   let wordStudyOcr = captureAndOcr('/sdcard/wordstudy_verify.png');
   console.log('WordStudy screen initial OCR:', wordStudyOcr.slice(0, 200).replace(/\n/g, ' '));
 
-  // If not yet in WordStudyScreen, try tapping at H * 0.40
+  // If not yet in WordStudyScreen, try tapping at H * 0.35
   if (!wordStudyOcr.includes('دراسة الكلمات') && !wordStudyOcr.includes('بذاتي') && !wordStudyOcr.includes('16')) {
-    console.log('Retrying tap on Verse 16 card at H * 0.40...');
-    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.40)}`);
+    console.log('Retrying tap on Verse 16 card at H * 0.35...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
     sleep(3500);
   }
 
@@ -650,29 +640,28 @@ try {
   console.log('genesis_multistrongs.png OCR Output (first 350 chars):');
   console.log(ocrText.slice(0, 350).replace(/\n/g, ' '));
 
-  // STRICT ASSERTIONS FOR GENESIS 22:16
-  const isGen2216 = (ocrText.includes('22') && ocrText.includes('16')) ||
-                    ocrText.includes('بذاتي') ||
-                    ocrText.includes('الأمر') ||
-                    ocrText.includes('ابنك') ||
-                    ocrText.includes('وحيدك');
+  // STRICT, UNCOMPROMISING ASSERTIONS FOR GENESIS 22:16
+  const isVerse1 = ocrText.includes('22: 1') || ocrText.includes('22:1 ') || ocrText.includes('امتحن') || ocrText.includes('الأمور');
+  const hasGen2216Ref = /(?:22\s*:\s*16|16\s*:\s*22)/.test(ocrText);
+  const hasVerse16SpecificWords = ocrText.includes('بذاتي') || ocrText.includes('أقسمت') || (ocrText.includes('الأمر') && ocrText.includes('وحيدك'));
+
+  const isGen2216 = !isVerse1 && (hasGen2216Ref || hasVerse16SpecificWords);
 
   const has1697 = ocrText.includes('1697');
-  const has1121 = ocrText.includes('1121');
-  const has3173 = ocrText.includes('3173');
-  const has853 = ocrText.includes('853');
-  const hasStrongsGeneral = has1697 || has1121 || has3173 || has853 ||
-                            ocrText.includes('Strong') || ocrText.includes('مرتبط بسترونج') ||
-                            ocrText.includes('موثّق') || ocrText.includes('دراسة الكلمات');
+  const hasCompoundPartners = ocrText.includes('1121') || ocrText.includes('3173') || ocrText.includes('ابنك') || ocrText.includes('وحيدك');
 
-  console.log(`Genesis 22:16 assertions: isGen2216=${isGen2216}, H1697=${has1697}, H1121=${has1121}, H3173=${has3173}, H853=${has853}, hasStrongs=${hasStrongsGeneral}`);
+  console.log(`Genesis 22:16 assertions: isGen2216=${isGen2216}, isVerse1=${isVerse1}, H1697=${has1697}, compoundPartners=${hasCompoundPartners}`);
 
-  if (!isGen2216) {
-    throw new Error(`Real Assertion Failed: Screen is NOT Genesis 22:16! OCR sample: "${ocrText.slice(0, 150)}"`);
+  if (isVerse1) {
+    throw new Error(`Real Assertion Failed: Screen is Genesis 22:1 (Verse 1), NOT Genesis 22:16! OCR sample: "${ocrText.slice(0, 150)}"`);
   }
 
-  if (!hasStrongsGeneral) {
-    throw new Error(`Real Assertion Failed: Strong's word study not detected on screen! OCR sample: "${ocrText.slice(0, 150)}"`);
+  if (!isGen2216) {
+    throw new Error(`Real Assertion Failed: Screen is NOT Genesis 22:16! Reference or text of 22:16 not found. OCR sample: "${ocrText.slice(0, 150)}"`);
+  }
+
+  if (!has1697 || !hasCompoundPartners) {
+    throw new Error(`Real Assertion Failed: Compound Strong's codes for Genesis 22:16 (H1697 with H1121/H3173) not detected! OCR sample: "${ocrText.slice(0, 150)}"`);
   }
 
   test7Passed = true;
@@ -688,22 +677,36 @@ let test8Passed = false;
 let test8Error = '';
 
 try {
+  const searchPng = path.join(evidenceDir, 'search_history_after_upgrade.png');
+  const hashSearch = getFileSha256(searchPng);
   const hashMatthew = getFileSha256(matthewPng);
   const hashDaniel = getFileSha256(danielPng);
   const hashGenesis = getFileSha256(genesisPng);
 
-  console.log(`Image SHA-256 Hashes:`);
-  console.log(` - matthew_G561.png:        ${hashMatthew}`);
-  console.log(` - daniel_H8133.png:         ${hashDaniel}`);
-  console.log(` - genesis_multistrongs.png:  ${hashGenesis}`);
+  console.log('Empirical Image SHA-256 Hashes:');
+  console.log(` - search_history_after_upgrade.png: ${hashSearch}`);
+  console.log(` - matthew_G561.png:                  ${hashMatthew}`);
+  console.log(` - daniel_H8133.png:                   ${hashDaniel}`);
+  console.log(` - genesis_multistrongs.png:            ${hashGenesis}`);
 
-  if (hashMatthew === hashDaniel || hashDaniel === hashGenesis || hashMatthew === hashGenesis) {
-    throw new Error(`Duplicate image detected! All three screenshots must be distinct captures of their respective screens.`);
+  const hashes = [hashSearch, hashMatthew, hashDaniel, hashGenesis];
+  const uniqueHashes = new Set(hashes);
+  if (uniqueHashes.size !== 4) {
+    throw new Error(`Duplicate image detected! All 4 screenshots must be distinct captures of their respective screens (unique count: ${uniqueHashes.size}/4).`);
   }
 
-  if (fs.statSync(matthewPng).size < 10000 || fs.statSync(danielPng).size < 10000 || fs.statSync(genesisPng).size < 10000) {
-    throw new Error(`One or more screenshots is suspiciously small or invalid.`);
+  if (fs.statSync(searchPng).size < 10000 || fs.statSync(matthewPng).size < 10000 || fs.statSync(danielPng).size < 10000 || fs.statSync(genesisPng).size < 10000) {
+    throw new Error('One or more screenshots is suspiciously small or invalid.');
   }
+
+  // Write dynamic hashes table for reporting
+  const imageHashesTable = {
+    search_history_after_upgrade: { file: 'search_history_after_upgrade.png', sha256: hashSearch, size: fs.statSync(searchPng).size },
+    matthew_G561: { file: 'matthew_G561.png', sha256: hashMatthew, size: fs.statSync(matthewPng).size },
+    daniel_H8133: { file: 'daniel_H8133.png', sha256: hashDaniel, size: fs.statSync(danielPng).size },
+    genesis_multistrongs: { file: 'genesis_multistrongs.png', sha256: hashGenesis, size: fs.statSync(genesisPng).size }
+  };
+  fs.writeFileSync(path.join(evidenceDir, 'image_hashes.json'), JSON.stringify(imageHashesTable, null, 2), 'utf8');
 
   test8Passed = true;
 } catch (e) {
@@ -718,14 +721,13 @@ let test9Passed = false;
 let test9Error = '';
 
 try {
-  // Capture the FULL final logcat covering the entire test run up to the end
+  // Capture fresh final logcat covering the entire test run right up to the end (50MB buffer to prevent truncation)
   console.log('Capturing full final Logcat after all UI interactions...');
-  const fullLogcat = execAdb('logcat -d', { timeout: 60000 });
-  fs.writeFileSync(path.join(evidenceDir, 'upgrade_logcat.txt'), fullLogcat, 'utf8');
-  fs.writeFileSync(path.join(evidenceDir, 'final_logcat.txt'), fullLogcat, 'utf8');
-  console.log(`Saved full upgrade_logcat.txt (${fullLogcat.length} chars) covering complete test execution.`);
+  const finalLogcat = execAdb('logcat -d', { timeout: 60000, maxBuffer: 50 * 1024 * 1024 });
+  fs.writeFileSync(path.join(evidenceDir, 'final_logcat.txt'), finalLogcat, 'utf8');
+  console.log(`Saved final_logcat.txt (${finalLogcat.length} chars) right at end of suite execution.`);
 
-  const hasFatal = fullLogcat.includes('FATAL EXCEPTION: main') || fullLogcat.includes('AndroidRuntime: FATAL');
+  const hasFatal = finalLogcat.includes('FATAL EXCEPTION: main') || finalLogcat.includes('AndroidRuntime: FATAL');
   if (hasFatal) {
     throw new Error('Detected FATAL EXCEPTION in Logcat!');
   }
