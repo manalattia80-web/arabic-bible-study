@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
               IconButton(
                 onPressed: () => context.pushNamed('search'),
                 icon: const Icon(Icons.search_rounded),
-                tooltip: 'Search',
+                tooltip: 'البحث في الكتاب المقدس',
               ),
               const SizedBox(width: 8),
             ],

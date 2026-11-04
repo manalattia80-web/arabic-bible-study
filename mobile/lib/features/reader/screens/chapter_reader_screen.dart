@@ -199,7 +199,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
                   ? Center(child: Text('لم يتم العثور على آيات', style: TextStyle(color: AppColors.textMuted)))
                   : ListView.builder(
                       controller: _scrollController,
-                      cacheExtent: 5000.0,
+                      cacheExtent: 10000.0,
                       padding: const EdgeInsets.fromLTRB(12, 8, 12, 100),
                       itemCount: reader.verses.length,
                       itemBuilder: (ctx, i) {
@@ -544,7 +544,7 @@ class _ErrorRetry extends StatelessWidget {
       children: [
         Text('⚠ $message', style: const TextStyle(color: AppColors.danger), textAlign: TextAlign.center),
         const SizedBox(height: 16),
-        ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
+        ElevatedButton(onPressed: onRetry, child: const Text('إعادة المحاولة')),
       ],
     ),
   );

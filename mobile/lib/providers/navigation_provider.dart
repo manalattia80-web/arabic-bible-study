@@ -1,3 +1,4 @@
+import '../models/verse.dart';
 // lib/providers/navigation_provider.dart
 // ─────────────────────────────────────────────────────────────────────────────
 // Manages testaments, books, and chapter lists.
@@ -14,7 +15,26 @@ class NavigationProvider extends ChangeNotifier {
   // ── State ──────────────────────────────────────────────────
   List<Testament> _testaments = [];
   List<Book>      _books      = [];
-  List<Book>      _allBooks   = [];  // all 66, loaded once
+  static List<Book> _buildInitialCanonicalBooks() {
+    final List<Book> list = [];
+    for (int id = 1; id <= 66; id++) {
+      final nameAr = Verse.defaultBookNames[id] ?? 'سفر $id';
+      final chCount = DatabaseService.defaultChapterCounts[id] ?? 1;
+      list.add(Book(
+        id: id,
+        testamentId: id >= 40 ? 2 : 1,
+        nameAr: nameAr,
+        nameArShort: nameAr,
+        nameEn: DatabaseService.defaultBookNamesEn[id] ?? 'Book $id',
+        nameEnShort: DatabaseService.defaultBookNamesEn[id] ?? 'Book $id',
+        chapterCount: chCount,
+        sortOrder: id,
+      ));
+    }
+    return list;
+  }
+
+  List<Book> _allBooks = _buildInitialCanonicalBooks();
   List<int>       _chapters   = [];
 
   bool   _loading = false;

@@ -764,7 +764,7 @@ class _StrongsModalState extends State<StrongsModal> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Strong\'s Lexicon (${entry.strongsId})',
+                                              'معجم سترونج (${entry.strongsId})',
                                               style: TextStyle(
                                                 color: AppColors.textMuted,
                                                 fontSize: 11,
@@ -783,7 +783,7 @@ class _StrongsModalState extends State<StrongsModal> {
                                             if (hasKjv) ...[
                                               const SizedBox(height: 6),
                                               Text(
-                                                'KJV Usage: ${entry.kjvUsage!}',
+                                                'شواهد الاستخدام في KJV: ${entry.kjvUsage!}',
                                                 style: TextStyle(
                                                   color: AppColors.textMuted,
                                                   fontSize: 12,
