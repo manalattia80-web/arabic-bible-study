@@ -77,6 +77,9 @@ jobs:
             set -e
             echo "=== Installing Experimental APK on Android Emulator ==="
             adb install -r arabic-bible-study-app.apk
+            echo "=== Launching MainActivity for initial database setup ==="
+            adb shell am start -n com.arabicbible.study/.MainActivity
+            sleep 5
             echo "=== Launching 5 Acceptance Scenarios Suite ==="
             node scripts/run_acceptance_scenarios_350.cjs
 

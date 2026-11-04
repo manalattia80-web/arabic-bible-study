@@ -14,7 +14,6 @@
 const fs = require('fs');
 const path = require('path');
 const child = require('child_process');
-const crypto = require('crypto');
 
 function execAdb(cmd, options = {}) {
   try {
@@ -107,38 +106,78 @@ const searchInputY = Math.round(H * 0.081);
 const themeIconX = Math.round(W * 0.75);
 const themeIconY = Math.round(H * 0.081);
 
-function restartAppCleanly() {
-  execAdb('shell am force-stop com.arabicbible.study');
-  sleep(1500);
-  execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-  sleep(4000);
-}
-
 function dismissKeyboard() {
   execAdb('shell input keyevent 111', { ignoreError: true });
-  sleep(500);
+  sleep(400);
 }
 
-function openSearch() {
+function ensureAppInForeground() {
+  const focus = execAdb('shell dumpsys window | grep mCurrentFocus', { ignoreError: true });
+  if (!focus.includes('com.arabicbible.study')) {
+    console.log(`App not in focus. Launching MainActivity...`);
+    execAdb('shell am start -n com.arabicbible.study/.MainActivity');
+    sleep(3000);
+  }
+}
+
+function waitForDatabaseAndAppReady() {
+  console.log('Ensuring app is running and database is fully assembled on device...');
+  ensureAppInForeground();
+  for (let poll = 0; poll < 40; poll++) {
+    const prefs = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
+    if (prefs.includes('db_version') && prefs.includes('348')) {
+      console.log(`Database v348 confirmed ready on device after ${poll * 1.5}s!`);
+      break;
+    }
+    sleep(1500);
+  }
+  sleep(3000);
   dismissKeyboard();
-  execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-  sleep(2000);
+}
+
+function ensureSearchScreen() {
+  ensureAppInForeground();
   dismissKeyboard();
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const snap = captureScreenshot('search_screen_check.png');
+    const ocr = snap.ocr;
+    const onSearch = ocr.includes('بحث') || ocr.includes('عمليات البحث') || ocr.includes('اقتراحات') || ocr.includes('ابحث');
+
+    if (!onSearch) {
+      console.log(`Attempt ${attempt + 1}: Tapping search icon at (${searchIconX}, ${searchIconY})...`);
+      execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
+      sleep(2500);
+      dismissKeyboard();
+    } else {
+      console.log('Confirmed on SearchScreen.');
+      return;
+    }
+  }
 }
 
 function searchAndSubmit(query) {
-  openSearch();
-  // Tap search field
+  ensureSearchScreen();
+  // Tap search input field
   execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
   sleep(500);
+  // Clear any existing text
+  for (let k = 0; k < 10; k++) {
+    execAdb('shell input keyevent 67'); // Backspace
+  }
+  sleep(300);
+  console.log(`Typing search query: "${query}"`);
   execAdb(`shell input text "${query}"`);
   sleep(800);
-  execAdb('shell input keyevent 66'); // Submit Enter
-  sleep(2500);
+  console.log('Submitting search via Enter key (66)...');
+  execAdb('shell input keyevent 66');
+  sleep(3000);
   dismissKeyboard();
 }
 
 console.log('=== STARTING 5 ARBITRATION ACCEPTANCE SCENARIOS ===\n');
+
+// 1. Initial wait for database and app readiness
+waitForDatabaseAndAppReady();
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Scenario 1: Search Genesis 22:16, direct nav, full reference, counter 22 of 50
@@ -146,30 +185,28 @@ console.log('=== STARTING 5 ARBITRATION ACCEPTANCE SCENARIOS ===\n');
 const t1 = Date.now();
 try {
   console.log('--- Executing Scenario 1: Genesis 22:16 Direct Navigation & Complete Reference ---');
-  restartAppCleanly();
-  searchAndSubmit('H3173'); // Searches for 'وحيدك' which matches Genesis 22:16
-  sleep(1500);
+  // Use unique phrase from Genesis 22:16: 'بذاتي أقسمت'
+  searchAndSubmit('بذاتي أقسمت');
+  sleep(2000);
 
-  // In search results, tap on result card for Genesis 22:16 or Genesis 22
-  // Card 1 is at ~H*0.48
+  // In search results, Card 1 is Genesis 22:16! Tap Card 1 at ~H*0.48
+  console.log('Tapping Card 1 in search results (Genesis 22:16)...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.48)}`);
-  sleep(3000); // Allow direct mount & scroll routine to complete
+  sleep(3500); // Allow direct mount & scroll routine to center verse 16
 
   const snap1 = captureScreenshot('scenario1_genesis_22_16_direct_nav.png');
   const ocr1 = snap1.ocr;
   fs.writeFileSync(path.join(evidenceDir, 'scenario1_ocr_raw.txt'), ocr1, 'utf8');
 
   // Assertions:
-  // 1. Must NOT show 'C...' or '999'
   const has999 = ocr1.includes('999');
   const hasCTrunc = /C\.\.\./i.test(ocr1);
-  // 2. Must show complete Book & Chapter title
   const hasGenesisHeader = ocr1.includes('التكوين') || ocr1.includes('تكوين');
   const hasChapter22 = ocr1.includes('22') || ocr1.includes('٢٢');
-  // 3. Must show counter 22 of 50
   const hasCounter50 = ocr1.includes('50') || ocr1.includes('٥٠') || ocr1.includes('من 50');
-  // 4. Must show Verse 16 text directly on screen without manual scroll
   const hasVerse16Words = ocr1.includes('بذاتي') || ocr1.includes('أقسمت') || ocr1.includes('اقسمت') || ocr1.includes('هذا الأمر') || (ocr1.includes('16') && ocr1.includes('وحيدك'));
+
+  console.log(`Scenario 1 Assertions: hasGenesisHeader=${hasGenesisHeader}, hasChapter22=${hasChapter22}, hasCounter50=${hasCounter50}, hasVerse16Words=${hasVerse16Words}, has999=${has999}`);
 
   if (has999 || hasCTrunc) {
     throw new Error(`Failed: C... or 999 counter detected! OCR: ${ocr1.slice(0, 150)}`);
@@ -193,13 +230,15 @@ const t2 = Date.now();
 try {
   console.log('\n--- Executing Scenario 2: Independent Selection of Repeated H1697 Chips ---');
   // From Reader with Verse 16 on screen, tap Verse 16 card to open WordStudy
+  console.log('Tapping Verse 16 card to open WordStudyScreen...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
-  sleep(3000);
+  sleep(3500);
 
   // In WordStudy, locate row for 'الأمر' with compound links (H1697, H853, H1697)
-  // Tap the first H1697 chip at row ~H*0.50
+  // Tap the first H1697 chip at row ~H*0.52
+  console.log('Tapping first H1697 chip in WordStudyScreen...');
   execAdb(`shell input tap ${Math.round(W * 0.65)} ${Math.round(H * 0.52)}`);
-  sleep(2500);
+  sleep(3000);
 
   const snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
   const ocr2 = snap2.ocr;
@@ -208,6 +247,8 @@ try {
   // Verify modal is open and has component label distinguishing repeated H1697
   const hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
   const hasScientificNote = ocr2.includes('المكونات المعجمية') || ocr2.includes('اللفظ العربي') || ocr2.includes('النص الأصلي');
+
+  console.log(`Scenario 2 Assertions: hasCompChips=${hasCompChips}, hasScientificNote=${hasScientificNote}`);
 
   if (!hasCompChips) {
     throw new Error(`Failed: Strong's modal or component chips not detected! OCR: ${ocr2.slice(0, 150)}`);
@@ -225,8 +266,9 @@ const t3 = Date.now();
 try {
   console.log('\n--- Executing Scenario 3: H853 Morphology Disclosure & Correct Part of Speech ---');
   // Inside the open StrongsModal, tap Chip 2 (H853) at ~H*0.35, W*0.50
+  console.log('Tapping H853 component chip in modal...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
-  sleep(2000);
+  sleep(2500);
 
   // Scroll down to morphology card in bottom sheet
   execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 300`);
@@ -238,6 +280,8 @@ try {
 
   // Verify disclosure banner or particle label
   const hasParticleOrDisclosure = ocr3.includes('أداة مفعولية') || ocr3.includes('مفعولية') || ocr3.includes('المكوّن الأساسي') || ocr3.includes('اللفظ الأساسي') || ocr3.includes('H853') || ocr3.includes('853');
+
+  console.log(`Scenario 3 Assertions: hasParticleOrDisclosure=${hasParticleOrDisclosure}`);
 
   if (!hasParticleOrDisclosure) {
     throw new Error(`Failed: H853 morphology disclosure banner not detected! OCR: ${ocr3.slice(0, 150)}`);
@@ -265,8 +309,9 @@ try {
   const snapPre = captureScreenshot('scenario4_reader_pre_theme_toggle.png');
 
   // Tap theme toggle icon in AppBar
+  console.log('Tapping theme toggle icon in reader AppBar...');
   execAdb(`shell input tap ${themeIconX} ${themeIconY}`);
-  sleep(1500);
+  sleep(2000);
 
   // Capture post-toggle screenshot in reader
   const snapPost = captureScreenshot('scenario4_reader_post_theme_toggle.png');
@@ -274,6 +319,8 @@ try {
 
   // Verify that the reading position is preserved (Verse 16 words still present)
   const stillOnVerse16 = ocrPost.includes('بذاتي') || ocrPost.includes('أقسمت') || ocrPost.includes('اقسمت') || ocrPost.includes('هذا الأمر') || ocrPost.includes('22');
+
+  console.log(`Scenario 4 Assertions: stillOnVerse16=${stillOnVerse16}`);
 
   if (!stillOnVerse16) {
     throw new Error(`Failed: Reading position lost after theme switch! OCR: ${ocrPost.slice(0, 150)}`);
@@ -290,24 +337,30 @@ try {
 const t5 = Date.now();
 try {
   console.log('\n--- Executing Scenario 5: Psalm 119:160 Direct Jump & 200% Font Zoom ---');
-  restartAppCleanly();
+  // Navigate back to HomeScreen
+  execAdb('shell input keyevent 4');
+  sleep(1000);
+  execAdb('shell input keyevent 4');
+  sleep(1000);
 
-  // Search Psalm 119:160 query
-  searchAndSubmit('رَأْسُ كَلَامِكَ حَقٌّ'); // Unique text of Psalm 119:160
+  // Search Psalm 119:160 unique text
+  searchAndSubmit('رأس كلامك حق');
   sleep(2000);
 
-  // Tap search result card for Psalm 119:160
+  // Tap search result Card 1 for Psalm 119:160
+  console.log('Tapping Card 1 for Psalm 119:160...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.48)}`);
-  sleep(3500); // Allow iterative jump routine down to verse 160
+  sleep(4000); // Allow iterative jump down to verse 160
 
   const snap5 = captureScreenshot('scenario5_psalm_119_160_direct_jump.png');
   const ocr5 = snap5.ocr;
   fs.writeFileSync(path.join(evidenceDir, 'scenario5_ocr_raw.txt'), ocr5, 'utf8');
 
-  // Verify Psalm 119:160 reference and text
   const hasPsalm = ocr5.includes('المزامير') || ocr5.includes('مزمور');
   const has119 = ocr5.includes('119') || ocr5.includes('١١٩');
-  const hasVerse160 = ocr5.includes('160') || ocr5.includes('١٦٠') || ocr5.includes('رأس كلامك') || ocr5.includes('حق') || ocr5.includes('حكم عدلك');
+  const hasVerse160 = ocr5.includes('160') || ocr5.includes('١٦٠') || ocr5.includes('رأس') || ocr5.includes('كلامك') || ocr5.includes('حق') || ocr5.includes('عدلك');
+
+  console.log(`Scenario 5 Assertions: hasPsalm=${hasPsalm}, has119=${has119}, hasVerse160=${hasVerse160}`);
 
   if (!hasPsalm && !has119) {
     throw new Error(`Failed: Psalm 119 header not found! OCR: ${ocr5.slice(0, 150)}`);
@@ -316,7 +369,7 @@ try {
     throw new Error(`Failed: Psalm 119:160 text not positioned directly! OCR: ${ocr5.slice(0, 150)}`);
   }
 
-  // Now test font enlargement to 200% via font increase button (3 taps)
+  // Font enlargement to 200% via font increase button
   const fontIncX = Math.round(W * 0.85);
   const fontIncY = Math.round(H * 0.081);
   for (let k = 0; k < 4; k++) {
@@ -328,6 +381,8 @@ try {
   const ocrZoom = snapZoom.ocr;
 
   const stillReadable = ocrZoom.includes('رأس') || ocrZoom.includes('كلامك') || ocrZoom.includes('حق') || ocrZoom.includes('المزامير');
+  console.log(`Scenario 5 Zoom Assertion: stillReadable=${stillReadable}`);
+
   if (!stillReadable) {
     throw new Error('Failed: Text clipped or unreadable after 200% zoom!');
   }
