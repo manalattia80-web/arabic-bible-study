@@ -600,13 +600,14 @@ try {
 
   // Inside ChapterReaderScreen (Genesis 22):
   // Scroll down until Verse 16 text («بِذَاتِي أَقْسَمْتُ... وَحِيدَكَ») is confirmed on screen
-  console.log('In ChapterReaderScreen: scrolling down to locate Verse 16 card...');
+  console.log('In ChapterReaderScreen: scrolling down to locate Verse 16 card («بِذَاتِي أَقْسَمْتُ»)...');
   let foundVerse16 = false;
-  for (let s = 0; s < 8; s++) {
+  for (let s = 0; s < 10; s++) {
     const readerScan = captureAndOcr('/sdcard/reader_scroll_check.png');
     console.log(`Reader scroll scan ${s + 1}:`, readerScan.slice(0, 150).replace(/\n/g, ' '));
-    if (readerScan.includes('بذاتي') || readerScan.includes('أقسمت') || readerScan.includes('اقسمت') || (readerScan.includes('وحيدك') && !readerScan.includes('22: 2') && !readerScan.includes('22: 12') && !readerScan.includes('22:2'))) {
-      console.log('Genesis 22:16 text detected on screen!');
+    const isVerse16 = readerScan.includes('بذاتي') || readerScan.includes('أقسمت') || readerScan.includes('اقسمت') || readerScan.includes('هذا الأمر') || (readerScan.includes('بذات') && readerScan.includes('16'));
+    if (isVerse16) {
+      console.log('Genesis 22:16 text definitively detected on screen!');
       foundVerse16 = true;
       break;
     }
