@@ -1,62 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="AcceptanceScenariosSuite" tests="5" failures="3" errors="0" time="306.4">
+<testsuites name="AcceptanceScenariosSuite" tests="5" failures="3" errors="0" time="199.2">
   <testsuite name="ArbitrationAcceptance" tests="5" failures="3" errors="0">
-    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="109.8">
+    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="86.7">
     </testcase>
-    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="32.4">
-      <failure message="Failed: Strong's modal or component chips not detected! OCR: ‎ED‏ المدخل المعجمي / الجذر
+    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="47.6">
+      <failure message="Failed: Strong's modal or component chips not detected! OCR: ‎etna‏ المدخل المعجمي / الجذر
 
-‎wi Hebrew‏ 2 ا
+‎aa tk
 
-‎shdba’ + ‏(شافع)‎ ab
-| GSD
+‎neum ٠ ‏(تثوم)‎ ab
+٠١ ‏مده‎
 
-‏© التحليل النحوي والصرفي ‎gels‏
-‏نوع الكلمة [القسم ‎(sal‏ فعل ‎eo‏
+‏© التحليل النحوي والصرفي ‎١‏ اسمعبري
+نوع الكلمة [القسم اللغوي) اسم ‎ene‏
 
-‏وزن ن">Failed: Strong's modal or component chips not detected! OCR: ‎ED‏ المدخل المعجمي / الجذر
+‏حالة ">Failed: Strong's modal or component chips not detected! OCR: ‎etna‏ المدخل المعجمي / الجذر
 
-‎wi Hebrew‏ 2 ا
+‎aa tk
 
-‎shdba’ + ‏(شافع)‎ ab
-| GSD
+‎neum ٠ ‏(تثوم)‎ ab
+٠١ ‏مده‎
 
-‏© التحليل النحوي والصرفي ‎gels‏
-‏نوع الكلمة [القسم ‎(sal‏ فعل ‎eo‏
+‏© التحليل النحوي والصرفي ‎١‏ اسمعبري
+نوع الكلمة [القسم اللغوي) اسم ‎ene‏
 
-‏وزن ن</failure>
+‏حالة </failure>
     </testcase>
-    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="16.4">
-      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: © التحليل النحوي والصرفي  ‎Seb‏
+    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="7.7">
+      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: حالة الإضافة العبرية
 
-gow ‏قعل‎
+الحالة الإعرابية ‎(Construct)‏
+‏الجسم (مذكر | مؤنث / مذكر ‎(Masculine)‏
 
-وزن نيفعل المطاوع /
-المجهول ‎(Niphal)‏
+(Singular) «sie
 
-الماضي التام العبدي
-‎(Qatal / Perfect)‏
+العدد (مقرد | مثنى /
 
-ميتي للمجهول
-‎(Passive)‏
-">Failed: H853 morphology disclosure banner not detected! OCR: © التحليل النحوي والصرفي  ‎Seb‏
+HNcmse ee
 
-gow ‏قعل‎
+2 الم">Failed: H853 morphology disclosure banner not detected! OCR: حالة الإضافة العبرية
 
-وزن نيفعل المطاوع /
-المجهول ‎(Niphal)‏
+الحالة الإعرابية ‎(Construct)‏
+‏الجسم (مذكر | مؤنث / مذكر ‎(Masculine)‏
 
-الماضي التام العبدي
-‎(Qatal / Perfect)‏
+(Singular) «sie
 
-ميتي للمجهول
-‎(Passive)‏
-</failure>
+العدد (مقرد | مثنى /
+
+HNcmse ee
+
+2 الم</failure>
     </testcase>
-    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="63.6">
+    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="19.0">
     </testcase>
-    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="84.3">
-      <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: 8:40 © v4
+    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="38.3">
+      <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: 8:56 © v4
 
 ه © عم ‎A‏
 
@@ -69,7 +67,7 @@ dines Bi das eal Jus Js
 
 ‏89 دراسة ‎Ay SUS‏ شواهد ‎١‏ “ب مقارنة الترجمات
 
-‏">Failed: Psalm 119:160 text not positioned directly! OCR: 8:40 © v4
+‏">Failed: Psalm 119:160 text not positioned directly! OCR: 8:56 © v4
 
 ه © عم ‎A‏
 
