@@ -520,12 +520,20 @@ try {
   sleep(1500);
 
   // In search results for H8133, Ezra cards appear first.
-  // Swipe up firmly twice to bring Daniel 2:21 (card 4) into view.
-  console.log('Scrolling search results to bring Daniel 2:21 into view...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 350`);
+  // Swipe inside the results list (below Strong's banner) to bring Daniel 2:21 into view.
+  console.log('Scrolling search results list below Strong\'s banner to bring Daniel 2:21 into view...');
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.85)} ${Math.round(W * 0.50)} ${Math.round(H * 0.45)} 350`);
   sleep(1500);
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 350`);
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.85)} ${Math.round(W * 0.50)} ${Math.round(H * 0.45)} 350`);
   sleep(2000);
+
+  // If a modal was inadvertently opened, dismiss with KEYCODE_BACK
+  let danCheck = captureAndOcr('/sdcard/daniel_check.png');
+  if (danCheck.includes('المعنى المعجمي') || danCheck.includes('الرمز القياسي')) {
+    console.log('Dismissing modal to show search results...');
+    execAdb('shell input keyevent 4');
+    sleep(1500);
+  }
 
   // Capture screenshot: daniel_H8133.png
   execAdb('shell screencap -p /sdcard/daniel_H8133.png');
@@ -569,59 +577,71 @@ try {
   ensureAppInForeground();
   dismissKeyboard();
 
-  // Search for Strong's H3173 (Word 16 of Genesis 22:16 is 'وحيدك' -> H3173)
-  console.log('Searching for H3173 to reach Genesis 22...');
-  executeSearch('H3173');
+  // Search for Strong's H2820 ('חָשַׂךְ' / 'تُمْسِكِ' in Genesis 22:16: 'وَلَمْ تُمْسِكِ ابْنَكَ وَحِيدَكَ')
+  // In the entire Old Testament, H2820 returns only 2 verses in Genesis:
+  // Card 1: Genesis 22:12
+  // Card 2: Genesis 22:16 (the exact target verse!)
+  console.log('Searching for H2820 to reach Genesis 22:16 directly...');
+  executeSearch('H2820');
   dismissKeyboard();
   sleep(1500);
 
-  // In search results for H3173, Genesis 22 results are listed below the Strong's banner.
-  // Tap the Genesis 22 result card (located at Y ≈ H * 0.58) to open ChapterReaderScreen.
-  console.log('Tapping Genesis 22 search result card to open ChapterReaderScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.58)}`);
-  sleep(3500);
+  // Swipe slightly up in results list (staying below Strong's banner) to center Card 2 (Genesis 22:16)
+  console.log('Centering Genesis 22:16 card (Card 2) in search results...');
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.85)} ${Math.round(W * 0.50)} ${Math.round(H * 0.55)} 350`);
+  sleep(1500);
 
-  let inReader = captureAndOcr('/sdcard/reader_initial_check.png');
-  console.log('Chapter reader initial check OCR:', inReader.slice(0, 160).replace(/\n/g, ' '));
-  if (inReader.includes('المعنى المعجمي') || inReader.includes('الرمز القياسي')) {
-    // If a modal opened, dismiss with Back
+  // If a modal was open, dismiss with back
+  let searchCheck = captureAndOcr('/sdcard/search_card_check.png');
+  if (searchCheck.includes('المعنى المعجمي') || searchCheck.includes('الرمز القياسي')) {
     execAdb('shell input keyevent 4');
     sleep(1500);
-    // Tap further down in results list
-    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.65)}`);
-    sleep(3500);
   }
 
-  // In ChapterReaderScreen (Genesis 22):
-  // Scroll down until Verse 16 text («بِذَاتِي أَقْسَمْتُ... وَحِيدَكَ») is confirmed on screen via OCR
-  console.log('In ChapterReaderScreen: scrolling down to locate Verse 16 card...');
-  let foundVerse16 = false;
-  for (let s = 0; s < 8; s++) {
-    const ocrVerse = captureAndOcr('/sdcard/reader_scroll_check.png');
-    console.log(`Reader scroll scan ${s + 1}:`, ocrVerse.slice(0, 160).replace(/\n/g, ' '));
-    if (ocrVerse.includes('بذاتي') || ocrVerse.includes('أقسمت') || ocrVerse.includes('وحيدك')) {
-      console.log('Genesis 22:16 text detected on screen!');
-      foundVerse16 = true;
-      break;
+  // Tap Genesis 22:16 card in results list to navigate with initialVerseNum=16
+  console.log('Tapping Genesis 22:16 result card to open ChapterReaderScreen...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.55)}`);
+  sleep(3500);
+
+  // In ChapterReaderScreen:
+  // The app opened Genesis 22 with initialVerseNum: 16, automatically scrolling to Verse 16 (alignment: 0.15)
+  console.log('Verifying Verse 16 in ChapterReaderScreen...');
+  let readerOcr = captureAndOcr('/sdcard/reader_initial_check.png');
+  console.log('Chapter reader check OCR:', readerOcr.slice(0, 160).replace(/\n/g, ' '));
+
+  if (readerOcr.includes('المعنى المعجمي') || readerOcr.includes('الرمز القياسي')) {
+    execAdb('shell input keyevent 4');
+    sleep(1500);
+  }
+
+  // If Verse 16 text is not yet centered on screen, scroll down in ChapterReader until Verse 16 text appears
+  if (!readerOcr.includes('بذاتي') && !readerOcr.includes('أقسمت') && !readerOcr.includes('وحيدك')) {
+    console.log('Scrolling down in ChapterReader to bring Verse 16 into clear view...');
+    for (let s = 0; s < 6; s++) {
+      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.30)} 350`);
+      sleep(1200);
+      const scrollOcr = captureAndOcr('/sdcard/reader_scroll_check.png');
+      console.log(`Reader scroll scan ${s + 1}:`, scrollOcr.slice(0, 150).replace(/\n/g, ' '));
+      if (scrollOcr.includes('بذاتي') || scrollOcr.includes('أقسمت') || scrollOcr.includes('وحيدك')) {
+        console.log('Genesis 22:16 text detected on screen!');
+        break;
+      }
     }
-    // Scroll down 1/2 screen
-    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 350`);
-    sleep(1200);
   }
 
   // Tap Verse 16 card to open WordStudyScreen
   console.log('Tapping Verse 16 card to open WordStudyScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
   sleep(3500);
 
   // Verify we reached WordStudyScreen for Genesis 22:16
   let wordStudyOcr = captureAndOcr('/sdcard/wordstudy_verify.png');
   console.log('WordStudy screen initial OCR:', wordStudyOcr.slice(0, 200).replace(/\n/g, ' '));
 
-  // If not yet in WordStudyScreen, try tapping at H * 0.35
+  // If not yet in WordStudyScreen, retry tapping at H * 0.45
   if (!wordStudyOcr.includes('دراسة الكلمات') && !wordStudyOcr.includes('بذاتي') && !wordStudyOcr.includes('16')) {
-    console.log('Retrying tap on Verse 16 card at H * 0.35...');
-    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
+    console.log('Retrying tap on Verse 16 card at H * 0.45...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
     sleep(3500);
   }
 
