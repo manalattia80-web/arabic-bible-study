@@ -520,11 +520,11 @@ try {
   sleep(1500);
 
   // In search results for H8133, Ezra cards appear first.
-  // Swipe inside the results list (below Strong's banner) to bring Daniel 2:21 into view.
-  console.log('Scrolling search results list below Strong\'s banner to bring Daniel 2:21 into view...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.85)} ${Math.round(W * 0.50)} ${Math.round(H * 0.45)} 350`);
+  // Swipe up firmly twice to bring Daniel 2:21 (card 4) into view.
+  console.log('Scrolling search results to bring Daniel 2:21 into view...');
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 350`);
   sleep(1500);
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.85)} ${Math.round(W * 0.50)} ${Math.round(H * 0.45)} 350`);
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 350`);
   sleep(2000);
 
   // If a modal was inadvertently opened, dismiss with KEYCODE_BACK
@@ -577,75 +577,70 @@ try {
   ensureAppInForeground();
   dismissKeyboard();
 
-  // Search for Strong's H2820 ('חָשַׂךְ' / 'تُمْسِكِ' in Genesis 22:16: 'وَلَمْ تُمْسِكِ ابْنَكَ وَحِيدَكَ')
-  // In the entire Old Testament, H2820 returns only 2 verses in Genesis:
-  // Card 1: Genesis 22:12
-  // Card 2: Genesis 22:16 (the exact target verse!)
-  console.log('Searching for H2820 to reach Genesis 22:16 directly...');
-  executeSearch('H2820');
+  // Search for Strong's H3173 ('وحيدك' in Genesis 22:16) to reach Genesis 22 results
+  console.log('Searching for H3173 to navigate to Genesis 22 in ChapterReaderScreen...');
+  executeSearch('H3173');
   dismissKeyboard();
   sleep(1500);
 
-  // Swipe slightly up in results list (staying below Strong's banner) to center Card 2 (Genesis 22:16)
-  console.log('Centering Genesis 22:16 card (Card 2) in search results...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.85)} ${Math.round(W * 0.50)} ${Math.round(H * 0.55)} 350`);
-  sleep(1500);
-
-  // If a modal was open, dismiss with back
-  let searchCheck = captureAndOcr('/sdcard/search_card_check.png');
-  if (searchCheck.includes('المعنى المعجمي') || searchCheck.includes('الرمز القياسي')) {
-    execAdb('shell input keyevent 4');
-    sleep(1500);
-  }
-
-  // Tap Genesis 22:16 card in results list to navigate with initialVerseNum=16
-  console.log('Tapping Genesis 22:16 result card to open ChapterReaderScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.55)}`);
+  // In search results for H3173, Card 1 is Genesis 22:2.
+  // Tap Card 1 (located at Y ≈ H * 0.58) to open ChapterReaderScreen for Genesis 22.
+  console.log('Tapping Genesis 22 search result card to open ChapterReaderScreen...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.58)}`);
   sleep(3500);
 
-  // In ChapterReaderScreen:
-  // The app opened Genesis 22 with initialVerseNum: 16, automatically scrolling to Verse 16 (alignment: 0.15)
-  console.log('Verifying Verse 16 in ChapterReaderScreen...');
-  let readerOcr = captureAndOcr('/sdcard/reader_initial_check.png');
-  console.log('Chapter reader check OCR:', readerOcr.slice(0, 160).replace(/\n/g, ' '));
-
-  if (readerOcr.includes('المعنى المعجمي') || readerOcr.includes('الرمز القياسي')) {
+  // If a dictionary modal opened instead of reader, dismiss and re-tap at H * 0.65
+  let initialReaderCheck = captureAndOcr('/sdcard/reader_initial_check.png');
+  if (initialReaderCheck.includes('المعنى المعجمي') || initialReaderCheck.includes('الرمز القياسي')) {
     execAdb('shell input keyevent 4');
     sleep(1500);
+    execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.65)}`);
+    sleep(3500);
   }
 
-  // If Verse 16 text is not yet centered on screen, scroll down in ChapterReader until Verse 16 text appears
-  if (!readerOcr.includes('بذاتي') && !readerOcr.includes('أقسمت') && !readerOcr.includes('وحيدك')) {
-    console.log('Scrolling down in ChapterReader to bring Verse 16 into clear view...');
-    for (let s = 0; s < 6; s++) {
-      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.30)} 350`);
-      sleep(1200);
-      const scrollOcr = captureAndOcr('/sdcard/reader_scroll_check.png');
-      console.log(`Reader scroll scan ${s + 1}:`, scrollOcr.slice(0, 150).replace(/\n/g, ' '));
-      if (scrollOcr.includes('بذاتي') || scrollOcr.includes('أقسمت') || scrollOcr.includes('وحيدك')) {
-        console.log('Genesis 22:16 text detected on screen!');
-        break;
-      }
+  // Inside ChapterReaderScreen (Genesis 22):
+  // Scroll down until Verse 16 text («بِذَاتِي أَقْسَمْتُ... وَحِيدَكَ») is confirmed on screen
+  console.log('In ChapterReaderScreen: scrolling down to locate Verse 16 card...');
+  let foundVerse16 = false;
+  for (let s = 0; s < 8; s++) {
+    const readerScan = captureAndOcr('/sdcard/reader_scroll_check.png');
+    console.log(`Reader scroll scan ${s + 1}:`, readerScan.slice(0, 150).replace(/\n/g, ' '));
+    if (readerScan.includes('بذاتي') || readerScan.includes('أقسمت') || readerScan.includes('اقسمت') || (readerScan.includes('وحيدك') && !readerScan.includes('22: 2') && !readerScan.includes('22: 12') && !readerScan.includes('22:2'))) {
+      console.log('Genesis 22:16 text detected on screen!');
+      foundVerse16 = true;
+      break;
     }
+    // Scroll down 1/2 screen
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 350`);
+    sleep(1200);
   }
 
-  // Tap Verse 16 card to open WordStudyScreen
-  console.log('Tapping Verse 16 card to open WordStudyScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
+  // Tap Verse 16 card to open WordStudyScreen.
+  // In RTL, the "دراسة الكلمات" button is on the right side of the card (W * 0.80).
+  console.log('Tapping Verse 16 card at (W * 0.80, H * 0.45) to open WordStudyScreen...');
+  execAdb(`shell input tap ${Math.round(W * 0.80)} ${Math.round(H * 0.45)}`);
   sleep(3500);
 
   // Verify we reached WordStudyScreen for Genesis 22:16
   let wordStudyOcr = captureAndOcr('/sdcard/wordstudy_verify.png');
   console.log('WordStudy screen initial OCR:', wordStudyOcr.slice(0, 200).replace(/\n/g, ' '));
 
-  // If not yet in WordStudyScreen, retry tapping at H * 0.45
+  // If not yet in WordStudyScreen, retry tapping at (W * 0.80, H * 0.35)
   if (!wordStudyOcr.includes('دراسة الكلمات') && !wordStudyOcr.includes('بذاتي') && !wordStudyOcr.includes('16')) {
-    console.log('Retrying tap on Verse 16 card at H * 0.45...');
+    console.log('Retrying tap on Verse 16 card at (W * 0.80, H * 0.35)...');
+    execAdb(`shell input tap ${Math.round(W * 0.80)} ${Math.round(H * 0.35)}`);
+    sleep(3500);
+    wordStudyOcr = captureAndOcr('/sdcard/wordstudy_verify.png');
+  }
+
+  // If still not opened, retry tapping at (W * 0.50, H * 0.45)
+  if (!wordStudyOcr.includes('دراسة الكلمات') && !wordStudyOcr.includes('بذاتي') && !wordStudyOcr.includes('16')) {
+    console.log('Retrying tap on Verse 16 card at (W * 0.50, H * 0.45)...');
     execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
     sleep(3500);
   }
 
-  // In WordStudyScreen, gently swipe up to bring compound Strong's rows into view
+  // In WordStudyScreen, swipe up gently to bring compound Strong's rows into view
   console.log('Scrolling in WordStudyScreen to center Strong\'s rows...');
   execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.70)} ${Math.round(W * 0.50)} ${Math.round(H * 0.45)} 350`);
   sleep(2000);
@@ -663,7 +658,7 @@ try {
   // STRICT, UNCOMPROMISING ASSERTIONS FOR GENESIS 22:16
   const isVerse1 = ocrText.includes('22: 1') || ocrText.includes('22:1 ') || ocrText.includes('امتحن') || ocrText.includes('الأمور');
   const hasGen2216Ref = /(?:22\s*:\s*16|16\s*:\s*22)/.test(ocrText);
-  const hasVerse16SpecificWords = ocrText.includes('بذاتي') || ocrText.includes('أقسمت') || (ocrText.includes('الأمر') && ocrText.includes('وحيدك'));
+  const hasVerse16SpecificWords = ocrText.includes('بذاتي') || ocrText.includes('أقسمت') || ocrText.includes('اقسمت') || (ocrText.includes('الأمر') && ocrText.includes('وحيدك'));
 
   const isGen2216 = !isVerse1 && (hasGen2216Ref || hasVerse16SpecificWords);
 
@@ -741,11 +736,23 @@ let test9Passed = false;
 let test9Error = '';
 
 try {
-  // Capture fresh final logcat covering the entire test run right up to the end (50MB buffer to prevent truncation)
-  console.log('Capturing full final Logcat after all UI interactions...');
-  const finalLogcat = execAdb('logcat -d', { timeout: 60000, maxBuffer: 50 * 1024 * 1024 });
-  fs.writeFileSync(path.join(evidenceDir, 'final_logcat.txt'), finalLogcat, 'utf8');
-  console.log(`Saved final_logcat.txt (${finalLogcat.length} chars) right at end of suite execution.`);
+  // Capture fresh final logcat covering the entire test run right up to the end directly to file on device
+  console.log('Capturing complete final Logcat directly to file on device to prevent any buffer truncation...');
+  const finalLogcatFile = path.join(evidenceDir, 'final_logcat.txt');
+  execAdb('shell "logcat -d > /sdcard/full_final_logcat.txt"');
+  execAdb(`pull /sdcard/full_final_logcat.txt "${finalLogcatFile}"`);
+
+  if (!fs.existsSync(finalLogcatFile)) {
+    throw new Error('Logcat collection failed: final_logcat.txt was not generated.');
+  }
+
+  const logStats = fs.statSync(finalLogcatFile);
+  if (logStats.size < 500000) {
+    throw new Error(`Logcat collection truncated or partial: file size is only ${logStats.size} bytes (expected > 1MB).`);
+  }
+
+  const finalLogcat = fs.readFileSync(finalLogcatFile, 'utf8');
+  console.log(`Saved complete final_logcat.txt (${logStats.size} bytes) covering entire suite execution.`);
 
   const hasFatal = finalLogcat.includes('FATAL EXCEPTION: main') || finalLogcat.includes('AndroidRuntime: FATAL');
   if (hasFatal) {
@@ -805,6 +812,7 @@ const requiredFiles = [
   'prefs_after_upgrade.xml',
   'search_history_ocr_raw.txt',
   'genesis_multistrongs_ocr_raw.txt',
+  'image_hashes.json',
   'apk_sha256.txt'
 ];
 
