@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   verify-acceptance-scenarios:
@@ -95,6 +95,19 @@ jobs:
             cd acceptance_evidence
             zip -r ../feature_acceptance_evidence.zip ./*
             cd ..
+          fi
+
+      - name: Publish Public Acceptance Release & Artifacts
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f "feature_acceptance_evidence.zip" ]; then
+            gh release delete acceptance-evidence-350 --yes || true
+            gh release create acceptance-evidence-350 feature_acceptance_evidence.zip \
+              --title "Acceptance Evidence 350" \
+              --notes "Empirical verification evidence on Android Emulator across 5 Acceptance Scenarios" \
+              --clobber || true
           fi
 
       - name: Upload Acceptance Verification Artifacts

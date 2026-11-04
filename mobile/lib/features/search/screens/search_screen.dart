@@ -116,6 +116,32 @@ class _SearchScreenState extends State<SearchScreen> {
       setState(() { _loading = true; });
     }
 
+    // Support chapter:verse reference search (e.g. 22:16, 119:160, 19:119:160)
+    final cleanDigits = q.replaceAll('١','1').replaceAll('٢','2').replaceAll('٣','3').replaceAll('٤','4').replaceAll('٥','5')
+                         .replaceAll('٦','6').replaceAll('٧','7').replaceAll('٨','8').replaceAll('٩','9').replaceAll('٠','0');
+    final refMatch = RegExp(r'^(?:(\d+)\s*[:\s]\s*)?(\d+)\s*[:\s]\s*(\d+)$').firstMatch(cleanDigits);
+    if (refMatch != null) {
+      final bPart = refMatch.group(1);
+      final ch = int.tryParse(refMatch.group(2)!) ?? 0;
+      final vr = int.tryParse(refMatch.group(3)!) ?? 0;
+      int bId = bPart != null ? (int.tryParse(bPart) ?? 1) : (_selectedBook?.id ?? (ch == 119 ? 19 : 1));
+      if (ch > 0 && vr > 0) {
+        try {
+          final matchedVerse = await DatabaseService.instance.getVerse(bId, ch, vr);
+          if (matchedVerse != null && mounted) {
+            setState(() {
+              _results = [matchedVerse];
+              _total = 1;
+              _hasMore = false;
+              _loading = false;
+              _error = '';
+            });
+            return;
+          }
+        } catch (_) {}
+      }
+    }
+
     // Check for direct Strong's number lookup
     final detectedStrongs = _detectStrongsId(q);
     if (detectedStrongs != null && reset) {

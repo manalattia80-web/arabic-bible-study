@@ -62,7 +62,13 @@ class _WordStudyScreenState extends State<WordStudyScreen> {
     final verse      = _verseData ?? widget.verse;
     final chapterNum = verse?['chapter_num'] as int? ?? 0;
     final verseNum   = verse?['verse_num']   as int? ?? 0;
-    final bookId     = verse?['book_id']     as int? ?? 0;
+    int bookId       = verse?['book_id']     as int? ?? 0;
+    if (bookId <= 0 && widget.verseId.contains('-')) {
+      final parts = widget.verseId.split('-');
+      if (parts.length >= 4) {
+        bookId = int.tryParse(parts[3]) ?? 0;
+      }
+    }
     final passedBook = verse?['book_name']   as String? ?? '';
     final bookObj    = bookId > 0 ? nav.getBook(bookId) : null;
     final bookName   = passedBook.isNotEmpty ? passedBook : (bookObj?.nameAr ?? (bookId > 0 ? (Verse.defaultBookNames[bookId] ?? '') : ''));

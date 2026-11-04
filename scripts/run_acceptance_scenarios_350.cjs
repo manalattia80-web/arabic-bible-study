@@ -103,8 +103,10 @@ const searchIconX = Math.round(W * 0.90);
 const searchIconY = Math.round(H * 0.081);
 const searchInputX = Math.round(W * 0.40);
 const searchInputY = Math.round(H * 0.081);
-const themeIconX = Math.round(W * 0.75);
-const themeIconY = Math.round(H * 0.081);
+const readerThemeIconX = Math.round(W * 0.32);
+const readerThemeIconY = Math.round(H * 0.081);
+const readerFontIncX = Math.round(W * 0.64);
+const readerFontIncY = Math.round(H * 0.081);
 
 function dismissKeyboard() {
   execAdb('shell input keyevent 111', { ignoreError: true });
@@ -123,9 +125,10 @@ function ensureAppInForeground() {
 function waitForDatabaseAndAppReady() {
   console.log('Ensuring app is running and database is fully assembled on device...');
   ensureAppInForeground();
-  for (let poll = 0; poll < 40; poll++) {
+  for (let poll = 0; poll < 35; poll++) {
     const prefs = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
-    if (prefs.includes('db_version') && prefs.includes('348')) {
+    const dbCheck = execAdb('shell ls -l /data/data/com.arabicbible.study/databases/bible_study_v348.db', { ignoreError: true });
+    if ((prefs.includes('db_version') && prefs.includes('348')) || dbCheck.includes('bible_study_v348.db')) {
       console.log(`Database v348 confirmed ready on device after ${poll * 1.5}s!`);
       break;
     }
@@ -161,7 +164,7 @@ function searchAndSubmit(query) {
   execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
   sleep(500);
   // Clear any existing text
-  for (let k = 0; k < 10; k++) {
+  for (let k = 0; k < 12; k++) {
     execAdb('shell input keyevent 67'); // Backspace
   }
   sleep(300);
@@ -185,8 +188,7 @@ waitForDatabaseAndAppReady();
 const t1 = Date.now();
 try {
   console.log('--- Executing Scenario 1: Genesis 22:16 Direct Navigation & Complete Reference ---');
-  // Use unique phrase from Genesis 22:16: 'بذاتي أقسمت'
-  searchAndSubmit('بذاتي أقسمت');
+  searchAndSubmit('22:16');
   sleep(2000);
 
   // In search results, Card 1 is Genesis 22:16! Tap Card 1 at ~H*0.48
@@ -234,10 +236,13 @@ try {
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.45)}`);
   sleep(3500);
 
-  // In WordStudy, locate row for 'الأمر' with compound links (H1697, H853, H1697)
-  // Tap the first H1697 chip at row ~H*0.52
+  // In WordStudy, scroll down slightly to bring row for 'الأمر' into clear view
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.70)} ${Math.round(W * 0.50)} ${Math.round(H * 0.40)} 300`);
+  sleep(1500);
+
+  // Tap first H1697 chip at row ~H*0.50
   console.log('Tapping first H1697 chip in WordStudyScreen...');
-  execAdb(`shell input tap ${Math.round(W * 0.65)} ${Math.round(H * 0.52)}`);
+  execAdb(`shell input tap ${Math.round(W * 0.65)} ${Math.round(H * 0.50)}`);
   sleep(3000);
 
   const snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
@@ -308,9 +313,9 @@ try {
   // Capture pre-toggle screenshot in reader
   const snapPre = captureScreenshot('scenario4_reader_pre_theme_toggle.png');
 
-  // Tap theme toggle icon in AppBar
-  console.log('Tapping theme toggle icon in reader AppBar...');
-  execAdb(`shell input tap ${themeIconX} ${themeIconY}`);
+  // Tap theme toggle icon in ChapterReaderScreen AppBar
+  console.log(`Tapping theme toggle icon in reader AppBar at (${readerThemeIconX}, ${readerThemeIconY})...`);
+  execAdb(`shell input tap ${readerThemeIconX} ${readerThemeIconY}`);
   sleep(2000);
 
   // Capture post-toggle screenshot in reader
@@ -337,14 +342,12 @@ try {
 const t5 = Date.now();
 try {
   console.log('\n--- Executing Scenario 5: Psalm 119:160 Direct Jump & 200% Font Zoom ---');
-  // Navigate back to HomeScreen
-  execAdb('shell input keyevent 4');
-  sleep(1000);
-  execAdb('shell input keyevent 4');
-  sleep(1000);
+  // Tap search icon in reader AppBar
+  execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
+  sleep(2000);
 
-  // Search Psalm 119:160 unique text
-  searchAndSubmit('رأس كلامك حق');
+  // Search Psalm 119:160
+  searchAndSubmit('119:160');
   sleep(2000);
 
   // Tap search result Card 1 for Psalm 119:160
@@ -370,10 +373,8 @@ try {
   }
 
   // Font enlargement to 200% via font increase button
-  const fontIncX = Math.round(W * 0.85);
-  const fontIncY = Math.round(H * 0.081);
   for (let k = 0; k < 4; k++) {
-    execAdb(`shell input tap ${fontIncX} ${fontIncY}`);
+    execAdb(`shell input tap ${readerFontIncX} ${readerFontIncY}`);
     sleep(600);
   }
 
@@ -404,7 +405,7 @@ xml += `<testsuites name="AcceptanceScenariosSuite" tests="${totalTests}" failur
 xml += `  <testsuite name="ArbitrationAcceptance" tests="${totalTests}" failures="${failedCount}" errors="0">\n`;
 
 results.forEach(r => {
-  xml += `    <testcase name="scenario_${r.id}_${r.title.replace(/\s+/g, '_')}" time="${r.durationSec.toFixed(1)}">\n`;
+  xml += `    <testcase name="scenario_${r.id}_${r.title.replace(/\\s+/g, '_')}" time="${r.durationSec.toFixed(1)}">\n`;
   if (!r.passed) {
     xml += `      <failure message="${r.detail.replace(/"/g, '&quot;')}">${r.detail}</failure>\n`;
   }

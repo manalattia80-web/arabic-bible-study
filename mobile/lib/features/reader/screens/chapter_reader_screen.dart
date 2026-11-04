@@ -308,6 +308,8 @@ class _VerseCard extends StatelessWidget {
         extra: {
           'verse_num':  verse.verseNum,
           'chapter_num': chapterNum,
+          'book_id':     verse.bookId,
+          'book_name':   bookName,
           'text_avd_ar': verse.textAvdAr,
           'text_original': verse.textManuscript ?? verse.textOriginal,
           'text_original_lang': verse.textOriginalLang,
