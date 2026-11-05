@@ -80,7 +80,7 @@ class BookGroup {
     ),
     BookGroup(
       id: 'nt_general_epistles',
-      nameAr: 'الرسائل العامة',
+      nameAr: 'الرسائل العامة (الجامعة)',
       descriptionAr: 'العبرانيين – يهوذا (٨ رسائل)',
       testamentId: 2,
       bookIds: [58, 59, 60, 61, 62, 63, 64, 65],
