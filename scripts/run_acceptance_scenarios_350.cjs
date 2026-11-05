@@ -1,13 +1,15 @@
 /**
  * run_acceptance_scenarios_350.cjs
- * Executes the Non-Negotiable Acceptance Scenarios on Live Android Emulator:
+ * Executes the Non-Negotiable Acceptance Scenarios on Live Android Emulator
+ * with strict element locators, true pixel luminance decoding, isolated setup,
+ * and standard-compliant JUnit XML.
  *
  * Scenario 1: Search Genesis 22:16 -> Direct navigation, complete book title (no C...),
  *             full reference, and accurate counter (الإصحاح 22 من 50).
  * Scenario 2: WordStudy Genesis 22:16 -> Word 12 (الأَمْرَ): Independent selection of repeated H1697
  *             components (المكوّن 1: H1697 vs المكوّن 3: H1697).
  * Scenario 3: Select H853 component -> Verified morphology disclosure banner and direct object particle.
- * Scenario 4: Toggle Theme -> Verified color luminance inversion with strict verse 16 position preservation.
+ * Scenario 4: Toggle Theme -> Verified real pixel color luminance inversion with strict verse 16 position preservation.
  * Scenario 5: Direct Jump to Psalm 119:160 -> Direct arrival and centering without offset loss.
  * Scenario 6: Controlled 200% Font Zoom -> Stepped magnification from 20.0 to 40.0 with zero clipping.
  */
@@ -40,7 +42,7 @@ const evidenceDir = path.resolve(process.cwd(), 'acceptance_evidence');
 if (!fs.existsSync(evidenceDir)) {
   fs.mkdirSync(evidenceDir, { recursive: true });
 } else {
-  // Wipe previous artifacts to ensure zero stale evidence
+  // Requirement 3: Wipe previous artifacts to ensure zero stale evidence
   const existingFiles = fs.readdirSync(evidenceDir);
   for (const f of existingFiles) {
     try { fs.unlinkSync(path.join(evidenceDir, f)); } catch (_) {}
@@ -64,7 +66,7 @@ function runOcr(imagePath) {
     let baseText = '';
     let invText = '';
 
-    // 1. Direct OCR (Light Theme / bright backgrounds)
+    // 1. Direct OCR (for Light Theme / bright backgrounds)
     try {
       baseText = child.execSync(`tesseract "${imagePath}" stdout -l ara+eng --psm 6`, {
         encoding: 'utf8',
@@ -81,7 +83,7 @@ function runOcr(imagePath) {
       } catch (_) {}
     }
 
-    // 2. Inverted OCR (Dark Theme / white-on-dark text)
+    // 2. Inverted OCR (for Dark Theme / white-on-dark text)
     try {
       const inverted = imagePath.replace(/\.png$/i, '_neg.png');
       child.execSync(`ffmpeg -y -i "${imagePath}" -vf "negate" "${inverted}"`, {
@@ -123,17 +125,21 @@ function captureScreenshot(filename) {
   return { path: localPath, ocr: runOcr(localPath) };
 }
 
-// Find UI element node by label / content-desc / text using Android UI Automator dump
-function findNodeCenter(searchPattern) {
+// Requirement 2: UI Automator Dump parser for true element identification
+function getUiDumpXml() {
   execAdb('shell uiautomator dump /sdcard/window_dump.xml', { ignoreError: true });
   const localDump = path.join(evidenceDir, 'window_dump.xml');
   execAdb(`pull /sdcard/window_dump.xml "${localDump}"`, { ignoreError: true });
-  if (!fs.existsSync(localDump)) return null;
-
+  if (!fs.existsSync(localDump)) return '';
   const xml = fs.readFileSync(localDump, 'utf8');
   try { fs.unlinkSync(localDump); } catch (_) {}
+  return xml;
+}
 
-  const regex = new RegExp(`<(?:node)[^>]+(?:text|content-desc)="[^"]*${searchPattern}[^"]*"[^>]+bounds="\\[(\\d+),(\\d+)\\]\\[(\\d+),(\\d+)\\]"`, 'i');
+function findNodeCenter(searchPattern) {
+  const xml = getUiDumpXml();
+  if (!xml) return null;
+  const regex = new RegExp(`<(?:node)[^>]+(?:text|content-desc|resource-id)="[^"]*${searchPattern}[^"]*"[^>]+bounds="\\[(\\d+),(\\d+)\\]\\[(\\d+),(\\d+)\\]"`, 'i');
   const match = xml.match(regex);
   if (match) {
     const x1 = parseInt(match[1], 10);
@@ -145,19 +151,30 @@ function findNodeCenter(searchPattern) {
   return null;
 }
 
-// Measure average luminance of the screen from a screenshot (0.0 = dark, 1.0 = light)
-function getScreenLuminance(imagePath) {
+// Requirement 3: TRUE Pixel Luminance Calculation by decoding raw RGB24 pixels with ffmpeg
+function getActualPixelLuminance(imagePath) {
   try {
-    const buf = fs.readFileSync(imagePath);
-    // Simple sampling of pixels from raw PNG bytes
-    let total = 0;
-    let count = 0;
-    for (let i = 100; i < buf.length - 100; i += 20) {
-      total += buf[i];
-      count++;
+    const rawRgb = child.execSync(`ffmpeg -i "${imagePath}" -v quiet -f rawvideo -pix_fmt rgb24 -`, {
+      maxBuffer: 20 * 1024 * 1024,
+      timeout: 15000
+    });
+    let totalLuminance = 0;
+    let sampleCount = 0;
+    // Sample every 10th pixel (step by 30 bytes)
+    for (let i = 0; i < rawRgb.length - 3; i += 30) {
+      const r = rawRgb[i];
+      const g = rawRgb[i + 1];
+      const b = rawRgb[i + 2];
+      // Perceived standard luminance (ITU-R BT.601 formula)
+      const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0;
+      totalLuminance += lum;
+      sampleCount++;
     }
-    return count > 0 ? total / (count * 255.0) : 0.5;
-  } catch (_) {
+    const avgLum = sampleCount > 0 ? totalLuminance / sampleCount : 0.5;
+    console.log(`Decoded ${sampleCount} real RGB pixels from ${path.basename(imagePath)}. Mean Luminance: ${avgLum.toFixed(3)}`);
+    return avgLum;
+  } catch (err) {
+    console.warn(`Pixel decoding fallback for ${imagePath}:`, err.message);
     return 0.5;
   }
 }
@@ -181,29 +198,28 @@ const W = sizeMatch ? parseInt(sizeMatch[1], 10) : 320;
 const H = sizeMatch ? parseInt(sizeMatch[2], 10) : 640;
 console.log(`Screen resolution: ${W} x ${H}`);
 
-// Dynamic or calibrated coordinates
-const searchIconX = Math.round(W * 0.90);
-const searchIconY = Math.round(H * 0.081);
-const searchInputX = Math.round(W * 0.40);
-const searchInputY = Math.round(H * 0.081);
+// Requirement 1: Ensure app is strictly in foreground before ANY action
+function assertAppInForeground(contextName = '') {
+  const focus = execAdb('shell dumpsys window | grep mCurrentFocus', { ignoreError: true });
+  if (!focus.includes('com.arabicbible.study')) {
+    console.log(`App not in focus (${focus}). Recovering to MainActivity for: ${contextName}...`);
+    execAdb('shell am start -n com.arabicbible.study/.MainActivity');
+    sleep(3500);
+    const verify = execAdb('shell dumpsys window | grep mCurrentFocus', { ignoreError: true });
+    if (!verify.includes('com.arabicbible.study')) {
+      throw new Error(`Execution halted: App is not in foreground! Focus: ${verify} (Context: ${contextName})`);
+    }
+  }
+}
 
 function dismissKeyboard() {
   execAdb('shell input keyevent 111', { ignoreError: true });
   sleep(400);
 }
 
-function ensureAppInForeground() {
-  const focus = execAdb('shell dumpsys window | grep mCurrentFocus', { ignoreError: true });
-  if (!focus.includes('com.arabicbible.study')) {
-    console.log(`App not in focus. Launching MainActivity...`);
-    execAdb('shell am start -n com.arabicbible.study/.MainActivity');
-    sleep(3000);
-  }
-}
-
 function waitForDatabaseAndAppReady() {
   console.log('Ensuring app is running and database is fully assembled on device...');
-  ensureAppInForeground();
+  assertAppInForeground('Initial Setup');
   for (let poll = 0; poll < 40; poll++) {
     const prefs = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
     const dbCheck = execAdb('shell ls -l /data/data/com.arabicbible.study/databases/bible_study_v348.db', { ignoreError: true });
@@ -217,48 +233,80 @@ function waitForDatabaseAndAppReady() {
   dismissKeyboard();
 }
 
-function ensureSearchScreen() {
-  ensureAppInForeground();
+// Requirement 1 & 2: Robust, isolated search screen opener
+function ensureSearchScreen(contextName = '') {
+  assertAppInForeground(contextName);
   dismissKeyboard();
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const snap = captureScreenshot('search_screen_check.png');
-    const norm = normalizeArabic(snap.ocr);
-    const onSearch = norm.includes('بحث') || norm.includes('عمليات البحث') || norm.includes('اقتراحات') || norm.includes('ابحث');
 
-    if (!onSearch) {
-      console.log(`Attempt ${attempt + 1}: Tapping search icon...`);
-      const searchNode = findNodeCenter('بحث');
-      if (searchNode) {
-        execAdb(`shell input tap ${searchNode.x} ${searchNode.y}`);
-      } else {
-        execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-      }
-      sleep(2500);
-      dismissKeyboard();
-    } else {
-      console.log('Confirmed on SearchScreen.');
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const xml = getUiDumpXml();
+    const onSearch = xml.includes('search_input_field') || xml.includes('ابحث') || xml.includes('بحث');
+    if (onSearch) {
+      console.log(`Confirmed on SearchScreen (Attempt ${attempt + 1}).`);
       return;
     }
+
+    console.log(`Attempt ${attempt + 1}: Locating search button in AppBar...`);
+    const searchNode = findNodeCenter('البحث في الكتاب المقدس') || findNodeCenter('بحث');
+    if (searchNode) {
+      execAdb(`shell input tap ${searchNode.x} ${searchNode.y}`);
+    } else {
+      // Tap search icon in top right AppBar (X ~ 300, Y ~ 48)
+      execAdb(`shell input tap ${Math.round(W * 0.92)} 48`);
+    }
+    sleep(2500);
+    dismissKeyboard();
   }
+
+  throw new Error(`Scenario setup failed: Unable to open SearchScreen for ${contextName}`);
 }
 
-function searchAndSubmit(query) {
-  ensureSearchScreen();
-  execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
+// Requirement 1: Safe search submit with explicit result loading verification
+function searchAndVerifyResults(query) {
+  ensureSearchScreen(`Search query: ${query}`);
+
+  // Tap search input field to focus
+  const inputNode = findNodeCenter('search_input_field') || findNodeCenter('ابحث');
+  const inputX = inputNode ? inputNode.x : Math.round(W * 0.40);
+  const inputY = inputNode ? inputNode.y : 48;
+  execAdb(`shell input tap ${inputX} ${inputY}`);
   sleep(500);
-  for (let k = 0; k < 12; k++) {
-    execAdb('shell input keyevent 67'); // Backspace
-  }
+
+  // Clear any existing text safely using Ctrl+A and Backspace (NEVER backspace spam)
+  execAdb('shell input keyevent 29 --meta 1', { ignoreError: true }); // Ctrl+A
+  sleep(200);
+  execAdb('shell input keyevent 67', { ignoreError: true }); // Backspace
   sleep(300);
+
   console.log(`Typing search query: "${query}"`);
   execAdb(`shell input text "${query}"`);
   sleep(800);
-  console.log(`Tapping search action button...`);
-  execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
-  sleep(500);
-  execAdb('shell input keyevent 66'); // Enter
-  sleep(3000);
+
+  // Submit search: tap the 'بحث' TextButton or send Enter
+  const submitNode = findNodeCenter('search_submit_btn') || findNodeCenter('بحث');
+  if (submitNode) {
+    execAdb(`shell input tap ${submitNode.x} ${submitNode.y}`);
+  } else {
+    execAdb('shell input keyevent 66'); // Enter
+  }
+
+  // Poll up to 6 seconds to verify results actually loaded on screen
+  let searchLoaded = false;
+  for (let poll = 0; poll < 6; poll++) {
+    sleep(1000);
+    const dump = getUiDumpXml();
+    if (dump.includes('SearchResultCard') || dump.includes('وجدنا') || dump.includes('الإصحاح') || dump.includes('آية')) {
+      searchLoaded = true;
+      console.log(`Search results verified loaded for "${query}" after ${poll + 1}s.`);
+      break;
+    }
+  }
+
   dismissKeyboard();
+
+  if (!searchLoaded) {
+    throw new Error(`Search failed: Search results for "${query}" did not appear on screen!`);
+  }
 }
 
 console.log('=== STARTING RIGOROUS ACCEPTANCE SCENARIOS ===\n');
@@ -272,13 +320,14 @@ waitForDatabaseAndAppReady();
 const t1 = Date.now();
 try {
   console.log('--- Executing Scenario 1: Genesis 22:16 Direct Navigation & Complete Reference ---');
-  searchAndSubmit('22:16');
-  sleep(2000);
+  searchAndVerifyResults('22:16');
 
-  // In search results, Card 1 is Genesis 22:16, centered at Y ~ 200
-  console.log('Tapping Card 1 in search results (Genesis 22:16) at (160, 200)...');
+  // Tap Card 1 in search results at Y ~ 200
+  console.log('Tapping Card 1 in search results (Genesis 22:16)...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} 200`);
-  sleep(4000); // Allow direct mount & scroll routine to center verse 16
+  sleep(4500); // Allow direct mount & scroll routine to center verse 16
+
+  assertAppInForeground('Scenario 1 Reader');
 
   const snap1 = captureScreenshot('scenario1_genesis_22_16_direct_nav.png');
   const ocr1 = snap1.ocr;
@@ -319,28 +368,36 @@ try {
 const t2 = Date.now();
 try {
   console.log('\n--- Executing Scenario 2: Independent Selection of Repeated H1697 Chips ---');
-  // From Reader with Verse 16 on screen, tap Verse 16 card to open WordStudy
-  console.log('Tapping Verse 16 card to open WordStudyScreen at (160, 130)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 130`);
+  assertAppInForeground('Scenario 2 Setup');
+
+  // Open WordStudyScreen by tapping Verse 16 card
+  console.log('Tapping Verse 16 card to open WordStudyScreen at (160, 140)...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} 140`);
   sleep(4000); // Allow WordStudyScreen to load
 
-  // In WordStudyScreen, scroll down the table to bring Word 12 (الأَمْرَ) into view
+  assertAppInForeground('Scenario 2 WordStudyScreen');
+
+  // Scroll down the table to bring Word 12 (الأَمْرَ) into view
   console.log('Scrolling down WordStudy table to reach Word 12 (الأَمْرَ)...');
   execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 100 400`);
   sleep(1000);
   execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 100 400`);
   sleep(1500);
 
-  // Tap Word 12 (الأَمْرَ) in table
-  console.log('Tapping Word 12 (الأَمْرَ) in table at (160, 270)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 270`);
+  // Locate and tap Word 12 (الأَمْرَ)
+  const word12Node = findNodeCenter('الأَمْرَ') || findNodeCenter('word_row_12');
+  if (word12Node) {
+    console.log(`Tapping Word 12 (الأَمْرَ) at node (${word12Node.x}, ${word12Node.y})...`);
+    execAdb(`shell input tap ${word12Node.x} ${word12Node.y}`);
+  } else {
+    console.log('Tapping Word 12 (الأَمْرَ) in table at (160, 270)...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} 270`);
+  }
   sleep(2500);
 
   let snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
-  let ocr2 = snap2.ocr;
-  let norm2 = normalizeArabic(ocr2);
+  let norm2 = normalizeArabic(snap2.ocr);
 
-  // Check if StrongsModal is open for Word 12 with repeated H1697 chips
   let hasComp1 = norm2.includes('المكون 1') || norm2.includes('المكون ١');
   let hasComp3 = norm2.includes('المكون 3') || norm2.includes('المكون ٣');
   let hasH1697 = norm2.includes('1697') || norm2.includes('H1697');
@@ -350,24 +407,26 @@ try {
     execAdb(`shell input tap ${Math.round(W * 0.50)} 320`);
     sleep(2500);
     snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
-    ocr2 = snap2.ocr;
-    norm2 = normalizeArabic(ocr2);
+    norm2 = normalizeArabic(snap2.ocr);
     hasComp1 = norm2.includes('المكون 1') || norm2.includes('المكون ١');
     hasComp3 = norm2.includes('المكون 3') || norm2.includes('المكون ٣');
     hasH1697 = norm2.includes('1697') || norm2.includes('H1697');
   }
 
   // Test independent selection: Tap Chip 3 to select Component 3
-  console.log('Tapping Component 3 chip at (220, 230)...');
-  execAdb('shell input tap 220 230');
+  const chip3Node = findNodeCenter('strongs_comp_chip_2') || findNodeCenter('المكوّن 3');
+  const chip3X = chip3Node ? chip3Node.x : 220;
+  const chip3Y = chip3Node ? chip3Node.y : 230;
+  console.log(`Tapping Component 3 chip at (${chip3X}, ${chip3Y})...`);
+  execAdb(`shell input tap ${chip3X} ${chip3Y}`);
   sleep(1500);
-  const snapChip3 = captureScreenshot('scenario2_chip3_selected.png');
+  captureScreenshot('scenario2_chip3_selected.png');
 
-  fs.writeFileSync(path.join(evidenceDir, 'scenario2_ocr_raw.txt'), ocr2, 'utf8');
+  fs.writeFileSync(path.join(evidenceDir, 'scenario2_ocr_raw.txt'), snap2.ocr, 'utf8');
   console.log(`Scenario 2 Assertions: hasComp1=${hasComp1}, hasComp3=${hasComp3}, hasH1697=${hasH1697}`);
 
   if (!hasH1697) {
-    throw new Error(`Failed: Strong's H1697 modal not opened! OCR: ${ocr2.slice(0, 150)}`);
+    throw new Error(`Failed: Strong's H1697 modal not opened!`);
   }
   if (!hasComp1 && !hasComp3) {
     throw new Error(`Failed: Component rank chips (المكوّن 1 / المكوّن 3) not distinguished!`);
@@ -384,9 +443,14 @@ try {
 const t3 = Date.now();
 try {
   console.log('\n--- Executing Scenario 3: H853 Morphology Disclosure & Correct Part of Speech ---');
-  // Inside the open StrongsModal for Word 12, tap the middle chip (H853) around (160, 230)
-  console.log('Tapping H853 component chip in modal at (160, 230)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 230`);
+  assertAppInForeground('Scenario 3 Setup');
+
+  // Inside the open StrongsModal for Word 12, tap the middle chip (H853)
+  const h853Node = findNodeCenter('strongs_comp_chip_1') || findNodeCenter('H853');
+  const h853X = h853Node ? h853Node.x : Math.round(W * 0.50);
+  const h853Y = h853Node ? h853Node.y : 230;
+  console.log(`Tapping H853 component chip in modal at (${h853X}, ${h853Y})...`);
+  execAdb(`shell input tap ${h853X} ${h853Y}`);
   sleep(2000);
 
   // Scroll down to morphology section in modal
@@ -394,8 +458,7 @@ try {
   sleep(1500);
 
   let snap3 = captureScreenshot('scenario3_h853_morphology_disclosure.png');
-  let ocr3 = snap3.ocr;
-  let norm3 = normalizeArabic(ocr3);
+  let norm3 = normalizeArabic(snap3.ocr);
   let hasDisclosureBanner = norm3.includes('تنبيه') && (norm3.includes('اللفظ الاساسي') || norm3.includes('المكون المعروض'));
   let hasParticlePos = norm3.includes('اداه مفعوليه') || norm3.includes('مفعوليه صريحه') || norm3.includes('مفعوليه');
 
@@ -404,13 +467,12 @@ try {
     execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 150 500`);
     sleep(1500);
     snap3 = captureScreenshot('scenario3_h853_morphology_disclosure.png');
-    ocr3 = snap3.ocr;
-    norm3 = normalizeArabic(ocr3);
+    norm3 = normalizeArabic(snap3.ocr);
     hasDisclosureBanner = norm3.includes('تنبيه') && (norm3.includes('اللفظ الاساسي') || norm3.includes('المكون المعروض'));
     hasParticlePos = norm3.includes('اداه مفعوليه') || norm3.includes('مفعوليه صريحه') || norm3.includes('مفعوليه');
   }
 
-  fs.writeFileSync(path.join(evidenceDir, 'scenario3_ocr_raw.txt'), ocr3, 'utf8');
+  fs.writeFileSync(path.join(evidenceDir, 'scenario3_ocr_raw.txt'), snap3.ocr, 'utf8');
   console.log(`Scenario 3 Assertions: hasDisclosureBanner=${hasDisclosureBanner}, hasParticlePos=${hasParticlePos}`);
 
   if (!hasDisclosureBanner && !hasParticlePos) {
@@ -423,11 +485,13 @@ try {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Scenario 4: Toggle theme during reading, verify real color change & preserve verse 16
+// Scenario 4: Toggle theme during reading, verify real pixel luminance & preserve verse 16
 // ─────────────────────────────────────────────────────────────────────────────
 const t4 = Date.now();
 try {
   console.log('\n--- Executing Scenario 4: Instant Theme Switching with Preserved Scroll ---');
+  assertAppInForeground('Scenario 4 Setup');
+
   // Dismiss StrongsModal with back key
   execAdb('shell input keyevent 4');
   sleep(1000);
@@ -435,17 +499,19 @@ try {
   execAdb('shell input keyevent 4');
   sleep(1500);
 
+  assertAppInForeground('Scenario 4 Reader');
+
   // Capture pre-toggle screenshot in reader
   const snapPre = captureScreenshot('scenario4_reader_pre_theme_toggle.png');
-  const lumPre = getScreenLuminance(snapPre.path);
+  const lumPre = getActualPixelLuminance(snapPre.path);
 
-  // Tap theme toggle button by accessibility node or exact position
-  const themeNode = findNodeCenter('تبديل السمة');
+  // Requirement 2: Tap theme toggle button by accessibility node or exact action position
+  const themeNode = findNodeCenter('تبديل السمة') || findNodeCenter('reader_theme_toggle_btn');
   if (themeNode) {
     console.log(`Tapping theme toggle button at found node (${themeNode.x}, ${themeNode.y})...`);
     execAdb(`shell input tap ${themeNode.x} ${themeNode.y}`);
   } else {
-    // Theme toggle is the first button in reader AppBar actions (X ~ 195, Y ~ 48 on 320x640)
+    // First action in reader AppBar actions (X ~ 195, Y ~ 48 on 320x640)
     console.log('Tapping theme toggle button at AppBar action position (195, 48)...');
     execAdb('shell input tap 195 48');
   }
@@ -453,22 +519,21 @@ try {
 
   // Capture post-toggle screenshot in reader
   const snapPost = captureScreenshot('scenario4_reader_post_theme_toggle.png');
-  const lumPost = getScreenLuminance(snapPost.path);
-  const ocrPost = snapPost.ocr;
-  const normPost = normalizeArabic(ocrPost);
+  const lumPost = getActualPixelLuminance(snapPost.path);
+  const normPost = normalizeArabic(snapPost.ocr);
 
   // Strict Assertions:
-  // 1. Luminance must change significantly between light and dark modes
+  // Requirement 3: Real pixel luminance shift between Light and Dark modes
   const lumDiff = Math.abs(lumPost - lumPre);
-  const themeChanged = lumDiff > 0.04;
+  const themeChanged = lumDiff > 0.15; // Decoded pixel change between dark and light is typically > 0.40
 
-  // 2. Exact Verse 16 must remain in view
+  // 2. Exact Verse 16 must strictly remain in view
   const stillOnVerse16 = normPost.includes('الاي 16') || normPost.includes('الآية 16') || normPost.includes('الآية ١٦') || (normPost.includes('وقال') && normPost.includes('بذاتي'));
 
   console.log(`Scenario 4 Assertions: lumPre=${lumPre.toFixed(3)}, lumPost=${lumPost.toFixed(3)}, lumDiff=${lumDiff.toFixed(3)}, themeChanged=${themeChanged}, stillOnVerse16=${stillOnVerse16}`);
 
   if (!themeChanged) {
-    throw new Error(`Failed: Screen color/theme did not toggle! Luminance diff: ${lumDiff.toFixed(3)}`);
+    throw new Error(`Failed: Screen color/theme did not toggle! True pixel luminance diff: ${lumDiff.toFixed(3)}`);
   }
   if (!stillOnVerse16) {
     throw new Error(`Failed: Exact Verse 16 position lost after theme switch!`);
@@ -485,31 +550,24 @@ try {
 const t5 = Date.now();
 try {
   console.log('\n--- Executing Scenario 5: Psalm 119:160 Direct Jump & Exact Positioning ---');
-  // Open search
-  const searchNode = findNodeCenter('بحث');
-  if (searchNode) {
-    execAdb(`shell input tap ${searchNode.x} ${searchNode.y}`);
-  } else {
-    execAdb(`shell input tap 305 48`);
-  }
-  sleep(2000);
+  assertAppInForeground('Scenario 5 Setup');
 
   // Search Psalm 119:160
-  searchAndSubmit('119:160');
-  sleep(2000);
+  searchAndVerifyResults('119:160');
 
-  // Tap search result Card 1 for Psalm 119:160 at (160, 200)
+  // Tap Card 1 in search results at Y ~ 200
   console.log('Tapping Card 1 for Psalm 119:160 at (160, 200)...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} 200`);
   sleep(7000); // Allow direct jump down to verse 160 with frame catchup
 
+  assertAppInForeground('Scenario 5 Reader');
+
   const snap5 = captureScreenshot('scenario5_psalm_119_160_direct_jump.png');
-  const ocr5 = snap5.ocr;
-  const norm5 = normalizeArabic(ocr5);
-  fs.writeFileSync(path.join(evidenceDir, 'scenario5_ocr_raw.txt'), ocr5, 'utf8');
+  const norm5 = normalizeArabic(snap5.ocr);
+  fs.writeFileSync(path.join(evidenceDir, 'scenario5_ocr_raw.txt'), snap5.ocr, 'utf8');
 
   const hasPsalmHeader = norm5.includes('المزامير') || norm5.includes('مزمور');
-  const hasChapter119 = ocr5.includes('119') || ocr5.includes('١١٩');
+  const hasChapter119 = snap5.ocr.includes('119') || snap5.ocr.includes('١١٩');
   const hasVerse160 = norm5.includes('160') || norm5.includes('١٦٠') || norm5.includes('راس كلامك') || norm5.includes('كلامك حق') || norm5.includes('احكام عدلك');
 
   console.log(`Scenario 5 Assertions: hasPsalmHeader=${hasPsalmHeader}, hasChapter119=${hasChapter119}, hasVerse160=${hasVerse160}`);
@@ -532,9 +590,11 @@ try {
 const t6 = Date.now();
 try {
   console.log('\n--- Executing Scenario 6: Controlled Font Zoom to 200% & Readability ---');
+  assertAppInForeground('Scenario 6 Setup');
+
   // Default font is 20.0. Each tap on reader_font_increase_btn increases by +4.0.
   // 5 taps: 20 -> 24 -> 28 -> 32 -> 36 -> 40.0 (exact 200% zoom!)
-  const fontNode = findNodeCenter('تكبير الخط');
+  const fontNode = findNodeCenter('تكبير الخط') || findNodeCenter('reader_font_increase_btn');
   const fontTapX = fontNode ? fontNode.x : 246;
   const fontTapY = fontNode ? fontNode.y : 48;
 
@@ -546,8 +606,7 @@ try {
   sleep(1500);
 
   const snapZoom = captureScreenshot('scenario6_psalm_119_160_zoomed_200.png');
-  const ocrZoom = snapZoom.ocr;
-  const normZoom = normalizeArabic(ocrZoom);
+  const normZoom = normalizeArabic(snapZoom.ocr);
 
   // Verify readability: verse 160 words remain clear and rendered without crash
   const textReadableAt200 = normZoom.includes('راس') || normZoom.includes('كلامك') || normZoom.includes('حق') || normZoom.includes('المزامير') || normZoom.includes('119');
@@ -563,7 +622,7 @@ try {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Output Robust, Standard-Compliant JUnit XML & Summary
+// Requirement 4: Output Robust, Standard-Compliant JUnit XML & Summary
 // ─────────────────────────────────────────────────────────────────────────────
 const totalTests = results.length;
 const passedCount = results.filter(r => r.passed).length;
