@@ -139,7 +139,8 @@ function getUiDumpXml() {
 function findNodeCenter(searchPattern) {
   const xml = getUiDumpXml();
   if (!xml) return null;
-  const regex = new RegExp(`<(?:node)[^>]+(?:text|content-desc|resource-id)="[^"]*${searchPattern}[^"]*"[^>]+bounds="\\[(\\d+),(\\d+)\\]\\[(\\d+),(\\d+)\\]"`, 'i');
+  const escaped = searchPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`<(?:node)[^>]+(?:text|content-desc|resource-id)="[^"]*${escaped}[^"]*"[^>]+bounds="\\[(\\d+),(\\d+)\\]\\[(\\d+),(\\d+)\\]"`, 'i');
   const match = xml.match(regex);
   if (match) {
     const x1 = parseInt(match[1], 10);
@@ -238,23 +239,54 @@ function ensureSearchScreen(contextName = '') {
   assertAppInForeground(contextName);
   dismissKeyboard();
 
-  for (let attempt = 0; attempt < 5; attempt++) {
+  for (let attempt = 0; attempt < 8; attempt++) {
     const xml = getUiDumpXml();
-    const onSearch = xml.includes('search_input_field') || xml.includes('ابحث') || xml.includes('بحث');
-    if (onSearch) {
+
+    // Check if we are genuinely on SearchScreen:
+    // It has an EditText search input or search_input_field AND is not HomeScreen (no 'دليل الكتاب المقدس')
+    const hasSearchField = xml.includes('android.widget.EditText') || 
+                           xml.includes('search_input_field') || 
+                           xml.includes('ابحث عن آية');
+    const isHomeScreen = xml.includes('دليل الكتاب المقدس') || xml.includes('Old Testament');
+
+    if (hasSearchField && !isHomeScreen) {
       console.log(`Confirmed on SearchScreen (Attempt ${attempt + 1}).`);
       return;
     }
 
-    console.log(`Attempt ${attempt + 1}: Locating search button in AppBar...`);
-    const searchNode = findNodeCenter('البحث في الكتاب المقدس') || findNodeCenter('بحث');
-    if (searchNode) {
-      execAdb(`shell input tap ${searchNode.x} ${searchNode.y}`);
-    } else {
-      // Tap search icon in top right AppBar (X ~ 300, Y ~ 48)
-      execAdb(`shell input tap ${Math.round(W * 0.92)} 48`);
+    console.log(`Attempt ${attempt + 1} for ${contextName}: Navigating to SearchScreen...`);
+
+    // Case A: On HomeScreen -> tap search button
+    if (isHomeScreen) {
+      const searchNode = findNodeCenter('home_search_btn') || 
+                         findNodeCenter('البحث في الكتاب المقدس');
+      if (searchNode) {
+        console.log(`Tapping home_search_btn at (${searchNode.x}, ${searchNode.y})...`);
+        execAdb(`shell input tap ${searchNode.x} ${searchNode.y}`);
+      } else {
+        // Fallback on 320x640: RTL search action in SliverAppBar is on left
+        console.log('Tapping home search icon fallback at (36, 48)...');
+        execAdb('shell input tap 36 48');
+      }
+      sleep(3000);
+      dismissKeyboard();
+      continue;
     }
-    sleep(2500);
+
+    // Case B: On ChapterReaderScreen -> tap reader search button
+    const readerSearchNode = findNodeCenter('reader_search_btn');
+    if (readerSearchNode) {
+      console.log(`Tapping reader_search_btn at (${readerSearchNode.x}, ${readerSearchNode.y})...`);
+      execAdb(`shell input tap ${readerSearchNode.x} ${readerSearchNode.y}`);
+      sleep(3000);
+      dismissKeyboard();
+      continue;
+    }
+
+    // Case C: Inside modal or sub-screen -> press Back to return
+    console.log('Pressing Back key to navigate toward SearchScreen...');
+    execAdb('shell input keyevent 4');
+    sleep(2000);
     dismissKeyboard();
   }
 
@@ -266,8 +298,10 @@ function searchAndVerifyResults(query) {
   ensureSearchScreen(`Search query: ${query}`);
 
   // Tap search input field to focus
-  const inputNode = findNodeCenter('search_input_field') || findNodeCenter('ابحث');
-  const inputX = inputNode ? inputNode.x : Math.round(W * 0.40);
+  const inputNode = findNodeCenter('search_input_field') || 
+                    findNodeCenter('android.widget.EditText') || 
+                    findNodeCenter('ابحث');
+  const inputX = inputNode ? inputNode.x : Math.round(W * 0.45);
   const inputY = inputNode ? inputNode.y : 48;
   execAdb(`shell input tap ${inputX} ${inputY}`);
   sleep(500);
@@ -280,29 +314,34 @@ function searchAndVerifyResults(query) {
 
   console.log(`Typing search query: "${query}"`);
   execAdb(`shell input text "${query}"`);
-  sleep(800);
+  sleep(1000);
 
   // Submit search: tap the 'بحث' TextButton or send Enter
   const submitNode = findNodeCenter('search_submit_btn') || findNodeCenter('بحث');
   if (submitNode) {
+    console.log(`Tapping search submit button at (${submitNode.x}, ${submitNode.y})...`);
     execAdb(`shell input tap ${submitNode.x} ${submitNode.y}`);
   } else {
     execAdb('shell input keyevent 66'); // Enter
   }
 
-  // Poll up to 6 seconds to verify results actually loaded on screen
+  dismissKeyboard();
+
+  // Poll up to 10 seconds to verify results actually loaded on screen
   let searchLoaded = false;
-  for (let poll = 0; poll < 6; poll++) {
-    sleep(1000);
+  for (let poll = 0; poll < 10; poll++) {
+    sleep(1200);
     const dump = getUiDumpXml();
-    if (dump.includes('SearchResultCard') || dump.includes('وجدنا') || dump.includes('الإصحاح') || dump.includes('آية')) {
+    const hasCount = dump.includes('وجدنا') || dump.includes('نتيجة');
+    const hasGenCard = query.includes('22:16') && (dump.includes('التكوين') || dump.includes('تكوين'));
+    const hasPsCard = query.includes('119:160') && (dump.includes('المزامير') || dump.includes('مزمور'));
+
+    if (hasCount || hasGenCard || hasPsCard) {
       searchLoaded = true;
-      console.log(`Search results verified loaded for "${query}" after ${poll + 1}s.`);
+      console.log(`Search results verified loaded for "${query}" after ${((poll + 1) * 1.2).toFixed(1)}s.`);
       break;
     }
   }
-
-  dismissKeyboard();
 
   if (!searchLoaded) {
     throw new Error(`Search failed: Search results for "${query}" did not appear on screen!`);
@@ -322,10 +361,17 @@ try {
   console.log('--- Executing Scenario 1: Genesis 22:16 Direct Navigation & Complete Reference ---');
   searchAndVerifyResults('22:16');
 
-  // Tap Card 1 in search results at Y ~ 200
-  console.log('Tapping Card 1 in search results (Genesis 22:16)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 200`);
-  sleep(4500); // Allow direct mount & scroll routine to center verse 16
+  // Tap Card 1 in search results
+  console.log('Locating and tapping Card 1 in search results (Genesis 22:16)...');
+  const card1Node = findNodeCenter('التكوين') || findNodeCenter('الإصحاح');
+  if (card1Node) {
+    console.log(`Tapping Card 1 at (${card1Node.x}, ${card1Node.y})...`);
+    execAdb(`shell input tap ${card1Node.x} ${card1Node.y}`);
+  } else {
+    console.log('Tapping Card 1 fallback at (160, 160)...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} 160`);
+  }
+  sleep(6000); // Allow direct mount & scroll routine to center verse 16
 
   assertAppInForeground('Scenario 1 Reader');
 
@@ -371,8 +417,15 @@ try {
   assertAppInForeground('Scenario 2 Setup');
 
   // Open WordStudyScreen by tapping Verse 16 card
-  console.log('Tapping Verse 16 card to open WordStudyScreen at (160, 140)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 140`);
+  console.log('Locating Verse 16 card in ChapterReaderScreen...');
+  const verse16Node = findNodeCenter('الآية 16') || findNodeCenter('الآية ١٦') || findNodeCenter('وقال');
+  if (verse16Node) {
+    console.log(`Tapping Verse 16 card at found node (${verse16Node.x}, ${verse16Node.y})...`);
+    execAdb(`shell input tap ${verse16Node.x} ${verse16Node.y}`);
+  } else {
+    console.log('Tapping Verse 16 card fallback at (160, 200)...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} 200`);
+  }
   sleep(4000); // Allow WordStudyScreen to load
 
   assertAppInForeground('Scenario 2 WordStudyScreen');
@@ -414,7 +467,7 @@ try {
   }
 
   // Test independent selection: Tap Chip 3 to select Component 3
-  const chip3Node = findNodeCenter('strongs_comp_chip_2') || findNodeCenter('المكوّن 3');
+  const chip3Node = findNodeCenter('strongs_comp_chip_2') || findNodeCenter('المكوّن 3') || findNodeCenter('المكون 3');
   const chip3X = chip3Node ? chip3Node.x : 220;
   const chip3Y = chip3Node ? chip3Node.y : 230;
   console.log(`Tapping Component 3 chip at (${chip3X}, ${chip3Y})...`);
@@ -446,7 +499,7 @@ try {
   assertAppInForeground('Scenario 3 Setup');
 
   // Inside the open StrongsModal for Word 12, tap the middle chip (H853)
-  const h853Node = findNodeCenter('strongs_comp_chip_1') || findNodeCenter('H853');
+  const h853Node = findNodeCenter('strongs_comp_chip_1') || findNodeCenter('H853') || findNodeCenter('المكوّن 2');
   const h853X = h853Node ? h853Node.x : Math.round(W * 0.50);
   const h853Y = h853Node ? h853Node.y : 230;
   console.log(`Tapping H853 component chip in modal at (${h853X}, ${h853Y})...`);
@@ -506,7 +559,7 @@ try {
   const lumPre = getActualPixelLuminance(snapPre.path);
 
   // Requirement 2: Tap theme toggle button by accessibility node or exact action position
-  const themeNode = findNodeCenter('تبديل السمة') || findNodeCenter('reader_theme_toggle_btn');
+  const themeNode = findNodeCenter('reader_theme_toggle_btn') || findNodeCenter('تبديل السمة') || findNodeCenter('الوضع');
   if (themeNode) {
     console.log(`Tapping theme toggle button at found node (${themeNode.x}, ${themeNode.y})...`);
     execAdb(`shell input tap ${themeNode.x} ${themeNode.y}`);
@@ -555,9 +608,16 @@ try {
   // Search Psalm 119:160
   searchAndVerifyResults('119:160');
 
-  // Tap Card 1 in search results at Y ~ 200
-  console.log('Tapping Card 1 for Psalm 119:160 at (160, 200)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 200`);
+  // Tap Card 1 in search results
+  console.log('Locating and tapping Card 1 for Psalm 119:160...');
+  const card5Node = findNodeCenter('المزامير') || findNodeCenter('الإصحاح');
+  if (card5Node) {
+    console.log(`Tapping Psalm Card 1 at (${card5Node.x}, ${card5Node.y})...`);
+    execAdb(`shell input tap ${card5Node.x} ${card5Node.y}`);
+  } else {
+    console.log('Tapping Psalm Card 1 fallback at (160, 160)...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} 160`);
+  }
   sleep(7000); // Allow direct jump down to verse 160 with frame catchup
 
   assertAppInForeground('Scenario 5 Reader');

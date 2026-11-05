@@ -106,12 +106,14 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               Consumer<ThemeProvider>(
                 builder: (ctx, theme, _) => IconButton(
+                  key: const Key('home_theme_toggle_btn'),
                   onPressed: theme.toggleTheme,
                   icon: Icon(theme.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
                   tooltip: theme.isDark ? 'الوضع النهاري' : 'الوضع الليلي',
                 ),
               ),
               IconButton(
+                key: const Key('home_search_btn'),
                 onPressed: () => context.pushNamed('search'),
                 icon: const Icon(Icons.search_rounded),
                 tooltip: 'البحث في الكتاب المقدس',

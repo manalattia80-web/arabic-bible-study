@@ -405,6 +405,7 @@ class _SearchScreenState extends State<SearchScreen> {
         title: Padding(
           padding: const EdgeInsets.only(right: 12),
           child: TextField(
+            key: const Key('search_input_field'),
             controller:  _ctrl,
             focusNode:   _focus,
             style: TextStyle(color: AppColors.textPrimary, fontSize: 15),
@@ -437,6 +438,7 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
         actions: [
           TextButton(
+            key: const Key('search_submit_btn'),
             onPressed: () => _search(),
             child: Text('بحث', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700)),
           ),
