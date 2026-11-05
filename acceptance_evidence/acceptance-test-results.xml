@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="AcceptanceScenariosSuite" tests="6" failures="6" errors="0" time="193.4">
+<testsuites name="AcceptanceScenariosSuite" tests="6" failures="6" errors="0" time="135.6">
   <testsuite name="ArbitrationAcceptance" tests="6" failures="6" errors="0">
-    <testcase name="scenario_1_الانتقال_المباشر_إلى_تكوين_٢٢:_١٦_مع_الشاهد_الكامل_والعدّاد" time="99.5">
+    <testcase name="scenario_1_الانتقال_المباشر_إلى_تكوين_٢٢:_١٦_مع_الشاهد_الكامل_والعدّاد" time="40.2">
       <failure message="Failed: Complete Book name &quot;التكوين&quot; not found in header!"><![CDATA[Failed: Complete Book name "التكوين" not found in header!]]></failure>
     </testcase>
-    <testcase name="scenario_2_التمييز_المستقل_لمكوّني_H1697_المكررين_حسب_الترتيب" time="16.9">
-      <failure message="Failed: Strong&apos;s H1697 modal not opened! OCR: 1231 @ cL
-‏كلمة, أو رقم مذ ...ل‎ ul ‏...ابحث عن‎ eo
-all © ‏المجموعة السفرية‎ &gt; OM ‏تحديد سقر‎ &gt;
-‏ابحث في الكتاب المقدس‎
-‏اكتب أي كلمة, عبارة. أو رقم س"><![CDATA[Failed: Strong's H1697 modal not opened! OCR: 1231 @ cL
-‏كلمة, أو رقم مذ ...ل‎ ul ‏...ابحث عن‎ eo
-all © ‏المجموعة السفرية‎ > OM ‏تحديد سقر‎ >
-‏ابحث في الكتاب المقدس‎
-‏اكتب أي كلمة, عبارة. أو رقم س]]></failure>
+    <testcase name="scenario_2_التمييز_المستقل_لمكوّني_H1697_المكررين_حسب_الترتيب" time="32.8">
+      <failure message="Failed: Strong&apos;s H1697 modal not opened!"><![CDATA[Failed: Strong's H1697 modal not opened!]]></failure>
     </testcase>
-    <testcase name="scenario_3_عرض_معلومات_H853_الصرفية_مع_الإفصاح_عن_اللفظ_الأساسي" time="8.0">
+    <testcase name="scenario_3_عرض_معلومات_H853_الصرفية_مع_الإفصاح_عن_اللفظ_الأساسي" time="16.4">
       <failure message="Failed: H853 morphology disclosure banner (&quot;تنبيه... اللفظ الأساسي&quot;) or particle POS not verified!"><![CDATA[Failed: H853 morphology disclosure banner ("تنبيه... اللفظ الأساسي") or particle POS not verified!]]></failure>
     </testcase>
-    <testcase name="scenario_4_تبديل_السمة_بين_الفاتح_والداكن_مع_الحفاظ_التام_على_موضع_القراءة" time="8.4">
-      <failure message="Failed: Screen color/theme did not toggle! Luminance diff: 0.008"><![CDATA[Failed: Screen color/theme did not toggle! Luminance diff: 0.008]]></failure>
+    <testcase name="scenario_4_تبديل_السمة_بين_الفاتح_والداكن_مع_الحفاظ_التام_على_موضع_القراءة" time="13.9">
+      <failure message="Failed: Screen color/theme did not toggle! True pixel luminance diff: 0.000"><![CDATA[Failed: Screen color/theme did not toggle! True pixel luminance diff: 0.000]]></failure>
     </testcase>
-    <testcase name="scenario_5_الانتقال_المباشر_إلى_مزمور_۱۱۹:_۱۶۰_وتثبيت_الآية_في_الموضع_الصحيح" time="53.5">
+    <testcase name="scenario_5_الانتقال_المباشر_إلى_مزمور_۱۱۹:_۱۶۰_وتثبيت_الآية_في_الموضع_الصحيح" time="23.6">
       <failure message="Failed: Psalm 119 header not confirmed!"><![CDATA[Failed: Psalm 119 header not confirmed!]]></failure>
     </testcase>
-    <testcase name="scenario_6_تكبير_الخط_إلى_نسبة_٢٠٠٪_بنجاح_تام_ودون_اقتطاع_للنص" time="7.1">
+    <testcase name="scenario_6_تكبير_الخط_إلى_نسبة_٢٠٠٪_بنجاح_تام_ودون_اقتطاع_للنص" time="8.7">
       <failure message="Failed: Text clipped or unreadable after controlled 200% zoom!"><![CDATA[Failed: Text clipped or unreadable after controlled 200% zoom!]]></failure>
     </testcase>
   </testsuite>
