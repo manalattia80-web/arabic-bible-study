@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="AcceptanceScenariosSuite" tests="5" failures="4" errors="0" time="225.6">
-  <testsuite name="ArbitrationAcceptance" tests="5" failures="4" errors="0">
-    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="81.7">
-      <failure message="Failed: Verse 16 text not brought to view directly! OCR: 10:43 © ©
-
-31 sli» ‏وَقَالَ:‎
+<testsuites name="AcceptanceScenariosSuite" tests="5" failures="5" errors="0" time="261.9">
+  <testsuite name="ArbitrationAcceptance" tests="5" failures="5" errors="0">
+    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="95.4">
+      <failure message="Failed: Verse 16 text not brought to view directly! OCR: 31 sli» ‏وَقَالَ:‎
 
 ‎WNL‏ د' ‎‘yaw‏ بجم ديه ذايار
 ‎Mwy wx‏ بدح مجود ‎NII AD‏ مياجم
@@ -12,9 +10,7 @@
 ‎STON WANN
 
 ‏التكوين — الإصحاح 22 - الاي 17 <
-أبتاركك م">Failed: Verse 16 text not brought to view directly! OCR: 10:43 © ©
-
-31 sli» ‏وَقَالَ:‎
+أبتاركك مباركة, وأكف">Failed: Verse 16 text not brought to view directly! OCR: 31 sli» ‏وَقَالَ:‎
 
 ‎WNL‏ د' ‎‘yaw‏ بجم ديه ذايار
 ‎Mwy wx‏ بدح مجود ‎NII AD‏ مياجم
@@ -22,41 +18,62 @@
 ‎STON WANN
 
 ‏التكوين — الإصحاح 22 - الاي 17 <
-أبتاركك م</failure>
+أبتاركك مباركة, وأكف</failure>
     </testcase>
-    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="85.8">
-      <failure message="Failed: Strong's modal or component chips not detected! OCR: الحوي المدخل المعجمي / الجذر
+    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="93.3">
+      <failure message="Failed: Strong's modal or component chips not detected! OCR: 3068 المدخل المعجمي / الجذر
 
-‎(compound_phrase)‏ دلالة نحوية
-تمده ‎٠١‏
+arn Hebrew
 
-‏© التحليل النحوي ... ' حرف عطف / أداة ربط
+yendvah ٠ ‏يهوه)‎ / 0383) <3
+٠-١ GSD
 
-‏نوع الكلمة (القسم اللغوي) حرف عط">Failed: Strong's modal or component chips not detected! OCR: الحوي المدخل المعجمي / الجذر
+© التحليل التحوي والصرفي .لمعم
+نوع ‎(gal a) a‏ اسم عام
 
-‎(compound_phrase)‏ دلالة نحوية
-تمده ‎٠١‏
+(Singutar) ‏مقر">Failed: Strong's modal or component chips not detected! OCR: 3068 المدخل المعجمي / الجذر
 
-‏© التحليل النحوي ... ' حرف عطف / أداة ربط
+arn Hebrew
 
-‏نوع الكلمة (القسم اللغوي) حرف عط</failure>
+yendvah ٠ ‏يهوه)‎ / 0383) <3
+٠-١ GSD
+
+© التحليل التحوي والصرفي .لمعم
+نوع ‎(gal a) a‏ اسم عام
+
+(Singutar) ‏مقر</failure>
     </testcase>
-    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="17.0">
-      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: العبرية للتعبير السببي المركب ‎١3‏
-‎WR [Yt‏ (المواضع 8-6). لا يحمل
-رقم سترونج مفرذا لكونه جزءًا من
-دلالة العبارة المركبة كاملة.
+    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="37.4">
+      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: 89 المعنى المعجمي
 
-‎Fh‏ معنى الكلمة في ا">Failed: H853 morphology disclosure banner not detected! OCR: العبرية للتعبير السببي المركب ‎١3‏
-‎WR [Yt‏ (المواضع 8-6). لا يحمل
-رقم سترونج مفرذا لكونه جزءًا من
-دلالة العبارة المركبة كاملة.
+الاسم الإلهي الأعظم والخاص بإله
+العهد, المشتق لغوياتاً من الفعل
+'قايّه' (الكائن أو الذي كان ويكون),
 
-‎Fh‏ معنى الكلمة في ا</failure>
+‎ail iy‏ الأزلي
+
+‏معبرا عن الك">Failed: H853 morphology disclosure banner not detected! OCR: 89 المعنى المعجمي
+
+الاسم الإلهي الأعظم والخاص بإله
+العهد, المشتق لغوياتاً من الفعل
+'قايّه' (الكائن أو الذي كان ويكون),
+
+‎ail iy‏ الأزلي
+
+‏معبرا عن الك</failure>
     </testcase>
-    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="16.8">
+    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="14.7">
+      <failure message="Failed: Reading position lost after theme switch! OCR: 1127 @ v.40
+
++ Unknown
+
+Staging app.">Failed: Reading position lost after theme switch! OCR: 1127 @ v.40
+
++ Unknown
+
+Staging app.</failure>
     </testcase>
-    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="24.4">
+    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="21.1">
       <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: الإصحاح 119
 
 ‎slag)‏ اضْطَهَدُونِي ‎Wy‏ ستبء وَمِنْ
