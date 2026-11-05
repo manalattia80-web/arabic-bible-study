@@ -1,90 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="AcceptanceScenariosSuite" tests="5" failures="5" errors="0" time="261.9">
-  <testsuite name="ArbitrationAcceptance" tests="5" failures="5" errors="0">
-    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="95.4">
-      <failure message="Failed: Verse 16 text not brought to view directly! OCR: 31 sli» ‏وَقَالَ:‎
-
-‎WNL‏ د' ‎‘yaw‏ بجم ديه ذايار
-‎Mwy wx‏ بدح مجود ‎NII AD‏ مياجم
-
-‎STON WANN
-
-‏التكوين — الإصحاح 22 - الاي 17 <
-أبتاركك مباركة, وأكف">Failed: Verse 16 text not brought to view directly! OCR: 31 sli» ‏وَقَالَ:‎
-
-‎WNL‏ د' ‎‘yaw‏ بجم ديه ذايار
-‎Mwy wx‏ بدح مجود ‎NII AD‏ مياجم
-
-‎STON WANN
-
-‏التكوين — الإصحاح 22 - الاي 17 <
-أبتاركك مباركة, وأكف</failure>
+<testsuites name="AcceptanceScenariosSuite" tests="5" failures="3" errors="0" time="125.0">
+  <testsuite name="ArbitrationAcceptance" tests="5" failures="3" errors="0">
+    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="79.4">
     </testcase>
-    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="93.3">
-      <failure message="Failed: Strong's modal or component chips not detected! OCR: 3068 المدخل المعجمي / الجذر
-
-arn Hebrew
-
-yendvah ٠ ‏يهوه)‎ / 0383) <3
-٠-١ GSD
-
-© التحليل التحوي والصرفي .لمعم
-نوع ‎(gal a) a‏ اسم عام
-
-(Singutar) ‏مقر">Failed: Strong's modal or component chips not detected! OCR: 3068 المدخل المعجمي / الجذر
-
-arn Hebrew
-
-yendvah ٠ ‏يهوه)‎ / 0383) <3
-٠-١ GSD
-
-© التحليل التحوي والصرفي .لمعم
-نوع ‎(gal a) a‏ اسم عام
-
-(Singutar) ‏مقر</failure>
+    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="12.5">
+      <failure message="Failed: Strong's modal or component chips not detected! OCR: ‎(idiomatic)‏ دلالة نحوية
+معد ‎١+‏
+‏© التحليل النحوي والصرفي ‎geese‏
+‏نوع الكلمة (القسم اللغوي). احرف جر عبري
+الجنس (مذكر / مؤنث / مذكر ‎(Masculine)‏
+">Failed: Strong's modal or component chips not detected! OCR: ‎(idiomatic)‏ دلالة نحوية
+معد ‎١+‏
+‏© التحليل النحوي والصرفي ‎geese‏
+‏نوع الكلمة (القسم اللغوي). احرف جر عبري
+الجنس (مذكر / مؤنث / مذكر ‎(Masculine)‏
+</failure>
     </testcase>
-    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="37.4">
-      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: 89 المعنى المعجمي
-
-الاسم الإلهي الأعظم والخاص بإله
-العهد, المشتق لغوياتاً من الفعل
-'قايّه' (الكائن أو الذي كان ويكون),
-
-‎ail iy‏ الأزلي
-
-‏معبرا عن الك">Failed: H853 morphology disclosure banner not detected! OCR: 89 المعنى المعجمي
-
-الاسم الإلهي الأعظم والخاص بإله
-العهد, المشتق لغوياتاً من الفعل
-'قايّه' (الكائن أو الذي كان ويكون),
-
-‎ail iy‏ الأزلي
-
-‏معبرا عن الك</failure>
+    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="7.6">
+      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: 89 التعريف اللغوي والنحوي
+اللفظ العبري 3' مركب من حرف
+الجر 2- وضمير المتكلم ' (في /بي).
+واستعماله في سياق القسم ‎&quot;D>‏
+‎«MYA‏ معناه الحرفي: بي
+أقسمت, و">Failed: H853 morphology disclosure banner not detected! OCR: 89 التعريف اللغوي والنحوي
+اللفظ العبري 3' مركب من حرف
+الجر 2- وضمير المتكلم ' (في /بي).
+واستعماله في سياق القسم ‎"D>‏
+‎«MYA‏ معناه الحرفي: بي
+أقسمت, و</failure>
     </testcase>
-    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="14.7">
-      <failure message="Failed: Reading position lost after theme switch! OCR: 1127 @ v.40
-
-+ Unknown
-
-Staging app.">Failed: Reading position lost after theme switch! OCR: 1127 @ v.40
-
-+ Unknown
-
-Staging app.</failure>
+    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="7.7">
     </testcase>
-    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="21.1">
-      <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: الإصحاح 119
+    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="17.8">
+      <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: 12:05 © 740
+wl
 
-‎slag)‏ اضْطَهَدُونِي ‎Wy‏ ستبء وَمِنْ
+> 7 © ‏عم‎ Aw © Q
 
-‎> (150 ns ‏الإصحا‎ | > gu
-) 359 ‏بي > [ الإصماح 119 من‎">Failed: Psalm 119:160 text not positioned directly! OCR: الإصحاح 119
+الت ( الإصحاح 119 من 450( ‎<M‏
+‏بي ‎<١‏ ( الإصاح 119من 150 ) | فى">Failed: Psalm 119:160 text not positioned directly! OCR: 12:05 © 740
+wl
 
-‎slag)‏ اضْطَهَدُونِي ‎Wy‏ ستبء وَمِنْ
+> 7 © ‏عم‎ Aw © Q
 
-‎> (150 ns ‏الإصحا‎ | > gu
-) 359 ‏بي > [ الإصماح 119 من‎</failure>
+الت ( الإصحاح 119 من 450( ‎<M‏
+‏بي ‎<١‏ ( الإصاح 119من 150 ) | فى</failure>
     </testcase>
   </testsuite>
 </testsuites>
