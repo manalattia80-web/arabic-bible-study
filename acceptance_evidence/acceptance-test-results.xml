@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="AcceptanceScenariosSuite" tests="5" failures="2" errors="0" time="232.3">
+<testsuites name="AcceptanceScenariosSuite" tests="5" failures="2" errors="0" time="330.3">
   <testsuite name="ArbitrationAcceptance" tests="5" failures="2" errors="0">
-    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="92.2">
+    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="74.8">
     </testcase>
-    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="46.4">
-      <failure message="Failed: Strong's modal or component chips not detected! OCR: ‎(idiomatic)‏ دلالة نحوية
-تمده ‎٠١‏
-‏© التحليل النحوي ‎gee Byala‏
+    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="97.7">
+      <failure message="Failed: Strong's modal or component chips not detected! OCR: 3068 المدخل المعجمي / الجذر
 
-‏نوع الكلمة (القسم ‎(go‏ احوف جر عبدي
+arn Hebrew
 
-‎1
+yendvah ٠ ‏يهوه)‎ / 0383) <3
+٠-١ GSD
 
-‎iba / Sia) ‏الجنس‎
+© التحليل التحوي والصرفي .لمعم
+نوع ‎(gal a) a‏ اسم عام
 
-‏مذكر ‎(Masculine)‏">Failed: Strong's modal or component chips not detected! OCR: ‎(idiomatic)‏ دلالة نحوية
-تمده ‎٠١‏
-‏© التحليل النحوي ‎gee Byala‏
+(Singutar) ‏مقر">Failed: Strong's modal or component chips not detected! OCR: 3068 المدخل المعجمي / الجذر
 
-‏نوع الكلمة (القسم ‎(go‏ احوف جر عبدي
+arn Hebrew
 
-‎1
+yendvah ٠ ‏يهوه)‎ / 0383) <3
+٠-١ GSD
 
-‎iba / Sia) ‏الجنس‎
+© التحليل التحوي والصرفي .لمعم
+نوع ‎(gal a) a‏ اسم عام
 
-‏مذكر ‎(Masculine)‏</failure>
+(Singutar) ‏مقر</failure>
     </testcase>
-    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="53.2">
-      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: coors) ee ‏الوسر‎
+    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="20.1">
+      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: 89 المعنى المعجمي
 
-9 التعريف اللغوي والنحوي
-اللفظ العبري 3' مركب من حرف
-الجر 2 وضمير المتكلم ' (في ‎(col‏
-‏واستعماله في سياق القسم ‎&quot;D>‏
-‎«MYA‏ معناه ">Failed: H853 morphology disclosure banner not detected! OCR: coors) ee ‏الوسر‎
+الاسم الإلهي الأعظم والخاص بإله
+العهد, المشتق لغوياتاً من الفعل
+'قايّه' (الكائن أو الذي كان ويكون),
+معبراً عن الكائن ‎ail‏ الأزلي
+ا">Failed: H853 morphology disclosure banner not detected! OCR: 89 المعنى المعجمي
 
-9 التعريف اللغوي والنحوي
-اللفظ العبري 3' مركب من حرف
-الجر 2 وضمير المتكلم ' (في ‎(col‏
-‏واستعماله في سياق القسم ‎"D>‏
-‎«MYA‏ معناه </failure>
+الاسم الإلهي الأعظم والخاص بإله
+العهد, المشتق لغوياتاً من الفعل
+'قايّه' (الكائن أو الذي كان ويكون),
+معبراً عن الكائن ‎ail‏ الأزلي
+ا</failure>
     </testcase>
-    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="12.3">
+    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="60.9">
     </testcase>
-    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="28.1">
+    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="76.8">
     </testcase>
   </testsuite>
 </testsuites>
