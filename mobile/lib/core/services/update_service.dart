@@ -41,6 +41,8 @@ class UpdateService {
   static const int currentBuildNumber = int.fromEnvironment('APP_BUILD_NUMBER', defaultValue: 156);
   static const String currentVersionName = 'v1.0.$currentBuildNumber';
 
+  static const String _releasesListApi =
+      'https://api.github.com/repos/manalattia80-web/arabic-bible-study/releases?per_page=5';
   static const String _latestReleaseApi =
       'https://api.github.com/repos/manalattia80-web/arabic-bible-study/releases/latest';
 
@@ -49,13 +51,41 @@ class UpdateService {
 
   Future<UpdateInfo?> checkForUpdate() async {
     try {
-      final res = await http.get(
-        Uri.parse(_latestReleaseApi),
+      // 1. Primary check: Query releases list to capture feature/pre-release builds directly
+      var res = await http.get(
+        Uri.parse(_releasesListApi),
         headers: {'Accept': 'application/vnd.github.v3+json'},
       ).timeout(const Duration(seconds: 4));
 
+      Map<String, dynamic>? data;
+
       if (res.statusCode == 200) {
-        final data = jsonDecode(res.body) as Map<String, dynamic>;
+        final decoded = jsonDecode(res.body);
+        if (decoded is List && decoded.isNotEmpty) {
+          for (final item in decoded) {
+            if (item is Map<String, dynamic> && item['draft'] != true) {
+              data = item;
+              break;
+            }
+          }
+        }
+      }
+
+      // 2. Secondary fallback: Query /releases/latest endpoint
+      if (data == null) {
+        res = await http.get(
+          Uri.parse(_latestReleaseApi),
+          headers: {'Accept': 'application/vnd.github.v3+json'},
+        ).timeout(const Duration(seconds: 4));
+        if (res.statusCode == 200) {
+          final decoded = jsonDecode(res.body);
+          if (decoded is Map<String, dynamic>) {
+            data = decoded;
+          }
+        }
+      }
+
+      if (data != null) {
         final tagName = data['tag_name'] as String? ?? '';
         final name = data['name'] as String? ?? 'تحديث جديد';
         final body = data['body'] as String? ?? '';
