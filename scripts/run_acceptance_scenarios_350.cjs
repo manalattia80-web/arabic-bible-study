@@ -246,9 +246,9 @@ try {
   execAdb(`shell input tap ${Math.round(W * 0.50)} 130`);
   sleep(4000); // Allow WordStudyScreen table to load
 
-  // Tap compound words chip in stats row at Y ~ 205, or row 12 after scroll
-  console.log('Tapping compound chip in WordStudyScreen at (150, 205)...');
-  execAdb(`shell input tap 150 205`);
+  // Tap compound words chip in stats row at (110, 315)
+  console.log('Tapping compound chip in WordStudyScreen at (110, 315)...');
+  execAdb('shell input tap 110 315');
   sleep(2500);
 
   let snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
@@ -256,10 +256,30 @@ try {
   let hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
 
   if (!hasCompChips) {
-    console.log('Fallback: Swiping up to bring Row 12 into view...');
-    execAdb(`shell input swipe ${Math.round(W * 0.50)} 500 ${Math.round(W * 0.50)} 150 800`);
-    sleep(2000);
-    execAdb(`shell input tap ${Math.round(W * 0.50)} 370`);
+    console.log('Retrying compound chip at (115, 315)...');
+    execAdb('shell input tap 115 315');
+    sleep(2500);
+    snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
+    ocr2 = snap2.ocr;
+    hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
+  }
+
+  if (!hasCompChips) {
+    console.log('Retrying compound chip at (105, 315)...');
+    execAdb('shell input tap 105 315');
+    sleep(2500);
+    snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
+    ocr2 = snap2.ocr;
+    hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
+  }
+
+  if (!hasCompChips) {
+    console.log('Fallback: Swiping twice to bring Row 12 into view...');
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} 550 ${Math.round(W * 0.50)} 150 500`);
+    sleep(1000);
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} 550 ${Math.round(W * 0.50)} 150 500`);
+    sleep(1500);
+    execAdb(`shell input tap ${Math.round(W * 0.50)} 260`);
     sleep(2500);
     snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
     ocr2 = snap2.ocr;
@@ -288,9 +308,9 @@ try {
 const t3 = Date.now();
 try {
   console.log('\n--- Executing Scenario 3: H853 Morphology Disclosure & Correct Part of Speech ---');
-  // Inside the open StrongsModal, tap Chip 2 (H853) in the middle at X ~ 160, Y ~ 310
-  console.log('Tapping H853 component chip in modal at (160, 310)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 310`);
+  // Inside the open StrongsModal, tap Chip 2 (H853) at (115, 315)
+  console.log('Tapping H853 component chip in modal at (115, 315)...');
+  execAdb('shell input tap 115 315');
   sleep(2000);
 
   // Scroll down to morphology section in modal
@@ -302,8 +322,8 @@ try {
   let hasParticleOrDisclosure = ocr3.includes('أداة مفعولية') || ocr3.includes('مفعولية') || ocr3.includes('المكوّن الأساسي') || ocr3.includes('اللفظ الأساسي') || ocr3.includes('H853') || ocr3.includes('853') || ocr3.includes('التحليل الصرفي الأصلي') || ocr3.includes('تنبيه');
 
   if (!hasParticleOrDisclosure) {
-    console.log('Retrying tap on H853 chip at (160, 290)...');
-    execAdb(`shell input tap ${Math.round(W * 0.50)} 290`);
+    console.log('Retrying tap on H853 chip at (120, 315)...');
+    execAdb('shell input tap 120 315');
     sleep(2000);
     execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 220 600`);
     sleep(1500);
