@@ -347,6 +347,7 @@ class _WordRow extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
+      key: Key('word_row_${mapping.arWordPosition}'),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(

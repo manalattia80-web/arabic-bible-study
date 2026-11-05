@@ -44,12 +44,18 @@ class ReaderProvider extends ChangeNotifier {
     }
   }
 
+  void setZoomPercent(int percent) {
+    // 100% = 20.0, 200% = 40.0
+    _fontSize = (20.0 * (percent / 100.0)).clamp(14.0, 40.0);
+    notifyListeners();
+  }
+
   void increaseFontSize() {
-    if (_fontSize < 32) { _fontSize += 2; notifyListeners(); }
+    if (_fontSize < 40) { _fontSize = (_fontSize + 4).clamp(14.0, 40.0); notifyListeners(); }
   }
 
   void decreaseFontSize() {
-    if (_fontSize > 14) { _fontSize -= 2; notifyListeners(); }
+    if (_fontSize > 14) { _fontSize = (_fontSize - 4).clamp(14.0, 40.0); notifyListeners(); }
   }
 
   void toggleOriginalText() {

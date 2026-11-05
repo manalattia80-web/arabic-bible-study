@@ -290,6 +290,7 @@ class _StrongsModalState extends State<StrongsModal> {
                                 final sId = item.value;
                                 final isSelected = (idx == _selectedComponentIndex);
                                 return FilterChip(
+                                  key: Key('strongs_comp_chip_$idx'),
                                   selected: isSelected,
                                   showCheckmark: false,
                                   avatar: CircleAvatar(
@@ -569,6 +570,7 @@ class _StrongsModalState extends State<StrongsModal> {
                             children: [
                               if (isSecondaryComp)
                                 Container(
+                                  key: const Key('h853_morphology_disclosure_banner'),
                                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                                   decoration: BoxDecoration(
                                     color: AppColors.info.withOpacity(0.12),

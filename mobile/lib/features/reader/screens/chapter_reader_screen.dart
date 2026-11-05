@@ -140,6 +140,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
+        leadingWidth: 36,
         title: Directionality(
           textDirection: TextDirection.rtl,
           child: Column(
@@ -147,15 +148,18 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${bookName} — الإصحاح ${widget.chapterNum}',
-                style: AppTheme.arabicLabel(size: 15),
+                bookName,
+                key: const Key('reader_appbar_book_title'),
+                style: AppTheme.arabicLabel(size: 16),
                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                softWrap: false,
               ),
               Text(
-                'الإصحاح ${widget.chapterNum} من ${totalCh}',
-                style: TextStyle(fontSize: 10, color: AppColors.textSecondary),
+                'الإصحاح ${widget.chapterNum} من $totalCh',
+                key: const Key('reader_appbar_chapter_subtitle'),
+                style: TextStyle(fontSize: 10.5, color: AppColors.textSecondary, fontWeight: FontWeight.w600),
                 maxLines: 1,
+                softWrap: false,
               ),
             ],
           ),
@@ -163,51 +167,76 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
         actions: [
           // Theme toggle
           Consumer<ThemeProvider>(
-            builder: (ctx, theme, _) => IconButton(
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(minWidth: 28, minHeight: 36),
-              icon: Icon(
-                theme.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                size: 18,
+            builder: (ctx, theme, _) => Semantics(
+              label: 'تبديل السمة',
+              button: true,
+              child: IconButton(
+                key: const Key('reader_theme_toggle_btn'),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(minWidth: 28, minHeight: 36),
+                icon: Icon(
+                  theme.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                  size: 18,
+                ),
+                onPressed: theme.toggleTheme,
+                tooltip: theme.isDark ? 'الوضع النهاري' : 'الوضع الليلي',
               ),
-              onPressed: theme.toggleTheme,
-              tooltip: theme.isDark ? 'الوضع النهاري' : 'الوضع الليلي',
             ),
           ),
           // Font size controls
-          IconButton(
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 26, minHeight: 36),
-            icon: const Icon(Icons.text_decrease, size: 18),
-            onPressed: reader.decreaseFontSize,
-            tooltip: 'تصغير الخط',
+          Semantics(
+            label: 'تصغير الخط',
+            button: true,
+            child: IconButton(
+              key: const Key('reader_font_decrease_btn'),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 26, minHeight: 36),
+              icon: const Icon(Icons.text_decrease, size: 18),
+              onPressed: reader.decreaseFontSize,
+              tooltip: 'تصغير الخط',
+            ),
           ),
-          IconButton(
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 26, minHeight: 36),
-            icon: const Icon(Icons.text_increase, size: 18),
-            onPressed: reader.increaseFontSize,
-            tooltip: 'تكبير الخط',
+          Semantics(
+            label: 'تكبير الخط',
+            button: true,
+            child: IconButton(
+              key: const Key('reader_font_increase_btn'),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 26, minHeight: 36),
+              icon: const Icon(Icons.text_increase, size: 18),
+              onPressed: reader.increaseFontSize,
+              tooltip: 'تكبير الخط',
+            ),
           ),
           // Toggle original text
-          IconButton(
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 28, minHeight: 36),
-            icon: Icon(
-              reader.showOriginal ? Icons.visibility : Icons.visibility_off,
-              size: 18,
-              color: reader.showOriginal ? AppColors.primary : AppColors.textMuted,
+          Semantics(
+            label: 'النص الأصلي',
+            button: true,
+            child: IconButton(
+              key: const Key('reader_toggle_original_btn'),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 28, minHeight: 36),
+              icon: Icon(
+                reader.showOriginal ? Icons.visibility : Icons.visibility_off,
+                size: 18,
+                color: reader.showOriginal ? AppColors.primary : AppColors.textMuted,
+              ),
+              onPressed: reader.toggleOriginalText,
+              tooltip: 'النص الأصلي (عبري/يوناني)',
             ),
-            onPressed: reader.toggleOriginalText,
-            tooltip: 'النص الأصلي (عبري/يوناني)',
           ),
           // Search
-          IconButton(
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 28, minHeight: 36),
-            icon: const Icon(Icons.search, size: 18),
-            onPressed: () => context.pushNamed('search'),
-            tooltip: 'بحث',
+          Semantics(
+            label: 'بحث',
+            button: true,
+            child: IconButton(
+              key: const Key('reader_search_btn'),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 28, minHeight: 36),
+              icon: const Icon(Icons.search, size: 18),
+              onPressed: () => context.pushNamed('search'),
+              tooltip: 'بحث',
+            ),
           ),
           const SizedBox(width: 4),
         ],
