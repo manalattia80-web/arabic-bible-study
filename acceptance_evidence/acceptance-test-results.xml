@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="AcceptanceScenariosSuite" tests="5" failures="2" errors="0" time="265.5">
+<testsuites name="AcceptanceScenariosSuite" tests="5" failures="2" errors="0" time="232.3">
   <testsuite name="ArbitrationAcceptance" tests="5" failures="2" errors="0">
-    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="85.2">
+    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="92.2">
     </testcase>
-    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="30.3">
+    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="46.4">
       <failure message="Failed: Strong's modal or component chips not detected! OCR: ‎(idiomatic)‏ دلالة نحوية
 تمده ‎٠١‏
 ‏© التحليل النحوي ‎gee Byala‏
@@ -26,24 +26,24 @@
 
 ‏مذكر ‎(Masculine)‏</failure>
     </testcase>
-    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="29.6">
+    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="53.2">
       <failure message="Failed: H853 morphology disclosure banner not detected! OCR: coors) ee ‏الوسر‎
 
 9 التعريف اللغوي والنحوي
 اللفظ العبري 3' مركب من حرف
-الجر 3 وضمير المتكلم ' (في ‎(col‏
+الجر 2 وضمير المتكلم ' (في ‎(col‏
 ‏واستعماله في سياق القسم ‎&quot;D>‏
-‎«MYAW‏ معناه">Failed: H853 morphology disclosure banner not detected! OCR: coors) ee ‏الوسر‎
+‎«MYA‏ معناه ">Failed: H853 morphology disclosure banner not detected! OCR: coors) ee ‏الوسر‎
 
 9 التعريف اللغوي والنحوي
 اللفظ العبري 3' مركب من حرف
-الجر 3 وضمير المتكلم ' (في ‎(col‏
+الجر 2 وضمير المتكلم ' (في ‎(col‏
 ‏واستعماله في سياق القسم ‎"D>‏
-‎«MYAW‏ معناه</failure>
+‎«MYA‏ معناه </failure>
     </testcase>
-    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="35.4">
+    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="12.3">
     </testcase>
-    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="84.9">
+    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="28.1">
     </testcase>
   </testsuite>
 </testsuites>
