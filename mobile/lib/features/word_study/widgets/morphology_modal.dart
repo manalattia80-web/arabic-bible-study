@@ -129,8 +129,8 @@ class MorphologyModal extends StatelessWidget {
                           ),
                           Text(
                             isHebrew
-                                ? 'اللغة العبرية للعهد القديم (Biblical Hebrew)'
-                                : 'اللغة اليونانية للعهد الجديد (Koine Greek)',
+                                ? 'اللغة العبرية للعهد القديم'
+                                : 'اللغة اليونانية للعهد الجديد',
                             style: TextStyle(color: AppColors.textMuted, fontSize: 11),
                           ),
                         ],

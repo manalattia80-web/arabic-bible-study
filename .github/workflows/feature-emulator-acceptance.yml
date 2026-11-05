@@ -59,10 +59,20 @@ jobs:
       - name: Reassemble SQLite Database from Chunk Parts
         run: node scripts/assemble_db.cjs
 
+      - name: Extract Canonical App Version from pubspec.yaml
+        run: |
+          RAW_VER=$(grep '^version:' mobile/pubspec.yaml | sed 's/version: //' | tr -d ' \r\n')
+          VER_NAME=$(echo "$RAW_VER" | cut -d'+' -f1)
+          VER_CODE=$(echo "$RAW_VER" | cut -d'+' -f2)
+          echo "APP_VER_NAME=$VER_NAME" >> $GITHUB_ENV
+          echo "APP_VER_CODE=$VER_CODE" >> $GITHUB_ENV
+          echo "APP_RELEASE_TAG=v$VER_NAME" >> $GITHUB_ENV
+          echo "Canonical Version: $VER_NAME, Build: $VER_CODE, Tag: v$VER_NAME"
+
       - name: Build Experimental APK from feature branch
         working-directory: ./mobile
         run: |
-          flutter build apk --release --no-tree-shake-icons
+          flutter build apk --release --no-tree-shake-icons --build-name=${{ env.APP_VER_NAME }} --build-number=${{ env.APP_VER_CODE }} --dart-define=APP_BUILD_NUMBER=${{ env.APP_VER_CODE }} --dart-define=DISABLE_AUTO_UPDATE=true
           cp build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-app.apk
           echo "APK Built Successfully: $(wc -c < ../arabic-bible-study-app.apk) bytes"
 

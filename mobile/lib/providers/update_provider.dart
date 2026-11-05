@@ -53,6 +53,9 @@ class UpdateProvider extends ChangeNotifier {
     void Function(String version)? onUpdateStarting,
     void Function()? onUpdateReady,
   }) async {
+    if (UpdateService.disableAutoUpdate) {
+      return;
+    }
     if (_isChecking) return;
     _isChecking = true;
     notifyListeners();

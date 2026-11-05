@@ -40,6 +40,7 @@ class UpdateService {
   // Current build number injected at build time, default to 156
   static const int currentBuildNumber = int.fromEnvironment('APP_BUILD_NUMBER', defaultValue: 156);
   static const String currentVersionName = 'v1.0.$currentBuildNumber';
+  static const bool disableAutoUpdate = bool.fromEnvironment('DISABLE_AUTO_UPDATE', defaultValue: false);
 
   static const String _releasesListApi =
       'https://api.github.com/repos/manalattia80-web/arabic-bible-study/releases?per_page=5';
@@ -50,6 +51,10 @@ class UpdateService {
       'https://github.com/manalattia80-web/arabic-bible-study/releases/latest/download/arabic-bible-study-app.apk';
 
   Future<UpdateInfo?> checkForUpdate() async {
+    if (disableAutoUpdate) {
+      debugPrint('Update check completely disabled via DISABLE_AUTO_UPDATE environment flag.');
+      return null;
+    }
     try {
       // 1. Primary check: Query releases list to capture feature/pre-release builds directly
       var res = await http.get(
