@@ -40,14 +40,20 @@ if (!fs.existsSync(evidenceDir)) fs.mkdirSync(evidenceDir, { recursive: true });
 
 function runOcr(imagePath) {
   try {
-    let combined = '';
+    let text = '';
     try {
-      combined += child.execSync(`tesseract "${imagePath}" stdout -l eng+ara`, {
+      text = child.execSync(`tesseract "${imagePath}" stdout -l eng+ara`, {
         encoding: 'utf8',
-        timeout: 30000,
+        timeout: 60000,
         stdio: ['pipe', 'pipe', 'ignore']
-      }).trim() + ' ';
-    } catch (_) {}
+      }).trim();
+    } catch (e) {
+      console.warn(`OCR base timeout/error on ${imagePath}:`, e.message);
+    }
+
+    if (text.length > 10) {
+      return text;
+    }
 
     try {
       const inverted = imagePath.replace(/\.png$/i, '_neg.png');
@@ -56,16 +62,17 @@ function runOcr(imagePath) {
         timeout: 15000
       });
       if (fs.existsSync(inverted)) {
-        combined += child.execSync(`tesseract "${inverted}" stdout -l eng+ara`, {
+        const inv = child.execSync(`tesseract "${inverted}" stdout -l eng+ara`, {
           encoding: 'utf8',
-          timeout: 30000,
+          timeout: 60000,
           stdio: ['pipe', 'pipe', 'ignore']
-        }).trim() + ' ';
+        }).trim();
         try { fs.unlinkSync(inverted); } catch (_) {}
+        return inv;
       }
     } catch (_) {}
 
-    return combined.trim();
+    return text;
   } catch (err) {
     console.warn(`OCR warning on ${imagePath}:`, err.message);
     return '';
@@ -239,16 +246,8 @@ try {
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.36)}`);
   sleep(2000);
 
-  // Poll until WordStudyScreen is loaded
-  console.log('Waiting for WordStudyScreen table to load...');
-  for (let poll = 0; poll < 15; poll++) {
-    const snap = captureScreenshot('word_study_loading_check.png');
-    if (snap.ocr.includes('الكلمة') || snap.ocr.includes('مرتبط') || snap.ocr.includes('الأصل') || snap.ocr.includes('الأمر') || snap.ocr.includes('1697') || snap.ocr.includes('H1697')) {
-      console.log(`WordStudyScreen confirmed ready after ${poll}s!`);
-      break;
-    }
-    sleep(1000);
-  }
+  // Allow WordStudyScreen table to load
+  sleep(4000);
 
   // Smooth swipe to bring Row 12 ('الأمر' / H1697) into view
   console.log('Swiping up to bring Row 12 (الأمر) into view...');
