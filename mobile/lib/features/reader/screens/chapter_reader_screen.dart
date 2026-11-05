@@ -89,6 +89,8 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
 
         if ((jumpTarget - currentOffset).abs() > 10) {
           _scrollController.jumpTo(jumpTarget);
+        } else if (currentOffset < maxScroll) {
+          _scrollController.jumpTo((currentOffset + 2500).clamp(0, maxScroll));
         }
 
         Future.delayed(const Duration(milliseconds: 60), () {
@@ -201,7 +203,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
                   ? Center(child: Text('لم يتم العثور على آيات', style: TextStyle(color: AppColors.textMuted)))
                   : ListView.builder(
                       controller: _scrollController,
-                      cacheExtent: 10000.0,
+                      cacheExtent: 100000.0,
                       padding: const EdgeInsets.fromLTRB(12, 8, 12, 100),
                       itemCount: reader.verses.length,
                       itemBuilder: (ctx, i) {
@@ -348,6 +350,8 @@ class _VerseCard extends StatelessWidget {
               extra: {
                 'verse_num':  verse.verseNum,
                 'chapter_num': chapterNum,
+                'book_id':     verse.bookId,
+                'book_name':   bookName,
                 'text_avd_ar': verse.textAvdAr,
                 'text_original': verse.textManuscript ?? verse.textOriginal,
                 'text_original_lang': verse.textOriginalLang,

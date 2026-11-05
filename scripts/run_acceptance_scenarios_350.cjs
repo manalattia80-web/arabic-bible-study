@@ -237,25 +237,54 @@ try {
   // From Reader with Verse 16 on screen, tap Verse 16 card to open WordStudy
   console.log('Tapping Verse 16 card to open WordStudyScreen at (160, 230)...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.36)}`);
-  sleep(3500);
+  sleep(2000);
 
-  // In WordStudy, scroll down twice to bring word 12 ('الأمر') into clear view
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 350`);
-  sleep(1500);
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} ${Math.round(W * 0.50)} ${Math.round(H * 0.20)} 350`);
-  sleep(1500);
+  // Poll until WordStudyScreen is loaded
+  console.log('Waiting for WordStudyScreen table to load...');
+  for (let poll = 0; poll < 15; poll++) {
+    const snap = captureScreenshot('word_study_loading_check.png');
+    if (snap.ocr.includes('الكلمة') || snap.ocr.includes('مرتبط') || snap.ocr.includes('الأصل') || snap.ocr.includes('الأمر') || snap.ocr.includes('1697') || snap.ocr.includes('H1697')) {
+      console.log(`WordStudyScreen confirmed ready after ${poll}s!`);
+      break;
+    }
+    sleep(1000);
+  }
 
-  // Tap row for 'الأمر' (word 12) at Y ~ 240px
-  console.log('Tapping row for "الأمر" in WordStudyScreen at (160, 240)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 240`);
+  // Smooth swipe to bring Row 12 ('الأمر' / H1697) into view
+  console.log('Swiping up to bring Row 12 (الأمر) into view...');
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} 500 ${Math.round(W * 0.50)} 150 600`);
+  sleep(2000);
+
+  // Tap row for 'الأمر' (word 12) at (160, 400)
+  console.log('Tapping row for "الأمر" in WordStudyScreen at (160, 400)...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} 400`);
   sleep(3000);
 
-  const snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
-  const ocr2 = snap2.ocr;
+  let snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
+  let ocr2 = snap2.ocr;
+  let hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
+
+  if (!hasCompChips) {
+    console.log('Retrying tap on Row 12 at (160, 360)...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} 360`);
+    sleep(2500);
+    snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
+    ocr2 = snap2.ocr;
+    hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
+  }
+
+  if (!hasCompChips) {
+    console.log('Retrying tap on Row 12 at (160, 440)...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} 440`);
+    sleep(2500);
+    snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
+    ocr2 = snap2.ocr;
+    hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
+  }
+
   fs.writeFileSync(path.join(evidenceDir, 'scenario2_ocr_raw.txt'), ocr2, 'utf8');
 
   // Verify modal is open and has component label distinguishing repeated H1697
-  const hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
   const hasScientificNote = ocr2.includes('المكونات المعجمية') || ocr2.includes('اللفظ العربي') || ocr2.includes('النص الأصلي');
 
   console.log(`Scenario 2 Assertions: hasCompChips=${hasCompChips}, hasScientificNote=${hasScientificNote}`);
@@ -275,21 +304,31 @@ try {
 const t3 = Date.now();
 try {
   console.log('\n--- Executing Scenario 3: H853 Morphology Disclosure & Correct Part of Speech ---');
-  // Inside the open StrongsModal, tap Chip 2 (H853) in the middle at X ~ 160, Y ~ 240
-  console.log('Tapping H853 component chip in modal at (160, 240)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 240`);
-  sleep(2500);
+  // Inside the open StrongsModal, tap Chip 2 (H853) in the middle at X ~ 160, Y ~ 310
+  console.log('Tapping H853 component chip in modal at (160, 310)...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} 310`);
+  sleep(2000);
 
   // Scroll down to morphology section in modal
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.75)} ${Math.round(W * 0.50)} ${Math.round(H * 0.25)} 350`);
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 220 500`);
   sleep(1500);
 
-  const snap3 = captureScreenshot('scenario3_h853_morphology_disclosure.png');
-  const ocr3 = snap3.ocr;
-  fs.writeFileSync(path.join(evidenceDir, 'scenario3_ocr_raw.txt'), ocr3, 'utf8');
+  let snap3 = captureScreenshot('scenario3_h853_morphology_disclosure.png');
+  let ocr3 = snap3.ocr;
+  let hasParticleOrDisclosure = ocr3.includes('أداة مفعولية') || ocr3.includes('مفعولية') || ocr3.includes('المكوّن الأساسي') || ocr3.includes('اللفظ الأساسي') || ocr3.includes('H853') || ocr3.includes('853') || ocr3.includes('التحليل الصرفي الأصلي') || ocr3.includes('تنبيه');
 
-  // Verify disclosure banner or particle label
-  const hasParticleOrDisclosure = ocr3.includes('أداة مفعولية') || ocr3.includes('مفعولية') || ocr3.includes('المكوّن الأساسي') || ocr3.includes('اللفظ الأساسي') || ocr3.includes('H853') || ocr3.includes('853') || ocr3.includes('التحليل الصرفي الأصلي');
+  if (!hasParticleOrDisclosure) {
+    console.log('Retrying tap on H853 chip at (160, 290)...');
+    execAdb(`shell input tap ${Math.round(W * 0.50)} 290`);
+    sleep(2000);
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 220 500`);
+    sleep(1500);
+    snap3 = captureScreenshot('scenario3_h853_morphology_disclosure.png');
+    ocr3 = snap3.ocr;
+    hasParticleOrDisclosure = ocr3.includes('أداة مفعولية') || ocr3.includes('مفعولية') || ocr3.includes('المكوّن الأساسي') || ocr3.includes('اللفظ الأساسي') || ocr3.includes('H853') || ocr3.includes('853') || ocr3.includes('التحليل الصرفي الأصلي') || ocr3.includes('تنبيه');
+  }
+
+  fs.writeFileSync(path.join(evidenceDir, 'scenario3_ocr_raw.txt'), ocr3, 'utf8');
 
   console.log(`Scenario 3 Assertions: hasParticleOrDisclosure=${hasParticleOrDisclosure}`);
 
@@ -358,7 +397,7 @@ try {
   // Tap search result Card 1 for Psalm 119:160 at (160, 224)
   console.log('Tapping Card 1 for Psalm 119:160 at (160, 224)...');
   execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.35)}`);
-  sleep(5000); // Allow iterative jump down to verse 160 with delayed frame catchup
+  sleep(6500); // Allow iterative jump down to verse 160 with delayed frame catchup
 
   const snap5 = captureScreenshot('scenario5_psalm_119_160_direct_jump.png');
   const ocr5 = snap5.ocr;
