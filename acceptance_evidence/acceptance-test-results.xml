@@ -1,100 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="AcceptanceScenariosSuite" tests="5" failures="5" errors="0" time="231.9">
-  <testsuite name="ArbitrationAcceptance" tests="5" failures="5" errors="0">
-    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="91.1">
-      <failure message="Failed: Book name &quot;التكوين&quot; not found in header! OCR: السابق >
+<testsuites name="AcceptanceScenariosSuite" tests="5" failures="4" errors="0" time="225.6">
+  <testsuite name="ArbitrationAcceptance" tests="5" failures="4" errors="0">
+    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="81.7">
+      <failure message="Failed: Verse 16 text not brought to view directly! OCR: 10:43 © ©
 
-wat
+31 sli» ‏وَقَالَ:‎
 
-لم يتم العتور على ‎OU‏
+‎WNL‏ د' ‎‘yaw‏ بجم ديه ذايار
+‎Mwy wx‏ بدح مجود ‎NII AD‏ مياجم
 
-الثالي > الإصحاح 22 من 50">Failed: Book name "التكوين" not found in header! OCR: السابق >
+‎STON WANN
 
-wat
+‏التكوين — الإصحاح 22 - الاي 17 <
+أبتاركك م">Failed: Verse 16 text not brought to view directly! OCR: 10:43 © ©
 
-لم يتم العتور على ‎OU‏
+31 sli» ‏وَقَالَ:‎
 
-الثالي > الإصحاح 22 من 50</failure>
+‎WNL‏ د' ‎‘yaw‏ بجم ديه ذايار
+‎Mwy wx‏ بدح مجود ‎NII AD‏ مياجم
+
+‎STON WANN
+
+‏التكوين — الإصحاح 22 - الاي 17 <
+أبتاركك م</failure>
     </testcase>
-    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="47.2">
-      <failure message="Failed: Strong's modal or component chips not detected! OCR: السابق >
+    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="85.8">
+      <failure message="Failed: Strong's modal or component chips not detected! OCR: الحوي المدخل المعجمي / الجذر
 
-746
+‎(compound_phrase)‏ دلالة نحوية
+تمده ‎٠١‏
 
-لم يتم العتور على ‎OU‏
+‏© التحليل النحوي ... ' حرف عطف / أداة ربط
 
-الثالي > الإصحاح 22 من 50">Failed: Strong's modal or component chips not detected! OCR: السابق >
+‏نوع الكلمة (القسم اللغوي) حرف عط">Failed: Strong's modal or component chips not detected! OCR: الحوي المدخل المعجمي / الجذر
 
-746
+‎(compound_phrase)‏ دلالة نحوية
+تمده ‎٠١‏
 
-لم يتم العتور على ‎OU‏
+‏© التحليل النحوي ... ' حرف عطف / أداة ربط
 
-الثالي > الإصحاح 22 من 50</failure>
+‏نوع الكلمة (القسم اللغوي) حرف عط</failure>
     </testcase>
-    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="22.8">
-      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: السابق >
+    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="17.0">
+      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: العبرية للتعبير السببي المركب ‎١3‏
+‎WR [Yt‏ (المواضع 8-6). لا يحمل
+رقم سترونج مفرذا لكونه جزءًا من
+دلالة العبارة المركبة كاملة.
 
-746
+‎Fh‏ معنى الكلمة في ا">Failed: H853 morphology disclosure banner not detected! OCR: العبرية للتعبير السببي المركب ‎١3‏
+‎WR [Yt‏ (المواضع 8-6). لا يحمل
+رقم سترونج مفرذا لكونه جزءًا من
+دلالة العبارة المركبة كاملة.
 
-لم يتم العتور على ‎OU‏
-
-الثالي > الإصحاح 22 من 50">Failed: H853 morphology disclosure banner not detected! OCR: السابق >
-
-746
-
-لم يتم العتور على ‎OU‏
-
-الثالي > الإصحاح 22 من 50</failure>
+‎Fh‏ معنى الكلمة في ا</failure>
     </testcase>
-    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="42.3">
-      <failure message="Failed: Reading position lost after theme switch! OCR: v4
-© a
-
-دليل الكتاب المقدس
-
-عبري / عربي
-يوناني / عربي
-
-تحديث جديد متا
-
-(v1.0.348)
-
-‎gall‏ القديم
-‎Old Testament‏ >
-
-‏عبري ) ‎١‏ 39 سفر
-
-‏العهد الجديد
-">Failed: Reading position lost after theme switch! OCR: v4
-© a
-
-دليل الكتاب المقدس
-
-عبري / عربي
-يوناني / عربي
-
-تحديث جديد متا
-
-(v1.0.348)
-
-‎gall‏ القديم
-‎Old Testament‏ >
-
-‏عبري ) ‎١‏ 39 سفر
-
-‏العهد الجديد
-</failure>
+    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="16.8">
     </testcase>
-    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="28.5">
-      <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: مد © 10:28
+    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="24.4">
+      <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: الإصحاح 119
 
-لم يتم العتور على ‎OU‏
+‎slag)‏ اضْطَهَدُونِي ‎Wy‏ ستبء وَمِنْ
 
-التالي > ‎ces!)‏ 119 من 150 )">Failed: Psalm 119:160 text not positioned directly! OCR: مد © 10:28
+‎> (150 ns ‏الإصحا‎ | > gu
+) 359 ‏بي > [ الإصماح 119 من‎">Failed: Psalm 119:160 text not positioned directly! OCR: الإصحاح 119
 
-لم يتم العتور على ‎OU‏
+‎slag)‏ اضْطَهَدُونِي ‎Wy‏ ستبء وَمِنْ
 
-التالي > ‎ces!)‏ 119 من 150 )</failure>
+‎> (150 ns ‏الإصحا‎ | > gu
+) 359 ‏بي > [ الإصماح 119 من‎</failure>
     </testcase>
   </testsuite>
 </testsuites>
