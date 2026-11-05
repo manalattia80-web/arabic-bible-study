@@ -240,6 +240,7 @@ class _MappingsStats extends StatelessWidget {
     final withStrongs = mappings.where((m) => m.hasStrongs).length;
     final verified = mappings.where((m) => m.isVerified).length;
     final withAudio = mappings.where((m) => m.hasAudio).length;
+    final compounds = mappings.where((m) => m.strongsIds.length > 1).toList();
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
       child: Row(
@@ -249,6 +250,35 @@ class _MappingsStats extends StatelessWidget {
           _stat('${mappings.length}', 'كلمة', AppColors.textSecondary),
           const SizedBox(width: 12),
           _stat('$withStrongs', 'مرتبط بسترونج', AppColors.primary),
+          if (compounds.isNotEmpty) ...[
+            const SizedBox(width: 10),
+            InkWell(
+              onTap: () {
+                final target = compounds.first;
+                StrongsModal.show(context, target.strongsId ?? '', mapping: target);
+              },
+              borderRadius: BorderRadius.circular(6),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryGlow,
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: AppColors.primary.withOpacity(0.4)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.call_split_rounded, size: 13, color: AppColors.primary),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${compounds.length} مركب',
+                      style: TextStyle(color: AppColors.primaryText, fontWeight: FontWeight.bold, fontSize: 11),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
           if (verified > 0) ...[
             const SizedBox(width: 12),
             _stat('$verified', 'موثّق', AppColors.success),

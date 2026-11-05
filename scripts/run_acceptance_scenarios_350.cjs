@@ -242,39 +242,24 @@ const t2 = Date.now();
 try {
   console.log('\n--- Executing Scenario 2: Independent Selection of Repeated H1697 Chips ---');
   // From Reader with Verse 16 on screen, tap Verse 16 card to open WordStudy
-  console.log('Tapping Verse 16 card to open WordStudyScreen at (160, 230)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * 0.36)}`);
-  sleep(2000);
+  console.log('Tapping Verse 16 card to open WordStudyScreen at (160, 130)...');
+  execAdb(`shell input tap ${Math.round(W * 0.50)} 130`);
+  sleep(4000); // Allow WordStudyScreen table to load
 
-  // Allow WordStudyScreen table to load
-  sleep(4000);
-
-  // Smooth swipe to bring Row 12 ('الأمر' / H1697) into view
-  console.log('Swiping up to bring Row 12 (الأمر) into view...');
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} 500 ${Math.round(W * 0.50)} 150 600`);
-  sleep(2000);
-
-  // Tap row for 'الأمر' (word 12) at (160, 400)
-  console.log('Tapping row for "الأمر" in WordStudyScreen at (160, 400)...');
-  execAdb(`shell input tap ${Math.round(W * 0.50)} 400`);
-  sleep(3000);
+  // Tap compound words chip in stats row at Y ~ 205, or row 12 after scroll
+  console.log('Tapping compound chip in WordStudyScreen at (150, 205)...');
+  execAdb(`shell input tap 150 205`);
+  sleep(2500);
 
   let snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
   let ocr2 = snap2.ocr;
   let hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
 
   if (!hasCompChips) {
-    console.log('Retrying tap on Row 12 at (160, 360)...');
-    execAdb(`shell input tap ${Math.round(W * 0.50)} 360`);
-    sleep(2500);
-    snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
-    ocr2 = snap2.ocr;
-    hasCompChips = ocr2.includes('المكوّن 1') || ocr2.includes('المكوّن ١') || ocr2.includes('المكون 1') || ocr2.includes('H1697') || ocr2.includes('1697');
-  }
-
-  if (!hasCompChips) {
-    console.log('Retrying tap on Row 12 at (160, 440)...');
-    execAdb(`shell input tap ${Math.round(W * 0.50)} 440`);
+    console.log('Fallback: Swiping up to bring Row 12 into view...');
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} 500 ${Math.round(W * 0.50)} 150 800`);
+    sleep(2000);
+    execAdb(`shell input tap ${Math.round(W * 0.50)} 370`);
     sleep(2500);
     snap2 = captureScreenshot('scenario2_h1697_independent_chips.png');
     ocr2 = snap2.ocr;
@@ -309,7 +294,7 @@ try {
   sleep(2000);
 
   // Scroll down to morphology section in modal
-  execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 220 500`);
+  execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 220 600`);
   sleep(1500);
 
   let snap3 = captureScreenshot('scenario3_h853_morphology_disclosure.png');
@@ -320,7 +305,7 @@ try {
     console.log('Retrying tap on H853 chip at (160, 290)...');
     execAdb(`shell input tap ${Math.round(W * 0.50)} 290`);
     sleep(2000);
-    execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 220 500`);
+    execAdb(`shell input swipe ${Math.round(W * 0.50)} 520 ${Math.round(W * 0.50)} 220 600`);
     sleep(1500);
     snap3 = captureScreenshot('scenario3_h853_morphology_disclosure.png');
     ocr3 = snap3.ocr;
