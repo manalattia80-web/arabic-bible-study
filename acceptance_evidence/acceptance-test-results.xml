@@ -1,49 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="AcceptanceScenariosSuite" tests="5" failures="2" errors="0" time="330.3">
-  <testsuite name="ArbitrationAcceptance" tests="5" failures="2" errors="0">
-    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="74.8">
+<testsuites name="AcceptanceScenariosSuite" tests="5" failures="5" errors="0" time="231.9">
+  <testsuite name="ArbitrationAcceptance" tests="5" failures="5" errors="0">
+    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="91.1">
+      <failure message="Failed: Book name &quot;التكوين&quot; not found in header! OCR: السابق >
+
+wat
+
+لم يتم العتور على ‎OU‏
+
+الثالي > الإصحاح 22 من 50">Failed: Book name "التكوين" not found in header! OCR: السابق >
+
+wat
+
+لم يتم العتور على ‎OU‏
+
+الثالي > الإصحاح 22 من 50</failure>
     </testcase>
-    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="97.7">
-      <failure message="Failed: Strong's modal or component chips not detected! OCR: 3068 المدخل المعجمي / الجذر
+    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="47.2">
+      <failure message="Failed: Strong's modal or component chips not detected! OCR: السابق >
 
-arn Hebrew
+746
 
-yendvah ٠ ‏يهوه)‎ / 0383) <3
-٠-١ GSD
+لم يتم العتور على ‎OU‏
 
-© التحليل التحوي والصرفي .لمعم
-نوع ‎(gal a) a‏ اسم عام
+الثالي > الإصحاح 22 من 50">Failed: Strong's modal or component chips not detected! OCR: السابق >
 
-(Singutar) ‏مقر">Failed: Strong's modal or component chips not detected! OCR: 3068 المدخل المعجمي / الجذر
+746
 
-arn Hebrew
+لم يتم العتور على ‎OU‏
 
-yendvah ٠ ‏يهوه)‎ / 0383) <3
-٠-١ GSD
-
-© التحليل التحوي والصرفي .لمعم
-نوع ‎(gal a) a‏ اسم عام
-
-(Singutar) ‏مقر</failure>
+الثالي > الإصحاح 22 من 50</failure>
     </testcase>
-    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="20.1">
-      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: 89 المعنى المعجمي
+    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="22.8">
+      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: السابق >
 
-الاسم الإلهي الأعظم والخاص بإله
-العهد, المشتق لغوياتاً من الفعل
-'قايّه' (الكائن أو الذي كان ويكون),
-معبراً عن الكائن ‎ail‏ الأزلي
-ا">Failed: H853 morphology disclosure banner not detected! OCR: 89 المعنى المعجمي
+746
 
-الاسم الإلهي الأعظم والخاص بإله
-العهد, المشتق لغوياتاً من الفعل
-'قايّه' (الكائن أو الذي كان ويكون),
-معبراً عن الكائن ‎ail‏ الأزلي
-ا</failure>
+لم يتم العتور على ‎OU‏
+
+الثالي > الإصحاح 22 من 50">Failed: H853 morphology disclosure banner not detected! OCR: السابق >
+
+746
+
+لم يتم العتور على ‎OU‏
+
+الثالي > الإصحاح 22 من 50</failure>
     </testcase>
-    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="60.9">
+    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="42.3">
+      <failure message="Failed: Reading position lost after theme switch! OCR: v4
+© a
+
+دليل الكتاب المقدس
+
+عبري / عربي
+يوناني / عربي
+
+تحديث جديد متا
+
+(v1.0.348)
+
+‎gall‏ القديم
+‎Old Testament‏ >
+
+‏عبري ) ‎١‏ 39 سفر
+
+‏العهد الجديد
+">Failed: Reading position lost after theme switch! OCR: v4
+© a
+
+دليل الكتاب المقدس
+
+عبري / عربي
+يوناني / عربي
+
+تحديث جديد متا
+
+(v1.0.348)
+
+‎gall‏ القديم
+‎Old Testament‏ >
+
+‏عبري ) ‎١‏ 39 سفر
+
+‏العهد الجديد
+</failure>
     </testcase>
-    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="76.8">
+    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="28.5">
+      <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: مد © 10:28
+
+لم يتم العتور على ‎OU‏
+
+التالي > ‎ces!)‏ 119 من 150 )">Failed: Psalm 119:160 text not positioned directly! OCR: مد © 10:28
+
+لم يتم العتور على ‎OU‏
+
+التالي > ‎ces!)‏ 119 من 150 )</failure>
     </testcase>
   </testsuite>
 </testsuites>
