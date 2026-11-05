@@ -1,86 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="AcceptanceScenariosSuite" tests="5" failures="3" errors="0" time="199.2">
-  <testsuite name="ArbitrationAcceptance" tests="5" failures="3" errors="0">
-    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="86.7">
+<testsuites name="AcceptanceScenariosSuite" tests="5" failures="2" errors="0" time="265.5">
+  <testsuite name="ArbitrationAcceptance" tests="5" failures="2" errors="0">
+    <testcase name="scenario_1_الانتقال المباشر إلى تكوين ٢٢: ١٦ مع الشاهد الكامل والعدّاد" time="85.2">
     </testcase>
-    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="47.6">
-      <failure message="Failed: Strong's modal or component chips not detected! OCR: ‎etna‏ المدخل المعجمي / الجذر
+    <testcase name="scenario_2_التمييز المستقل لمكوّني H1697 المكررين حسب الترتيب" time="30.3">
+      <failure message="Failed: Strong's modal or component chips not detected! OCR: ‎(idiomatic)‏ دلالة نحوية
+تمده ‎٠١‏
+‏© التحليل النحوي ‎gee Byala‏
 
-‎aa tk
+‏نوع الكلمة (القسم ‎(go‏ احوف جر عبدي
 
-‎neum ٠ ‏(تثوم)‎ ab
-٠١ ‏مده‎
+‎1
 
-‏© التحليل النحوي والصرفي ‎١‏ اسمعبري
-نوع الكلمة [القسم اللغوي) اسم ‎ene‏
+‎iba / Sia) ‏الجنس‎
 
-‏حالة ">Failed: Strong's modal or component chips not detected! OCR: ‎etna‏ المدخل المعجمي / الجذر
+‏مذكر ‎(Masculine)‏">Failed: Strong's modal or component chips not detected! OCR: ‎(idiomatic)‏ دلالة نحوية
+تمده ‎٠١‏
+‏© التحليل النحوي ‎gee Byala‏
 
-‎aa tk
+‏نوع الكلمة (القسم ‎(go‏ احوف جر عبدي
 
-‎neum ٠ ‏(تثوم)‎ ab
-٠١ ‏مده‎
+‎1
 
-‏© التحليل النحوي والصرفي ‎١‏ اسمعبري
-نوع الكلمة [القسم اللغوي) اسم ‎ene‏
+‎iba / Sia) ‏الجنس‎
 
-‏حالة </failure>
+‏مذكر ‎(Masculine)‏</failure>
     </testcase>
-    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="7.7">
-      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: حالة الإضافة العبرية
+    <testcase name="scenario_3_عرض معلومات H853 الصرفية مع الإفصاح عن اللفظ الأساسي" time="29.6">
+      <failure message="Failed: H853 morphology disclosure banner not detected! OCR: coors) ee ‏الوسر‎
 
-الحالة الإعرابية ‎(Construct)‏
-‏الجسم (مذكر | مؤنث / مذكر ‎(Masculine)‏
+9 التعريف اللغوي والنحوي
+اللفظ العبري 3' مركب من حرف
+الجر 3 وضمير المتكلم ' (في ‎(col‏
+‏واستعماله في سياق القسم ‎&quot;D>‏
+‎«MYAW‏ معناه">Failed: H853 morphology disclosure banner not detected! OCR: coors) ee ‏الوسر‎
 
-(Singular) «sie
-
-العدد (مقرد | مثنى /
-
-HNcmse ee
-
-2 الم">Failed: H853 morphology disclosure banner not detected! OCR: حالة الإضافة العبرية
-
-الحالة الإعرابية ‎(Construct)‏
-‏الجسم (مذكر | مؤنث / مذكر ‎(Masculine)‏
-
-(Singular) «sie
-
-العدد (مقرد | مثنى /
-
-HNcmse ee
-
-2 الم</failure>
+9 التعريف اللغوي والنحوي
+اللفظ العبري 3' مركب من حرف
+الجر 3 وضمير المتكلم ' (في ‎(col‏
+‏واستعماله في سياق القسم ‎"D>‏
+‎«MYAW‏ معناه</failure>
     </testcase>
-    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="19.0">
+    <testcase name="scenario_4_تبديل السمة بين الفاتح والداكن مع الحفاظ التام على موضع القراءة" time="35.4">
     </testcase>
-    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="38.3">
-      <failure message="Failed: Psalm 119:160 text not positioned directly! OCR: 8:56 © v4
-
-ه © عم ‎A‏
-
-dines Bi das eal Jus Js
-
-فَوَاسِعَةٌ جدًا.
-
-‎NIN yp NN N29N 222‏ ريصق
-‎TTA‏
-
-‏89 دراسة ‎Ay SUS‏ شواهد ‎١‏ “ب مقارنة الترجمات
-
-‏">Failed: Psalm 119:160 text not positioned directly! OCR: 8:56 © v4
-
-ه © عم ‎A‏
-
-dines Bi das eal Jus Js
-
-فَوَاسِعَةٌ جدًا.
-
-‎NIN yp NN N29N 222‏ ريصق
-‎TTA‏
-
-‏89 دراسة ‎Ay SUS‏ شواهد ‎١‏ “ب مقارنة الترجمات
-
-‏</failure>
+    <testcase name="scenario_5_الانتقال المباشر إلى مزمور ۱۱۹: ۱۶۰ وتكبير النص دون اقتطاع" time="84.9">
     </testcase>
   </testsuite>
 </testsuites>
