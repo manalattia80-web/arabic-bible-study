@@ -45,10 +45,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
   @override
   void initState() {
     super.initState();
-    final reader = context.read<ReaderProvider>();
-    if (reader.bookId != widget.bookId || reader.chapterNum != widget.chapterNum) {
-      reader.clear();
-    }
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ReaderProvider>().loadChapter(widget.bookId, widget.chapterNum);
     });

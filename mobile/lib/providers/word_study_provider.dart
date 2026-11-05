@@ -57,17 +57,18 @@ class WordStudyProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _mappings = await ApiService.getWordMappings(verseId);
+      // 1. Try local database first (instant offline response)
+      _mappings = await DatabaseService.instance.getWordMappings(verseId);
       if (_mappings.isEmpty) {
-        debugPrint('Remote mappings empty for $verseId, trying local sqlite fallback...');
-        _mappings = await DatabaseService.instance.getWordMappings(verseId);
+        debugPrint('Local mappings empty for $verseId, trying API fallback...');
+        _mappings = await ApiService.getWordMappings(verseId);
       }
     } catch (e) {
-      debugPrint('Error loading word mappings from API ($e), trying local fallback...');
+      debugPrint('Error loading word mappings from local db ($e), trying API fallback...');
       try {
-        _mappings = await DatabaseService.instance.getWordMappings(verseId);
-      } catch (localErr) {
-        _mappingsError = 'فشل في تحميل الكلمات: $localErr';
+        _mappings = await ApiService.getWordMappings(verseId);
+      } catch (apiErr) {
+        _mappingsError = 'فشل في تحميل الكلمات: $apiErr';
       }
     } finally {
       _loadingMappings = false;

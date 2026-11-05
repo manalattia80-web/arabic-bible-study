@@ -27,6 +27,7 @@ class ReaderProvider extends ChangeNotifier {
     if (_bookId == bookId && _chapterNum == chapterNum && _verses.isNotEmpty) return;
 
     _loading    = true;
+    _verses     = [];
     _error      = '';
     _bookId     = bookId;
     _chapterNum = chapterNum;
