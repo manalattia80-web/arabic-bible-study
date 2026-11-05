@@ -45,6 +45,10 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
   @override
   void initState() {
     super.initState();
+    final reader = context.read<ReaderProvider>();
+    if (reader.bookId != widget.bookId || reader.chapterNum != widget.chapterNum) {
+      reader.clear();
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ReaderProvider>().loadChapter(widget.bookId, widget.chapterNum);
     });
@@ -58,6 +62,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
 
   void _scrollToTargetVerseIfNeeded(ReaderProvider reader) {
     if (_hasScrolledToTarget || widget.initialVerseNum == null || reader.loading || reader.verses.isEmpty) return;
+    if (reader.bookId != widget.bookId || reader.chapterNum != widget.chapterNum) return;
 
     final targetIndex = reader.verses.indexWhere((v) => v.verseNum == widget.initialVerseNum);
     if (targetIndex < 0) return;

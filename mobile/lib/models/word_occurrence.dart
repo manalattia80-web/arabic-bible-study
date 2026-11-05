@@ -32,5 +32,5 @@ class WordOccurrence {
     );
   }
 
-  String get reference => '$bookNameAr $chapterNum: $verseNum';
+  String get reference => '$bookNameAr — الإصحاح $chapterNum — الآية $verseNum';
 }

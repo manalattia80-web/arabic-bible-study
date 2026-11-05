@@ -57,7 +57,7 @@ class Verse {
   }
 
   String get displayBookName => bookNameAr ?? defaultBookNames[bookId] ?? 'السفر $bookId';
-  String get reference => '$displayBookName $chapterNum: $verseNum';
+  String get reference => '$displayBookName — الإصحاح $chapterNum — الآية $verseNum';
   bool   get isHebrew  => textOriginalLang == 'hebrew' || textOriginalLang == 'aramaic';
 
   static const Map<int, String> defaultBookNames = {

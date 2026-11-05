@@ -22,5 +22,5 @@ class CrossReference {
     required this.targetText,
   });
 
-  String get reference => '$targetBookName $targetChapterNum: $targetVerseNum';
+  String get reference => '$targetBookName — الإصحاح $targetChapterNum — الآية $targetVerseNum';
 }
