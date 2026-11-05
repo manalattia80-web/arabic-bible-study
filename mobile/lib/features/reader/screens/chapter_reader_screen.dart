@@ -142,18 +142,23 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
         title: Directionality(
           textDirection: TextDirection.rtl,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '$bookName — الإصحاح ${widget.chapterNum}',
-                style: AppTheme.arabicLabel(size: 16),
+                '${bookName} — الإصحاح ${widget.chapterNum}',
+                style: AppTheme.arabicLabel(size: 15),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               Text(
-                'الإصحاح ${widget.chapterNum} من $totalCh',
-                style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+                'الإصحاح ${widget.chapterNum} من ${totalCh}',
+                style: TextStyle(fontSize: 10, color: AppColors.textSecondary),
+                maxLines: 1,
               ),
             ],
           ),
@@ -162,9 +167,11 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
           // Theme toggle
           Consumer<ThemeProvider>(
             builder: (ctx, theme, _) => IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 28, minHeight: 36),
               icon: Icon(
                 theme.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                size: 20,
+                size: 18,
               ),
               onPressed: theme.toggleTheme,
               tooltip: theme.isDark ? 'الوضع النهاري' : 'الوضع الليلي',
@@ -172,20 +179,26 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
           ),
           // Font size controls
           IconButton(
-            icon: const Icon(Icons.text_decrease, size: 20),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 26, minHeight: 36),
+            icon: const Icon(Icons.text_decrease, size: 18),
             onPressed: reader.decreaseFontSize,
             tooltip: 'تصغير الخط',
           ),
           IconButton(
-            icon: const Icon(Icons.text_increase, size: 20),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 26, minHeight: 36),
+            icon: const Icon(Icons.text_increase, size: 18),
             onPressed: reader.increaseFontSize,
             tooltip: 'تكبير الخط',
           ),
           // Toggle original text
           IconButton(
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 28, minHeight: 36),
             icon: Icon(
               reader.showOriginal ? Icons.visibility : Icons.visibility_off,
-              size: 20,
+              size: 18,
               color: reader.showOriginal ? AppColors.primary : AppColors.textMuted,
             ),
             onPressed: reader.toggleOriginalText,
@@ -193,8 +206,11 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
           ),
           // Search
           IconButton(
-            icon: const Icon(Icons.search, size: 20),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 28, minHeight: 36),
+            icon: const Icon(Icons.search, size: 18),
             onPressed: () => context.pushNamed('search'),
+            tooltip: 'بحث',
           ),
           const SizedBox(width: 4),
         ],

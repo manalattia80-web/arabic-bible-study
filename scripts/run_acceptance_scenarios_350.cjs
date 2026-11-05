@@ -110,9 +110,9 @@ const searchIconX = Math.round(W * 0.90);
 const searchIconY = Math.round(H * 0.081);
 const searchInputX = Math.round(W * 0.40);
 const searchInputY = Math.round(H * 0.081);
-const readerThemeIconX = Math.round(W * 0.32);
+const readerThemeIconX = Math.round(W * 0.60);
 const readerThemeIconY = Math.round(H * 0.081);
-const readerFontIncX = Math.round(W * 0.64);
+const readerFontIncX = Math.round(W * 0.77);
 const readerFontIncY = Math.round(H * 0.081);
 
 function dismissKeyboard() {
