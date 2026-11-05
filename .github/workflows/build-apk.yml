@@ -115,7 +115,7 @@ jobs:
             play-store-bundle.aab
 
       - name: Create Release
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature/')
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "${{ env.APP_RELEASE_TAG }}"
@@ -124,8 +124,8 @@ jobs:
             arabic-bible-study-app.apk
             play-store-bundle.aab
           draft: false
-          prerelease: false
-          make_latest: true
+          prerelease: ${{ github.ref != 'refs/heads/main' }}
+          make_latest: ${{ github.ref == 'refs/heads/main' }}
           token: ${{ secrets.GITHUB_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
