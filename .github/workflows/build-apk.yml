@@ -133,8 +133,8 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.356)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 356` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.357)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 357` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
           - **Morphology Engine CCAT & Participle Refinements**:
             - **Philippians 4:6 (تَهْتَمُّوا & لِتُعْلَمْ)**: Mapped CCAT Imperative mood code `D` in MorphGNT to `imperative` with grammatical person and number (`V- 2PAD-P--` -> 2nd pl, `V- 3PPD-S--` -> 3rd sg).

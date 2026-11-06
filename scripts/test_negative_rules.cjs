@@ -132,13 +132,25 @@ const testCases = [
         'H9003'
       );
     `
+  },
+  {
+    gateNum: 6,
+    name: 'source_locator_index_mismatch',
+    expectedFailTag: '[FAIL] 1 Kings 18:21 w9 (تعرجون)',
+    description: 'Injected incorrect source locator index (OSHB:B11.C18.V21.w9 instead of w10)',
+    mutationSql: `
+      UPDATE word_mappings 
+      SET verified_locator = 'OSHB:B11.C18.V21.w9' 
+      WHERE verse_id IN (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21) 
+        AND ar_word_position = 9;
+    `
   }
 ];
 
 let verifiedGates = 0;
 
 for (const tc of testCases) {
-  console.log(`[${tc.gateNum}/5] Testing Gate ${tc.gateNum}: ${tc.description}...`);
+  console.log(`[${tc.gateNum}/${testCases.length}] Testing Gate ${tc.gateNum}: ${tc.description}...`);
   createFreshScratchDb();
   execSqlOnScratch(tc.mutationSql);
   const res = runAuditOnScratch();

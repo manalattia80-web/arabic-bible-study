@@ -1375,8 +1375,8 @@ const batch20ComprehensiveCases = [
     ref: '1 Kings 18:21 w9 (تعرجون)', book: 11, ch: 18, vs: 21, pos: 9,
     expStrongs: 'H6452', expOrig: 'פָּסַח', expSurface: 'פֹּסְחִים֮',
     expPos: 'verb', expStem: 'qal', expMood: 'participle', expGender: 'masculine', expNumber: 'plural', expPerson: null,
-    expMorph: 'HVqrmpa', expLoc: 'OSHB:B11.C18.V21.w9',
-    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 10, oshbExpectedId: '11xrp'
+    expMorph: 'HVqrmpa', expLoc: 'OSHB:B11.C18.V21.w10',
+    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbExpectedId: '11xrp'
   },
   // 35. Ezra 5:8 w25 (يُعمل)
   {
@@ -1400,9 +1400,9 @@ const batch20ComprehensiveCases = [
     ref: 'Phil 4:6 w12 (لتُعلم)', book: 50, ch: 4, vs: 6, pos: 12,
     expStrongs: 'G1107', expOrig: 'γνωρίζω', expSurface: 'γνωριζέσθω',
     expPos: 'verb', expMood: 'imperative', expPerson: '3', expNumber: 'singular', expGender: null,
-    expMorph: 'V- 3PPD-S--', expLoc: 'SBLGNT:B50.C4.V6.w12',
+    expMorph: 'V- 3PPD-S--', expLoc: 'SBLGNT:B50.C4.V6.w16',
     oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
-    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 16, sblgntExpectedMorph: 'V- 3PPD-S--', sblgntExpectedLemma: 'γνωρίζω'
+    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntExpectedMorph: 'V- 3PPD-S--', sblgntExpectedLemma: 'γνωρίζω'
   }
 ];
 
@@ -1413,7 +1413,7 @@ for (const tc of batch20ComprehensiveCases) {
            wm.morph_gender, wm.morph_number, wm.morph_person,
            (SELECT GROUP_CONCAT(sub.strongs_id, ',') 
             FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub) as comps,
-           wm.morph_stem, wm.morph_mood
+           wm.morph_stem, wm.morph_mood, wm.orig_word_position
     FROM word_mappings wm
     JOIN verses v ON wm.verse_id = v.id
     WHERE v.book_id = ${tc.book} AND v.chapter_num = ${tc.ch} AND v.verse_num = ${tc.vs} AND wm.ar_word_position = ${tc.pos};
@@ -1430,6 +1430,11 @@ for (const tc of batch20ComprehensiveCases) {
   const actualStrongs = row[8];
   const actualStem = row[9] || null;
   const actualMood = row[10] || null;
+  const actualOrigPos = row[11] ? parseInt(row[11], 10) : null;
+
+  // Word index MUST be parsed directly from stored verified_locator, eliminating any audit loophole
+  const locWordMatch = actualLoc ? actualLoc.match(/\.w(\d+)/) : null;
+  const extractedWordIndex = locWordMatch ? parseInt(locWordMatch[1], 10) : null;
 
   const okStrongs = actualStrongs === tc.expStrongs;
   const okOrig = actualOrig === tc.expOrig;
@@ -1442,6 +1447,7 @@ for (const tc of batch20ComprehensiveCases) {
   const okPerson = actualPerson === tc.expPerson;
   const okStem = tc.expStem !== undefined ? actualStem === tc.expStem : true;
   const okMood = tc.expMood !== undefined ? actualMood === tc.expMood : true;
+  const okPosSync = (extractedWordIndex !== null && actualOrigPos !== null && extractedWordIndex === actualOrigPos);
 
   let okSourceXml = true;
   let xmlDetail = '';
@@ -1451,10 +1457,11 @@ for (const tc of batch20ComprehensiveCases) {
       okSourceXml = false;
       xmlDetail = `OSHB file/verse not found: ${tc.oshbBook} ${tc.oshbOsis}`;
     } else {
-      const targetElement = oshbWords.find(w => w.index === tc.oshbWordIndex);
+      // Lookup index strictly from stored verified_locator
+      const targetElement = oshbWords.find(w => w.index === extractedWordIndex);
       if (!targetElement) {
         okSourceXml = false;
-        xmlDetail = `OSHB word index ${tc.oshbWordIndex} not found in ${tc.oshbOsis}`;
+        xmlDetail = `OSHB word index ${extractedWordIndex} (from locator ${actualLoc}) not found in ${tc.oshbOsis}`;
       } else {
         if (tc.oshbExpectedId && targetElement.id !== tc.oshbExpectedId) {
           okSourceXml = false;
@@ -1475,10 +1482,11 @@ for (const tc of batch20ComprehensiveCases) {
       okSblgnt = false;
       sblgntDetail = `SBLGNT file/verse not found: Book ${tc.sblgntBookId} ${tc.sblgntChapter}:${tc.sblgntVerse}`;
     } else {
-      const targetToken = sblgntWords.find(w => w.index === tc.sblgntWordIndex);
+      // Lookup index strictly from stored verified_locator
+      const targetToken = sblgntWords.find(w => w.index === extractedWordIndex);
       if (!targetToken) {
         okSblgnt = false;
-        sblgntDetail = `SBLGNT token index ${tc.sblgntWordIndex} not found in ${tc.sblgntBookId} ${tc.sblgntChapter}:${tc.sblgntVerse}`;
+        sblgntDetail = `SBLGNT token index ${extractedWordIndex} (from locator ${actualLoc}) not found in ${tc.sblgntBookId} ${tc.sblgntChapter}:${tc.sblgntVerse}`;
       } else {
         if (tc.sblgntExpectedMorph && targetToken.morph !== tc.sblgntExpectedMorph) {
           okSblgnt = false;
@@ -1491,9 +1499,9 @@ for (const tc of batch20ComprehensiveCases) {
     }
   }
 
-  const passed = okStrongs && okOrig && okSurface && okPos && okMorph && okLoc && okGender && okNumber && okPerson && okStem && okMood && okSourceXml && okSblgnt;
+  const passed = okStrongs && okOrig && okSurface && okPos && okMorph && okLoc && okGender && okNumber && okPerson && okStem && okMood && okPosSync && okSourceXml && okSblgnt;
   assertCondition(`${tc.ref} (Source & Morphology Verified): Strongs=${tc.expStrongs}, Surface=${tc.expSurface}, Morph=${tc.expMorph}, Loc=${tc.expLoc}`, passed, 
-    !passed ? `Mismatches: ${!okStrongs ? 'Strongs(' + actualStrongs + ') ' : ''}${!okOrig ? 'Orig(' + actualOrig + ') ' : ''}${!okSurface ? 'Surface(' + actualSurface + ') ' : ''}${!okPos ? 'Pos(' + actualPos + ') ' : ''}${!okMorph ? 'Morph(' + actualMorph + ') ' : ''}${!okLoc ? 'Loc(' + actualLoc + ') ' : ''}${!okGender ? 'Gender(' + actualGender + ') ' : ''}${!okNumber ? 'Number(' + actualNumber + ') ' : ''}${!okPerson ? 'Person(' + actualPerson + ') ' : ''}${!okStem ? 'Stem(' + actualStem + ') ' : ''}${!okMood ? 'Mood(' + actualMood + ') ' : ''}${!okSourceXml ? 'OSHB_XML(' + xmlDetail + ') ' : ''}${!okSblgnt ? 'SBLGNT(' + sblgntDetail + ') ' : ''}` : '');
+    !passed ? `Mismatches: ${!okStrongs ? 'Strongs(' + actualStrongs + ') ' : ''}${!okOrig ? 'Orig(' + actualOrig + ') ' : ''}${!okSurface ? 'Surface(' + actualSurface + ') ' : ''}${!okPos ? 'Pos(' + actualPos + ') ' : ''}${!okMorph ? 'Morph(' + actualMorph + ') ' : ''}${!okLoc ? 'Loc(' + actualLoc + ') ' : ''}${!okGender ? 'Gender(' + actualGender + ') ' : ''}${!okNumber ? 'Number(' + actualNumber + ') ' : ''}${!okPerson ? 'Person(' + actualPerson + ') ' : ''}${!okStem ? 'Stem(' + actualStem + ') ' : ''}${!okMood ? 'Mood(' + actualMood + ') ' : ''}${!okPosSync ? 'PosSync(extracted=' + extractedWordIndex + ', orig_pos=' + actualOrigPos + ') ' : ''}${!okSourceXml ? 'OSHB_XML(' + xmlDetail + ') ' : ''}${!okSblgnt ? 'SBLGNT(' + sblgntDetail + ') ' : ''}` : '');
   if (passed) batch20Pass++;
 }
 console.log(`Batch 20 Direct Source & Morphology Summary: ${batch20Pass}/${batch20ComprehensiveCases.length} loci rigorously verified against DB, OSHB XML, and SBLGNT sources.\n`);
