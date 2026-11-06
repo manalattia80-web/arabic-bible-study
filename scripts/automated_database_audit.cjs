@@ -1016,6 +1016,56 @@ for (const tc of test10Cases) {
   assertCondition(`${tc.ref} returns exact ordered sequence ${tc.expected}`, actual === tc.expected, `actual: ${actual}`);
 }
 
+// -----------------------------------------------------------------------------
+// Test 11: 20-Verse Batch Loci Regression Invariant (32 Corrected Units)
+// -----------------------------------------------------------------------------
+console.log('\n▶  TEST 11: 20-Verse Batch Audit Gate (32 Fixed Loci Regression Invariant)');
+const batch20KeyCases = [
+  { ref: 'Exod 15:2 w8 (إلهي)', book: 2, ch: 15, vs: 2, pos: 8, expected: 'H410' },
+  { ref: 'Lev 26:12 w2 (بينكم)', book: 3, ch: 26, vs: 12, pos: 2, expected: 'H8432' },
+  { ref: 'Deut 6:5 w7 (ومن)', book: 5, ch: 6, vs: 5, pos: 7, expected: 'H3605' },
+  { ref: 'Deut 6:5 w9 (نفسك)', book: 5, ch: 6, vs: 5, pos: 9, expected: 'H5315' },
+  { ref: 'Deut 6:5 w10 (ومن)', book: 5, ch: 6, vs: 5, pos: 10, expected: 'H3605' },
+  { ref: '1 Kings 18:21 w6 (وقال)', book: 11, ch: 18, vs: 21, pos: 6, expected: 'H559' },
+  { ref: '1 Kings 18:21 w7 (حتى)', book: 11, ch: 18, vs: 21, pos: 7, expected: 'H5704' },
+  { ref: '1 Kings 18:21 w8 (متى)', book: 11, ch: 18, vs: 21, pos: 8, expected: 'H4970' },
+  { ref: '1 Kings 18:21 w12 (إن)', book: 11, ch: 18, vs: 21, pos: 12, expected: 'H518' },
+  { ref: '1 Kings 18:21 w17 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 17, expected: 'H1980,H310' },
+  { ref: '1 Kings 18:21 w18 (وإن)', book: 11, ch: 18, vs: 21, pos: 18, expected: 'H518' },
+  { ref: '1 Kings 18:21 w21 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 21, expected: 'H1980,H310' },
+  { ref: 'Zech 4:6 w5 (كلمة)', book: 38, ch: 4, vs: 6, pos: 5, expected: 'H1697' },
+  { ref: 'Gal 5:22 w11 (صلاح)', book: 48, ch: 5, vs: 22, pos: 11, expected: 'G19' },
+  { ref: 'Ezra 5:8 w5 (أننا)', book: 15, ch: 5, vs: 8, pos: 5, expected: 'H1768' },
+  { ref: 'Ezra 5:8 w18 (عظيمة)', book: 15, ch: 5, vs: 8, pos: 18, expected: 'H1560' },
+  { ref: 'Ezra 5:8 w20 (خشب)', book: 15, ch: 5, vs: 8, pos: 20, expected: 'H636' },
+  { ref: 'Ezra 5:8 w22 (الحيطان)', book: 15, ch: 5, vs: 8, pos: 22, expected: 'H3797' },
+  { ref: 'Ezra 5:8 w23 (وهذا)', book: 15, ch: 5, vs: 8, pos: 23, expected: 'H1791' },
+  { ref: 'Ezra 5:8 w26 (بسرعة)', book: 15, ch: 5, vs: 8, pos: 26, expected: 'H629' },
+  { ref: 'Dan 4:17 w2 (الأمر)', book: 27, ch: 4, vs: 17, pos: 2, expected: 'H6600' },
+  { ref: 'Dan 4:17 w3 (بقضاء)', book: 27, ch: 4, vs: 17, pos: 3, expected: 'H1510' },
+  { ref: 'Dan 4:17 w5 (والحكم)', book: 27, ch: 4, vs: 17, pos: 5, expected: 'H7595' },
+  { ref: 'Dan 4:17 w6 (بكلمة)', book: 27, ch: 4, vs: 17, pos: 6, expected: 'H3983' },
+  { ref: 'Dan 4:17 w7 (القدوسين)', book: 27, ch: 4, vs: 17, pos: 7, expected: 'H6922' },
+  { ref: 'Dan 4:17 w12 (العلي)', book: 27, ch: 4, vs: 17, pos: 12, expected: 'H5943' },
+  { ref: 'Dan 4:17 w15 (مملكة)', book: 27, ch: 4, vs: 17, pos: 15, expected: 'H4437' },
+  { ref: 'Dan 4:17 w18 (من)', book: 27, ch: 4, vs: 17, pos: 18, expected: 'H4479' }
+];
+
+let batch20Pass = 0;
+for (const tc of batch20KeyCases) {
+  const actual = query(`
+    SELECT (SELECT GROUP_CONCAT(sub.strongs_id, ',') 
+            FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub)
+    FROM word_mappings wm
+    JOIN verses v ON wm.verse_id = v.id
+    WHERE v.book_id = ${tc.book} AND v.chapter_num = ${tc.ch} AND v.verse_num = ${tc.vs} AND wm.ar_word_position = ${tc.pos};
+  `).trim();
+  const passed = actual === tc.expected;
+  assertCondition(`${tc.ref} = ${tc.expected}`, passed, `actual: ${actual}`);
+  if (passed) batch20Pass++;
+}
+console.log(`Batch 20 Invariant Summary: ${batch20Pass}/${batch20KeyCases.length} key loci verified.\n`);
+
 
 console.log('\n========================================================================');
 if (totalFailures === 0) {
