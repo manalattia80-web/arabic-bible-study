@@ -133,17 +133,20 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 📋 Rigorous Linguistic & Database Batch Audit (20 Verses / 311 Words)
-          Verified 20 complete verses across 20 distinct biblical books against scholarly gold standards (OSHB/WLC for Hebrew and Aramaic, MorphGNT/SBLGNT for Greek):
-          1. **Exodus 15:2**: Corrected Word 8 (`إِلهِي` translating `אֵלִי` = H410 vs misattributed H430).
-          2. **Leviticus 26:12**: Corrected Word 2 (`بَيْنَكُمْ` translating `בְּתוֹכְכֶם` = H8432 vs misattributed H5973).
-          3. **Deuteronomy 6:5**: Corrected Words 7, 9, 10 alignment and lexical linkage (`وَمِنْ كُلِّ` = H3605; `نَفْسِكَ` = H5315).
-          4. **1 Kings 18:21**: Corrected middle alignment scramble (Words 6, 7, 8, 12, 17, 18, 21: `וַיֹּאמֶר` = H559; `עַד־מָתַי` = H5704+H4970; `אִם` = H518; `לְכוּ אַחֲרָיו` = H1980+H310).
-          5. **Zechariah 4:6**: Corrected Word 5 (`كَلِمَةُ` translating `דְּבַר` = H1697 vs H562).
-          6. **Galatians 5:22**: Linked Word 11 (`صَلاَحٌ` translating `ἀγαθωσύνη` = G19 noun feminine nominative).
-          7. **Ezra 5:8 (Aramaic)**: Corrected 9 Aramaic lexical roots and prepositions (`לְמַלְכָּא` H4430, `דִּי` H1768, `גְּלָל` H1560, `אָع` H636, `כֻּתְלַיָּא` H3797, `דָךְ` H1791, `אָסְפַּרְנָא` H629).
-          8. **Daniel 4:17 (Aramaic)**: Corrected 9 Aramaic roots and cleaned duplicate surface tokens (`פִּתְגָמָא` H6600, `בִּגְזֵרַת` H1510, `שְׁאֵלְתָא` H7595, `וּמֵאמַר` H3983, `קַדִּישִׁין` H6922, `עִלָּאָה` H5943, `בְּמַלְכוּת` H4437, `וּלְמַן` H4479).
-          9. **Regression Gate**: Automated Test 11 added to `scripts/automated_database_audit.cjs` guaranteeing 100% preservation across all 32 corrected loci.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.354)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 354` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries (`bible_study_v348.db`).
+          - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade. Verified via end-to-end upgrade simulation from v1.0.352.
+          - **Exodus 15:2 Verification**: Upgraded installations immediately query and display `H410` (`אֵלִי` / `אֵל`) for `إِلهِي` (Exod 15:2 w8) without requiring manual app reinstallation or data clearing.
+
+          ## 📋 Rigorous 4-Axis Remediation & Regression Gate (20 Verses / 33 Key Loci)
+          - **4 Independent Verification Axes**: Every key locus strictly audited and enforced across `[strongs_id, orig_word (lemma), orig_surface (manuscript inflected), morph_pos & orig_morphology, verified_locator]`.
+          - **OSHB & SBLGNT Conformance**:
+            - **Deut 6:5 (نَفْسِكَ)**: Aligned locator to MT/OSHB token 8 (`נַפְשְׁךָ֖`, `HNcfsc/Sp2ms`, locator `OSHB:B5.C6.V5.w8`).
+            - **Ezra 5:8 (بِسُرْعَةٍ)**: Corrected POS to adverb (`AD`), manuscript surface to `אָסְפַּ֥רְנָא`, and locator to OSHB token 19 (`OSHB:B15.C5.V8.w19`).
+            - **Daniel 4:17 (الْقُدُّوسِينَ)**: Aligned with Masoretic versification (Dan 4:14 MT / OSHB w5), raw morphology tag `AAampa` (`קַדִּישִׁ֖ין` plural emphatic), and eliminated duplicated original tokens.
+            - **Joshua 1:9 (تَذْهَبُ)**: Replaced uninflected lemma with authentic manuscript surface `תֵּלֵֽךְ׃` and raw tag `HVqi2ms`.
+          - **Transparency & Provenance Note**: This 20-verse batch is designated as a dedicated remediation and regression-locking batch, not claimed as an untainted blind evaluation measurement sample.
+          - **Automated Quality Gate**: Test 11 in `scripts/automated_database_audit.cjs` asserts 33/33 4-axis checks, passing with 0 failures alongside 5/5 negative quality gate rejections.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

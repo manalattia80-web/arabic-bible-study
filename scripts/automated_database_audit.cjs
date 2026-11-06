@@ -1017,54 +1017,126 @@ for (const tc of test10Cases) {
 }
 
 // -----------------------------------------------------------------------------
-// Test 11: 20-Verse Batch Loci Regression Invariant (32 Corrected Units)
+// Test 11: 20-Verse Batch Loci 4-Axis Rigorous Invariant (33 Corrected Units)
 // -----------------------------------------------------------------------------
-console.log('\n▶  TEST 11: 20-Verse Batch Audit Gate (32 Fixed Loci Regression Invariant)');
-const batch20KeyCases = [
-  { ref: 'Exod 15:2 w8 (إلهي)', book: 2, ch: 15, vs: 2, pos: 8, expected: 'H410' },
-  { ref: 'Lev 26:12 w2 (بينكم)', book: 3, ch: 26, vs: 12, pos: 2, expected: 'H8432' },
-  { ref: 'Deut 6:5 w7 (ومن)', book: 5, ch: 6, vs: 5, pos: 7, expected: 'H3605' },
-  { ref: 'Deut 6:5 w9 (نفسك)', book: 5, ch: 6, vs: 5, pos: 9, expected: 'H5315' },
-  { ref: 'Deut 6:5 w10 (ومن)', book: 5, ch: 6, vs: 5, pos: 10, expected: 'H3605' },
-  { ref: '1 Kings 18:21 w6 (وقال)', book: 11, ch: 18, vs: 21, pos: 6, expected: 'H559' },
-  { ref: '1 Kings 18:21 w7 (حتى)', book: 11, ch: 18, vs: 21, pos: 7, expected: 'H5704' },
-  { ref: '1 Kings 18:21 w8 (متى)', book: 11, ch: 18, vs: 21, pos: 8, expected: 'H4970' },
-  { ref: '1 Kings 18:21 w12 (إن)', book: 11, ch: 18, vs: 21, pos: 12, expected: 'H518' },
-  { ref: '1 Kings 18:21 w17 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 17, expected: 'H1980,H310' },
-  { ref: '1 Kings 18:21 w18 (وإن)', book: 11, ch: 18, vs: 21, pos: 18, expected: 'H518' },
-  { ref: '1 Kings 18:21 w21 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 21, expected: 'H1980,H310' },
-  { ref: 'Zech 4:6 w5 (كلمة)', book: 38, ch: 4, vs: 6, pos: 5, expected: 'H1697' },
-  { ref: 'Gal 5:22 w11 (صلاح)', book: 48, ch: 5, vs: 22, pos: 11, expected: 'G19' },
-  { ref: 'Ezra 5:8 w5 (أننا)', book: 15, ch: 5, vs: 8, pos: 5, expected: 'H1768' },
-  { ref: 'Ezra 5:8 w18 (عظيمة)', book: 15, ch: 5, vs: 8, pos: 18, expected: 'H1560' },
-  { ref: 'Ezra 5:8 w20 (خشب)', book: 15, ch: 5, vs: 8, pos: 20, expected: 'H636' },
-  { ref: 'Ezra 5:8 w22 (الحيطان)', book: 15, ch: 5, vs: 8, pos: 22, expected: 'H3797' },
-  { ref: 'Ezra 5:8 w23 (وهذا)', book: 15, ch: 5, vs: 8, pos: 23, expected: 'H1791' },
-  { ref: 'Ezra 5:8 w26 (بسرعة)', book: 15, ch: 5, vs: 8, pos: 26, expected: 'H629' },
-  { ref: 'Dan 4:17 w2 (الأمر)', book: 27, ch: 4, vs: 17, pos: 2, expected: 'H6600' },
-  { ref: 'Dan 4:17 w3 (بقضاء)', book: 27, ch: 4, vs: 17, pos: 3, expected: 'H1510' },
-  { ref: 'Dan 4:17 w5 (والحكم)', book: 27, ch: 4, vs: 17, pos: 5, expected: 'H7595' },
-  { ref: 'Dan 4:17 w6 (بكلمة)', book: 27, ch: 4, vs: 17, pos: 6, expected: 'H3983' },
-  { ref: 'Dan 4:17 w7 (القدوسين)', book: 27, ch: 4, vs: 17, pos: 7, expected: 'H6922' },
-  { ref: 'Dan 4:17 w12 (العلي)', book: 27, ch: 4, vs: 17, pos: 12, expected: 'H5943' },
-  { ref: 'Dan 4:17 w15 (مملكة)', book: 27, ch: 4, vs: 17, pos: 15, expected: 'H4437' },
-  { ref: 'Dan 4:17 w18 (من)', book: 27, ch: 4, vs: 17, pos: 18, expected: 'H4479' }
+console.log('\n▶  TEST 11: 20-Verse Batch 4-Axis Rigorous Gate (Strongs, Lemma, Surface, Morph, Locator)');
+const batch20ComprehensiveCases = [
+  // 1. Exodus 15:2
+  { ref: 'Exod 15:2 w8 (إلهي)', book: 2, ch: 15, vs: 2, pos: 8,
+    expStrongs: 'H410', expOrig: 'אֵל', expSurface: 'אֵלִי֙', expPos: 'noun', expMorph: 'HNcmsc/Sp1cs', expLoc: 'OSHB:B2.C15.V2.w6' },
+
+  // 2. Leviticus 26:12
+  { ref: 'Lev 26:12 w2 (بينكم)', book: 3, ch: 26, vs: 12, pos: 2,
+    expStrongs: 'H8432', expOrig: 'תָּוֶךְ', expSurface: 'בְּתוֹכְכֶם', expPos: 'noun', expMorph: 'HR/Ncmsc/Sp2mp', expLoc: 'OSHB:B3.C26.V12.w2' },
+
+  // 3. Deuteronomy 6:5
+  { ref: 'Deut 6:5 w7 (ومن)', book: 5, ch: 6, vs: 5, pos: 7,
+    expStrongs: 'H3605', expOrig: 'כֹּל', expSurface: 'וּבְכָל', expPos: 'noun', expMorph: 'HC/R/Ncmsc', expLoc: 'OSHB:B5.C6.V5.w7' },
+  { ref: 'Deut 6:5 w9 (نفسك)', book: 5, ch: 6, vs: 5, pos: 9,
+    expStrongs: 'H5315', expOrig: 'נֶפֶשׁ', expSurface: 'נַפְשְׁךָ֖', expPos: 'noun', expMorph: 'HNcfsc/Sp2ms', expLoc: 'OSHB:B5.C6.V5.w8' },
+  { ref: 'Deut 6:5 w10 (ومن)', book: 5, ch: 6, vs: 5, pos: 10,
+    expStrongs: 'H3605', expOrig: 'כֹּל', expSurface: 'וּבְכָל', expPos: 'noun', expMorph: 'HC/R/Ncmsc', expLoc: 'OSHB:B5.C6.V5.w9' },
+
+  // 4. Joshua 1:9
+  { ref: 'Josh 1:9 w14 (تذهب)', book: 6, ch: 1, vs: 9, pos: 14,
+    expStrongs: 'H1980', expOrig: 'הָלַךְ', expSurface: 'תֵּלֵֽךְ׃', expPos: 'verb', expMorph: 'HVqi2ms', expLoc: 'OSHB:B6.C1.V9.w14' },
+
+  // 5. 1 Kings 18:21
+  { ref: '1 Kings 18:21 w6 (وقال)', book: 11, ch: 18, vs: 21, pos: 6,
+    expStrongs: 'H559', expOrig: 'אָמַר', expSurface: 'וַיֹּ֙אמֶר֙', expPos: 'verb', expMorph: 'HC/Vqw3ms', expLoc: 'OSHB:B11.C18.V21.w4' },
+  { ref: '1 Kings 18:21 w7 (حتى)', book: 11, ch: 18, vs: 21, pos: 7,
+    expStrongs: 'H5704', expOrig: 'עַד', expSurface: 'עַד־', expPos: 'preposition', expMorph: 'HR', expLoc: 'OSHB:B11.C18.V21.w5' },
+  { ref: '1 Kings 18:21 w8 (متى)', book: 11, ch: 18, vs: 21, pos: 8,
+    expStrongs: 'H4970', expOrig: 'מָתַי', expSurface: 'מָתַ֞י', expPos: 'adverb', expMorph: 'HTi', expLoc: 'OSHB:B11.C18.V21.w5' },
+  { ref: '1 Kings 18:21 w12 (إن)', book: 11, ch: 18, vs: 21, pos: 12,
+    expStrongs: 'H518', expOrig: 'אִם', expSurface: 'אִם־', expPos: 'conjunction', expMorph: 'HC', expLoc: 'OSHB:B11.C18.V21.w10' },
+  { ref: '1 Kings 18:21 w17 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 17,
+    expStrongs: 'H1980,H310', expOrig: 'הָלַךְ', expSurface: 'לְכ֣וּ אַחֲרָ֔יו', expPos: 'verb', expMorph: 'HVqv2mp', expLoc: 'OSHB:B11.C18.V21.w13' },
+  { ref: '1 Kings 18:21 w18 (وإن)', book: 11, ch: 18, vs: 21, pos: 18,
+    expStrongs: 'H518', expOrig: 'אִם', expSurface: 'וְאִם־', expPos: 'conjunction', expMorph: 'HC', expLoc: 'OSHB:B11.C18.V21.w14' },
+  { ref: '1 Kings 18:21 w21 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 21,
+    expStrongs: 'H1980,H310', expOrig: 'הָלַךְ', expSurface: 'לְכ֣וּ אַחֲרָ֑יו', expPos: 'verb', expMorph: 'HVqv2mp', expLoc: 'OSHB:B11.C18.V21.w16' },
+
+  // 6. Zechariah 4:6
+  { ref: 'Zech 4:6 w5 (كلمة)', book: 38, ch: 4, vs: 6, pos: 5,
+    expStrongs: 'H1697', expOrig: 'דָּבָר', expSurface: 'דְּבַר־', expPos: 'noun', expMorph: 'HNcmsc', expLoc: 'OSHB:B38.C4.V6.w5' },
+
+  // 7. Galatians 5:22
+  { ref: 'Gal 5:22 w11 (صلاح)', book: 48, ch: 5, vs: 22, pos: 11,
+    expStrongs: 'G19', expOrig: 'ἀγαθωσύνη', expSurface: 'ἀγαθωσύνη', expPos: 'noun', expMorph: 'N- ----NSF-', expLoc: 'SBLGNT:B48.C5.V22.w11' },
+
+  // 8. Ezra 5:8 (Aramaic)
+  { ref: 'Ezra 5:8 w3 (لدى)', book: 15, ch: 5, vs: 8, pos: 3,
+    expStrongs: 'H4430', expOrig: 'מֶלֶךְ', expSurface: 'לְמַלְכָּ֗א', expPos: 'preposition', expMorph: 'AR/Ncmsd/Td', expLoc: 'OSHB:B15.C5.V8.w3' },
+  { ref: 'Ezra 5:8 w5 (أننا)', book: 15, ch: 5, vs: 8, pos: 5,
+    expStrongs: 'H1768', expOrig: 'דִּי', expSurface: 'דִּֽי', expPos: 'conjunction', expMorph: 'ATr', expLoc: 'OSHB:B15.C5.V8.w4' },
+  { ref: 'Ezra 5:8 w7 (إلى)', book: 15, ch: 5, vs: 8, pos: 7,
+    expStrongs: 'H3061', expOrig: 'יְהוּד', expSurface: 'לִיה֤וּד', expPos: 'preposition', expMorph: 'AR/Np', expLoc: 'OSHB:B15.C5.V8.w5' },
+  { ref: 'Ezra 5:8 w10 (إلى)', book: 15, ch: 5, vs: 8, pos: 10,
+    expStrongs: 'H1005', expOrig: 'בַּיִת', expSurface: 'לְבֵית֙', expPos: 'preposition', expMorph: 'AR/Ncmsc', expLoc: 'OSHB:B15.C5.V8.w7' },
+  { ref: 'Ezra 5:8 w18 (عظيمة)', book: 15, ch: 5, vs: 8, pos: 18,
+    expStrongs: 'H1560', expOrig: 'גְּלָל', expSurface: 'גְּלָ֔ל', expPos: 'noun', expMorph: 'ANcmsa', expLoc: 'OSHB:B15.C5.V8.w13' },
+  { ref: 'Ezra 5:8 w20 (خشب)', book: 15, ch: 5, vs: 8, pos: 20,
+    expStrongs: 'H636', expOrig: 'אָע', expSurface: 'וְאָ֖ע', expPos: 'noun', expMorph: 'AC/Ncmsa', expLoc: 'OSHB:B15.C5.V8.w14' },
+  { ref: 'Ezra 5:8 w22 (الحيطان)', book: 15, ch: 5, vs: 8, pos: 22,
+    expStrongs: 'H3797', expOrig: 'כְּתַל', expSurface: 'בְּכֻתְלַיָּ֑א', expPos: 'noun', expMorph: 'AR/Ncmpd/Td', expLoc: 'OSHB:B15.C5.V8.w16' },
+  { ref: 'Ezra 5:8 w23 (وهذا)', book: 15, ch: 5, vs: 8, pos: 23,
+    expStrongs: 'H1791', expOrig: 'דָּךְ', expSurface: 'דָ֛ךְ', expPos: 'demonstrative', expMorph: 'APd-fs', expLoc: 'OSHB:B15.C5.V8.w18' },
+  { ref: 'Ezra 5:8 w26 (بسرعة)', book: 15, ch: 5, vs: 8, pos: 26,
+    expStrongs: 'H629', expOrig: 'אָסְפַּרְנָא', expSurface: 'אָסְפַּ֥רְנָא', expPos: 'adverb', expMorph: 'AD', expLoc: 'OSHB:B15.C5.V8.w19' },
+
+  // 9. Daniel 4:17 (Aramaic) - MT 4:14
+  { ref: 'Dan 4:17 w1 (هذا)', book: 27, ch: 4, vs: 17, pos: 1,
+    expStrongs: 'H6600', expOrig: 'פִּתְגָם', expSurface: 'פִּתְגָמָ֔א', expPos: 'noun', expMorph: 'ANcmsd/Td', expLoc: 'OSHB:B27.C4.V14.w3' },
+  { ref: 'Dan 4:17 w2 (الأمر)', book: 27, ch: 4, vs: 17, pos: 2,
+    expStrongs: 'H6600', expOrig: 'פִּתְגָם', expSurface: 'פִּתְגָמָ֔א', expPos: 'noun', expMorph: 'ANcmsd/Td', expLoc: 'OSHB:B27.C4.V14.w3' },
+  { ref: 'Dan 4:17 w3 (بقضاء)', book: 27, ch: 4, vs: 17, pos: 3,
+    expStrongs: 'H1510', expOrig: 'גְּזֵרָה', expSurface: 'בִּגְזֵרַ֤ת', expPos: 'noun', expMorph: 'AR/Ncfsc', expLoc: 'OSHB:B27.C4.V14.w1' },
+  { ref: 'Dan 4:17 w5 (والحكم)', book: 27, ch: 4, vs: 17, pos: 5,
+    expStrongs: 'H7595', expOrig: 'שְׁאֵלָה', expSurface: 'שְׁאֵֽלְתָ֑א', expPos: 'noun', expMorph: 'ANcfsd/Td', expLoc: 'OSHB:B27.C4.V14.w6' },
+  { ref: 'Dan 4:17 w6 (بكلمة)', book: 27, ch: 4, vs: 17, pos: 6,
+    expStrongs: 'H3983', expOrig: 'מֵאמַר', expSurface: 'וּמֵאמַ֥ר', expPos: 'noun', expMorph: 'AC/Ncmsc', expLoc: 'OSHB:B27.C4.V14.w4' },
+  { ref: 'Dan 4:17 w7 (القدوسين)', book: 27, ch: 4, vs: 17, pos: 7,
+    expStrongs: 'H6922', expOrig: 'קַדִּישׁ', expSurface: 'קַדִּישִׁ֖ין', expPos: 'adjective', expMorph: 'AAampa', expLoc: 'OSHB:B27.C4.V14.w5' },
+  { ref: 'Dan 4:17 w12 (العلي)', book: 27, ch: 4, vs: 17, pos: 12,
+    expStrongs: 'H5943', expOrig: 'עִלָּאָה', expSurface: 'עִלָּאָ֜ה', expPos: 'adjective', expMorph: 'AAamsd/Td', expLoc: 'OSHB:B27.C4.V14.w14' },
+  { ref: 'Dan 4:17 w15 (مملكة)', book: 27, ch: 4, vs: 17, pos: 15,
+    expStrongs: 'H4437', expOrig: 'מַלְכוּ', expSurface: 'בְּמַלְכ֣וּת', expPos: 'noun', expMorph: 'AR/Ncfsc', expLoc: 'OSHB:B27.C4.V14.w15' },
+  { ref: 'Dan 4:17 w18 (من)', book: 27, ch: 4, vs: 17, pos: 18,
+    expStrongs: 'H4479', expOrig: 'מַן', expSurface: 'וּלְמַן', expPos: 'pronoun', expMorph: 'AC/R/Pq', expLoc: 'OSHB:B27.C4.V14.w17' }
 ];
 
 let batch20Pass = 0;
-for (const tc of batch20KeyCases) {
-  const actual = query(`
-    SELECT (SELECT GROUP_CONCAT(sub.strongs_id, ',') 
-            FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub)
+for (const tc of batch20ComprehensiveCases) {
+  const row = query(`
+    SELECT wm.orig_word, wm.orig_surface, wm.morph_pos, wm.orig_morphology, wm.verified_locator,
+           (SELECT GROUP_CONCAT(sub.strongs_id, ',') 
+            FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub) as comps
     FROM word_mappings wm
     JOIN verses v ON wm.verse_id = v.id
     WHERE v.book_id = ${tc.book} AND v.chapter_num = ${tc.ch} AND v.verse_num = ${tc.vs} AND wm.ar_word_position = ${tc.pos};
-  `).trim();
-  const passed = actual === tc.expected;
-  assertCondition(`${tc.ref} = ${tc.expected}`, passed, `actual: ${actual}`);
+  `).split('|');
+
+  const actualOrig = row[0];
+  const actualSurface = row[1];
+  const actualPos = row[2];
+  const actualMorph = row[3];
+  const actualLoc = row[4];
+  const actualStrongs = row[5];
+
+  const okStrongs = actualStrongs === tc.expStrongs;
+  const okOrig = actualOrig === tc.expOrig;
+  const okSurface = actualSurface === tc.expSurface;
+  const okPos = actualPos === tc.expPos;
+  const okMorph = actualMorph === tc.expMorph;
+  const okLoc = actualLoc === tc.expLoc;
+
+  const passed = okStrongs && okOrig && okSurface && okPos && okMorph && okLoc;
+  assertCondition(`${tc.ref} (4-axis): Strongs=${tc.expStrongs}, Surface=${tc.expSurface}, Morph=${tc.expMorph}, Loc=${tc.expLoc}`, passed, 
+    !passed ? `Mismatches: ${!okStrongs ? 'Strongs(' + actualStrongs + ') ' : ''}${!okOrig ? 'Orig(' + actualOrig + ') ' : ''}${!okSurface ? 'Surface(' + actualSurface + ') ' : ''}${!okPos ? 'Pos(' + actualPos + ') ' : ''}${!okMorph ? 'Morph(' + actualMorph + ') ' : ''}${!okLoc ? 'Loc(' + actualLoc + ') ' : ''}` : '');
   if (passed) batch20Pass++;
 }
-console.log(`Batch 20 Invariant Summary: ${batch20Pass}/${batch20KeyCases.length} key loci verified.\n`);
+console.log(`Batch 20 4-Axis Invariant Summary: ${batch20Pass}/${batch20ComprehensiveCases.length} loci verified across all 4 axes.\n`);
 
 
 console.log('\n========================================================================');

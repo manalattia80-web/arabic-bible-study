@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 348; // v1.0.348: 71-part database assembly validation, full Aramaic corpus remediation and Greek NT punctuation alignment
+    const targetDbVersion = 354; // v1.0.348: 71-part database assembly validation, full Aramaic corpus remediation and Greek NT punctuation alignment
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();
@@ -90,6 +90,27 @@ class DatabaseService {
         await tmpFile.rename(dbPath);
         await prefs.setInt('db_version', targetDbVersion);
         debugPrint('Local SQLite database assembled and verified successfully (${await outFile.length()} bytes).');
+
+        // Safe cleanup of legacy database binaries to prevent storage bloat
+        // Only removes older bible_study_v*.db files AFTER the new targetDb is fully verified and registered
+        // Does NOT touch SharedPreferences, user history, notes, or any other app files
+        try {
+          final dbDir = Directory(databasesPath);
+          if (await dbDir.exists()) {
+            final entries = dbDir.listSync();
+            for (final entry in entries) {
+              final name = p.basename(entry.path);
+              if (name.startsWith('bible_study_v') && name.endsWith('.db') && name != p.basename(dbPath)) {
+                try {
+                  File(entry.path).deleteSync();
+                  debugPrint('Cleaned up legacy database file: $name');
+                } catch (_) {}
+              }
+            }
+          }
+        } catch (cleanErr) {
+          debugPrint('Legacy DB cleanup notice: $cleanErr');
+        }
       } catch (e) {
         debugPrint('CRITICAL: Database assembly interrupted or failed ($e). Cleaning temp file.');
         try {
