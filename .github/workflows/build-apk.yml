@@ -133,20 +133,18 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.354)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 354` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries (`bible_study_v348.db`).
-          - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade. Verified via end-to-end upgrade simulation from v1.0.352.
-          - **Exodus 15:2 Verification**: Upgraded installations immediately query and display `H410` (`אֵלִי` / `אֵל`) for `إِلهِي` (Exod 15:2 w8) without requiring manual app reinstallation or data clearing.
-
-          ## 📋 Rigorous 4-Axis Remediation & Regression Gate (20 Verses / 33 Key Loci)
-          - **4 Independent Verification Axes**: Every key locus strictly audited and enforced across `[strongs_id, orig_word (lemma), orig_surface (manuscript inflected), morph_pos & orig_morphology, verified_locator]`.
-          - **OSHB & SBLGNT Conformance**:
-            - **Deut 6:5 (نَفْسِكَ)**: Aligned locator to MT/OSHB token 8 (`נַפְשְׁךָ֖`, `HNcfsc/Sp2ms`, locator `OSHB:B5.C6.V5.w8`).
-            - **Ezra 5:8 (بِسُرْعَةٍ)**: Corrected POS to adverb (`AD`), manuscript surface to `אָסְפַּ֥רְנָא`, and locator to OSHB token 19 (`OSHB:B15.C5.V8.w19`).
-            - **Daniel 4:17 (الْقُدُّوسِينَ)**: Aligned with Masoretic versification (Dan 4:14 MT / OSHB w5), raw morphology tag `AAampa` (`קַדִּישִׁ֖ין` plural emphatic), and eliminated duplicated original tokens.
-            - **Joshua 1:9 (تَذْهَبُ)**: Replaced uninflected lemma with authentic manuscript surface `תֵּלֵֽךְ׃` and raw tag `HVqi2ms`.
-          - **Transparency & Provenance Note**: This 20-verse batch is designated as a dedicated remediation and regression-locking batch, not claimed as an untainted blind evaluation measurement sample.
-          - **Automated Quality Gate**: Test 11 in `scripts/automated_database_audit.cjs` asserts 33/33 4-axis checks, passing with 0 failures alongside 5/5 negative quality gate rejections.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.355)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 355` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
+          - **Canonical OSHB XML Word-Counting & Direct Source Validation**:
+            - Word locators are directly validated against actual `<w>` elements in canonical OSHB XML source files with stable element IDs (`id="02ehU"`, `id="06oAj"`, `id="15CfS"`, `id="38CmP"`).
+            - **Exodus 15:2 (إِلهِي)**: Aligned to OSHB XML token 8 (`אֵלִי֙`, id `02ehU`, `OSHB:B2.C15.V2.w8`), rectifying previous offset to token 6.
+            - **Joshua 1:9 (تَذْهَبُ)**: Aligned to OSHB XML token 15 (`תֵּלֵֽךְ׃`, id `06oAj`, `OSHB:B6.C1.V9.w15`), rectifying offset to token 14.
+            - **Ezra 5:8 (بِسُرْعَةٍ)**: Aligned to OSHB XML token 20 (`אָסְפַּ֥רְנָא`, id `15CfS`, `OSHB:B15.C5.V8.w20`), rectifying offset to token 19.
+          - **Comprehensive Morphology Re-derivation**:
+            - Re-derived all detailed morphology columns (`morph_pos`, `morph_stem`, `morph_tense`, `morph_voice`, `morph_mood`, `morph_person`, `morph_gender`, `morph_number`, `morph_case`) purely from raw manuscript codes (`orig_morphology`).
+            - Purged all stale inherited values (e.g. `Exodus 15:2` w8 `HNcmsc/Sp1cs` corrected from stale `plural` to `singular`).
+          - **CI Quality Gate**: Test 11 in `scripts/automated_database_audit.cjs` opens canonical OSHB XML files directly and enforces all 33 loci across 4 axes plus detailed morphology and XML element ID matching, passing 33/33 with 0 failures alongside 5/5 negative quality gate rejections.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

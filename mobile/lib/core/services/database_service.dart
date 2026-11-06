@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 354; // v1.0.348: 71-part database assembly validation, full Aramaic corpus remediation and Greek NT punctuation alignment
+    const targetDbVersion = 355; // v1.0.355: Canonical OSHB XML source-verified locators, element ID tracking, fully re-derived morphology from raw tags
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();

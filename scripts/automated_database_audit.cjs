@@ -1017,99 +1017,322 @@ for (const tc of test10Cases) {
 }
 
 // -----------------------------------------------------------------------------
-// Test 11: 20-Verse Batch Loci 4-Axis Rigorous Invariant (33 Corrected Units)
+// Test 11: 20-Verse Batch Loci: Direct OSHB Source XML & Derived Morphology Gate
 // -----------------------------------------------------------------------------
-console.log('\n▶  TEST 11: 20-Verse Batch 4-Axis Rigorous Gate (Strongs, Lemma, Surface, Morph, Locator)');
+console.log('\n▶  TEST 11: 20-Verse Batch Direct Source XML & Morphology Quality Gate (33 Units)');
+
+const oshbDir = path.resolve(__dirname, 'data/oshb');
+function extractOshbVerse(bookName, osisID) {
+  const xmlFile = path.join(oshbDir, `${bookName}.xml`);
+  if (!fs.existsSync(xmlFile)) return null;
+  const xmlText = fs.readFileSync(xmlFile, 'utf8');
+  const verseRegex = new RegExp(`<verse\\s+osisID="${osisID}">([\\s\\S]*?)</verse>`);
+  const match = xmlText.match(verseRegex);
+  if (!match) return null;
+  const verseContent = match[1];
+
+  const wRegex = /<w\s+([^>]*?)>([\s\S]*?)<\/w>/g;
+  const words = [];
+  let wMatch;
+  let idx = 1;
+  while ((wMatch = wRegex.exec(verseContent)) !== null) {
+    const attrs = wMatch[1];
+    const text = wMatch[2].replace(/<[^>]+>/g, '').trim();
+    const lemmaMatch = attrs.match(/lemma="([^"]+)"/);
+    const morphMatch = attrs.match(/morph="([^"]+)"/);
+    const idMatch = attrs.match(/id="([^"]+)"/);
+
+    words.push({
+      index: idx++,
+      id: idMatch ? idMatch[1] : null,
+      lemma: lemmaMatch ? lemmaMatch[1] : null,
+      morph: morphMatch ? morphMatch[1] : null,
+      text: text
+    });
+  }
+  return words;
+}
+
 const batch20ComprehensiveCases = [
-  // 1. Exodus 15:2
-  { ref: 'Exod 15:2 w8 (إلهي)', book: 2, ch: 15, vs: 2, pos: 8,
-    expStrongs: 'H410', expOrig: 'אֵל', expSurface: 'אֵלִי֙', expPos: 'noun', expMorph: 'HNcmsc/Sp1cs', expLoc: 'OSHB:B2.C15.V2.w6' },
+  // 1. Exodus 15:2 w8 (إلهي)
+  {
+    ref: 'Exod 15:2 w8 (إلهي)', book: 2, ch: 15, vs: 2, pos: 8,
+    expStrongs: 'H410', expOrig: 'אֵל', expSurface: 'אֵלִי֙',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'HNcmsc/Sp1cs', expLoc: 'OSHB:B2.C15.V2.w8',
+    oshbBook: 'Exod', oshbOsis: 'Exod.15.2', oshbWordIndex: 8, oshbExpectedId: '02ehU'
+  },
 
-  // 2. Leviticus 26:12
-  { ref: 'Lev 26:12 w2 (بينكم)', book: 3, ch: 26, vs: 12, pos: 2,
-    expStrongs: 'H8432', expOrig: 'תָּוֶךְ', expSurface: 'בְּתוֹכְכֶם', expPos: 'noun', expMorph: 'HR/Ncmsc/Sp2mp', expLoc: 'OSHB:B3.C26.V12.w2' },
+  // 2. Leviticus 26:12 w2 (بينكم)
+  {
+    ref: 'Lev 26:12 w2 (بينكم)', book: 3, ch: 26, vs: 12, pos: 2,
+    expStrongs: 'H8432', expOrig: 'תָּוֶךְ', expSurface: 'בְּתוֹכְכֶם',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'HR/Ncmsc/Sp2mp', expLoc: 'OSHB:B3.C26.V12.w2',
+    oshbBook: 'Lev', oshbOsis: 'Lev.26.12', oshbWordIndex: 2, oshbExpectedId: '03yxa'
+  },
 
-  // 3. Deuteronomy 6:5
-  { ref: 'Deut 6:5 w7 (ومن)', book: 5, ch: 6, vs: 5, pos: 7,
-    expStrongs: 'H3605', expOrig: 'כֹּל', expSurface: 'וּבְכָל', expPos: 'noun', expMorph: 'HC/R/Ncmsc', expLoc: 'OSHB:B5.C6.V5.w7' },
-  { ref: 'Deut 6:5 w9 (نفسك)', book: 5, ch: 6, vs: 5, pos: 9,
-    expStrongs: 'H5315', expOrig: 'נֶפֶשׁ', expSurface: 'נַפְשְׁךָ֖', expPos: 'noun', expMorph: 'HNcfsc/Sp2ms', expLoc: 'OSHB:B5.C6.V5.w8' },
-  { ref: 'Deut 6:5 w10 (ومن)', book: 5, ch: 6, vs: 5, pos: 10,
-    expStrongs: 'H3605', expOrig: 'כֹּל', expSurface: 'וּבְכָל', expPos: 'noun', expMorph: 'HC/R/Ncmsc', expLoc: 'OSHB:B5.C6.V5.w9' },
+  // 3. Deuteronomy 6:5 w7 (ومن)
+  {
+    ref: 'Deut 6:5 w7 (ومن)', book: 5, ch: 6, vs: 5, pos: 7,
+    expStrongs: 'H3605', expOrig: 'כֹּל', expSurface: 'וּבְכָל',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'HC/R/Ncmsc', expLoc: 'OSHB:B5.C6.V5.w7',
+    oshbBook: 'Deut', oshbOsis: 'Deut.6.5', oshbWordIndex: 7, oshbExpectedId: '05jFT'
+  },
+  // 4. Deuteronomy 6:5 w9 (نفسك)
+  {
+    ref: 'Deut 6:5 w9 (نفسك)', book: 5, ch: 6, vs: 5, pos: 9,
+    expStrongs: 'H5315', expOrig: 'נֶפֶשׁ', expSurface: 'נַפְשְׁךָ֖',
+    expPos: 'noun', expGender: 'common', expNumber: 'singular', expPerson: null,
+    expMorph: 'HNcbsc/Sp2ms', expLoc: 'OSHB:B5.C6.V5.w8',
+    oshbBook: 'Deut', oshbOsis: 'Deut.6.5', oshbWordIndex: 8, oshbExpectedId: '05VEv'
+  },
+  // 5. Deuteronomy 6:5 w10 (ومن)
+  {
+    ref: 'Deut 6:5 w10 (ومن)', book: 5, ch: 6, vs: 5, pos: 10,
+    expStrongs: 'H3605', expOrig: 'כֹּל', expSurface: 'וּבְכָל',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'HC/R/Ncmsc', expLoc: 'OSHB:B5.C6.V5.w9',
+    oshbBook: 'Deut', oshbOsis: 'Deut.6.5', oshbWordIndex: 9, oshbExpectedId: '05dWK'
+  },
 
-  // 4. Joshua 1:9
-  { ref: 'Josh 1:9 w14 (تذهب)', book: 6, ch: 1, vs: 9, pos: 14,
-    expStrongs: 'H1980', expOrig: 'הָלַךְ', expSurface: 'תֵּלֵֽךְ׃', expPos: 'verb', expMorph: 'HVqi2ms', expLoc: 'OSHB:B6.C1.V9.w14' },
+  // 6. Joshua 1:9 w14 (تذهب)
+  {
+    ref: 'Josh 1:9 w14 (تذهب)', book: 6, ch: 1, vs: 9, pos: 14,
+    expStrongs: 'H1980', expOrig: 'הָלַךְ', expSurface: 'תֵּלֵֽךְ׃',
+    expPos: 'verb', expGender: 'masculine', expNumber: 'singular', expPerson: '2',
+    expMorph: 'HVqi2ms', expLoc: 'OSHB:B6.C1.V9.w15',
+    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 15, oshbExpectedId: '06oAj'
+  },
 
-  // 5. 1 Kings 18:21
-  { ref: '1 Kings 18:21 w6 (وقال)', book: 11, ch: 18, vs: 21, pos: 6,
-    expStrongs: 'H559', expOrig: 'אָמַר', expSurface: 'וַיֹּ֙אמֶר֙', expPos: 'verb', expMorph: 'HC/Vqw3ms', expLoc: 'OSHB:B11.C18.V21.w4' },
-  { ref: '1 Kings 18:21 w7 (حتى)', book: 11, ch: 18, vs: 21, pos: 7,
-    expStrongs: 'H5704', expOrig: 'עַד', expSurface: 'עַד־', expPos: 'preposition', expMorph: 'HR', expLoc: 'OSHB:B11.C18.V21.w5' },
-  { ref: '1 Kings 18:21 w8 (متى)', book: 11, ch: 18, vs: 21, pos: 8,
-    expStrongs: 'H4970', expOrig: 'מָתַי', expSurface: 'מָתַ֞י', expPos: 'adverb', expMorph: 'HTi', expLoc: 'OSHB:B11.C18.V21.w5' },
-  { ref: '1 Kings 18:21 w12 (إن)', book: 11, ch: 18, vs: 21, pos: 12,
-    expStrongs: 'H518', expOrig: 'אִם', expSurface: 'אִם־', expPos: 'conjunction', expMorph: 'HC', expLoc: 'OSHB:B11.C18.V21.w10' },
-  { ref: '1 Kings 18:21 w17 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 17,
-    expStrongs: 'H1980,H310', expOrig: 'הָלַךְ', expSurface: 'לְכ֣וּ אַחֲרָ֔יו', expPos: 'verb', expMorph: 'HVqv2mp', expLoc: 'OSHB:B11.C18.V21.w13' },
-  { ref: '1 Kings 18:21 w18 (وإن)', book: 11, ch: 18, vs: 21, pos: 18,
-    expStrongs: 'H518', expOrig: 'אִם', expSurface: 'וְאִם־', expPos: 'conjunction', expMorph: 'HC', expLoc: 'OSHB:B11.C18.V21.w14' },
-  { ref: '1 Kings 18:21 w21 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 21,
-    expStrongs: 'H1980,H310', expOrig: 'הָלַךְ', expSurface: 'לְכ֣וּ אַחֲרָ֑יו', expPos: 'verb', expMorph: 'HVqv2mp', expLoc: 'OSHB:B11.C18.V21.w16' },
+  // 7. 1 Kings 18:21 w6 (وقال)
+  {
+    ref: '1 Kings 18:21 w6 (وقال)', book: 11, ch: 18, vs: 21, pos: 6,
+    expStrongs: 'H559', expOrig: 'אָמַר', expSurface: 'וַיֹּ֙אמֶר֙',
+    expPos: 'verb', expGender: 'masculine', expNumber: 'singular', expPerson: '3',
+    expMorph: 'HC/Vqw3ms', expLoc: 'OSHB:B11.C18.V21.w6',
+    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 6, oshbExpectedId: '11J7S'
+  },
+  // 8. 1 Kings 18:21 w7 (حتى)
+  {
+    ref: '1 Kings 18:21 w7 (حتى)', book: 11, ch: 18, vs: 21, pos: 7,
+    expStrongs: 'H5704', expOrig: 'עַד', expSurface: 'עַד־',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HR', expLoc: 'OSHB:B11.C18.V21.w7',
+    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 7, oshbExpectedId: '11BM3'
+  },
+  // 9. 1 Kings 18:21 w8 (متى)
+  {
+    ref: '1 Kings 18:21 w8 (متى)', book: 11, ch: 18, vs: 21, pos: 8,
+    expStrongs: 'H4970', expOrig: 'מָתַי', expSurface: 'מָתַ֞י',
+    expPos: 'particle', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HTi', expLoc: 'OSHB:B11.C18.V21.w8',
+    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 8, oshbExpectedId: '113MM'
+  },
+  // 10. 1 Kings 18:21 w12 (إن)
+  {
+    ref: '1 Kings 18:21 w12 (إن)', book: 11, ch: 18, vs: 21, pos: 12,
+    expStrongs: 'H518', expOrig: 'אִם', expSurface: 'אִם־',
+    expPos: 'conjunction', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HC', expLoc: 'OSHB:B11.C18.V21.w14',
+    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 14, oshbExpectedId: '11r5s'
+  },
+  // 11. 1 Kings 18:21 w17 (فاتبعوه)
+  {
+    ref: '1 Kings 18:21 w17 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 17,
+    expStrongs: 'H1980,H310', expOrig: 'הָלַךְ', expSurface: 'לְכ֣וּ אַחֲרָ֔יו',
+    expPos: 'verb', expGender: 'masculine', expNumber: 'plural', expPerson: '2',
+    expMorph: 'HVqv2mp', expLoc: 'OSHB:B11.C18.V21.w17',
+    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 17, oshbExpectedId: '11u4c'
+  },
+  // 12. 1 Kings 18:21 w18 (وإن)
+  {
+    ref: '1 Kings 18:21 w18 (وإن)', book: 11, ch: 18, vs: 21, pos: 18,
+    expStrongs: 'H518', expOrig: 'אִם', expSurface: 'וְאִם־',
+    expPos: 'conjunction', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HC/C', expLoc: 'OSHB:B11.C18.V21.w19',
+    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 19, oshbExpectedId: '11Azr'
+  },
+  // 13. 1 Kings 18:21 w21 (فاتبعوه)
+  {
+    ref: '1 Kings 18:21 w21 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 21,
+    expStrongs: 'H1980,H310', expOrig: 'הָלַךְ', expSurface: 'לְכ֣וּ אַחֲרָ֑יו',
+    expPos: 'verb', expGender: 'masculine', expNumber: 'plural', expPerson: '2',
+    expMorph: 'HVqv2mp', expLoc: 'OSHB:B11.C18.V21.w21',
+    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 21, oshbExpectedId: '11KxK'
+  },
 
-  // 6. Zechariah 4:6
-  { ref: 'Zech 4:6 w5 (كلمة)', book: 38, ch: 4, vs: 6, pos: 5,
-    expStrongs: 'H1697', expOrig: 'דָּבָר', expSurface: 'דְּבַר־', expPos: 'noun', expMorph: 'HNcmsc', expLoc: 'OSHB:B38.C4.V6.w5' },
+  // 14. Zechariah 4:6 w5 (كلمة)
+  {
+    ref: 'Zech 4:6 w5 (كلمة)', book: 38, ch: 4, vs: 6, pos: 5,
+    expStrongs: 'H1697', expOrig: 'דָּבָר', expSurface: 'דְּבַר־',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'HNcmsc', expLoc: 'OSHB:B38.C4.V6.w6',
+    oshbBook: 'Zech', oshbOsis: 'Zech.4.6', oshbWordIndex: 6, oshbExpectedId: '38CmP'
+  },
 
-  // 7. Galatians 5:22
-  { ref: 'Gal 5:22 w11 (صلاح)', book: 48, ch: 5, vs: 22, pos: 11,
-    expStrongs: 'G19', expOrig: 'ἀγαθωσύνη', expSurface: 'ἀγαθωσύνη', expPos: 'noun', expMorph: 'N- ----NSF-', expLoc: 'SBLGNT:B48.C5.V22.w11' },
+  // 15. Ezra 5:8 w3 (لدى)
+  {
+    ref: 'Ezra 5:8 w3 (لدى)', book: 15, ch: 5, vs: 8, pos: 3,
+    expStrongs: 'H4430', expOrig: 'מֶלֶךְ', expSurface: 'לְמַלְכָּ֗א',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'AR/Ncmsd/Td', expLoc: 'OSHB:B15.C5.V8.w3',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 3, oshbExpectedId: '15Y4b'
+  },
+  // 16. Ezra 5:8 w5 (أننا)
+  {
+    ref: 'Ezra 5:8 w5 (أننا)', book: 15, ch: 5, vs: 8, pos: 5,
+    expStrongs: 'H1768', expOrig: 'דִּי', expSurface: 'דִּֽי',
+    expPos: 'particle', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'ATr', expLoc: 'OSHB:B15.C5.V8.w4',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 4, oshbExpectedId: '15RWu'
+  },
+  // 17. Ezra 5:8 w7 (إلى)
+  {
+    ref: 'Ezra 5:8 w7 (إلى)', book: 15, ch: 5, vs: 8, pos: 7,
+    expStrongs: 'H3061', expOrig: 'יְהוּד', expSurface: 'לִיה֤וּד',
+    expPos: 'proper_noun', expGender: null, expNumber: 'singular', expPerson: null,
+    expMorph: 'AR/Np', expLoc: 'OSHB:B15.C5.V8.w6',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 6, oshbExpectedId: '15DKB'
+  },
+  // 18. Ezra 5:8 w10 (إلى)
+  {
+    ref: 'Ezra 5:8 w10 (إلى)', book: 15, ch: 5, vs: 8, pos: 10,
+    expStrongs: 'H1005', expOrig: 'בַּיִת', expSurface: 'לְבֵית֙',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'AR/Ncmsc', expLoc: 'OSHB:B15.C5.V8.w8',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 8, oshbExpectedId: '15Z2k'
+  },
+  // 19. Ezra 5:8 w18 (عظيمة)
+  {
+    ref: 'Ezra 5:8 w18 (عظيمة)', book: 15, ch: 5, vs: 8, pos: 18,
+    expStrongs: 'H1560', expOrig: 'גְּלָל', expSurface: 'גְּלָ֔ל',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'ANcmsa', expLoc: 'OSHB:B15.C5.V8.w14',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 14, oshbExpectedId: '15Q3F'
+  },
+  // 20. Ezra 5:8 w20 (خشب)
+  {
+    ref: 'Ezra 5:8 w20 (خشب)', book: 15, ch: 5, vs: 8, pos: 20,
+    expStrongs: 'H636', expOrig: 'אָע', expSurface: 'וְאָ֖ע',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'AC/Ncmsa', expLoc: 'OSHB:B15.C5.V8.w15',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 15, oshbExpectedId: '152Kw'
+  },
+  // 21. Ezra 5:8 w22 (الحيطان)
+  {
+    ref: 'Ezra 5:8 w22 (الحيطان)', book: 15, ch: 5, vs: 8, pos: 22,
+    expStrongs: 'H3797', expOrig: 'כְּתַל', expSurface: 'בְּכֻתְלַיָּ֑א',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'plural', expPerson: null,
+    expMorph: 'AR/Ncmpd/Td', expLoc: 'OSHB:B15.C5.V8.w17',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 17, oshbExpectedId: '15jJB'
+  },
+  // 22. Ezra 5:8 w23 (وهذا)
+  {
+    ref: 'Ezra 5:8 w23 (وهذا)', book: 15, ch: 5, vs: 8, pos: 23,
+    expStrongs: 'H1791', expOrig: 'דָּךְ', expSurface: 'דָ֛ךְ',
+    expPos: 'demonstrative', expGender: 'feminine', expNumber: 'singular', expPerson: null,
+    expMorph: 'APdxfs', expLoc: 'OSHB:B15.C5.V8.w19',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 19, oshbExpectedId: '15bTz'
+  },
+  // 23. Ezra 5:8 w26 (بسرعة)
+  {
+    ref: 'Ezra 5:8 w26 (بسرعة)', book: 15, ch: 5, vs: 8, pos: 26,
+    expStrongs: 'H629', expOrig: 'אָסְפַּרְנָא', expSurface: 'אָסְפַּ֥רְנָא',
+    expPos: 'adverb', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'AD', expLoc: 'OSHB:B15.C5.V8.w20',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 20, oshbExpectedId: '15CfS'
+  },
 
-  // 8. Ezra 5:8 (Aramaic)
-  { ref: 'Ezra 5:8 w3 (لدى)', book: 15, ch: 5, vs: 8, pos: 3,
-    expStrongs: 'H4430', expOrig: 'מֶלֶךְ', expSurface: 'לְמַלְכָּ֗א', expPos: 'preposition', expMorph: 'AR/Ncmsd/Td', expLoc: 'OSHB:B15.C5.V8.w3' },
-  { ref: 'Ezra 5:8 w5 (أننا)', book: 15, ch: 5, vs: 8, pos: 5,
-    expStrongs: 'H1768', expOrig: 'דִּי', expSurface: 'דִּֽי', expPos: 'conjunction', expMorph: 'ATr', expLoc: 'OSHB:B15.C5.V8.w4' },
-  { ref: 'Ezra 5:8 w7 (إلى)', book: 15, ch: 5, vs: 8, pos: 7,
-    expStrongs: 'H3061', expOrig: 'יְהוּד', expSurface: 'לִיה֤וּד', expPos: 'preposition', expMorph: 'AR/Np', expLoc: 'OSHB:B15.C5.V8.w5' },
-  { ref: 'Ezra 5:8 w10 (إلى)', book: 15, ch: 5, vs: 8, pos: 10,
-    expStrongs: 'H1005', expOrig: 'בַּיִת', expSurface: 'לְבֵית֙', expPos: 'preposition', expMorph: 'AR/Ncmsc', expLoc: 'OSHB:B15.C5.V8.w7' },
-  { ref: 'Ezra 5:8 w18 (عظيمة)', book: 15, ch: 5, vs: 8, pos: 18,
-    expStrongs: 'H1560', expOrig: 'גְּלָל', expSurface: 'גְּלָ֔ל', expPos: 'noun', expMorph: 'ANcmsa', expLoc: 'OSHB:B15.C5.V8.w13' },
-  { ref: 'Ezra 5:8 w20 (خشب)', book: 15, ch: 5, vs: 8, pos: 20,
-    expStrongs: 'H636', expOrig: 'אָע', expSurface: 'וְאָ֖ע', expPos: 'noun', expMorph: 'AC/Ncmsa', expLoc: 'OSHB:B15.C5.V8.w14' },
-  { ref: 'Ezra 5:8 w22 (الحيطان)', book: 15, ch: 5, vs: 8, pos: 22,
-    expStrongs: 'H3797', expOrig: 'כְּתַל', expSurface: 'בְּכֻתְלַיָּ֑א', expPos: 'noun', expMorph: 'AR/Ncmpd/Td', expLoc: 'OSHB:B15.C5.V8.w16' },
-  { ref: 'Ezra 5:8 w23 (وهذا)', book: 15, ch: 5, vs: 8, pos: 23,
-    expStrongs: 'H1791', expOrig: 'דָּךְ', expSurface: 'דָ֛ךְ', expPos: 'demonstrative', expMorph: 'APd-fs', expLoc: 'OSHB:B15.C5.V8.w18' },
-  { ref: 'Ezra 5:8 w26 (بسرعة)', book: 15, ch: 5, vs: 8, pos: 26,
-    expStrongs: 'H629', expOrig: 'אָסְפַּרְנָא', expSurface: 'אָסְפַּ֥רְנָא', expPos: 'adverb', expMorph: 'AD', expLoc: 'OSHB:B15.C5.V8.w19' },
+  // 24. Daniel 4:17 w1 (هذا)
+  {
+    ref: 'Dan 4:17 w1 (هذا)', book: 27, ch: 4, vs: 17, pos: 1,
+    expStrongs: 'H6600', expOrig: 'פִּתְגָם', expSurface: 'פִּתְגָמָ֔א',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'ANcmsd/Td', expLoc: 'OSHB:B27.C4.V14.w3',
+    oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 3, oshbExpectedId: '27oC6'
+  },
+  // 25. Daniel 4:17 w2 (الأمر)
+  {
+    ref: 'Dan 4:17 w2 (الأمر)', book: 27, ch: 4, vs: 17, pos: 2,
+    expStrongs: 'H6600', expOrig: 'פִּתְגָם', expSurface: 'פִּתְגָמָ֔א',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'ANcmsd/Td', expLoc: 'OSHB:B27.C4.V14.w3',
+    oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 3, oshbExpectedId: '27oC6'
+  },
+  // 26. Daniel 4:17 w3 (بقضاء)
+  {
+    ref: 'Dan 4:17 w3 (بقضاء)', book: 27, ch: 4, vs: 17, pos: 3,
+    expStrongs: 'H1510', expOrig: 'גְּזֵרָה', expSurface: 'בִּגְזֵרַ֤ת',
+    expPos: 'noun', expGender: 'feminine', expNumber: 'singular', expPerson: null,
+    expMorph: 'AR/Ncfsc', expLoc: 'OSHB:B27.C4.V14.w1',
+    oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 1, oshbExpectedId: '27fqr'
+  },
+  // 27. Daniel 4:17 w5 (والحكم)
+  {
+    ref: 'Dan 4:17 w5 (والحكم)', book: 27, ch: 4, vs: 17, pos: 5,
+    expStrongs: 'H7595', expOrig: 'שְׁאֵלָה', expSurface: 'שְׁאֵֽלְתָ֑א',
+    expPos: 'noun', expGender: 'feminine', expNumber: 'singular', expPerson: null,
+    expMorph: 'ANcfsd/Td', expLoc: 'OSHB:B27.C4.V14.w6',
+    oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 6, oshbExpectedId: '27TKQ'
+  },
+  // 28. Daniel 4:17 w6 (بكلمة)
+  {
+    ref: 'Dan 4:17 w6 (بكلمة)', book: 27, ch: 4, vs: 17, pos: 6,
+    expStrongs: 'H3983', expOrig: 'מֵאמַר', expSurface: 'וּמֵאמַ֥ר',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'AC/Ncmsc', expLoc: 'OSHB:B27.C4.V14.w4',
+    oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 4, oshbExpectedId: '27AB9'
+  },
+  // 29. Daniel 4:17 w7 (القدوسين)
+  {
+    ref: 'Dan 4:17 w7 (القدوسين)', book: 27, ch: 4, vs: 17, pos: 7,
+    expStrongs: 'H6922', expOrig: 'קַדִּישׁ', expSurface: 'קַדִּישִׁ֖ין',
+    expPos: 'adjective', expGender: 'masculine', expNumber: 'plural', expPerson: null,
+    expMorph: 'AAampa', expLoc: 'OSHB:B27.C4.V14.w5',
+    oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 5, oshbExpectedId: '276Bi'
+  },
+  // 30. Daniel 4:17 w12 (العلي)
+  {
+    ref: 'Dan 4:17 w12 (العلي)', book: 27, ch: 4, vs: 17, pos: 12,
+    expStrongs: 'H5943', expOrig: 'עִלָּאָה', expSurface: 'עִלָּאָ֜ה',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'ANcmsd/Td', expLoc: 'OSHB:B27.C4.V14.w15',
+    oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 15, oshbExpectedId: '27bjL'
+  },
+  // 31. Daniel 4:17 w15 (مملكة)
+  {
+    ref: 'Dan 4:17 w15 (مملكة)', book: 27, ch: 4, vs: 17, pos: 15,
+    expStrongs: 'H4437', expOrig: 'מַלְכוּ', expSurface: 'בְּמַלְכ֣וּת',
+    expPos: 'noun', expGender: 'feminine', expNumber: 'singular', expPerson: null,
+    expMorph: 'AR/Ncfsc', expLoc: 'OSHB:B27.C4.V14.w16',
+    oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 16, oshbExpectedId: '27ant'
+  },
+  // 32. Daniel 4:17 w18 (من)
+  {
+    ref: 'Dan 4:17 w18 (من)', book: 27, ch: 4, vs: 17, pos: 18,
+    expStrongs: 'H4479', expOrig: 'מַן', expSurface: 'וּלְמַן',
+    expPos: 'pronoun', expGender: 'common', expNumber: 'singular', expPerson: null,
+    expMorph: 'AC/R/Pfxcs', expLoc: 'OSHB:B27.C4.V14.w19',
+    oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 19, oshbExpectedId: '27fns'
+  },
 
-  // 9. Daniel 4:17 (Aramaic) - MT 4:14
-  { ref: 'Dan 4:17 w1 (هذا)', book: 27, ch: 4, vs: 17, pos: 1,
-    expStrongs: 'H6600', expOrig: 'פִּתְגָם', expSurface: 'פִּתְגָמָ֔א', expPos: 'noun', expMorph: 'ANcmsd/Td', expLoc: 'OSHB:B27.C4.V14.w3' },
-  { ref: 'Dan 4:17 w2 (الأمر)', book: 27, ch: 4, vs: 17, pos: 2,
-    expStrongs: 'H6600', expOrig: 'פִּתְגָם', expSurface: 'פִּתְגָמָ֔א', expPos: 'noun', expMorph: 'ANcmsd/Td', expLoc: 'OSHB:B27.C4.V14.w3' },
-  { ref: 'Dan 4:17 w3 (بقضاء)', book: 27, ch: 4, vs: 17, pos: 3,
-    expStrongs: 'H1510', expOrig: 'גְּזֵרָה', expSurface: 'בִּגְזֵרַ֤ת', expPos: 'noun', expMorph: 'AR/Ncfsc', expLoc: 'OSHB:B27.C4.V14.w1' },
-  { ref: 'Dan 4:17 w5 (والحكم)', book: 27, ch: 4, vs: 17, pos: 5,
-    expStrongs: 'H7595', expOrig: 'שְׁאֵלָה', expSurface: 'שְׁאֵֽלְתָ֑א', expPos: 'noun', expMorph: 'ANcfsd/Td', expLoc: 'OSHB:B27.C4.V14.w6' },
-  { ref: 'Dan 4:17 w6 (بكلمة)', book: 27, ch: 4, vs: 17, pos: 6,
-    expStrongs: 'H3983', expOrig: 'מֵאמַר', expSurface: 'וּמֵאמַ֥ר', expPos: 'noun', expMorph: 'AC/Ncmsc', expLoc: 'OSHB:B27.C4.V14.w4' },
-  { ref: 'Dan 4:17 w7 (القدوسين)', book: 27, ch: 4, vs: 17, pos: 7,
-    expStrongs: 'H6922', expOrig: 'קַדִּישׁ', expSurface: 'קַדִּישִׁ֖ין', expPos: 'adjective', expMorph: 'AAampa', expLoc: 'OSHB:B27.C4.V14.w5' },
-  { ref: 'Dan 4:17 w12 (العلي)', book: 27, ch: 4, vs: 17, pos: 12,
-    expStrongs: 'H5943', expOrig: 'עִלָּאָה', expSurface: 'עִלָּאָ֜ה', expPos: 'adjective', expMorph: 'AAamsd/Td', expLoc: 'OSHB:B27.C4.V14.w14' },
-  { ref: 'Dan 4:17 w15 (مملكة)', book: 27, ch: 4, vs: 17, pos: 15,
-    expStrongs: 'H4437', expOrig: 'מַלְכוּ', expSurface: 'בְּמַלְכ֣וּת', expPos: 'noun', expMorph: 'AR/Ncfsc', expLoc: 'OSHB:B27.C4.V14.w15' },
-  { ref: 'Dan 4:17 w18 (من)', book: 27, ch: 4, vs: 17, pos: 18,
-    expStrongs: 'H4479', expOrig: 'מַן', expSurface: 'וּלְמַן', expPos: 'pronoun', expMorph: 'AC/R/Pq', expLoc: 'OSHB:B27.C4.V14.w17' }
+  // 33. Galatians 5:22 w11 (صلاح)
+  {
+    ref: 'Gal 5:22 w11 (صلاح)', book: 48, ch: 5, vs: 22, pos: 11,
+    expStrongs: 'G19', expOrig: 'ἀγαθωσύνη', expSurface: 'ἀγαθωσύνη',
+    expPos: 'noun', expGender: 'feminine', expNumber: 'singular', expPerson: null,
+    expMorph: 'N- ----NSF-', expLoc: 'SBLGNT:B48.C5.V22.w11',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null
+  }
 ];
 
 let batch20Pass = 0;
 for (const tc of batch20ComprehensiveCases) {
   const row = query(`
     SELECT wm.orig_word, wm.orig_surface, wm.morph_pos, wm.orig_morphology, wm.verified_locator,
+           wm.morph_gender, wm.morph_number, wm.morph_person,
            (SELECT GROUP_CONCAT(sub.strongs_id, ',') 
             FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub) as comps
     FROM word_mappings wm
@@ -1122,7 +1345,10 @@ for (const tc of batch20ComprehensiveCases) {
   const actualPos = row[2];
   const actualMorph = row[3];
   const actualLoc = row[4];
-  const actualStrongs = row[5];
+  const actualGender = row[5] || null;
+  const actualNumber = row[6] || null;
+  const actualPerson = row[7] || null;
+  const actualStrongs = row[8];
 
   const okStrongs = actualStrongs === tc.expStrongs;
   const okOrig = actualOrig === tc.expOrig;
@@ -1130,14 +1356,40 @@ for (const tc of batch20ComprehensiveCases) {
   const okPos = actualPos === tc.expPos;
   const okMorph = actualMorph === tc.expMorph;
   const okLoc = actualLoc === tc.expLoc;
+  const okGender = actualGender === tc.expGender;
+  const okNumber = actualNumber === tc.expNumber;
+  const okPerson = actualPerson === tc.expPerson;
 
-  const passed = okStrongs && okOrig && okSurface && okPos && okMorph && okLoc;
-  assertCondition(`${tc.ref} (4-axis): Strongs=${tc.expStrongs}, Surface=${tc.expSurface}, Morph=${tc.expMorph}, Loc=${tc.expLoc}`, passed, 
-    !passed ? `Mismatches: ${!okStrongs ? 'Strongs(' + actualStrongs + ') ' : ''}${!okOrig ? 'Orig(' + actualOrig + ') ' : ''}${!okSurface ? 'Surface(' + actualSurface + ') ' : ''}${!okPos ? 'Pos(' + actualPos + ') ' : ''}${!okMorph ? 'Morph(' + actualMorph + ') ' : ''}${!okLoc ? 'Loc(' + actualLoc + ') ' : ''}` : '');
+  let okSourceXml = true;
+  let xmlDetail = '';
+  if (tc.oshbBook) {
+    const oshbWords = extractOshbVerse(tc.oshbBook, tc.oshbOsis);
+    if (!oshbWords) {
+      okSourceXml = false;
+      xmlDetail = `OSHB file/verse not found: ${tc.oshbBook} ${tc.oshbOsis}`;
+    } else {
+      const targetElement = oshbWords.find(w => w.index === tc.oshbWordIndex);
+      if (!targetElement) {
+        okSourceXml = false;
+        xmlDetail = `OSHB word index ${tc.oshbWordIndex} not found in ${tc.oshbOsis}`;
+      } else {
+        if (tc.oshbExpectedId && targetElement.id !== tc.oshbExpectedId) {
+          okSourceXml = false;
+          xmlDetail = `XML id mismatch: got ${targetElement.id}, expected ${tc.oshbExpectedId}`;
+        } else if (targetElement.morph !== tc.expMorph) {
+          okSourceXml = false;
+          xmlDetail = `XML morph mismatch: got ${targetElement.morph}, expected ${tc.expMorph}`;
+        }
+      }
+    }
+  }
+
+  const passed = okStrongs && okOrig && okSurface && okPos && okMorph && okLoc && okGender && okNumber && okPerson && okSourceXml;
+  assertCondition(`${tc.ref} (Source & Morphology Verified): Strongs=${tc.expStrongs}, Surface=${tc.expSurface}, Morph=${tc.expMorph}, Loc=${tc.expLoc}`, passed, 
+    !passed ? `Mismatches: ${!okStrongs ? 'Strongs(' + actualStrongs + ') ' : ''}${!okOrig ? 'Orig(' + actualOrig + ') ' : ''}${!okSurface ? 'Surface(' + actualSurface + ') ' : ''}${!okPos ? 'Pos(' + actualPos + ') ' : ''}${!okMorph ? 'Morph(' + actualMorph + ') ' : ''}${!okLoc ? 'Loc(' + actualLoc + ') ' : ''}${!okGender ? 'Gender(' + actualGender + ') ' : ''}${!okNumber ? 'Number(' + actualNumber + ') ' : ''}${!okPerson ? 'Person(' + actualPerson + ') ' : ''}${!okSourceXml ? 'OSHB_XML(' + xmlDetail + ') ' : ''}` : '');
   if (passed) batch20Pass++;
 }
-console.log(`Batch 20 4-Axis Invariant Summary: ${batch20Pass}/${batch20ComprehensiveCases.length} loci verified across all 4 axes.\n`);
-
+console.log(`Batch 20 Direct Source & Morphology Summary: ${batch20Pass}/${batch20ComprehensiveCases.length} loci rigorously verified against DB & OSHB XML source.\n`);
 
 console.log('\n========================================================================');
 if (totalFailures === 0) {
