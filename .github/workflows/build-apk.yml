@@ -133,18 +133,18 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.355)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 355` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.356)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 356` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **Canonical OSHB XML Word-Counting & Direct Source Validation**:
-            - Word locators are directly validated against actual `<w>` elements in canonical OSHB XML source files with stable element IDs (`id="02ehU"`, `id="06oAj"`, `id="15CfS"`, `id="38CmP"`).
-            - **Exodus 15:2 (إِلهِي)**: Aligned to OSHB XML token 8 (`אֵלִי֙`, id `02ehU`, `OSHB:B2.C15.V2.w8`), rectifying previous offset to token 6.
-            - **Joshua 1:9 (تَذْهَبُ)**: Aligned to OSHB XML token 15 (`תֵּלֵֽךְ׃`, id `06oAj`, `OSHB:B6.C1.V9.w15`), rectifying offset to token 14.
-            - **Ezra 5:8 (بِسُرْعَةٍ)**: Aligned to OSHB XML token 20 (`אָסְפַּ֥רְנָא`, id `15CfS`, `OSHB:B15.C5.V8.w20`), rectifying offset to token 19.
-          - **Comprehensive Morphology Re-derivation**:
-            - Re-derived all detailed morphology columns (`morph_pos`, `morph_stem`, `morph_tense`, `morph_voice`, `morph_mood`, `morph_person`, `morph_gender`, `morph_number`, `morph_case`) purely from raw manuscript codes (`orig_morphology`).
-            - Purged all stale inherited values (e.g. `Exodus 15:2` w8 `HNcmsc/Sp1cs` corrected from stale `plural` to `singular`).
-          - **CI Quality Gate**: Test 11 in `scripts/automated_database_audit.cjs` opens canonical OSHB XML files directly and enforces all 33 loci across 4 axes plus detailed morphology and XML element ID matching, passing 33/33 with 0 failures alongside 5/5 negative quality gate rejections.
+          - **Morphology Engine CCAT & Participle Refinements**:
+            - **Philippians 4:6 (تَهْتَمُّوا & لِتُعْلَمْ)**: Mapped CCAT Imperative mood code `D` in MorphGNT to `imperative` with grammatical person and number (`V- 2PAD-P--` -> 2nd pl, `V- 3PPD-S--` -> 3rd sg).
+            - **1 Kings 18:21 (تَعْرُجُونَ)**: Derived grammatical gender (`masculine`) and number (`plural`) for Hebrew participles (`HVqrmpa`) while preserving absent person.
+            - **Ezra 5:8 (يُعْمَلُ)**: Added full support for Aramaic stem `u` (`hithpeel`), passive voice, feminine singular participle (`AVurfsa`).
+          - **Canonical Locator Realignment**:
+            - **Galatians 5:22 (صَلاَحٌ)**: Aligned locator to token 12 (`SBLGNT:B48.C5.V22.w12`, `ἀγαθωσύνη`), rectifying previous offset to token 11 (`χρηστότης`/`لطف`).
+          - **Direct Source Verification (OSHB XML & MorphGNT SBLGNT)**:
+            - CI Quality Gate Test 11 now verifies Greek tokens directly against authentic canonical MorphGNT SBLGNT files alongside Hebrew/Aramaic OSHB XML files.
+            - 37/37 loci verified across all 4 axes with 0 failures, passing all 11 quality gates and 5/5 negative quality gate rejections.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

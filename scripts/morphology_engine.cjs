@@ -52,7 +52,7 @@ function parseGreekMorphGNT(tag) {
     if (code[3] === 'I') mood = 'indicative';
     else if (code[3] === 'S') mood = 'subjunctive';
     else if (code[3] === 'O') mood = 'optative';
-    else if (code[3] === 'M') mood = 'imperative';
+    else if (code[3] === 'D' || code[3] === 'M') mood = 'imperative';
     else if (code[3] === 'N') mood = 'infinitive';
     else if (code[3] === 'P') mood = 'participle';
 
@@ -116,6 +116,7 @@ function parseHebrewAramaicMorph(tag) {
     else if (sChar === 'h') stem = isAramaic ? 'haphel' : 'hiphil';
     else if (sChar === 'H') stem = 'hophal';
     else if (sChar === 't') stem = isAramaic ? 'ithpeel' : 'hithpael';
+    else if (sChar === 'u') stem = isAramaic ? 'hithpeel' : 'hothpaal';
     else if (sChar === 'a') stem = 'aphel';
     else if (sChar === 'o') stem = 'polel';
 
@@ -131,10 +132,22 @@ function parseHebrewAramaicMorph(tag) {
     else if (tChar === 'a') { tense = null; mood = 'infinitive_absolute'; }
 
     if (['qal', 'piel', 'hiphil', 'peal', 'pael', 'aphel'].includes(stem)) voice = 'active';
-    else if (['niphal', 'pual', 'hophal', 'ithpeel', 'hithpeel'].includes(stem)) voice = 'passive';
+    else if (['niphal', 'pual', 'hophal', 'ithpeel', 'hithpeel', 'hothpaal'].includes(stem)) voice = 'passive';
     else if (['hithpael'].includes(stem)) voice = 'reflexive';
 
-    if (code.length >= 4 && '123'.includes(code[3])) {
+    if (tChar === 'r' || tChar === 's') {
+      // Participle has gender, number, state, but person is null
+      if (code.length >= 4) {
+        if (code[3] === 'm') gender = 'masculine';
+        else if (code[3] === 'f') gender = 'feminine';
+        else if (code[3] === 'c') gender = 'common';
+      }
+      if (code.length >= 5) {
+        if (code[4] === 's') number = 'singular';
+        else if (code[4] === 'p') number = 'plural';
+        else if (code[4] === 'd') number = 'dual';
+      }
+    } else if (code.length >= 4 && '123'.includes(code[3])) {
       person = code[3];
       if (code.length >= 5) {
         if (code[4] === 'm') gender = 'masculine';

@@ -1019,7 +1019,7 @@ for (const tc of test10Cases) {
 // -----------------------------------------------------------------------------
 // Test 11: 20-Verse Batch Loci: Direct OSHB Source XML & Derived Morphology Gate
 // -----------------------------------------------------------------------------
-console.log('\n▶  TEST 11: 20-Verse Batch Direct Source XML & Morphology Quality Gate (33 Units)');
+console.log('\n▶  TEST 11: 20-Verse Batch Direct Source XML & SBLGNT Morphology Quality Gate (37 Units)');
 
 const oshbDir = path.resolve(__dirname, 'data/oshb');
 function extractOshbVerse(bookName, osisID) {
@@ -1051,6 +1051,49 @@ function extractOshbVerse(bookName, osisID) {
     });
   }
   return words;
+}
+
+const sblgntDir = path.resolve(__dirname, 'data/sblgnt');
+const sblgntBookMap = {
+  41: '62-Mk-morphgnt.txt',
+  42: '63-Lk-morphgnt.txt',
+  45: '66-Ro-morphgnt.txt',
+  48: '69-Ga-morphgnt.txt',
+  49: '70-Eph-morphgnt.txt',
+  50: '71-Php-morphgnt.txt',
+  52: '73-1Th-morphgnt.txt',
+  60: '81-1Pe-morphgnt.txt'
+};
+
+function extractSblgntVerse(bookId, chapter, verse) {
+  const fileName = sblgntBookMap[bookId];
+  if (!fileName) return null;
+  const filePath = path.join(sblgntDir, fileName);
+  if (!fs.existsSync(filePath)) return null;
+  const prefix = String(bookId - 39).padStart(2, '0') +
+                 String(chapter).padStart(2, '0') +
+                 String(verse).padStart(2, '0');
+  const text = fs.readFileSync(filePath, 'utf8');
+  const lines = text.split('\n');
+  const tokens = [];
+  let idx = 1;
+  for (const line of lines) {
+    if (!line.startsWith(prefix)) continue;
+    const parts = line.trim().split(/\s+/);
+    if (parts.length >= 7) {
+      tokens.push({
+        index: idx++,
+        pos: parts[1],
+        parseCode: parts[2],
+        morph: `${parts[1]} ${parts[2]}`,
+        surfacePunct: parts[3],
+        surfaceClean: parts[4],
+        surfaceNorm: parts[5],
+        lemma: parts[6]
+      });
+    }
+  }
+  return tokens;
 }
 
 const batch20ComprehensiveCases = [
@@ -1323,8 +1366,43 @@ const batch20ComprehensiveCases = [
     ref: 'Gal 5:22 w11 (صلاح)', book: 48, ch: 5, vs: 22, pos: 11,
     expStrongs: 'G19', expOrig: 'ἀγαθωσύνη', expSurface: 'ἀγαθωσύνη',
     expPos: 'noun', expGender: 'feminine', expNumber: 'singular', expPerson: null,
-    expMorph: 'N- ----NSF-', expLoc: 'SBLGNT:B48.C5.V22.w11',
-    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null
+    expMorph: 'N- ----NSF-', expLoc: 'SBLGNT:B48.C5.V22.w12',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 48, sblgntChapter: 5, sblgntVerse: 22, sblgntWordIndex: 12, sblgntExpectedMorph: 'N- ----NSF-', sblgntExpectedLemma: 'ἀγαθωσύνη'
+  },
+  // 34. 1 Kings 18:21 w9 (تعرجون)
+  {
+    ref: '1 Kings 18:21 w9 (تعرجون)', book: 11, ch: 18, vs: 21, pos: 9,
+    expStrongs: 'H6452', expOrig: 'פָּסַח', expSurface: 'פֹּסְחִים֮',
+    expPos: 'verb', expStem: 'qal', expMood: 'participle', expGender: 'masculine', expNumber: 'plural', expPerson: null,
+    expMorph: 'HVqrmpa', expLoc: 'OSHB:B11.C18.V21.w9',
+    oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 10, oshbExpectedId: '11xrp'
+  },
+  // 35. Ezra 5:8 w25 (يُعمل)
+  {
+    ref: 'Ezra 5:8 w25 (يُعمل)', book: 15, ch: 5, vs: 8, pos: 25,
+    expStrongs: 'H5648', expOrig: 'עֲבַד', expSurface: 'מִתְעַבְדָ֖א',
+    expPos: 'verb', expStem: 'hithpeel', expMood: 'participle', expGender: 'feminine', expNumber: 'singular', expPerson: null,
+    expMorph: 'AVurfsa', expLoc: 'OSHB:B15.C5.V8.w21',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 21, oshbExpectedId: '15RZe'
+  },
+  // 36. Philippians 4:6 w2 (تهتموا)
+  {
+    ref: 'Phil 4:6 w2 (تهتموا)', book: 50, ch: 4, vs: 6, pos: 2,
+    expStrongs: 'G3309', expOrig: 'μεριμνάω', expSurface: 'μεριμνᾶτε',
+    expPos: 'verb', expMood: 'imperative', expPerson: '2', expNumber: 'plural', expGender: null,
+    expMorph: 'V- 2PAD-P--', expLoc: 'SBLGNT:B50.C4.V6.w2',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 2, sblgntExpectedMorph: 'V- 2PAD-P--', sblgntExpectedLemma: 'μεριμνάω'
+  },
+  // 37. Philippians 4:6 w12 (لتُعلم)
+  {
+    ref: 'Phil 4:6 w12 (لتُعلم)', book: 50, ch: 4, vs: 6, pos: 12,
+    expStrongs: 'G1107', expOrig: 'γνωρίζω', expSurface: 'γνωριζέσθω',
+    expPos: 'verb', expMood: 'imperative', expPerson: '3', expNumber: 'singular', expGender: null,
+    expMorph: 'V- 3PPD-S--', expLoc: 'SBLGNT:B50.C4.V6.w12',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 16, sblgntExpectedMorph: 'V- 3PPD-S--', sblgntExpectedLemma: 'γνωρίζω'
   }
 ];
 
@@ -1334,7 +1412,8 @@ for (const tc of batch20ComprehensiveCases) {
     SELECT wm.orig_word, wm.orig_surface, wm.morph_pos, wm.orig_morphology, wm.verified_locator,
            wm.morph_gender, wm.morph_number, wm.morph_person,
            (SELECT GROUP_CONCAT(sub.strongs_id, ',') 
-            FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub) as comps
+            FROM (SELECT strongs_id FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS sub) as comps,
+           wm.morph_stem, wm.morph_mood
     FROM word_mappings wm
     JOIN verses v ON wm.verse_id = v.id
     WHERE v.book_id = ${tc.book} AND v.chapter_num = ${tc.ch} AND v.verse_num = ${tc.vs} AND wm.ar_word_position = ${tc.pos};
@@ -1349,6 +1428,8 @@ for (const tc of batch20ComprehensiveCases) {
   const actualNumber = row[6] || null;
   const actualPerson = row[7] || null;
   const actualStrongs = row[8];
+  const actualStem = row[9] || null;
+  const actualMood = row[10] || null;
 
   const okStrongs = actualStrongs === tc.expStrongs;
   const okOrig = actualOrig === tc.expOrig;
@@ -1359,6 +1440,8 @@ for (const tc of batch20ComprehensiveCases) {
   const okGender = actualGender === tc.expGender;
   const okNumber = actualNumber === tc.expNumber;
   const okPerson = actualPerson === tc.expPerson;
+  const okStem = tc.expStem !== undefined ? actualStem === tc.expStem : true;
+  const okMood = tc.expMood !== undefined ? actualMood === tc.expMood : true;
 
   let okSourceXml = true;
   let xmlDetail = '';
@@ -1384,12 +1467,36 @@ for (const tc of batch20ComprehensiveCases) {
     }
   }
 
-  const passed = okStrongs && okOrig && okSurface && okPos && okMorph && okLoc && okGender && okNumber && okPerson && okSourceXml;
+  let okSblgnt = true;
+  let sblgntDetail = '';
+  if (tc.sblgntBookId) {
+    const sblgntWords = extractSblgntVerse(tc.sblgntBookId, tc.sblgntChapter, tc.sblgntVerse);
+    if (!sblgntWords) {
+      okSblgnt = false;
+      sblgntDetail = `SBLGNT file/verse not found: Book ${tc.sblgntBookId} ${tc.sblgntChapter}:${tc.sblgntVerse}`;
+    } else {
+      const targetToken = sblgntWords.find(w => w.index === tc.sblgntWordIndex);
+      if (!targetToken) {
+        okSblgnt = false;
+        sblgntDetail = `SBLGNT token index ${tc.sblgntWordIndex} not found in ${tc.sblgntBookId} ${tc.sblgntChapter}:${tc.sblgntVerse}`;
+      } else {
+        if (tc.sblgntExpectedMorph && targetToken.morph !== tc.sblgntExpectedMorph) {
+          okSblgnt = false;
+          sblgntDetail = `SBLGNT morph mismatch: got ${targetToken.morph}, expected ${tc.sblgntExpectedMorph}`;
+        } else if (tc.sblgntExpectedLemma && targetToken.lemma !== tc.sblgntExpectedLemma) {
+          okSblgnt = false;
+          sblgntDetail = `SBLGNT lemma mismatch: got ${targetToken.lemma}, expected ${tc.sblgntExpectedLemma}`;
+        }
+      }
+    }
+  }
+
+  const passed = okStrongs && okOrig && okSurface && okPos && okMorph && okLoc && okGender && okNumber && okPerson && okStem && okMood && okSourceXml && okSblgnt;
   assertCondition(`${tc.ref} (Source & Morphology Verified): Strongs=${tc.expStrongs}, Surface=${tc.expSurface}, Morph=${tc.expMorph}, Loc=${tc.expLoc}`, passed, 
-    !passed ? `Mismatches: ${!okStrongs ? 'Strongs(' + actualStrongs + ') ' : ''}${!okOrig ? 'Orig(' + actualOrig + ') ' : ''}${!okSurface ? 'Surface(' + actualSurface + ') ' : ''}${!okPos ? 'Pos(' + actualPos + ') ' : ''}${!okMorph ? 'Morph(' + actualMorph + ') ' : ''}${!okLoc ? 'Loc(' + actualLoc + ') ' : ''}${!okGender ? 'Gender(' + actualGender + ') ' : ''}${!okNumber ? 'Number(' + actualNumber + ') ' : ''}${!okPerson ? 'Person(' + actualPerson + ') ' : ''}${!okSourceXml ? 'OSHB_XML(' + xmlDetail + ') ' : ''}` : '');
+    !passed ? `Mismatches: ${!okStrongs ? 'Strongs(' + actualStrongs + ') ' : ''}${!okOrig ? 'Orig(' + actualOrig + ') ' : ''}${!okSurface ? 'Surface(' + actualSurface + ') ' : ''}${!okPos ? 'Pos(' + actualPos + ') ' : ''}${!okMorph ? 'Morph(' + actualMorph + ') ' : ''}${!okLoc ? 'Loc(' + actualLoc + ') ' : ''}${!okGender ? 'Gender(' + actualGender + ') ' : ''}${!okNumber ? 'Number(' + actualNumber + ') ' : ''}${!okPerson ? 'Person(' + actualPerson + ') ' : ''}${!okStem ? 'Stem(' + actualStem + ') ' : ''}${!okMood ? 'Mood(' + actualMood + ') ' : ''}${!okSourceXml ? 'OSHB_XML(' + xmlDetail + ') ' : ''}${!okSblgnt ? 'SBLGNT(' + sblgntDetail + ') ' : ''}` : '');
   if (passed) batch20Pass++;
 }
-console.log(`Batch 20 Direct Source & Morphology Summary: ${batch20Pass}/${batch20ComprehensiveCases.length} loci rigorously verified against DB & OSHB XML source.\n`);
+console.log(`Batch 20 Direct Source & Morphology Summary: ${batch20Pass}/${batch20ComprehensiveCases.length} loci rigorously verified against DB, OSHB XML, and SBLGNT sources.\n`);
 
 console.log('\n========================================================================');
 if (totalFailures === 0) {

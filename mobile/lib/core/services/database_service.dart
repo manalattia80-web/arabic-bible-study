@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 355; // v1.0.355: Canonical OSHB XML source-verified locators, element ID tracking, fully re-derived morphology from raw tags
+    const targetDbVersion = 356; // v1.0.356: SBLGNT direct source verification, Gal 5:22 locator alignment, participle gender/number extraction, Greek imperative mood CCAT mapping
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();
