@@ -41,11 +41,15 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
   final Map<int, GlobalKey> _verseKeys = {};
   final ScrollController _scrollController = ScrollController();
   bool _hasScrolledToTarget = false;
+  int? _currentReadingVerse;
+  double _currentReadingVerseAlignment = 0.12;
+  double? _lastRecordedFontSize;
 
   @override
   void initState() {
     super.initState();
-    
+    _currentReadingVerse = widget.initialVerseNum;
+    _scrollController.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ReaderProvider>().loadChapter(widget.bookId, widget.chapterNum);
     });
@@ -53,8 +57,104 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
 
   @override
   void dispose() {
+    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    _detectCurrentReadingVerse();
+  }
+
+  int? _detectCurrentReadingVerse() {
+    if (!mounted || _verseKeys.isEmpty) return _currentReadingVerse;
+
+    final mediaQuery = MediaQuery.maybeOf(context);
+    final appBarBottom = (mediaQuery?.padding.top ?? 24.0) + kToolbarHeight;
+    final screenHeight = mediaQuery?.size.height ?? 640.0;
+    final viewportHeight = (screenHeight - appBarBottom).clamp(100.0, 2000.0);
+
+    int? bestVerse;
+    double bestAlignment = 0.12;
+    double minDistance = double.infinity;
+    final readingLineY = appBarBottom + 24.0;
+
+    for (final entry in _verseKeys.entries) {
+      final ctx = entry.value.currentContext;
+      if (ctx == null) continue;
+      final renderBox = ctx.findRenderObject() as RenderBox?;
+      if (renderBox == null || !renderBox.hasSize) continue;
+
+      final pos = renderBox.localToGlobal(Offset.zero);
+      final top = pos.dy;
+      final bottom = top + renderBox.size.height;
+
+      if (bottom > appBarBottom && top < screenHeight) {
+        if (top <= readingLineY && bottom >= readingLineY) {
+          bestVerse = entry.key;
+          final rel = (top - appBarBottom) / viewportHeight;
+          bestAlignment = rel.clamp(0.0, 0.85);
+          break;
+        }
+
+        final dist = (top - readingLineY).abs();
+        if (dist < minDistance) {
+          minDistance = dist;
+          bestVerse = entry.key;
+          final rel = (top - appBarBottom) / viewportHeight;
+          bestAlignment = rel.clamp(0.0, 0.85);
+        }
+      }
+    }
+
+    if (bestVerse != null) {
+      _currentReadingVerse = bestVerse;
+      _currentReadingVerseAlignment = bestAlignment;
+    }
+    return _currentReadingVerse;
+  }
+
+  void _changeFontSize(VoidCallback action) {
+    final anchorVerse = _detectCurrentReadingVerse() ?? _currentReadingVerse ?? widget.initialVerseNum ?? 1;
+    final anchorAlignment = _currentReadingVerseAlignment;
+
+    action();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _restoreAnchorVerse(anchorVerse, anchorAlignment, 0);
+    });
+  }
+
+  void _restoreAnchorVerse(int verseNum, double alignment, int attempt) {
+    if (!mounted) return;
+    final targetKey = _verseKeys[verseNum];
+    final targetCtx = targetKey?.currentContext;
+
+    if (targetCtx != null) {
+      Scrollable.ensureVisible(
+        targetCtx,
+        duration: const Duration(milliseconds: 50),
+        curve: Curves.easeOutCubic,
+        alignment: alignment,
+      );
+      return;
+    }
+
+    if (_scrollController.hasClients && attempt < 10) {
+      final reader = context.read<ReaderProvider>();
+      final targetIndex = reader.verses.indexWhere((v) => v.verseNum == verseNum);
+      if (targetIndex >= 0) {
+        final maxScroll = _scrollController.position.maxScrollExtent;
+        final estimated = targetIndex * (reader.fontSize * 7.5);
+        final jumpTarget = estimated.clamp(0.0, maxScroll);
+        _scrollController.jumpTo(jumpTarget);
+      }
+      Future.delayed(const Duration(milliseconds: 30), () {
+        if (mounted) {
+          _restoreAnchorVerse(verseNum, alignment, attempt + 1);
+        }
+      });
+    }
   }
 
   void _scrollToTargetVerseIfNeeded(ReaderProvider reader) {
@@ -133,6 +233,16 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
     final bookName = book?.nameAr ?? Verse.defaultBookNames[widget.bookId] ?? 'سفر ${widget.bookId}';
     final totalCh = book?.chapterCount ?? DatabaseService.defaultChapterCounts[widget.bookId] ?? 1;
 
+    final currentFontSize = reader.fontSize;
+    if (_lastRecordedFontSize != null && _lastRecordedFontSize != currentFontSize) {
+      final anchorVerse = _currentReadingVerse ?? widget.initialVerseNum ?? 1;
+      final anchorAlignment = _currentReadingVerseAlignment;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _restoreAnchorVerse(anchorVerse, anchorAlignment, 0);
+      });
+    }
+    _lastRecordedFontSize = currentFontSize;
+
     if (!reader.loading && reader.verses.isNotEmpty) {
       _scrollToTargetVerseIfNeeded(reader);
     }
@@ -192,7 +302,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(minWidth: 26, minHeight: 36),
               icon: const Icon(Icons.text_decrease, size: 18),
-              onPressed: reader.decreaseFontSize,
+              onPressed: () => _changeFontSize(reader.decreaseFontSize),
               tooltip: 'تصغير الخط',
             ),
           ),
@@ -204,7 +314,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(minWidth: 26, minHeight: 36),
               icon: const Icon(Icons.text_increase, size: 18),
-              onPressed: reader.increaseFontSize,
+              onPressed: () => _changeFontSize(reader.increaseFontSize),
               tooltip: 'تكبير الخط',
             ),
           ),
@@ -248,28 +358,36 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
               ? _ErrorRetry(reader.error, () => reader.loadChapter(widget.bookId, widget.chapterNum))
               : reader.verses.isEmpty
                   ? Center(child: Text('لم يتم العثور على آيات', style: TextStyle(color: AppColors.textMuted)))
-                  : ListView.builder(
-                      controller: _scrollController,
-                      cacheExtent: 100000.0,
-                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 100),
-                      itemCount: reader.verses.length,
-                      itemBuilder: (ctx, i) {
-                        final v = reader.verses[i];
-                        _verseKeys[v.verseNum] ??= GlobalKey();
-                        final isHighlighted = v.verseNum == widget.initialVerseNum;
-
-                        return Container(
-                          key: _verseKeys[v.verseNum],
-                          child: _VerseCard(
-                            verse:         v,
-                            fontSize:      reader.fontSize,
-                            showOrig:      reader.showOriginal,
-                            chapterNum:    widget.chapterNum,
-                            bookName:      bookName,
-                            isHighlighted: isHighlighted,
-                          ),
-                        );
+                  : NotificationListener<ScrollNotification>(
+                      onNotification: (notification) {
+                        if (notification is ScrollUpdateNotification || notification is ScrollEndNotification) {
+                          _detectCurrentReadingVerse();
+                        }
+                        return false;
                       },
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        cacheExtent: 100000.0,
+                        padding: const EdgeInsets.fromLTRB(12, 8, 12, 100),
+                        itemCount: reader.verses.length,
+                        itemBuilder: (ctx, i) {
+                          final v = reader.verses[i];
+                          _verseKeys[v.verseNum] ??= GlobalKey();
+                          final isHighlighted = v.verseNum == widget.initialVerseNum;
+
+                          return Container(
+                            key: _verseKeys[v.verseNum],
+                            child: _VerseCard(
+                              verse:         v,
+                              fontSize:      reader.fontSize,
+                              showOrig:      reader.showOriginal,
+                              chapterNum:    widget.chapterNum,
+                              bookName:      bookName,
+                              isHighlighted: isHighlighted,
+                            ),
+                          );
+                        },
+                      ),
                     ),
 
       // Chapter prev/next navigation bar

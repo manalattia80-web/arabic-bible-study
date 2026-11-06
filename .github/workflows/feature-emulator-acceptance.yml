@@ -1,12 +1,6 @@
 name: Feature UI/UX Acceptance Emulator Verification
 
 on:
-  push:
-    branches: [ "feature/ui-ux-refinement" ]
-    paths:
-      - 'mobile/**'
-      - 'scripts/run_acceptance_scenarios_350.cjs'
-      - '.github/workflows/feature-emulator-acceptance.yml'
   workflow_dispatch:
 
 permissions:
