@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 364; // v1.0.364: Batch 3 Joshua 1:9 canonical repairs, negative gates 19-20, manifest 244/67/0
+    const targetDbVersion = 365; // v1.0.365: Harmonized OSHB cantillation for Josh 1:9 w11 אֱלֹהֶ֔יךָ (zaqef qaton), negative gate 21, manifest 244/67/0
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();

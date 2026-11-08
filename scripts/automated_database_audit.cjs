@@ -1476,15 +1476,15 @@ const batch20ComprehensiveCases = [
     expStrongs: 'H3068', expOrig: 'יְהֹוָה', expSurface: 'יְהוָ֣ה',
     expPos: 'proper_noun', expGender: null, expNumber: 'singular', expPerson: null,
     expMorph: 'HNp', expLoc: 'OSHB:B6.C1.V9.w11',
-    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 11, oshbExpectedId: '06Qa3'
+    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 11, oshbExpectedId: '06Qa3', oshbCheckSurface: true
   },
   // 47. Josh 1:9 w11 (إِلهَكَ)
   {
     ref: 'Josh 1:9 w11 (إِلهَكَ)', book: 6, ch: 1, vs: 9, pos: 11,
-    expStrongs: 'H430', expOrig: 'אֱלֹהִים', expSurface: 'אֱלֹהֶ֑יךָ',
+    expStrongs: 'H430', expOrig: 'אֱלֹהִים', expSurface: 'אֱלֹהֶ֔יךָ',
     expPos: 'noun', expGender: 'masculine', expNumber: 'plural', expPerson: null,
     expMorph: 'HNcmpc/Sp2ms', expLoc: 'OSHB:B6.C1.V9.w12',
-    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 12, oshbExpectedId: '06WTe'
+    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 12, oshbExpectedId: '06WTe', oshbCheckSurface: true
   },
   // 48. Josh 1:9 w12 (مَعَكَ)
   {
@@ -1492,7 +1492,7 @@ const batch20ComprehensiveCases = [
     expStrongs: 'H5973', expOrig: 'עִם', expSurface: 'עִמְּךָ֙',
     expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
     expMorph: 'HR/Sp2ms', expLoc: 'OSHB:B6.C1.V9.w10',
-    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 10, oshbExpectedId: '063Lj'
+    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 10, oshbExpectedId: '063Lj', oshbCheckSurface: true
   },
   // 49. Josh 1:9 w13 (حَيْثُمَا)
   {
@@ -1500,7 +1500,7 @@ const batch20ComprehensiveCases = [
     expStrongs: 'H834,H3605', expOrig: 'אֲשֶׁר', expSurface: 'אֲשֶׁ֥ר',
     expPos: 'particle', expGender: null, expNumber: null, expPerson: null,
     expMorph: 'HTr', expLoc: 'OSHB:B6.C1.V9.w14',
-    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 14, oshbExpectedId: '06sKn'
+    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 14, oshbExpectedId: '06sKn', oshbCheckSurface: true
   }
 ];
 
@@ -1567,6 +1567,12 @@ for (const tc of batch20ComprehensiveCases) {
         } else if (targetElement.morph !== tc.expMorph && (!targetElement.morph.includes('/') || !targetElement.morph.split('/').map(p => p.replace(/^H/, '')).includes(tc.expMorph.replace(/^H/, '')))) {
           okSourceXml = false;
           xmlDetail = `XML morph mismatch: got ${targetElement.morph}, expected ${tc.expMorph}`;
+        } else if (tc.oshbCheckSurface) {
+          const expectedSurface = targetElement.text.replace(/\//g, '');
+          if (actualSurface !== expectedSurface) {
+            okSourceXml = false;
+            xmlDetail = `XML surface mismatch: got '${actualSurface}', expected OSHB '${expectedSurface}'`;
+          }
         }
       }
     }
@@ -1779,6 +1785,27 @@ const joshHaythuma = query(`
 const okJoshHaythuma = joshHaythuma[0] === '14' && joshHaythuma[1] === 'OSHB:B6.C1.V9.w14' &&
   joshHaythuma[2] === 'H834:primary@w14[אֲשֶׁ֥ר:HTr];H3605:secondary@w13[בְּכֹ֖ל:HR/Ncmsa]';
 assertCondition('Joshua 1:9 w13 (حَيْثُمَا) Multi-Component Completeness (H834 primary w14 + H3605 secondary w13)', okJoshHaythuma, `Found pos=${joshHaythuma[0]}, loc=${joshHaythuma[1]}, comps=${joshHaythuma[2]}`);
+
+// 16. Joshua 1:9 w11 "إِلهَكَ" Direct OSHB Source Surface & Cantillation Purity (אֱלֹהֶ֔יךָ with zaqef qaton U+0594, NOT אֱלֹהֶ֑יךָ with etnachta U+0591)
+const joshEloheika = query(`
+  SELECT wm.orig_surface, wm.orig_word_position, wm.verified_locator, wms.orig_component
+  FROM word_mappings wm
+  JOIN word_mapping_strongs wms ON wm.id = wms.mapping_id
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 9 AND book_id = 6)
+    AND wm.ar_word_position = 11;
+`).split('|');
+const oshbJoshVerse = extractOshbVerse('Josh', 'Josh.1.9');
+const oshbEloheikaWord = oshbJoshVerse ? oshbJoshVerse.find(w => w.index === 12) : null;
+const expectedOshbEloheika = oshbEloheikaWord ? oshbEloheikaWord.text.replace(/\//g, '') : 'אֱלֹהֶ֔יךָ';
+
+const okJoshEloheika = joshEloheika[0] === expectedOshbEloheika &&
+  joshEloheika[3] === expectedOshbEloheika &&
+  joshEloheika[0].includes('\u0594') &&
+  !joshEloheika[0].includes('\u0591') &&
+  joshEloheika[1] === '12' &&
+  joshEloheika[2] === 'OSHB:B6.C1.V9.w12';
+assertCondition('Joshua 1:9 w11 (إِلهَكَ) Direct OSHB Source Surface & Cantillation Purity (אֱלֹהֶ֔יךָ with zaqef qaton U+0594, NOT אֱלֹהֶ֑יךָ)', okJoshEloheika, `Found surface=${joshEloheika[0]}, comp=${joshEloheika[3]}, pos=${joshEloheika[1]}, loc=${joshEloheika[2]}, expected=${expectedOshbEloheika}`);
+
 
 
 

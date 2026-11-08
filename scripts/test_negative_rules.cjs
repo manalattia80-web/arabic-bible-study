@@ -327,6 +327,18 @@ const testCases = [
           AND ar_word_position = 13
       ) AND link_role = 'secondary';
     `
+  },
+  {
+    gateNum: 21,
+    name: 'josh_1_9_eloheika_cantillation_reverted_to_etnachta',
+    expectedFailTag: '[FAIL] Joshua 1:9 w11 (إِلهَكَ) Direct OSHB Source Surface & Cantillation Purity',
+    description: 'Reverted Joshua 1:9 w11 (إِلهَكَ) from אֱלֹהֶ֔יךָ (zaqef qaton) to אֱלֹהֶ֑יךָ (etnachta)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_surface = 'אֱלֹהֶ֑יךָ'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 9 AND book_id = 6)
+        AND ar_word_position = 11;
+    `
   }
 ];
 

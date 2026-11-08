@@ -137,20 +137,22 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.364)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 364` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.365)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 365` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **Batch 3 Canonical Repairs (Joshua 1:9)**:
+          - **Batch 3 Canonical Repairs (Joshua 1:9) & OSHB Cantillation Harmonization**:
             - **Joshua 1:9 Word-Order Alignment**: Aligned Arabic SVO order ("الرَّبَّ إِلهَكَ مَعَكَ حَيْثُمَا") with Hebrew fronted predicate (`עִמְּךָ יְהוָה אֱלֹהֶיךָ בְּכֹל אֲשֶׁר תֵּלֵךְ`):
               - "الرَّبَّ" (pos 10): aligned from w10 to w11 (`יְהוָ֣ה`, H3068, HNp, locator `OSHB:B6.C1.V9.w11`).
-              - "إِلهَكَ" (pos 11): aligned from w11 to w12 (`אֱלֹהֶ֑יךָ`, H430, HNcmpc/Sp2ms, locator `OSHB:B6.C1.V9.w12`).
+              - "إِلهَكَ" (pos 11): aligned from w11 to w12 with authentic OSHB cantillation `אֱלֹהֶ֔יךָ` (zaqef qaton U+0594, H430, HNcmpc/Sp2ms, locator `OSHB:B6.C1.V9.w12`).
               - "مَعَكَ" (pos 12): aligned from w12 to w10 (`עִמְּךָ֙`, H5973, HR/Sp2ms, locator `OSHB:B6.C1.V9.w10`).
               - "حَيْثُمَا" (pos 13): multi-component alignment with primary component at w14 (`אֲשֶׁ֥ר`, H834, HTr, locator `OSHB:B6.C1.V9.w14`) and secondary component at w13 (`בְּכֹ֖ל`, H3605, HR/Ncmsa).
-            - **Canonical Manifest v364**: 311 units: 244 correct (78.46%), 67 errors, 0 undecided.
-          - **Negative Quality Gates 19, 20 & Production CI**:
+            - **Canonical Manifest v365**: 311 units: 244 correct (78.46%), 67 errors, 0 undecided.
+          - **Negative Quality Gates 19, 20, 21 & Production CI**:
             - **Gate 19**: Rejection of Joshua 1:9 "الرَّبَّ" locator mutation from w11 back to w10.
             - **Gate 20**: Rejection of deleting secondary component w13 (`בְּכֹ֖ל`) from "حَيْثُمَا" in Joshua 1:9.
-            - **Comprehensive Loci**: Expanded direct source & morphology checks to 49 verified loci.
+            - **Gate 21**: Rejection of reverting Joshua 1:9 "إِلهَكَ" from `אֱלֹהֶ֔יךָ` (zaqef qaton) to `אֱלֹהֶ֑יךָ` (etnachta).
+            - **Direct OSHB Comparison**: Direct XML surface verification on OSHB tokens in production quality gates.
+            - **Comprehensive Loci**: 49 verified direct source & morphology loci in Test 11, 16 dedicated component boundaries in Test 13.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md
