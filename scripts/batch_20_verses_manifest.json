@@ -1,15 +1,15 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "1.0.359",
+  "version": "1.0.362",
   "date": "2026-11-08",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
     "total": 311,
-    "correct": 233,
-    "error": 78,
+    "correct": 240,
+    "error": 71,
     "undecided": 0,
-    "accuracyPercent": 74.92
+    "accuracyPercent": 77.17
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -242,6 +242,41 @@
       "origWord": "יָהּ",
       "origSurface": "יָ֔הּ",
       "origMorph": "HNp",
+      "origPos": 3,
+      "locator": "OSHB:B2.C15.V2.w3",
+      "locWordIndex": 3,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح"
+    },
+    {
+      "verse": "Exod 15:2",
+      "verseAr": "الخروج ١٥:٢",
+      "lang": "hebrew",
+      "arPos": 2,
+      "arWord": "قُوَّتِي",
+      "strongsId": "H5797",
+      "components": "H5797:primary",
+      "origWord": "עֹז",
+      "origSurface": "עָזִּ֤י",
+      "origMorph": "HNcmsc/Sp1cs",
       "origPos": 1,
       "locator": "OSHB:B2.C15.V2.w1",
       "locWordIndex": 1,
@@ -256,50 +291,15 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNp' vs Source 'HNcmsc/Sp1cs' (id: 02c59)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Exod 15:2",
-      "verseAr": "الخروج ١٥:٢",
-      "lang": "hebrew",
-      "arPos": 2,
-      "arWord": "قُوَّتِي",
-      "strongsId": "H5797",
-      "components": "H5797:primary",
-      "origWord": "עֹז",
-      "origSurface": "עָזִּ֤י",
-      "origMorph": "HNcmsc/Sp1cs",
-      "origPos": 2,
-      "locator": "OSHB:B2.C15.V2.w2",
-      "locWordIndex": 2,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNcmsc/Sp1cs' vs Source 'HC/Ncfsa' (id: 02d4U)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Exod 15:2",
@@ -307,11 +307,11 @@
       "lang": "hebrew",
       "arPos": 3,
       "arWord": "وَنَشِيدِي",
-      "strongsId": "H2172",
-      "components": "H2172:primary",
+      "strongsId": "H2176",
+      "components": "H2176:primary",
       "origWord": "זִמְרָה",
       "origSurface": "וְזִמְרָת֙",
-      "origMorph": "HC/Ncfsc",
+      "origMorph": "HC/Ncfsa",
       "origPos": 2,
       "locator": "OSHB:B2.C15.V2.w2",
       "locWordIndex": 2,
@@ -326,15 +326,15 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HC/Ncfsc' vs Source 'HC/Ncfsa' (id: 02d4U)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Exod 15:2",
@@ -382,9 +382,9 @@
       "origWord": "הָיָה",
       "origSurface": "וַֽיְהִי",
       "origMorph": "HC/Vqw3ms",
-      "origPos": 5,
-      "locator": "OSHB:B2.C15.V2.w5",
-      "locWordIndex": 5,
+      "origPos": 4,
+      "locator": "OSHB:B2.C15.V2.w4",
+      "locWordIndex": 4,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -396,15 +396,15 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HC/Vqw3ms' vs Source 'HR/Sp1cs' (id: 02tTy)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Exod 15:2",
@@ -1012,41 +1012,6 @@
       "origWord": "יְהֹוָה",
       "origSurface": "יְהוָ֣ה",
       "origMorph": "HNp",
-      "origPos": 2,
-      "locator": "OSHB:B5.C6.V5.w2",
-      "locWordIndex": 2,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNp' vs Source 'HTo' (id: 05dCq)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Deut 6:5",
-      "verseAr": "التثنية ٦:٥",
-      "lang": "hebrew",
-      "arPos": 3,
-      "arWord": "إِلهَكَ",
-      "strongsId": "H430",
-      "components": "H430:primary",
-      "origWord": "אֱלֹהִים",
-      "origSurface": "אֱלֹהֶ֑יךָ",
-      "origMorph": "HNcmpc/Sp2ms",
       "origPos": 3,
       "locator": "OSHB:B5.C6.V5.w3",
       "locWordIndex": 3,
@@ -1061,15 +1026,50 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNcmpc/Sp2ms' vs Source 'HNp' (id: 05cAA)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
+    },
+    {
+      "verse": "Deut 6:5",
+      "verseAr": "التثنية ٦:٥",
+      "lang": "hebrew",
+      "arPos": 3,
+      "arWord": "إِلهَكَ",
+      "strongsId": "H430",
+      "components": "H430:primary",
+      "origWord": "אֱלֹהִים",
+      "origSurface": "אֱלֹהֶ֑יךָ",
+      "origMorph": "HNcmpc/Sp2ms",
+      "origPos": 4,
+      "locator": "OSHB:B5.C6.V5.w4",
+      "locWordIndex": 4,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Deut 6:5",
@@ -1077,10 +1077,10 @@
       "lang": "hebrew",
       "arPos": 4,
       "arWord": "مِنْ",
-      "strongsId": "H4480",
-      "components": "H4480:primary",
-      "origWord": "מִן",
-      "origSurface": "מִן",
+      "strongsId": "H9003",
+      "components": "H9003:primary",
+      "origWord": "בְּ",
+      "origSurface": "בְּכָל",
       "origMorph": "HR",
       "origPos": 5,
       "locator": "OSHB:B5.C6.V5.w5",
@@ -1096,15 +1096,15 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR' vs Source 'HR/Ncmsc' (id: 05NZQ)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Deut 6:5",
@@ -11118,5 +11118,10 @@
     }
   ],
   "ezra58Note": "In v1.0.361, Ezra 5:8 pos 16 (يُبْنَى) locator corrected from w16 to w12, elevated to صحيح.",
-  "micah68Note": "In v1.0.361, Micah 6:8 pos 2 (أَخْبَرَكَ) component specification strictly enforces orig_word_position, orig_component, and orig_morphology for both links."
+  "micah68Note": "In v1.0.361, Micah 6:8 pos 2 (أَخْبَرَكَ) component specification strictly enforces orig_word_position, orig_component, and orig_morphology for both links.",
+  "batch2Highlights": {
+    "exod152Repairs": "Fronted word order corrected: pos 1 -> w3 יָהּ (H3050, HNp), pos 2 -> w1 עָזִּי (H5797, HNcmsc/Sp1cs), pos 3 -> w2 וְזִמְרָת (H2176, HC/Ncfsa), pos 5 -> w4 וַיְהִי (H1961, HC/Vqw3ms)",
+    "deut65Repairs": "Direct object particle אֵת (w2) index shift corrected: pos 2 -> w3 יְהוָה (H3068, HNp), pos 3 -> w4 אֱלֹהֶיךָ (H430, HNcmpc/Sp2ms), pos 4 -> w5 preposition Beth component (H9003, HR)",
+    "deut65FutureCompoundReview": "Positions 7 and 10 (وَمِنْ) pass current checks via compound H3605, queued for dedicated multi-component conjunction separation in future batch."
+  }
 }

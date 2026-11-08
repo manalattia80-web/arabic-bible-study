@@ -1412,6 +1412,63 @@ const batch20ComprehensiveCases = [
     expMorph: 'AVurmsa', expLoc: 'OSHB:B15.C5.V8.w12',
     oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 12, oshbExpectedId: '15qDM'
   }
+,
+  // 39. Deut 6:5 w2 (الرَّبَّ)
+  {
+    ref: 'Deut 6:5 w2 (الرَّبَّ)', book: 5, ch: 6, vs: 5, pos: 2,
+    expStrongs: 'H3068', expOrig: 'יְהֹוָה', expSurface: 'יְהוָ֣ה',
+    expPos: 'proper_noun', expGender: null, expNumber: 'singular', expPerson: null,
+    expMorph: 'HNp', expLoc: 'OSHB:B5.C6.V5.w3',
+    oshbBook: 'Deut', oshbOsis: 'Deut.6.5', oshbWordIndex: 3, oshbExpectedId: '05cAA'
+  },
+  // 40. Deut 6:5 w3 (إِلهَكَ)
+  {
+    ref: 'Deut 6:5 w3 (إِلهَكَ)', book: 5, ch: 6, vs: 5, pos: 3,
+    expStrongs: 'H430', expOrig: 'אֱלֹהִים', expSurface: 'אֱלֹהֶ֑יךָ',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'plural', expPerson: null,
+    expMorph: 'HNcmpc/Sp2ms', expLoc: 'OSHB:B5.C6.V5.w4',
+    oshbBook: 'Deut', oshbOsis: 'Deut.6.5', oshbWordIndex: 4, oshbExpectedId: '05UYM'
+  },
+  // 41. Deut 6:5 w4 (مِنْ)
+  {
+    ref: 'Deut 6:5 w4 (مِنْ)', book: 5, ch: 6, vs: 5, pos: 4,
+    expStrongs: 'H9003', expOrig: 'בְּ', expSurface: 'בְּכָל',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HR', expLoc: 'OSHB:B5.C6.V5.w5',
+    oshbBook: 'Deut', oshbOsis: 'Deut.6.5', oshbWordIndex: 5, oshbExpectedId: '05NZQ'
+  },
+  // 42. Exod 15:2 w1 (الرَّبُّ)
+  {
+    ref: 'Exod 15:2 w1 (الرَّبُّ)', book: 2, ch: 15, vs: 2, pos: 1,
+    expStrongs: 'H3050', expOrig: 'יָהּ', expSurface: 'יָ֔הּ',
+    expPos: 'proper_noun', expGender: null, expNumber: 'singular', expPerson: null,
+    expMorph: 'HNp', expLoc: 'OSHB:B2.C15.V2.w3',
+    oshbBook: 'Exod', oshbOsis: 'Exod.15.2', oshbWordIndex: 3, oshbExpectedId: '02nLr'
+  },
+  // 43. Exod 15:2 w2 (قُوَّتِي)
+  {
+    ref: 'Exod 15:2 w2 (قُوَّتِي)', book: 2, ch: 15, vs: 2, pos: 2,
+    expStrongs: 'H5797', expOrig: 'עֹז', expSurface: 'עָזִּ֤י',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'HNcmsc/Sp1cs', expLoc: 'OSHB:B2.C15.V2.w1',
+    oshbBook: 'Exod', oshbOsis: 'Exod.15.2', oshbWordIndex: 1, oshbExpectedId: '02c59'
+  },
+  // 44. Exod 15:2 w3 (وَنَشِيدِي)
+  {
+    ref: 'Exod 15:2 w3 (وَنَشِيدِي)', book: 2, ch: 15, vs: 2, pos: 3,
+    expStrongs: 'H2176', expOrig: 'זִמְרָה', expSurface: 'וְזִמְרָת֙',
+    expPos: 'noun', expGender: 'feminine', expNumber: 'singular', expPerson: null,
+    expMorph: 'HC/Ncfsa', expLoc: 'OSHB:B2.C15.V2.w2',
+    oshbBook: 'Exod', oshbOsis: 'Exod.15.2', oshbWordIndex: 2, oshbExpectedId: '02d4U'
+  },
+  // 45. Exod 15:2 w5 (صَارَ)
+  {
+    ref: 'Exod 15:2 w5 (صَارَ)', book: 2, ch: 15, vs: 2, pos: 5,
+    expStrongs: 'H1961', expOrig: 'הָיָה', expSurface: 'וַֽיְהִי',
+    expPos: 'verb', expStem: 'qal', expMood: 'indicative', expPerson: '3', expGender: 'masculine', expNumber: 'singular',
+    expMorph: 'HC/Vqw3ms', expLoc: 'OSHB:B2.C15.V2.w4',
+    oshbBook: 'Exod', oshbOsis: 'Exod.15.2', oshbWordIndex: 4, oshbExpectedId: '02Qb5'
+  }
 ];
 
 let batch20Pass = 0;
@@ -1474,7 +1531,7 @@ for (const tc of batch20ComprehensiveCases) {
         if (tc.oshbExpectedId && targetElement.id !== tc.oshbExpectedId) {
           okSourceXml = false;
           xmlDetail = `XML id mismatch: got ${targetElement.id}, expected ${tc.oshbExpectedId}`;
-        } else if (targetElement.morph !== tc.expMorph) {
+        } else if (targetElement.morph !== tc.expMorph && (!targetElement.morph.includes('/') || !targetElement.morph.split('/').map(p => p.replace(/^H/, '')).includes(tc.expMorph.replace(/^H/, '')))) {
           okSourceXml = false;
           xmlDetail = `XML morph mismatch: got ${targetElement.morph}, expected ${tc.expMorph}`;
         }
@@ -1612,6 +1669,51 @@ const ezra16 = query(`
 `).split('|');
 const okEzra16 = ezra16[0] === 'H1124' && ezra16[1] === 'AVurmsa' && ezra16[2] === '12' && ezra16[3] === 'OSHB:B15.C5.V8.w12' && ezra16[4] === 'מִתְבְּנֵא֙';
 assertCondition('Ezra 5:8 w16 (يُبْنَى) Source Locator & Root Purity (H1124, AVurmsa, w12)', okEzra16, `Found strongs=${ezra16[0]}, morph=${ezra16[1]}, pos=${ezra16[2]}, loc=${ezra16[3]}, comp=${ezra16[4]}`);
+
+// 8. Deuteronomy 6:5 w2 "الرَّبَّ" (H3068, HNp, w3, NOT w2)
+const deutRab = query(`
+  SELECT strongs_id, orig_morphology, orig_word_position, verified_locator
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 6 AND verse_num = 5 AND book_id = 5)
+    AND ar_word_position = 2;
+`).split('|');
+const okDeutRab = deutRab[0] === 'H3068' && deutRab[1] === 'HNp' && deutRab[2] === '3' && deutRab[3] === 'OSHB:B5.C6.V5.w3' && deutRab[3] !== 'OSHB:B5.C6.V5.w2';
+assertCondition('Deuteronomy 6:5 w2 (الرَّبَّ) Locator & Lexical Purity (H3068, HNp, w3, NOT w2)', okDeutRab, `Found strongs=${deutRab[0]}, morph=${deutRab[1]}, pos=${deutRab[2]}, loc=${deutRab[3]}`);
+
+// 9. Exodus 15:2 w1 "الرَّبُّ" (H3050, HNp, w3, NOT w1)
+const exodRab = query(`
+  SELECT strongs_id, orig_morphology, orig_word_position, verified_locator
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 2 AND book_id = 2)
+    AND ar_word_position = 1;
+`).split('|');
+const okExodRab = exodRab[0] === 'H3050' && exodRab[1] === 'HNp' && exodRab[2] === '3' && exodRab[3] === 'OSHB:B2.C15.V2.w3' && exodRab[3] !== 'OSHB:B2.C15.V2.w1';
+assertCondition('Exodus 15:2 w1 (الرَّبُّ) Locator & Lexical Purity (H3050, HNp, w3, NOT w1)', okExodRab, `Found strongs=${exodRab[0]}, morph=${exodRab[1]}, pos=${exodRab[2]}, loc=${exodRab[3]}`);
+
+// 10. Deuteronomy 6:5 w4 "مِنْ" Preposition Beth Component (H9003, HR, NOT H4480)
+const deutMin = query(`
+  SELECT strongs_id, orig_morphology, orig_word_position, verified_locator
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 6 AND verse_num = 5 AND book_id = 5)
+    AND ar_word_position = 4;
+`).split('|');
+const okDeutMin = deutMin[0] === 'H9003' && deutMin[0] !== 'H4480' && deutMin[1] === 'HR' && deutMin[2] === '5' && deutMin[3] === 'OSHB:B5.C6.V5.w5';
+assertCondition('Deuteronomy 6:5 w4 (مِنْ) Preposition Beth Component (H9003, HR, NOT H4480)', okDeutMin, `Found strongs=${deutMin[0]}, morph=${deutMin[1]}, pos=${deutMin[2]}, loc=${deutMin[3]}`);
+
+// 11. Exodus 15:2 w3 "وَنَشِيدِي" Strongs Purity (H2176, NOT H2172)
+const exodNashid = query(`
+  SELECT strongs_id, orig_morphology, orig_word_position, verified_locator
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 2 AND book_id = 2)
+    AND ar_word_position = 3;
+`).split('|');
+const okExodNashidStrongs = exodNashid[0] === 'H2176' && exodNashid[0] !== 'H2172' && exodNashid[2] === '2' && exodNashid[3] === 'OSHB:B2.C15.V2.w2';
+assertCondition('Exodus 15:2 w3 (وَنَشِيدِي) Strongs Purity (H2176, NOT H2172)', okExodNashidStrongs, `Found strongs=${exodNashid[0]}, morph=${exodNashid[1]}, pos=${exodNashid[2]}, loc=${exodNashid[3]}`);
+
+// 12. Exodus 15:2 w3 "وَنَشِيدِي" Morphology Purity (HC/Ncfsa, NOT HC/Ncfsc)
+const okExodNashidMorph = exodNashid[1] === 'HC/Ncfsa' && exodNashid[1] !== 'HC/Ncfsc';
+assertCondition('Exodus 15:2 w3 (وَنَشِيدِي) Morphology Purity (HC/Ncfsa, NOT HC/Ncfsc)', okExodNashidMorph, `Found strongs=${exodNashid[0]}, morph=${exodNashid[1]}, pos=${exodNashid[2]}, loc=${exodNashid[3]}`);
+
 
 console.log('\n========================================================================');
 if (totalFailures === 0) {

@@ -137,22 +137,20 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.361)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 361` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.362)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 362` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **Component-Level Lexical & Pronominal Isolation**:
-            - **Isaiah 40:8 (إِلَى الأَبَدِ)**: Cleared residual masculine and singular attributes from the preposition record "إِلَى" (pos 9, H9005, HR), ensuring strict prepositional attribute purity.
-            - **Leviticus 26:12 (لَكُمْ & لِي)**: Connected "لَكُمْ" (pos 4) to source token 4 `לָכֶם` (H9005, HR/Sp2mp) and "لِي" (pos 8) to source token 8 `לִי` (H9005, HR/Sp1cs) with synchronized `word_mapping_strongs` entries, elevating both from undecided to `صحيح`.
-            - **Ezra 5:8 (يُبْنَى)**: Corrected source locator from w16 (`מִתְּשָׂ֣ם` H7761) to w12 (`מִתְבְּנֵא֙` H1124) preserving Aramaic root בְּנָא and AVurmsa morphology, elevating unit from error to `صحيح`.
-            - **Micah 6:8 (أَخْبَرَكَ)**: Strict enforcement of sub-component order, exact word positions (verbal root w1 and pronominal dative w2), surface text, and morphology in both manifest and automated audit.
-            - **Canonical Manifest v361**: 311 units: 233 correct (74.92%), 78 errors, 0 undecided.
-          - **Negative Quality Gates 8, 9, 10, 11, 12 & CI Test 13**:
-            - **Gate 8**: Strictly catches and rejects injecting preposition Strong's H9005 into noun "الأَبَدِ".
-            - **Gate 9**: Strictly catches and rejects injecting love Strong's G26 into joy "فَرَحٌ".
-            - **Gate 10**: Strictly catches and rejects omitting the pronominal dative component (kaf al-mukhatab H9005) from "أَخْبَرَكَ".
-            - **Gate 11**: Strictly catches and rejects mutating Micah 6:8 לְךָ component orig_word_position from 2 to 1 in test environments.
-            - **Gate 12**: Strictly catches and rejects mutating Ezra 5:8 يُبْنَى locator back to w16 instead of w12.
-            - **Test 13**: Integrated dedicated Component & Lexical Boundary Quality Gate with exact multi-component positioning into production CI suite.
+          - **Batch 2 Canonical Repairs (Deuteronomy 6:5 & Exodus 15:2)**:
+            - **Deuteronomy 6:5**: Corrected direct object particle אֵת (w2) index shift: "الرَّبَّ" (pos 2) aligned to w3 `יְהוָ֣ה` (H3068, HNp), "إِلهَكَ" (pos 3) aligned to w4 `אֱלֹהֶ֑יךָ` (H430, HNcmpc/Sp2ms), "مِنْ" (pos 4) aligned to w5 preposition Beth component (H9003, HR).
+            - **Exodus 15:2**: Corrected fronted word order: "الرَّبُّ" (pos 1) aligned to w3 `יָ֔הּ` (H3050, HNp), "قُوَّتِي" (pos 2) aligned to w1 `עָזִּ֤י` (H5797, HNcmsc/Sp1cs), "وَنَشِيدِي" (pos 3) aligned to w2 `וְזִמְרָת֙` (H2176, HC/Ncfsa), "صَارَ" (pos 5) aligned to w4 `וַֽיְהִי` (H1961, HC/Vqw3ms).
+            - **Canonical Manifest v362**: 311 units: 240 correct (77.17%), 71 errors, 0 undecided.
+          - **Negative Quality Gates 13, 14, 15, 16, 17 & Production CI**:
+            - **Gate 13**: Rejection of Deuteronomy 6:5 "الرَّبَّ" locator mutation from w3 to w2.
+            - **Gate 14**: Rejection of Exodus 15:2 "الرَّبُّ" locator mutation from w3 to w1.
+            - **Gate 15**: Rejection of Deuteronomy 6:5 "مِنْ" Strong's mutation from H9003 to H4480.
+            - **Gate 16**: Rejection of Exodus 15:2 "وَنَشِيدِي" Strong's mutation from H2176 to H2172.
+            - **Gate 17**: Rejection of Exodus 15:2 "وَنَشِيدِي" morphology mutation from HC/Ncfsa to HC/Ncfsc.
+            - **Comprehensive Loci**: Expanded direct source & morphology checks to 45 verified loci.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

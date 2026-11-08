@@ -229,6 +229,66 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 8 AND book_id = 15)
         AND ar_word_position = 16;
     `
+  },
+  {
+    gateNum: 13,
+    name: 'deut_6_5_rab_locator_reverted_to_w2',
+    expectedFailTag: '[FAIL] Deuteronomy 6:5 w2 (الرَّبَّ) Locator & Lexical Purity',
+    description: 'Reverted Deuteronomy 6:5 w2 (الرَّبَّ) locator from w3 back to w2',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word_position = 2, verified_locator = 'OSHB:B5.C6.V5.w2'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 6 AND verse_num = 5 AND book_id = 5)
+        AND ar_word_position = 2;
+    `
+  },
+  {
+    gateNum: 14,
+    name: 'exod_15_2_rab_locator_reverted_to_w1',
+    expectedFailTag: '[FAIL] Exodus 15:2 w1 (الرَّبُّ) Locator & Lexical Purity',
+    description: 'Reverted Exodus 15:2 w1 (الرَّبُّ) locator from w3 back to w1',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word_position = 1, verified_locator = 'OSHB:B2.C15.V2.w1'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 2 AND book_id = 2)
+        AND ar_word_position = 1;
+    `
+  },
+  {
+    gateNum: 15,
+    name: 'deut_6_5_min_strongs_reverted_to_h4480',
+    expectedFailTag: '[FAIL] Deuteronomy 6:5 w4 (مِنْ) Preposition Beth Component',
+    description: 'Reverted Deuteronomy 6:5 w4 (مِنْ) Strong\'s from H9003 back to H4480',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H4480'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 6 AND verse_num = 5 AND book_id = 5)
+        AND ar_word_position = 4;
+    `
+  },
+  {
+    gateNum: 16,
+    name: 'exod_15_2_nashid_strongs_reverted_to_h2172',
+    expectedFailTag: '[FAIL] Exodus 15:2 w3 (وَنَشِيدِي) Strongs Purity',
+    description: 'Reverted Exodus 15:2 w3 (وَنَشِيدِي) Strong\'s from H2176 back to H2172',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H2172'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 2 AND book_id = 2)
+        AND ar_word_position = 3;
+    `
+  },
+  {
+    gateNum: 17,
+    name: 'exod_15_2_nashid_morphology_reverted_to_hcncfsc',
+    expectedFailTag: '[FAIL] Exodus 15:2 w3 (وَنَشِيدِي) Morphology Purity',
+    description: 'Reverted Exodus 15:2 w3 (وَنَشِيدِي) morphology from HC/Ncfsa back to HC/Ncfsc',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_morphology = 'HC/Ncfsc'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 2 AND book_id = 2)
+        AND ar_word_position = 3;
+    `
   }
 ];
 
