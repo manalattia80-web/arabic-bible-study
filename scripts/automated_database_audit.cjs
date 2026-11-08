@@ -1456,7 +1456,7 @@ const batch20ComprehensiveCases = [
   // 44. Exod 15:2 w3 (وَنَشِيدِي)
   {
     ref: 'Exod 15:2 w3 (وَنَشِيدِي)', book: 2, ch: 15, vs: 2, pos: 3,
-    expStrongs: 'H2176', expOrig: 'זִמְרָה', expSurface: 'וְזִמְרָת֙',
+    expStrongs: 'H2176', expOrig: 'זִמְרָת', expSurface: 'וְזִמְרָת֙',
     expPos: 'noun', expGender: 'feminine', expNumber: 'singular', expPerson: null,
     expMorph: 'HC/Ncfsa', expLoc: 'OSHB:B2.C15.V2.w2',
     oshbBook: 'Exod', oshbOsis: 'Exod.15.2', oshbWordIndex: 2, oshbExpectedId: '02d4U'
@@ -1713,6 +1713,17 @@ assertCondition('Exodus 15:2 w3 (وَنَشِيدِي) Strongs Purity (H2176, NO
 // 12. Exodus 15:2 w3 "وَنَشِيدِي" Morphology Purity (HC/Ncfsa, NOT HC/Ncfsc)
 const okExodNashidMorph = exodNashid[1] === 'HC/Ncfsa' && exodNashid[1] !== 'HC/Ncfsc';
 assertCondition('Exodus 15:2 w3 (وَنَشِيدِي) Morphology Purity (HC/Ncfsa, NOT HC/Ncfsc)', okExodNashidMorph, `Found strongs=${exodNashid[0]}, morph=${exodNashid[1]}, pos=${exodNashid[2]}, loc=${exodNashid[3]}`);
+
+// 13. Exodus 15:2 w3 "وَنَشِيدِي" Lexical Lemma Purity (זִמְרָת, NOT זִמְרָה)
+const exodNashidOrig = query(`
+  SELECT orig_word
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 2 AND book_id = 2)
+    AND ar_word_position = 3;
+`).trim();
+const okExodNashidOrig = exodNashidOrig === 'זִמְרָת' && exodNashidOrig !== 'זִמְרָה';
+assertCondition('Exodus 15:2 w3 (وَنَشِيدِي) Lexical Lemma Purity (זִמְרָת, NOT זִמְרָה)', okExodNashidOrig, `Found orig_word=${exodNashidOrig}`);
+
 
 
 console.log('\n========================================================================');

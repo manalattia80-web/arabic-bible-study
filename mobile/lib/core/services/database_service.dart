@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 362; // v1.0.362: Batch 2 repairs: Deut 6:5 (w3, w4, w5 H9003) & Exod 15:2 (w3, w1, w2, w4), negative gates 13-17, manifest 240/71/0
+    const targetDbVersion = 363; // v1.0.363: Harmonized lemma for H2176 זִמְרָת in Exod 15:2 w3, negative gate 18, manifest 240/71/0
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();

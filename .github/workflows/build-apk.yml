@@ -137,19 +137,21 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.362)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 362` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.363)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 363` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **Batch 2 Canonical Repairs (Deuteronomy 6:5 & Exodus 15:2)**:
-            - **Deuteronomy 6:5**: Corrected direct object particle אֵת (w2) index shift: "الرَّبَّ" (pos 2) aligned to w3 `יְהוָ֣ה` (H3068, HNp), "إِلهَكَ" (pos 3) aligned to w4 `אֱלֹהֶ֑יךָ` (H430, HNcmpc/Sp2ms), "مِنْ" (pos 4) aligned to w5 preposition Beth component (H9003, HR).
+          - **Batch 2 Canonical Repairs & Lexicon Lemma Harmonization**:
+            - **Deuteronomy 6:5**: Corrected direct object particle אֵת (w2) index shift: "الرَّبَّ" (pos 2) aligned to w3 `יְהוָ֣ה` (H3068, HNp), "إِلهَكَ" (pos 3) aligned to w4 `אֱلֹהֶ֑יךָ` (H430, HNcmpc/Sp2ms), "مِنْ" (pos 4) aligned to w5 preposition Beth component (H9003, HR).
             - **Exodus 15:2**: Corrected fronted word order: "الرَّبُّ" (pos 1) aligned to w3 `יָ֔הּ` (H3050, HNp), "قُوَّتِي" (pos 2) aligned to w1 `עָזִּ֤י` (H5797, HNcmsc/Sp1cs), "وَنَشِيدِي" (pos 3) aligned to w2 `וְזִמְרָת֙` (H2176, HC/Ncfsa), "صَارَ" (pos 5) aligned to w4 `וַֽיְהִי` (H1961, HC/Vqw3ms).
-            - **Canonical Manifest v362**: 311 units: 240 correct (77.17%), 71 errors, 0 undecided.
-          - **Negative Quality Gates 13, 14, 15, 16, 17 & Production CI**:
+            - **Lemma Harmonization for H2176**: Aligned `orig_word` in database, manifest, and CI assertions from `זִמְרָה` to project lexicon entry `זִמְרָת`.
+            - **Canonical Manifest v363**: 311 units: 240 correct (77.17%), 71 errors, 0 undecided.
+          - **Negative Quality Gates 13, 14, 15, 16, 17, 18 & Production CI**:
             - **Gate 13**: Rejection of Deuteronomy 6:5 "الرَّبَّ" locator mutation from w3 to w2.
             - **Gate 14**: Rejection of Exodus 15:2 "الرَّبُّ" locator mutation from w3 to w1.
             - **Gate 15**: Rejection of Deuteronomy 6:5 "مِنْ" Strong's mutation from H9003 to H4480.
             - **Gate 16**: Rejection of Exodus 15:2 "وَنَشِيدِي" Strong's mutation from H2176 to H2172.
             - **Gate 17**: Rejection of Exodus 15:2 "وَنَشِيدِي" morphology mutation from HC/Ncfsa to HC/Ncfsc.
+            - **Gate 18**: Rejection of Exodus 15:2 "وَنَشِيدِي" lemma mutation from `זִמְרָת` to `זִמְרָה`.
             - **Comprehensive Loci**: Expanded direct source & morphology checks to 45 verified loci.
           EOF
           

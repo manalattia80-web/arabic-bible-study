@@ -1,6 +1,6 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "1.0.362",
+  "version": "1.0.363",
   "date": "2026-11-08",
   "totalVerses": 20,
   "totalRecords": 311,
@@ -309,7 +309,7 @@
       "arWord": "وَنَشِيدِي",
       "strongsId": "H2176",
       "components": "H2176:primary",
-      "origWord": "זִמְרָה",
+      "origWord": "זִמְרָת",
       "origSurface": "וְזִמְרָת֙",
       "origMorph": "HC/Ncfsa",
       "origPos": 2,

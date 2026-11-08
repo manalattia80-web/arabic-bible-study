@@ -289,6 +289,18 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 2 AND book_id = 2)
         AND ar_word_position = 3;
     `
+  },
+  {
+    gateNum: 18,
+    name: 'exod_15_2_nashid_orig_word_reverted_to_zimrah',
+    expectedFailTag: '[FAIL] Exodus 15:2 w3 (وَنَشِيدِي) Lexical Lemma Purity',
+    description: 'Reverted Exodus 15:2 w3 (وَنَشِيدِي) orig_word from זִמְרָת back to זִמְרָה',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word = 'זִמְרָה'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 2 AND book_id = 2)
+        AND ar_word_position = 3;
+    `
   }
 ];
 
