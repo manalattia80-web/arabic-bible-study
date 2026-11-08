@@ -144,6 +144,26 @@ const testCases = [
       WHERE verse_id IN (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21) 
         AND ar_word_position = 9;
     `
+  },
+  {
+    gateNum: 7,
+    name: 'incorrect_lexical_strongs_with_correct_loc_and_morph',
+    expectedFailTag: '[FAIL] 1 Kings 18:21 w7 (حتى)',
+    description: 'Injected incorrect Strong\'s ID (H9999 instead of H5704) with authentic locator and morphology',
+    mutationSql: `
+      UPDATE word_mappings 
+      SET strongs_id = 'H9999' 
+      WHERE verse_id IN (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21) 
+        AND ar_word_position = 7;
+
+      UPDATE word_mapping_strongs
+      SET strongs_id = 'H9999'
+      WHERE mapping_id = (
+        SELECT id FROM word_mappings 
+        WHERE verse_id IN (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21) 
+          AND ar_word_position = 7
+      );
+    `
   }
 ];
 

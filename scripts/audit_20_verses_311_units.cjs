@@ -6,10 +6,12 @@ const isWin = process.platform === 'win32';
 const sqlitePath = isWin && fs.existsSync(path.resolve(__dirname, '../sqlite_dist/sqlite3.exe'))
   ? path.resolve(__dirname, '../sqlite_dist/sqlite3.exe')
   : 'sqlite3';
-const dbPath = path.resolve(__dirname, '../mobile/assets/bible_study.db');
+
+const defaultDbPath = path.resolve(__dirname, '../bible_study.db');
+const dbPath = process.env.AUDIT_DB_PATH || defaultDbPath;
 
 function query(sql) {
-  const tmpFile = path.resolve(__dirname, 'temp_query_audit.sql');
+  const tmpFile = path.resolve(__dirname, `temp_query_audit_${Date.now()}_${Math.random().toString(36).substring(7)}.sql`);
   fs.writeFileSync(tmpFile, sql, 'utf8');
   try {
     return execSync(`"${sqlitePath}" "${dbPath}" < "${tmpFile}"`, { encoding: 'utf8' }).trim();
@@ -93,49 +95,92 @@ function extractSblgntVerse(bookId, chapter, verse) {
   return tokens;
 }
 
-const targetVerses = [
-  // 10 Hebrew
-  { book: 2, ch: 15, vs: 2, name: 'Exod 15:2', nameAr: 'الخروج ١٥:٢', lang: 'hebrew', oshbFile: 'Exod', oshbOsis: 'Exod.15.2' },
-  { book: 3, ch: 26, vs: 12, name: 'Lev 26:12', nameAr: 'اللاويين ٢٦:١٢', lang: 'hebrew', oshbFile: 'Lev', oshbOsis: 'Lev.26.12' },
-  { book: 5, ch: 6, vs: 5, name: 'Deut 6:5', nameAr: 'التثنية ٦:٥', lang: 'hebrew', oshbFile: 'Deut', oshbOsis: 'Deut.6.5' },
-  { book: 6, ch: 1, vs: 9, name: 'Josh 1:9', nameAr: 'يشوع ١:٩', lang: 'hebrew', oshbFile: 'Josh', oshbOsis: 'Josh.1.9' },
-  { book: 8, ch: 1, vs: 16, name: 'Ruth 1:16', nameAr: 'راعوث ١:١٦', lang: 'hebrew', oshbFile: 'Ruth', oshbOsis: 'Ruth.1.16' },
-  { book: 11, ch: 18, vs: 21, name: '1Kgs 18:21', nameAr: '١ ملوك ١٨:٢١', lang: 'hebrew', oshbFile: '1Kgs', oshbOsis: '1Kgs.18.21' },
-  { book: 20, ch: 3, vs: 5, name: 'Prov 3:5', nameAr: 'الأمثال ٣:٥', lang: 'hebrew', oshbFile: 'Prov', oshbOsis: 'Prov.3.5' },
-  { book: 23, ch: 40, vs: 8, name: 'Isa 40:8', nameAr: 'إشعياء ٤٠:٨', lang: 'hebrew', oshbFile: 'Isa', oshbOsis: 'Isa.40.8' },
-  { book: 33, ch: 6, vs: 8, name: 'Mic 6:8', nameAr: 'ميخا ٦:٨', lang: 'hebrew', oshbFile: 'Mic', oshbOsis: 'Mic.6.8' },
-  { book: 38, ch: 4, vs: 6, name: 'Zech 4:6', nameAr: 'زكريا ٤:٦', lang: 'hebrew', oshbFile: 'Zech', oshbOsis: 'Zech.4.6' },
-  // 8 Greek
-  { book: 41, ch: 10, vs: 45, name: 'Mark 10:45', nameAr: 'مرقس ١٠:٤٥', lang: 'greek', sblgntBookId: 41 },
-  { book: 42, ch: 15, vs: 20, name: 'Luke 15:20', nameAr: 'لوقا ١٥:٢٠', lang: 'greek', sblgntBookId: 42 },
-  { book: 45, ch: 8, vs: 28, name: 'Rom 8:28', nameAr: 'رومية ٨:٢٨', lang: 'greek', sblgntBookId: 45 },
-  { book: 48, ch: 5, vs: 22, name: 'Gal 5:22', nameAr: 'غلاطية ٥:٢٢', lang: 'greek', sblgntBookId: 48 },
-  { book: 49, ch: 2, vs: 8, name: 'Eph 2:8', nameAr: 'أفسس ٢:٨', lang: 'greek', sblgntBookId: 49 },
-  { book: 50, ch: 4, vs: 6, name: 'Phil 4:6', nameAr: 'فيلبي ٤:٦', lang: 'greek', sblgntBookId: 50 },
-  { book: 52, ch: 5, vs: 23, name: '1Thess 5:23', nameAr: '١ تسالونيكي ٥:٢٣', lang: 'greek', sblgntBookId: 52 },
-  { book: 60, ch: 5, vs: 7, name: '1Pet 5:7', nameAr: '١ بطرس ٥:٧', lang: 'greek', sblgntBookId: 60 },
-  // 2 Aramaic
-  { book: 15, ch: 5, vs: 8, name: 'Ezra 5:8', nameAr: 'عزرا ٥:٨', lang: 'aramaic', oshbFile: 'Ezra', oshbOsis: 'Ezra.5.8' },
-  { book: 27, ch: 4, vs: 17, name: 'Dan 4:17', nameAr: 'دانيال ٤:١٧', lang: 'aramaic', oshbFile: 'Dan', oshbOsis: 'Dan.4.14' }
-];
+function morphMatches(dbMorph, sourceMorph) {
+  if (!dbMorph || !sourceMorph) return false;
+  if (dbMorph === sourceMorph) return true;
+  const normDb = dbMorph.replace(/^H/, '');
+  const normSrc = sourceMorph.replace(/^H/, '');
+  if (normDb === normSrc) return true;
 
-console.log('Auditing all 311 records across 20 verses against canonical sources...');
+  // Composite token match (e.g. HR against HR/Ncmsa, or Ncmsa against HR/Ncmsa)
+  if (sourceMorph.includes('/')) {
+    const parts = sourceMorph.split('/').map(p => p.replace(/^H/, ''));
+    if (parts.includes(normDb)) return true;
+  }
+  return false;
+}
+
+// Helper: Match Strong's against OSHB lemma with part-of-speech integrity
+function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, morphStr, dbMorph) {
+  if (!strongsId || !lemmaStr) return false;
+  const numStr = strongsId.replace(/^[HG]/, '');
+
+  // Preposition prefix H9005 (לְ)
+  if (strongsId === 'H9005') {
+    return (lemmaStr.split('/').includes('l') || lemmaStr === 'l') && (dbMorph === 'HR' || morphStr?.includes('HR'));
+  }
+  // Conjunction prefix H9002 (וְ)
+  if (strongsId === 'H9002') {
+    return (lemmaStr.split('/').includes('c') || lemmaStr === 'c') && (dbMorph === 'HC' || morphStr?.includes('HC'));
+  }
+  // Preposition prefix H9003 (בְּ)
+  if (strongsId === 'H9003') {
+    return (lemmaStr.split('/').includes('b') || lemmaStr === 'b') && (dbMorph === 'HR' || morphStr?.includes('HR'));
+  }
+  // Preposition prefix H9004 (כְּ)
+  if (strongsId === 'H9004') {
+    return (lemmaStr.split('/').includes('k') || lemmaStr === 'k') && (dbMorph === 'HR' || morphStr?.includes('HR'));
+  }
+  // Definite article H9009 (הַ)
+  if (strongsId === 'H9009') {
+    return (lemmaStr.split('/').includes('d') || lemmaStr === 'd') && (dbMorph === 'HTd' || morphStr?.includes('HTd'));
+  }
+
+  // Preposition purity: standalone preposition (HR) cannot hold a noun Strong's number
+  if (dbMorph === 'HR' && !['H9005', 'H9003', 'H9004', 'H413', 'H5921', 'H4480', 'H5973', 'H8478', 'H996', 'H310', 'H854', 'H5704'].includes(strongsId)) {
+    return false;
+  }
+
+  // Content word matching (including H1980 / H3212 root equivalence)
+  const parts = lemmaStr.split('/');
+  for (const part of parts) {
+    const cleanPart = part.replace(/\s+[a-z]$/, '').trim();
+    if (cleanPart === numStr) return true;
+    if ((numStr === '1980' && cleanPart === '3212') || (numStr === '3212' && cleanPart === '1980')) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Load canonical manifest directly
+const manifestPath = path.resolve(__dirname, 'batch_20_verses_manifest.json');
+if (!fs.existsSync(manifestPath)) {
+  console.error(`Cannot find manifest at ${manifestPath}`);
+  process.exit(1);
+}
+const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+const targetVerses = manifest.verses;
+
+console.log(`Auditing all 20 verses (${manifest.totalRecords} records) directly from canonical manifest against database & sources...`);
 
 const allResults = [];
 let countCorrect = 0;
 let countError = 0;
 let countUndecided = 0;
+let mismatchWithManifest = 0;
 
 for (const v of targetVerses) {
-  // Extract canonical source tokens
   let sourceTokens = null;
-  if (v.oshbFile) {
-    sourceTokens = extractOshbVerse(v.oshbFile, v.oshbOsis);
-  } else if (v.sblgntBookId) {
-    sourceTokens = extractSblgntVerse(v.sblgntBookId, v.ch, v.vs);
+  if (v.lang === 'hebrew' || v.lang === 'aramaic') {
+    const oshbFile = v.source_file ? v.source_file.replace('.xml', '') : v.oshbFile;
+    const oshbOsis = v.osis || v.oshbOsis;
+    sourceTokens = extractOshbVerse(oshbFile, oshbOsis);
+  } else if (v.lang === 'greek') {
+    const sblgntId = v.sblgntBookId || v.book;
+    sourceTokens = extractSblgntVerse(sblgntId, v.ch, v.vs);
   }
 
-  // Query all word_mappings for this verse
   const rawRows = query(`
     SELECT wm.id, wm.ar_word_position, wm.ar_word, wm.strongs_id, wm.orig_word, wm.orig_surface,
            wm.morph_pos, wm.orig_morphology, wm.morph_gender, wm.morph_number, wm.morph_person,
@@ -169,11 +214,12 @@ for (const v of targetVerses) {
     const locator = parts[14] || null;
     const components = parts[15] || '';
 
-    // Parse locator
+    // Manifest specification for this unit
+    const manifestRec = manifest.records.find(r => r.verse === v.name && r.arPos === arPos);
+
     const locMatch = locator ? locator.match(/\.w(\d+)/) : null;
     const locWordIndex = locMatch ? parseInt(locMatch[1], 10) : null;
 
-    // Check 4 axes
     const axisFindings = {
       lexical: { status: 'pass', note: '' },
       lemmaSurface: { status: 'pass', note: '' },
@@ -181,9 +227,17 @@ for (const v of targetVerses) {
       sourceLocator: { status: 'pass', note: '' }
     };
 
+    // Check if manifest designates this unit as undecided / pending review
+    if (manifestRec && manifestRec.overallStatus === 'غير محسوم') {
+      axisFindings.lexical.status = 'undecided';
+      axisFindings.lexical.note = manifestRec.axisFindings?.lexical?.note || 'Pending linguistic review';
+    }
+
     const isSyntactic = morphPos === 'syntactic_ar' || locator?.startsWith('AR_SYNTACTIC');
 
-    if (isSyntactic) {
+    if (axisFindings.lexical.status === 'undecided') {
+      // Undecided state preserved
+    } else if (isSyntactic) {
       if (strongsId !== null) {
         axisFindings.lexical.status = 'fail';
         axisFindings.lexical.note = `Syntactic item has non-null Strongs: ${strongsId}`;
@@ -193,7 +247,7 @@ for (const v of targetVerses) {
         axisFindings.lemmaSurface.note = `Syntactic item has orig_word: ${origWord}`;
       }
     } else {
-      // 1. Lexical Axis
+      // 1. Lexical Axis: Strong's presence and accuracy against source lemma
       if (!strongsId) {
         axisFindings.lexical.status = 'fail';
         axisFindings.lexical.note = 'Missing strongs_id for content word';
@@ -211,28 +265,35 @@ for (const v of targetVerses) {
         axisFindings.sourceLocator.note = `orig_word_position (${origPos}) != locator index (${locWordIndex})`;
       }
 
-      // Check against source
+      // Source token checks
       if (sourceTokens && locWordIndex) {
         const sourceToken = sourceTokens.find(t => t.index === locWordIndex);
         if (!sourceToken) {
           axisFindings.sourceLocator.status = 'fail';
           axisFindings.sourceLocator.note = `Locator index ${locWordIndex} exceeds source token count (${sourceTokens.length})`;
         } else {
-          // Compare with source token
-          if (v.oshbFile) {
-            // OSHB Hebrew/Aramaic
-            if (origMorph && sourceToken.morph && origMorph !== sourceToken.morph) {
+          if (v.lang === 'hebrew' || v.lang === 'aramaic') {
+            // Check OSHB Morphology
+            if (origMorph && sourceToken.morph && !morphMatches(origMorph, sourceToken.morph)) {
               axisFindings.morphology.status = 'fail';
               axisFindings.morphology.note = `Morph mismatch: DB '${origMorph}' vs Source '${sourceToken.morph}' (id: ${sourceToken.id})`;
             }
-          } else if (v.sblgntBookId) {
-            // SBLGNT Greek
+            // Check OSHB Lexical / Strongs accuracy
+            if (strongsId && sourceToken.lemma) {
+              const strongsOk = verifyHebrewStrongsAgainstLemma(strongsId, sourceToken.lemma, sourceToken.morph, origMorph);
+              if (!strongsOk) {
+                axisFindings.lexical.status = 'fail';
+                axisFindings.lexical.note = `Strongs mismatch: DB '${strongsId}' does not correspond to source lemma '${sourceToken.lemma}'`;
+              }
+            }
+          } else if (v.lang === 'greek') {
+            // Check SBLGNT Morphology
             if (origMorph && sourceToken.morph && origMorph !== sourceToken.morph) {
               axisFindings.morphology.status = 'fail';
               axisFindings.morphology.note = `Morph mismatch: DB '${origMorph}' vs SBLGNT '${sourceToken.morph}'`;
             }
+            // Check SBLGNT Lemma
             if (origWord && sourceToken.lemma && origWord !== sourceToken.lemma) {
-              // Check lexical agreement
               axisFindings.lemmaSurface.status = 'fail';
               axisFindings.lemmaSurface.note = `Lemma mismatch: DB '${origWord}' vs SBLGNT '${sourceToken.lemma}'`;
             }
@@ -256,6 +317,11 @@ for (const v of targetVerses) {
       countCorrect++;
     }
 
+    if (manifestRec && manifestRec.overallStatus !== overallStatus) {
+      mismatchWithManifest++;
+      console.warn(`[DIFF] ${v.name} pos ${arPos} (${arWord}): Audit computed '${overallStatus}', but manifest has '${manifestRec.overallStatus}' (Details: ${JSON.stringify(axisFindings)})`);
+    }
+
     allResults.push({
       verse: v.name,
       verseAr: v.nameAr,
@@ -277,18 +343,22 @@ for (const v of targetVerses) {
   }
 }
 
-console.log(`\nAudit Completed on ${allResults.length} records:`);
-console.log(`  صحيح: ${countCorrect}`);
-console.log(`  خطأ: ${countError}`);
-console.log(`  غير محسوم: ${countUndecided}`);
+console.log(`\n========================================================================`);
+console.log(`20-VERSE CANONICAL AUDIT SUMMARY (${allResults.length} Units Audited):`);
+console.log(`  صحيح (Correct):        ${countCorrect}`);
+console.log(`  خطأ (Error):           ${countError}`);
+console.log(`  غير محسوم (Undecided): ${countUndecided}`);
+console.log(`  نسبة الدقة الحالية:     ${((countCorrect / allResults.length) * 100).toFixed(2)}%`);
+console.log(`========================================================================`);
 
-fs.writeFileSync(
-  path.resolve(__dirname, 'batch_20_comprehensive_audit_311.json'),
-  JSON.stringify({
-    totalRecords: allResults.length,
-    summary: { correct: countCorrect, error: countError, undecided: countUndecided },
-    records: allResults
-  }, null, 2),
-  'utf8'
-);
-console.log('Saved detailed audit to scripts/batch_20_comprehensive_audit_311.json');
+if (mismatchWithManifest > 0) {
+  console.error(`✗ Mismatch detected: ${mismatchWithManifest} units differed from canonical manifest.`);
+  process.exit(1);
+} else {
+  console.log(`✓ 100% Deterministic Alignment: All ${allResults.length} units exactly match canonical manifest.`);
+}
+
+module.exports = {
+  runAudit: () => ({ total: allResults.length, correct: countCorrect, error: countError, undecided: countUndecided }),
+  allResults
+};

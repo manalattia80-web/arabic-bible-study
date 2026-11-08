@@ -1506,6 +1506,25 @@ for (const tc of batch20ComprehensiveCases) {
 }
 console.log(`Batch 20 Direct Source & Morphology Summary: ${batch20Pass}/${batch20ComprehensiveCases.length} loci rigorously verified against DB, OSHB XML, and SBLGNT sources.\n`);
 
+// -----------------------------------------------------------------------------
+// Test 12: 20-Verse Benchmark Canonical Manifest Quality Gate (All 311 Units)
+// -----------------------------------------------------------------------------
+console.log('\n▶  TEST 12: 20-Verse Benchmark Canonical Manifest Quality Gate (All 311 Units)');
+try {
+  const auditScriptPath = path.resolve(__dirname, 'audit_20_verses_311_units.cjs');
+  const auditOutput = execSync(`"${process.execPath}" "${auditScriptPath}"`, {
+    env: { ...process.env, AUDIT_DB_PATH: dbPath },
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe']
+  });
+  console.log(auditOutput);
+  assertCondition('20-Verse Benchmark Canonical Manifest Quality Gate (All 311 Units in manifest)', true);
+} catch (err) {
+  const errOutput = (err.stdout || '') + '\n' + (err.stderr || '');
+  console.error(errOutput);
+  assertCondition('20-Verse Benchmark Canonical Manifest Quality Gate (All 311 Units in manifest)', false, errOutput.slice(0, 300));
+}
+
 console.log('\n========================================================================');
 if (totalFailures === 0) {
   console.log('              ALL QUALITY GATE CHECKS PASSED (0 FAILURES)               ');

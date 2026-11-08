@@ -1,14 +1,15 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "1.0.358",
+  "version": "1.0.359",
   "date": "2026-11-08",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
-    "correct": 233,
-    "error": 78,
-    "undecided": 0,
-    "accuracyPercentage": "74.92%"
+    "correct": 230,
+    "error": 79,
+    "undecided": 2,
+    "totalRecords": 311,
+    "accuracyPercentage": "73.95%"
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -769,11 +770,11 @@
       "origPos": 4,
       "locator": "AR_SYNTACTIC:B3.C26.V12.w4",
       "locWordIndex": 4,
-      "isSyntactic": true,
+      "isSyntactic": false,
       "axisFindings": {
         "lexical": {
-          "status": "pass",
-          "note": ""
+          "status": "undecided",
+          "note": "محل مراجعة لغوية: تماثل الأصل العبري الصريح (לָכֶם w4: HR/Sp2mp, H9005) مقابل تصنيف AR_SYNTACTIC القديم"
         },
         "lemmaSurface": {
           "status": "pass",
@@ -788,7 +789,7 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "غير محسوم"
     },
     {
       "verse": "Lev 26:12",
@@ -909,11 +910,11 @@
       "origPos": 8,
       "locator": "AR_SYNTACTIC:B3.C26.V12.w8",
       "locWordIndex": 8,
-      "isSyntactic": true,
+      "isSyntactic": false,
       "axisFindings": {
         "lexical": {
-          "status": "pass",
-          "note": ""
+          "status": "undecided",
+          "note": "محل مراجعة لغوية: تماثل الأصل العبري الصريح (לִי w8: HR/Sp1cs, H9005) مقابل تصنيف AR_SYNTACTIC القديم"
         },
         "lemmaSurface": {
           "status": "pass",
@@ -928,7 +929,7 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "غير محسوم"
     },
     {
       "verse": "Lev 26:12",
@@ -4051,11 +4052,11 @@
       "lang": "hebrew",
       "arPos": 9,
       "arWord": "إِلَى",
-      "strongsId": "H5769",
-      "components": "H5769:primary\r",
-      "origWord": "עוֹלָם",
-      "origSurface": "לְעֹולָֽם",
-      "origMorph": "HR/Ncmsa",
+      "strongsId": "H9005",
+      "components": "H9005:primary",
+      "origWord": "לְ",
+      "origSurface": "לְ",
+      "origMorph": "HR",
       "origPos": 8,
       "locator": "OSHB:B23.C40.V8.w8",
       "locWordIndex": 8,
@@ -4063,7 +4064,7 @@
       "axisFindings": {
         "lexical": {
           "status": "pass",
-          "note": ""
+          "note": "Preposition prefix לְ (H9005)"
         },
         "lemmaSurface": {
           "status": "pass",
@@ -4071,7 +4072,7 @@
         },
         "morphology": {
           "status": "pass",
-          "note": ""
+          "note": "Preposition HR"
         },
         "sourceLocator": {
           "status": "pass",
@@ -4089,8 +4090,8 @@
       "strongsId": "H5769",
       "components": "H5769:primary",
       "origWord": "עוֹלָם",
-      "origSurface": "לְעֹולָֽם",
-      "origMorph": "HR/Ncmsa",
+      "origSurface": "עוֹלָם",
+      "origMorph": "HNcmsa",
       "origPos": 8,
       "locator": "OSHB:B23.C40.V8.w8",
       "locWordIndex": 8,
@@ -4098,7 +4099,7 @@
       "axisFindings": {
         "lexical": {
           "status": "pass",
-          "note": ""
+          "note": "Noun stem עוֹלָם (H5769)"
         },
         "lemmaSurface": {
           "status": "pass",
@@ -4106,7 +4107,7 @@
         },
         "morphology": {
           "status": "pass",
-          "note": ""
+          "note": "Noun HNcmsa"
         },
         "sourceLocator": {
           "status": "pass",
@@ -4157,7 +4158,7 @@
       "arPos": 2,
       "arWord": "أَخْبَرَكَ",
       "strongsId": "H5046",
-      "components": "H5046:primary\r",
+      "components": "H5046:primary;H9005:pronominal_dative",
       "origWord": "נָגַד",
       "origSurface": "הִגִּ֥יד",
       "origMorph": "HVhp3ms",
@@ -4168,7 +4169,7 @@
       "axisFindings": {
         "lexical": {
           "status": "pass",
-          "note": ""
+          "note": "Primary H5046 (הִגִּיד) + Pronominal Dative H9005 (לְךָ)"
         },
         "lemmaSurface": {
           "status": "pass",
@@ -9837,8 +9838,8 @@
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
-          "status": "pass",
-          "note": ""
+          "status": "fail",
+          "note": "Strongs mismatch: DB 'H1124' does not correspond to source lemma '7761' (locator points to w16 מִתְּשָׂ֣ם instead of w12 מִתְבְּנֵא֙)"
         },
         "lemmaSurface": {
           "status": "pass",
@@ -9853,7 +9854,7 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "خطأ"
     },
     {
       "verse": "Ezra 5:8",

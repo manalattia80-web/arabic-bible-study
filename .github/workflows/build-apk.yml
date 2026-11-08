@@ -55,6 +55,9 @@ jobs:
       - name: Run Rigorous Scientific & Database Quality Gate
         run: node scripts/automated_database_audit.cjs
 
+      - name: Run 20-Verse Canonical Manifest Quality Gate
+        run: node scripts/audit_20_verses_311_units.cjs
+
       - name: Run Negative Quality Gate Suite (Forbidden States CI Check)
         run: node scripts/test_negative_rules.cjs
 
@@ -133,15 +136,16 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.358)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 358` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.359)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 359` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **Batch 1 Canonical Alignment Corrections (Elimination of Out-of-Bounds Locators)**:
-            - **Isaiah 40:8 (كَلِمَةُ إِلهِنَا فَتَثْبُتُ إِلَى الأَبَدِ)**: Realigned tokens 5, 6, 7 to OSHB w5 (`וּדְבַר`), w6 (`אֱלֹהֵינוּ`), w7 (`יָקוּם`). Resolved out-of-bounds locators `w9` and `w10` by mapping Arabic prepositional phrase `إِلَى الأَبَدِ` (tokens 8 and 9) to Hebrew w8 (`לְעוֹלָם`). All 10 tokens now pass 100% against OSHB XML.
-            - **Micah 6:8 (مَاذَا يَطْلُبُهُ مِنْكَ الرَّبُّ ... وَأَنْ تَسْلُكَ مُتَوَاضِعًا مَعَ إِلهِكَ)**: Realigned all 21 Arabic tokens to Hebrew OSHB words 1–19, resolving syntactic inverted word orders and out-of-bounds locators `w20` and `w21` (`مَعَ` -> w18 `עִם`, `إِلهِكَ` -> w19 `אֱלֹהֶיךָ`). All 21 tokens now pass 100% against OSHB XML.
-          - **Direct Source Verification & Quality Gates**:
-            - 311-unit 20-verse benchmark audit tracks passing units from 215 to 233 (74.92%).
-            - Automated Quality Gate suite passed 0 failures.
+          - **Component-Level Lexical & Pronominal Refinements**:
+            - **Isaiah 40:8 (إِلَى الأَبَدِ)**: Dissected Hebrew token 8 (`לְעוֹלָם`, `ל/עוֹלָם`, `HR/Ncmsa`) to map `إِلَى` specifically to preposition prefix `לְ` (`H9005`, `HR`) and `الأَبَدِ` to noun stem `עוֹלָם` (`H5769`, `HNcmsa`), eliminating the lexical anomaly of storing a preposition as a noun.
+            - **Micah 6:8 (أَخْبَرَكَ)**: Documented both verbal root `הִגִּיד` (w1, `H5046`, `HVhp3ms`) and pronominal dative `לְךָ֛` (w2, `H9005`, `HR/Sp2ms`) as composite components in `word_mapping_strongs`.
+            - **Leviticus 26:12 (لَكُمْ & لِي)**: Marked as `غير محسوم` (undecided/pending review) in the canonical manifest pending formal linguistic decision between legacy syntactic categorization and explicit Hebrew tokens (`לָכֶם` w4 & `לִי` w8).
+          - **Direct Canonical Manifest CI Quality Gate**:
+            - Integrated 20-verse manifest audit (311 units) into the CI build pipeline, reading directly from `scripts/batch_20_verses_manifest.json` with 100% deterministic alignment (230 pass, 79 error, 2 undecided).
+            - Added **Gate 7** to negative quality gate suite: strictly catches and rejects mismatched Strong's IDs even when locator and morphology are authentic.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

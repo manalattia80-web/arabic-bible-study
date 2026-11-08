@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 358; // v1.0.358: Batch 1 complete realignments for Isa 40:8 & Mic 6:8, elimination of out-of-bounds locators
+    const targetDbVersion = 359; // v1.0.359: Component-level lexical & pronominal refinement, 20-verse canonical manifest gate in CI, Gate 7 negative test
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();
