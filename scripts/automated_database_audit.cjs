@@ -1019,7 +1019,7 @@ for (const tc of test10Cases) {
 // -----------------------------------------------------------------------------
 // Test 11: 20-Verse Batch Loci: Direct OSHB Source XML & Derived Morphology Gate
 // -----------------------------------------------------------------------------
-console.log('\n▶  TEST 11: 20-Verse Batch Direct Source XML & SBLGNT Morphology Quality Gate (37 Units)');
+console.log('\n▶  TEST 11: 20-Verse Batch Direct Source XML & SBLGNT Morphology Quality Gate (38 Units)');
 
 const oshbDir = path.resolve(__dirname, 'data/oshb');
 function extractOshbVerse(bookName, osisID) {
@@ -1403,6 +1403,14 @@ const batch20ComprehensiveCases = [
     expMorph: 'V- 3PPD-S--', expLoc: 'SBLGNT:B50.C4.V6.w16',
     oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
     sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntExpectedMorph: 'V- 3PPD-S--', sblgntExpectedLemma: 'γνωρίζω'
+  },
+  // 38. Ezra 5:8 w16 (يُبْنَى)
+  {
+    ref: 'Ezra 5:8 w16 (يُبْنَى)', book: 15, ch: 5, vs: 8, pos: 16,
+    expStrongs: 'H1124', expOrig: 'בְּנָא', expSurface: 'מִתְבְּנֵא֙',
+    expPos: 'verb', expStem: 'hithpeel', expMood: 'participle', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'AVurmsa', expLoc: 'OSHB:B15.C5.V8.w12',
+    oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 12, oshbExpectedId: '15qDM'
   }
 ];
 
@@ -1550,16 +1558,20 @@ const isaNoun = query(`
 const okIsaNoun = isaNoun[0] === 'H5769' && isaNoun[1] === 'HNcmsa' && isaNoun[0] !== 'H9005';
 assertCondition('Isaiah 40:8 w10 (الأَبَدِ) Lexical Isolation (H5769, HNcmsa, NOT H9005)', okIsaNoun, `Found strongs=${isaNoun[0]}, morph=${isaNoun[1]}`);
 
-// 3. Micah 6:8 w2 "أَخْبَرَكَ" multi-component completeness (must have H5046 primary AND H9005 pronominal_dative)
-const micComp = query(`
-  SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role, ';')
+// 3. Micah 6:8 w2 "أَخْبَرَكَ" multi-component completeness & exact sub-component position/morphology
+const micLinks = query(`
+  SELECT wms.link_order, wms.strongs_id, wms.link_role, wms.orig_word_position, wms.orig_component, wms.orig_morphology
   FROM word_mapping_strongs wms
   JOIN word_mappings wm ON wm.id = wms.mapping_id
   WHERE wm.verse_id = (SELECT id FROM verses WHERE chapter_num = 6 AND verse_num = 8 AND book_id = 33)
-    AND wm.ar_word_position = 2;
-`);
-const okMicComp = micComp.includes('H5046:primary') && micComp.includes('H9005:pronominal_dative');
-assertCondition('Micah 6:8 w2 (أَخْبَرَكَ) Multi-Component Completeness (H5046 verbal + H9005 pronominal_dative)', okMicComp, `Found components=${micComp}`);
+    AND wm.ar_word_position = 2
+  ORDER BY link_order ASC;
+`).replace(/\r/g, '').split('\n').filter(Boolean);
+
+const okMicLink1 = micLinks[0] === '1|H5046|primary|1|הִגִּ֥יד|HVhp3ms';
+const okMicLink2 = micLinks[1] === '2|H9005|pronominal_dative|2|לְךָ֛|HR/Sp2ms';
+const okMicComp = micLinks.length === 2 && okMicLink1 && okMicLink2;
+assertCondition('Micah 6:8 w2 (أَخْبَرَكَ) Multi-Component Completeness (H5046 verbal w1 + H9005 pronominal_dative w2)', okMicComp, `Found links=${JSON.stringify(micLinks)}`);
 
 // 4. Galatians 5:22 w6 "فَرَحٌ" Greek lexical joy isolation (must be G5479, NEVER G26)
 const galJoy = query(`
@@ -1590,6 +1602,16 @@ const levLi = query(`
 `).split('|');
 const okLevLi = levLi[0] === 'H9005' && levLi[1] === 'HR/Sp1cs' && levLi[2] === '8' && levLi[3] === 'OSHB:B3.C26.V12.w8';
 assertCondition('Leviticus 26:12 w8 (لِي) Explicit Source Linkage (H9005, HR/Sp1cs, w8)', okLevLi, `Found strongs=${levLi[0]}, morph=${levLi[1]}, pos=${levLi[2]}, loc=${levLi[3]}`);
+
+// 7. Ezra 5:8 w16 "يُبْنَى" locator and root verification (H1124, AVurmsa, w12)
+const ezra16 = query(`
+  SELECT strongs_id, orig_morphology, orig_word_position, verified_locator, orig_surface
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 8 AND book_id = 15)
+    AND ar_word_position = 16;
+`).split('|');
+const okEzra16 = ezra16[0] === 'H1124' && ezra16[1] === 'AVurmsa' && ezra16[2] === '12' && ezra16[3] === 'OSHB:B15.C5.V8.w12' && ezra16[4] === 'מִתְבְּנֵא֙';
+assertCondition('Ezra 5:8 w16 (يُبْنَى) Source Locator & Root Purity (H1124, AVurmsa, w12)', okEzra16, `Found strongs=${ezra16[0]}, morph=${ezra16[1]}, pos=${ezra16[2]}, loc=${ezra16[3]}, comp=${ezra16[4]}`);
 
 console.log('\n========================================================================');
 if (totalFailures === 0) {

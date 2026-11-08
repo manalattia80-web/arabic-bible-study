@@ -202,6 +202,33 @@ const testCases = [
           AND ar_word_position = 2
       ) AND link_role = 'pronominal_dative';
     `
+  },
+  {
+    gateNum: 11,
+    name: 'mic_6_8_mutated_component_position',
+    expectedFailTag: '[FAIL] Micah 6:8 w2 (أَخْبَرَكَ) Multi-Component Completeness',
+    description: 'Mutated Micah 6:8 לְךָ component orig_word_position from 2 to 1 in test DB',
+    mutationSql: `
+      UPDATE word_mapping_strongs
+      SET orig_word_position = 1
+      WHERE mapping_id = (
+        SELECT id FROM word_mappings
+        WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 6 AND verse_num = 8 AND book_id = 33)
+          AND ar_word_position = 2
+      ) AND link_role = 'pronominal_dative';
+    `
+  },
+  {
+    gateNum: 12,
+    name: 'ezra_5_8_locator_out_of_bounds_or_mismatched',
+    expectedFailTag: '[FAIL] Ezra 5:8 w16 (يُبْنَى) Source Locator & Root Purity',
+    description: 'Mutated Ezra 5:8 w16 (يُبْنَى) locator back to w16 (מִתְּשָׂ֣ם) instead of w12 (מִתְבְּנֵא֙)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word_position = 16, verified_locator = 'OSHB:B15.C5.V8.w16'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 8 AND book_id = 15)
+        AND ar_word_position = 16;
+    `
   }
 ];
 

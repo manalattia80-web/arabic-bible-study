@@ -200,7 +200,9 @@ for (const v of targetVerses) {
            wm.morph_pos, wm.orig_morphology, wm.morph_gender, wm.morph_number, wm.morph_person,
            wm.morph_stem, wm.morph_mood, wm.orig_word_position, wm.verified_locator,
            (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role, ';') 
-            FROM (SELECT strongs_id, link_role FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as components
+            FROM (SELECT strongs_id, link_role FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as components,
+           (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || COALESCE(wms.orig_word_position, '') || '[' || COALESCE(wms.orig_component, '') || ':' || COALESCE(wms.orig_morphology, '') || ']', ';') 
+            FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as components_detailed
     FROM word_mappings wm
     JOIN verses vr ON wm.verse_id = vr.id
     WHERE vr.book_id = ${v.book} AND vr.chapter_num = ${v.ch} AND vr.verse_num = ${v.vs}
@@ -227,6 +229,7 @@ for (const v of targetVerses) {
     const origPos = parts[13] ? parseInt(parts[13], 10) : null;
     const locator = parts[14] || null;
     const components = parts[15] || '';
+    const componentsDetailed = parts[16] || '';
 
     // Manifest specification for this unit
     const manifestRec = manifest.records.find(r => r.verse === v.name && r.arPos === arPos);
@@ -273,13 +276,21 @@ for (const v of targetVerses) {
         axisFindings.lexical.note = `Strongs ID mismatch: DB '${strongsId}' vs manifest '${manifestRec.strongsId}'`;
       }
 
-      // Check multi-component integrity: reject missing or mismatched components
+      // Check multi-component integrity: reject missing or mismatched components, including position, surface form, and morphology
       if (manifestRec && manifestRec.components) {
-        const normDbComp = (components || '').trim().replace(/\r/g, '');
         const normExpComp = manifestRec.components.trim().replace(/\r/g, '');
-        if (normExpComp && normDbComp !== normExpComp) {
-          axisFindings.lexical.status = 'fail';
-          axisFindings.lexical.note = `Components mismatch: DB has '${normDbComp}', expected '${normExpComp}'`;
+        if (normExpComp.includes('@w')) {
+          const normDbDetailed = (componentsDetailed || '').trim().replace(/\r/g, '');
+          if (normDbDetailed !== normExpComp) {
+            axisFindings.lexical.status = 'fail';
+            axisFindings.lexical.note = `Component detailed mismatch: DB has '${normDbDetailed}', expected '${normExpComp}'`;
+          }
+        } else {
+          const normDbComp = (components || '').trim().replace(/\r/g, '');
+          if (normDbComp !== normExpComp) {
+            axisFindings.lexical.status = 'fail';
+            axisFindings.lexical.note = `Components mismatch: DB has '${normDbComp}', expected '${normExpComp}'`;
+          }
         }
       }
 

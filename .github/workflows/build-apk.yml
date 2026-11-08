@@ -137,18 +137,22 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.360)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 360` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.361)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 361` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
           - **Component-Level Lexical & Pronominal Isolation**:
             - **Isaiah 40:8 (إِلَى الأَبَدِ)**: Cleared residual masculine and singular attributes from the preposition record "إِلَى" (pos 9, H9005, HR), ensuring strict prepositional attribute purity.
             - **Leviticus 26:12 (لَكُمْ & لِي)**: Connected "لَكُمْ" (pos 4) to source token 4 `לָכֶם` (H9005, HR/Sp2mp) and "لِي" (pos 8) to source token 8 `לִי` (H9005, HR/Sp1cs) with synchronized `word_mapping_strongs` entries, elevating both from undecided to `صحيح`.
-            - **Canonical Manifest v360**: 311 units: 232 correct (74.60%), 79 errors, 0 undecided.
-          - **Negative Quality Gates 8, 9, 10 & CI Test 13**:
+            - **Ezra 5:8 (يُبْنَى)**: Corrected source locator from w16 (`מִתְּשָׂ֣ם` H7761) to w12 (`מִתְבְּנֵא֙` H1124) preserving Aramaic root בְּנָא and AVurmsa morphology, elevating unit from error to `صحيح`.
+            - **Micah 6:8 (أَخْبَرَكَ)**: Strict enforcement of sub-component order, exact word positions (verbal root w1 and pronominal dative w2), surface text, and morphology in both manifest and automated audit.
+            - **Canonical Manifest v361**: 311 units: 233 correct (74.92%), 78 errors, 0 undecided.
+          - **Negative Quality Gates 8, 9, 10, 11, 12 & CI Test 13**:
             - **Gate 8**: Strictly catches and rejects injecting preposition Strong's H9005 into noun "الأَبَدِ".
             - **Gate 9**: Strictly catches and rejects injecting love Strong's G26 into joy "فَرَحٌ".
             - **Gate 10**: Strictly catches and rejects omitting the pronominal dative component (kaf al-mukhatab H9005) from "أَخْبَرَكَ".
-            - **Test 13**: Integrated dedicated Component & Lexical Boundary Quality Gate into production CI suite.
+            - **Gate 11**: Strictly catches and rejects mutating Micah 6:8 לְךָ component orig_word_position from 2 to 1 in test environments.
+            - **Gate 12**: Strictly catches and rejects mutating Ezra 5:8 يُبْنَى locator back to w16 instead of w12.
+            - **Test 13**: Integrated dedicated Component & Lexical Boundary Quality Gate with exact multi-component positioning into production CI suite.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

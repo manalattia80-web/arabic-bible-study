@@ -6,10 +6,10 @@
   "totalRecords": 311,
   "summary": {
     "total": 311,
-    "correct": 232,
-    "error": 79,
+    "correct": 233,
+    "error": 78,
     "undecided": 0,
-    "accuracyPercent": 74.6
+    "accuracyPercent": 74.92
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -4158,7 +4158,7 @@
       "arPos": 2,
       "arWord": "أَخْبَرَكَ",
       "strongsId": "H5046",
-      "components": "H5046:primary;H9005:pronominal_dative",
+      "components": "H5046:primary@w1[הִגִּ֥יד:HVhp3ms];H9005:pronominal_dative@w2[לְךָ֛:HR/Sp2ms]",
       "origWord": "נָגַד",
       "origSurface": "הִגִּ֥יד",
       "origMorph": "HVhp3ms",
@@ -4169,7 +4169,7 @@
       "axisFindings": {
         "lexical": {
           "status": "pass",
-          "note": "Primary H5046 (הִגִּיד) + Pronominal Dative H9005 (לְךָ)"
+          "note": "Primary H5046 (הִגִּיד w1 HVhp3ms) + Pronominal Dative H9005 (לְךָ w2 HR/Sp2ms)"
         },
         "lemmaSurface": {
           "status": "pass",
@@ -9832,9 +9832,9 @@
       "origWord": "בְּנָא",
       "origSurface": "מִתְבְּנֵא֙",
       "origMorph": "AVurmsa",
-      "origPos": 16,
-      "locator": "OSHB:B15.C5.V8.w16",
-      "locWordIndex": 16,
+      "origPos": 12,
+      "locator": "OSHB:B15.C5.V8.w12",
+      "locWordIndex": 12,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -9851,10 +9851,10 @@
         },
         "sourceLocator": {
           "status": "pass",
-          "note": ""
+          "note": "w12 in OSHB (corrected from w16)"
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Ezra 5:8",
@@ -11116,5 +11116,7 @@
       },
       "overallStatus": "خطأ"
     }
-  ]
+  ],
+  "ezra58Note": "In v1.0.361, Ezra 5:8 pos 16 (يُبْنَى) locator corrected from w16 to w12, elevated to صحيح.",
+  "micah68Note": "In v1.0.361, Micah 6:8 pos 2 (أَخْبَرَكَ) component specification strictly enforces orig_word_position, orig_component, and orig_morphology for both links."
 }
