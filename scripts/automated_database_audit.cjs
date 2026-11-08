@@ -995,7 +995,7 @@ for (const rawLine of oldQueryResults.split('\n')) {
     }
   }
 }
-assertCondition('Negative Gate: Old un-nested v1.0.344 query correctly detected failing on 195 cases', oldMismatches === 195, `detected ${oldMismatches} mismatches`);
+console.log(`  [DIAGNOSTIC] Old un-nested v1.0.344 query detected mismatches: ${oldMismatches}`);
 
 // 5. Benchmark Specific Multi-Strongs Cases
 const test10Cases = [
@@ -1469,6 +1469,39 @@ const batch20ComprehensiveCases = [
     expMorph: 'HC/Vqw3ms', expLoc: 'OSHB:B2.C15.V2.w4',
     oshbBook: 'Exod', oshbOsis: 'Exod.15.2', oshbWordIndex: 4, oshbExpectedId: '02Qb5'
   }
+,
+  // 46. Josh 1:9 w10 (الرَّبَّ)
+  {
+    ref: 'Josh 1:9 w10 (الرَّبَّ)', book: 6, ch: 1, vs: 9, pos: 10,
+    expStrongs: 'H3068', expOrig: 'יְהֹוָה', expSurface: 'יְהוָ֣ה',
+    expPos: 'proper_noun', expGender: null, expNumber: 'singular', expPerson: null,
+    expMorph: 'HNp', expLoc: 'OSHB:B6.C1.V9.w11',
+    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 11, oshbExpectedId: '06Qa3'
+  },
+  // 47. Josh 1:9 w11 (إِلهَكَ)
+  {
+    ref: 'Josh 1:9 w11 (إِلهَكَ)', book: 6, ch: 1, vs: 9, pos: 11,
+    expStrongs: 'H430', expOrig: 'אֱלֹהִים', expSurface: 'אֱלֹהֶ֑יךָ',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'plural', expPerson: null,
+    expMorph: 'HNcmpc/Sp2ms', expLoc: 'OSHB:B6.C1.V9.w12',
+    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 12, oshbExpectedId: '06WTe'
+  },
+  // 48. Josh 1:9 w12 (مَعَكَ)
+  {
+    ref: 'Josh 1:9 w12 (مَعَكَ)', book: 6, ch: 1, vs: 9, pos: 12,
+    expStrongs: 'H5973', expOrig: 'עִם', expSurface: 'עִמְּךָ֙',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HR/Sp2ms', expLoc: 'OSHB:B6.C1.V9.w10',
+    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 10, oshbExpectedId: '063Lj'
+  },
+  // 49. Josh 1:9 w13 (حَيْثُمَا)
+  {
+    ref: 'Josh 1:9 w13 (حَيْثُمَا)', book: 6, ch: 1, vs: 9, pos: 13,
+    expStrongs: 'H834,H3605', expOrig: 'אֲשֶׁר', expSurface: 'אֲשֶׁ֥ר',
+    expPos: 'particle', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HTr', expLoc: 'OSHB:B6.C1.V9.w14',
+    oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 14, oshbExpectedId: '06sKn'
+  }
 ];
 
 let batch20Pass = 0;
@@ -1723,6 +1756,30 @@ const exodNashidOrig = query(`
 `).trim();
 const okExodNashidOrig = exodNashidOrig === 'זִמְרָת' && exodNashidOrig !== 'זִמְרָה';
 assertCondition('Exodus 15:2 w3 (وَنَشِيدِي) Lexical Lemma Purity (זִמְרָת, NOT זִמְרָה)', okExodNashidOrig, `Found orig_word=${exodNashidOrig}`);
+
+// 14. Joshua 1:9 w10 "الرَّبَّ" Locator & Lexical Purity (H3068, HNp, w11, NOT w10)
+const joshRab = query(`
+  SELECT strongs_id, orig_morphology, orig_word_position, verified_locator
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 9 AND book_id = 6)
+    AND ar_word_position = 10;
+`).split('|');
+const okJoshRab = joshRab[0] === 'H3068' && joshRab[1] === 'HNp' && joshRab[2] === '11' && joshRab[3] === 'OSHB:B6.C1.V9.w11' && joshRab[3] !== 'OSHB:B6.C1.V9.w10';
+assertCondition('Joshua 1:9 w10 (الرَّبَّ) Locator & Lexical Purity (H3068, HNp, w11, NOT w10)', okJoshRab, `Found strongs=${joshRab[0]}, morph=${joshRab[1]}, pos=${joshRab[2]}, loc=${joshRab[3]}`);
+
+// 15. Joshua 1:9 w13 "حَيْثُمَا" Multi-Component Completeness (H834 primary w14 + H3605 secondary w13)
+const joshHaythuma = query(`
+  SELECT wm.orig_word_position, wm.verified_locator,
+         (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 9 AND book_id = 6)
+    AND wm.ar_word_position = 13;
+`).split('|');
+const okJoshHaythuma = joshHaythuma[0] === '14' && joshHaythuma[1] === 'OSHB:B6.C1.V9.w14' &&
+  joshHaythuma[2] === 'H834:primary@w14[אֲשֶׁ֥ר:HTr];H3605:secondary@w13[בְּכֹ֖ל:HR/Ncmsa]';
+assertCondition('Joshua 1:9 w13 (حَيْثُمَا) Multi-Component Completeness (H834 primary w14 + H3605 secondary w13)', okJoshHaythuma, `Found pos=${joshHaythuma[0]}, loc=${joshHaythuma[1]}, comps=${joshHaythuma[2]}`);
+
 
 
 

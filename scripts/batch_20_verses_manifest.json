@@ -1,15 +1,15 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "1.0.363",
+  "version": "1.0.364",
   "date": "2026-11-08",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
     "total": 311,
-    "correct": 240,
-    "error": 71,
+    "correct": 244,
+    "error": 67,
     "undecided": 0,
-    "accuracyPercent": 77.17
+    "accuracyPercent": 78.46
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -1712,41 +1712,6 @@
       "origWord": "יְהֹוָה",
       "origSurface": "יְהוָ֣ה",
       "origMorph": "HNp",
-      "origPos": 10,
-      "locator": "OSHB:B6.C1.V9.w10",
-      "locWordIndex": 10,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNp' vs Source 'HR/Sp2ms' (id: 063Lj)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Josh 1:9",
-      "verseAr": "يشوع ١:٩",
-      "lang": "hebrew",
-      "arPos": 11,
-      "arWord": "إِلهَكَ",
-      "strongsId": "H430",
-      "components": "H430:primary",
-      "origWord": "אֱלֹהִים",
-      "origSurface": "אֱלֹהֶ֔יךָ",
-      "origMorph": "HNcmpc/Sp2ms",
       "origPos": 11,
       "locator": "OSHB:B6.C1.V9.w11",
       "locWordIndex": 11,
@@ -1761,27 +1726,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNcmpc/Sp2ms' vs Source 'HNp' (id: 06Qa3)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Josh 1:9",
       "verseAr": "يشوع ١:٩",
       "lang": "hebrew",
-      "arPos": 12,
-      "arWord": "مَعَكَ",
-      "strongsId": "H5973",
-      "components": "H5973:primary",
-      "origWord": "עִם",
-      "origSurface": "עִמְּךָ֙",
-      "origMorph": "HR/Sp2ms",
+      "arPos": 11,
+      "arWord": "إِلهَكَ",
+      "strongsId": "H430",
+      "components": "H430:primary",
+      "origWord": "אֱלֹהִים",
+      "origSurface": "אֱלֹהֶ֑יךָ",
+      "origMorph": "HNcmpc/Sp2ms",
       "origPos": 12,
       "locator": "OSHB:B6.C1.V9.w12",
       "locWordIndex": 12,
@@ -1796,30 +1761,30 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/Sp2ms' vs Source 'HNcmpc/Sp2ms' (id: 06WTe)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Josh 1:9",
       "verseAr": "يشوع ١:٩",
       "lang": "hebrew",
-      "arPos": 13,
-      "arWord": "حَيْثُمَا",
-      "strongsId": "H834",
-      "components": "H834:primary",
-      "origWord": "אֲשֶׁר",
-      "origSurface": "אֲשֶׁ֥ר",
-      "origMorph": "HTr",
-      "origPos": 13,
-      "locator": "OSHB:B6.C1.V9.w13",
-      "locWordIndex": 13,
+      "arPos": 12,
+      "arWord": "مَعَكَ",
+      "strongsId": "H5973",
+      "components": "H5973:primary",
+      "origWord": "עִם",
+      "origSurface": "עִמְּךָ֙",
+      "origMorph": "HR/Sp2ms",
+      "origPos": 10,
+      "locator": "OSHB:B6.C1.V9.w10",
+      "locWordIndex": 10,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -1831,15 +1796,50 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HTr' vs Source 'HR/Ncmsa' (id: 066VM)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
+    },
+    {
+      "verse": "Josh 1:9",
+      "verseAr": "يشوع ١:٩",
+      "lang": "hebrew",
+      "arPos": 13,
+      "arWord": "حَيْثُمَا",
+      "strongsId": "H834",
+      "components": "H834:primary@w14[אֲשֶׁ֥ר:HTr];H3605:secondary@w13[בְּכֹ֖ל:HR/Ncmsa]",
+      "origWord": "אֲשֶׁר",
+      "origSurface": "אֲשֶׁ֥ר",
+      "origMorph": "HTr",
+      "origPos": 14,
+      "locator": "OSHB:B6.C1.V9.w14",
+      "locWordIndex": 14,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Josh 1:9",
@@ -11123,5 +11123,8 @@
     "exod152Repairs": "Fronted word order corrected: pos 1 -> w3 יָהּ (H3050, HNp), pos 2 -> w1 עָזִּי (H5797, HNcmsc/Sp1cs), pos 3 -> w2 וְזִמְרָת (H2176, HC/Ncfsa), pos 5 -> w4 וַיְהִי (H1961, HC/Vqw3ms)",
     "deut65Repairs": "Direct object particle אֵת (w2) index shift corrected: pos 2 -> w3 יְהוָה (H3068, HNp), pos 3 -> w4 אֱלֹהֶיךָ (H430, HNcmpc/Sp2ms), pos 4 -> w5 preposition Beth component (H9003, HR)",
     "deut65FutureCompoundReview": "Positions 7 and 10 (وَمِنْ) pass current checks via compound H3605, queued for dedicated multi-component conjunction separation in future batch."
+  },
+  "batch3Highlights": {
+    "josh19Repairs": "Fronted predicate shift corrected: pos 10 -> w11 יְהוָה (H3068, HNp), pos 11 -> w12 אֱלֹהֶיךָ (H430, HNcmpc/Sp2ms), pos 12 -> w10 עִמְּךָ (H5973, HR/Sp2ms), pos 13 -> w14 אֲשֶׁר (H834, HTr) with secondary component w13 בְּכֹל (H3605, HR/Ncmsa)"
   }
 }

@@ -301,6 +301,32 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 2 AND book_id = 2)
         AND ar_word_position = 3;
     `
+  },
+  {
+    gateNum: 19,
+    name: 'josh_1_9_rab_locator_reverted_to_w10',
+    expectedFailTag: '[FAIL] Joshua 1:9 w10 (الرَّبَّ) Locator & Lexical Purity',
+    description: 'Reverted Joshua 1:9 w10 (الرَّبَّ) locator from w11 back to w10',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word_position = 10, verified_locator = 'OSHB:B6.C1.V9.w10'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 9 AND book_id = 6)
+        AND ar_word_position = 10;
+    `
+  },
+  {
+    gateNum: 20,
+    name: 'josh_1_9_haythuma_missing_secondary_component',
+    expectedFailTag: '[FAIL] Joshua 1:9 w13 (حَيْثُمَا) Multi-Component Completeness',
+    description: 'Deleted secondary component w13 בְּכֹ֖ל from حَيْثُمَا in Joshua 1:9',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (
+        SELECT id FROM word_mappings
+        WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 9 AND book_id = 6)
+          AND ar_word_position = 13
+      ) AND link_role = 'secondary';
+    `
   }
 ];
 
