@@ -7,7 +7,9 @@ const sqlitePath = isWin && fs.existsSync(path.resolve(__dirname, '../sqlite_dis
   ? path.resolve(__dirname, '../sqlite_dist/sqlite3.exe')
   : 'sqlite3';
 
-const defaultDbPath = path.resolve(__dirname, '../bible_study.db');
+const defaultDbPath = fs.existsSync(path.resolve(__dirname, '../mobile/assets/bible_study.db'))
+  ? path.resolve(__dirname, '../mobile/assets/bible_study.db')
+  : path.resolve(__dirname, '../bible_study.db');
 const dbPath = process.env.AUDIT_DB_PATH || defaultDbPath;
 
 function query(sql) {
