@@ -53,7 +53,7 @@ function extractOshbVerse(bookName, osisRef) {
   return words;
 }
 
-// SBLGNT Parser
+// SBLGNT Text Parser
 const sblgntDir = path.resolve(__dirname, 'data/sblgnt');
 const sblgntBookMap = {
   41: '62-Mk-morphgnt.txt',
@@ -66,22 +66,24 @@ const sblgntBookMap = {
   60: '81-1Pe-morphgnt.txt'
 };
 
-function extractSblgntVerse(bookId, chapter, verse) {
+function extractSblgntVerse(bookId, ch, vs) {
   const fileName = sblgntBookMap[bookId];
   if (!fileName) return null;
   const filePath = path.join(sblgntDir, fileName);
   if (!fs.existsSync(filePath)) return null;
-  const prefix = String(bookId - 39).padStart(2, '0') +
-                 String(chapter).padStart(2, '0') +
-                 String(verse).padStart(2, '0');
-  const text = fs.readFileSync(filePath, 'utf8');
-  const lines = text.split('\n');
+  const content = fs.readFileSync(filePath, 'utf8');
+  const lines = content.split('\n');
   const tokens = [];
   let idx = 1;
+
   for (const line of lines) {
-    if (!line.startsWith(prefix)) continue;
+    if (!line.trim()) continue;
     const parts = line.trim().split(/\s+/);
-    if (parts.length >= 7) {
+    if (parts.length < 7) continue;
+    const tag = parts[0];
+    const lineCh = parseInt(tag.substring(2, 4), 10);
+    const lineVs = parseInt(tag.substring(4, 6), 10);
+    if (lineCh === ch && lineVs === vs) {
       tokens.push({
         index: idx++,
         pos: parts[1],
@@ -117,25 +119,35 @@ function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, morphStr, dbMorph)
   if (!strongsId || !lemmaStr) return false;
   const numStr = strongsId.replace(/^[HG]/, '');
 
-  // Preposition prefix H9005 (לְ)
+  // Preposition prefix H9005 (לְ): strictly requires preposition morphology on the mapped unit
   if (strongsId === 'H9005') {
-    return (lemmaStr.split('/').includes('l') || lemmaStr === 'l') && (dbMorph === 'HR' || morphStr?.includes('HR'));
+    const isPrep = dbMorph === 'HR' || (dbMorph && dbMorph.startsWith('HR/')) || (dbMorph && dbMorph.startsWith('R'));
+    const hasL = lemmaStr.split('/').includes('l') || lemmaStr === 'l';
+    return isPrep && hasL;
   }
-  // Conjunction prefix H9002 (וְ)
+  // Conjunction prefix H9002 (וְ): strictly requires conjunction morphology
   if (strongsId === 'H9002') {
-    return (lemmaStr.split('/').includes('c') || lemmaStr === 'c') && (dbMorph === 'HC' || morphStr?.includes('HC'));
+    const isConj = dbMorph === 'HC' || (dbMorph && dbMorph.startsWith('HC/')) || (dbMorph && dbMorph.startsWith('C'));
+    const hasC = lemmaStr.split('/').includes('c') || lemmaStr === 'c';
+    return isConj && hasC;
   }
-  // Preposition prefix H9003 (בְּ)
+  // Preposition prefix H9003 (בְּ): strictly requires preposition morphology
   if (strongsId === 'H9003') {
-    return (lemmaStr.split('/').includes('b') || lemmaStr === 'b') && (dbMorph === 'HR' || morphStr?.includes('HR'));
+    const isPrep = dbMorph === 'HR' || (dbMorph && dbMorph.startsWith('HR/')) || (dbMorph && dbMorph.startsWith('R'));
+    const hasB = lemmaStr.split('/').includes('b') || lemmaStr === 'b';
+    return isPrep && hasB;
   }
-  // Preposition prefix H9004 (כְּ)
+  // Preposition prefix H9004 (כְּ): strictly requires preposition morphology
   if (strongsId === 'H9004') {
-    return (lemmaStr.split('/').includes('k') || lemmaStr === 'k') && (dbMorph === 'HR' || morphStr?.includes('HR'));
+    const isPrep = dbMorph === 'HR' || (dbMorph && dbMorph.startsWith('HR/')) || (dbMorph && dbMorph.startsWith('R'));
+    const hasK = lemmaStr.split('/').includes('k') || lemmaStr === 'k';
+    return isPrep && hasK;
   }
-  // Definite article H9009 (הַ)
+  // Definite article H9009 (הַ): strictly requires article morphology
   if (strongsId === 'H9009') {
-    return (lemmaStr.split('/').includes('d') || lemmaStr === 'd') && (dbMorph === 'HTd' || morphStr?.includes('HTd'));
+    const isArt = dbMorph === 'HTd' || (dbMorph && dbMorph.startsWith('HTd/')) || (dbMorph && dbMorph.startsWith('Td'));
+    const hasD = lemmaStr.split('/').includes('d') || lemmaStr === 'd';
+    return isArt && hasD;
   }
 
   // Preposition purity: standalone preposition (HR) cannot hold a noun Strong's number
@@ -164,7 +176,7 @@ if (!fs.existsSync(manifestPath)) {
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const targetVerses = manifest.verses;
 
-console.log(`Auditing all 20 verses (${manifest.totalRecords} records) directly from canonical manifest against database & sources...`);
+console.log(`Auditing all 20 verses (${manifest.records.length} records) directly from canonical manifest against database & sources...\n`);
 
 const allResults = [];
 let countCorrect = 0;
@@ -255,6 +267,22 @@ for (const v of targetVerses) {
         axisFindings.lexical.note = 'Missing strongs_id for content word';
       }
 
+      // Check against manifest expected Strongs ID
+      if (manifestRec && manifestRec.strongsId && strongsId !== manifestRec.strongsId) {
+        axisFindings.lexical.status = 'fail';
+        axisFindings.lexical.note = `Strongs ID mismatch: DB '${strongsId}' vs manifest '${manifestRec.strongsId}'`;
+      }
+
+      // Check multi-component integrity: reject missing or mismatched components
+      if (manifestRec && manifestRec.components) {
+        const normDbComp = (components || '').trim().replace(/\r/g, '');
+        const normExpComp = manifestRec.components.trim().replace(/\r/g, '');
+        if (normExpComp && normDbComp !== normExpComp) {
+          axisFindings.lexical.status = 'fail';
+          axisFindings.lexical.note = `Components mismatch: DB has '${normDbComp}', expected '${normExpComp}'`;
+        }
+      }
+
       // 2. Source & Locator Axis
       if (!locator) {
         axisFindings.sourceLocator.status = 'fail';
@@ -265,6 +293,18 @@ for (const v of targetVerses) {
       } else if (origPos !== null && origPos !== locWordIndex) {
         axisFindings.sourceLocator.status = 'fail';
         axisFindings.sourceLocator.note = `orig_word_position (${origPos}) != locator index (${locWordIndex})`;
+      }
+
+      // Check against manifest expected locator
+      if (manifestRec && manifestRec.locator && locator !== manifestRec.locator) {
+        axisFindings.sourceLocator.status = 'fail';
+        axisFindings.sourceLocator.note = `Locator mismatch: DB '${locator}' vs manifest '${manifestRec.locator}'`;
+      }
+
+      // 3. Morphology Axis: Check against manifest expected morphology
+      if (manifestRec && manifestRec.origMorph && origMorph !== manifestRec.origMorph) {
+        axisFindings.morphology.status = 'fail';
+        axisFindings.morphology.note = `Orig morphology mismatch: DB '${origMorph}' vs manifest '${manifestRec.origMorph}'`;
       }
 
       // Source token checks

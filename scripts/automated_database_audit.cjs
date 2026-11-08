@@ -1525,6 +1525,72 @@ try {
   assertCondition('20-Verse Benchmark Canonical Manifest Quality Gate (All 311 Units in manifest)', false, errOutput.slice(0, 300));
 }
 
+// -----------------------------------------------------------------------------
+// Test 13: Dedicated Component & Lexical Boundary Quality Gate
+// -----------------------------------------------------------------------------
+console.log('\n▶  TEST 13: Dedicated Component & Lexical Boundary Quality Gate');
+
+// 1. Isaiah 40:8 w9 "إِلَى" preposition purity (H9005, HR, gender=NULL, number=NULL)
+const isaPrep = query(`
+  SELECT strongs_id, orig_morphology, morph_gender, morph_number
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 40 AND verse_num = 8 AND book_id = 23)
+    AND ar_word_position = 9;
+`).split('|');
+const okIsaPrep = isaPrep[0] === 'H9005' && isaPrep[1] === 'HR' && !isaPrep[2] && !isaPrep[3];
+assertCondition('Isaiah 40:8 w9 (إِلَى) Preposition Purity (H9005, HR, gender=NULL, number=NULL)', okIsaPrep, `Found strongs=${isaPrep[0]}, morph=${isaPrep[1]}, gender=${isaPrep[2]}, number=${isaPrep[3]}`);
+
+// 2. Isaiah 40:8 w10 "الأَبَدِ" lexical isolation (must be H5769, HNcmsa, NEVER H9005)
+const isaNoun = query(`
+  SELECT strongs_id, orig_morphology
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 40 AND verse_num = 8 AND book_id = 23)
+    AND ar_word_position = 10;
+`).split('|');
+const okIsaNoun = isaNoun[0] === 'H5769' && isaNoun[1] === 'HNcmsa' && isaNoun[0] !== 'H9005';
+assertCondition('Isaiah 40:8 w10 (الأَبَدِ) Lexical Isolation (H5769, HNcmsa, NOT H9005)', okIsaNoun, `Found strongs=${isaNoun[0]}, morph=${isaNoun[1]}`);
+
+// 3. Micah 6:8 w2 "أَخْبَرَكَ" multi-component completeness (must have H5046 primary AND H9005 pronominal_dative)
+const micComp = query(`
+  SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role, ';')
+  FROM word_mapping_strongs wms
+  JOIN word_mappings wm ON wm.id = wms.mapping_id
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE chapter_num = 6 AND verse_num = 8 AND book_id = 33)
+    AND wm.ar_word_position = 2;
+`);
+const okMicComp = micComp.includes('H5046:primary') && micComp.includes('H9005:pronominal_dative');
+assertCondition('Micah 6:8 w2 (أَخْبَرَكَ) Multi-Component Completeness (H5046 verbal + H9005 pronominal_dative)', okMicComp, `Found components=${micComp}`);
+
+// 4. Galatians 5:22 w6 "فَرَحٌ" Greek lexical joy isolation (must be G5479, NEVER G26)
+const galJoy = query(`
+  SELECT strongs_id, orig_morphology
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 22 AND book_id = 48)
+    AND ar_word_position = 6;
+`).split('|');
+const okGalJoy = galJoy[0] === 'G5479' && galJoy[0] !== 'G26';
+assertCondition('Galatians 5:22 w6 (فَرَحٌ) Greek Lexical Joy Isolation (G5479, NOT G26)', okGalJoy, `Found strongs=${galJoy[0]}`);
+
+// 5. Leviticus 26:12 w4 "لَكُمْ" explicit source linkage (H9005, HR/Sp2mp, w4)
+const levLakhem = query(`
+  SELECT strongs_id, orig_morphology, orig_word_position, verified_locator
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 26 AND verse_num = 12 AND book_id = 3)
+    AND ar_word_position = 4;
+`).split('|');
+const okLevLakhem = levLakhem[0] === 'H9005' && levLakhem[1] === 'HR/Sp2mp' && levLakhem[2] === '4' && levLakhem[3] === 'OSHB:B3.C26.V12.w4';
+assertCondition('Leviticus 26:12 w4 (لَكُمْ) Explicit Source Linkage (H9005, HR/Sp2mp, w4)', okLevLakhem, `Found strongs=${levLakhem[0]}, morph=${levLakhem[1]}, pos=${levLakhem[2]}, loc=${levLakhem[3]}`);
+
+// 6. Leviticus 26:12 w8 "لِي" explicit source linkage (H9005, HR/Sp1cs, w8)
+const levLi = query(`
+  SELECT strongs_id, orig_morphology, orig_word_position, verified_locator
+  FROM word_mappings
+  WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 26 AND verse_num = 12 AND book_id = 3)
+    AND ar_word_position = 8;
+`).split('|');
+const okLevLi = levLi[0] === 'H9005' && levLi[1] === 'HR/Sp1cs' && levLi[2] === '8' && levLi[3] === 'OSHB:B3.C26.V12.w8';
+assertCondition('Leviticus 26:12 w8 (لِي) Explicit Source Linkage (H9005, HR/Sp1cs, w8)', okLevLi, `Found strongs=${levLi[0]}, morph=${levLi[1]}, pos=${levLi[2]}, loc=${levLi[3]}`);
+
 console.log('\n========================================================================');
 if (totalFailures === 0) {
   console.log('              ALL QUALITY GATE CHECKS PASSED (0 FAILURES)               ');

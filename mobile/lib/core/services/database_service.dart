@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 359; // v1.0.359: Component-level lexical & pronominal refinement, 20-verse canonical manifest gate in CI, Gate 7 negative test
+    const targetDbVersion = 360; // v1.0.360: Component isolation, negative gates 8-10, Lev 26:12 explicit linkages, manifest 232/79/0
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();

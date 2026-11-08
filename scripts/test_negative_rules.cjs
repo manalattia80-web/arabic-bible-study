@@ -164,6 +164,44 @@ const testCases = [
           AND ar_word_position = 7
       );
     `
+  },
+  {
+    gateNum: 8,
+    name: 'isa_40_8_noun_with_preposition_strongs',
+    expectedFailTag: '[FAIL] Isaiah 40:8 w10 (الأَبَدِ) Lexical Isolation',
+    description: 'Injected preposition Strong ID H9005 into noun الأَبَدِ in Isaiah 40:8',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H9005'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 40 AND verse_num = 8 AND book_id = 23)
+        AND ar_word_position = 10;
+    `
+  },
+  {
+    gateNum: 9,
+    name: 'gal_5_22_joy_with_love_strongs',
+    expectedFailTag: '[FAIL] Galatians 5:22 w6 (فَرَحٌ) Greek Lexical Joy Isolation',
+    description: 'Injected love Strong ID G26 into joy فَرَحٌ in Galatians 5:22',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'G26'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 22 AND book_id = 48)
+        AND ar_word_position = 6;
+    `
+  },
+  {
+    gateNum: 10,
+    name: 'mic_6_8_missing_pronominal_dative_component',
+    expectedFailTag: '[FAIL] Micah 6:8 w2 (أَخْبَرَكَ) Multi-Component Completeness',
+    description: 'Deleted kaf al-mukhatab pronominal dative component (H9005) from أَخْبَرَكَ in Micah 6:8',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (
+        SELECT id FROM word_mappings
+        WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 6 AND verse_num = 8 AND book_id = 33)
+          AND ar_word_position = 2
+      ) AND link_role = 'pronominal_dative';
+    `
   }
 ];
 
