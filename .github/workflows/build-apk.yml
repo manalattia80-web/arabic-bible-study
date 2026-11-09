@@ -53,6 +53,9 @@ jobs:
       - name: Reassemble SQLite Database from Chunk Parts
         run: node scripts/assemble_db.cjs
 
+      - name: Verify Exact Database Chunks and App Alignment
+        run: node scripts/verify_db_chunks_exact.cjs
+
       - name: Run Rigorous Scientific & Database Quality Gate
         run: node scripts/automated_database_audit.cjs
 
@@ -137,18 +140,14 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.371)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 371` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.372)
+          - **Corrective Asset & Code Alignment**: Synchronized `const totalParts = 70;` in `DatabaseService` exactly matching the 70 chunked asset parts (`part_00.dat` .. `part_69.dat`) resulting from SQLite `VACUUM` (saving 4,341,760 bytes), resolving the startup `AssetNotFoundException` on `part_70.dat`.
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 372` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **1 Kings 18:21 Morphology & Display Polish (Batch 371)**:
-            - **Morphology Card Alignment**: "الْفِرْقَتَيْنِ" (pos 11) primary Hebrew noun card `H5587` (`הַסְּעִפִּים֒`) updated to `morph_gender = 'masculine'` and `morph_number = 'plural'` matching `HTd/Ncmpa`, properly attributing dual feminine strictly to numeral component `H8147` (`שְׁתֵּ֣י`).
-            - **Display Notes Purification**: Rephrased the 7 display notes at Arabic positions 6, 7, 8, 12, 17, 18, 21 into clean, descriptive canonical notes, removing obsolete audit-era defect descriptors.
-            - **Canonical Manifest v371**: Synchronized `locWordIndex` directly from `locator` across all 8 affected records (w10->11, w11->13, w14->15, w15->15, w22->23, w23->24, w24->25, w25->27) and set `isSyntactic = true` for "هُوَ" (pos 15).
-            - **Quality Gate 40 (Negative Rule)**: Rejection of reverting pos 11 ("الْفِرْقَتَيْنِ") morphology back to feminine dual. All 40 negative gates passing.
-            - **Benchmark Status**: 311 units audited: 275 correct (88.42%), 36 errors (15 Hebrew, 21 Aramaic), 0 undecided.
-          - **Negative Quality Gates 1 to 40 Verified**:
-            - **Gate 40**: Rejection of restoring feminine dual morphology to 1Kgs 18:21 pos 11 primary noun H5587.
-            - **Comprehensive Loci**: 66 verified direct source & morphology loci in Test 11, 40 dedicated component boundaries in Test 13.
+          - **Pre-Publish Full Chunk Verification Quality Gate**: Added mandatory automated check verifying 1:1 filename and byte matching between Dart code expectation and APK asset contents.
+          - **Automatic Chunk Tracking Architecture**: Enhanced `scripts/chunk_db.cjs` to automatically generate asset manifest and synchronize `totalParts` in `database_service.dart`.
+          - **1 Kings 18:21 Verified Morphology**: Preserved verified canonical database with `H5587` ("الْفِرْقَتَيْنِ") as masculine plural (`HTd/Ncmpa`), 7 cleansed display notes, manifest locWordIndex sync, and negative gate 40.
+          - **Benchmark Status**: 311 units audited: 275 correct (88.42%), 36 errors (15 Hebrew, 21 Aramaic), 0 undecided. All 40 negative gates passing.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

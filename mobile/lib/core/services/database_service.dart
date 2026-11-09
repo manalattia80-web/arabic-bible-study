@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 371; // v1.0.371: 1 Kings 18:21 morphology card fix (masculine plural H5587), updated display notes, manifest locWordIndex sync, negative gate 40
+    const targetDbVersion = 372; // v1.0.372: Corrective release, totalParts = 70 aligned with chunked DB, 1Kgs 18:21 morphology verified
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();
@@ -62,7 +62,7 @@ class DatabaseService {
 
       try {
         final sink = tmpFile.openWrite();
-        const totalParts = 71;
+        const totalParts = 70;
         for (int i = 0; i < totalParts; i++) {
           final partIndexStr = i.toString().padLeft(2, '0');
           final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');

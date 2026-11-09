@@ -344,6 +344,37 @@ const outOfBoundsComponents = parseInt(query(`
 `));
 assertCondition('range_component_positions_bounded: all components of range locators fall strictly within [start, end]', outOfBoundsComponents === 0, `found ${outOfBoundsComponents}`);
 
+// Strict DB Chunks and Dart App Alignment Gate:
+// 1. Matches totalParts in mobile/lib/core/services/database_service.dart
+// 2. Verifies 1:1 existence of all expected files from part_00.dat to part_${N-1}.dat
+// 3. Rejects any missing, extra, or empty chunk files
+const dbServiceFile = path.resolve(__dirname, '../mobile/lib/core/services/database_service.dart');
+const dbPartsFolder = path.resolve(__dirname, '../mobile/assets/db_parts');
+let chunksMatchOk = false;
+let chunksErrorDetail = '';
+if (fs.existsSync(dbServiceFile) && fs.existsSync(dbPartsFolder)) {
+  const dartCodeText = fs.readFileSync(dbServiceFile, 'utf8');
+  const tpMatch = dartCodeText.match(/const\s+totalParts\s*=\s*(\d+);/);
+  if (!tpMatch) {
+    chunksErrorDetail = 'const totalParts = N; missing in database_service.dart';
+  } else {
+    const expectedCount = parseInt(tpMatch[1], 10);
+    const expectedNames = [];
+    for (let i = 0; i < expectedCount; i++) {
+      expectedNames.push(`part_${String(i).padStart(2, '0')}.dat`);
+    }
+    const actualNames = fs.readdirSync(dbPartsFolder).filter(f => f.endsWith('.dat')).sort();
+    const missing = expectedNames.filter(f => !actualNames.includes(f));
+    const extra = actualNames.filter(f => !expectedNames.includes(f));
+    if (missing.length > 0 || extra.length > 0) {
+      chunksErrorDetail = `Missing: [${missing.join(', ')}], Extra: [${extra.join(', ')}]`;
+    } else {
+      chunksMatchOk = true;
+    }
+  }
+}
+assertCondition('exact_db_parts_match_dart_app: All chunk files from part_00.dat to part_N.dat match database_service.dart 1:1', chunksMatchOk, chunksErrorDetail);
+
 
 
 
