@@ -168,7 +168,7 @@ function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, morphStr, dbMorph)
 }
 
 // Load canonical manifest directly
-const manifestPath = path.resolve(__dirname, 'batch_20_verses_manifest.json');
+const manifestPath = process.env.AUDIT_MANIFEST_PATH || path.resolve(__dirname, 'batch_20_verses_manifest.json');
 if (!fs.existsSync(manifestPath)) {
   console.error(`Cannot find manifest at ${manifestPath}`);
   process.exit(1);

@@ -1,17 +1,17 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "v1.0.369",
+  "version": "v1.0.370",
   "date": "2026-11-09",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
     "totalUnits": 311,
-    "correct": 267,
-    "errors": 44,
-    "error": 44,
+    "correct": 275,
+    "errors": 36,
+    "error": 36,
     "undecided": 0,
-    "accuracy": "85.85%",
-    "accuracyPercentage": 85.85
+    "accuracy": "88.42%",
+    "accuracyPercentage": 88.42
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -2760,9 +2760,9 @@
       "arPos": 6,
       "arWord": "وَقَالَ",
       "strongsId": "H559",
-      "components": "H559:primary",
+      "components": "H559:primary@w6[וַיֹּ֨אמֶר֙:HC/Vqw3ms]",
       "origWord": "אָמַר",
-      "origSurface": "וַיֹּ֙אמֶר֙",
+      "origSurface": "וַיֹּ֨אמֶר֙",
       "origMorph": "HC/Vqw3ms",
       "origPos": 6,
       "locator": "OSHB:B11.C18.V21.w6",
@@ -2786,7 +2786,8 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -2865,7 +2866,7 @@
       "arPos": 9,
       "arWord": "تَعْرُجُونَ",
       "strongsId": "H6452",
-      "components": "H6452:primary",
+      "components": "H6452:primary@w10[פֹּסְחִים֮:HVqrmpa];H859:secondary@w9[אַתֶּ֣ם:HPp2mp]",
       "origWord": "פָּסַח",
       "origSurface": "פֹּסְחִים֮",
       "origMorph": "HVqrmpa",
@@ -2891,7 +2892,8 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -2899,13 +2901,13 @@
       "lang": "hebrew",
       "arPos": 10,
       "arWord": "بَيْنَ",
-      "strongsId": "H996",
-      "components": "H996:primary",
-      "origWord": "בֵּין",
+      "strongsId": "H5921",
+      "components": "H5921:primary@w11[עַל־:HR]",
+      "origWord": "עַל",
       "origSurface": "עַל־",
       "origMorph": "HR",
-      "origPos": 8,
-      "locator": "OSHB:B11.C18.V21.w8",
+      "origPos": 11,
+      "locator": "OSHB:B11.C18.V21.w11",
       "locWordIndex": 8,
       "isSyntactic": false,
       "axisFindings": {
@@ -2918,15 +2920,16 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR' vs Source 'HTi' (id: 113MM)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -2934,13 +2937,13 @@
       "lang": "hebrew",
       "arPos": 11,
       "arWord": "الْفِرْقَتَيْنِ",
-      "strongsId": "H8147",
-      "components": "H8147:primary",
-      "origWord": "שְׁנַיִם",
-      "origSurface": "שְׁתֵּ֣י",
-      "origMorph": "HAcfdc",
-      "origPos": 11,
-      "locator": "OSHB:B11.C18.V21.w11",
+      "strongsId": "H5587",
+      "components": "H5587:primary@w13[הַסְּעִפִּים֒:HTd/Ncmpa];H8147:secondary@w12[שְׁתֵּ֣י:HAcfdc]",
+      "origWord": "סָעִף",
+      "origSurface": "הַסְּעִפִּים֒",
+      "origMorph": "HTd/Ncmpa",
+      "origPos": 13,
+      "locator": "OSHB:B11.C18.V21.w13",
       "locWordIndex": 11,
       "isSyntactic": false,
       "axisFindings": {
@@ -2953,15 +2956,16 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HAcfdc' vs Source 'HR' (id: 119HN)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -3040,12 +3044,12 @@
       "arPos": 14,
       "arWord": "الرَّبُّ",
       "strongsId": "H3068",
-      "components": "H3068:primary",
+      "components": "H3068:primary@w15[יְהוָ֤ה:HNp]",
       "origWord": "יְהֹוָה",
       "origSurface": "יְהוָ֤ה",
       "origMorph": "HNp",
-      "origPos": 14,
-      "locator": "OSHB:B11.C18.V21.w14",
+      "origPos": 15,
+      "locator": "OSHB:B11.C18.V21.w15",
       "locWordIndex": 14,
       "isSyntactic": false,
       "axisFindings": {
@@ -3058,15 +3062,16 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNp' vs Source 'HC' (id: 11r5s)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -3074,13 +3079,13 @@
       "lang": "hebrew",
       "arPos": 15,
       "arWord": "هُوَ",
-      "strongsId": "H1931",
-      "components": "H1931:primary",
-      "origWord": "הוּא",
-      "origSurface": "הוּא",
-      "origMorph": "HPp3ms",
-      "origPos": 11,
-      "locator": "OSHB:B11.C18.V21.w11",
+      "strongsId": null,
+      "components": "",
+      "origWord": "—",
+      "origSurface": "—",
+      "origMorph": null,
+      "origPos": 0,
+      "locator": "AR_SYNTACTIC:B11.C18.V21.w15",
       "locWordIndex": 11,
       "isSyntactic": false,
       "axisFindings": {
@@ -3093,15 +3098,16 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HPp3ms' vs Source 'HR' (id: 119HN)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -3144,10 +3150,10 @@
       "lang": "hebrew",
       "arPos": 17,
       "arWord": "فَاتَّبِعُوهُ",
-      "strongsId": "H1980",
-      "components": "H1980:primary;H310:secondary",
-      "origWord": "הָלַךְ",
-      "origSurface": "לְכ֣וּ אַחֲרָ֔יו",
+      "strongsId": "H3212",
+      "components": "H3212:primary@w17[לְכ֣וּ:HVqv2mp];H310:secondary@w18[אַחֲרָ֔יו:HR/Sp3ms]",
+      "origWord": "יָלַךְ",
+      "origSurface": "לְכ֣וּ",
       "origMorph": "HVqv2mp",
       "origPos": 17,
       "locator": "OSHB:B11.C18.V21.w17",
@@ -3171,7 +3177,8 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -3284,10 +3291,10 @@
       "lang": "hebrew",
       "arPos": 21,
       "arWord": "فَاتَّبِعُوهُ",
-      "strongsId": "H1980",
-      "components": "H1980:primary;H310:secondary",
-      "origWord": "הָלַךְ",
-      "origSurface": "לְכ֣וּ אַחֲרָ֑יו",
+      "strongsId": "H3212",
+      "components": "H3212:primary@w21[לְכ֣וּ:HVqv2mp];H310:secondary@w22[אַחֲרָ֑יו:HR/Sp3ms]",
+      "origWord": "יָלַךְ",
+      "origSurface": "לְכ֣וּ",
       "origMorph": "HVqv2mp",
       "origPos": 21,
       "locator": "OSHB:B11.C18.V21.w21",
@@ -3311,7 +3318,8 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -3320,12 +3328,12 @@
       "arPos": 22,
       "arWord": "فَلَمْ",
       "strongsId": "H3808",
-      "components": "H3808:primary",
+      "components": "H3808:primary@w23[וְלֹֽא:HC/Tn]",
       "origWord": "לֹא",
       "origSurface": "וְלֹֽא",
       "origMorph": "HC/Tn",
-      "origPos": 22,
-      "locator": "OSHB:B11.C18.V21.w22",
+      "origPos": 23,
+      "locator": "OSHB:B11.C18.V21.w23",
       "locWordIndex": 22,
       "isSyntactic": false,
       "axisFindings": {
@@ -3338,15 +3346,16 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HC/Tn' vs Source 'HR/Sp3ms' (id: 114q4)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -3355,12 +3364,12 @@
       "arPos": 23,
       "arWord": "يُجِبْهُ",
       "strongsId": "H6030",
-      "components": "H6030:primary",
+      "components": "H6030:primary@w24[עָנ֥וּ:HVqp3cp];H853:secondary@w26[אֹת֖וֹ:HTo/Sp3ms]",
       "origWord": "עָנָה",
       "origSurface": "עָנ֥וּ",
       "origMorph": "HVqp3cp",
-      "origPos": 23,
-      "locator": "OSHB:B11.C18.V21.w23",
+      "origPos": 24,
+      "locator": "OSHB:B11.C18.V21.w24",
       "locWordIndex": 23,
       "isSyntactic": false,
       "axisFindings": {
@@ -3373,15 +3382,16 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HVqp3cp' vs Source 'HC/Tn' (id: 11fh6)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -3390,12 +3400,12 @@
       "arPos": 24,
       "arWord": "الشَّعْبُ",
       "strongsId": "H5971",
-      "components": "H5971:primary",
+      "components": "H5971:primary@w25[הָעָ֛ם:HTd/Ncmsa]",
       "origWord": "עַם",
       "origSurface": "הָעָ֛ם",
       "origMorph": "HTd/Ncmsa",
-      "origPos": 24,
-      "locator": "OSHB:B11.C18.V21.w24",
+      "origPos": 25,
+      "locator": "OSHB:B11.C18.V21.w25",
       "locWordIndex": 24,
       "isSyntactic": false,
       "axisFindings": {
@@ -3408,15 +3418,16 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HTd/Ncmsa' vs Source 'HVqp3cp' (id: 11esn)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "1Kgs 18:21",
@@ -3425,12 +3436,12 @@
       "arPos": 25,
       "arWord": "بِكَلِمَةٍ",
       "strongsId": "H1697",
-      "components": "H1697:primary",
+      "components": "H1697:primary@w27[דָּבָֽר:HNcmsa]",
       "origWord": "דָּבָר",
       "origSurface": "דָּבָֽר",
       "origMorph": "HNcmsa",
-      "origPos": 25,
-      "locator": "OSHB:B11.C18.V21.w25",
+      "origPos": 27,
+      "locator": "OSHB:B11.C18.V21.w27",
       "locWordIndex": 25,
       "isSyntactic": false,
       "axisFindings": {
@@ -3443,15 +3454,16 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNcmsa' vs Source 'HTd/Ncmsa' (id: 11ZQR)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "status": "pass"
     },
     {
       "verse": "Prov 3:5",

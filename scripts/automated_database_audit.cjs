@@ -1155,7 +1155,7 @@ const batch20ComprehensiveCases = [
   // 7. 1 Kings 18:21 w6 (وقال)
   {
     ref: '1 Kings 18:21 w6 (وقال)', book: 11, ch: 18, vs: 21, pos: 6,
-    expStrongs: 'H559', expOrig: 'אָמַר', expSurface: 'וַיֹּ֙אמֶר֙',
+    expStrongs: 'H559', expOrig: 'אָמַר', expSurface: 'וַיֹּ֨אמֶר֙',
     expPos: 'verb', expGender: 'masculine', expNumber: 'singular', expPerson: '3',
     expMorph: 'HC/Vqw3ms', expLoc: 'OSHB:B11.C18.V21.w6',
     oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 6, oshbExpectedId: '11J7S'
@@ -1187,7 +1187,7 @@ const batch20ComprehensiveCases = [
   // 11. 1 Kings 18:21 w17 (فاتبعوه)
   {
     ref: '1 Kings 18:21 w17 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 17,
-    expStrongs: 'H1980,H310', expOrig: 'הָלַךְ', expSurface: 'לְכ֣וּ אַחֲרָ֔יו',
+    expStrongs: 'H3212,H310', expOrig: 'יָלַךְ', expSurface: 'לְכ֣וּ',
     expPos: 'verb', expGender: 'masculine', expNumber: 'plural', expPerson: '2',
     expMorph: 'HVqv2mp', expLoc: 'OSHB:B11.C18.V21.w17',
     oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 17, oshbExpectedId: '11u4c'
@@ -1203,7 +1203,7 @@ const batch20ComprehensiveCases = [
   // 13. 1 Kings 18:21 w21 (فاتبعوه)
   {
     ref: '1 Kings 18:21 w21 (فاتبعوه)', book: 11, ch: 18, vs: 21, pos: 21,
-    expStrongs: 'H1980,H310', expOrig: 'הָלַךְ', expSurface: 'לְכ֣וּ אַחֲרָ֑יו',
+    expStrongs: 'H3212,H310', expOrig: 'יָלַךְ', expSurface: 'לְכ֣וּ',
     expPos: 'verb', expGender: 'masculine', expNumber: 'plural', expPerson: '2',
     expMorph: 'HVqv2mp', expLoc: 'OSHB:B11.C18.V21.w21',
     oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbWordIndex: 21, oshbExpectedId: '11KxK'
@@ -1376,7 +1376,7 @@ const batch20ComprehensiveCases = [
   // 34. 1 Kings 18:21 w9 (تعرجون)
   {
     ref: '1 Kings 18:21 w9 (تعرجون)', book: 11, ch: 18, vs: 21, pos: 9,
-    expStrongs: 'H6452', expOrig: 'פָּסַח', expSurface: 'פֹּסְחִים֮',
+    expStrongs: 'H6452,H859', expOrig: 'פָּסַח', expSurface: 'פֹּסְחִים֮',
     expPos: 'verb', expStem: 'qal', expMood: 'participle', expGender: 'masculine', expNumber: 'plural', expPerson: null,
     expMorph: 'HVqrmpa', expLoc: 'OSHB:B11.C18.V21.w10',
     oshbBook: '1Kgs', oshbOsis: '1Kgs.18.21', oshbExpectedId: '11xrp'
@@ -2147,6 +2147,94 @@ const okRuthAshuv = ruthAshuvRow[0] === 'H7725' &&
   !ruthAshuvRow[3].includes('\u0648') &&
   ruthAshuvRow[3].includes('\u05D5');
 assertCondition('Ruth 1:16 w8 (وَأَرْجِعَ) Component & Pure Hebrew Vav U+05D5 (H7725, w7, לָשׁ֣וּב, NO Arabic Waw U+0648)', okRuthAshuv, `Found strongs=${ruthAshuvRow[0]}, pos=${ruthAshuvRow[1]}, loc=${ruthAshuvRow[2]}, comp=${ruthAshuvRow[3]}`);
+
+// 32. 1 Kings 18:21 w10 "بَيْنَ" Locator & Lexical Purity (H5921, HR, w11, עַל־, NOT H996)
+const kgsBayna = query(`
+  SELECT wm.strongs_id, wm.orig_word, wm.orig_surface, wm.orig_word_position, wm.verified_locator, wm.orig_morphology
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21)
+    AND wm.ar_word_position = 10;
+`).split('|');
+const okKgsBayna = kgsBayna[0] === 'H5921' && kgsBayna[2] === 'עַל־' && kgsBayna[3] === '11' &&
+  kgsBayna[4] === 'OSHB:B11.C18.V21.w11' && kgsBayna[5] === 'HR' && kgsBayna[0] !== 'H996';
+assertCondition('1 Kings 18:21 w10 (بَيْنَ) Locator & Lexical Purity (H5921, HR, w11, NOT H996)', okKgsBayna, `Found strongs=${kgsBayna[0]}, surface=${kgsBayna[2]}, pos=${kgsBayna[3]}, loc=${kgsBayna[4]}, morph=${kgsBayna[5]}`);
+
+// 33. 1 Kings 18:21 w11 "الْفِرْقَتَيْنِ" Multi-Component Completeness (H5587 primary w13 + H8147 secondary w12)
+const kgsFirqComps = query(`
+  SELECT (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21)
+    AND wm.ar_word_position = 11;
+`).trim();
+const okKgsFirqComps = kgsFirqComps === 'H5587:primary@w13[הַסְּעִפִּים֒:HTd/Ncmpa];H8147:secondary@w12[שְׁתֵּ֣י:HAcfdc]';
+assertCondition('1 Kings 18:21 w11 (الْفِرْقَتَيْنِ) Multi-Component Completeness (H5587 primary w13 + H8147 secondary w12)', okKgsFirqComps, `Found comps=${kgsFirqComps}`);
+
+// 34. 1 Kings 18:21 w14 "الرَّبُّ" Locator & Lexical Purity (H3068, HNp, w15, NOT w14)
+const kgsRabb = query(`
+  SELECT wm.strongs_id, wm.orig_word_position, wm.verified_locator, wm.orig_surface
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21)
+    AND wm.ar_word_position = 14;
+`).split('|');
+const okKgsRabb = kgsRabb[0] === 'H3068' && kgsRabb[1] === '15' && kgsRabb[2] === 'OSHB:B11.C18.V21.w15' && kgsRabb[3] === 'יְהוָ֤ה';
+assertCondition('1 Kings 18:21 w14 (الرَّبُّ) Locator & Lexical Purity (H3068, HNp, w15, NOT w14)', okKgsRabb, `Found strongs=${kgsRabb[0]}, pos=${kgsRabb[1]}, loc=${kgsRabb[2]}, surface=${kgsRabb[3]}`);
+
+// 35. 1 Kings 18:21 w15 "هُوَ" Syntactic Copula Purity (syntactic_ar, NULL strongs, AR_SYNTACTIC:B11.C18.V21.w15, NOT H1931)
+const kgsHuwa = query(`
+  SELECT wm.strongs_id, wm.morph_pos, wm.morph_source, wm.verified_locator,
+         (SELECT COUNT(*) FROM word_mapping_strongs WHERE mapping_id = wm.id)
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21)
+    AND wm.ar_word_position = 15;
+`).split('|');
+const okKgsHuwa = !kgsHuwa[0] && kgsHuwa[1] === 'syntactic_ar' && kgsHuwa[2] === 'syntactic_ar' &&
+  kgsHuwa[3] === 'AR_SYNTACTIC:B11.C18.V21.w15' && parseInt(kgsHuwa[4], 10) === 0;
+assertCondition('1 Kings 18:21 w15 (هُوَ) Syntactic Copula Purity (syntactic_ar, NULL strongs, 0 components, NOT H1931)', okKgsHuwa, `Found strongs=${kgsHuwa[0]}, pos=${kgsHuwa[1]}, loc=${kgsHuwa[3]}, comps=${kgsHuwa[4]}`);
+
+// 36. 1 Kings 18:21 w17 "فَاتَّبِعُوهُ" Multi-Component Position & Morphology Isolation (H3212 primary w17 HVqv2mp + H310 secondary w18 HR/Sp3ms)
+const kgsItba17 = query(`
+  SELECT (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21)
+    AND wm.ar_word_position = 17;
+`).trim();
+const okKgsItba17 = kgsItba17 === 'H3212:primary@w17[לְכ֣וּ:HVqv2mp];H310:secondary@w18[אַחֲרָ֔יו:HR/Sp3ms]';
+assertCondition('1 Kings 18:21 w17 (فَاتَّبِعُوهُ) Multi-Component Position & Morphology Isolation (H3212 w17 + H310 w18)', okKgsItba17, `Found comps=${kgsItba17}`);
+
+// 37. 1 Kings 18:21 w21 "فَاتَّبِعُوهُ" Multi-Component Position & Morphology Isolation (H3212 primary w21 HVqv2mp + H310 secondary w22 HR/Sp3ms)
+const kgsItba21 = query(`
+  SELECT (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21)
+    AND wm.ar_word_position = 21;
+`).trim();
+const okKgsItba21 = kgsItba21 === 'H3212:primary@w21[לְכ֣וּ:HVqv2mp];H310:secondary@w22[אַחֲרָ֑יו:HR/Sp3ms]';
+assertCondition('1 Kings 18:21 w21 (فَاتَّبِعُوهُ) Multi-Component Position & Morphology Isolation (H3212 w21 + H310 w22)', okKgsItba21, `Found comps=${kgsItba21}`);
+
+// 38. 1 Kings 18:21 w23 "يُجِبْهُ" Multi-Component Completeness (H6030 primary w24 HVqp3cp + H853 secondary w26 HTo/Sp3ms)
+const kgsYujibComps = query(`
+  SELECT (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21)
+    AND wm.ar_word_position = 23;
+`).trim();
+const okKgsYujibComps = kgsYujibComps === 'H6030:primary@w24[עָנ֥וּ:HVqp3cp];H853:secondary@w26[אֹת֖וֹ:HTo/Sp3ms]';
+assertCondition('1 Kings 18:21 w23 (يُجِبْهُ) Multi-Component Completeness (H6030 primary w24 + H853 secondary w26)', okKgsYujibComps, `Found comps=${kgsYujibComps}`);
+
+// 39. 1 Kings 18:21 w9 "تَعْرُجُونَ" Multi-Component Completeness (H6452 primary w10 HVqrmpa + H859 secondary w9 HPp2mp)
+const kgsTaarujComps = query(`
+  SELECT (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21)
+    AND wm.ar_word_position = 9;
+`).trim();
+const okKgsTaarujComps = kgsTaarujComps === 'H6452:primary@w10[פֹּסְחִים֮:HVqrmpa];H859:secondary@w9[אַתֶּ֣ם:HPp2mp]';
+assertCondition('1 Kings 18:21 w9 (تَعْرُجُونَ) Multi-Component Completeness (H6452 primary w10 + H859 secondary w9)', okKgsTaarujComps, `Found comps=${kgsTaarujComps}`);
 
 
 

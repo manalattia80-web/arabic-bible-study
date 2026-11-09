@@ -493,6 +493,63 @@ const testCases = [
       WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 16 AND book_id = 8) AND ar_word_position = 8)
         AND strongs_id = 'H7725';
     `
+  },
+  {
+    gateNum: 35,
+    name: '1kgs_18_21_huwa_reverted_to_h1931',
+    expectedFailTag: '[FAIL] 1 Kings 18:21 w15 (هُوَ) Syntactic Copula Purity',
+    description: 'Reverted 1 Kings 18:21 pos 15 (هُوَ) from syntactic copula back to H1931',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H1931', orig_word = 'הוּא', orig_surface = 'הוּא', orig_word_position = 11, verified_locator = 'OSHB:B11.C18.V21.w11', morph_pos = 'personal_pronoun', morph_source = 'oshb_wlc', verified_source = 'oshb_wlc'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 18 AND verse_num = 21 AND book_id = 11)
+        AND ar_word_position = 15;
+    `
+  },
+  {
+    gateNum: 36,
+    name: '1kgs_18_21_firqatayn_secondary_deleted',
+    expectedFailTag: '[FAIL] 1 Kings 18:21 w11 (الْفِرْقَتَيْنِ) Multi-Component Completeness',
+    description: 'Deleted numeral component H8147 from 1 Kings 18:21 pos 11 (الْفِرْقَتَيْنِ)',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 18 AND verse_num = 21 AND book_id = 11) AND ar_word_position = 11)
+        AND strongs_id = 'H8147';
+    `
+  },
+  {
+    gateNum: 37,
+    name: '1kgs_18_21_taaruj_secondary_deleted',
+    expectedFailTag: '[FAIL] 1 Kings 18:21 w9 (تَعْرُجُونَ) Multi-Component Completeness',
+    description: 'Deleted pronominal component H859 from 1 Kings 18:21 pos 9 (تَعْرُجُونَ)',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 18 AND verse_num = 21 AND book_id = 11) AND ar_word_position = 9)
+        AND strongs_id = 'H859';
+    `
+  },
+  {
+    gateNum: 38,
+    name: '1kgs_18_21_itba_w17_misattributed_position',
+    expectedFailTag: '[FAIL] 1 Kings 18:21 w17 (فَاتَّبِعُوهُ) Multi-Component Position & Morphology Isolation',
+    description: 'Misattributed H310 component to w17 instead of w18 in 1 Kings 18:21 pos 17 (فَاتَّبِعُوهُ)',
+    mutationSql: `
+      UPDATE word_mapping_strongs
+      SET orig_word_position = 17, orig_morphology = 'HVqv2mp'
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 18 AND verse_num = 21 AND book_id = 11) AND ar_word_position = 17)
+        AND strongs_id = 'H310';
+    `
+  },
+  {
+    gateNum: 39,
+    name: '1kgs_18_21_yujibhu_secondary_deleted',
+    expectedFailTag: '[FAIL] 1 Kings 18:21 w23 (يُجِبْهُ) Multi-Component Completeness',
+    description: 'Deleted object pronoun component H853 from 1 Kings 18:21 pos 23 (يُجِبْهُ)',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 18 AND verse_num = 21 AND book_id = 11) AND ar_word_position = 23)
+        AND strongs_id = 'H853';
+    `
   }
 ];
 

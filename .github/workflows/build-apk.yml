@@ -137,16 +137,32 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.369)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 369` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.370)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 370` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **Ruth 1:16 Component Character Purity & Manifest Synchronization (Batch 369)**:
-            - **Pure Hebrew Vav (U+05D5)**: Ruth 1:16 pos 8 ("وَأَرْجِعَ") `orig_component` strictly normalized to `לָשׁ֣וּב` with pure Hebrew Vav `U+05D5`, completely eliminating Arabic Waw `U+0648`.
-            - **Global Character Purity**: Expanded DB-wide integrity check in Test 3 to cover `word_mapping_strongs.orig_component`, permanently preventing Arabic leakage into original lexical components.
-            - **Canonical Manifest v369 Synchronized**: Full summary unification at 311 units: 267 correct (85.85%), 44 errors (23 Hebrew, 21 Aramaic), 0 undecided.
-          - **Negative Quality Gate 34 & Production CI**:
-            - **Gate 34**: Rejection of injecting Arabic Waw `U+0648` into Ruth 1:16 pos 8 ("وَأَرْجِعَ") component.
-            - **Comprehensive Loci**: 66 verified direct source & morphology loci in Test 11, 31 dedicated component boundaries in Test 13.
+          - **1 Kings 18:21 Full Verse Canonical Alignment (Batch 370)**:
+            - **8 Base Corrections**:
+              - "بَيْنَ" (pos 10): Aligned to Hebrew preposition `עַל־` (`H5921`, `HR`, locator `OSHB:B11.C18.V21.w11`), replacing false H996 at w8.
+              - "الْفِرْقَتَيْنِ" (pos 11): Compound dual noun `שְׁתֵּ֣י הַסְּעִפִּים֒` (`H5587` primary `הַסְּעִפִּים֒` `HTd/Ncmpa` w13 + `H8147` secondary `שְׁתֵּ֣י` `HAcfdc` w12).
+              - "الرَّبُّ" (pos 14): Locator corrected to `OSHB:B11.C18.V21.w15` (`יְהוָ֤ה`, `H3068`, `HNp`), resolving false w14 shift.
+              - "هُوَ" (pos 15): Reclassified as Arabic syntactic copula (`syntactic_ar`, `NULL` strongs, `AR_SYNTACTIC:B11.C18.V21.w15`), removing false H1931.
+              - "فَلَمْ" (pos 22): Locator corrected to `OSHB:B11.C18.V21.w23` (`וְלֹֽא`, `H3808`, `HC/Tn`), resolving false w22 shift.
+              - "يُجِبْهُ" (pos 23): Primary verb `עָנ֥וּ` (`H6030`, `HVqp3cp`, w24) + secondary object marker suffix `אֹת֖וֹ` (`H853`, `HTo/Sp3ms`, w26).
+              - "الشَّعْبُ" (pos 24): Locator corrected to `OSHB:B11.C18.V21.w25` (`הָעָ֛ם`, `H5971`, `HTd/Ncmsa`).
+              - "بِكَلِمَةٍ" (pos 25): Locator corrected to `OSHB:B11.C18.V21.w27` (`דָּבָֽר`, `H1697`, `HNcmsa`).
+            - **4 Refinements & Cantillation Purity**:
+              - "وَقَالَ" (pos 6): Surface cantillation normalized to `וַיֹּ֨אמֶר֙` (`qadma` U+05A8 + `pashta` U+0599).
+              - "تَعْرُجُونَ" (pos 9): Primary `פֹּסְחִים֮` (`H6452`, w10) + secondary 2mp pronoun `אַתֶּ֣ם` (`H859`, `HPp2mp`, w9).
+              - "فَاتَّبِعُوهُ" (pos 17): Distinct components `לְכ֣וּ` (`H3212`, `HVqv2mp`, w17) + `אַחֲרָ֔יו` (`H310`, `HR/Sp3ms`, w18).
+              - "فَاتَّبِعُوهُ" (pos 21): Distinct components `לְכ֣וּ` (`H3212`, `HVqv2mp`, w21) + `אַחֲרָ֑יו` (`H310`, `HR/Sp3ms`, w22).
+            - **Canonical Manifest v370**: 311 units: 275 correct (88.42%), 36 errors (15 Hebrew, 21 Aramaic), 0 undecided.
+          - **Negative Quality Gates 35, 36, 37, 38, 39 & Production CI**:
+            - **Gate 35**: Rejection of restoring H1931 to 1Kgs 18:21 pos 15 ("هُوَ").
+            - **Gate 36**: Rejection of deleting secondary numeral component H8147 from pos 11 ("الْفِرْقَتَيْنِ").
+            - **Gate 37**: Rejection of deleting secondary pronominal component H859 from pos 9 ("تَعْرُجُونَ").
+            - **Gate 38**: Rejection of misattributing H310 component to w17 instead of w18 in pos 17 ("فَاتَّبِعُوهُ").
+            - **Gate 39**: Rejection of deleting secondary object pronoun component H853 from pos 23 ("يُجِبْهُ").
+            - **Comprehensive Loci**: 66 verified direct source & morphology loci in Test 11, 39 dedicated component boundaries in Test 13.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md
