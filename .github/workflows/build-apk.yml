@@ -137,26 +137,33 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.366)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 366` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.367)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 367` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **New Testament Canonical Batch Alignment (Rom 8:28, 1Thess 5:23, Luke 15:20)**:
-            - **Romans 8:28**:
-              - "الأَشْيَاءِ" (pos 5): aligned with `πάντα` (G3956, A- ----APN-, locator `SBLGNT:B45.C8.V28.w8`), shared translation with "كُلَّ".
-              - "مَعًا" (pos 7): aligned with `συνεργεῖ` (G4903, V- 3PAI-S--, locator `SBLGNT:B45.C8.V28.w9`), unitary verb translation with "تَعْمَلُ" (G4862 rejected).
-            - **1 Thessalonians 5:23**:
-              - "بِلاَ" (pos 11): aligned with `ἀμέμπτως` (G274, D- --------, locator `SBLGNT:B52.C5.V23.w21`), shared privative adverb translation with "لَوْمٍ".
-              - "عِنْدَ" (pos 13): aligned with `ἐν` (G1722, P- --------, locator `SBLGNT:B52.C5.V23.w22`).
+          - **Philippians 4:6 & Luke 15:20 Canonical Alignment**:
+            - **Philippians 4:6 (all 11 Greek sample errors resolved)**:
+              - "بِشَيْءٍ" (pos 3): `μηδὲν` (G3367, A- ----ASN-, locator `SBLGNT:B50.C4.V6.w1`), shared with "لاَ".
+              - "بَلْ" (pos 4): `ἀλλ’` (G235, C- --------, locator `SBLGNT:B50.C4.V6.w3`).
+              - "فِي" (pos 5): `ἐν` (G1722, P- --------, locator `SBLGNT:B50.C4.V6.w4`).
+              - "كُلِّ" (pos 6): `παντὶ` (G3956, A- ----DSN-, locator `SBLGNT:B50.C4.V6.w5`), shared with "شَيْءٍ" (pos 7).
+              - "بِالصَّلاَةِ" (pos 8): `προσευχῇ` (G4335, N- ----DSF-, locator `SBLGNT:B50.C4.V6.w7`).
+              - "وَالدُّعَاءِ" (pos 9): Primary `δεήσει` (G1162, N- ----DSF-, w10), Secondary `καὶ` (G2532, C- --------, w8).
+              - "مَعَ" (pos 10): `μετ’` (G3326, P- --------, locator `SBLGNT:B50.C4.V6.w11`), surface strictly `μετ’`, lexicon entry `μετά`.
+              - "الشُّكْرِ" (pos 11): `εὐχαριστίας` (G2169, N- ----GSF-, locator `SBLGNT:B50.C4.V6.w12`).
+              - "طِلْبَاتُكُمْ" (pos 13): Primary `αἰτήματα` (G155, N- ----NPN-, w14), Secondary `ὑμῶν` (G4771, RP ----GP--, w15).
+              - "لَدَى" (pos 14): `πρὸς` (G4314, P- --------, locator `SBLGNT:B50.C4.V6.w17`).
+              - "اللهِ" (pos 15): `θεόν` (G2316, N- ----ASM-, locator `SBLGNT:B50.C4.V6.w19`).
             - **Luke 15:20**:
-              - "كَانَ" (pos 6): syntactic copula (`syntactic_ar`, relation `copula_implied`, locator `AR_IMPLIED:B42.C15.V20.w6`), null Strong's ID, isolated from Greek text.
-              - "لَمْ" (pos 7): aligned with `ἔτι` (G2089, D- --------, locator `SBLGNT:B42.C15.V20.w8`), shared temporal adverb translation with "يَزَلْ".
-            - **Canonical Manifest v366**: 311 units: 250 correct (80.39%), 61 errors, 0 undecided.
-          - **Negative Quality Gates 22, 23, 24 & Production CI**:
-            - **Gate 22**: Rejection of re-injecting G4862 into Romans 8:28 pos 7 ("مَعًا").
-            - **Gate 23**: Rejection of linking Luke 15:20 pos 6 ("كَانَ") falsely to Greek conjunction G1161 (`δὲ`).
-            - **Gate 24**: Rejection of reverting 1 Thessalonians 5:23 pos 13 ("عِنْدَ") locator from w22 back to w13.
-            - **Direct SBLGNT Surface Verification**: SBLGNT token surface clean text checking (`sblgntCheckSurface`) in production quality gates.
-            - **Comprehensive Loci**: 54 verified direct source & morphology loci in Test 11, 20 dedicated component boundaries in Test 13.
+              - "كَانَ" (pos 6): source fields updated to `syntactic_ar`, removing false morphgnt badge, locator `AR_IMPLIED:B42.C15.V20.w6`.
+              - "بَعِيدًا" (pos 9): Primary `μακρὰν` (G3112, w11), Secondary `ἀπέχοντος` (G568, w12, `morphgnt_sblgnt`).
+            - **Canonical Manifest v367**: 311 units: 261 correct (83.92%), 50 errors (Hebrew/Aramaic only, 0 Greek errors), 0 undecided.
+          - **Negative Quality Gates 25, 26, 27, 28, 29 & Production CI**:
+            - **Gate 25**: Rejection of reverting Phil 4:6 pos 10 ("مَعَ") locator from w11 back to w10.
+            - **Gate 26**: Rejection of reverting Phil 4:6 pos 3 ("بِشَيْءٍ") locator from w1 back to w3.
+            - **Gate 27**: Rejection of false MorphGNT badge on Luke 15:20 pos 6 ("كَانَ").
+            - **Gate 28**: Rejection of deleting G568 (`ἀπέχοντος`) secondary component from Luke 15:20 pos 9 ("بَعِيدًا").
+            - **Gate 29**: Rejection of reverting Phil 4:6 pos 10 ("مَعَ") surface from `μετ’` back to `μετά`.
+            - **Comprehensive Loci**: 60 verified direct source & morphology loci in Test 11, 26 dedicated component boundaries in Test 13.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

@@ -1551,6 +1551,66 @@ const batch20ComprehensiveCases = [
     oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
     sblgntBookId: 42, sblgntChapter: 15, sblgntVerse: 20, sblgntWordIndex: 8,
     sblgntExpectedMorph: 'D- --------', sblgntExpectedLemma: 'ἔτι', sblgntCheckSurface: true
+  },
+  // 55. Phil 4:6 w3 (بِشَيْءٍ)
+  {
+    ref: 'Phil 4:6 w3 (بِشَيْءٍ)', book: 50, ch: 4, vs: 6, pos: 3,
+    expStrongs: 'G3367', expOrig: 'μηδείς', expSurface: 'μηδὲν',
+    expPos: 'adjective', expGender: 'neuter', expNumber: 'singular', expPerson: null,
+    expMorph: 'A- ----ASN-', expLoc: 'SBLGNT:B50.C4.V6.w1',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 1,
+    sblgntExpectedMorph: 'A- ----ASN-', sblgntExpectedLemma: 'μηδείς', sblgntCheckSurface: true
+  },
+  // 56. Phil 4:6 w4 (بَلْ)
+  {
+    ref: 'Phil 4:6 w4 (بَلْ)', book: 50, ch: 4, vs: 6, pos: 4,
+    expStrongs: 'G235', expOrig: 'ἀλλά', expSurface: 'ἀλλ’',
+    expPos: 'conjunction', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'C- --------', expLoc: 'SBLGNT:B50.C4.V6.w3',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 3,
+    sblgntExpectedMorph: 'C- --------', sblgntExpectedLemma: 'ἀλλά', sblgntCheckSurface: true
+  },
+  // 57. Phil 4:6 w10 (مَعَ)
+  {
+    ref: 'Phil 4:6 w10 (مَعَ)', book: 50, ch: 4, vs: 6, pos: 10,
+    expStrongs: 'G3326', expOrig: 'μετά', expSurface: 'μετ’',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'P- --------', expLoc: 'SBLGNT:B50.C4.V6.w11',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 11,
+    sblgntExpectedMorph: 'P- --------', sblgntExpectedLemma: 'μετά', sblgntCheckSurface: true
+  },
+  // 58. Phil 4:6 w11 (الشُّكْرِ)
+  {
+    ref: 'Phil 4:6 w11 (الشُّكْرِ)', book: 50, ch: 4, vs: 6, pos: 11,
+    expStrongs: 'G2169', expOrig: 'εὐχαριστία', expSurface: 'εὐχαριστίας',
+    expPos: 'noun', expGender: 'feminine', expNumber: 'singular', expPerson: null,
+    expMorph: 'N- ----GSF-', expLoc: 'SBLGNT:B50.C4.V6.w12',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 12,
+    sblgntExpectedMorph: 'N- ----GSF-', sblgntExpectedLemma: 'εὐχαριστία', sblgntCheckSurface: true
+  },
+  // 59. Phil 4:6 w14 (لَدَى)
+  {
+    ref: 'Phil 4:6 w14 (لَدَى)', book: 50, ch: 4, vs: 6, pos: 14,
+    expStrongs: 'G4314', expOrig: 'πρός', expSurface: 'πρὸς',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'P- --------', expLoc: 'SBLGNT:B50.C4.V6.w17',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 17,
+    sblgntExpectedMorph: 'P- --------', sblgntExpectedLemma: 'πρός', sblgntCheckSurface: true
+  },
+  // 60. Phil 4:6 w15 (اللهِ)
+  {
+    ref: 'Phil 4:6 w15 (اللهِ)', book: 50, ch: 4, vs: 6, pos: 15,
+    expStrongs: 'G2316', expOrig: 'θεός', expSurface: 'θεόν',
+    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
+    expMorph: 'N- ----ASM-', expLoc: 'SBLGNT:B50.C4.V6.w19',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 19,
+    sblgntExpectedMorph: 'N- ----ASM-', sblgntExpectedLemma: 'θεός', sblgntCheckSurface: true
   }
 ];
 
@@ -1908,6 +1968,74 @@ const thBila = query(`
 const okThBila = thBila[0] === 'G274' && thBila[1] === 'ἀμέμπτως' && thBila[2] === '21' &&
   thBila[3] === 'SBLGNT:B52.C5.V23.w21' && thBila[0] !== 'G1722';
 assertCondition('1 Thessalonians 5:23 w11 (بِلاَ) Adverbial Privative Purity (G274, w21, NOT G1722)', okThBila, `Found strongs=${thBila[0]}, orig=${thBila[1]}, pos=${thBila[2]}, loc=${thBila[3]}`);
+
+// 21. Luke 15:20 w6 "كَانَ" Source Badge Purity (syntactic_ar, NOT morphgnt_sblgnt)
+const lkKanaSrc = query(`
+  SELECT wm.verified_source, wm.morph_source
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 42 AND chapter_num = 15 AND verse_num = 20)
+    AND wm.ar_word_position = 6;
+`).split('|');
+const okLkKanaSrc = lkKanaSrc[0] === 'syntactic_ar' && lkKanaSrc[1] === 'syntactic_ar' &&
+  lkKanaSrc[0] !== 'morphgnt_sblgnt' && lkKanaSrc[1] !== 'morphgnt_sblgnt';
+assertCondition('Luke 15:20 w6 (كَانَ) Source Badge Purity (syntactic_ar, NOT morphgnt_sblgnt)', okLkKanaSrc, `Found verified_source=${lkKanaSrc[0]}, morph_source=${lkKanaSrc[1]}`);
+
+// 22. Luke 15:20 w9 "بَعِيدًا" Multi-Component Completeness (G3112 primary w11 + G568 secondary w12)
+const lkBaedaComps = query(`
+  SELECT (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 42 AND chapter_num = 15 AND verse_num = 20)
+    AND wm.ar_word_position = 9;
+`).trim();
+const okLkBaedaComps = lkBaedaComps === 'G3112:primary@w11[μακρὰν:D- --------];G568:secondary@w12[ἀπέχοντος:V- -PAPGSM-]';
+assertCondition('Luke 15:20 w9 (بَعِيدًا) Multi-Component Completeness (G3112 primary w11 + G568 secondary w12)', okLkBaedaComps, `Found comps=${lkBaedaComps}`);
+
+// 23. Philippians 4:6 w10 "مَعَ" Surface & Locator Purity (G3326, w11, μετ’, NOT w10, NOT μετὰ)
+const philMaa = query(`
+  SELECT wm.strongs_id, wm.orig_word, wm.orig_surface, wm.orig_word_position, wm.verified_locator,
+         (SELECT wms.orig_component FROM word_mapping_strongs wms WHERE wms.mapping_id = wm.id AND wms.link_order = 1) as comp
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 50 AND chapter_num = 4 AND verse_num = 6)
+    AND wm.ar_word_position = 10;
+`).split('|');
+const okPhilMaa = philMaa[0] === 'G3326' && philMaa[1] === 'μετά' && philMaa[2] === 'μετ’' &&
+  philMaa[3] === '11' && philMaa[4] === 'SBLGNT:B50.C4.V6.w11' && philMaa[5] === 'μετ’' &&
+  philMaa[2] !== 'μετὰ' && philMaa[4] !== 'SBLGNT:B50.C4.V6.w10';
+assertCondition('Philippians 4:6 w10 (مَعَ) Surface & Locator Purity (G3326, w11, μετ’, NOT w10, NOT μετὰ)', okPhilMaa, `Found strongs=${philMaa[0]}, orig=${philMaa[1]}, surface=${philMaa[2]}, pos=${philMaa[3]}, loc=${philMaa[4]}, comp=${philMaa[5]}`);
+
+// 24. Philippians 4:6 w3 "بِشَيْءٍ" Locator Purity (G3367, w1, μηδὲν, NOT w3)
+const philBishay = query(`
+  SELECT wm.strongs_id, wm.orig_word, wm.orig_surface, wm.orig_word_position, wm.verified_locator
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 50 AND chapter_num = 4 AND verse_num = 6)
+    AND wm.ar_word_position = 3;
+`).split('|');
+const okPhilBishay = philBishay[0] === 'G3367' && philBishay[1] === 'μηδείς' && philBishay[2] === 'μηδὲν' &&
+  philBishay[3] === '1' && philBishay[4] === 'SBLGNT:B50.C4.V6.w1' && philBishay[4] !== 'SBLGNT:B50.C4.V6.w3';
+assertCondition('Philippians 4:6 w3 (بِشَيْءٍ) Locator Purity (G3367, w1, μηδὲν, NOT w3)', okPhilBishay, `Found strongs=${philBishay[0]}, orig=${philBishay[1]}, surface=${philBishay[2]}, pos=${philBishay[3]}, loc=${philBishay[4]}`);
+
+// 25. Philippians 4:6 w9 "وَالدُّعَاءِ" Multi-Component Completeness (G1162 primary w10 + G2532 secondary w8)
+const philDuaComps = query(`
+  SELECT (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 50 AND chapter_num = 4 AND verse_num = 6)
+    AND wm.ar_word_position = 9;
+`).trim();
+const okPhilDuaComps = philDuaComps === 'G1162:primary@w10[δεήσει:N- ----DSF-];G2532:secondary@w8[καὶ:C- --------]';
+assertCondition('Philippians 4:6 w9 (وَالدُّعَاءِ) Multi-Component Completeness (G1162 primary w10 + G2532 secondary w8)', okPhilDuaComps, `Found comps=${philDuaComps}`);
+
+// 26. Philippians 4:6 w13 "طِلْبَاتُكُمْ" Multi-Component Completeness (G155 primary w14 + G4771 secondary w15)
+const philTilbaComps = query(`
+  SELECT (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 50 AND chapter_num = 4 AND verse_num = 6)
+    AND wm.ar_word_position = 13;
+`).trim();
+const okPhilTilbaComps = philTilbaComps === 'G155:primary@w14[αἰτήματα:N- ----NPN-];G4771:secondary@w15[ὑμῶν:RP ----GP--]';
+assertCondition('Philippians 4:6 w13 (طِلْبَاتُكُمْ) Multi-Component Completeness (G155 primary w14 + G4771 secondary w15)', okPhilTilbaComps, `Found comps=${philTilbaComps}`);
 
 
 

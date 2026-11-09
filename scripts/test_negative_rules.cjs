@@ -375,6 +375,65 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 23 AND book_id = 52)
         AND ar_word_position = 13;
     `
+  },
+  {
+    gateNum: 25,
+    name: 'phil_4_6_maa_locator_reverted_to_w10',
+    expectedFailTag: '[FAIL] Philippians 4:6 w10 (مَعَ) Surface & Locator Purity',
+    description: 'Reverted Philippians 4:6 pos 10 (مَعَ) locator from w11 back to w10',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word_position = 10, verified_locator = 'SBLGNT:B50.C4.V6.w10'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 50)
+        AND ar_word_position = 10;
+    `
+  },
+  {
+    gateNum: 26,
+    name: 'phil_4_6_bishay_locator_reverted_to_w3',
+    expectedFailTag: '[FAIL] Philippians 4:6 w3 (بِشَيْءٍ) Locator Purity',
+    description: 'Reverted Philippians 4:6 pos 3 (بِشَيْءٍ) locator from w1 back to w3',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word_position = 3, verified_locator = 'SBLGNT:B50.C4.V6.w3'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 50)
+        AND ar_word_position = 3;
+    `
+  },
+  {
+    gateNum: 27,
+    name: 'luke_15_20_kana_source_badge_reverted_to_morphgnt',
+    expectedFailTag: '[FAIL] Luke 15:20 w6 (كَانَ) Source Badge Purity',
+    description: 'Reverted Luke 15:20 pos 6 (كَانَ) source badge to morphgnt_sblgnt',
+    mutationSql: `
+      UPDATE word_mappings
+      SET verified_source = 'morphgnt_sblgnt', morph_source = 'morphgnt_sblgnt'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 20 AND book_id = 42)
+        AND ar_word_position = 6;
+    `
+  },
+  {
+    gateNum: 28,
+    name: 'luke_15_20_baeda_g568_deleted',
+    expectedFailTag: '[FAIL] Luke 15:20 w9 (بَعِيدًا) Multi-Component Completeness',
+    description: 'Deleted secondary component G568 (ἀπέχοντος) from Luke 15:20 pos 9 (بَعِيدًا)',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 20 AND book_id = 42) AND ar_word_position = 9)
+        AND strongs_id = 'G568';
+    `
+  },
+  {
+    gateNum: 29,
+    name: 'phil_4_6_maa_surface_reverted_to_meta',
+    expectedFailTag: '[FAIL] Philippians 4:6 w10 (مَعَ) Surface & Locator Purity',
+    description: 'Reverted Philippians 4:6 pos 10 (مَعَ) surface from μετ’ back to μετά',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_surface = 'μετά'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 50)
+        AND ar_word_position = 10;
+    `
   }
 ];
 

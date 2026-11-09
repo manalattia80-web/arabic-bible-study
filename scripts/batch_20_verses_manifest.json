@@ -1,14 +1,15 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "1.0.366",
-  "date": "2026-11-08",
+  "version": "v1.0.367",
+  "date": "2026-11-09",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
-    "correct": 250,
-    "error": 61,
+    "totalUnits": 311,
+    "correct": 261,
+    "errors": 50,
     "undecided": 0,
-    "accuracyPercent": 80.39
+    "accuracy": "83.92%"
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -6257,7 +6258,7 @@
       "arPos": 9,
       "arWord": "بَعِيدًا",
       "strongsId": "G3112",
-      "components": "G3112:primary",
+      "components": "G3112:primary;G568:secondary",
       "origWord": "μακράν",
       "origSurface": "μακρὰν",
       "origMorph": "D- --------",
@@ -7976,9 +7977,9 @@
       "origWord": "μηδείς",
       "origSurface": "μηδὲν",
       "origMorph": "A- ----ASN-",
-      "origPos": 3,
-      "locator": "SBLGNT:B50.C4.V6.w3",
-      "locWordIndex": 3,
+      "origPos": 1,
+      "locator": "SBLGNT:B50.C4.V6.w1",
+      "locWordIndex": 1,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -7986,19 +7987,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'μηδείς' vs SBLGNT 'ἀλλά'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'A- ----ASN-' vs SBLGNT 'C- --------'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Phil 4:6",
@@ -8011,9 +8012,9 @@
       "origWord": "ἀλλά",
       "origSurface": "ἀλλ’",
       "origMorph": "C- --------",
-      "origPos": 4,
-      "locator": "SBLGNT:B50.C4.V6.w4",
-      "locWordIndex": 4,
+      "origPos": 3,
+      "locator": "SBLGNT:B50.C4.V6.w3",
+      "locWordIndex": 3,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8021,19 +8022,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'ἀλλά' vs SBLGNT 'ἐν'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'C- --------' vs SBLGNT 'P- --------'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Phil 4:6",
@@ -8046,9 +8047,9 @@
       "origWord": "ἐν",
       "origSurface": "ἐν",
       "origMorph": "P- --------",
-      "origPos": 5,
-      "locator": "SBLGNT:B50.C4.V6.w5",
-      "locWordIndex": 5,
+      "origPos": 4,
+      "locator": "SBLGNT:B50.C4.V6.w4",
+      "locWordIndex": 4,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8056,19 +8057,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'ἐν' vs SBLGNT 'πᾶς'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'P- --------' vs SBLGNT 'A- ----DSN-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Phil 4:6",
@@ -8081,9 +8082,9 @@
       "origWord": "πᾶς",
       "origSurface": "παντὶ",
       "origMorph": "A- ----DSN-",
-      "origPos": 6,
-      "locator": "SBLGNT:B50.C4.V6.w6",
-      "locWordIndex": 6,
+      "origPos": 5,
+      "locator": "SBLGNT:B50.C4.V6.w5",
+      "locWordIndex": 5,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8091,19 +8092,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'πᾶς' vs SBLGNT 'ὁ'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'A- ----DSN-' vs SBLGNT 'RA ----DSF-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Phil 4:6",
@@ -8151,9 +8152,9 @@
       "origWord": "προσευχή",
       "origSurface": "προσευχῇ",
       "origMorph": "N- ----DSF-",
-      "origPos": 8,
-      "locator": "SBLGNT:B50.C4.V6.w8",
-      "locWordIndex": 8,
+      "origPos": 7,
+      "locator": "SBLGNT:B50.C4.V6.w7",
+      "locWordIndex": 7,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8161,19 +8162,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'προσευχή' vs SBLGNT 'καί'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'N- ----DSF-' vs SBLGNT 'C- --------'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Phil 4:6",
@@ -8182,45 +8183,10 @@
       "arPos": 9,
       "arWord": "وَالدُّعَاءِ",
       "strongsId": "G1162",
-      "components": "G1162:primary",
+      "components": "G1162:primary;G2532:secondary",
       "origWord": "δέησις",
       "origSurface": "δεήσει",
       "origMorph": "N- ----DSF-",
-      "origPos": 9,
-      "locator": "SBLGNT:B50.C4.V6.w9",
-      "locWordIndex": 9,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'δέησις' vs SBLGNT 'ὁ'"
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'N- ----DSF-' vs SBLGNT 'RA ----DSF-'"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Phil 4:6",
-      "verseAr": "فيلبي ٤:٦",
-      "lang": "greek",
-      "arPos": 10,
-      "arWord": "مَعَ",
-      "strongsId": "G3326",
-      "components": "G3326:primary",
-      "origWord": "μετά",
-      "origSurface": "μετὰ",
-      "origMorph": "P- --------",
       "origPos": 10,
       "locator": "SBLGNT:B50.C4.V6.w10",
       "locWordIndex": 10,
@@ -8231,19 +8197,54 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'μετά' vs SBLGNT 'δέησις'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'P- --------' vs SBLGNT 'N- ----DSF-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
+    },
+    {
+      "verse": "Phil 4:6",
+      "verseAr": "فيلبي ٤:٦",
+      "lang": "greek",
+      "arPos": 10,
+      "arWord": "مَعَ",
+      "strongsId": "G3326",
+      "components": "G3326:primary",
+      "origWord": "μετά",
+      "origSurface": "μετ’",
+      "origMorph": "P- --------",
+      "origPos": 11,
+      "locator": "SBLGNT:B50.C4.V6.w11",
+      "locWordIndex": 11,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Phil 4:6",
@@ -8256,9 +8257,9 @@
       "origWord": "εὐχαριστία",
       "origSurface": "εὐχαριστίας",
       "origMorph": "N- ----GSF-",
-      "origPos": 11,
-      "locator": "SBLGNT:B50.C4.V6.w11",
-      "locWordIndex": 11,
+      "origPos": 12,
+      "locator": "SBLGNT:B50.C4.V6.w12",
+      "locWordIndex": 12,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8266,19 +8267,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'εὐχαριστία' vs SBLGNT 'μετά'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'N- ----GSF-' vs SBLGNT 'P- --------'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Phil 4:6",
@@ -8322,13 +8323,13 @@
       "arPos": 13,
       "arWord": "طِلْبَاتُكُمْ",
       "strongsId": "G155",
-      "components": "G155:primary",
+      "components": "G155:primary;G4771:secondary",
       "origWord": "αἴτημα",
       "origSurface": "αἰτήματα",
       "origMorph": "N- ----NPN-",
-      "origPos": 13,
-      "locator": "SBLGNT:B50.C4.V6.w13",
-      "locWordIndex": 13,
+      "origPos": 14,
+      "locator": "SBLGNT:B50.C4.V6.w14",
+      "locWordIndex": 14,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8336,19 +8337,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'αἴτημα' vs SBLGNT 'ὁ'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'N- ----NPN-' vs SBLGNT 'RA ----NPN-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Phil 4:6",
@@ -8361,9 +8362,9 @@
       "origWord": "πρός",
       "origSurface": "πρὸς",
       "origMorph": "P- --------",
-      "origPos": 14,
-      "locator": "SBLGNT:B50.C4.V6.w14",
-      "locWordIndex": 14,
+      "origPos": 17,
+      "locator": "SBLGNT:B50.C4.V6.w17",
+      "locWordIndex": 17,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8371,19 +8372,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'πρός' vs SBLGNT 'αἴτημα'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'P- --------' vs SBLGNT 'N- ----NPN-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Phil 4:6",
@@ -8396,9 +8397,9 @@
       "origWord": "θεός",
       "origSurface": "θεόν",
       "origMorph": "N- ----ASM-",
-      "origPos": 15,
-      "locator": "SBLGNT:B50.C4.V6.w15",
-      "locWordIndex": 15,
+      "origPos": 19,
+      "locator": "SBLGNT:B50.C4.V6.w19",
+      "locWordIndex": 19,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8406,19 +8407,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'θεός' vs SBLGNT 'σύ'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'N- ----ASM-' vs SBLGNT 'RP ----GP--'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "1Thess 5:23",
