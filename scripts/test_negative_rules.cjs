@@ -481,6 +481,18 @@ const testCases = [
       WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 16 AND book_id = 8) AND ar_word_position = 9)
         AND strongs_id = 'H4480';
     `
+  },
+  {
+    gateNum: 34,
+    name: 'ruth_1_16_ashuv_arabic_waw_injected',
+    expectedFailTag: '[FAIL] Ruth 1:16 w8 (وَأَرْجِعَ) Component & Pure Hebrew Vav U+05D5',
+    description: 'Injected Arabic Waw U+0648 into Ruth 1:16 pos 8 (وَأَرْجِعَ) component',
+    mutationSql: `
+      UPDATE word_mapping_strongs
+      SET orig_component = '\u05DC\u05B8\u05E9\u05C1\u05A3\u0648\u05BC\u05D1'
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 16 AND book_id = 8) AND ar_word_position = 8)
+        AND strongs_id = 'H7725';
+    `
   }
 ];
 

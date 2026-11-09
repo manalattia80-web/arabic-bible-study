@@ -290,6 +290,9 @@ assertCondition('verb_not_syntactic_ar: verbs with Strongs/original cannot have 
 const mixedArabicOriginal = parseInt(query("SELECT count(*) FROM word_mappings WHERE strongs_id IS NOT NULL AND (orig_surface GLOB '*[ء-ي]*' OR orig_word GLOB '*[ء-ي]*');"));
 assertCondition('pure_script_original: no mixed Arabic characters in Hebrew or Greek original fields', mixedArabicOriginal === 0, `found ${mixedArabicOriginal}`);
 
+const mixedArabicComponent = parseInt(query("SELECT count(*) FROM word_mapping_strongs WHERE orig_component GLOB '*[ء-ي]*';"));
+assertCondition('pure_script_component: no mixed Arabic characters in orig_component fields across word_mapping_strongs', mixedArabicComponent === 0, `found ${mixedArabicComponent}`);
+
 // General Consistency Gate: For all single locators across the entire database, orig_word_position must match .wN exactly
 const singleLocatorMismatches = parseInt(query(`
   SELECT count(*) FROM word_mappings 
@@ -2128,6 +2131,22 @@ const ruthAnkiComps = query(`
 `).trim();
 const okRuthAnkiComps = ruthAnkiComps === 'H310:primary@w8[מֵאַחֲרָ֑יִךְ:HR/R/Sp2fs];H4480:secondary@w8[מֵ:HR]';
 assertCondition('Ruth 1:16 w9 (عَنْكِ) Multi-Component Completeness (H310 primary + H4480 secondary)', okRuthAnkiComps, `Found comps=${ruthAnkiComps}`);
+
+// 31. Ruth 1:16 w8 "وَأَرْجِعَ" Component & Hebrew Vav Purity (H7725, w7, לָשׁ֣וּב with Hebrew Vav U+05D5, zero Arabic Waw U+0648)
+const ruthAshuvRow = query(`
+  SELECT wm.strongs_id, wm.orig_word_position, wm.verified_locator, wms.orig_component
+  FROM word_mappings wm
+  JOIN word_mapping_strongs wms ON wms.mapping_id = wm.id
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 8 AND chapter_num = 1 AND verse_num = 16)
+    AND wm.ar_word_position = 8;
+`).split('|');
+const okRuthAshuv = ruthAshuvRow[0] === 'H7725' &&
+  ruthAshuvRow[1] === '7' &&
+  ruthAshuvRow[2] === 'OSHB:B8.C1.V16.w7' &&
+  ruthAshuvRow[3] === '\u05DC\u05B8\u05E9\u05C1\u05A3\u05D5\u05BC\u05D1' &&
+  !ruthAshuvRow[3].includes('\u0648') &&
+  ruthAshuvRow[3].includes('\u05D5');
+assertCondition('Ruth 1:16 w8 (وَأَرْجِعَ) Component & Pure Hebrew Vav U+05D5 (H7725, w7, לָשׁ֣וּב, NO Arabic Waw U+0648)', okRuthAshuv, `Found strongs=${ruthAshuvRow[0]}, pos=${ruthAshuvRow[1]}, loc=${ruthAshuvRow[2]}, comp=${ruthAshuvRow[3]}`);
 
 
 

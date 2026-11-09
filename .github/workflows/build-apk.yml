@@ -137,23 +137,16 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.368)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 368` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.369)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 369` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **Ruth 1:16 Canonical OSHB Alignment (Batch 368)**:
-            - "عَلَيَّ" (pos 5): aligned with `בִ֔י` (`H9003` prefix Beth, `HR/Sp1cs`, locator `OSHB:B8.C1.V16.w5`), 1cs pronominal suffix, replacing false H413.
-            - "أَنْ" (pos 6): aligned with `לְ` prefix (`H9005`, `HR`, locator `OSHB:B8.C1.V16.w6`), preceding infinitive construct.
-            - "أَتْرُكَكِ" (pos 7): aligned with `לְעָזְבֵ֖ךְ` (`H5800`, `HR/Vqc/Sp2fs`, locator `OSHB:B8.C1.V16.w6`), retaining 2fs pronominal suffix.
-            - "وَأَرْجعَ" (pos 8): aligned with `לָשׁ֣וּב` (`H7725`, `HR/Vqc`, locator `OSHB:B8.C1.V16.w7`).
-            - "عَنْكِ" (pos 9): Primary `אַחַר` (`H310`, `HR/R/Sp2fs`, locator `OSHB:B8.C1.V16.w8`), Secondary `מֵ` prefix (`H4480`, `HR`, w8).
-            - "لأَنَّهُ" (pos 10): aligned with `כִּ֠י` (`H3588`, `HC`, locator `OSHB:B8.C1.V16.w9`).
-            - **Canonical Manifest v368**: 311 units: 267 correct (85.85%), 44 errors (23 Hebrew, 21 Aramaic), 0 undecided.
-          - **Negative Quality Gates 30, 31, 32, 33 & Production CI**:
-            - **Gate 30**: Rejection of reverting Ruth 1:16 pos 5 ("عَلَيَّ") from H9003 back to H413.
-            - **Gate 31**: Rejection of loss of prefix Lam (H9005) from Ruth 1:16 pos 6 ("أَنْ").
-            - **Gate 32**: Rejection of dropping feminine 2nd person pronominal suffix from Ruth 1:16 pos 7 ("أَتْرُكَكِ").
-            - **Gate 33**: Rejection of deleting prefix component H4480 from Ruth 1:16 pos 9 ("عَنْكِ").
-            - **Comprehensive Loci**: 66 verified direct source & morphology loci in Test 11, 30 dedicated component boundaries in Test 13.
+          - **Ruth 1:16 Component Character Purity & Manifest Synchronization (Batch 369)**:
+            - **Pure Hebrew Vav (U+05D5)**: Ruth 1:16 pos 8 ("وَأَرْجِعَ") `orig_component` strictly normalized to `לָשׁ֣וּב` with pure Hebrew Vav `U+05D5`, completely eliminating Arabic Waw `U+0648`.
+            - **Global Character Purity**: Expanded DB-wide integrity check in Test 3 to cover `word_mapping_strongs.orig_component`, permanently preventing Arabic leakage into original lexical components.
+            - **Canonical Manifest v369 Synchronized**: Full summary unification at 311 units: 267 correct (85.85%), 44 errors (23 Hebrew, 21 Aramaic), 0 undecided.
+          - **Negative Quality Gate 34 & Production CI**:
+            - **Gate 34**: Rejection of injecting Arabic Waw `U+0648` into Ruth 1:16 pos 8 ("وَأَرْجِعَ") component.
+            - **Comprehensive Loci**: 66 verified direct source & morphology loci in Test 11, 31 dedicated component boundaries in Test 13.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

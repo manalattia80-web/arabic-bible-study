@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 368; // v1.0.368: Canonical OSHB alignment for Ruth 1:16 (6 loci), negative gates 30-33, manifest 267/44/0 (85.85%)
+    const targetDbVersion = 369; // v1.0.369: Pure Hebrew Vav U+05D5 in Ruth 1:16 w8 component, manifest summary sync (267/44/0, 85.85%), negative gate 34
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();
