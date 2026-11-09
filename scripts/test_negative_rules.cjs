@@ -434,6 +434,53 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 50)
         AND ar_word_position = 10;
     `
+  },
+  {
+    gateNum: 30,
+    name: 'ruth_1_16_alayya_reverted_to_h413',
+    expectedFailTag: '[FAIL] Ruth 1:16 w5 (عَلَيَّ) Locator & Lexical Purity',
+    description: 'Reverted Ruth 1:16 pos 5 (عَلَيَّ) Strong ID from H9003 back to H413',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H413', orig_word = 'אֵל', orig_surface = 'אֶל', orig_morphology = 'HR'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 16 AND book_id = 8)
+        AND ar_word_position = 5;
+    `
+  },
+  {
+    gateNum: 31,
+    name: 'ruth_1_16_an_loss_of_lam_h9005',
+    expectedFailTag: '[FAIL] Ruth 1:16 w6 (أَنْ) Prefix Lam Purity',
+    description: 'Loss of prefix Lam (H9005) from Ruth 1:16 pos 6 (أَنْ), reverted to conjunction H3588',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H3588', orig_word = 'כִּי', orig_surface = 'כִּ֠י', orig_morphology = 'HC'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 16 AND book_id = 8)
+        AND ar_word_position = 6;
+    `
+  },
+  {
+    gateNum: 32,
+    name: 'ruth_1_16_atrukaki_loss_of_suffix_sp2fs',
+    expectedFailTag: '[FAIL] Ruth 1:16 w7 (أَتْرُكَكِ) Suffix & Verb Purity',
+    description: 'Dropped feminine 2nd person pronominal suffix Sp2fs from Ruth 1:16 pos 7 (أَتْرُكَكِ)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_morphology = 'HR/Vqc', morph_gender = NULL, morph_person = NULL
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 16 AND book_id = 8)
+        AND ar_word_position = 7;
+    `
+  },
+  {
+    gateNum: 33,
+    name: 'ruth_1_16_anki_prefix_deleted',
+    expectedFailTag: '[FAIL] Ruth 1:16 w9 (عَنْكِ) Multi-Component Completeness',
+    description: 'Deleted prefix component H4480 from Ruth 1:16 pos 9 (عَنْكِ)',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 16 AND book_id = 8) AND ar_word_position = 9)
+        AND strongs_id = 'H4480';
+    `
   }
 ];
 

@@ -137,33 +137,23 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.367)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 367` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.368)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 368` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **Philippians 4:6 & Luke 15:20 Canonical Alignment**:
-            - **Philippians 4:6 (all 11 Greek sample errors resolved)**:
-              - "بِشَيْءٍ" (pos 3): `μηδὲν` (G3367, A- ----ASN-, locator `SBLGNT:B50.C4.V6.w1`), shared with "لاَ".
-              - "بَلْ" (pos 4): `ἀλλ’` (G235, C- --------, locator `SBLGNT:B50.C4.V6.w3`).
-              - "فِي" (pos 5): `ἐν` (G1722, P- --------, locator `SBLGNT:B50.C4.V6.w4`).
-              - "كُلِّ" (pos 6): `παντὶ` (G3956, A- ----DSN-, locator `SBLGNT:B50.C4.V6.w5`), shared with "شَيْءٍ" (pos 7).
-              - "بِالصَّلاَةِ" (pos 8): `προσευχῇ` (G4335, N- ----DSF-, locator `SBLGNT:B50.C4.V6.w7`).
-              - "وَالدُّعَاءِ" (pos 9): Primary `δεήσει` (G1162, N- ----DSF-, w10), Secondary `καὶ` (G2532, C- --------, w8).
-              - "مَعَ" (pos 10): `μετ’` (G3326, P- --------, locator `SBLGNT:B50.C4.V6.w11`), surface strictly `μετ’`, lexicon entry `μετά`.
-              - "الشُّكْرِ" (pos 11): `εὐχαριστίας` (G2169, N- ----GSF-, locator `SBLGNT:B50.C4.V6.w12`).
-              - "طِلْبَاتُكُمْ" (pos 13): Primary `αἰτήματα` (G155, N- ----NPN-, w14), Secondary `ὑμῶν` (G4771, RP ----GP--, w15).
-              - "لَدَى" (pos 14): `πρὸς` (G4314, P- --------, locator `SBLGNT:B50.C4.V6.w17`).
-              - "اللهِ" (pos 15): `θεόν` (G2316, N- ----ASM-, locator `SBLGNT:B50.C4.V6.w19`).
-            - **Luke 15:20**:
-              - "كَانَ" (pos 6): source fields updated to `syntactic_ar`, removing false morphgnt badge, locator `AR_IMPLIED:B42.C15.V20.w6`.
-              - "بَعِيدًا" (pos 9): Primary `μακρὰν` (G3112, w11), Secondary `ἀπέχοντος` (G568, w12, `morphgnt_sblgnt`).
-            - **Canonical Manifest v367**: 311 units: 261 correct (83.92%), 50 errors (Hebrew/Aramaic only, 0 Greek errors), 0 undecided.
-          - **Negative Quality Gates 25, 26, 27, 28, 29 & Production CI**:
-            - **Gate 25**: Rejection of reverting Phil 4:6 pos 10 ("مَعَ") locator from w11 back to w10.
-            - **Gate 26**: Rejection of reverting Phil 4:6 pos 3 ("بِشَيْءٍ") locator from w1 back to w3.
-            - **Gate 27**: Rejection of false MorphGNT badge on Luke 15:20 pos 6 ("كَانَ").
-            - **Gate 28**: Rejection of deleting G568 (`ἀπέχοντος`) secondary component from Luke 15:20 pos 9 ("بَعِيدًا").
-            - **Gate 29**: Rejection of reverting Phil 4:6 pos 10 ("مَعَ") surface from `μετ’` back to `μετά`.
-            - **Comprehensive Loci**: 60 verified direct source & morphology loci in Test 11, 26 dedicated component boundaries in Test 13.
+          - **Ruth 1:16 Canonical OSHB Alignment (Batch 368)**:
+            - "عَلَيَّ" (pos 5): aligned with `בִ֔י` (`H9003` prefix Beth, `HR/Sp1cs`, locator `OSHB:B8.C1.V16.w5`), 1cs pronominal suffix, replacing false H413.
+            - "أَنْ" (pos 6): aligned with `לְ` prefix (`H9005`, `HR`, locator `OSHB:B8.C1.V16.w6`), preceding infinitive construct.
+            - "أَتْرُكَكِ" (pos 7): aligned with `לְעָזְבֵ֖ךְ` (`H5800`, `HR/Vqc/Sp2fs`, locator `OSHB:B8.C1.V16.w6`), retaining 2fs pronominal suffix.
+            - "وَأَرْجعَ" (pos 8): aligned with `לָשׁ֣וּב` (`H7725`, `HR/Vqc`, locator `OSHB:B8.C1.V16.w7`).
+            - "عَنْكِ" (pos 9): Primary `אַחַר` (`H310`, `HR/R/Sp2fs`, locator `OSHB:B8.C1.V16.w8`), Secondary `מֵ` prefix (`H4480`, `HR`, w8).
+            - "لأَنَّهُ" (pos 10): aligned with `כִּ֠י` (`H3588`, `HC`, locator `OSHB:B8.C1.V16.w9`).
+            - **Canonical Manifest v368**: 311 units: 267 correct (85.85%), 44 errors (23 Hebrew, 21 Aramaic), 0 undecided.
+          - **Negative Quality Gates 30, 31, 32, 33 & Production CI**:
+            - **Gate 30**: Rejection of reverting Ruth 1:16 pos 5 ("عَلَيَّ") from H9003 back to H413.
+            - **Gate 31**: Rejection of loss of prefix Lam (H9005) from Ruth 1:16 pos 6 ("أَنْ").
+            - **Gate 32**: Rejection of dropping feminine 2nd person pronominal suffix from Ruth 1:16 pos 7 ("أَتْرُكَكِ").
+            - **Gate 33**: Rejection of deleting prefix component H4480 from Ruth 1:16 pos 9 ("عَنْكِ").
+            - **Comprehensive Loci**: 66 verified direct source & morphology loci in Test 11, 30 dedicated component boundaries in Test 13.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

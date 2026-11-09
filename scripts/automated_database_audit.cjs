@@ -1611,6 +1611,54 @@ const batch20ComprehensiveCases = [
     oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
     sblgntBookId: 50, sblgntChapter: 4, sblgntVerse: 6, sblgntWordIndex: 19,
     sblgntExpectedMorph: 'N- ----ASM-', sblgntExpectedLemma: 'θεός', sblgntCheckSurface: true
+  },
+  // 61. Ruth 1:16 w5 (عَلَيَّ)
+  {
+    ref: 'Ruth 1:16 w5 (عَلَيَّ)', book: 8, ch: 1, vs: 16, pos: 5,
+    expStrongs: 'H9003', expOrig: 'בְּ', expSurface: 'בִ֔י',
+    expPos: 'preposition', expGender: 'common', expNumber: 'singular', expPerson: 'first',
+    expMorph: 'HR/Sp1cs', expLoc: 'OSHB:B8.C1.V16.w5',
+    oshbBook: 'Ruth', oshbOsis: 'Ruth.1.16', oshbWordIndex: 5, oshbExpectedId: '083k3'
+  },
+  // 62. Ruth 1:16 w6 (أَنْ)
+  {
+    ref: 'Ruth 1:16 w6 (أَنْ)', book: 8, ch: 1, vs: 16, pos: 6,
+    expStrongs: 'H9005', expOrig: 'לְ', expSurface: 'לְ',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HR', expLoc: 'OSHB:B8.C1.V16.w6',
+    oshbBook: 'Ruth', oshbOsis: 'Ruth.1.16', oshbWordIndex: 6, oshbExpectedId: '081rL'
+  },
+  // 63. Ruth 1:16 w7 (أَتْرُكَكِ)
+  {
+    ref: 'Ruth 1:16 w7 (أَتْرُكَكِ)', book: 8, ch: 1, vs: 16, pos: 7,
+    expStrongs: 'H5800', expOrig: 'עָזַב', expSurface: 'לְעָזְבֵ֖ךְ',
+    expPos: 'verb', expGender: 'feminine', expNumber: 'singular', expPerson: 'second',
+    expMorph: 'HR/Vqc/Sp2fs', expLoc: 'OSHB:B8.C1.V16.w6',
+    oshbBook: 'Ruth', oshbOsis: 'Ruth.1.16', oshbWordIndex: 6, oshbExpectedId: '081rL'
+  },
+  // 64. Ruth 1:16 w8 (وَأَرْجعَ)
+  {
+    ref: 'Ruth 1:16 w8 (وَأَرْجعَ)', book: 8, ch: 1, vs: 16, pos: 8,
+    expStrongs: 'H7725', expOrig: 'שׁוּב', expSurface: 'לָשׁ֣וּב',
+    expPos: 'verb', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HR/Vqc', expLoc: 'OSHB:B8.C1.V16.w7',
+    oshbBook: 'Ruth', oshbOsis: 'Ruth.1.16', oshbWordIndex: 7, oshbExpectedId: '08W2c'
+  },
+  // 65. Ruth 1:16 w9 (عَنْكِ)
+  {
+    ref: 'Ruth 1:16 w9 (عَنْكِ)', book: 8, ch: 1, vs: 16, pos: 9,
+    expStrongs: 'H310,H4480', expOrig: 'אַחַר', expSurface: 'מֵאַחֲרָ֑יִךְ',
+    expPos: 'preposition', expGender: 'feminine', expNumber: 'singular', expPerson: 'second',
+    expMorph: 'HR/R/Sp2fs', expLoc: 'OSHB:B8.C1.V16.w8',
+    oshbBook: 'Ruth', oshbOsis: 'Ruth.1.16', oshbWordIndex: 8, oshbExpectedId: '08mL3'
+  },
+  // 66. Ruth 1:16 w10 (لأَنَّهُ)
+  {
+    ref: 'Ruth 1:16 w10 (لأَنَّهُ)', book: 8, ch: 1, vs: 16, pos: 10,
+    expStrongs: 'H3588', expOrig: 'כִּי', expSurface: 'כִּ֠י',
+    expPos: 'conjunction', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'HC', expLoc: 'OSHB:B8.C1.V16.w9',
+    oshbBook: 'Ruth', oshbOsis: 'Ruth.1.16', oshbWordIndex: 9, oshbExpectedId: '08zfc'
   }
 ];
 
@@ -2036,6 +2084,50 @@ const philTilbaComps = query(`
 `).trim();
 const okPhilTilbaComps = philTilbaComps === 'G155:primary@w14[αἰτήματα:N- ----NPN-];G4771:secondary@w15[ὑμῶν:RP ----GP--]';
 assertCondition('Philippians 4:6 w13 (طِلْبَاتُكُمْ) Multi-Component Completeness (G155 primary w14 + G4771 secondary w15)', okPhilTilbaComps, `Found comps=${philTilbaComps}`);
+
+// 27. Ruth 1:16 w5 "عَلَيَّ" Locator & Lexical Purity (H9003, w5, בִ֔י, NOT H413)
+const ruthAlayya = query(`
+  SELECT wm.strongs_id, wm.orig_word, wm.orig_surface, wm.orig_word_position, wm.verified_locator, wm.orig_morphology
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 8 AND chapter_num = 1 AND verse_num = 16)
+    AND wm.ar_word_position = 5;
+`).split('|');
+const okRuthAlayya = ruthAlayya[0] === 'H9003' && ruthAlayya[2] === 'בִ֔י' && ruthAlayya[3] === '5' &&
+  ruthAlayya[4] === 'OSHB:B8.C1.V16.w5' && ruthAlayya[5] === 'HR/Sp1cs' && ruthAlayya[0] !== 'H413';
+assertCondition('Ruth 1:16 w5 (عَلَيَّ) Locator & Lexical Purity (H9003, w5, NOT H413)', okRuthAlayya, `Found strongs=${ruthAlayya[0]}, orig=${ruthAlayya[1]}, surface=${ruthAlayya[2]}, pos=${ruthAlayya[3]}, loc=${ruthAlayya[4]}, morph=${ruthAlayya[5]}`);
+
+// 28. Ruth 1:16 w6 "أَنْ" Prefix Lam Purity (H9005, w6, לְ)
+const ruthAn = query(`
+  SELECT wm.strongs_id, wm.orig_word, wm.orig_surface, wm.orig_word_position, wm.verified_locator, wm.orig_morphology
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 8 AND chapter_num = 1 AND verse_num = 16)
+    AND wm.ar_word_position = 6;
+`).split('|');
+const okRuthAn = ruthAn[0] === 'H9005' && ruthAn[1] === 'לְ' && ruthAn[3] === '6' &&
+  ruthAn[4] === 'OSHB:B8.C1.V16.w6' && ruthAn[5] === 'HR' && ruthAn[0] !== 'H3588';
+assertCondition('Ruth 1:16 w6 (أَنْ) Prefix Lam Purity (H9005, w6, לְ)', okRuthAn, `Found strongs=${ruthAn[0]}, orig=${ruthAn[1]}, surface=${ruthAn[2]}, pos=${ruthAn[3]}, loc=${ruthAn[4]}, morph=${ruthAn[5]}`);
+
+// 29. Ruth 1:16 w7 "أَتْرُكَكِ" Suffix & Verb Purity (H5800, w6, feminine 2nd person suffix)
+const ruthAtruk = query(`
+  SELECT wm.strongs_id, wm.orig_word, wm.orig_surface, wm.orig_word_position, wm.verified_locator, wm.orig_morphology, wm.morph_gender, wm.morph_person
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 8 AND chapter_num = 1 AND verse_num = 16)
+    AND wm.ar_word_position = 7;
+`).split('|');
+const okRuthAtruk = ruthAtruk[0] === 'H5800' && ruthAtruk[1] === 'עָזַב' && ruthAtruk[3] === '6' &&
+  ruthAtruk[4] === 'OSHB:B8.C1.V16.w6' && ruthAtruk[5].includes('Sp2fs') && ruthAtruk[6] === 'feminine' && ruthAtruk[7] === 'second';
+assertCondition('Ruth 1:16 w7 (أَتْرُكَكِ) Suffix & Verb Purity (H5800, w6, feminine 2nd person suffix)', okRuthAtruk, `Found strongs=${ruthAtruk[0]}, orig=${ruthAtruk[1]}, pos=${ruthAtruk[3]}, loc=${ruthAtruk[4]}, morph=${ruthAtruk[5]}, gender=${ruthAtruk[6]}, person=${ruthAtruk[7]}`);
+
+// 30. Ruth 1:16 w9 "عَنْكِ" Multi-Component Completeness (H310 primary + H4480 secondary)
+const ruthAnkiComps = query(`
+  SELECT (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 8 AND chapter_num = 1 AND verse_num = 16)
+    AND wm.ar_word_position = 9;
+`).trim();
+const okRuthAnkiComps = ruthAnkiComps === 'H310:primary@w8[מֵאַחֲרָ֑יִךְ:HR/R/Sp2fs];H4480:secondary@w8[מֵ:HR]';
+assertCondition('Ruth 1:16 w9 (عَنْكِ) Multi-Component Completeness (H310 primary + H4480 secondary)', okRuthAnkiComps, `Found comps=${ruthAnkiComps}`);
 
 
 

@@ -1,15 +1,17 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "v1.0.367",
+  "version": "v1.0.368",
   "date": "2026-11-09",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
     "totalUnits": 311,
-    "correct": 261,
+    "correct": 267,
     "errors": 50,
     "undecided": 0,
-    "accuracy": "83.92%"
+    "accuracy": "83.92%",
+    "error": 44,
+    "accuracyPercentage": 85.85
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -2022,11 +2024,11 @@
       "lang": "hebrew",
       "arPos": 5,
       "arWord": "عَلَيَّ",
-      "strongsId": "H413",
-      "components": "H413:primary",
-      "origWord": "אֵל",
-      "origSurface": "אֶל",
-      "origMorph": "HR",
+      "strongsId": "H9003",
+      "components": "H9003:primary",
+      "origWord": "בְּ",
+      "origSurface": "בִ֔י",
+      "origMorph": "HR/Sp1cs",
       "origPos": 5,
       "locator": "OSHB:B8.C1.V16.w5",
       "locWordIndex": 5,
@@ -2041,15 +2043,15 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR' vs Source 'HR/Sp1cs' (id: 083k3)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Ruth 1:16",
@@ -2057,11 +2059,11 @@
       "lang": "hebrew",
       "arPos": 6,
       "arWord": "أَنْ",
-      "strongsId": "H3588",
-      "components": "H3588:primary",
-      "origWord": "כִּי",
-      "origSurface": "כִּ֠י",
-      "origMorph": "HC",
+      "strongsId": "H9005",
+      "components": "H9005:primary",
+      "origWord": "לְ",
+      "origSurface": "לְ",
+      "origMorph": "HR",
       "origPos": 6,
       "locator": "OSHB:B8.C1.V16.w6",
       "locWordIndex": 6,
@@ -2076,15 +2078,15 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HC' vs Source 'HR/Vqc/Sp2fs' (id: 081rL)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Ruth 1:16",
@@ -2097,6 +2099,41 @@
       "origWord": "עָזַב",
       "origSurface": "לְעָזְבֵ֖ךְ",
       "origMorph": "HR/Vqc/Sp2fs",
+      "origPos": 6,
+      "locator": "OSHB:B8.C1.V16.w6",
+      "locWordIndex": 6,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح"
+    },
+    {
+      "verse": "Ruth 1:16",
+      "verseAr": "راعوث ١:١٦",
+      "lang": "hebrew",
+      "arPos": 8,
+      "arWord": "وَأَرْجعَ",
+      "strongsId": "H7725",
+      "components": "H7725:primary",
+      "origWord": "שׁוּב",
+      "origSurface": "לָשׁ֣וּב",
+      "origMorph": "HR/Vqc",
       "origPos": 7,
       "locator": "OSHB:B8.C1.V16.w7",
       "locWordIndex": 7,
@@ -2111,27 +2148,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/Vqc/Sp2fs' vs Source 'HR/Vqc' (id: 08W2c)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Ruth 1:16",
       "verseAr": "راعوث ١:١٦",
       "lang": "hebrew",
-      "arPos": 8,
-      "arWord": "وَأَرْجعَ",
-      "strongsId": "H7725",
-      "components": "H7725:primary",
-      "origWord": "שׁוּב",
-      "origSurface": "לָשׁ֣וּב",
-      "origMorph": "HR/Vqc",
+      "arPos": 9,
+      "arWord": "عَنْكِ",
+      "strongsId": "H310",
+      "components": "H310:primary;H4480:secondary",
+      "origWord": "אַחַר",
+      "origSurface": "מֵאַחֲרָ֑יִךְ",
+      "origMorph": "HR/R/Sp2fs",
       "origPos": 8,
       "locator": "OSHB:B8.C1.V16.w8",
       "locWordIndex": 8,
@@ -2146,50 +2183,15 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/Vqc' vs Source 'HR/R/Sp2fs' (id: 08mL3)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Ruth 1:16",
-      "verseAr": "راعوث ١:١٦",
-      "lang": "hebrew",
-      "arPos": 9,
-      "arWord": "عَنْكِ",
-      "strongsId": "H4480",
-      "components": "H4480:primary",
-      "origWord": "מִן",
-      "origSurface": "מֵאַחֲרָיִךְ",
-      "origMorph": "HR/R/Sp2fs",
-      "origPos": 6,
-      "locator": "OSHB:B8.C1.V16.w6",
-      "locWordIndex": 6,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/R/Sp2fs' vs Source 'HR/Vqc/Sp2fs' (id: 081rL)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Ruth 1:16",
@@ -2202,9 +2204,9 @@
       "origWord": "כִּי",
       "origSurface": "כִּ֠י",
       "origMorph": "HC",
-      "origPos": 10,
-      "locator": "OSHB:B8.C1.V16.w10",
-      "locWordIndex": 10,
+      "origPos": 9,
+      "locator": "OSHB:B8.C1.V16.w9",
+      "locWordIndex": 9,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -2216,15 +2218,15 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HC' vs Source 'HR' (id: 08sYp)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Ruth 1:16",
