@@ -1501,6 +1501,56 @@ const batch20ComprehensiveCases = [
     expPos: 'particle', expGender: null, expNumber: null, expPerson: null,
     expMorph: 'HTr', expLoc: 'OSHB:B6.C1.V9.w14',
     oshbBook: 'Josh', oshbOsis: 'Josh.1.9', oshbWordIndex: 14, oshbExpectedId: '06sKn', oshbCheckSurface: true
+  },
+  // 50. Rom 8:28 w5 (الأَشْيَاءِ)
+  {
+    ref: 'Rom 8:28 w5 (الأَشْيَاءِ)', book: 45, ch: 8, vs: 28, pos: 5,
+    expStrongs: 'G3956', expOrig: 'πᾶς', expSurface: 'πάντα',
+    expPos: 'adjective', expGender: 'neuter', expNumber: 'plural', expPerson: null,
+    expMorph: 'A- ----APN-', expLoc: 'SBLGNT:B45.C8.V28.w8',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 45, sblgntChapter: 8, sblgntVerse: 28, sblgntWordIndex: 8,
+    sblgntExpectedMorph: 'A- ----APN-', sblgntExpectedLemma: 'πᾶς', sblgntCheckSurface: true
+  },
+  // 51. Rom 8:28 w7 (مَعًا)
+  {
+    ref: 'Rom 8:28 w7 (مَعًا)', book: 45, ch: 8, vs: 28, pos: 7,
+    expStrongs: 'G4903', expOrig: 'συνεργέω', expSurface: 'συνεργεῖ',
+    expPos: 'verb', expGender: null, expNumber: 'singular', expPerson: '3', expStem: null, expMood: 'indicative',
+    expMorph: 'V- 3PAI-S--', expLoc: 'SBLGNT:B45.C8.V28.w9',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 45, sblgntChapter: 8, sblgntVerse: 28, sblgntWordIndex: 9,
+    sblgntExpectedMorph: 'V- 3PAI-S--', sblgntExpectedLemma: 'συνεργέω', sblgntCheckSurface: true
+  },
+  // 52. 1Th 5:23 w11 (بِلاَ)
+  {
+    ref: '1Th 5:23 w11 (بِلاَ)', book: 52, ch: 5, vs: 23, pos: 11,
+    expStrongs: 'G274', expOrig: 'ἀμέμπτως', expSurface: 'ἀμέμπτως',
+    expPos: 'adverb', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'D- --------', expLoc: 'SBLGNT:B52.C5.V23.w21',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 52, sblgntChapter: 5, sblgntVerse: 23, sblgntWordIndex: 21,
+    sblgntExpectedMorph: 'D- --------', sblgntExpectedLemma: 'ἀμέμπτως', sblgntCheckSurface: true
+  },
+  // 53. 1Th 5:23 w13 (عِنْدَ)
+  {
+    ref: '1Th 5:23 w13 (عِنْدَ)', book: 52, ch: 5, vs: 23, pos: 13,
+    expStrongs: 'G1722', expOrig: 'ἐν', expSurface: 'ἐν',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'P- --------', expLoc: 'SBLGNT:B52.C5.V23.w22',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 52, sblgntChapter: 5, sblgntVerse: 23, sblgntWordIndex: 22,
+    sblgntExpectedMorph: 'P- --------', sblgntExpectedLemma: 'ἐν', sblgntCheckSurface: true
+  },
+  // 54. Lk 15:20 w7 (لَمْ)
+  {
+    ref: 'Lk 15:20 w7 (لَمْ)', book: 42, ch: 15, vs: 20, pos: 7,
+    expStrongs: 'G2089', expOrig: 'ἔτι', expSurface: 'ἔτι',
+    expPos: 'adverb', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'D- --------', expLoc: 'SBLGNT:B42.C15.V20.w8',
+    oshbBook: null, oshbOsis: null, oshbWordIndex: null, oshbExpectedId: null,
+    sblgntBookId: 42, sblgntChapter: 15, sblgntVerse: 20, sblgntWordIndex: 8,
+    sblgntExpectedMorph: 'D- --------', sblgntExpectedLemma: 'ἔτι', sblgntCheckSurface: true
   }
 ];
 
@@ -1598,6 +1648,11 @@ for (const tc of batch20ComprehensiveCases) {
         } else if (tc.sblgntExpectedLemma && targetToken.lemma !== tc.sblgntExpectedLemma) {
           okSblgnt = false;
           sblgntDetail = `SBLGNT lemma mismatch: got ${targetToken.lemma}, expected ${tc.sblgntExpectedLemma}`;
+        } else if (tc.sblgntCheckSurface) {
+          if (actualSurface !== targetToken.surfaceClean) {
+            okSblgnt = false;
+            sblgntDetail = `SBLGNT surface mismatch: got '${actualSurface}', expected SBLGNT '${targetToken.surfaceClean}'`;
+          }
         }
       }
     }
@@ -1805,6 +1860,54 @@ const okJoshEloheika = joshEloheika[0] === expectedOshbEloheika &&
   joshEloheika[1] === '12' &&
   joshEloheika[2] === 'OSHB:B6.C1.V9.w12';
 assertCondition('Joshua 1:9 w11 (إِلهَكَ) Direct OSHB Source Surface & Cantillation Purity (אֱלֹהֶ֔יךָ with zaqef qaton U+0594, NOT אֱלֹהֶ֑יךָ)', okJoshEloheika, `Found surface=${joshEloheika[0]}, comp=${joshEloheika[3]}, pos=${joshEloheika[1]}, loc=${joshEloheika[2]}, expected=${expectedOshbEloheika}`);
+
+// 17. Romans 8:28 w7 "مَعًا" Strongs & Unitary Translation Purity (G4903, NOT G4862)
+const romMaan = query(`
+  SELECT wm.strongs_id, wm.orig_word, wm.orig_surface, wm.orig_morphology, wm.orig_word_position, wm.verified_locator,
+         (SELECT GROUP_CONCAT(wms.strongs_id, ',') FROM word_mapping_strongs wms WHERE wms.mapping_id = wm.id) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 45 AND chapter_num = 8 AND verse_num = 28)
+    AND wm.ar_word_position = 7;
+`).split('|');
+const okRomMaan = romMaan[0] === 'G4903' && romMaan[1] === 'συνεργέω' && romMaan[2] === 'συνεργεῖ' &&
+  romMaan[3] === 'V- 3PAI-S--' && romMaan[4] === '9' && romMaan[5] === 'SBLGNT:B45.C8.V28.w9' &&
+  romMaan[0] !== 'G4862' && romMaan[6] === 'G4903';
+assertCondition('Romans 8:28 w7 (مَعًا) Strongs & Unitary Translation Purity (G4903, NOT G4862)', okRomMaan, `Found strongs=${romMaan[0]}, orig=${romMaan[1]}, surface=${romMaan[2]}, morph=${romMaan[3]}, pos=${romMaan[4]}, loc=${romMaan[5]}, comps=${romMaan[6]}`);
+
+// 18. Luke 15:20 w6 "كَانَ" Syntactic Copula Purity (NULL strongs, NOT G1161)
+const lkKana = query(`
+  SELECT wm.strongs_id, wm.orig_word, wm.orig_surface, wm.orig_word_position, wm.verified_locator, wm.relation_type,
+         (SELECT COUNT(*) FROM word_mapping_strongs wms WHERE wms.mapping_id = wm.id) as comps_count
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 42 AND chapter_num = 15 AND verse_num = 20)
+    AND wm.ar_word_position = 6;
+`).split('|');
+const okLkKana = !lkKana[0] && lkKana[1] === '—' && !lkKana[3] &&
+  lkKana[4] === 'AR_IMPLIED:B42.C15.V20.w6' && lkKana[5] === 'copula_implied' &&
+  lkKana[6] === '0' && lkKana[0] !== 'G1161' && lkKana[4] !== 'SBLGNT:B42.C15.V20.w9';
+assertCondition('Luke 15:20 w6 (كَانَ) Syntactic Copula Purity (NULL strongs, NOT G1161)', okLkKana, `Found strongs=${lkKana[0]}, orig=${lkKana[1]}, pos=${lkKana[3]}, loc=${lkKana[4]}, rel=${lkKana[5]}, comps=${lkKana[6]}`);
+
+// 19. 1 Thessalonians 5:23 w13 "عِنْدَ" Preposition Locator Purity (w22, NOT w13)
+const thEnda = query(`
+  SELECT wm.strongs_id, wm.orig_word_position, wm.verified_locator
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 52 AND chapter_num = 5 AND verse_num = 23)
+    AND wm.ar_word_position = 13;
+`).split('|');
+const okThEnda = thEnda[0] === 'G1722' && thEnda[1] === '22' &&
+  thEnda[2] === 'SBLGNT:B52.C5.V23.w22' && thEnda[2] !== 'SBLGNT:B52.C5.V23.w13';
+assertCondition('1 Thessalonians 5:23 w13 (عِنْدَ) Preposition Locator Purity (w22, NOT w13)', okThEnda, `Found strongs=${thEnda[0]}, pos=${thEnda[1]}, loc=${thEnda[2]}`);
+
+// 20. 1 Thessalonians 5:23 w11 "بِلاَ" Adverbial Privative Purity (G274, w21, NOT G1722)
+const thBila = query(`
+  SELECT wm.strongs_id, wm.orig_word, wm.orig_word_position, wm.verified_locator
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 52 AND chapter_num = 5 AND verse_num = 23)
+    AND wm.ar_word_position = 11;
+`).split('|');
+const okThBila = thBila[0] === 'G274' && thBila[1] === 'ἀμέμπτως' && thBila[2] === '21' &&
+  thBila[3] === 'SBLGNT:B52.C5.V23.w21' && thBila[0] !== 'G1722';
+assertCondition('1 Thessalonians 5:23 w11 (بِلاَ) Adverbial Privative Purity (G274, w21, NOT G1722)', okThBila, `Found strongs=${thBila[0]}, orig=${thBila[1]}, pos=${thBila[2]}, loc=${thBila[3]}`);
 
 
 

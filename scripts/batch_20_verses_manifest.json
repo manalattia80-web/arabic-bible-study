@@ -1,15 +1,14 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "1.0.364",
+  "version": "1.0.366",
   "date": "2026-11-08",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
-    "total": 311,
-    "correct": 244,
-    "error": 67,
+    "correct": 250,
+    "error": 61,
     "undecided": 0,
-    "accuracyPercent": 78.46
+    "accuracyPercent": 80.39
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -6152,34 +6151,34 @@
       "lang": "greek",
       "arPos": 6,
       "arWord": "كَانَ",
-      "strongsId": "G1161",
-      "components": "G1161:primary",
-      "origWord": "δέ",
-      "origSurface": "δὲ",
-      "origMorph": "C- --------",
-      "origPos": 6,
-      "locator": "SBLGNT:B42.C15.V20.w6",
-      "locWordIndex": 6,
-      "isSyntactic": false,
+      "strongsId": null,
+      "components": "",
+      "origWord": "—",
+      "origSurface": "—",
+      "origMorph": null,
+      "origPos": null,
+      "locator": "AR_IMPLIED:B42.C15.V20.w6",
+      "locWordIndex": null,
+      "isSyntactic": true,
       "axisFindings": {
         "lexical": {
           "status": "pass",
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'δέ' vs SBLGNT 'πατήρ'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'C- --------' vs SBLGNT 'N- ----ASM-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Luke 15:20",
@@ -6187,14 +6186,14 @@
       "lang": "greek",
       "arPos": 7,
       "arWord": "لَمْ",
-      "strongsId": "G3756",
-      "components": "G3756:primary",
-      "origWord": "οὐ",
-      "origSurface": "οὐ",
+      "strongsId": "G2089",
+      "components": "G2089:primary",
+      "origWord": "ἔτι",
+      "origSurface": "ἔτι",
       "origMorph": "D- --------",
-      "origPos": 7,
-      "locator": "SBLGNT:B42.C15.V20.w7",
-      "locWordIndex": 7,
+      "origPos": 8,
+      "locator": "SBLGNT:B42.C15.V20.w8",
+      "locWordIndex": 8,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -6202,19 +6201,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'οὐ' vs SBLGNT 'ἑαυτοῦ'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'D- --------' vs SBLGNT 'RP ----GSM-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Luke 15:20",
@@ -6717,9 +6716,9 @@
       "origWord": "πᾶς",
       "origSurface": "πάντα",
       "origMorph": "A- ----APN-",
-      "origPos": 5,
-      "locator": "SBLGNT:B45.C8.V28.w5",
-      "locWordIndex": 5,
+      "origPos": 8,
+      "locator": "SBLGNT:B45.C8.V28.w8",
+      "locWordIndex": 8,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -6727,19 +6726,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'πᾶς' vs SBLGNT 'ἀγαπάω'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'A- ----APN-' vs SBLGNT 'V- -PAPDPM-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Rom 8:28",
@@ -6782,11 +6781,11 @@
       "lang": "greek",
       "arPos": 7,
       "arWord": "مَعًا",
-      "strongsId": "G4862",
-      "components": "G4862:primary",
-      "origWord": "σύν",
-      "origSurface": "σύν",
-      "origMorph": "P- --------",
+      "strongsId": "G4903",
+      "components": "G4903:primary",
+      "origWord": "συνεργέω",
+      "origSurface": "συνεργεῖ",
+      "origMorph": "V- 3PAI-S--",
       "origPos": 9,
       "locator": "SBLGNT:B45.C8.V28.w9",
       "locWordIndex": 9,
@@ -6797,19 +6796,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'σύν' vs SBLGNT 'συνεργέω'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'P- --------' vs SBLGNT 'V- 3PAI-S--'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Rom 8:28",
@@ -8777,14 +8776,14 @@
       "lang": "greek",
       "arPos": 11,
       "arWord": "بِلاَ",
-      "strongsId": "G1722",
-      "components": "G1722:primary",
-      "origWord": "ἐν",
-      "origSurface": "ἐν",
-      "origMorph": "P- --------",
-      "origPos": 11,
-      "locator": "SBLGNT:B52.C5.V23.w11",
-      "locWordIndex": 11,
+      "strongsId": "G274",
+      "components": "G274:primary",
+      "origWord": "ἀμέμπτως",
+      "origSurface": "ἀμέμπτως",
+      "origMorph": "D- --------",
+      "origPos": 21,
+      "locator": "SBLGNT:B52.C5.V23.w21",
+      "locWordIndex": 21,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8792,19 +8791,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'ἐν' vs SBLGNT 'ὁλόκληρος'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'P- --------' vs SBLGNT 'A- ----NSN-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "1Thess 5:23",
@@ -8852,9 +8851,9 @@
       "origWord": "ἐν",
       "origSurface": "ἐν",
       "origMorph": "P- --------",
-      "origPos": 13,
-      "locator": "SBLGNT:B52.C5.V23.w13",
-      "locWordIndex": 13,
+      "origPos": 22,
+      "locator": "SBLGNT:B52.C5.V23.w22",
+      "locWordIndex": 22,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -8862,19 +8861,19 @@
           "note": ""
         },
         "lemmaSurface": {
-          "status": "fail",
-          "note": "Lemma mismatch: DB 'ἐν' vs SBLGNT 'ὁ'"
+          "status": "pass",
+          "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'P- --------' vs SBLGNT 'RA ----NSN-'"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "1Thess 5:23",

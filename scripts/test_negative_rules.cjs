@@ -339,6 +339,42 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 1 AND verse_num = 9 AND book_id = 6)
         AND ar_word_position = 11;
     `
+  },
+  {
+    gateNum: 22,
+    name: 'rom_8_28_maan_g4862_reinjected',
+    expectedFailTag: '[FAIL] Romans 8:28 w7 (مَعًا) Strongs & Unitary Translation Purity (G4903, NOT G4862)',
+    description: 'Re-injected G4862 into Romans 8:28 pos 7 (مَعًا) as independent preposition',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'G4862'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 8 AND verse_num = 28 AND book_id = 45)
+        AND ar_word_position = 7;
+    `
+  },
+  {
+    gateNum: 23,
+    name: 'luke_15_20_kana_linked_to_g1161',
+    expectedFailTag: '[FAIL] Luke 15:20 w6 (كَانَ) Syntactic Copula Purity (NULL strongs, NOT G1161)',
+    description: 'Linked Luke 15:20 pos 6 (كَانَ) falsely to Greek conjunction G1161 (δὲ)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'G1161', orig_word = 'δέ', verified_locator = 'SBLGNT:B42.C15.V20.w9', relation_type = 'direct'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 15 AND verse_num = 20 AND book_id = 42)
+        AND ar_word_position = 6;
+    `
+  },
+  {
+    gateNum: 24,
+    name: '1thess_5_23_enda_locator_reverted_to_w13',
+    expectedFailTag: '[FAIL] 1 Thessalonians 5:23 w13 (عِنْدَ) Preposition Locator Purity (w22, NOT w13)',
+    description: 'Reverted 1 Thessalonians 5:23 pos 13 (عِنْدَ) locator from w22 back to w13',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word_position = 13, verified_locator = 'SBLGNT:B52.C5.V23.w13'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 23 AND book_id = 52)
+        AND ar_word_position = 13;
+    `
   }
 ];
 
