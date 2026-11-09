@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 370; // v1.0.370: 1 Kings 18:21 full canonical alignment (25 Arabic / 27 Hebrew loci), 39 negative gates, manifest 275/36/0 (88.42%)
+    const targetDbVersion = 371; // v1.0.371: 1 Kings 18:21 morphology card fix (masculine plural H5587), updated display notes, manifest locWordIndex sync, negative gate 40
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();

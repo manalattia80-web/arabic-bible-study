@@ -550,6 +550,18 @@ const testCases = [
       WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 18 AND verse_num = 21 AND book_id = 11) AND ar_word_position = 23)
         AND strongs_id = 'H853';
     `
+  },
+  {
+    gateNum: 40,
+    name: '1kings_18_21_firqatayn_reverted_to_dual_feminine',
+    expectedFailTag: '[FAIL] 1 Kings 18:21 w11 (الْفِرْقَتَيْنِ) Primary Morphology Plural Masculine',
+    description: 'Reverted 1 Kings 18:21 pos 11 (الْفِرْقَتَيْنِ) morph_gender/morph_number back to feminine dual',
+    mutationSql: `
+      UPDATE word_mappings
+      SET morph_gender = 'feminine', morph_number = 'dual'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 18 AND verse_num = 21 AND book_id = 11)
+        AND ar_word_position = 11;
+    `
   }
 ];
 

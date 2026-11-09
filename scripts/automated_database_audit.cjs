@@ -2236,6 +2236,16 @@ const kgsTaarujComps = query(`
 const okKgsTaarujComps = kgsTaarujComps === 'H6452:primary@w10[פֹּסְחִים֮:HVqrmpa];H859:secondary@w9[אַתֶּ֣ם:HPp2mp]';
 assertCondition('1 Kings 18:21 w9 (تَعْرُجُونَ) Multi-Component Completeness (H6452 primary w10 + H859 secondary w9)', okKgsTaarujComps, `Found comps=${kgsTaarujComps}`);
 
+// 40. 1 Kings 18:21 w11 "الْفِرْقَتَيْنِ" Primary Hebrew Morphology: Plural Masculine (HTd/Ncmpa)
+const kgs11Morph = query(`
+  SELECT wm.morph_gender, wm.morph_number
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 11 AND chapter_num = 18 AND verse_num = 21)
+    AND wm.ar_word_position = 11;
+`).split('|');
+const okKgs11Morph = kgs11Morph[0] === 'masculine' && kgs11Morph[1] === 'plural';
+assertCondition('1 Kings 18:21 w11 (الْفِرْقَتَيْنِ) Primary Morphology Plural Masculine (HTd/Ncmpa)', okKgs11Morph, `Found gender=${kgs11Morph[0]}, number=${kgs11Morph[1]}`);
+
 
 
 

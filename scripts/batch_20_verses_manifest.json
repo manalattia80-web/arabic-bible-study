@@ -2908,7 +2908,7 @@
       "origMorph": "HR",
       "origPos": 11,
       "locator": "OSHB:B11.C18.V21.w11",
-      "locWordIndex": 8,
+      "locWordIndex": 11,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -2944,7 +2944,7 @@
       "origMorph": "HTd/Ncmpa",
       "origPos": 13,
       "locator": "OSHB:B11.C18.V21.w13",
-      "locWordIndex": 11,
+      "locWordIndex": 13,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -3050,7 +3050,7 @@
       "origMorph": "HNp",
       "origPos": 15,
       "locator": "OSHB:B11.C18.V21.w15",
-      "locWordIndex": 14,
+      "locWordIndex": 15,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -3086,8 +3086,8 @@
       "origMorph": null,
       "origPos": 0,
       "locator": "AR_SYNTACTIC:B11.C18.V21.w15",
-      "locWordIndex": 11,
-      "isSyntactic": false,
+      "locWordIndex": 15,
+      "isSyntactic": true,
       "axisFindings": {
         "lexical": {
           "status": "pass",
@@ -3334,7 +3334,7 @@
       "origMorph": "HC/Tn",
       "origPos": 23,
       "locator": "OSHB:B11.C18.V21.w23",
-      "locWordIndex": 22,
+      "locWordIndex": 23,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -3370,7 +3370,7 @@
       "origMorph": "HVqp3cp",
       "origPos": 24,
       "locator": "OSHB:B11.C18.V21.w24",
-      "locWordIndex": 23,
+      "locWordIndex": 24,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -3406,7 +3406,7 @@
       "origMorph": "HTd/Ncmsa",
       "origPos": 25,
       "locator": "OSHB:B11.C18.V21.w25",
-      "locWordIndex": 24,
+      "locWordIndex": 25,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -3442,7 +3442,7 @@
       "origMorph": "HNcmsa",
       "origPos": 27,
       "locator": "OSHB:B11.C18.V21.w27",
-      "locWordIndex": 25,
+      "locWordIndex": 27,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {

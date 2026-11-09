@@ -137,32 +137,18 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.370)
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 370` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
+          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.371)
+          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 371` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
           - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **1 Kings 18:21 Full Verse Canonical Alignment (Batch 370)**:
-            - **8 Base Corrections**:
-              - "بَيْنَ" (pos 10): Aligned to Hebrew preposition `עַל־` (`H5921`, `HR`, locator `OSHB:B11.C18.V21.w11`), replacing false H996 at w8.
-              - "الْفِرْقَتَيْنِ" (pos 11): Compound dual noun `שְׁתֵּ֣י הַסְּעִפִּים֒` (`H5587` primary `הַסְּעִפִּים֒` `HTd/Ncmpa` w13 + `H8147` secondary `שְׁתֵּ֣י` `HAcfdc` w12).
-              - "الرَّبُّ" (pos 14): Locator corrected to `OSHB:B11.C18.V21.w15` (`יְהוָ֤ה`, `H3068`, `HNp`), resolving false w14 shift.
-              - "هُوَ" (pos 15): Reclassified as Arabic syntactic copula (`syntactic_ar`, `NULL` strongs, `AR_SYNTACTIC:B11.C18.V21.w15`), removing false H1931.
-              - "فَلَمْ" (pos 22): Locator corrected to `OSHB:B11.C18.V21.w23` (`וְלֹֽא`, `H3808`, `HC/Tn`), resolving false w22 shift.
-              - "يُجِبْهُ" (pos 23): Primary verb `עָנ֥וּ` (`H6030`, `HVqp3cp`, w24) + secondary object marker suffix `אֹת֖וֹ` (`H853`, `HTo/Sp3ms`, w26).
-              - "الشَّعْبُ" (pos 24): Locator corrected to `OSHB:B11.C18.V21.w25` (`הָעָ֛ם`, `H5971`, `HTd/Ncmsa`).
-              - "بِكَلِمَةٍ" (pos 25): Locator corrected to `OSHB:B11.C18.V21.w27` (`דָּבָֽר`, `H1697`, `HNcmsa`).
-            - **4 Refinements & Cantillation Purity**:
-              - "وَقَالَ" (pos 6): Surface cantillation normalized to `וַיֹּ֨אמֶר֙` (`qadma` U+05A8 + `pashta` U+0599).
-              - "تَعْرُجُونَ" (pos 9): Primary `פֹּסְחִים֮` (`H6452`, w10) + secondary 2mp pronoun `אַתֶּ֣ם` (`H859`, `HPp2mp`, w9).
-              - "فَاتَّبِعُوهُ" (pos 17): Distinct components `לְכ֣וּ` (`H3212`, `HVqv2mp`, w17) + `אַחֲרָ֔יו` (`H310`, `HR/Sp3ms`, w18).
-              - "فَاتَّبِعُوهُ" (pos 21): Distinct components `לְכ֣וּ` (`H3212`, `HVqv2mp`, w21) + `אַחֲרָ֑יו` (`H310`, `HR/Sp3ms`, w22).
-            - **Canonical Manifest v370**: 311 units: 275 correct (88.42%), 36 errors (15 Hebrew, 21 Aramaic), 0 undecided.
-          - **Negative Quality Gates 35, 36, 37, 38, 39 & Production CI**:
-            - **Gate 35**: Rejection of restoring H1931 to 1Kgs 18:21 pos 15 ("هُوَ").
-            - **Gate 36**: Rejection of deleting secondary numeral component H8147 from pos 11 ("الْفِرْقَتَيْنِ").
-            - **Gate 37**: Rejection of deleting secondary pronominal component H859 from pos 9 ("تَعْرُجُونَ").
-            - **Gate 38**: Rejection of misattributing H310 component to w17 instead of w18 in pos 17 ("فَاتَّبِعُوهُ").
-            - **Gate 39**: Rejection of deleting secondary object pronoun component H853 from pos 23 ("يُجِبْهُ").
-            - **Comprehensive Loci**: 66 verified direct source & morphology loci in Test 11, 39 dedicated component boundaries in Test 13.
+          - **1 Kings 18:21 Morphology & Display Polish (Batch 371)**:
+            - **Morphology Card Alignment**: "الْفِرْقَتَيْنِ" (pos 11) primary Hebrew noun card `H5587` (`הַסְּעִפִּים֒`) updated to `morph_gender = 'masculine'` and `morph_number = 'plural'` matching `HTd/Ncmpa`, properly attributing dual feminine strictly to numeral component `H8147` (`שְׁתֵּ֣י`).
+            - **Display Notes Purification**: Rephrased the 7 display notes at Arabic positions 6, 7, 8, 12, 17, 18, 21 into clean, descriptive canonical notes, removing obsolete audit-era defect descriptors.
+            - **Canonical Manifest v371**: Synchronized `locWordIndex` directly from `locator` across all 8 affected records (w10->11, w11->13, w14->15, w15->15, w22->23, w23->24, w24->25, w25->27) and set `isSyntactic = true` for "هُوَ" (pos 15).
+            - **Quality Gate 40 (Negative Rule)**: Rejection of reverting pos 11 ("الْفِرْقَتَيْنِ") morphology back to feminine dual. All 40 negative gates passing.
+            - **Benchmark Status**: 311 units audited: 275 correct (88.42%), 36 errors (15 Hebrew, 21 Aramaic), 0 undecided.
+          - **Negative Quality Gates 1 to 40 Verified**:
+            - **Gate 40**: Rejection of restoring feminine dual morphology to 1Kgs 18:21 pos 11 primary noun H5587.
+            - **Comprehensive Loci**: 66 verified direct source & morphology loci in Test 11, 40 dedicated component boundaries in Test 13.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md
