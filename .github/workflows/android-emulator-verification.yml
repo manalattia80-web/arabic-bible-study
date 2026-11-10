@@ -6,7 +6,7 @@ on:
     branches: [ "main", "feature/**" ]
     paths:
       - '.github/workflows/android-emulator-verification.yml'
-      - 'scripts/run_android_emulator_v372_test.cjs'
+      - 'scripts/run_android_emulator_v373_test.cjs'
 
 jobs:
   verify-android-emulator:
@@ -37,36 +37,44 @@ jobs:
           java-version: '17'
 
       - name: Create Evidence Directory
-        run: mkdir -p emulator_evidence_v372
+        run: mkdir -p emulator_evidence_v373
 
       - name: Reassemble SQLite Database from Chunk Parts
         run: node scripts/assemble_db.cjs
 
-      - name: Download Baseline v1.0.370 APK
-        run: |
-          V370_URL="https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.370/arabic-bible-study-app.apk"
-          echo "Downloading baseline v1.0.370 APK from: $V370_URL"
-          curl -L -f -o v370_baseline.apk "$V370_URL"
-          echo "v370 APK Size: $(wc -c < v370_baseline.apk) bytes"
-
-      - name: Obtain & Verify Official Published v1.0.372 APK
+      - name: Download Baseline v1.0.372 APK
         run: |
           V372_URL="https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.372/arabic-bible-study-app.apk"
-          echo "Downloading official published v1.0.372 APK from: $V372_URL"
-          curl -L -f -o v372_candidate.apk "$V372_URL"
-          echo "Downloaded APK Size: $(wc -c < v372_candidate.apk) bytes"
-          EXPECTED_SHA="9e059d4d015da0b6e064044b2ea7a113dc39aa44784ad864cf2f02e2648ea974"
-          ACTUAL_SHA=$(sha256sum v372_candidate.apk | awk '{print $1}')
+          echo "Downloading baseline v1.0.372 APK from: $V372_URL"
+          curl -L -f -o v372_baseline.apk "$V372_URL"
+          echo "v372 APK Size: $(wc -c < v372_baseline.apk) bytes"
+          EXPECTED_372_SHA="9e059d4d015da0b6e064044b2ea7a113dc39aa44784ad864cf2f02e2648ea974"
+          ACTUAL_372_SHA=$(sha256sum v372_baseline.apk | awk '{print $1}')
+          echo "Expected v372 SHA-256: $EXPECTED_372_SHA"
+          echo "Actual v372 SHA-256:   $ACTUAL_372_SHA"
+          if [ "$ACTUAL_372_SHA" != "$EXPECTED_372_SHA" ]; then
+            echo "ERROR: Baseline v1.0.372 APK SHA-256 mismatch!"
+            exit 1
+          fi
+
+      - name: Obtain & Verify Official Published v1.0.373 APK
+        run: |
+          V373_URL="https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.373/arabic-bible-study-app.apk"
+          echo "Downloading official published v1.0.373 APK from: $V373_URL"
+          curl -L -f -o v373_candidate.apk "$V373_URL"
+          echo "Downloaded APK Size: $(wc -c < v373_candidate.apk) bytes"
+          EXPECTED_SHA="977328caccb2a8165385de99986a095926cc5229abd8105879612561d6a5e0a9"
+          ACTUAL_SHA=$(sha256sum v373_candidate.apk | awk '{print $1}')
           echo "Expected SHA-256: $EXPECTED_SHA"
           echo "Actual SHA-256:   $ACTUAL_SHA"
           if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then
-            echo "ERROR: APK SHA-256 mismatch with published v1.0.372!"
+            echo "ERROR: APK SHA-256 mismatch with published v1.0.373!"
             exit 1
           fi
-          sha256sum v372_candidate.apk | tee emulator_evidence_v372/apk_sha256.txt
+          sha256sum v373_candidate.apk | tee emulator_evidence_v373/apk_sha256.txt
 
       - name: Verify Built APK Chunks & Asset Integrity (Post-Build Gate)
-        run: node scripts/verify_apk_asset_integrity.cjs v372_candidate.apk
+        run: node scripts/verify_apk_asset_integrity.cjs v373_candidate.apk
 
       - name: Run Android Emulator Clean Install & Upgrade Verification Suite
         uses: reactivecircus/android-emulator-runner@v2
@@ -79,8 +87,8 @@ jobs:
           disable-animations: true
           script: |
             set -e
-            echo "=== Launching v1.0.372 Clean Install & v370->v372 Upgrade Test Suite on Live Android API 33 Emulator ==="
-            node scripts/run_android_emulator_v372_test.cjs
+            echo "=== Launching v1.0.373 Clean Install & v372->v373 Upgrade Test Suite on Live Android API 33 Emulator ==="
+            node scripts/run_android_emulator_v373_test.cjs
 
       - name: Display Test Results & Execution Summary
         if: always()
@@ -88,42 +96,39 @@ jobs:
           echo "========================================================================"
           echo "  ANDROID EMULATOR VERIFICATION RESULTS (test-results.xml)"
           echo "========================================================================"
-          cat emulator_evidence_v372/test-results.xml || true
-          
-          echo "========================================================================"
-          echo "  SHARED PREFERENCES BEFORE UPGRADE (v370)"
-          echo "========================================================================"
-          cat emulator_evidence_v372/prefs_before_upgrade.xml || true
+          cat emulator_evidence_v373/test-results.xml || true
 
           echo "========================================================================"
-          echo "  SHARED PREFERENCES AFTER UPGRADE (v372)"
+          echo "  SHARED PREFERENCES BEFORE UPGRADE (v372)"
           echo "========================================================================"
-          cat emulator_evidence_v372/prefs_after_upgrade.xml || true
-          
-          echo "========================================================================"
-          echo "  RAW OCR: CLEAN INSTALL 1 KINGS 18:21 H5587 CARD"
-          echo "========================================================================"
-          cat emulator_evidence_v372/clean_install_1kgs_h5587_card_ocr.txt || true
+          cat emulator_evidence_v373/prefs_before_upgrade.xml || true
 
           echo "========================================================================"
-          echo "  RAW OCR: UPGRADE 1 KINGS 18:21 H5587 CARD"
+          echo "  SHARED PREFERENCES AFTER UPGRADE (v373)"
           echo "========================================================================"
-          cat emulator_evidence_v372/upgrade_1kgs_h5587_card_ocr.txt || true
+          cat emulator_evidence_v373/prefs_after_upgrade.xml || true
 
-      - name: Upload Android Emulator v1.0.372 Evidence Artifacts
+          for f in emulator_evidence_v373/*_ocr.txt; do
+            echo "========================================================================"
+            echo "  OCR: $f"
+            echo "========================================================================"
+            cat "$f" || true
+          done
+
+      - name: Upload Android Emulator v1.0.373 Evidence Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: android-emulator-v372-evidence
+          name: android-emulator-v373-evidence
           path: |
-            android_emulator_v372_evidence.zip
-            emulator_evidence_v372/
+            android_emulator_v373_evidence.zip
+            emulator_evidence_v373/
 
-      - name: Attach Evidence Archive to Official Release v1.0.372
+      - name: Attach Evidence Archive to Official Release v1.0.373
         if: success()
         run: |
-          if [ -f "android_emulator_v372_evidence.zip" ]; then
-            gh release upload v1.0.372 android_emulator_v372_evidence.zip --clobber
+          if [ -f "android_emulator_v373_evidence.zip" ]; then
+            gh release upload v1.0.373 android_emulator_v373_evidence.zip --clobber
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
