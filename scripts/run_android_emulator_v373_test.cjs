@@ -48,13 +48,15 @@ function getFileSha256(filePath) {
 function runOcr(imagePath, fastSinglePass = false) {
   try {
     let combined = '';
-    try {
-      combined += child.execSync(`tesseract "${imagePath}" stdout -l eng+ara`, {
-        encoding: 'utf8',
-        timeout: 30000,
-        stdio: ['pipe', 'pipe', 'ignore']
-      }).trim() + ' ';
-    } catch (_) {}
+    for (const lang of ['eng+ara', 'eng']) {
+      try {
+        combined += child.execSync(`tesseract "${imagePath}" stdout -l ${lang}`, {
+          encoding: 'utf8',
+          timeout: 30000,
+          stdio: ['pipe', 'pipe', 'ignore']
+        }).trim() + ' ';
+      } catch (_) {}
+    }
 
     if (!fastSinglePass) {
       try {
@@ -64,11 +66,15 @@ function runOcr(imagePath, fastSinglePass = false) {
           timeout: 15000
         });
         if (fs.existsSync(inverted)) {
-          combined += child.execSync(`tesseract "${inverted}" stdout -l eng+ara`, {
-            encoding: 'utf8',
-            timeout: 30000,
-            stdio: ['pipe', 'pipe', 'ignore']
-          }).trim() + ' ';
+          for (const lang of ['eng+ara', 'eng']) {
+            try {
+              combined += child.execSync(`tesseract "${inverted}" stdout -l ${lang}`, {
+                encoding: 'utf8',
+                timeout: 30000,
+                stdio: ['pipe', 'pipe', 'ignore']
+              }).trim() + ' ';
+            } catch (_) {}
+          }
           try { fs.unlinkSync(inverted); } catch (_) {}
         }
       } catch (_) {}
@@ -114,9 +120,15 @@ function findTargetRowYsFromTsv(imagePath, targetCodes, H) {
           const tapY = Math.round(top + height / 2);
           if (tapY < H * 0.14 || tapY > H * 0.90) continue;
 
+          const tsvAliases = {
+            H1697: ['1697', 'dabar', 'dbar'],
+            H2428: ['2428', 'chayil', 'chayll'],
+            H3581: ['3581', 'koach', 'kdach'],
+            H7307: ['7307', 'ruwach', 'ruach'],
+          };
           for (const code of targetCodes) {
-            const digits = code.replace(/^H/, '');
-            if (rawText.includes(digits)) {
+            const lower = rawText.toLowerCase();
+            if ((tsvAliases[code] || [code.replace(/^H/, '')]).some(a => lower.includes(a))) {
               if (!found[code]) found[code] = [];
               if (!found[code].some(existingY => Math.abs(existingY - tapY) < 40)) {
                 found[code].push(tapY);
@@ -405,15 +417,15 @@ function openZech46CardsAndVerify(prefixLabel) {
     }
     console.log(`[MODAL OCR SAMPLE]: ${o.slice(0, 200).replace(/\n/g, ' ')}`);
 
-    // Match STRICTLY by Strong's code or unambiguous morphology code (never common Arabic substrings)
+    // Match by Strong's code, morphology code, OR unique Latin transliteration (dabar/chayil/koach/ruwach)
     let targetKey = null;
-    if (!captured.H1697 && (o.includes('1697') || o.includes('Ncmsc')) && !o.includes('2428') && !o.includes('3581') && !o.includes('7307') && !o.includes('6030') && !o.includes('559')) {
+    if (!captured.H1697 && (o.includes('1697') || o.includes('Ncmsc') || /\bd[aâ]?b[aâ]r\b/i.test(o) || /\bdbar\b/i.test(o)) && !/\b(chayil|koach|ruwach|ruach)\b/i.test(o) && !o.includes('2428') && !o.includes('3581') && !o.includes('7307')) {
       targetKey = 'H1697';
-    } else if (!captured.H2428 && o.includes('2428') && !o.includes('3581') && !o.includes('7307') && !o.includes('1697')) {
+    } else if (!captured.H2428 && (o.includes('2428') || /chay[il1]{1,2}/i.test(o)) && !/\b(dabar|dbar|koach|ruwach|ruach)\b/i.test(o) && !o.includes('3581') && !o.includes('7307') && !o.includes('1697')) {
       targetKey = 'H2428';
-    } else if (!captured.H3581 && o.includes('3581') && !o.includes('2428') && !o.includes('7307') && !o.includes('1697')) {
+    } else if (!captured.H3581 && (o.includes('3581') || /k[oô0]?ach/i.test(o)) && !/\b(dabar|dbar|chayil|ruwach|ruach)\b/i.test(o) && !o.includes('2428') && !o.includes('7307') && !o.includes('1697')) {
       targetKey = 'H3581';
-    } else if (!captured.H7307 && (o.includes('7307') || o.includes('Ncbsc')) && !o.includes('2428') && !o.includes('3581') && !o.includes('1697')) {
+    } else if (!captured.H7307 && (o.includes('7307') || o.includes('Ncbsc') || o.includes('Sp1cs') || /r[uû]w?ach/i.test(o)) && !/\b(dabar|dbar|chayil|koach)\b/i.test(o) && !o.includes('2428') && !o.includes('3581') && !o.includes('1697')) {
       targetKey = 'H7307';
     }
 
@@ -481,15 +493,15 @@ function openZech46CardsAndVerify(prefixLabel) {
     }
   }
 
-  // Scan WordStudyScreen top-to-bottom in small overlapping swipes using TSV Strong's targeting
+  // Scan WordStudyScreen top-to-bottom across all 18 rows using TSV targeting
   const requiredKeys = ['H1697', 'H2428', 'H3581', 'H7307'];
-  for (let pass = 0; pass < 7; pass++) {
+  for (let pass = 0; pass < 9; pass++) {
     const remaining = requiredKeys.filter(k => !captured[k]);
     if (remaining.length === 0) break;
 
     if (pass > 0) {
       console.log(`Scrolling down in WordStudyScreen (pass ${pass}, remaining: ${remaining.join(', ')})...`);
-      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.72)} ${Math.round(W * 0.50)} ${Math.round(H * 0.42)} 350`);
+      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.76)} ${Math.round(W * 0.50)} ${Math.round(H * 0.34)} 350`);
       sleep(1200);
     }
 
