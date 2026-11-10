@@ -258,7 +258,7 @@ function openH5587MorphologyCardAndVerify(screenshotName) {
   }
 
   // Try tapping rows in the visible area to open H5587 StrongsModal
-  const rowOffsets = [0.50, 0.58, 0.42, 0.66, 0.34, 0.74, 0.26, 0.82];
+  const rowOffsets = [0.36, 0.44, 0.52, 0.60, 0.28, 0.68, 0.76];
   let openedH5587Modal = false;
   let finalCardOcr = '';
 
@@ -288,13 +288,18 @@ function openH5587MorphologyCardAndVerify(screenshotName) {
       sleep(2200);
 
       const modalCheck = captureAndOcr('modal_check.png');
-      const isH5587Modal = (
+      console.log(`[MODAL OCR SAMPLE]: ${modalCheck.ocr.slice(0, 200).replace(/\n/g, ' ')}`);
+      const looksLikeOtherVerbOrWord = modalCheck.ocr.includes('6452') || modalCheck.ocr.includes('3212') || modalCheck.ocr.includes('تعرف') || modalCheck.ocr.includes('عرج');
+      const isH5587Modal = !looksLikeOtherVerbOrWord && (
         modalCheck.ocr.includes('5587') ||
         modalCheck.ocr.includes('S587') ||
+        modalCheck.ocr.includes('557') ||
+        modalCheck.ocr.includes('55B7') ||
         modalCheck.ocr.includes('8147') ||
+        modalCheck.ocr.includes('B147') ||
         modalCheck.ocr.includes('Ncmpa') ||
-        modalCheck.ocr.toLowerCase().includes("sa'iph") ||
-        modalCheck.ocr.toLowerCase().includes('saiph') ||
+        modalCheck.ocr.includes('تركيب متعدد') ||
+        modalCheck.ocr.includes('متعدد المداخل') ||
         modalCheck.ocr.includes('الفرقتين') ||
         modalCheck.ocr.includes('ساعف') ||
         modalCheck.ocr.includes('ساغف') ||
@@ -307,7 +312,13 @@ function openH5587MorphologyCardAndVerify(screenshotName) {
         execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.78)} ${Math.round(W * 0.50)} ${Math.round(H * 0.30)} 350`);
         sleep(1500);
 
-        const cardSnap = captureAndOcr(screenshotName, `/sdcard/${screenshotName}`);
+        let cardSnap = captureAndOcr(screenshotName, `/sdcard/${screenshotName}`);
+        if (!cardSnap.ocr.includes('Masculine') || !cardSnap.ocr.includes('Plural')) {
+          console.log('Morphology rows not fully in view yet; doing second scroll up inside expanded modal...');
+          execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.72)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 350`);
+          sleep(1500);
+          cardSnap = captureAndOcr(screenshotName, `/sdcard/${screenshotName}`);
+        }
         finalCardOcr = cardSnap.ocr;
         openedH5587Modal = true;
         break;
