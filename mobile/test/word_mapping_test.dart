@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:arabic_bible_study/models/word_mapping.dart';
+import 'package:arabic_bible_study/core/services/morphology_service.dart';
 
 void main() {
   group('WordMapping.fromJson Multi-Strongs Invariant Tests', () {
@@ -45,6 +46,32 @@ void main() {
       final mapping = WordMapping.fromJson(json);
 
       expect(mapping.strongsIds, equals(['H5921', 'H3651']));
+    });
+  });
+
+  group('MorphologyService Card Display Invariants (v1.0.372)', () {
+    test('1 Kings 18:21 H5587 renders masculine plural card instead of feminine dual', () {
+      final analysis = MorphologyService.parse(
+        code: 'HTd/Ncmpa',
+        language: 'hebrew',
+        arWord: 'الْفِرْقَتَيْنِ',
+        origWord: 'סָעִף',
+        origSurface: 'הַסְּעִפִּים֒',
+        strongsId: 'H5587',
+        morphPos: 'noun',
+        morphGender: 'masculine',
+        morphNumber: 'plural',
+        morphSource: 'oshb_wlc',
+        verifiedLocator: '1Kgs.18.21#11',
+      );
+
+      expect(analysis.partOfSpeech, contains('اسم'));
+      expect(analysis.gender, contains('مذكر'));
+      expect(analysis.number, contains('جمع'));
+      expect(analysis.gender, isNot(contains('مؤنث')));
+      expect(analysis.number, isNot(contains('مثنى')));
+      expect(analysis.summary, isNot(contains('مؤنث')));
+      expect(analysis.summary, isNot(contains('مثنى')));
     });
   });
 }

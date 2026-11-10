@@ -3,7 +3,10 @@ name: Android Emulator Verification
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "feature/**" ]
+    paths:
+      - '.github/workflows/android-emulator-verification.yml'
+      - 'scripts/run_android_emulator_v372_test.cjs'
 
 jobs:
   verify-android-emulator:
@@ -33,49 +36,39 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.3'
-          channel: 'stable'
-
-      - name: Configure Flutter Android Project
-        working-directory: ./mobile
-        run: |
-          rm -f test/widget_test.dart
-          node ../scripts/patch_gradle.cjs
-
-      - name: Install dependencies
-        working-directory: ./mobile
-        run: flutter pub get
-
       - name: Create Evidence Directory
-        run: mkdir -p emulator_evidence
+        run: mkdir -p emulator_evidence_v372
 
-      - name: Download Baseline v1.0.346 APK
-        run: |
-          V346_URL="https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.346/arabic-bible-study-app.apk"
-          echo "Downloading baseline v1.0.346 APK from: $V346_URL"
-          curl -L -f -o v346_app.apk "$V346_URL"
-          echo "v346 APK Size: $(wc -c < v346_app.apk) bytes"
+      - name: Reassemble SQLite Database from Chunk Parts
+        run: node scripts/assemble_db.cjs
 
-      - name: Obtain Official Candidate v1.0.348 APK
+      - name: Download Baseline v1.0.370 APK
         run: |
-          V348_URL="https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.348/arabic-bible-study-app.apk"
-          echo "Downloading official published v1.0.348 APK from: $V348_URL"
-          curl -L -f -o v348_candidate.apk "$V348_URL"
-          echo "Downloaded APK Size: $(wc -c < v348_candidate.apk) bytes"
-          EXPECTED_SHA="7002ed351d7ee16a4a0e77af6eaaa8e599f197b3fe224dfe90536319b9cd34de"
-          ACTUAL_SHA=$(sha256sum v348_candidate.apk | awk '{print $1}')
+          V370_URL="https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.370/arabic-bible-study-app.apk"
+          echo "Downloading baseline v1.0.370 APK from: $V370_URL"
+          curl -L -f -o v370_baseline.apk "$V370_URL"
+          echo "v370 APK Size: $(wc -c < v370_baseline.apk) bytes"
+
+      - name: Obtain & Verify Official Published v1.0.372 APK
+        run: |
+          V372_URL="https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.372/arabic-bible-study-app.apk"
+          echo "Downloading official published v1.0.372 APK from: $V372_URL"
+          curl -L -f -o v372_candidate.apk "$V372_URL"
+          echo "Downloaded APK Size: $(wc -c < v372_candidate.apk) bytes"
+          EXPECTED_SHA="9e059d4d015da0b6e064044b2ea7a113dc39aa44784ad864cf2f02e2648ea974"
+          ACTUAL_SHA=$(sha256sum v372_candidate.apk | awk '{print $1}')
           echo "Expected SHA-256: $EXPECTED_SHA"
           echo "Actual SHA-256:   $ACTUAL_SHA"
           if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then
-            echo "ERROR: APK SHA-256 mismatch with frozen candidate v1.0.348!"
+            echo "ERROR: APK SHA-256 mismatch with published v1.0.372!"
             exit 1
           fi
-          sha256sum v348_candidate.apk | tee emulator_evidence/apk_sha256.txt
+          sha256sum v372_candidate.apk | tee emulator_evidence_v372/apk_sha256.txt
 
-      - name: Run Android Emulator Automated Test Suite
+      - name: Verify Built APK Chunks & Asset Integrity (Post-Build Gate)
+        run: node scripts/verify_apk_asset_integrity.cjs v372_candidate.apk
+
+      - name: Run Android Emulator Clean Install & Upgrade Verification Suite
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 33
@@ -86,80 +79,51 @@ jobs:
           disable-animations: true
           script: |
             set -e
-            echo "=== Launching Automated Test Suite on Live Android API 33 Emulator ==="
-            node scripts/run_android_automated_tests.cjs
+            echo "=== Launching v1.0.372 Clean Install & v370->v372 Upgrade Test Suite on Live Android API 33 Emulator ==="
+            node scripts/run_android_emulator_v372_test.cjs
 
       - name: Display Test Results & Execution Summary
         if: always()
         run: |
           echo "========================================================================"
-          echo "  AUTOMATED TEST RESULTS (test-results.xml)"
+          echo "  ANDROID EMULATOR VERIFICATION RESULTS (test-results.xml)"
           echo "========================================================================"
-          cat emulator_evidence/test-results.xml || true
+          cat emulator_evidence_v372/test-results.xml || true
           
           echo "========================================================================"
-          echo "  PREFERENCES & BOOKMARKS CHECK (preferences_check.json)"
+          echo "  SHARED PREFERENCES BEFORE UPGRADE (v370)"
           echo "========================================================================"
-          cat emulator_evidence/preferences_check.json || true
-          
-          echo "========================================================================"
-          echo "  APK SHA-256 FINGERPRINT (apk_sha256.txt)"
-          echo "========================================================================"
-          cat emulator_evidence/apk_sha256.txt || true
-          
-          echo "========================================================================"
-          echo "  RAW OCR: SEARCH HISTORY CHIPS (search_history_ocr_raw.txt)"
-          echo "========================================================================"
-          cat emulator_evidence/search_history_ocr_raw.txt || true
-          
-          echo "========================================================================"
-          echo "  RAW OCR: GENESIS 22:16 COMPOUND STRONGS (genesis_multistrongs_ocr_raw.txt)"
-          echo "========================================================================"
-          cat emulator_evidence/genesis_multistrongs_ocr_raw.txt || true
-          
-          cat << 'EOF' > emulator_evidence/execution_report.md
-          # Official Automated Android Verification Report — v1.0.348
-          
-          ## 1. Summary of Execution
-          - **Runner**: Ubuntu 24.04 (x86_64) Hardware-Accelerated KVM Android Emulator
-          - **Android API Level**: 33 (Google APIs)
-          - **Target Package**: `com.arabicbible.study`
-          - **Baseline App**: `v1.0.346` installed with user settings and bookmarks seeded
-          - **In-Place Upgrade**: `adb install -r v348_candidate.apk` without data wipe
-          - **Database Migration**: `targetDbVersion = 348` and `totalParts = 71` verified on device
-          - **Settings Preservation**: User preferences, theme, font size, and bookmarks 100% preserved
-          - **Zero Fatal Crashes**: 0 errors detected during entire test run
-          
-          ## 2. Real UI Verified Evidence
-          - **Matthew 27:61**: Greek Strong's `G561` («تُجَاهَ») verified on UI (`matthew_G561.png`)
-          - **Daniel 2:21**: Aramaic Strong's `H8133` («يُغَيِّرُ») verified on UI (`daniel_H8133.png`)
-          - **Genesis 22:16**: Multi-Strong's compound links (`H1697`, `H853`, `H1121`) verified on UI (`genesis_multistrongs.png`)
-          
-          ## 3. Packaged Evidence Assets
-          The following files are packaged into `android_automated_test_evidence_v1.0.348.zip`:
-          1. `test-results.xml` (JUnit standard test results with assertion outcomes)
-          2. `matthew_G561.png` (Screenshot of Greek linkage in UI)
-          3. `daniel_H8133.png` (Screenshot of Aramaic linkage in UI)
-          4. `genesis_multistrongs.png` (Screenshot of multi-Strong's compound links in UI)
-          5. `upgrade_logcat.txt` (Logcat tracing in-place upgrade and runtime)
-          6. `preferences_check.json` (Structured JSON comparing settings before and after upgrade)
-          7. `apk_sha256.txt` (SHA-256 fingerprint of the tested candidate APK)
-          EOF
+          cat emulator_evidence_v372/prefs_before_upgrade.xml || true
 
-      - name: Upload Automated Verification Artifacts
+          echo "========================================================================"
+          echo "  SHARED PREFERENCES AFTER UPGRADE (v372)"
+          echo "========================================================================"
+          cat emulator_evidence_v372/prefs_after_upgrade.xml || true
+          
+          echo "========================================================================"
+          echo "  RAW OCR: CLEAN INSTALL 1 KINGS 18:21 H5587 CARD"
+          echo "========================================================================"
+          cat emulator_evidence_v372/clean_install_1kgs_h5587_card_ocr.txt || true
+
+          echo "========================================================================"
+          echo "  RAW OCR: UPGRADE 1 KINGS 18:21 H5587 CARD"
+          echo "========================================================================"
+          cat emulator_evidence_v372/upgrade_1kgs_h5587_card_ocr.txt || true
+
+      - name: Upload Android Emulator v1.0.372 Evidence Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: android-automated-test-evidence-v1.0.348
+          name: android-emulator-v372-evidence
           path: |
-            android_automated_test_evidence_v1.0.348.zip
-            emulator_evidence/
+            android_emulator_v372_evidence.zip
+            emulator_evidence_v372/
 
-      - name: Attach Evidence Archive to Official Release v1.0.348
-        if: always()
+      - name: Attach Evidence Archive to Official Release v1.0.372
+        if: success()
         run: |
-          if [ -f "android_automated_test_evidence_v1.0.348.zip" ]; then
-            gh release upload v1.0.348 android_automated_test_evidence_v1.0.348.zip --clobber
+          if [ -f "android_emulator_v372_evidence.zip" ]; then
+            gh release upload v1.0.372 android_emulator_v372_evidence.zip --clobber
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

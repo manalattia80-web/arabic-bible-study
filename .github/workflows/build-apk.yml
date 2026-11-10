@@ -73,6 +73,9 @@ jobs:
         working-directory: ./mobile
         run: flutter test
 
+      - name: Run Clean Install & Upgrade Runtime Verification Suite
+        run: node scripts/verify_runtime_clean_and_upgrade.cjs
+
       - name: Extract Canonical App Version from pubspec.yaml
         run: |
           RAW_VER=$(grep '^version:' mobile/pubspec.yaml | sed 's/version: //' | tr -d ' \r\n')
@@ -97,6 +100,9 @@ jobs:
           fi
           echo "Found APK at: $APK_PATH"
           cp "$APK_PATH" ../arabic-bible-study-app.apk
+
+      - name: Verify Built APK Chunks and Asset Integrity (Post-Build Gate)
+        run: node scripts/verify_apk_asset_integrity.cjs arabic-bible-study-app.apk
 
       - name: Build App Bundle (AAB for Google Play Store)
         working-directory: ./mobile
@@ -163,9 +169,20 @@ jobs:
             apk_sha256.txt
             db_sha256.txt
             release_notes.md
+            scratch/runtime_clean_and_upgrade_evidence_v372.json
+
+      - name: Check if Release Tag Already Exists
+        id: check_release
+        run: |
+          if git ls-remote --tags origin "refs/tags/${{ env.APP_RELEASE_TAG }}" | grep -q "${{ env.APP_RELEASE_TAG }}"; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Release tag ${{ env.APP_RELEASE_TAG }} already exists on remote; preserving published release binary."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Create Release
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature/')
+        if: (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature/')) && steps.check_release.outputs.exists != 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "${{ env.APP_RELEASE_TAG }}"
