@@ -143,8 +143,10 @@ function recordTest(name, durationSec, passed, failureMsg = '') {
   testResults.push({ name, durationSec, passed, failureMsg });
   if (passed) {
     console.log(`[PASS] ${name} (${durationSec.toFixed(1)}s)`);
+    console.log(`::notice::PASS ${name} (${durationSec.toFixed(1)}s)`);
   } else {
     console.error(`[FAIL] ${name} (${durationSec.toFixed(1)}s): ${failureMsg}`);
+    console.log(`::error::FAIL ${name}: ${failureMsg}`);
   }
 }
 
@@ -215,16 +217,22 @@ function executeSearch(queryText) {
   ensureSearchScreen();
   execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
   sleep(500);
-  execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
+  for (let k = 0; k < 15; k++) execAdb('shell input keyevent 67');
   sleep(400);
-  for (let k = 0; k < 10; k++) execAdb('shell input keyevent 67');
-  sleep(500);
 
   console.log(`Typing search query: ${queryText}`);
   execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
-  sleep(600);
-  execAdb(`shell input text "${queryText}"`);
-  sleep(1000);
+  sleep(500);
+  if (queryText.includes(' ')) {
+    const parts = queryText.split(' ');
+    for (let i = 0; i < parts.length; i++) {
+      if (i > 0) execAdb('shell input keyevent 62'); // KEYCODE_SPACE
+      if (parts[i].length > 0) execAdb(`shell input text "${parts[i]}"`);
+    }
+  } else {
+    execAdb(`shell input text "${queryText}"`);
+  }
+  sleep(800);
   execAdb('shell input keyevent 66'); // Enter
   sleep(3000);
   dismissKeyboard();
@@ -275,10 +283,13 @@ function openZech46CardsAndVerify(prefixLabel) {
   sleep(3500);
 
   // Use space-separated book chapter verse reference supported by SearchScreen
-  executeSearch('38%s4%s6');
+  executeSearch('38 4 6');
 
   const searchResSnap = captureAndOcr(`${prefixLabel}_search_zech46_results.png`, `/sdcard/${prefixLabel}_search_zech46_results.png`);
   console.log('Search 38 4 6 OCR sample:', searchResSnap.ocr.slice(0, 220).replace(/\n/g, ' '));
+  if (!searchResSnap.ocr.includes('زربابل') && !searchResSnap.ocr.includes('زكريا') && !searchResSnap.ocr.includes('نتيجة') && !searchResSnap.ocr.includes('بالقدرة')) {
+    throw new Error(`Search '38 4 6' did not return Zechariah 4:6 result card! OCR: "${searchResSnap.ocr.slice(0, 250)}"`);
+  }
 
   const cardTapOffsets = [0.36, 0.42, 0.48, 0.30, 0.54, 0.60];
   let enteredReader = false;
@@ -309,7 +320,8 @@ function openZech46CardsAndVerify(prefixLabel) {
     throw new Error('Could not navigate to Zechariah 4:6 in ChapterReaderScreen from 38 4 6 search.');
   }
 
-  const verseTapOffsets = [0.40, 0.50, 0.30, 0.60, 0.70, 0.80];
+  // ChapterReaderScreen aligns target verse with alignment: 0.15 -> ~0.23..0.35 * H
+  const verseTapOffsets = [0.26, 0.31, 0.22, 0.36, 0.42, 0.48, 0.54];
   let enteredWordStudy = false;
   for (const yRatio of verseTapOffsets) {
     console.log(`Tapping Verse 6 card at (${Math.round(W * 0.60)}, ${Math.round(H * yRatio)}) to open WordStudyScreen...`);
@@ -317,15 +329,27 @@ function openZech46CardsAndVerify(prefixLabel) {
     sleep(3500);
 
     const wsCheck = captureAndOcr('wordstudy_entry_check.png', '/sdcard/wordstudy_entry_check.png');
-    if (wsCheck.ocr.includes('الأصل المعجمي') || wsCheck.ocr.includes('سترونج والنطق') || wsCheck.ocr.includes('الرمز المعجمي') || wsCheck.ocr.includes('دراسة')) {
-      enteredWordStudy = true;
-      console.log('Entered WordStudyScreen for Zechariah 4:6!');
-      break;
+    const isWordStudy = wsCheck.ocr.includes('الأصل المعجمي') || wsCheck.ocr.includes('سترونج والنطق') || wsCheck.ocr.includes('الرمز المعجمي') || wsCheck.ocr.includes('دراسة');
+    if (isWordStudy) {
+      const isZech46 =
+        wsCheck.ocr.includes('الآية 6') ||
+        wsCheck.ocr.includes('بالقدرة') ||
+        wsCheck.ocr.includes('زربابل') ||
+        wsCheck.ocr.includes('بروحي') ||
+        wsCheck.ocr.includes('الجنود');
+      if (isZech46) {
+        enteredWordStudy = true;
+        console.log('Confirmed WordStudyScreen for Zechariah 4:6 is open!');
+        break;
+      }
+      console.log(`Opened WordStudyScreen for wrong verse (OCR: ${wsCheck.ocr.slice(0, 120).replace(/\n/g, ' ')}), pressing Back...`);
+      execAdb('shell input keyevent 4');
+      sleep(1200);
     }
   }
 
   if (!enteredWordStudy) {
-    throw new Error('Could not open WordStudyScreen for Zechariah 4:6.');
+    throw new Error('Could not open WordStudyScreen for Zechariah 4:6 (Verse 6).');
   }
 
   const captured = {};
