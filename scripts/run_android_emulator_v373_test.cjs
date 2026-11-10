@@ -147,7 +147,7 @@ function recordTest(name, durationSec, passed, failureMsg = '') {
     console.log(`::notice::PASS ${name} (${durationSec.toFixed(1)}s)`);
   } else {
     console.error(`[FAIL] ${name} (${durationSec.toFixed(1)}s): ${cleanMsg}`);
-    console.log(`::error::FAIL ${name}: ${cleanMsg.slice(0, 500)}`);
+    console.log(`::error::FAIL ${name}: ${cleanMsg.slice(0, 1200)}`);
   }
 }
 
@@ -369,10 +369,12 @@ function openZech46CardsAndVerify(prefixLabel) {
     lastWsCheckOcr = wsCheck.ocr;
     const isWordStudy = wsCheck.ocr.includes('الأصل المعجمي') || wsCheck.ocr.includes('سترونج والنطق') || wsCheck.ocr.includes('الرمز المعجمي') || wsCheck.ocr.includes('دراسة');
     if (isWordStudy) {
-      // Strictly distinguish Zechariah 4:6 from Verse 5 or Verse 7 (never match 'الإصحاح 4' or 'زربابل'!)
+      // Strictly distinguish Zechariah 4:6 from Verse 5 or Verse 7 (handles RTL bidi order '6 زكريا - الإصحاح 4 - الآية')
       const isZech46 =
         wsCheck.ocr.includes('الآية 6') ||
         wsCheck.ocr.includes('الآية ٦') ||
+        (/زكريا.*الإصحاح\s*4/.test(wsCheck.ocr) && /\b6\b/.test(wsCheck.ocr)) ||
+        (/الإصحاح\s*4.*الآية/.test(wsCheck.ocr) && /\b6\b/.test(wsCheck.ocr)) ||
         wsCheck.ocr.includes('18 كلمة') ||
         wsCheck.ocr.includes('1697') ||
         wsCheck.ocr.includes('2428') ||
@@ -393,9 +395,14 @@ function openZech46CardsAndVerify(prefixLabel) {
   }
 
   const captured = {};
+  const diag = { tsvPerPass: [], modalOpenCount: 0, modalSamples: [], wsPass0Ocr: '' };
 
   function inspectOpenedModal(modalCheck) {
     const o = modalCheck.ocr;
+    diag.modalOpenCount++;
+    if (diag.modalSamples.length < 4) {
+      diag.modalSamples.push(o.replace(/\r?\n/g, ' | ').slice(0, 110));
+    }
     console.log(`[MODAL OCR SAMPLE]: ${o.slice(0, 200).replace(/\n/g, ' ')}`);
 
     // Match STRICTLY by Strong's code or unambiguous morphology code (never common Arabic substrings)
@@ -470,7 +477,7 @@ function openZech46CardsAndVerify(prefixLabel) {
       execAdb('shell input keyevent 4');
       sleep(900);
       const chk = captureAndOcr('back_check.png', '/sdcard/back_check.png', true);
-      if (!isModalOpenOcr(chk.ocr)) break;
+      if (chk.ocr.includes('الأصل المعجمي') || chk.ocr.includes('سترونج والنطق') || !isModalOpenOcr(chk.ocr)) break;
     }
   }
 
@@ -489,8 +496,12 @@ function openZech46CardsAndVerify(prefixLabel) {
     const scanPath = path.join(evidenceDir, `ws_pass_${pass}.png`);
     execAdb('shell screencap -p /sdcard/ws_pass.png');
     execAdb(`pull /sdcard/ws_pass.png "${scanPath}"`);
+    if (pass === 0) {
+      diag.wsPass0Ocr = runOcr(scanPath, true).replace(/\r?\n/g, ' | ').slice(0, 140);
+    }
 
     const tsvHits = findTargetRowYsFromTsv(scanPath, remaining, H);
+    diag.tsvPerPass.push(tsvHits);
     console.log(`TSV hits on pass ${pass}:`, JSON.stringify(tsvHits));
 
     for (const key of remaining) {
@@ -542,7 +553,7 @@ function openZech46CardsAndVerify(prefixLabel) {
 
   for (const reqKey of requiredKeys) {
     if (!captured[reqKey]) {
-      throw new Error(`Did not capture and verify Zechariah 4:6 card ${reqKey}. Captured: ${JSON.stringify(captured)}`);
+      throw new Error(`Did not capture and verify Zechariah 4:6 card ${reqKey}. Captured: ${JSON.stringify(captured)} | Diag: ${JSON.stringify(diag)}`);
     }
   }
   return captured;
