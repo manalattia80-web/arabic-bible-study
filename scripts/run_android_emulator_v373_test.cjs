@@ -45,7 +45,7 @@ function getFileSha256(filePath) {
   return crypto.createHash('sha256').update(buffer).digest('hex').toUpperCase();
 }
 
-function runOcr(imagePath) {
+function runOcr(imagePath, fastSinglePass = false) {
   try {
     let combined = '';
     try {
@@ -56,27 +56,79 @@ function runOcr(imagePath) {
       }).trim() + ' ';
     } catch (_) {}
 
-    try {
-      const inverted = imagePath.replace(/\.png$/i, '_neg.png');
-      child.execSync(`ffmpeg -y -i "${imagePath}" -vf "negate" "${inverted}"`, {
-        stdio: 'ignore',
-        timeout: 15000
-      });
-      if (fs.existsSync(inverted)) {
-        combined += child.execSync(`tesseract "${inverted}" stdout -l eng+ara`, {
-          encoding: 'utf8',
-          timeout: 30000,
-          stdio: ['pipe', 'pipe', 'ignore']
-        }).trim() + ' ';
-        try { fs.unlinkSync(inverted); } catch (_) {}
-      }
-    } catch (_) {}
+    if (!fastSinglePass) {
+      try {
+        const inverted = imagePath.replace(/\.png$/i, '_neg.png');
+        child.execSync(`ffmpeg -y -i "${imagePath}" -vf "negate" "${inverted}"`, {
+          stdio: 'ignore',
+          timeout: 15000
+        });
+        if (fs.existsSync(inverted)) {
+          combined += child.execSync(`tesseract "${inverted}" stdout -l eng+ara`, {
+            encoding: 'utf8',
+            timeout: 30000,
+            stdio: ['pipe', 'pipe', 'ignore']
+          }).trim() + ' ';
+          try { fs.unlinkSync(inverted); } catch (_) {}
+        }
+      } catch (_) {}
+    }
 
     return combined.trim();
   } catch (err) {
     console.warn(`OCR warning on ${imagePath}:`, err.message);
     return '';
   }
+}
+
+/**
+ * Finds exact pixel Y coordinates of target Strong's codes on WordStudyScreen using Tesseract TSV.
+ */
+function findTargetRowYsFromTsv(imagePath, targetCodes, H) {
+  const found = {}; // code -> [tapY, ...]
+  const imagesToScan = [imagePath];
+  const inverted = imagePath.replace(/\.png$/i, '_tsv_neg.png');
+  try {
+    child.execSync(`ffmpeg -y -i "${imagePath}" -vf "negate" "${inverted}"`, {
+      stdio: 'ignore',
+      timeout: 15000
+    });
+    if (fs.existsSync(inverted)) imagesToScan.push(inverted);
+  } catch (_) {}
+
+  for (const img of imagesToScan) {
+    for (const psm of ['6', '11']) {
+      try {
+        const tsv = child.execSync(`tesseract "${img}" stdout -l eng --psm ${psm} tsv`, {
+          encoding: 'utf8',
+          timeout: 20000,
+          stdio: ['pipe', 'pipe', 'ignore']
+        });
+        for (const line of tsv.split(/\r?\n/)) {
+          const cols = line.split('\t');
+          if (cols.length < 12) continue;
+          const top = parseInt(cols[7], 10);
+          const height = parseInt(cols[9], 10);
+          const rawText = (cols[11] || '').trim().replace(/[^0-9A-Za-z]/g, '');
+          if (!rawText || isNaN(top) || isNaN(height) || height <= 0) continue;
+          const tapY = Math.round(top + height / 2);
+          if (tapY < H * 0.14 || tapY > H * 0.90) continue;
+
+          for (const code of targetCodes) {
+            const digits = code.replace(/^H/, '');
+            if (rawText.includes(digits)) {
+              if (!found[code]) found[code] = [];
+              if (!found[code].some(existingY => Math.abs(existingY - tapY) < 40)) {
+                found[code].push(tapY);
+              }
+            }
+          }
+        }
+      } catch (_) {}
+    }
+  }
+  try { if (fs.existsSync(inverted)) fs.unlinkSync(inverted); } catch (_) {}
+  return found;
 }
 
 console.log('========================================================================');
@@ -135,18 +187,18 @@ function dismissKeyboard() {
   }
 }
 
-function captureAndOcr(localFilename = 'screen_check.png', remotePath = '/sdcard/screen_check.png') {
+function captureAndOcr(localFilename = 'screen_check.png', remotePath = '/sdcard/screen_check.png', fastSinglePass = false) {
   const localPath = path.join(evidenceDir, localFilename);
   execAdb(`shell screencap -p ${remotePath}`);
   execAdb(`pull ${remotePath} "${localPath}"`);
-  return { localPath, ocr: runOcr(localPath) };
+  return { localPath, ocr: runOcr(localPath, fastSinglePass) };
 }
 
 function ensureSearchScreen() {
   ensureAppInForeground();
   dismissKeyboard();
   for (let attempt = 0; attempt < 4; attempt++) {
-    const { ocr } = captureAndOcr('nav_check.png');
+    const { ocr } = captureAndOcr('nav_check.png', '/sdcard/nav_check.png', true);
     const onSearch = ocr.includes('بحث') || ocr.includes('عمليات البحث') || ocr.includes('اقتراحات') || ocr.includes('ابحث') || ocr.includes('Search');
     if (!onSearch) {
       console.log(`Navigating to SearchScreen (tap ${searchIconX}, ${searchIconY})...`);
@@ -159,7 +211,7 @@ function ensureSearchScreen() {
   }
 }
 
-function executeSearch(code) {
+function executeSearch(queryText) {
   ensureSearchScreen();
   execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
   sleep(500);
@@ -168,10 +220,10 @@ function executeSearch(code) {
   for (let k = 0; k < 10; k++) execAdb('shell input keyevent 67');
   sleep(500);
 
-  console.log(`Typing search query: ${code}`);
+  console.log(`Typing search query: ${queryText}`);
   execAdb(`shell input tap ${searchInputX} ${searchInputY}`);
   sleep(600);
-  execAdb(`shell input text "${code}"`);
+  execAdb(`shell input text "${queryText}"`);
   sleep(1000);
   execAdb('shell input keyevent 66'); // Enter
   sleep(3000);
@@ -184,7 +236,7 @@ function isModalOpenOcr(ocr) {
     ocr.includes('المدخل المعجمي') ||
     ocr.includes('الرمز القياسي') ||
     ocr.includes('نطق آلي') ||
-    ocr.includes('Hebrew') ||
+    ocr.includes('عرض المعجم') ||
     ocr.includes('المعنى المعجمي') ||
     ocr.includes('التحليل النحوي')
   );
@@ -209,8 +261,8 @@ function hasConstructOcr(ocr) {
 }
 
 /**
- * Navigates Search('38:4:6') -> Zechariah 4:6 Reader -> WordStudyScreen
- * Opens and captures:
+ * Navigates Search('38 4 6') -> Zechariah 4:6 Reader -> WordStudyScreen
+ * Uses TSV Strong's coordinate targeting + dense fallback to open & verify:
  *   - H1697 ("كَلِمَةُ"): Construct state
  *   - H2428 ("بِالْقُدْرَةِ"): Bet prefix
  *   - H3581 ("بِالْقُوَّةِ"): Bet prefix
@@ -222,30 +274,30 @@ function openZech46CardsAndVerify(prefixLabel) {
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
   sleep(3500);
 
-  // Use exact book:chapter:verse query supported by SearchScreen (line 122)
-  executeSearch('38:4:6');
+  // Use space-separated book chapter verse reference supported by SearchScreen
+  executeSearch('38%s4%s6');
 
-  const searchResSnap = captureAndOcr(`${prefixLabel}_search_zech46_results.png`);
-  console.log('Search 38:4:6 OCR sample:', searchResSnap.ocr.slice(0, 220).replace(/\n/g, ' '));
+  const searchResSnap = captureAndOcr(`${prefixLabel}_search_zech46_results.png`, `/sdcard/${prefixLabel}_search_zech46_results.png`);
+  console.log('Search 38 4 6 OCR sample:', searchResSnap.ocr.slice(0, 220).replace(/\n/g, ' '));
 
-  // Direct ref match shows 1 card without DirectStrongsCard above it
-  const cardTapOffsets = [0.36, 0.42, 0.48, 0.54, 0.30, 0.60];
+  const cardTapOffsets = [0.36, 0.42, 0.48, 0.30, 0.54, 0.60];
   let enteredReader = false;
   for (const yRatio of cardTapOffsets) {
     console.log(`Tapping Zechariah 4:6 result card at (${Math.round(W * 0.50)}, ${Math.round(H * yRatio)})...`);
     execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
-    sleep(3500);
+    sleep(4000);
 
-    const check = captureAndOcr('reader_entry_check.png');
-    if (check.ocr.includes('عرض المعجم بالكامل') || check.ocr.includes('التحليل النحوي')) {
+    const check = captureAndOcr('reader_entry_check.png', '/sdcard/reader_entry_check.png');
+    if (isModalOpenOcr(check.ocr)) {
       execAdb('shell input keyevent 4');
       sleep(1200);
       continue;
     }
     const isReaderScreen =
-      (check.ocr.includes('التالي') || check.ocr.includes('السابق') || check.ocr.includes('زكريا') || check.ocr.includes('زربابل')) &&
+      (check.ocr.includes('التالي') || check.ocr.includes('السابق')) &&
       !check.ocr.includes('نتائج') &&
-      !check.ocr.includes('وجدنا');
+      !check.ocr.includes('وجدنا') &&
+      !check.ocr.includes('اقتراحات');
     if (isReaderScreen) {
       enteredReader = true;
       console.log('Entered Zechariah 4 ChapterReaderScreen successfully!');
@@ -254,17 +306,17 @@ function openZech46CardsAndVerify(prefixLabel) {
   }
 
   if (!enteredReader) {
-    throw new Error('Could not navigate to Zechariah 4:6 in ChapterReaderScreen from 38:4:6 search.');
+    throw new Error('Could not navigate to Zechariah 4:6 in ChapterReaderScreen from 38 4 6 search.');
   }
 
-  const verseTapOffsets = [0.40, 0.50, 0.30, 0.60, 0.70];
+  const verseTapOffsets = [0.40, 0.50, 0.30, 0.60, 0.70, 0.80];
   let enteredWordStudy = false;
   for (const yRatio of verseTapOffsets) {
     console.log(`Tapping Verse 6 card at (${Math.round(W * 0.60)}, ${Math.round(H * yRatio)}) to open WordStudyScreen...`);
     execAdb(`shell input tap ${Math.round(W * 0.60)} ${Math.round(H * yRatio)}`);
     sleep(3500);
 
-    const wsCheck = captureAndOcr('wordstudy_entry_check.png');
+    const wsCheck = captureAndOcr('wordstudy_entry_check.png', '/sdcard/wordstudy_entry_check.png');
     if (wsCheck.ocr.includes('الأصل المعجمي') || wsCheck.ocr.includes('سترونج والنطق') || wsCheck.ocr.includes('الرمز المعجمي') || wsCheck.ocr.includes('دراسة')) {
       enteredWordStudy = true;
       console.log('Entered WordStudyScreen for Zechariah 4:6!');
@@ -282,15 +334,15 @@ function openZech46CardsAndVerify(prefixLabel) {
     const o = modalCheck.ocr;
     console.log(`[MODAL OCR SAMPLE]: ${o.slice(0, 200).replace(/\n/g, ' ')}`);
 
-    // Identify which target Strong's card is open (rejecting non-targets explicitly)
+    // Match STRICTLY by Strong's code or unambiguous morphology code (never common Arabic substrings)
     let targetKey = null;
-    if (!captured.H1697 && (o.includes('1697') || o.includes('Ncmsc') || o.includes('كلمة')) && !o.includes('2428') && !o.includes('3581') && !o.includes('7307') && !o.includes('6030')) {
+    if (!captured.H1697 && (o.includes('1697') || o.includes('Ncmsc')) && !o.includes('2428') && !o.includes('3581') && !o.includes('7307') && !o.includes('6030') && !o.includes('559')) {
       targetKey = 'H1697';
-    } else if (!captured.H2428 && (o.includes('2428') || o.includes('بالقدرة') || o.includes('القدرة')) && !o.includes('3581') && !o.includes('7307') && !o.includes('1697')) {
+    } else if (!captured.H2428 && o.includes('2428') && !o.includes('3581') && !o.includes('7307') && !o.includes('1697')) {
       targetKey = 'H2428';
-    } else if (!captured.H3581 && (o.includes('3581') || o.includes('بالقوة') || o.includes('القوة')) && !o.includes('2428') && !o.includes('7307') && !o.includes('1697')) {
+    } else if (!captured.H3581 && o.includes('3581') && !o.includes('2428') && !o.includes('7307') && !o.includes('1697')) {
       targetKey = 'H3581';
-    } else if (!captured.H7307 && (o.includes('7307') || o.includes('Ncbsc') || o.includes('بروحي') || o.includes('روحي')) && !o.includes('2428') && !o.includes('3581') && !o.includes('1697')) {
+    } else if (!captured.H7307 && (o.includes('7307') || o.includes('Ncbsc')) && !o.includes('2428') && !o.includes('3581') && !o.includes('1697')) {
       targetKey = 'H7307';
     }
 
@@ -298,14 +350,7 @@ function openZech46CardsAndVerify(prefixLabel) {
       return false;
     }
 
-    console.log(`Target card ${targetKey} opened! Checking Morphology Card rows...`);
-    let snap = modalCheck;
-    const needsScroll = () => {
-      if (targetKey === 'H1697') return !hasConstructOcr(snap.ocr);
-      if (targetKey === 'H2428' || targetKey === 'H3581') return !hasBetPrefixOcr(snap.ocr);
-      return !(hasBetPrefixOcr(snap.ocr) && hasConstructOcr(snap.ocr));
-    };
-
+    console.log(`Target card ${targetKey} opened! Verifying Morphology Card UI rows...`);
     const shotMap = {
       H1697: `${prefixLabel}_zech_h1697_construct_card.png`,
       H2428: `${prefixLabel}_zech_h2428_bet_card.png`,
@@ -314,17 +359,25 @@ function openZech46CardsAndVerify(prefixLabel) {
     };
     const shotName = shotMap[targetKey];
 
+    // Capture full dual-pass OCR right away before any modal scroll
+    let snap = captureAndOcr(shotName, `/sdcard/${shotName}`, false);
+
+    const needsScroll = () => {
+      if (targetKey === 'H1697') return !hasConstructOcr(snap.ocr);
+      if (targetKey === 'H2428' || targetKey === 'H3581') return !hasBetPrefixOcr(snap.ocr);
+      return !(hasBetPrefixOcr(snap.ocr) && hasConstructOcr(snap.ocr));
+    };
+
     if (needsScroll()) {
-      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.72)} ${Math.round(W * 0.50)} ${Math.round(H * 0.36)} 350`);
+      // Gentle swipe inside single-Strong's modal so Morphology table centers cleanly without overshooting
+      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.68)} ${Math.round(W * 0.50)} ${Math.round(H * 0.46)} 320`);
       sleep(1400);
-      snap = captureAndOcr(shotName, `/sdcard/${shotName}`);
+      snap = captureAndOcr(shotName, `/sdcard/${shotName}`, false);
       if (needsScroll()) {
-        execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.72)} ${Math.round(W * 0.50)} ${Math.round(H * 0.38)} 350`);
+        execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.68)} ${Math.round(W * 0.50)} ${Math.round(H * 0.46)} 320`);
         sleep(1400);
-        snap = captureAndOcr(shotName, `/sdcard/${shotName}`);
+        snap = captureAndOcr(shotName, `/sdcard/${shotName}`, false);
       }
-    } else {
-      snap = captureAndOcr(shotName, `/sdcard/${shotName}`);
     }
 
     fs.writeFileSync(path.join(evidenceDir, shotName.replace('.png', '_ocr.txt')), snap.ocr, 'utf8');
@@ -348,51 +401,82 @@ function openZech46CardsAndVerify(prefixLabel) {
     return true;
   }
 
-  // Scan WordStudyScreen from top (row 5 H1697) down through rows 11-15 (H2428, H3581, H7307)
-  const rowOffsets = [0.32, 0.42, 0.52, 0.62, 0.72, 0.80];
+  function ensureBackOnWordStudy() {
+    for (let i = 0; i < 2; i++) {
+      execAdb('shell input keyevent 4');
+      sleep(900);
+      const chk = captureAndOcr('back_check.png', '/sdcard/back_check.png', true);
+      if (!isModalOpenOcr(chk.ocr)) break;
+    }
+  }
+
+  // Scan WordStudyScreen top-to-bottom in small overlapping swipes using TSV Strong's targeting
+  const requiredKeys = ['H1697', 'H2428', 'H3581', 'H7307'];
   for (let pass = 0; pass < 7; pass++) {
-    if (captured.H1697 && captured.H2428 && captured.H3581 && captured.H7307) break;
+    const remaining = requiredKeys.filter(k => !captured[k]);
+    if (remaining.length === 0) break;
 
     if (pass > 0) {
-      console.log(`Scrolling down in WordStudyScreen (scroll pass ${pass})... Captured so far: ${Object.keys(captured).join(', ') || 'none'}`);
-      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.74)} ${Math.round(W * 0.50)} ${Math.round(H * 0.34)} 380`);
-      sleep(1300);
+      console.log(`Scrolling down in WordStudyScreen (pass ${pass}, remaining: ${remaining.join(', ')})...`);
+      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.72)} ${Math.round(W * 0.50)} ${Math.round(H * 0.42)} 350`);
+      sleep(1200);
     }
 
-    const scan = captureAndOcr(`ws_pass_${pass}.png`);
-    const mayHaveH1697 = !captured.H1697 && (scan.ocr.includes('1697') || scan.ocr.includes('كلمة') || scan.ocr.includes('الرب') || scan.ocr.includes('فأجاب'));
-    const mayHaveBetCards = (!captured.H2428 || !captured.H3581 || !captured.H7307) && (
-      scan.ocr.includes('2428') || scan.ocr.includes('3581') || scan.ocr.includes('7307') ||
-      scan.ocr.includes('بالقدرة') || scan.ocr.includes('بالقوة') || scan.ocr.includes('بروحي') ||
-      pass >= 2
-    );
-    if (!mayHaveH1697 && !mayHaveBetCards) {
-      continue;
-    }
+    const scanPath = path.join(evidenceDir, `ws_pass_${pass}.png`);
+    execAdb('shell screencap -p /sdcard/ws_pass.png');
+    execAdb(`pull /sdcard/ws_pass.png "${scanPath}"`);
 
-    for (const yRatio of rowOffsets) {
-      if (captured.H1697 && captured.H2428 && captured.H3581 && captured.H7307) break;
+    const tsvHits = findTargetRowYsFromTsv(scanPath, remaining, H);
+    console.log(`TSV hits on pass ${pass}:`, JSON.stringify(tsvHits));
 
-      const preCheck = captureAndOcr('pre_tap_check.png');
-      if (isModalOpenOcr(preCheck.ocr)) {
-        execAdb('shell input keyevent 4');
-        sleep(900);
-      }
-
-      console.log(`Tapping word row (pass ${pass}) at (${Math.round(W * 0.50)}, ${Math.round(H * yRatio)})...`);
-      execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
-      sleep(2100);
-
-      const modalCheck = captureAndOcr('modal_check.png');
-      if (isModalOpenOcr(modalCheck.ocr)) {
-        inspectOpenedModal(modalCheck);
-        execAdb('shell input keyevent 4');
-        sleep(1000);
+    for (const key of remaining) {
+      const ys = tsvHits[key] || [];
+      for (const yPx of ys) {
+        if (captured[key]) break;
+        console.log(`Tapping TSV coordinate for ${key} at (${Math.round(W * 0.50)}, ${yPx})...`);
+        execAdb(`shell input tap ${Math.round(W * 0.50)} ${yPx}`);
+        sleep(2000);
+        const modalCheck = captureAndOcr('modal_check.png', '/sdcard/modal_check.png', true);
+        if (isModalOpenOcr(modalCheck.ocr)) {
+          inspectOpenedModal(modalCheck);
+          ensureBackOnWordStudy();
+        }
       }
     }
   }
 
-  for (const reqKey of ['H1697', 'H2428', 'H3581', 'H7307']) {
+  // Fallback sweep if any card still missed by TSV
+  const stillMissing = requiredKeys.filter(k => !captured[k]);
+  if (stillMissing.length > 0) {
+    console.log(`Fallback dense sweep for missing keys: ${stillMissing.join(', ')}...`);
+    // Scroll back to top if H1697 missing, otherwise scan from current/middle
+    if (stillMissing.includes('H1697')) {
+      for (let up = 0; up < 4; up++) {
+        execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} 300`);
+        sleep(800);
+      }
+    }
+    const denseOffsets = [0.24, 0.30, 0.36, 0.42, 0.48, 0.54, 0.60, 0.66, 0.72, 0.78, 0.84];
+    for (let s = 0; s < 5; s++) {
+      if (requiredKeys.every(k => captured[k])) break;
+      if (s > 0) {
+        execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.74)} ${Math.round(W * 0.50)} ${Math.round(H * 0.44)} 350`);
+        sleep(1100);
+      }
+      for (const yRatio of denseOffsets) {
+        if (requiredKeys.every(k => captured[k])) break;
+        execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
+        sleep(1800);
+        const modalCheck = captureAndOcr('modal_check.png', '/sdcard/modal_check.png', true);
+        if (isModalOpenOcr(modalCheck.ocr)) {
+          inspectOpenedModal(modalCheck);
+          ensureBackOnWordStudy();
+        }
+      }
+    }
+  }
+
+  for (const reqKey of requiredKeys) {
     if (!captured[reqKey]) {
       throw new Error(`Did not capture and verify Zechariah 4:6 card ${reqKey}. Captured: ${JSON.stringify(captured)}`);
     }
@@ -514,7 +598,7 @@ try {
   if (!v372Ready) {
     throw new Error('Timed out waiting for baseline v372 database bible_study_v372.db to initialize!');
   }
-  sleep(3000);
+  sleep(3500);
   ensureAppInForeground();
 
   // Execute an organic search in baseline v372 UI before upgrade
