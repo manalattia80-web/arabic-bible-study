@@ -242,12 +242,15 @@ function openH5587MorphologyCardAndVerify(screenshotName) {
     throw new Error('Could not open WordStudyScreen for 1 Kings 18:21.');
   }
 
-  // Scroll down inside WordStudyScreen so Row 11 ("الْفِرْقَتَيْنِ" / H5587) comes into view
+  // Scroll down inside WordStudyScreen so Row 11 ("الْفِرْقَتَيْنِ" / H5587) comes cleanly into center view
   console.log('Scrolling in WordStudyScreen to reach row 11 ("الْفِرْقَتَيْنِ" / H5587)...');
   for (let s = 0; s < 5; s++) {
     const scan = captureAndOcr('wordstudy_scroll_scan.png');
-    if (scan.ocr.includes('5587') || scan.ocr.includes('الفرقتين')) {
-      console.log(`Detected H5587 / الفرقتين on screen at scroll iteration ${s}!`);
+    if (scan.ocr.includes('5587') || scan.ocr.includes('S587') || scan.ocr.includes('8147') || scan.ocr.includes('الفرقتين')) {
+      console.log(`Detected H5587 / الفرقتين on screen at scroll iteration ${s}! Centering row 11...`);
+      // Scroll up once more so row 11 moves from bottom edge to middle viewport
+      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.65)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 350`);
+      sleep(1200);
       break;
     }
     execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.72)} ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} 350`);
@@ -255,7 +258,7 @@ function openH5587MorphologyCardAndVerify(screenshotName) {
   }
 
   // Try tapping rows in the visible area to open H5587 StrongsModal
-  const rowOffsets = [0.50, 0.56, 0.44, 0.62, 0.38, 0.68, 0.32, 0.74, 0.26, 0.80];
+  const rowOffsets = [0.50, 0.58, 0.42, 0.66, 0.34, 0.74, 0.26, 0.82];
   let openedH5587Modal = false;
   let finalCardOcr = '';
 
@@ -266,25 +269,58 @@ function openH5587MorphologyCardAndVerify(screenshotName) {
       sleep(1200);
     }
     for (const yRatio of rowOffsets) {
+      // Guard: ensure no stale modal is stuck open before tapping next row
+      const preCheck = captureAndOcr('pre_tap_check.png');
+      if (
+        preCheck.ocr.includes('المدخل المعجمي') ||
+        preCheck.ocr.includes('الرمز القياسي') ||
+        preCheck.ocr.includes('نطق آلي') ||
+        preCheck.ocr.includes('Hebrew') ||
+        preCheck.ocr.includes('المعنى المعجمي')
+      ) {
+        console.log('Detected stale modal open; pressing Back before next tap...');
+        execAdb('shell input keyevent 4');
+        sleep(1000);
+      }
+
       console.log(`Trying word row tap (pass ${pass + 1}) at (${Math.round(W * 0.50)}, ${Math.round(H * yRatio)})...`);
       execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
       sleep(2200);
 
       const modalCheck = captureAndOcr('modal_check.png');
-      if (modalCheck.ocr.includes('5587') || modalCheck.ocr.includes('ساعف') || modalCheck.ocr.includes('الفرقتين') || modalCheck.ocr.includes('الشق') || modalCheck.ocr.includes('مترد')) {
-        console.log('StrongsModal for H5587 opened! Ensuring Morphology Card table is centered...');
-        if (!modalCheck.ocr.includes('Masculine') && !modalCheck.ocr.includes('التحليل النحوي')) {
-          // Gentle swipe up inside the bottom sheet modal to center Morphology table
-          execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.65)} ${Math.round(W * 0.50)} ${Math.round(H * 0.42)} 350`);
-          sleep(1200);
-        }
+      const isH5587Modal = (
+        modalCheck.ocr.includes('5587') ||
+        modalCheck.ocr.includes('S587') ||
+        modalCheck.ocr.includes('8147') ||
+        modalCheck.ocr.includes('Ncmpa') ||
+        modalCheck.ocr.toLowerCase().includes("sa'iph") ||
+        modalCheck.ocr.toLowerCase().includes('saiph') ||
+        modalCheck.ocr.includes('الفرقتين') ||
+        modalCheck.ocr.includes('ساعف') ||
+        modalCheck.ocr.includes('ساغف') ||
+        modalCheck.ocr.includes('سايف')
+      );
+
+      if (isH5587Modal) {
+        console.log('StrongsModal for H5587 opened! Scrolling inside modal to reveal full Morphology Card table...');
+        // Always scroll up inside compound StrongsModal so Masculine + Plural rows are squarely centered
+        execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.78)} ${Math.round(W * 0.50)} ${Math.round(H * 0.30)} 350`);
+        sleep(1500);
 
         const cardSnap = captureAndOcr(screenshotName, `/sdcard/${screenshotName}`);
         finalCardOcr = cardSnap.ocr;
         openedH5587Modal = true;
         break;
-      } else if (modalCheck.ocr.includes('المعنى') || modalCheck.ocr.includes('سترونج') || modalCheck.ocr.includes('التحليل النحوي')) {
-        // Wrong row modal opened, dismiss and try next offset
+      } else if (
+        modalCheck.ocr.includes('المدخل المعجمي') ||
+        modalCheck.ocr.includes('الرمز القياسي') ||
+        modalCheck.ocr.includes('المعنى') ||
+        modalCheck.ocr.includes('نطق آلي') ||
+        modalCheck.ocr.includes('Hebrew') ||
+        modalCheck.ocr.includes('التحليل')
+      ) {
+        // Wrong row modal opened; dismiss strictly
+        console.log('Wrong row modal opened; dismissing with KEYCODE_BACK...');
         execAdb('shell input keyevent 4');
         sleep(1000);
       }
