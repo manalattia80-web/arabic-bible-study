@@ -1,17 +1,19 @@
 /**
  * run_android_emulator_v373_test.cjs
- * Official Android Emulator Automated Runtime & Upgrade Verification Suite for v1.0.373
- * Tests BOTH required tracks on a live Android API 33 KVM Emulator:
- *   1. Track A (Clean Install): Fresh install of v1.0.373 APK -> confirms bible_study_v373.db
- *      (363,438,080 bytes from 70 parts) opens cleanly with ZERO AssetNotFoundException,
- *      and Zechariah 4:6 Word Study Cards render Bet prefix ("باء الجر والظرفية") on
- *      H2428 ("بِالْقُدْرَةِ"), H3581 ("بِالْقُوَّةِ"), H7307 ("بِرُوحِي") and Construct state
- *      ("حالة الإضافة العبرية (Construct)") on H1697 ("كَلِمَةُ") & H7307 ("بِرُوحِي").
- *   2. Track B (Upgrade from v372): Installs v1.0.372 baseline, seeds user preferences
- *      (dark mode, search history, db_version=372), performs in-place upgrade via
- *      `adb install -r v373_candidate.apk` without wiping data, verifies bible_study_v373.db
- *      opens cleanly, bible_study_v372.db is deleted, 100% user prefs/history are preserved,
- *      and Zechariah 4:6 cards display Bet prefix and Construct state in live UI.
+ * Official Android Emulator Verification Suite for Release v1.0.373
+ * Separated into clean, independent suites on live Android API 33 KVM Emulator:
+ *   Suite 1 (Clean Install): Fresh install of v1.0.373 APK -> verifies bible_study_v373.db
+ *     (363,438,080 bytes from 70 parts), zero AssetNotFoundException, opens Zechariah 4:6.
+ *   Suite 2 (Upgrade v372 -> v373): Installs v1.0.372 baseline, seeds user prefs/history,
+ *     upgrades in-place (`adb install -r v373_candidate.apk`), verifies bible_study_v372.db
+ *     cleanup, bible_study_v373.db integrity, 100% user prefs preservation, opens Zechariah 4:6.
+ *   Suite 3 (Direct Zechariah 4:6 Cards Verification on v1.0.373):
+ *     Opens each of the 4 cards by name/Strong's/transliteration directly in Zechariah 4:6 WordStudyScreen:
+ *       - H1697 ("كَلِمَةُ"): Construct state ("Construct" / "الإضافة العبرية")
+ *       - H2428 ("بِالْقُدْرَةِ"): Bet prefix VALUE ("باء الجر" / "الظرفية" — NEVER just row label)
+ *       - H3581 ("بِالْقُوَّةِ"): Bet prefix VALUE ("باء الجر" / "الظرفية" — NEVER just row label)
+ *       - H7307 ("بِرُوحِي"): BOTH Bet prefix VALUE ("باء الجر" / "الظرفية") AND Construct state
+ *   Suite 4 (Logcat Cleanliness & Distinct Screenshot Evidence Packaging).
  */
 
 const fs = require('fs');
@@ -115,10 +117,10 @@ function runOcr(imagePath, fastSinglePass = false) {
 }
 
 /**
- * Finds exact pixel Y coordinates of target Strong's codes on WordStudyScreen using Tesseract TSV.
+ * Finds Y pixel coordinates of target Strong's/transliteration words using Tesseract TSV.
  */
 function findTargetRowYsFromTsv(imagePath, targetCodes, H) {
-  const found = {}; // code -> [tapY, ...]
+  const found = {};
   const imagesToScan = [imagePath];
   const inverted = imagePath.replace(/\.png$/i, '_tsv_neg.png');
   try {
@@ -128,6 +130,13 @@ function findTargetRowYsFromTsv(imagePath, targetCodes, H) {
     });
     if (fs.existsSync(inverted)) imagesToScan.push(inverted);
   } catch (_) {}
+
+  const tsvAliases = {
+    H1697: ['1697', 'dabar', 'dbar'],
+    H2428: ['2428', 'chayil', 'chayll'],
+    H3581: ['3581', 'koach', 'kdach'],
+    H7307: ['7307', 'ruwach', 'ruach'],
+  };
 
   for (const img of imagesToScan) {
     for (const psm of ['6', '11']) {
@@ -147,14 +156,8 @@ function findTargetRowYsFromTsv(imagePath, targetCodes, H) {
           const tapY = Math.round(top + height / 2);
           if (tapY < H * 0.14 || tapY > H * 0.90) continue;
 
-          const tsvAliases = {
-            H1697: ['1697', 'dabar', 'dbar'],
-            H2428: ['2428', 'chayil', 'chayll'],
-            H3581: ['3581', 'koach', 'kdach'],
-            H7307: ['7307', 'ruwach', 'ruach'],
-          };
+          const lower = rawText.toLowerCase();
           for (const code of targetCodes) {
-            const lower = rawText.toLowerCase();
             if ((tsvAliases[code] || [code.replace(/^H/, '')]).some(a => lower.includes(a))) {
               if (!found[code]) found[code] = [];
               if (!found[code].some(existingY => Math.abs(existingY - tapY) < 40)) {
@@ -171,19 +174,19 @@ function findTargetRowYsFromTsv(imagePath, targetCodes, H) {
 }
 
 console.log('========================================================================');
-console.log('  ANDROID EMULATOR VERIFICATION SUITE v1.0.373 (CLEAN INSTALL & UPGRADE)');
+console.log('  ANDROID EMULATOR VERIFICATION SUITE v1.0.373 (SEPARATED TRACKS)');
 console.log('========================================================================\n');
 
 const evidenceDir = path.resolve(process.cwd(), 'emulator_evidence_v373');
 if (!fs.existsSync(evidenceDir)) fs.mkdirSync(evidenceDir, { recursive: true });
 
 const testResults = [];
-function recordTest(name, durationSec, passed, failureMsg = '') {
+function recordTest(name, durationSec, passed, failureMsg = '', infoMsg = '') {
   const cleanMsg = String(failureMsg || '').replace(/\r?\n/g, ' | ');
   testResults.push({ name, durationSec, passed, failureMsg: cleanMsg });
   if (passed) {
-    console.log(`[PASS] ${name} (${durationSec.toFixed(1)}s)`);
-    console.log(`::notice::PASS ${name} (${durationSec.toFixed(1)}s)`);
+    console.log(`[PASS] ${name} (${durationSec.toFixed(1)}s) ${infoMsg}`);
+    console.log(`::notice::PASS ${name} (${durationSec.toFixed(1)}s) ${infoMsg}`.slice(0, 600));
   } else {
     console.error(`[FAIL] ${name} (${durationSec.toFixed(1)}s): ${cleanMsg}`);
     console.log(`::error::FAIL ${name}: ${cleanMsg.slice(0, 1200)}`);
@@ -303,39 +306,39 @@ function isModalOpenOcr(ocr) {
   );
 }
 
-function hasBetPrefixOcr(ocr) {
+/**
+ * STRICT Bet prefix assertion: requires actual Bet prefix VALUE ("باء الجر" / "الظرفية"),
+ * NEVER just the generic row label ("الحروف والزوائد المتصلة").
+ */
+function hasBetPrefixValueOcr(ocr) {
   return (
     ocr.includes('باء الجر') ||
     ocr.includes('والظرفية') ||
-    ocr.includes('الحروف والزوائد') ||
+    ocr.includes('الظرفية') ||
     /باء\s*الجر/.test(ocr)
   );
 }
 
-function hasConstructOcr(ocr) {
+/**
+ * STRICT Construct state assertion: requires "Construct" or "الإضافة العبرية" / "حالة الإضافة".
+ */
+function hasConstructValueOcr(ocr) {
   return (
-    ocr.includes('Construct') ||
-    ocr.includes('construct') ||
+    /\bConstruct\b/i.test(ocr) ||
     ocr.includes('الإضافة العبرية') ||
     ocr.includes('حالة الإضافة')
   );
 }
 
 /**
- * Navigates Search('38 4 6') -> Zechariah 4:6 Reader -> WordStudyScreen
- * Uses TSV Strong's coordinate targeting + dense fallback to open & verify:
- *   - H1697 ("كَلِمَةُ"): Construct state
- *   - H2428 ("بِالْقُدْرَةِ"): Bet prefix
- *   - H3581 ("بِالْقُوَّةِ"): Bet prefix
- *   - H7307 ("بِرُوحِي"): Bet prefix + Construct state
+ * Navigates Search('38 4 6') -> Zechariah 4:6 Reader -> WordStudyScreen (confirmed Verse 6).
  */
-function openZech46CardsAndVerify(prefixLabel) {
+function navigateToZech46WordStudyScreen(prefixLabel) {
   execAdb('shell am force-stop com.arabicbible.study');
   sleep(1500);
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
   sleep(3500);
 
-  // Use space-separated book chapter verse reference supported by SearchScreen
   executeSearch('38 4 6');
 
   const searchResSnap = captureAndOcr(`${prefixLabel}_search_zech46_results.png`, `/sdcard/${prefixLabel}_search_zech46_results.png`);
@@ -398,20 +401,20 @@ function openZech46CardsAndVerify(prefixLabel) {
     throw new Error(`Could not navigate to Zechariah 4:6 in ChapterReaderScreen from 38 4 6 search. Last OCR: "${lastReaderCheckOcr.replace(/\r?\n/g, ' | ').slice(0, 280)}"`);
   }
 
-  // ChapterReaderScreen aligns target verse with alignment: 0.15 -> ~0.20..0.34 * H
+  // ChapterReaderScreen aligns target verse with alignment: 0.15
   const verseTapOffsets = [0.24, 0.28, 0.32, 0.20, 0.36, 0.42, 0.48];
   let enteredWordStudy = false;
   let lastWsCheckOcr = '';
+  const wsShotName = `${prefixLabel}_zech46_wordstudy.png`;
   for (const yRatio of verseTapOffsets) {
     console.log(`Tapping Verse 6 card at (${Math.round(W * 0.60)}, ${Math.round(H * yRatio)}) to open WordStudyScreen...`);
     execAdb(`shell input tap ${Math.round(W * 0.60)} ${Math.round(H * yRatio)}`);
     sleep(3500);
 
-    const wsCheck = captureAndOcr('wordstudy_entry_check.png', '/sdcard/wordstudy_entry_check.png');
+    const wsCheck = captureAndOcr(wsShotName, `/sdcard/${wsShotName}`);
     lastWsCheckOcr = wsCheck.ocr;
     const isWordStudy = wsCheck.ocr.includes('الأصل المعجمي') || wsCheck.ocr.includes('سترونج والنطق') || wsCheck.ocr.includes('الرمز المعجمي') || wsCheck.ocr.includes('دراسة');
     if (isWordStudy) {
-      // Strictly distinguish Zechariah 4:6 from Verse 5 or Verse 7 (handles RTL bidi order '6 زكريا - الإصحاح 4 - الآية')
       const isZech46 =
         wsCheck.ocr.includes('الآية 6') ||
         wsCheck.ocr.includes('الآية ٦') ||
@@ -426,7 +429,7 @@ function openZech46CardsAndVerify(prefixLabel) {
         console.log('Confirmed WordStudyScreen for Zechariah 4:6 is open!');
         break;
       }
-      console.log(`Opened WordStudyScreen for wrong verse (OCR: ${wsCheck.ocr.slice(0, 140).replace(/\n/g, ' | ')}), pressing Back...`);
+      console.log(`Opened WordStudyScreen for wrong verse, pressing Back...`);
       execAdb('shell input keyevent 4');
       sleep(1200);
     }
@@ -435,188 +438,18 @@ function openZech46CardsAndVerify(prefixLabel) {
   if (!enteredWordStudy) {
     throw new Error(`Could not open WordStudyScreen for Zechariah 4:6 (Verse 6). Last OCR: "${lastWsCheckOcr.replace(/\r?\n/g, ' | ').slice(0, 280)}"`);
   }
-
-  const captured = {};
-  const diag = { tsvPerPass: [], modalOpenCount: 0, modalSamples: [], wsPass0Ocr: '' };
-
-  function inspectOpenedModal(modalCheck) {
-    const o = modalCheck.ocr;
-    diag.modalOpenCount++;
-    if (diag.modalSamples.length < 4) {
-      diag.modalSamples.push(o.replace(/\r?\n/g, ' | ').slice(0, 110));
-    }
-    console.log(`[MODAL OCR SAMPLE]: ${o.slice(0, 200).replace(/\n/g, ' ')}`);
-
-    // Match by Strong's code, morphology code, OR flexible Latin transliteration (dabar/chayil/koach/ruwach)
-    let targetKey = null;
-    const hasChayil = /chay[il1t]{1,2}|hay[il1]{2}/i.test(o);
-    const hasKoach  = /\bk[oô0da]?[ae]?ch|k[oô0]ac/i.test(o);
-    const hasRuwach = /\br[uûi]w?[aâe]c/i.test(o);
-    const hasDabar  = /\bd[aâe]?b[aâe]?r|dbar/i.test(o);
-
-    if (!captured.H1697 && (o.includes('1697') || o.includes('Ncmsc') || hasDabar) && !hasChayil && !hasKoach && !hasRuwach && !o.includes('2428') && !o.includes('3581') && !o.includes('7307')) {
-      targetKey = 'H1697';
-    } else if (!captured.H2428 && (o.includes('2428') || hasChayil) && !hasDabar && !hasKoach && !hasRuwach && !o.includes('3581') && !o.includes('7307') && !o.includes('1697')) {
-      targetKey = 'H2428';
-    } else if (!captured.H3581 && (o.includes('3581') || hasKoach) && !hasDabar && !hasChayil && !hasRuwach && !o.includes('2428') && !o.includes('7307') && !o.includes('1697')) {
-      targetKey = 'H3581';
-    } else if (!captured.H7307 && (o.includes('7307') || o.includes('Ncbsc') || o.includes('Sp1cs') || hasRuwach) && !hasDabar && !hasChayil && !hasKoach && !o.includes('2428') && !o.includes('3581') && !o.includes('1697')) {
-      targetKey = 'H7307';
-    }
-
-    if (!targetKey) {
-      return false;
-    }
-
-    console.log(`Target card ${targetKey} opened! Verifying Morphology Card UI rows...`);
-    const shotMap = {
-      H1697: `${prefixLabel}_zech_h1697_construct_card.png`,
-      H2428: `${prefixLabel}_zech_h2428_bet_card.png`,
-      H3581: `${prefixLabel}_zech_h3581_bet_card.png`,
-      H7307: `${prefixLabel}_zech_h7307_bet_construct_card.png`,
-    };
-    const shotName = shotMap[targetKey];
-
-    // Capture full dual-pass OCR right away before any modal scroll
-    let snap = captureAndOcr(shotName, `/sdcard/${shotName}`, false);
-
-    const needsScroll = () => {
-      if (targetKey === 'H1697') return !hasConstructOcr(snap.ocr);
-      if (targetKey === 'H2428' || targetKey === 'H3581') return !hasBetPrefixOcr(snap.ocr);
-      return !(hasBetPrefixOcr(snap.ocr) && hasConstructOcr(snap.ocr));
-    };
-
-    if (needsScroll()) {
-      // Gentle swipe inside single-Strong's modal so Morphology table centers cleanly without overshooting
-      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.68)} ${Math.round(W * 0.50)} ${Math.round(H * 0.46)} 320`);
-      sleep(1400);
-      snap = captureAndOcr(shotName, `/sdcard/${shotName}`, false);
-      if (needsScroll()) {
-        execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.68)} ${Math.round(W * 0.50)} ${Math.round(H * 0.46)} 320`);
-        sleep(1400);
-        snap = captureAndOcr(shotName, `/sdcard/${shotName}`, false);
-      }
-    }
-
-    fs.writeFileSync(path.join(evidenceDir, shotName.replace('.png', '_ocr.txt')), snap.ocr, 'utf8');
-    console.log(`${shotName} OCR sample:`, snap.ocr.slice(0, 420).replace(/\n/g, ' '));
-
-    const betOk = hasBetPrefixOcr(snap.ocr);
-    const constructOk = hasConstructOcr(snap.ocr);
-    console.log(`${targetKey} Card Assertions: betOk=${betOk}, constructOk=${constructOk}`);
-
-    if (targetKey === 'H1697' && !constructOk) {
-      throw new Error(`Expected Construct state not visible on H1697 ("كَلِمَةُ") card! OCR: "${snap.ocr.slice(0, 350)}"`);
-    }
-    if ((targetKey === 'H2428' || targetKey === 'H3581') && !betOk) {
-      throw new Error(`Expected Bet prefix ("باء الجر والظرفية") not visible on ${targetKey} card! OCR: "${snap.ocr.slice(0, 350)}"`);
-    }
-    if (targetKey === 'H7307' && (!betOk || !constructOk)) {
-      throw new Error(`Expected BOTH Bet prefix and Construct state on H7307 ("بِرُوحِي") card! betOk=${betOk}, constructOk=${constructOk}`);
-    }
-
-    captured[targetKey] = shotName;
-    return true;
-  }
-
-  const isDark = prefixLabel === 'upgrade';
-
-  function captureFastEngModal() {
-    const localPath = path.join(evidenceDir, 'modal_fast.png');
-    execAdb('shell screencap -p /sdcard/modal_fast.png');
-    execAdb(`pull /sdcard/modal_fast.png "${localPath}"`);
-    return { localPath, ocr: runFastEngOcr(localPath, isDark) };
-  }
-
-  function ensureBackOnWordStudy() {
-    for (let i = 0; i < 2; i++) {
-      execAdb('shell input keyevent 4');
-      sleep(800);
-      const localPath = path.join(evidenceDir, 'back_check.png');
-      execAdb('shell screencap -p /sdcard/back_check.png');
-      execAdb(`pull /sdcard/back_check.png "${localPath}"`);
-      const chkAraEng = runOcr(localPath, !isDark);
-      if (chkAraEng.includes('اضغط على الرمز') || chkAraEng.includes('سترونج والنطق') || chkAraEng.includes('الأصل المعجمي') || !isModalOpenOcr(chkAraEng)) {
-        break;
-      }
-    }
-  }
-
-  // Linear zero-skip scan across WordStudyScreen (up to 9 overlapping frames reaching bottom row 18)
-  const requiredKeys = ['H1697', 'H2428', 'H3581', 'H7307'];
-  const frame0Offsets = [0.48, 0.525, 0.57, 0.615, 0.66, 0.705, 0.75, 0.795, 0.84, 0.885];
-  const frameNOffsets = [0.20, 0.245, 0.29, 0.335, 0.38, 0.425, 0.47, 0.515, 0.56, 0.605, 0.65, 0.695, 0.74, 0.785, 0.83, 0.875];
-
-  for (let frame = 0; frame < 9; frame++) {
-    const remaining = requiredKeys.filter(k => !captured[k]);
-    if (remaining.length === 0) break;
-
-    if (frame > 0) {
-      console.log(`Scrolling down in WordStudyScreen (frame ${frame}, remaining: ${remaining.join(', ')})...`);
-      // Larger drag (0.84 -> 0.18 at 500ms) covers ~0.5*H cleanly with zero fling overshoot while keeping overlap
-      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.84)} ${Math.round(W * 0.50)} ${Math.round(H * 0.18)} 500`);
-      sleep(1100);
-    }
-
-    const scanPath = path.join(evidenceDir, `ws_pass_${frame}.png`);
-    execAdb('shell screencap -p /sdcard/ws_pass.png');
-    execAdb(`pull /sdcard/ws_pass.png "${scanPath}"`);
-    if (frame === 0) {
-      diag.wsPass0Ocr = runOcr(scanPath, true).replace(/\r?\n/g, ' | ').slice(0, 140);
-    }
-
-    // 1. Direct TSV hit targeting for visible remaining targets
-    const tsvHits = findTargetRowYsFromTsv(scanPath, remaining, H);
-    diag.tsvPerPass.push(tsvHits);
-    console.log(`TSV hits on frame ${frame}:`, JSON.stringify(tsvHits));
-
-    for (const key of remaining) {
-      const ys = tsvHits[key] || [];
-      for (const yPx of ys) {
-        if (captured[key]) break;
-        console.log(`Tapping TSV coordinate for ${key} at (${Math.round(W * 0.50)}, ${yPx})...`);
-        execAdb(`shell input tap ${Math.round(W * 0.50)} ${yPx}`);
-        sleep(1400);
-        const mFast = captureFastEngModal();
-        if (isModalOpenOcr(mFast.ocr)) {
-          inspectOpenedModal(mFast);
-          ensureBackOnWordStudy();
-        }
-      }
-    }
-
-    // 2. Zero-skip 0.045*H dense scan on current frame for any target still missing in this viewport
-    if (!requiredKeys.every(k => captured[k])) {
-      const offsets = frame === 0 ? frame0Offsets : frameNOffsets;
-      for (const yRatio of offsets) {
-        if (requiredKeys.every(k => captured[k])) break;
-        execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
-        sleep(1300);
-        const mFast = captureFastEngModal();
-        if (isModalOpenOcr(mFast.ocr)) {
-          inspectOpenedModal(mFast);
-          ensureBackOnWordStudy();
-        }
-      }
-    }
-  }
-
-  for (const reqKey of requiredKeys) {
-    if (!captured[reqKey]) {
-      throw new Error(`Did not capture and verify Zechariah 4:6 card ${reqKey}. Captured: ${JSON.stringify(captured)} | Diag: ${JSON.stringify(diag)}`);
-    }
-  }
-  return captured;
+  return wsShotName;
 }
 
+const capturedEvidenceFiles = [];
+
 // ============================================================================
-// TRACK 1: CLEAN INSTALL OF v1.0.373
+// SUITE 1: CLEAN INSTALL OF v1.0.373
 // ============================================================================
-console.log('--- TRACK 1: CLEAN INSTALL OF v1.0.373 ---');
+console.log('--- SUITE 1: CLEAN INSTALL OF v1.0.373 ---');
 const t1Start = Date.now();
 let t1Passed = false;
 let t1Error = '';
-let cleanShots = {};
 
 try {
   execAdb('logcat -c');
@@ -649,7 +482,7 @@ try {
   const dbPathClean = '/data/data/com.arabicbible.study/databases/bible_study_v373.db';
   const statOutClean = execAdb(`shell stat -c %s ${dbPathClean}`);
   const bytesClean = parseInt(statOutClean.trim(), 10);
-  console.log(`Clean install physical DB size on Android device: ${bytesClean} bytes (base 363438080 + sqflite open overhead)`);
+  console.log(`Clean install physical DB size: ${bytesClean} bytes`);
   if (isNaN(bytesClean) || bytesClean < 363438080 || bytesClean > 363500000) {
     throw new Error(`Unexpected DB size on clean install: ${bytesClean} (expected ~363438080 - 363446272)`);
   }
@@ -665,21 +498,21 @@ try {
     throw new Error('CRITICAL: Detected AssetNotFoundException or part_70.dat reference during clean install!');
   }
 
-  cleanShots = openZech46CardsAndVerify('clean_install');
+  const wsShot = navigateToZech46WordStudyScreen('clean_install');
+  capturedEvidenceFiles.push(wsShot);
   t1Passed = true;
 } catch (e) {
   t1Error = e.message;
 }
-recordTest('test_clean_install_v373_opens_db_and_renders_zech46_bet_and_construct_cards', (Date.now() - t1Start) / 1000, t1Passed, t1Error);
+recordTest('test_clean_install_v373_opens_db_and_reaches_zech46', (Date.now() - t1Start) / 1000, t1Passed, t1Error);
 
 // ============================================================================
-// TRACK 2: ACTUAL UPGRADE FROM v1.0.372 TO v1.0.373
+// SUITE 2: ACTUAL UPGRADE FROM v1.0.372 TO v1.0.373
 // ============================================================================
-console.log('\n--- TRACK 2: UPGRADE FROM v1.0.372 TO v1.0.373 ---');
+console.log('\n--- SUITE 2: UPGRADE FROM v1.0.372 TO v1.0.373 ---');
 const t2Start = Date.now();
 let t2Passed = false;
 let t2Error = '';
-let upgradeShots = {};
 
 try {
   execAdb('logcat -c');
@@ -692,7 +525,6 @@ try {
     throw new Error(`Baseline v372 install failed: ${inst372}`);
   }
 
-  // Seed user state in v372 SharedPreferences BEFORE launching
   const seedXml = `<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 <map>
     <boolean name="flutter.is_dark_mode" value="true" />
@@ -707,7 +539,6 @@ try {
   execAdb('shell chmod 666 /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
   execAdb('shell "if [ -d /data/data/com.arabicbible.study ]; then chown -R $(stat -c \'%u:%g\' /data/data/com.arabicbible.study) /data/data/com.arabicbible.study/shared_prefs; fi"', { ignoreError: true });
 
-  // Launch v372 to initialize bible_study_v372.db
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
   console.log('Waiting for baseline v372 DB initialization on device...');
   let v372Ready = false;
@@ -726,23 +557,17 @@ try {
   sleep(3500);
   ensureAppInForeground();
 
-  // Execute an organic search in baseline v372 UI before upgrade
   console.log('Performing organic search in baseline v372 UI...');
   executeSearch('G561');
   sleep(1500);
   execAdb('shell am start -n com.arabicbible.study/.MainActivity');
   sleep(1500);
 
-  // Force-stop to flush prefs and verify v372 state on device
   execAdb('shell am force-stop com.arabicbible.study');
   sleep(2000);
 
   const prefsBefore = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
   fs.writeFileSync(path.join(evidenceDir, 'prefs_before_upgrade.xml'), prefsBefore, 'utf8');
-  console.log('Captured prefs_before_upgrade.xml:\n', prefsBefore);
-
-  const db372Check = execAdb('shell ls -l /data/data/com.arabicbible.study/databases/bible_study_v372.db');
-  console.log('Verified baseline bible_study_v372.db exists:', db372Check);
 
   // Perform in-place upgrade to v1.0.373 WITHOUT wiping data (-r)
   console.log('\nExecuting in-place upgrade (`adb install -r v373_candidate.apk`)...');
@@ -776,7 +601,6 @@ try {
     throw new Error('CRITICAL: Detected AssetNotFoundException or part_70.dat reference during upgrade!');
   }
 
-  // Verify v372 legacy DB was deleted and v373 DB is open & exact size
   const legacyExistsCheck = execAdb('shell ls /data/data/com.arabicbible.study/databases/bible_study_v372.db', { ignoreError: true });
   if (!legacyExistsCheck.includes('No such file') && legacyExistsCheck.includes('bible_study_v372.db')) {
     throw new Error('Legacy database bible_study_v372.db was NOT cleaned up after upgrade!');
@@ -794,10 +618,8 @@ try {
     throw new Error(`Invalid SQLite header on upgraded DB: ${headerUpgrade}`);
   }
 
-  // Verify user preferences 100% intact
   const prefsAfter = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml');
   fs.writeFileSync(path.join(evidenceDir, 'prefs_after_upgrade.xml'), prefsAfter, 'utf8');
-  console.log('Captured prefs_after_upgrade.xml:\n', prefsAfter);
 
   const hasDark = prefsAfter.includes('is_dark_mode') && prefsAfter.includes('value="true"');
   const hasDb373 = prefsAfter.includes('db_version') && prefsAfter.includes('value="373"');
@@ -811,23 +633,205 @@ try {
   dismissKeyboard();
   sleep(1500);
   const searchUiSnap = captureAndOcr('upgrade_search_history.png', '/sdcard/upgrade_search_history.png');
-  console.log('Upgrade Search History UI OCR sample:', searchUiSnap.ocr.slice(0, 250).replace(/\n/g, ' '));
   fs.writeFileSync(path.join(evidenceDir, 'upgrade_search_history_ocr.txt'), searchUiSnap.ocr, 'utf8');
+  capturedEvidenceFiles.push('upgrade_search_history.png');
 
-  upgradeShots = openZech46CardsAndVerify('upgrade');
+  const wsUpgradeShot = navigateToZech46WordStudyScreen('upgrade');
+  capturedEvidenceFiles.push(wsUpgradeShot);
   t2Passed = true;
 } catch (e) {
   t2Error = e.message;
 }
-recordTest('test_upgrade_v372_to_v373_retains_user_data_and_renders_zech46_bet_and_construct_cards', (Date.now() - t2Start) / 1000, t2Passed, t2Error);
+recordTest('test_upgrade_v372_to_v373_retains_user_data_and_opens_db', (Date.now() - t2Start) / 1000, t2Passed, t2Error);
 
 // ============================================================================
-// TRACK 3: LOGCAT CLEANLINESS, SCREENSHOT UNIQUENESS & EVIDENCE BUNDLE
+// SUITE 3: DIRECT ZECHARIAH 4:6 CARDS VERIFICATION ON v1.0.373 PACKAGE
+// Open all 4 target cards by name & Strong's/transliteration directly on v1.0.373
 // ============================================================================
-console.log('\n--- TRACK 3: LOGCAT CLEANLINESS & EVIDENCE PACKAGING ---');
-const t3Start = Date.now();
-let t3Passed = false;
-let t3Error = '';
+console.log('\n--- SUITE 3: DIRECT ZECHARIAH 4:6 BET & CONSTRUCT CARDS ON v1.0.373 ---');
+
+const cardTargets = {
+  H1697: { testName: 'test_zech46_card_H1697_construct', shotName: 'zech46_h1697_construct_card.png', expectBet: false, expectConstruct: true },
+  H2428: { testName: 'test_zech46_card_H2428_bet', shotName: 'zech46_h2428_bet_card.png', expectBet: true, expectConstruct: false },
+  H3581: { testName: 'test_zech46_card_H3581_bet', shotName: 'zech46_h3581_bet_card.png', expectBet: true, expectConstruct: false },
+  H7307: { testName: 'test_zech46_card_H7307_bet_and_construct', shotName: 'zech46_h7307_bet_construct_card.png', expectBet: true, expectConstruct: true },
+};
+
+const cardResults = {}; // key -> { passed, err, info }
+const suite3Start = Date.now();
+
+try {
+  // Already on upgraded v1.0.373 with Zechariah 4:6 WordStudyScreen open (or navigate fresh if Track 2 failed)
+  if (!t2Passed) {
+    execAdb('uninstall com.arabicbible.study', { ignoreError: true });
+    sleep(1000);
+    execAdb('install v373_candidate.apk', { timeout: 90000 });
+    execAdb('shell am start -n com.arabicbible.study/.MainActivity');
+    for (let poll = 0; poll < 45; poll++) {
+      sleep(1500);
+      const p = execAdb('shell cat /data/data/com.arabicbible.study/shared_prefs/FlutterSharedPreferences.xml', { ignoreError: true });
+      if (p.includes('name="flutter.db_version" value="373"')) break;
+    }
+    navigateToZech46WordStudyScreen('cards_suite');
+  } else {
+    // Re-enter WordStudyScreen cleanly from top so frame 0 starts at row 1
+    navigateToZech46WordStudyScreen('cards_suite');
+  }
+
+  const isDarkForCards = t2Passed; // Upgrade preserved dark mode; clean fallback is light mode
+
+  function captureFastEngModal() {
+    const localPath = path.join(evidenceDir, 'modal_fast.png');
+    execAdb('shell screencap -p /sdcard/modal_fast.png');
+    execAdb(`pull /sdcard/modal_fast.png "${localPath}"`);
+    return { localPath, ocr: runFastEngOcr(localPath, isDarkForCards) };
+  }
+
+  function ensureBackOnWordStudy() {
+    for (let i = 0; i < 2; i++) {
+      execAdb('shell input keyevent 4');
+      sleep(800);
+      const localPath = path.join(evidenceDir, 'back_check.png');
+      execAdb('shell screencap -p /sdcard/back_check.png');
+      execAdb(`pull /sdcard/back_check.png "${localPath}"`);
+      const chkAraEng = runOcr(localPath, !isDarkForCards);
+      if (chkAraEng.includes('اضغط على الرمز') || chkAraEng.includes('سترونج والنطق') || chkAraEng.includes('الأصل المعجمي') || !isModalOpenOcr(chkAraEng)) {
+        break;
+      }
+    }
+  }
+
+  function inspectTargetCardModal(mFast) {
+    const o = mFast.ocr;
+    const hasChayil = /chay[il1t]{1,2}|hay[il1]{2}/i.test(o);
+    const hasKoach  = /\bk[oô0da]?[ae]?ch|k[oô0]ac/i.test(o);
+    const hasRuwach = /\br[uûi]w?[aâe]c/i.test(o);
+    const hasDabar  = /\bd[aâe]?b[aâe]?r|dbar/i.test(o);
+
+    let targetKey = null;
+    if (!cardResults.H1697 && (o.includes('1697') || o.includes('Ncmsc') || hasDabar) && !hasChayil && !hasKoach && !hasRuwach && !o.includes('2428') && !o.includes('3581') && !o.includes('7307')) {
+      targetKey = 'H1697';
+    } else if (!cardResults.H2428 && (o.includes('2428') || hasChayil) && !hasDabar && !hasKoach && !hasRuwach && !o.includes('3581') && !o.includes('7307') && !o.includes('1697')) {
+      targetKey = 'H2428';
+    } else if (!cardResults.H3581 && (o.includes('3581') || hasKoach) && !hasDabar && !hasChayil && !hasRuwach && !o.includes('2428') && !o.includes('7307') && !o.includes('1697')) {
+      targetKey = 'H3581';
+    } else if (!cardResults.H7307 && (o.includes('7307') || o.includes('Ncbsc') || o.includes('Sp1cs') || hasRuwach) && !hasDabar && !hasChayil && !hasKoach && !o.includes('2428') && !o.includes('3581') && !o.includes('1697')) {
+      targetKey = 'H7307';
+    }
+    if (!targetKey) return false;
+
+    const spec = cardTargets[targetKey];
+    const cardStart = Date.now();
+    console.log(`\nOpened named card ${targetKey}! Capturing & verifying Bet / Construct values...`);
+    let snap = captureAndOcr(spec.shotName, `/sdcard/${spec.shotName}`, false);
+
+    const needsScroll = () => {
+      if (spec.expectBet && !hasBetPrefixValueOcr(snap.ocr)) return true;
+      if (spec.expectConstruct && !hasConstructValueOcr(snap.ocr)) return true;
+      return false;
+    };
+
+    for (let s = 0; s < 2 && needsScroll(); s++) {
+      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.68)} ${Math.round(W * 0.50)} ${Math.round(H * 0.46)} 320`);
+      sleep(1400);
+      snap = captureAndOcr(spec.shotName, `/sdcard/${spec.shotName}`, false);
+    }
+
+    fs.writeFileSync(path.join(evidenceDir, spec.shotName.replace('.png', '_ocr.txt')), snap.ocr, 'utf8');
+    capturedEvidenceFiles.push(spec.shotName);
+
+    const betValueOk = hasBetPrefixValueOcr(snap.ocr);
+    const constructValueOk = hasConstructValueOcr(snap.ocr);
+    const ocrOneLine = snap.ocr.replace(/\r?\n/g, ' | ').slice(0, 350);
+
+    let err = '';
+    if (spec.expectBet && !betValueOk) {
+      err += `Bet prefix VALUE ("باء الجر" / "الظرفية") NOT visible! `;
+    }
+    if (spec.expectConstruct && !constructValueOk) {
+      err += `Construct state VALUE ("Construct" / "الإضافة العبرية") NOT visible! `;
+    }
+    if (err) {
+      err += `OCR: "${ocrOneLine}"`;
+    }
+
+    cardResults[targetKey] = {
+      passed: err === '',
+      durationSec: (Date.now() - cardStart) / 1000,
+      err,
+      info: `betValue=${betValueOk}, constructValue=${constructValueOk}, ocr="${ocrOneLine.slice(0, 180)}"`
+    };
+    return true;
+  }
+
+  const requiredKeys = Object.keys(cardTargets);
+  const frame0Offsets = [0.48, 0.525, 0.57, 0.615, 0.66, 0.705, 0.75, 0.795, 0.84, 0.885];
+  const frameNOffsets = [0.20, 0.245, 0.29, 0.335, 0.38, 0.425, 0.47, 0.515, 0.56, 0.605, 0.65, 0.695, 0.74, 0.785, 0.83, 0.875];
+
+  for (let frame = 0; frame < 10; frame++) {
+    const remaining = requiredKeys.filter(k => !cardResults[k]);
+    if (remaining.length === 0) break;
+
+    if (frame > 0) {
+      console.log(`Scrolling down in WordStudyScreen (frame ${frame}, remaining: ${remaining.join(', ')})...`);
+      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.84)} ${Math.round(W * 0.50)} ${Math.round(H * 0.18)} 500`);
+      sleep(1100);
+    }
+
+    const scanPath = path.join(evidenceDir, `ws_cards_frame_${frame}.png`);
+    execAdb('shell screencap -p /sdcard/ws_cards_frame.png');
+    execAdb(`pull /sdcard/ws_cards_frame.png "${scanPath}"`);
+
+    const tsvHits = findTargetRowYsFromTsv(scanPath, remaining, H);
+    console.log(`TSV hits on frame ${frame}:`, JSON.stringify(tsvHits));
+
+    for (const key of remaining) {
+      for (const yPx of (tsvHits[key] || [])) {
+        if (cardResults[key]) break;
+        execAdb(`shell input tap ${Math.round(W * 0.50)} ${yPx}`);
+        sleep(1400);
+        const mFast = captureFastEngModal();
+        if (isModalOpenOcr(mFast.ocr)) {
+          inspectTargetCardModal(mFast);
+          ensureBackOnWordStudy();
+        }
+      }
+    }
+
+    if (!requiredKeys.every(k => cardResults[k])) {
+      const offsets = frame === 0 ? frame0Offsets : frameNOffsets;
+      for (const yRatio of offsets) {
+        if (requiredKeys.every(k => cardResults[k])) break;
+        execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
+        sleep(1300);
+        const mFast = captureFastEngModal();
+        if (isModalOpenOcr(mFast.ocr)) {
+          inspectTargetCardModal(mFast);
+          ensureBackOnWordStudy();
+        }
+      }
+    }
+  }
+} catch (navErr) {
+  console.error('Suite 3 setup error:', navErr.message);
+}
+
+for (const [key, spec] of Object.entries(cardTargets)) {
+  const res = cardResults[key];
+  if (res) {
+    recordTest(spec.testName, res.durationSec, res.passed, res.err, res.info);
+  } else {
+    recordTest(spec.testName, (Date.now() - suite3Start) / 1000, false, `Card ${key} was not opened/detected in WordStudyScreen.`);
+  }
+}
+
+// ============================================================================
+// SUITE 4: LOGCAT CLEANLINESS, SCREENSHOT UNIQUENESS & EVIDENCE BUNDLE
+// ============================================================================
+console.log('\n--- SUITE 4: LOGCAT CLEANLINESS & EVIDENCE PACKAGING ---');
+const t4Start = Date.now();
+let t4Passed = false;
+let t4Error = '';
 
 try {
   const finalLogcatPath = path.join(evidenceDir, 'final_logcat.txt');
@@ -839,14 +843,18 @@ try {
     throw new Error('Fatal crash or AssetNotFoundException found in final_logcat.txt!');
   }
 
-  const shotNames = [
-    ...Object.values(cleanShots),
+  const expectedShots = [
+    'clean_install_zech46_wordstudy.png',
     'upgrade_search_history.png',
-    ...Object.values(upgradeShots),
+    'upgrade_zech46_wordstudy.png',
+    'zech46_h1697_construct_card.png',
+    'zech46_h2428_bet_card.png',
+    'zech46_h3581_bet_card.png',
+    'zech46_h7307_bet_construct_card.png',
   ];
   const imageHashes = {};
   const uniqueSet = new Set();
-  for (const s of shotNames) {
+  for (const s of expectedShots) {
     const p = path.join(evidenceDir, s);
     if (!fs.existsSync(p) || fs.statSync(p).size < 10000) {
       throw new Error(`Screenshot ${s} missing or invalid!`);
@@ -855,16 +863,16 @@ try {
     imageHashes[s] = { sha256: h, size: fs.statSync(p).size };
     uniqueSet.add(h);
   }
-  if (shotNames.length < 9 || uniqueSet.size !== shotNames.length) {
-    throw new Error(`Expected 9 distinct screenshots, got ${uniqueSet.size}/${shotNames.length}!`);
+  if (uniqueSet.size !== expectedShots.length) {
+    throw new Error(`Duplicate screenshot hashes detected (${uniqueSet.size}/${expectedShots.length})!`);
   }
   fs.writeFileSync(path.join(evidenceDir, 'image_hashes.json'), JSON.stringify(imageHashes, null, 2), 'utf8');
 
-  t3Passed = true;
+  t4Passed = true;
 } catch (e) {
-  t3Error = e.message;
+  t4Error = e.message;
 }
-recordTest('test_zero_fatal_crashes_and_distinct_evidence', (Date.now() - t3Start) / 1000, t3Passed, t3Error);
+recordTest('test_zero_fatal_crashes_and_distinct_evidence', (Date.now() - t4Start) / 1000, t4Passed, t4Error);
 
 // Write JUnit XML
 const totalTime = testResults.reduce((s, t) => s + t.durationSec, 0);
