@@ -73,5 +73,89 @@ void main() {
       expect(analysis.summary, isNot(contains('مؤنث')));
       expect(analysis.summary, isNot(contains('مثنى')));
     });
+
+    test('Zechariah 4:6 Bet prefix detector handles literal OSHB surfaces & construct case (v1.0.373)', () {
+      // w12: بِالْقُدْرَةِ (בְחַ֨יִל֙ - no Dagesh in Bet)
+      final a1 = MorphologyService.parse(
+        code: 'HR/Ncmsa',
+        language: 'hebrew',
+        arWord: 'بِالْقُدْرَةِ',
+        origWord: 'חַיִל',
+        origSurface: 'בְחַ֨יִל֙',
+        strongsId: 'H2428',
+        morphPos: 'noun',
+        morphGender: 'masculine',
+        morphNumber: 'singular',
+        morphSource: 'oshb_wlc',
+        verifiedLocator: 'OSHB:B38.C4.V6.w12',
+      );
+      expect(a1.prefixes, contains('باء الجر والظرفية (בְּ)'));
+
+      // w14: بِالْقُوَّةِ (בְכֹ֔חַ - no Dagesh in Bet)
+      final a2 = MorphologyService.parse(
+        code: 'HR/Ncmsa',
+        language: 'hebrew',
+        arWord: 'بِالْقُوَّةِ',
+        origWord: 'כֹּחַ',
+        origSurface: 'בְכֹ֔חַ',
+        strongsId: 'H3581',
+        morphPos: 'noun',
+        morphGender: 'masculine',
+        morphNumber: 'singular',
+        morphSource: 'oshb_wlc',
+        verifiedLocator: 'OSHB:B38.C4.V6.w14',
+      );
+      expect(a2.prefixes, contains('باء الجر والظرفية (בְּ)'));
+
+      // w17: بِرُوحِي (בְּרוּחִ֔י - Dagesh U+05BC before Sheva U+05B0) + construct case
+      final a3 = MorphologyService.parse(
+        code: 'HR/Ncbsc/Sp1cs',
+        language: 'hebrew',
+        arWord: 'بِرُوحِي',
+        origWord: 'רוּחַ',
+        origSurface: 'בְּרוּחִ֔י',
+        strongsId: 'H7307',
+        morphPos: 'noun',
+        morphGender: 'common',
+        morphNumber: 'singular',
+        morphCase: 'construct',
+        morphSource: 'oshb_wlc',
+        verifiedLocator: 'OSHB:B38.C4.V6.w17',
+      );
+      expect(a3.prefixes, contains('باء الجر والظرفية (בְּ)'));
+      expect(a3.grammaticalCase, contains('الإضافة'));
+
+      // Control test: בַּיִת (H1004, HNcmsa) where Bet is root letter, NOT preposition
+      final control = MorphologyService.parse(
+        code: 'HNcmsa',
+        language: 'hebrew',
+        arWord: 'بَيْتُ',
+        origWord: 'בַּיִת',
+        origSurface: 'בַּיִת',
+        strongsId: 'H1004',
+        morphPos: 'noun',
+        morphGender: 'masculine',
+        morphNumber: 'singular',
+        morphSource: 'oshb_wlc',
+      );
+      expect(control.prefixes, isNot(contains('باء الجر والظرفية (בְּ)')));
+
+      // Construct state test for w6: كَلِمَةُ (דְּבַר־, HNcmsc)
+      final constructWord = MorphologyService.parse(
+        code: 'HNcmsc',
+        language: 'hebrew',
+        arWord: 'كَلِمَةُ',
+        origWord: 'דָּבָר',
+        origSurface: 'דְּבַר־',
+        strongsId: 'H1697',
+        morphPos: 'noun',
+        morphGender: 'masculine',
+        morphNumber: 'singular',
+        morphCase: 'construct',
+        morphSource: 'oshb_wlc',
+        verifiedLocator: 'OSHB:B38.C4.V6.w6',
+      );
+      expect(constructWord.grammaticalCase, contains('الإضافة'));
+    });
   });
 }

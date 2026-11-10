@@ -562,6 +562,64 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 18 AND verse_num = 21 AND book_id = 11)
         AND ar_word_position = 11;
     `
+  },
+  {
+    gateNum: 41,
+    name: 'zech_4_6_wakallamani_w3_deleted',
+    expectedFailTag: '[FAIL] Zechariah 4:6 Full-Verse Canonical Loci',
+    description: 'Deleted secondary component w3 (H413 אֵלַי֙) from Zechariah 4:6 pos 2 (وَكَلَّمَنِي)',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 38) AND ar_word_position = 2)
+        AND strongs_id = 'H413';
+    `
+  },
+  {
+    gateNum: 42,
+    name: 'zech_4_6_bal_w16_deleted',
+    expectedFailTag: '[FAIL] Zechariah 4:6 Full-Verse Canonical Loci',
+    description: 'Deleted secondary component w16 (H518 אִם) from Zechariah 4:6 pos 14 (بَلْ)',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 38) AND ar_word_position = 14)
+        AND strongs_id = 'H518';
+    `
+  },
+  {
+    gateNum: 43,
+    name: 'zech_4_6_ila_reverted_to_hr_sp1cs',
+    expectedFailTag: '[FAIL] Zechariah 4:6 w7 (إِلَى) Exact Preposition Form',
+    description: 'Reverted Zechariah 4:6 pos 7 (إِلَى) to אֵל / HR/Sp1cs at w7',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_surface = 'אֵל', orig_morphology = 'HR/Sp1cs', orig_word_position = 7, verified_locator = 'OSHB:B38.C4.V6.w7'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 38)
+        AND ar_word_position = 7;
+    `
+  },
+  {
+    gateNum: 44,
+    name: 'zech_4_6_kalimah_stale_h562_note',
+    expectedFailTag: '[FAIL] Zechariah 4:6 w5 (كَلِمَةُ) Clean Notes (no H562) & Construct Case',
+    description: 'Restored stale H562 note on Zechariah 4:6 pos 5 (كَلِمَةُ)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET grammar_notes = 'الربط الحالي بـ H562 غير دقيق'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 38)
+        AND ar_word_position = 5;
+    `
+  },
+  {
+    gateNum: 45,
+    name: 'zech_4_6_biruhi_missing_construct',
+    expectedFailTag: '[FAIL] Zechariah 4:6 w15 (بِرُوحِي) Construct Case',
+    description: 'Cleared morph_case construct from Zechariah 4:6 pos 15 (بِرُوحِي)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET morph_case = NULL
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 38)
+        AND ar_word_position = 15;
+    `
   }
 ];
 

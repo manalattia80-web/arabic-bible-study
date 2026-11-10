@@ -251,7 +251,7 @@ class MorphologyService {
     'directional': 'مقترن بهاء الاتجاه (Directional He)',
   };
 
-  static List<String> _detectHebrewSurfacePrefixes(String surfaceWord, String? strongsId) {
+  static List<String> _detectHebrewSurfacePrefixes(String surfaceWord, String? strongsId, {String? code}) {
     final cons = surfaceWord.replaceAll(RegExp(r'[\u0591-\u05C7]'), '').trim();
     if (cons.length <= 1) return const [];
     int? sNum;
@@ -272,7 +272,10 @@ class MorphologyService {
     if (surfaceWord.startsWith('הַ') || surfaceWord.startsWith('הָ') || surfaceWord.startsWith('הֶ')) {
       prefixes.add('هاء التعريف (הַ)');
     }
-    if (!isBetRoot && (surfaceWord.startsWith('בְּ') || surfaceWord.startsWith('בַּ') || surfaceWord.startsWith('בִּ'))) {
+    final cleanCode = (code ?? '').trim();
+    final isBetPrepByMorph = cleanCode.startsWith('HR/') || cleanCode.startsWith('R/');
+    final isBetPrepByLegacy = cleanCode.isEmpty && !isBetRoot && (surfaceWord.startsWith('בְּ') || surfaceWord.startsWith('בְּ') || surfaceWord.startsWith('בַּ') || surfaceWord.startsWith('בִּ'));
+    if (cons.startsWith('ב') && (isBetPrepByMorph || isBetPrepByLegacy)) {
       prefixes.add('باء الجر والظرفية (בְּ)');
     }
     if (!isLamedRoot && (surfaceWord.startsWith('לְ') || surfaceWord.startsWith('לַ') || surfaceWord.startsWith('לִ'))) {
@@ -359,7 +362,7 @@ class MorphologyService {
     }
 
     final prefixes = (isHebrew && origSurface != null)
-        ? _detectHebrewSurfacePrefixes(origSurface, strongsId)
+        ? _detectHebrewSurfacePrefixes(origSurface, strongsId, code: code)
         : const <String>[];
 
     // Map structured part-of-speech key to scholarly Arabic label

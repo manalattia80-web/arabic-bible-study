@@ -136,7 +136,7 @@ const cleanQuickCheck = runSql(cleanDbPath, 'PRAGMA quick_check;');
 console.log(`\n[VERIFICATION - TRACK 1] Clean Install Invariants:`);
 console.log(`  [${cleanDbExists && cleanSize === 363438080 ? 'PASS' : 'FAIL'}] Target DB exists with exact vacuumed size: ${cleanSize} bytes`);
 console.log(`  [${cleanQuickCheck === 'ok' ? 'PASS' : 'FAIL'}] PRAGMA quick_check: ${cleanQuickCheck}`);
-console.log(`  [${cleanPrefs.db_version === 372 ? 'PASS' : 'FAIL'}] Preferences db_version set to: ${cleanPrefs.db_version}`);
+console.log(`  [${cleanPrefs.db_version === targetDbVersion ? 'PASS' : 'FAIL'}] Preferences db_version set to: ${cleanPrefs.db_version}`);
 
 results.clean_install = {
   db_opened: cleanDbExists && cleanQuickCheck === 'ok',
@@ -345,25 +345,28 @@ const isMasculinePlural = (
 );
 
 console.log(`\n[VERIFICATION - TRACK 3] Morphology Card Assertions (Both Paths):`);
-console.log(`  [${cleanInstallMorphOk ? 'PASS' : 'FAIL'}] Clean Install DB opens v372 and returns H5587 masculine plural.`);
+console.log(`  [${cleanInstallMorphOk ? 'PASS' : 'FAIL'}] Clean Install DB opens v${targetDbVersion} and returns H5587 masculine plural.`);
 console.log(`  [${isMasculinePlural ? 'PASS' : 'FAIL'}] Upgraded DB returns H5587 masculine plural ("${cardDisplay.composite}"), dual/feminine eliminated.`);
 
-// Spot-check other recent canonical alignments
+// Spot-check Zechariah 4:6 canonical repairs (v1.0.373) & sample
 const spotCheckSql = `
 SELECT 'Ruth 1:16 w7', wm.ar_word, wms.strongs_id, wm.orig_surface, wm.orig_word, wms.orig_component
 FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
 JOIN word_mapping_strongs wms ON wm.id = wms.mapping_id AND wms.link_role = 'primary'
 WHERE v.book_id = 8 AND v.chapter_num = 1 AND v.verse_num = 16 AND wms.orig_word_position = 7
 UNION ALL
-SELECT 'Phil 4:6 w11', wm.ar_word, wms.strongs_id, wm.orig_surface, wm.orig_word, wms.orig_component
+SELECT 'Zech 4:6 pos7', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.orig_morphology, wm.verified_locator
 FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
-JOIN word_mapping_strongs wms ON wm.id = wms.mapping_id AND wms.link_role = 'primary'
-WHERE v.book_id = 50 AND v.chapter_num = 4 AND v.verse_num = 6 AND wms.orig_word_position = 11
+WHERE v.book_id = 38 AND v.chapter_num = 4 AND v.verse_num = 6 AND wm.ar_word_position = 7
 UNION ALL
-SELECT 'Luke 15:20 w12', wm.ar_word, wms.strongs_id, wm.orig_surface, wm.orig_word, wms.orig_component
+SELECT 'Zech 4:6 pos14sec', wm.ar_word, wms.strongs_id, wms.orig_component, wms.orig_morphology, CAST(wms.orig_word_position AS TEXT)
 FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
-JOIN word_mapping_strongs wms ON wm.id = wms.mapping_id AND wms.strongs_id = 'G568'
-WHERE v.book_id = 42 AND v.chapter_num = 15 AND v.verse_num = 20;
+JOIN word_mapping_strongs wms ON wm.id = wms.mapping_id AND wms.link_role = 'secondary'
+WHERE v.book_id = 38 AND v.chapter_num = 4 AND v.verse_num = 6 AND wm.ar_word_position = 14
+UNION ALL
+SELECT 'Zech 4:6 pos15', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.morph_case, wm.verified_locator
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 38 AND v.chapter_num = 4 AND v.verse_num = 6 AND wm.ar_word_position = 15;
 `;
 const spotRes = runSql(targetUpgradeDbPath, spotCheckSql);
 console.log(`\n[SPOT CHECK] Canonical Verifications across sample:`);
@@ -376,6 +379,11 @@ const ruthOrigComp = ruthCols[5] || '';
 const ruthHasHebrewVav = ruthOrigComp.includes('\u05D5') && !ruthOrigComp.includes('\u0648');
 console.log(`  [${ruthHasHebrewVav ? 'PASS' : 'FAIL'}] Ruth 1:16 w7 orig_component ("${ruthOrigComp.trim()}") contains Hebrew Vav (U+05D5) and NO Arabic Waw (U+0648).`);
 
+const zechPos7Ok = spotRes.includes('Zech 4:6 pos7|إِلَى|H413|אֶל|HR|OSHB:B38.C4.V6.w8');
+const zechPos14SecOk = spotRes.includes('Zech 4:6 pos14sec|بَلْ|H518|אִם|HC|16');
+const zechPos15Ok = spotRes.includes('Zech 4:6 pos15|بِرُوحِي|H7307|בְּרוּחִ֔י|construct|OSHB:B38.C4.V6.w17');
+console.log(`  [${zechPos7Ok && zechPos14SecOk && zechPos15Ok ? 'PASS' : 'FAIL'}] Zechariah 4:6 repairs verified on assembled DB (pos7 אֶל/HR, pos14 w16 H518, pos15 construct).`);
+
 results.morphology_card_verification = {
   target_word: mArWord,
   primary_strongs: mStrongs,
@@ -385,7 +393,8 @@ results.morphology_card_verification = {
   orig_morphology: mMorphRaw,
   card_display_composite: cardDisplay.composite,
   is_masculine_plural: isMasculinePlural,
-  ruth_hebrew_vav_verified: ruthHasHebrewVav
+  ruth_hebrew_vav_verified: ruthHasHebrewVav,
+  zech_4_6_verified: zechPos7Ok && zechPos14SecOk && zechPos15Ok
 };
 
 // ============================================================================
@@ -397,7 +406,8 @@ const allPassed = (
   results.upgrade_from_v370.target_db_opened &&
   results.upgrade_from_v370.zero_data_loss_guaranteed &&
   results.morphology_card_verification.is_masculine_plural &&
-  results.morphology_card_verification.ruth_hebrew_vav_verified
+  results.morphology_card_verification.ruth_hebrew_vav_verified &&
+  results.morphology_card_verification.zech_4_6_verified
 );
 
 if (allPassed) {

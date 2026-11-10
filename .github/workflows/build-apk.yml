@@ -146,14 +146,12 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Database Upgrade Architecture & Data Protection (v1.0.372)
-          - **Corrective Asset & Code Alignment**: Synchronized `const totalParts = 70;` in `DatabaseService` exactly matching the 70 chunked asset parts (`part_00.dat` .. `part_69.dat`) resulting from SQLite `VACUUM` (saving 4,341,760 bytes), resolving the startup `AssetNotFoundException` on `part_70.dat`.
-          - **Dynamic Upgrade Migration**: Bumped `targetDbVersion = 372` in `DatabaseService` with atomic temp-file assembly, pre-registration SQLite integrity check, and safe cleanup of legacy database binaries.
-          - **Zero Data Loss Guarantee**: All user preferences, theme modes, font sizes, reading history, and bookmarks stored in `SharedPreferences` remain 100% intact upon upgrade.
-          - **Pre-Publish Full Chunk Verification Quality Gate**: Added mandatory automated check verifying 1:1 filename and byte matching between Dart code expectation and APK asset contents.
-          - **Automatic Chunk Tracking Architecture**: Enhanced `scripts/chunk_db.cjs` to automatically generate asset manifest and synchronize `totalParts` in `database_service.dart`.
-          - **1 Kings 18:21 Verified Morphology**: Preserved verified canonical database with `H5587` ("الْفِرْقَتَيْنِ") as masculine plural (`HTd/Ncmpa`), 7 cleansed display notes, manifest locWordIndex sync, and negative gate 40.
-          - **Benchmark Status**: 311 units audited: 275 correct (88.42%), 36 errors (15 Hebrew, 21 Aramaic), 0 undecided. All 40 negative gates passing.
+          ## 🚀 Zechariah 4:6 Canonical OSHB Alignment & Morphology Polish (v1.0.373)
+          - **Zechariah 4:6 Full Canonical Alignment**: Resolved all 15 remaining Hebrew benchmark errors by mapping all 18 Arabic words across all 20 OSHB tokens (`w1..w20`), adding `H413` (`אֵלַי֙` · `HR/Sp1cs`) at `w3` inside «وَكَلَّمَنِي» (`arPos 2`) and `H518` (`אִם` · `HC`) at `w16` inside «بَلْ» (`arPos 14`), fixing «إِلَى» (`w8`, `אֶל`, `HR`), and cleaning the stale `H562` note on «كَلِمَةُ».
+          - **Hebrew Bet Preposition Prefix Detector**: Updated `MorphologyService._detectHebrewSurfacePrefixes` to classify Bet (`בְּ`) deterministically via `HR/` morphology + diacritic-stripped initial `ב`, supporting literal OSHB surfaces (`בְחַ֨יִל֙`, `בְכֹ֔חַ`, `בְּרוּחִ֔י`) while rejecting root-Bet controls (`בַּיִת`, `HNcmsa`).
+          - **Construct Case & Negative Gates 41–45**: Set `morph_case = 'construct'` on «كَلِمَةُ» (`HNcmsc`) and «بِرُوحِي» (`HR/Ncbsc/Sp1cs`), and enforced 5 new negative quality gates (Gates 41–45).
+          - **Post-Build APK Asset Gate**: Runs `verify_apk_asset_integrity.cjs` directly against the built APK ZIP central directory and reassembles chunks before publishing.
+          - **Benchmark Status**: 311 units audited: **290 correct (93.25%)**, **21 errors** (Aramaic only: 12 Ezra 5:8, 9 Daniel 4:17), **0 Hebrew/Greek errors**, **0 undecided**. All 45 negative gates passing.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

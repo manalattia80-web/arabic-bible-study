@@ -1,17 +1,17 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "v1.0.372",
-  "date": "2026-11-09",
+  "version": "v1.0.373",
+  "date": "2026-11-10",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
     "totalUnits": 311,
-    "correct": 275,
-    "errors": 36,
-    "error": 36,
+    "correct": 290,
+    "errors": 21,
+    "error": 21,
     "undecided": 0,
-    "accuracy": "88.42%",
-    "accuracyPercentage": 88.42
+    "accuracy": "93.25%",
+    "accuracyPercentage": 93.25
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -4907,7 +4907,7 @@
       "arPos": 2,
       "arWord": "وَكَلَّمَنِي",
       "strongsId": "H559",
-      "components": "H559:primary",
+      "components": "H559:primary@w2[וַיֹּ֤אמֶר:HC/Vqw3ms];H413:secondary@w3[אֵלַי֙:HR/Sp1cs]",
       "origWord": "אָמַר",
       "origSurface": "וַיֹּ֤אמֶר",
       "origMorph": "HC/Vqw3ms",
@@ -4946,41 +4946,6 @@
       "origWord": "אָמַר",
       "origSurface": "לֵאמֹ֔ר",
       "origMorph": "HR/Vqc",
-      "origPos": 3,
-      "locator": "OSHB:B38.C4.V6.w3",
-      "locWordIndex": 3,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/Vqc' vs Source 'HR/Sp1cs' (id: 38WVH)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Zech 4:6",
-      "verseAr": "زكريا ٤:٦",
-      "lang": "hebrew",
-      "arPos": 4,
-      "arWord": "هذِهِ",
-      "strongsId": "H2088",
-      "components": "H2088:primary",
-      "origWord": "זֶה",
-      "origSurface": "זֶ֚ה",
-      "origMorph": "HPdxms",
       "origPos": 4,
       "locator": "OSHB:B38.C4.V6.w4",
       "locWordIndex": 4,
@@ -4995,15 +4960,50 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HPdxms' vs Source 'HR/Vqc' (id: 38WMK)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
+    },
+    {
+      "verse": "Zech 4:6",
+      "verseAr": "زكريا ٤:٦",
+      "lang": "hebrew",
+      "arPos": 4,
+      "arWord": "هذِهِ",
+      "strongsId": "H2088",
+      "components": "H2088:primary",
+      "origWord": "זֶה",
+      "origSurface": "זֶ֚ה",
+      "origMorph": "HPdxms",
+      "origPos": 5,
+      "locator": "OSHB:B38.C4.V6.w5",
+      "locWordIndex": 5,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
@@ -5051,41 +5051,6 @@
       "origWord": "יְהֹוָה",
       "origSurface": "יְהוָ֔ה",
       "origMorph": "HNp",
-      "origPos": 6,
-      "locator": "OSHB:B38.C4.V6.w6",
-      "locWordIndex": 6,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNp' vs Source 'HNcmsc' (id: 38CmP)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Zech 4:6",
-      "verseAr": "زكريا ٤:٦",
-      "lang": "hebrew",
-      "arPos": 7,
-      "arWord": "إِلَى",
-      "strongsId": "H413",
-      "components": "H413:primary",
-      "origWord": "אֵל",
-      "origSurface": "אֵל",
-      "origMorph": "HR/Sp1cs",
       "origPos": 7,
       "locator": "OSHB:B38.C4.V6.w7",
       "locWordIndex": 7,
@@ -5100,27 +5065,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/Sp1cs' vs Source 'HNp' (id: 38LY2)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 8,
-      "arWord": "زَرُبَّابِلَ",
-      "strongsId": "H2216",
-      "components": "H2216:primary",
-      "origWord": "זְרֻבָּבֶל",
-      "origSurface": "זְרֻבָּבֶ֖ל",
-      "origMorph": "HNp",
+      "arPos": 7,
+      "arWord": "إِلَى",
+      "strongsId": "H413",
+      "components": "H413:primary",
+      "origWord": "אֵל",
+      "origSurface": "אֶל",
+      "origMorph": "HR",
       "origPos": 8,
       "locator": "OSHB:B38.C4.V6.w8",
       "locWordIndex": 8,
@@ -5135,27 +5100,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNp' vs Source 'HR' (id: 38k7w)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 9,
-      "arWord": "قَائِلاً",
-      "strongsId": "H559",
-      "components": "H559:primary",
-      "origWord": "אָמַר",
-      "origSurface": "לֵאמֹ֑ר",
-      "origMorph": "HR/Vqc",
+      "arPos": 8,
+      "arWord": "زَرُبَّابِلَ",
+      "strongsId": "H2216",
+      "components": "H2216:primary",
+      "origWord": "זְרֻבָּבֶל",
+      "origSurface": "זְרֻבָּבֶ֖ל",
+      "origMorph": "HNp",
       "origPos": 9,
       "locator": "OSHB:B38.C4.V6.w9",
       "locWordIndex": 9,
@@ -5170,27 +5135,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/Vqc' vs Source 'HNp' (id: 38JFy)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 10,
-      "arWord": "لاَ",
-      "strongsId": "H3808",
-      "components": "H3808:primary",
-      "origWord": "לֹא",
-      "origSurface": "לֹ֤א",
-      "origMorph": "HTn",
+      "arPos": 9,
+      "arWord": "قَائِلاً",
+      "strongsId": "H559",
+      "components": "H559:primary",
+      "origWord": "אָמַר",
+      "origSurface": "לֵאמֹ֑ר",
+      "origMorph": "HR/Vqc",
       "origPos": 10,
       "locator": "OSHB:B38.C4.V6.w10",
       "locWordIndex": 10,
@@ -5205,27 +5170,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HTn' vs Source 'HR/Vqc' (id: 38Amf)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 11,
-      "arWord": "بِالْقُدْرَةِ",
-      "strongsId": "H2428",
-      "components": "H2428:primary",
-      "origWord": "חַיִל",
-      "origSurface": "בְחַ֨יִל֙",
-      "origMorph": "HR/Ncmsa",
+      "arPos": 10,
+      "arWord": "لاَ",
+      "strongsId": "H3808",
+      "components": "H3808:primary",
+      "origWord": "לֹא",
+      "origSurface": "לֹ֤א",
+      "origMorph": "HTn",
       "origPos": 11,
       "locator": "OSHB:B38.C4.V6.w11",
       "locWordIndex": 11,
@@ -5240,27 +5205,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/Ncmsa' vs Source 'HTn' (id: 38i9m)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 12,
-      "arWord": "وَلاَ",
-      "strongsId": "H3808",
-      "components": "H3808:primary",
-      "origWord": "לֹא",
-      "origSurface": "וְלֹ֣א",
-      "origMorph": "HC/Tn",
+      "arPos": 11,
+      "arWord": "بِالْقُدْرَةِ",
+      "strongsId": "H2428",
+      "components": "H2428:primary",
+      "origWord": "חַיִל",
+      "origSurface": "בְחַ֨יִל֙",
+      "origMorph": "HR/Ncmsa",
       "origPos": 12,
       "locator": "OSHB:B38.C4.V6.w12",
       "locWordIndex": 12,
@@ -5275,27 +5240,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HC/Tn' vs Source 'HR/Ncmsa' (id: 38FCo)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 13,
-      "arWord": "بِالْقُوَّةِ",
-      "strongsId": "H3581",
-      "components": "H3581:primary",
-      "origWord": "כֹּחַ",
-      "origSurface": "בְכֹ֔חַ",
-      "origMorph": "HR/Ncmsa",
+      "arPos": 12,
+      "arWord": "وَلاَ",
+      "strongsId": "H3808",
+      "components": "H3808:primary",
+      "origWord": "לֹא",
+      "origSurface": "וְלֹ֣א",
+      "origMorph": "HC/Tn",
       "origPos": 13,
       "locator": "OSHB:B38.C4.V6.w13",
       "locWordIndex": 13,
@@ -5310,27 +5275,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/Ncmsa' vs Source 'HC/Tn' (id: 38wNS)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 14,
-      "arWord": "بَلْ",
-      "strongsId": "H3588",
-      "components": "H3588:primary",
-      "origWord": "כִּי",
-      "origSurface": "כִּ֣י",
-      "origMorph": "HC",
+      "arPos": 13,
+      "arWord": "بِالْقُوَّةِ",
+      "strongsId": "H3581",
+      "components": "H3581:primary",
+      "origWord": "כֹּחַ",
+      "origSurface": "בְכֹ֔חַ",
+      "origMorph": "HR/Ncmsa",
       "origPos": 14,
       "locator": "OSHB:B38.C4.V6.w14",
       "locWordIndex": 14,
@@ -5345,27 +5310,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HC' vs Source 'HR/Ncmsa' (id: 38XPV)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 15,
-      "arWord": "بِرُوحِي",
-      "strongsId": "H7307",
-      "components": "H7307:primary",
-      "origWord": "רוּחַ",
-      "origSurface": "בְּרוּחִ֔י",
-      "origMorph": "HR/Ncbsc/Sp1cs",
+      "arPos": 14,
+      "arWord": "بَلْ",
+      "strongsId": "H3588",
+      "components": "H3588:primary@w15[כִּ֣י:HC];H518:secondary@w16[אִם:HC]",
+      "origWord": "כִּי",
+      "origSurface": "כִּ֣י",
+      "origMorph": "HC",
       "origPos": 15,
       "locator": "OSHB:B38.C4.V6.w15",
       "locWordIndex": 15,
@@ -5380,62 +5345,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HR/Ncbsc/Sp1cs' vs Source 'HC' (id: 38K9E)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 16,
-      "arWord": "قَالَ",
-      "strongsId": "H559",
-      "components": "H559:primary",
-      "origWord": "אָמַר",
-      "origSurface": "אָמַ֖ר",
-      "origMorph": "HVqp3ms",
-      "origPos": 16,
-      "locator": "OSHB:B38.C4.V6.w16",
-      "locWordIndex": 16,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HVqp3ms' vs Source 'HC' (id: 38sNR)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Zech 4:6",
-      "verseAr": "زكريا ٤:٦",
-      "lang": "hebrew",
-      "arPos": 17,
-      "arWord": "رَبُّ",
-      "strongsId": "H3068",
-      "components": "H3068:primary",
-      "origWord": "יְהֹוָה",
-      "origSurface": "יְהוָ֥ה",
-      "origMorph": "HNp",
+      "arPos": 15,
+      "arWord": "بِرُوحِي",
+      "strongsId": "H7307",
+      "components": "H7307:primary",
+      "origWord": "רוּחַ",
+      "origSurface": "בְּרוּחִ֔י",
+      "origMorph": "HR/Ncbsc/Sp1cs",
       "origPos": 17,
       "locator": "OSHB:B38.C4.V6.w17",
       "locWordIndex": 17,
@@ -5450,27 +5380,27 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNp' vs Source 'HR/Ncbsc/Sp1cs' (id: 38pww)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Zech 4:6",
       "verseAr": "زكريا ٤:٦",
       "lang": "hebrew",
-      "arPos": 18,
-      "arWord": "الْجُنُودِ",
-      "strongsId": "H6635",
-      "components": "H6635:primary",
-      "origWord": "צָבָא",
-      "origSurface": "צְבָאֽוֹת",
-      "origMorph": "HNcbpa",
+      "arPos": 16,
+      "arWord": "قَالَ",
+      "strongsId": "H559",
+      "components": "H559:primary",
+      "origWord": "אָמַר",
+      "origSurface": "אָמַ֖ר",
+      "origMorph": "HVqp3ms",
       "origPos": 18,
       "locator": "OSHB:B38.C4.V6.w18",
       "locWordIndex": 18,
@@ -5485,15 +5415,85 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'HNcbpa' vs Source 'HVqp3ms' (id: 38d1k)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح"
+    },
+    {
+      "verse": "Zech 4:6",
+      "verseAr": "زكريا ٤:٦",
+      "lang": "hebrew",
+      "arPos": 17,
+      "arWord": "رَبُّ",
+      "strongsId": "H3068",
+      "components": "H3068:primary",
+      "origWord": "יְהֹוָה",
+      "origSurface": "יְהוָ֥ה",
+      "origMorph": "HNp",
+      "origPos": 19,
+      "locator": "OSHB:B38.C4.V6.w19",
+      "locWordIndex": 19,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح"
+    },
+    {
+      "verse": "Zech 4:6",
+      "verseAr": "زكريا ٤:٦",
+      "lang": "hebrew",
+      "arPos": 18,
+      "arWord": "الْجُنُودِ",
+      "strongsId": "H6635",
+      "components": "H6635:primary",
+      "origWord": "צָבָא",
+      "origSurface": "צְבָאֽוֹת",
+      "origMorph": "HNcbpa",
+      "origPos": 20,
+      "locator": "OSHB:B38.C4.V6.w20",
+      "locWordIndex": 20,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح"
     },
     {
       "verse": "Mark 10:45",

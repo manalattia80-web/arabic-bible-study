@@ -2277,6 +2277,86 @@ const kgs11Morph = query(`
 const okKgs11Morph = kgs11Morph[0] === 'masculine' && kgs11Morph[1] === 'plural';
 assertCondition('1 Kings 18:21 w11 (الْفِرْقَتَيْنِ) Primary Morphology Plural Masculine (HTd/Ncmpa)', okKgs11Morph, `Found gender=${kgs11Morph[0]}, number=${kgs11Morph[1]}`);
 
+// 41. Zechariah 4:6 Full-Verse Component Canonical Integrity (All 18 Ar / 20 Heb OSHB tokens, incl. w3 & w16)
+const zechExpectedComps = [
+  { pos: 1, comps: 'H6030:primary@w1[וַיַּ֜עַן:HC/Vqw3ms]' },
+  { pos: 2, comps: 'H559:primary@w2[וַיֹּ֤אמֶר:HC/Vqw3ms];H413:secondary@w3[אֵלַי֙:HR/Sp1cs]' },
+  { pos: 3, comps: 'H559:primary@w4[לֵאמֹ֔ר:HR/Vqc]' },
+  { pos: 4, comps: 'H2088:primary@w5[זֶ֚ה:HPdxms]' },
+  { pos: 5, comps: 'H1697:primary@w6[דְּבַר־:HNcmsc]' },
+  { pos: 6, comps: 'H3068:primary@w7[יְהוָ֔ה:HNp]' },
+  { pos: 7, comps: 'H413:primary@w8[אֶל:HR]' },
+  { pos: 8, comps: 'H2216:primary@w9[זְרֻבָּבֶ֖ל:HNp]' },
+  { pos: 9, comps: 'H559:primary@w10[לֵאמֹ֑ר:HR/Vqc]' },
+  { pos: 10, comps: 'H3808:primary@w11[לֹ֤א:HTn]' },
+  { pos: 11, comps: 'H2428:primary@w12[בְחַ֨יִל֙:HR/Ncmsa]' },
+  { pos: 12, comps: 'H3808:primary@w13[וְלֹ֣א:HC/Tn]' },
+  { pos: 13, comps: 'H3581:primary@w14[בְכֹ֔חַ:HR/Ncmsa]' },
+  { pos: 14, comps: 'H3588:primary@w15[כִּ֣י:HC];H518:secondary@w16[אִם:HC]' },
+  { pos: 15, comps: 'H7307:primary@w17[בְּרוּחִ֔י:HR/Ncbsc/Sp1cs]' },
+  { pos: 16, comps: 'H559:primary@w18[אָמַ֖ר:HVqp3ms]' },
+  { pos: 17, comps: 'H3068:primary@w19[יְהוָ֥ה:HNp]' },
+  { pos: 18, comps: 'H6635:primary@w20[צְבָאֽוֹת:HNcbpa]' }
+];
+const zechRowsRaw = query(`
+  SELECT wm.ar_word_position,
+         (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position || '[' || wms.orig_component || ':' || wms.orig_morphology || ']', ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as comps
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 38 AND chapter_num = 4 AND verse_num = 6)
+  ORDER BY wm.ar_word_position ASC;
+`).trim();
+const zechActualMap = new Map();
+for (const line of zechRowsRaw.split('\n')) {
+  if (!line.trim()) continue;
+  const idx = line.indexOf('|');
+  zechActualMap.set(parseInt(line.slice(0, idx), 10), line.slice(idx + 1).trim());
+}
+const zechMismatches = [];
+for (const exp of zechExpectedComps) {
+  const act = zechActualMap.get(exp.pos);
+  if (act !== exp.comps) {
+    zechMismatches.push(`pos${exp.pos}: expected '${exp.comps}', got '${act}'`);
+  }
+}
+assertCondition('Zechariah 4:6 Full-Verse Canonical Loci (All 18 Ar / 20 Heb OSHB tokens incl. w3 & w16, NO H9003)', zechMismatches.length === 0, zechMismatches.join(' | '));
+
+// 42. Zechariah 4:6 arPos 7 ("إِلَى") Exact Form (w8, אֶל, HR without suffix)
+const zechIlaRow = query(`
+  SELECT wm.orig_word_position, wm.orig_surface, wm.orig_morphology, wm.verified_locator
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 38 AND chapter_num = 4 AND verse_num = 6)
+    AND wm.ar_word_position = 7;
+`).trim();
+const okZechIla = zechIlaRow === '8|אֶל|HR|OSHB:B38.C4.V6.w8';
+assertCondition('Zechariah 4:6 w7 (إِلَى) Exact Preposition Form (w8, אֶל, HR)', okZechIla, `Found=${zechIlaRow}`);
+
+// 43. Zechariah 4:6 arPos 5 ("كَلِمَةُ") Clean Notes (NO H562) & Construct Case
+const zechKalimaRow = query(`
+  SELECT wm.morph_case, COALESCE(wm.grammar_notes, '')
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 38 AND chapter_num = 4 AND verse_num = 6)
+    AND wm.ar_word_position = 5;
+`).trim();
+const [kalimaCase, kalimaNotes] = zechKalimaRow.split('|');
+const okZechKalima = kalimaCase === 'construct' && !kalimaNotes.includes('H562') && kalimaNotes.includes('H1697');
+assertCondition('Zechariah 4:6 w5 (كَلِمَةُ) Clean Notes (no H562) & Construct Case', okZechKalima, `Found case=${kalimaCase}, notes=${kalimaNotes}`);
+
+// 44. Zechariah 4:6 arPos 15 ("بِرُوحِي") Construct Case
+const zechRuhiCase = query(`
+  SELECT wm.morph_case
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 38 AND chapter_num = 4 AND verse_num = 6)
+    AND wm.ar_word_position = 15;
+`).trim();
+assertCondition('Zechariah 4:6 w15 (بِرُوحِي) Construct Case (HR/Ncbsc/Sp1cs)', zechRuhiCase === 'construct', `Found case=${zechRuhiCase}`);
+
+// 45. Bet Prefix Detector Source Code Invariant (morphology_service.dart)
+const morphServicePath = path.resolve(__dirname, '../mobile/lib/core/services/morphology_service.dart');
+const morphServiceCode = fs.readFileSync(morphServicePath, 'utf8');
+const hasMorphBetCheck = morphServiceCode.includes("startsWith('HR/')") && morphServiceCode.includes("cons.startsWith('ב')");
+assertCondition('MorphologyService Bet Prefix Detector relies on HR/ + stripped ב consonant', hasMorphBetCheck, 'Missing HR/ + stripped ב prefix check in morphology_service.dart');
+
 
 
 
