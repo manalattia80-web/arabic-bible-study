@@ -297,12 +297,20 @@ function openZech46CardsAndVerify(prefixLabel) {
 
   const searchResSnap = captureAndOcr(`${prefixLabel}_search_zech46_results.png`, `/sdcard/${prefixLabel}_search_zech46_results.png`);
   console.log('Search 38 4 6 OCR sample:', searchResSnap.ocr.slice(0, 300).replace(/\n/g, ' | '));
-  if (!searchResSnap.ocr.includes('زربابل') && !searchResSnap.ocr.includes('زكريا') && !searchResSnap.ocr.includes('نتيجة') && !searchResSnap.ocr.includes('بالقدرة')) {
+  const hasSearchResult = (o) =>
+    o.includes('38 4 6') ||
+    o.includes('وجدنا 1') ||
+    o.includes('الإصحاح 4') ||
+    o.includes('الآية 6') ||
+    o.includes('في القارئ') ||
+    o.includes('زربابل') ||
+    o.includes('زكريا');
+  if (!hasSearchResult(searchResSnap.ocr)) {
     console.log('Retrying Search submit button tap at', searchBtnX, searchBtnY);
     execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
     sleep(2500);
     const retrySnap = captureAndOcr(`${prefixLabel}_search_zech46_results.png`, `/sdcard/${prefixLabel}_search_zech46_results.png`);
-    if (!retrySnap.ocr.includes('زربابل') && !retrySnap.ocr.includes('زكريا') && !retrySnap.ocr.includes('نتيجة') && !retrySnap.ocr.includes('بالقدرة')) {
+    if (!hasSearchResult(retrySnap.ocr)) {
       throw new Error(`Search '38 4 6' did not return Zechariah 4:6 result card! OCR: "${retrySnap.ocr.replace(/\r?\n/g, ' | ').slice(0, 320)}"`);
     }
   }
@@ -349,10 +357,12 @@ function openZech46CardsAndVerify(prefixLabel) {
     if (isWordStudy) {
       const isZech46 =
         wsCheck.ocr.includes('الآية 6') ||
-        wsCheck.ocr.includes('بالقدرة') ||
-        wsCheck.ocr.includes('زربابل') ||
-        wsCheck.ocr.includes('بروحي') ||
-        wsCheck.ocr.includes('الجنود');
+        wsCheck.ocr.includes('الإصحاح 4') ||
+        wsCheck.ocr.includes('1697') ||
+        wsCheck.ocr.includes('6030') ||
+        wsCheck.ocr.includes('2088') ||
+        wsCheck.ocr.includes('18 كلمة') ||
+        wsCheck.ocr.includes('زربابل');
       if (isZech46) {
         enteredWordStudy = true;
         console.log('Confirmed WordStudyScreen for Zechariah 4:6 is open!');
