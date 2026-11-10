@@ -256,7 +256,8 @@ function isModalOpenOcr(ocr) {
     ocr.includes('نطق آلي') ||
     ocr.includes('عرض المعجم') ||
     ocr.includes('المعنى المعجمي') ||
-    ocr.includes('التحليل النحوي')
+    ocr.includes('التحليل النحوي') ||
+    /\b(Noun|Verb|Preposition|Conjunction|Pronoun|Particle|Adjective|Masculine|Feminine|Common|Singular|Plural|Construct|Absolute|Hebrew|Aramaic|Strong|Meaning|Wayyiqtol)\b/i.test(ocr)
   );
 }
 
@@ -315,24 +316,35 @@ function openZech46CardsAndVerify(prefixLabel) {
     }
   }
 
-  const cardTapOffsets = [0.36, 0.42, 0.48, 0.30, 0.54, 0.60];
+  const cardTapOffsets = [0.34, 0.38, 0.42, 0.30, 0.46, 0.52];
   let enteredReader = false;
+  let lastReaderCheckOcr = '';
   for (const yRatio of cardTapOffsets) {
     console.log(`Tapping Zechariah 4:6 result card at (${Math.round(W * 0.50)}, ${Math.round(H * yRatio)})...`);
     execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
     sleep(4000);
 
     const check = captureAndOcr('reader_entry_check.png', '/sdcard/reader_entry_check.png');
+    lastReaderCheckOcr = check.ocr;
     if (isModalOpenOcr(check.ocr)) {
       execAdb('shell input keyevent 4');
       sleep(1200);
       continue;
     }
+    if (check.ocr.includes('الأصل المعجمي') || check.ocr.includes('سترونج والنطق')) {
+      execAdb('shell input keyevent 4');
+      sleep(1200);
+      enteredReader = true;
+      console.log('Returned from WordStudyScreen to Zechariah 4 ChapterReaderScreen!');
+      break;
+    }
     const isReaderScreen =
-      (check.ocr.includes('التالي') || check.ocr.includes('السابق')) &&
+      (check.ocr.includes('التالي') || check.ocr.includes('السابق') || check.ocr.includes('من 14')) &&
       !check.ocr.includes('نتائج') &&
       !check.ocr.includes('وجدنا') &&
-      !check.ocr.includes('اقتراحات');
+      !check.ocr.includes('اقتراحات') &&
+      !check.ocr.includes('الأصل المعجمي') &&
+      !check.ocr.includes('سترونج والنطق');
     if (isReaderScreen) {
       enteredReader = true;
       console.log('Entered Zechariah 4 ChapterReaderScreen successfully!');
@@ -341,41 +353,43 @@ function openZech46CardsAndVerify(prefixLabel) {
   }
 
   if (!enteredReader) {
-    throw new Error('Could not navigate to Zechariah 4:6 in ChapterReaderScreen from 38 4 6 search.');
+    throw new Error(`Could not navigate to Zechariah 4:6 in ChapterReaderScreen from 38 4 6 search. Last OCR: "${lastReaderCheckOcr.replace(/\r?\n/g, ' | ').slice(0, 280)}"`);
   }
 
-  // ChapterReaderScreen aligns target verse with alignment: 0.15 -> ~0.23..0.35 * H
-  const verseTapOffsets = [0.26, 0.31, 0.22, 0.36, 0.42, 0.48, 0.54];
+  // ChapterReaderScreen aligns target verse with alignment: 0.15 -> ~0.20..0.34 * H
+  const verseTapOffsets = [0.24, 0.28, 0.32, 0.20, 0.36, 0.42, 0.48];
   let enteredWordStudy = false;
+  let lastWsCheckOcr = '';
   for (const yRatio of verseTapOffsets) {
     console.log(`Tapping Verse 6 card at (${Math.round(W * 0.60)}, ${Math.round(H * yRatio)}) to open WordStudyScreen...`);
     execAdb(`shell input tap ${Math.round(W * 0.60)} ${Math.round(H * yRatio)}`);
     sleep(3500);
 
     const wsCheck = captureAndOcr('wordstudy_entry_check.png', '/sdcard/wordstudy_entry_check.png');
+    lastWsCheckOcr = wsCheck.ocr;
     const isWordStudy = wsCheck.ocr.includes('الأصل المعجمي') || wsCheck.ocr.includes('سترونج والنطق') || wsCheck.ocr.includes('الرمز المعجمي') || wsCheck.ocr.includes('دراسة');
     if (isWordStudy) {
+      // Strictly distinguish Zechariah 4:6 from Verse 5 or Verse 7 (never match 'الإصحاح 4' or 'زربابل'!)
       const isZech46 =
         wsCheck.ocr.includes('الآية 6') ||
-        wsCheck.ocr.includes('الإصحاح 4') ||
-        wsCheck.ocr.includes('1697') ||
-        wsCheck.ocr.includes('6030') ||
-        wsCheck.ocr.includes('2088') ||
+        wsCheck.ocr.includes('الآية ٦') ||
         wsCheck.ocr.includes('18 كلمة') ||
-        wsCheck.ocr.includes('زربابل');
+        wsCheck.ocr.includes('1697') ||
+        wsCheck.ocr.includes('2428') ||
+        wsCheck.ocr.includes('7307');
       if (isZech46) {
         enteredWordStudy = true;
         console.log('Confirmed WordStudyScreen for Zechariah 4:6 is open!');
         break;
       }
-      console.log(`Opened WordStudyScreen for wrong verse (OCR: ${wsCheck.ocr.slice(0, 120).replace(/\n/g, ' ')}), pressing Back...`);
+      console.log(`Opened WordStudyScreen for wrong verse (OCR: ${wsCheck.ocr.slice(0, 140).replace(/\n/g, ' | ')}), pressing Back...`);
       execAdb('shell input keyevent 4');
       sleep(1200);
     }
   }
 
   if (!enteredWordStudy) {
-    throw new Error('Could not open WordStudyScreen for Zechariah 4:6 (Verse 6).');
+    throw new Error(`Could not open WordStudyScreen for Zechariah 4:6 (Verse 6). Last OCR: "${lastWsCheckOcr.replace(/\r?\n/g, ' | ').slice(0, 280)}"`);
   }
 
   const captured = {};
@@ -486,7 +500,7 @@ function openZech46CardsAndVerify(prefixLabel) {
         console.log(`Tapping TSV coordinate for ${key} at (${Math.round(W * 0.50)}, ${yPx})...`);
         execAdb(`shell input tap ${Math.round(W * 0.50)} ${yPx}`);
         sleep(2000);
-        const modalCheck = captureAndOcr('modal_check.png', '/sdcard/modal_check.png', true);
+        const modalCheck = captureAndOcr('modal_check.png', '/sdcard/modal_check.png', false);
         if (isModalOpenOcr(modalCheck.ocr)) {
           inspectOpenedModal(modalCheck);
           ensureBackOnWordStudy();
@@ -517,7 +531,7 @@ function openZech46CardsAndVerify(prefixLabel) {
         if (requiredKeys.every(k => captured[k])) break;
         execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
         sleep(1800);
-        const modalCheck = captureAndOcr('modal_check.png', '/sdcard/modal_check.png', true);
+        const modalCheck = captureAndOcr('modal_check.png', '/sdcard/modal_check.png', false);
         if (isModalOpenOcr(modalCheck.ocr)) {
           inspectOpenedModal(modalCheck);
           ensureBackOnWordStudy();
