@@ -45,6 +45,33 @@ function getFileSha256(filePath) {
   return crypto.createHash('sha256').update(buffer).digest('hex').toUpperCase();
 }
 
+function runFastEngOcr(imagePath, isDark = false) {
+  try {
+    let targetImg = imagePath;
+    const inverted = imagePath.replace(/\.png$/i, '_fastneg.png');
+    if (isDark) {
+      try {
+        child.execSync(`ffmpeg -y -i "${imagePath}" -vf "negate" "${inverted}"`, {
+          stdio: 'ignore',
+          timeout: 15000
+        });
+        if (fs.existsSync(inverted)) targetImg = inverted;
+      } catch (_) {}
+    }
+    const out = child.execSync(`tesseract "${targetImg}" stdout -l eng`, {
+      encoding: 'utf8',
+      timeout: 20000,
+      stdio: ['pipe', 'pipe', 'ignore']
+    }).trim();
+    if (isDark) {
+      try { if (fs.existsSync(inverted)) fs.unlinkSync(inverted); } catch (_) {}
+    }
+    return out;
+  } catch (_) {
+    return '';
+  }
+}
+
 function runOcr(imagePath, fastSinglePass = false) {
   try {
     let combined = '';
@@ -417,15 +444,20 @@ function openZech46CardsAndVerify(prefixLabel) {
     }
     console.log(`[MODAL OCR SAMPLE]: ${o.slice(0, 200).replace(/\n/g, ' ')}`);
 
-    // Match by Strong's code, morphology code, OR unique Latin transliteration (dabar/chayil/koach/ruwach)
+    // Match by Strong's code, morphology code, OR flexible Latin transliteration (dabar/chayil/koach/ruwach)
     let targetKey = null;
-    if (!captured.H1697 && (o.includes('1697') || o.includes('Ncmsc') || /\bd[aâ]?b[aâ]r\b/i.test(o) || /\bdbar\b/i.test(o)) && !/\b(chayil|koach|ruwach|ruach)\b/i.test(o) && !o.includes('2428') && !o.includes('3581') && !o.includes('7307')) {
+    const hasChayil = /chay[il1t]{1,2}|hay[il1]{2}/i.test(o);
+    const hasKoach  = /\bk[oô0da]?[ae]?ch|k[oô0]ac/i.test(o);
+    const hasRuwach = /\br[uûi]w?[aâe]c/i.test(o);
+    const hasDabar  = /\bd[aâe]?b[aâe]?r|dbar/i.test(o);
+
+    if (!captured.H1697 && (o.includes('1697') || o.includes('Ncmsc') || hasDabar) && !hasChayil && !hasKoach && !hasRuwach && !o.includes('2428') && !o.includes('3581') && !o.includes('7307')) {
       targetKey = 'H1697';
-    } else if (!captured.H2428 && (o.includes('2428') || /chay[il1]{1,2}/i.test(o)) && !/\b(dabar|dbar|koach|ruwach|ruach)\b/i.test(o) && !o.includes('3581') && !o.includes('7307') && !o.includes('1697')) {
+    } else if (!captured.H2428 && (o.includes('2428') || hasChayil) && !hasDabar && !hasKoach && !hasRuwach && !o.includes('3581') && !o.includes('7307') && !o.includes('1697')) {
       targetKey = 'H2428';
-    } else if (!captured.H3581 && (o.includes('3581') || /k[oô0]?ach/i.test(o)) && !/\b(dabar|dbar|chayil|ruwach|ruach)\b/i.test(o) && !o.includes('2428') && !o.includes('7307') && !o.includes('1697')) {
+    } else if (!captured.H3581 && (o.includes('3581') || hasKoach) && !hasDabar && !hasChayil && !hasRuwach && !o.includes('2428') && !o.includes('7307') && !o.includes('1697')) {
       targetKey = 'H3581';
-    } else if (!captured.H7307 && (o.includes('7307') || o.includes('Ncbsc') || o.includes('Sp1cs') || /r[uû]w?ach/i.test(o)) && !/\b(dabar|dbar|chayil|koach)\b/i.test(o) && !o.includes('2428') && !o.includes('3581') && !o.includes('1697')) {
+    } else if (!captured.H7307 && (o.includes('7307') || o.includes('Ncbsc') || o.includes('Sp1cs') || hasRuwach) && !hasDabar && !hasChayil && !hasKoach && !o.includes('2428') && !o.includes('3581') && !o.includes('1697')) {
       targetKey = 'H7307';
     }
 
@@ -484,37 +516,54 @@ function openZech46CardsAndVerify(prefixLabel) {
     return true;
   }
 
+  const isDark = prefixLabel === 'upgrade';
+
+  function captureFastEngModal() {
+    const localPath = path.join(evidenceDir, 'modal_fast.png');
+    execAdb('shell screencap -p /sdcard/modal_fast.png');
+    execAdb(`pull /sdcard/modal_fast.png "${localPath}"`);
+    return { localPath, ocr: runFastEngOcr(localPath, isDark) };
+  }
+
   function ensureBackOnWordStudy() {
     for (let i = 0; i < 2; i++) {
       execAdb('shell input keyevent 4');
-      sleep(900);
-      const chk = captureAndOcr('back_check.png', '/sdcard/back_check.png', true);
-      if (chk.ocr.includes('الأصل المعجمي') || chk.ocr.includes('سترونج والنطق') || !isModalOpenOcr(chk.ocr)) break;
+      sleep(750);
+      const localPath = path.join(evidenceDir, 'back_check.png');
+      execAdb('shell screencap -p /sdcard/back_check.png');
+      execAdb(`pull /sdcard/back_check.png "${localPath}"`);
+      const fastChk = runFastEngOcr(localPath, isDark);
+      if (!isModalOpenOcr(fastChk)) break;
     }
   }
 
-  // Scan WordStudyScreen top-to-bottom across all 18 rows using TSV targeting
+  // Linear zero-skip scan across WordStudyScreen (max 5 overlapping frames, ~0.042*H dense pitch)
   const requiredKeys = ['H1697', 'H2428', 'H3581', 'H7307'];
-  for (let pass = 0; pass < 9; pass++) {
+  const frame0Offsets = [0.48, 0.522, 0.564, 0.606, 0.648, 0.69, 0.732, 0.774, 0.816, 0.858];
+  const frameNOffsets = [0.22, 0.262, 0.304, 0.346, 0.388, 0.43, 0.472, 0.514, 0.556, 0.598, 0.64, 0.682, 0.724, 0.766, 0.808, 0.85];
+
+  for (let frame = 0; frame < 6; frame++) {
     const remaining = requiredKeys.filter(k => !captured[k]);
     if (remaining.length === 0) break;
 
-    if (pass > 0) {
-      console.log(`Scrolling down in WordStudyScreen (pass ${pass}, remaining: ${remaining.join(', ')})...`);
-      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.76)} ${Math.round(W * 0.50)} ${Math.round(H * 0.34)} 350`);
-      sleep(1200);
+    if (frame > 0) {
+      console.log(`Scrolling down in WordStudyScreen (frame ${frame}, remaining: ${remaining.join(', ')})...`);
+      // 600ms slow swipe eliminates Android fling inertia for exact overlapping coverage
+      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.76)} ${Math.round(W * 0.50)} ${Math.round(H * 0.32)} 600`);
+      sleep(1100);
     }
 
-    const scanPath = path.join(evidenceDir, `ws_pass_${pass}.png`);
+    const scanPath = path.join(evidenceDir, `ws_pass_${frame}.png`);
     execAdb('shell screencap -p /sdcard/ws_pass.png');
     execAdb(`pull /sdcard/ws_pass.png "${scanPath}"`);
-    if (pass === 0) {
+    if (frame === 0) {
       diag.wsPass0Ocr = runOcr(scanPath, true).replace(/\r?\n/g, ' | ').slice(0, 140);
     }
 
+    // 1. Direct TSV hit targeting for visible remaining targets
     const tsvHits = findTargetRowYsFromTsv(scanPath, remaining, H);
     diag.tsvPerPass.push(tsvHits);
-    console.log(`TSV hits on pass ${pass}:`, JSON.stringify(tsvHits));
+    console.log(`TSV hits on frame ${frame}:`, JSON.stringify(tsvHits));
 
     for (const key of remaining) {
       const ys = tsvHits[key] || [];
@@ -522,41 +571,25 @@ function openZech46CardsAndVerify(prefixLabel) {
         if (captured[key]) break;
         console.log(`Tapping TSV coordinate for ${key} at (${Math.round(W * 0.50)}, ${yPx})...`);
         execAdb(`shell input tap ${Math.round(W * 0.50)} ${yPx}`);
-        sleep(2000);
-        const modalCheck = captureAndOcr('modal_check.png', '/sdcard/modal_check.png', false);
-        if (isModalOpenOcr(modalCheck.ocr)) {
-          inspectOpenedModal(modalCheck);
+        sleep(1600);
+        const mFast = captureFastEngModal();
+        if (isModalOpenOcr(mFast.ocr)) {
+          inspectOpenedModal(mFast);
           ensureBackOnWordStudy();
         }
       }
     }
-  }
 
-  // Fallback sweep if any card still missed by TSV
-  const stillMissing = requiredKeys.filter(k => !captured[k]);
-  if (stillMissing.length > 0) {
-    console.log(`Fallback dense sweep for missing keys: ${stillMissing.join(', ')}...`);
-    // Scroll back to top if H1697 missing, otherwise scan from current/middle
-    if (stillMissing.includes('H1697')) {
-      for (let up = 0; up < 4; up++) {
-        execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.35)} ${Math.round(W * 0.50)} ${Math.round(H * 0.80)} 300`);
-        sleep(800);
-      }
-    }
-    const denseOffsets = [0.24, 0.30, 0.36, 0.42, 0.48, 0.54, 0.60, 0.66, 0.72, 0.78, 0.84];
-    for (let s = 0; s < 5; s++) {
-      if (requiredKeys.every(k => captured[k])) break;
-      if (s > 0) {
-        execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.74)} ${Math.round(W * 0.50)} ${Math.round(H * 0.44)} 350`);
-        sleep(1100);
-      }
-      for (const yRatio of denseOffsets) {
+    // 2. Zero-skip 0.042*H dense scan on current frame for any target still missing in this viewport
+    if (!requiredKeys.every(k => captured[k])) {
+      const offsets = frame === 0 ? frame0Offsets : frameNOffsets;
+      for (const yRatio of offsets) {
         if (requiredKeys.every(k => captured[k])) break;
         execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
-        sleep(1800);
-        const modalCheck = captureAndOcr('modal_check.png', '/sdcard/modal_check.png', false);
-        if (isModalOpenOcr(modalCheck.ocr)) {
-          inspectOpenedModal(modalCheck);
+        sleep(1500);
+        const mFast = captureFastEngModal();
+        if (isModalOpenOcr(mFast.ocr)) {
+          inspectOpenedModal(mFast);
           ensureBackOnWordStudy();
         }
       }
