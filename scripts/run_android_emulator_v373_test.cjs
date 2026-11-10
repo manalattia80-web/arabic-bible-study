@@ -289,6 +289,9 @@ function executeSearch(queryText) {
 }
 
 function isModalOpenOcr(ocr) {
+  if (ocr.includes('اضغط على الرمز') || ocr.includes('سترونج والنطق') || ocr.includes('الأصل المعجمي')) {
+    return false;
+  }
   return (
     ocr.includes('المدخل المعجمي') ||
     ocr.includes('الرمز القياسي') ||
@@ -296,7 +299,7 @@ function isModalOpenOcr(ocr) {
     ocr.includes('عرض المعجم') ||
     ocr.includes('المعنى المعجمي') ||
     ocr.includes('التحليل النحوي') ||
-    /\b(Noun|Verb|Preposition|Conjunction|Pronoun|Particle|Adjective|Masculine|Feminine|Common|Singular|Plural|Construct|Absolute|Hebrew|Aramaic|Strong|Meaning|Wayyiqtol)\b/i.test(ocr)
+    /\b(Noun|Verb|Preposition|Conjunction|Pronoun|Particle|Adjective|Masculine|Feminine|Singular|Plural|Construct|Absolute|Hebrew|Aramaic|Wayyiqtol|dabar|chayil|koach|ruwach)\b/i.test(ocr)
   );
 }
 
@@ -528,28 +531,30 @@ function openZech46CardsAndVerify(prefixLabel) {
   function ensureBackOnWordStudy() {
     for (let i = 0; i < 2; i++) {
       execAdb('shell input keyevent 4');
-      sleep(750);
+      sleep(800);
       const localPath = path.join(evidenceDir, 'back_check.png');
       execAdb('shell screencap -p /sdcard/back_check.png');
       execAdb(`pull /sdcard/back_check.png "${localPath}"`);
-      const fastChk = runFastEngOcr(localPath, isDark);
-      if (!isModalOpenOcr(fastChk)) break;
+      const chkAraEng = runOcr(localPath, !isDark);
+      if (chkAraEng.includes('اضغط على الرمز') || chkAraEng.includes('سترونج والنطق') || chkAraEng.includes('الأصل المعجمي') || !isModalOpenOcr(chkAraEng)) {
+        break;
+      }
     }
   }
 
-  // Linear zero-skip scan across WordStudyScreen (max 5 overlapping frames, ~0.042*H dense pitch)
+  // Linear zero-skip scan across WordStudyScreen (up to 9 overlapping frames reaching bottom row 18)
   const requiredKeys = ['H1697', 'H2428', 'H3581', 'H7307'];
-  const frame0Offsets = [0.48, 0.522, 0.564, 0.606, 0.648, 0.69, 0.732, 0.774, 0.816, 0.858];
-  const frameNOffsets = [0.22, 0.262, 0.304, 0.346, 0.388, 0.43, 0.472, 0.514, 0.556, 0.598, 0.64, 0.682, 0.724, 0.766, 0.808, 0.85];
+  const frame0Offsets = [0.48, 0.525, 0.57, 0.615, 0.66, 0.705, 0.75, 0.795, 0.84, 0.885];
+  const frameNOffsets = [0.20, 0.245, 0.29, 0.335, 0.38, 0.425, 0.47, 0.515, 0.56, 0.605, 0.65, 0.695, 0.74, 0.785, 0.83, 0.875];
 
-  for (let frame = 0; frame < 6; frame++) {
+  for (let frame = 0; frame < 9; frame++) {
     const remaining = requiredKeys.filter(k => !captured[k]);
     if (remaining.length === 0) break;
 
     if (frame > 0) {
       console.log(`Scrolling down in WordStudyScreen (frame ${frame}, remaining: ${remaining.join(', ')})...`);
-      // 600ms slow swipe eliminates Android fling inertia for exact overlapping coverage
-      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.76)} ${Math.round(W * 0.50)} ${Math.round(H * 0.32)} 600`);
+      // Larger drag (0.84 -> 0.18 at 500ms) covers ~0.5*H cleanly with zero fling overshoot while keeping overlap
+      execAdb(`shell input swipe ${Math.round(W * 0.50)} ${Math.round(H * 0.84)} ${Math.round(W * 0.50)} ${Math.round(H * 0.18)} 500`);
       sleep(1100);
     }
 
@@ -571,7 +576,7 @@ function openZech46CardsAndVerify(prefixLabel) {
         if (captured[key]) break;
         console.log(`Tapping TSV coordinate for ${key} at (${Math.round(W * 0.50)}, ${yPx})...`);
         execAdb(`shell input tap ${Math.round(W * 0.50)} ${yPx}`);
-        sleep(1600);
+        sleep(1400);
         const mFast = captureFastEngModal();
         if (isModalOpenOcr(mFast.ocr)) {
           inspectOpenedModal(mFast);
@@ -580,13 +585,13 @@ function openZech46CardsAndVerify(prefixLabel) {
       }
     }
 
-    // 2. Zero-skip 0.042*H dense scan on current frame for any target still missing in this viewport
+    // 2. Zero-skip 0.045*H dense scan on current frame for any target still missing in this viewport
     if (!requiredKeys.every(k => captured[k])) {
       const offsets = frame === 0 ? frame0Offsets : frameNOffsets;
       for (const yRatio of offsets) {
         if (requiredKeys.every(k => captured[k])) break;
         execAdb(`shell input tap ${Math.round(W * 0.50)} ${Math.round(H * yRatio)}`);
-        sleep(1500);
+        sleep(1300);
         const mFast = captureFastEngModal();
         if (isModalOpenOcr(mFast.ocr)) {
           inspectOpenedModal(mFast);
