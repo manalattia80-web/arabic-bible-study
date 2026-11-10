@@ -140,13 +140,14 @@ if (!fs.existsSync(evidenceDir)) fs.mkdirSync(evidenceDir, { recursive: true });
 
 const testResults = [];
 function recordTest(name, durationSec, passed, failureMsg = '') {
-  testResults.push({ name, durationSec, passed, failureMsg });
+  const cleanMsg = String(failureMsg || '').replace(/\r?\n/g, ' | ');
+  testResults.push({ name, durationSec, passed, failureMsg: cleanMsg });
   if (passed) {
     console.log(`[PASS] ${name} (${durationSec.toFixed(1)}s)`);
     console.log(`::notice::PASS ${name} (${durationSec.toFixed(1)}s)`);
   } else {
-    console.error(`[FAIL] ${name} (${durationSec.toFixed(1)}s): ${failureMsg}`);
-    console.log(`::error::FAIL ${name}: ${failureMsg}`);
+    console.error(`[FAIL] ${name} (${durationSec.toFixed(1)}s): ${cleanMsg}`);
+    console.log(`::error::FAIL ${name}: ${cleanMsg.slice(0, 500)}`);
   }
 }
 
@@ -200,10 +201,19 @@ function ensureSearchScreen() {
   ensureAppInForeground();
   dismissKeyboard();
   for (let attempt = 0; attempt < 4; attempt++) {
-    const { ocr } = captureAndOcr('nav_check.png', '/sdcard/nav_check.png', true);
-    const onSearch = ocr.includes('بحث') || ocr.includes('عمليات البحث') || ocr.includes('اقتراحات') || ocr.includes('ابحث') || ocr.includes('Search');
+    const { ocr } = captureAndOcr('nav_check.png', '/sdcard/nav_check.png', false);
+    const onHome = ocr.includes('إرشادات') || ocr.includes('أوفلاين') || ocr.includes('فاندايك') || ocr.includes('تصفح الأسفار');
+    const onSearch = !onHome && (
+      ocr.includes('المجموعة السفرية') ||
+      ocr.includes('تحديد سفر') ||
+      ocr.includes('عمليات البحث') ||
+      ocr.includes('اقتراحات للدراسة') ||
+      ocr.includes('ابحث في') ||
+      ocr.includes('وجدنا') ||
+      ocr.includes('38 4 6')
+    );
     if (!onSearch) {
-      console.log(`Navigating to SearchScreen (tap ${searchIconX}, ${searchIconY})...`);
+      console.log(`Not yet on SearchScreen (attempt ${attempt}, tapping Search icon at ${searchIconX}, ${searchIconY})...`);
       execAdb(`shell input tap ${searchIconX} ${searchIconY}`);
       sleep(2500);
     } else {
@@ -286,9 +296,15 @@ function openZech46CardsAndVerify(prefixLabel) {
   executeSearch('38 4 6');
 
   const searchResSnap = captureAndOcr(`${prefixLabel}_search_zech46_results.png`, `/sdcard/${prefixLabel}_search_zech46_results.png`);
-  console.log('Search 38 4 6 OCR sample:', searchResSnap.ocr.slice(0, 220).replace(/\n/g, ' '));
+  console.log('Search 38 4 6 OCR sample:', searchResSnap.ocr.slice(0, 300).replace(/\n/g, ' | '));
   if (!searchResSnap.ocr.includes('زربابل') && !searchResSnap.ocr.includes('زكريا') && !searchResSnap.ocr.includes('نتيجة') && !searchResSnap.ocr.includes('بالقدرة')) {
-    throw new Error(`Search '38 4 6' did not return Zechariah 4:6 result card! OCR: "${searchResSnap.ocr.slice(0, 250)}"`);
+    console.log('Retrying Search submit button tap at', searchBtnX, searchBtnY);
+    execAdb(`shell input tap ${searchBtnX} ${searchBtnY}`);
+    sleep(2500);
+    const retrySnap = captureAndOcr(`${prefixLabel}_search_zech46_results.png`, `/sdcard/${prefixLabel}_search_zech46_results.png`);
+    if (!retrySnap.ocr.includes('زربابل') && !retrySnap.ocr.includes('زكريا') && !retrySnap.ocr.includes('نتيجة') && !retrySnap.ocr.includes('بالقدرة')) {
+      throw new Error(`Search '38 4 6' did not return Zechariah 4:6 result card! OCR: "${retrySnap.ocr.replace(/\r?\n/g, ' | ').slice(0, 320)}"`);
+    }
   }
 
   const cardTapOffsets = [0.36, 0.42, 0.48, 0.30, 0.54, 0.60];
