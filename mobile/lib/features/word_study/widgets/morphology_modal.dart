@@ -67,6 +67,8 @@ class MorphologyModal extends StatelessWidget {
       verifiedLocator: mapping.verifiedLocator,
     );
     final isHebrew = mapping.isHebrew;
+    final isAramaic = mapping.isAramaic;
+    final isSemitic = isHebrew || isAramaic;
 
     return DraggableScrollableSheet(
       initialChildSize: 0.65,
@@ -128,9 +130,11 @@ class MorphologyModal extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            isHebrew
-                                ? 'اللغة العبرية للعهد القديم'
-                                : 'اللغة اليونانية للعهد الجديد',
+                            isAramaic
+                                ? 'اللغة الآرامية للعهد القديم'
+                                : (isHebrew
+                                    ? 'اللغة العبرية للعهد القديم'
+                                    : 'اللغة اليونانية للعهد الجديد'),
                             style: TextStyle(color: AppColors.textMuted, fontSize: 11),
                           ),
                         ],
@@ -179,12 +183,12 @@ class MorphologyModal extends StatelessWidget {
                             // Original Script
                             Expanded(
                               child: Directionality(
-                                textDirection: isHebrew ? TextDirection.rtl : TextDirection.ltr,
+                                textDirection: isSemitic ? TextDirection.rtl : TextDirection.ltr,
                                 child: Text(
                                   (mapping.origSurface != null && mapping.origSurface!.trim().isNotEmpty)
                                       ? mapping.origSurface!
                                       : mapping.origWord,
-                                  style: isHebrew
+                                  style: isSemitic
                                       ? AppTheme.hebrewText(size: 32)
                                       : AppTheme.greekText(size: 28),
                                 ),
@@ -355,7 +359,7 @@ class MorphologyModal extends StatelessWidget {
 
                           if (analysis.stem != null)
                             _GrammarRow(
-                              label: 'الوزن الصرفي العبري',
+                              label: isAramaic ? 'الوزن الصرفي الآرامي' : 'الوزن الصرفي العبري',
                               value: analysis.stem!,
                             ),
 

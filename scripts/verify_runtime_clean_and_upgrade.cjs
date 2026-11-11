@@ -5,7 +5,7 @@ const crypto = require('crypto');
 
 console.log('========================================================================');
 console.log('  OFFICIAL RUNTIME VERIFICATION: CLEAN INSTALL & UPGRADE FROM v370     ');
-console.log('  Target: Arabic Bible Study v1.0.374 (Build 374, totalParts = 70)      ');
+console.log('  Target: Arabic Bible Study v1.0.375 (Build 375, totalParts = 70)      ');
 console.log('========================================================================\n');
 
 const rootDir = path.resolve(__dirname, '..');

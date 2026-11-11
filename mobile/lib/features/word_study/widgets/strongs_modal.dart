@@ -37,6 +37,17 @@ class StrongsModal extends StatefulWidget {
     return null;
   }
 
+  static String resolveMorphologyLanguage({
+    WordMapping? mapping,
+    required StrongsEntry entry,
+  }) {
+    final mappingLang = mapping?.origWordLang.trim();
+    if (mappingLang != null && mappingLang.isNotEmpty) {
+      return mappingLang;
+    }
+    return entry.isAramaic ? 'aramaic' : entry.language;
+  }
+
   static Future<void> show(
     BuildContext context,
     String strongsId, {
@@ -81,7 +92,7 @@ class _StrongsModalState extends State<StrongsModal> {
   }
 
   StrongsEntry _buildFallbackEntry(WordMapping m) {
-    final isHebrew = m.isHebrew;
+    final isHebrew = m.isHebrew || m.isAramaic;
     final ar = m.arWord.replaceAll(RegExp(r'[\u064B-\u065F\u0670]'), '').trim();
 
     String origWord = (m.origWord.isNotEmpty && m.origWord != '---' && m.origWord != '-')
@@ -92,7 +103,7 @@ class _StrongsModalState extends State<StrongsModal> {
     String notesAr = '';
     String sId = m.strongsId?.isNotEmpty == true && m.strongsId != '---'
         ? m.strongsId!
-        : (isHebrew ? 'عبري' : 'يوناني');
+        : (m.isAramaic ? 'آرامي' : (isHebrew ? 'عبري' : 'يوناني'));
 
     final bool hasGrammarNotes = m.grammarNotes != null && m.grammarNotes!.trim().isNotEmpty;
     final bool isSupplied = m.origWord.contains('---') || m.origWord.trim() == '-' || m.origWord.trim() == '—';
@@ -533,9 +544,14 @@ class _StrongsModalState extends State<StrongsModal> {
                       ? 'To'
                       : (isSecondaryComp ? null : mapping?.origMorphology);
 
+                  final morphLang = StrongsModal.resolveMorphologyLanguage(
+                    mapping: mapping,
+                    entry: entry,
+                  );
+
                   final morphAnalysis = MorphologyService.parse(
                     code: effectiveCode,
-                    language: entry.language,
+                    language: morphLang,
                     fallbackDefinition: entry.definitionEn,
                     arWord: mapping?.arWord,
                     origWord: isSecondaryComp ? entry.originalWord : effectiveOrig,
@@ -630,7 +646,7 @@ class _StrongsModalState extends State<StrongsModal> {
                                   ],
                                 ),
                               ),
-                              ..._buildGrammarTable(morphAnalysis),
+                              ..._buildGrammarTable(morphAnalysis, isAramaic: morphLang == 'aramaic'),
                               const SizedBox(height: 4),
                             ],
                           ),
@@ -1234,13 +1250,17 @@ class _StrongsModalState extends State<StrongsModal> {
     ),
   );
 
-  List<Widget> _buildGrammarTable(MorphologyAnalysis m) {
+  List<Widget> _buildGrammarTable(MorphologyAnalysis m, {bool isAramaic = false}) {
     final rows = <({String label, String value, bool isMonospace})>[];
 
     rows.add((label: 'نوع الكلمة (القسم اللغوي)', value: m.partOfSpeech, isMonospace: false));
 
     if (m.stem != null && m.stem!.isNotEmpty) {
-      rows.add((label: 'الوزن الصرفي العبري', value: m.stem!, isMonospace: false));
+      rows.add((
+        label: isAramaic ? 'الوزن الصرفي الآرامي' : 'الوزن الصرفي العبري',
+        value: m.stem!,
+        isMonospace: false,
+      ));
     }
     if (m.tense != null && m.tense!.isNotEmpty) {
       rows.add((label: 'نوع الفعل والزمن', value: m.tense!, isMonospace: false));

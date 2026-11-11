@@ -1,6 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 import 'package:arabic_bible_study/models/word_mapping.dart';
+import 'package:arabic_bible_study/models/strongs_entry.dart';
 import 'package:arabic_bible_study/core/services/morphology_service.dart';
+import 'package:arabic_bible_study/providers/word_study_provider.dart';
+import 'package:arabic_bible_study/providers/theme_provider.dart';
+import 'package:arabic_bible_study/features/word_study/widgets/strongs_modal.dart';
+import 'package:arabic_bible_study/features/word_study/widgets/morphology_modal.dart';
 
 void main() {
   group('WordMapping.fromJson Multi-Strongs Invariant Tests', () {
@@ -224,6 +231,240 @@ void main() {
       expect(known.stem, contains('Peil'));
       expect(known.voice, contains('Passive'));
       expect(known.mood, contains('اسم مفعول'));
+    });
+
+    test('StrongsModal.resolveMorphologyLanguage prioritizes mapping.origWordLang over entry.language', () {
+      const entry = StrongsEntry(
+        strongsId: 'H1005',
+        language: 'hebrew',
+        originalWord: 'בַּיִת',
+        transliteration: 'bayith',
+        definitionEn: 'house',
+        arIsVerified: true,
+      );
+      const aramaicMapping = WordMapping(
+        id: 'wm_ezra_5_8_11',
+        verseId: 'ezra_5_8',
+        arWordPosition: 11,
+        origWordPosition: 8,
+        arWord: 'بَيْتِ',
+        origWord: 'בַּיִת',
+        origSurface: 'לְבֵית֙',
+        origWordLang: 'aramaic',
+        origMorphology: 'AR/Ncmsc',
+        morphPos: 'noun',
+        morphNumber: 'singular',
+        morphGender: 'masculine',
+        morphCase: 'construct',
+        strongsId: 'H1005',
+        isVerified: true,
+      );
+      expect(
+        StrongsModal.resolveMorphologyLanguage(mapping: aramaicMapping, entry: entry),
+        equals('aramaic'),
+      );
+      expect(
+        StrongsModal.resolveMorphologyLanguage(mapping: null, entry: entry),
+        equals('hebrew'),
+      );
+    });
+  });
+
+  group('Ezra 5:8 Actual Modal Widget Tests (v1.0.375)', () {
+    testWidgets('StrongsModal renders Aramaic Construct label for Ezra 5:8 H1005 even when entry.language is hebrew', (WidgetTester tester) async {
+      tester.view.physicalSize = const Size(800, 3000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      const entry = StrongsEntry(
+        strongsId: 'H1005',
+        language: 'hebrew',
+        originalWord: 'בַּיִת',
+        transliteration: 'bayith',
+        definitionEn: '(Aramaic) corresponding to H1004; a house',
+        arIsVerified: true,
+      );
+      const mapping = WordMapping(
+        id: 'wm_ezra_5_8_11',
+        verseId: 'ezra_5_8',
+        arWordPosition: 11,
+        origWordPosition: 8,
+        arWord: 'بَيْتِ',
+        origWord: 'בַּיִת',
+        origSurface: 'לְבֵית֙',
+        origWordLang: 'aramaic',
+        origMorphology: 'AR/Ncmsc',
+        morphPos: 'noun',
+        morphNumber: 'singular',
+        morphGender: 'masculine',
+        morphCase: 'construct',
+        strongsId: 'H1005',
+        strongsIds: ['H1005'],
+        isVerified: true,
+      );
+
+      final studyProvider = WordStudyProvider()..setTestStrongsEntry(entry);
+      final themeProvider = ThemeProvider();
+      addTearDown(studyProvider.dispose);
+      addTearDown(themeProvider.dispose);
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<WordStudyProvider>.value(value: studyProvider),
+            ChangeNotifierProvider<ThemeProvider>.value(value: themeProvider),
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: SizedBox.expand(
+                child: StrongsModal(strongsId: 'H1005', mapping: mapping),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('حالة الإضافة الآرامية (Construct)'), findsOneWidget);
+      expect(find.textContaining('حالة الإضافة العبرية'), findsNothing);
+    });
+
+    testWidgets('StrongsModal & MorphologyModal render Ezra 5:8 H3046 Peil Passive Participle with Aramaic labels', (WidgetTester tester) async {
+      tester.view.physicalSize = const Size(800, 3000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      const entry = StrongsEntry(
+        strongsId: 'H3046',
+        language: 'hebrew',
+        originalWord: 'יְדַע',
+        transliteration: 'yeda',
+        definitionEn: '(Aramaic) corresponding to H3045; to know',
+        arIsVerified: true,
+      );
+      const mapping = WordMapping(
+        id: 'wm_ezra_5_8_2',
+        verseId: 'ezra_5_8',
+        arWordPosition: 2,
+        origWordPosition: 1,
+        arWord: 'مَعْلُومًا',
+        origWord: 'יְדַע',
+        origSurface: 'יְדִ֣יעַ',
+        origWordLang: 'aramaic',
+        origMorphology: 'AVQsmsa',
+        morphPos: 'verb',
+        morphStem: 'peil',
+        morphVoice: 'passive',
+        morphMood: 'passive_participle',
+        morphNumber: 'singular',
+        morphGender: 'masculine',
+        strongsId: 'H3046',
+        strongsIds: ['H3046'],
+        isVerified: true,
+      );
+
+      final studyProvider = WordStudyProvider()..setTestStrongsEntry(entry);
+      final themeProvider = ThemeProvider();
+      addTearDown(studyProvider.dispose);
+      addTearDown(themeProvider.dispose);
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<WordStudyProvider>.value(value: studyProvider),
+            ChangeNotifierProvider<ThemeProvider>.value(value: themeProvider),
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: SizedBox.expand(
+                child: StrongsModal(strongsId: 'H3046', mapping: mapping),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('وزن بَعِيل الآرامي المجهول (Peil)'), findsOneWidget);
+      expect(find.textContaining('الوزن الصرفي الآرامي'), findsOneWidget);
+      expect(find.textContaining('اسم مفعول'), findsWidgets);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SizedBox.expand(
+              child: MorphologyModal(mapping: mapping),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('اللغة الآرامية للعهد القديم'), findsOneWidget);
+      expect(find.textContaining('وزن بَعِيل الآرامي المجهول (Peil)'), findsWidgets);
+      expect(find.textContaining('الوزن الصرفي الآرامي'), findsOneWidget);
+    });
+
+    testWidgets('StrongsModal renders Aramaic Construct & no Bet prefix for Ezra 5:8 H69 (בِحِجَارَةٍ) when entry has no Aramaic tag', (WidgetTester tester) async {
+      tester.view.physicalSize = const Size(800, 3000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      const entry = StrongsEntry(
+        strongsId: 'H69',
+        language: 'hebrew',
+        originalWord: 'אֶבֶן',
+        transliteration: 'eben',
+        definitionEn: 'a stone',
+        arIsVerified: true,
+      );
+      const mapping = WordMapping(
+        id: 'wm_ezra_5_8_17',
+        verseId: 'ezra_5_8',
+        arWordPosition: 17,
+        origWordPosition: 13,
+        arWord: 'بِحِجَارَةٍ',
+        origWord: 'אֶבֶן',
+        origSurface: 'אֶ֣בֶן',
+        origWordLang: 'aramaic',
+        origMorphology: 'ANcfsc',
+        morphPos: 'noun',
+        morphNumber: 'singular',
+        morphGender: 'feminine',
+        morphCase: 'construct',
+        strongsId: 'H69',
+        strongsIds: ['H69'],
+        isVerified: true,
+      );
+
+      final studyProvider = WordStudyProvider()..setTestStrongsEntry(entry);
+      final themeProvider = ThemeProvider();
+      addTearDown(studyProvider.dispose);
+      addTearDown(themeProvider.dispose);
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<WordStudyProvider>.value(value: studyProvider),
+            ChangeNotifierProvider<ThemeProvider>.value(value: themeProvider),
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: SizedBox.expand(
+                child: StrongsModal(strongsId: 'H69', mapping: mapping),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('حالة الإضافة الآرامية (Construct)'), findsOneWidget);
+      expect(find.textContaining('حالة الإضافة العبرية'), findsNothing);
+      expect(find.textContaining('باء الجر'), findsNothing);
     });
   });
 }

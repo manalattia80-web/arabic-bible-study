@@ -2425,6 +2425,20 @@ const ezraStaleNotes = query(`
 const hasAramaicLabels = morphServiceCode.includes("'peil'") && morphServiceCode.includes("'passive_participle'") && morphServiceCode.includes('حالة الإضافة الآرامية (Construct)');
 assertCondition('Ezra 5:8 Clean Grammar Notes (no stale IDs) & Aramaic UI Construct/Peil Labels', ezraStaleNotes === '0' && hasAramaicLabels, `staleNotes=${ezraStaleNotes}, hasAramaicLabels=${hasAramaicLabels}`);
 
+// 51. StrongsModal & MorphologyModal Verse Language Precedence (mapping.origWordLang over entry.language)
+const strongsModalPath = path.resolve(__dirname, '../mobile/lib/features/word_study/widgets/strongs_modal.dart');
+const morphModalPath = path.resolve(__dirname, '../mobile/lib/features/word_study/widgets/morphology_modal.dart');
+const strongsModalCode = fs.readFileSync(strongsModalPath, 'utf8');
+const morphModalCode = fs.readFileSync(morphModalPath, 'utf8');
+const hasModalLangFix =
+  strongsModalCode.includes('resolveMorphologyLanguage') &&
+  strongsModalCode.includes('language: morphLang') &&
+  !strongsModalCode.includes('language: entry.language,') &&
+  strongsModalCode.includes('الوزن الصرفي الآرامي') &&
+  morphModalCode.includes('اللغة الآرامية للعهد القديم') &&
+  morphModalCode.includes('الوزن الصرفي الآرامي');
+assertCondition('StrongsModal & MorphologyModal prioritize verse origWordLang over entry.language for Aramaic cards', hasModalLangFix, 'Language propagation or Aramaic stem label missing in modals');
+
 
 
 

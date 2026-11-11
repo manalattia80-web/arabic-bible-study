@@ -146,11 +146,11 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Ezra 5:8 Canonical OSHB Alignment & Aramaic Morphology Support (v1.0.374)
-          - **Ezra 5:8 Full Canonical Alignment**: Resolved all 12 Ezra 5:8 errors across all 29 Arabic words and 23 OSHB Aramaic tokens (`w1..w23`), preserving Lamed `H9005` (`AR`) vs attached noun Strong's (`H4430`, `H3061`, `H1005`), restoring `H236` (`אֲזַ֜לְנָא` · `AVqp1cp`) at `w5`, moving `H1932` (`וְה֤וּא` · `AC/Pp3ms`) to `arPos 15` («بِهِ» @ `w11`) and `arPos 14` («وَإِذَا») to `syntactic_ar`, fixing `arPos 17` («بِحِجَارَةٍ» · `H69` · `ANcfsc`), fixing `arPos 2` («مَعْلُومًا» · `H3046` · `AVQsmsa`) to `peil`/`passive`/`passive_participle`, and cleaning all stale `grammar_notes`.
-          - **Aramaic App & Morphology Fixes**: Enabled `AR/` Bet prefix detection in `MorphologyService._detectHebrewSurfacePrefixes`, added Aramaic construct label (`حالة الإضافة الآرامية (Construct)`), and mapped `peil` / `passive_participle` labels with unit tests in `word_mapping_test.dart`.
-          - **Hardened Auditor & Negative Gates 46–50**: Upgraded `audit_20_verses_311_units.cjs` to enforce surface forms, derived morphology columns, verb stems, and `word_mapping_strongs` component integrity; enforced 5 new negative gates (Gates 46–50).
-          - **Benchmark Status**: 311 units audited: **302 correct (97.11%)**, **9 errors** (Daniel 4:17 remaining for next independent release `v1.0.375`), **0 Ezra/Hebrew/Greek errors**, **0 undecided**. All 50 negative gates passing.
+          ## 🚀 Modal Verse-Language Precedence & Generalized 311-Unit Morphology Gate (v1.0.375)
+          - **Aramaic Morphology Language Precedence (`StrongsModal` & `MorphologyModal`)**: Fixed [`strongs_modal.dart`](mobile/lib/features/word_study/widgets/strongs_modal.dart) to pass the verse mapping language (`mapping.origWordLang`) via `StrongsModal.resolveMorphologyLanguage` instead of `entry.language` (which stored `'hebrew'` for Aramaic `H` Strong's entries), ensuring Ezra 5:8 construct cards display **«حالة الإضافة الآرامية (Construct)»** and **«الوزن الصرفي الآرامي»** rather than Hebrew labels; also fixed Aramaic RTL/label rendering in `MorphologyModal` and `WordStudyScreen`.
+          - **Actual Widget Tests Added**: Added `testWidgets` cases in `mobile/test/word_mapping_test.dart` pumping real `StrongsModal` and `MorphologyModal` widgets on Ezra 5:8 `H1005` («بَيْتِ»), `H3046` («مَعْلُومًا»), and `H69` («بِحِجَارَةٍ»).
+          - **Generalized 311-Unit Derived Morphology Audit & Gate 51**: Extended `audit_20_verses_311_units.cjs` with universal OSHB + MorphGNT derived column checks (`morph_pos`, `morph_stem`, `morph_tense`, `morph_voice`, `morph_mood`, `morph_person`, `morph_number`, `morph_gender`, `morph_case`) across all 311 units, populated derived fields for all 302 passing records in `scripts/batch_20_verses_manifest.json`, and enforced Gate 51 (Mark 10:45 «يَأْتِ» person tamper).
+          - **Benchmark Status**: **302 / 311 correct (97.11%)**, **9 errors** (Daniel 4:17 intentionally reserved for next independent release `v1.0.376`), **0 Ezra/Hebrew/Greek errors**, **0 undecided**. All 51 negative gates passing.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

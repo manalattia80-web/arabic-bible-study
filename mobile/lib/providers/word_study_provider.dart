@@ -151,6 +151,13 @@ class WordStudyProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  @visibleForTesting
+  void setTestStrongsEntry(StrongsEntry? entry) {
+    _selectedStrongs = entry;
+    _loadingStrongs = false;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     AudioPlaybackService.instance.currentlyPlayingKey.removeListener(_onAudioStateChanged);

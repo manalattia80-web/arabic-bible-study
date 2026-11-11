@@ -680,6 +680,18 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 8 AND book_id = 15)
         AND ar_word_position = 17;
     `
+  },
+  {
+    gateNum: 51,
+    name: 'mark_10_45_yati_person_corrupted_to_first',
+    expectedFailTag: '[FAIL] 20-Verse Benchmark Canonical Manifest Quality Gate',
+    description: 'Corrupted Mark 10:45 pos 6 (يَأْتِ) morph_person from 3rd to 1st person (first)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET morph_person = 'first'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 10 AND verse_num = 45 AND book_id = 41)
+        AND ar_word_position = 6;
+    `
   }
 ];
 

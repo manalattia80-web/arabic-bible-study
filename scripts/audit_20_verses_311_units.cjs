@@ -176,6 +176,146 @@ function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, morphStr, dbMorph)
   return false;
 }
 
+function verifyDerivedMorphologyAgainstSource(lang, dbMorph, srcMorph, derived) {
+  const normPerson = p => ({ first: '1', second: '2', third: '3' }[p] || p || null);
+  const { morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase } = derived;
+
+  if (lang === 'greek') {
+    const m = (srcMorph || '').trim();
+    if (m.length < 11) return null;
+    const posCode = m.slice(0, 2).trim();
+    const tag = m.slice(3, 11);
+    if (tag.length !== 8) return null;
+    const [personCh, tenseCh, voiceCh, moodCh, caseCh, numCh, genCh] = tag.split('');
+
+    const personMap = { '1': '1', '2': '2', '3': '3', '-': null };
+    const tenseMap = { P: 'present', I: 'imperfect', F: 'future', A: 'aorist', X: 'perfect', Y: 'pluperfect', '-': null };
+    const voiceMap = { A: 'active', M: 'middle', P: 'passive', '-': null };
+    const moodMap = { I: 'indicative', D: 'imperative', S: 'subjunctive', O: 'optative', N: 'infinitive', P: 'participle', '-': null };
+    const caseMap = { N: 'nominative', G: 'genitive', D: 'dative', A: 'accusative', V: 'vocative', '-': null };
+    const numMap = { S: 'singular', P: 'plural', '-': null };
+    const genMap = { M: 'masculine', F: 'feminine', N: 'neuter', '-': null };
+    const posMap = {
+      'V-': ['verb'], 'N-': ['noun'], 'A-': ['adjective'], 'C-': ['conjunction'],
+      'D-': ['adverb'], 'P-': ['preposition'], 'X-': ['particle'], 'I-': ['interjection'],
+      'RA': ['article', 'pronoun'], 'RD': ['demonstrative', 'pronoun'],
+      'RI': ['interrogative_pronoun', 'pronoun'], 'RP': ['personal_pronoun', 'pronoun'],
+      'RR': ['relative_pronoun', 'pronoun']
+    };
+
+    const allowedPos = posMap[posCode];
+    if (allowedPos && !allowedPos.includes(morphPos)) {
+      return `Derived morph_pos mismatch: DB '${morphPos}' vs MorphGNT '${posCode}'`;
+    }
+    if ((normPerson(morphPerson)) !== personMap[personCh]) {
+      return `Derived morph_person mismatch: DB '${morphPerson}' vs MorphGNT '${personMap[personCh]}' (${srcMorph})`;
+    }
+    if ((morphTense || null) !== tenseMap[tenseCh]) {
+      return `Derived morph_tense mismatch: DB '${morphTense}' vs MorphGNT '${tenseMap[tenseCh]}' (${srcMorph})`;
+    }
+    if ((morphVoice || null) !== voiceMap[voiceCh]) {
+      return `Derived morph_voice mismatch: DB '${morphVoice}' vs MorphGNT '${voiceMap[voiceCh]}' (${srcMorph})`;
+    }
+    if ((morphMood || null) !== moodMap[moodCh]) {
+      return `Derived morph_mood mismatch: DB '${morphMood}' vs MorphGNT '${moodMap[moodCh]}' (${srcMorph})`;
+    }
+    if ((morphCase || null) !== caseMap[caseCh]) {
+      return `Derived morph_case mismatch: DB '${morphCase}' vs MorphGNT '${caseMap[caseCh]}' (${srcMorph})`;
+    }
+    if ((morphNumber || null) !== numMap[numCh]) {
+      return `Derived morph_number mismatch: DB '${morphNumber}' vs MorphGNT '${numMap[numCh]}' (${srcMorph})`;
+    }
+    if ((morphGender || null) !== genMap[genCh]) {
+      return `Derived morph_gender mismatch: DB '${morphGender}' vs MorphGNT '${genMap[genCh]}' (${srcMorph})`;
+    }
+    return null;
+  }
+
+  // Hebrew / Aramaic OSHB derived validation
+  const tag = (dbMorph || srcMorph || '').trim();
+  if (!tag || /^(HR|AR|HC|AC|HT|AT|R|C)$/.test(tag)) return null;
+  const segs = tag.split('/');
+  if (segs.length === 2 && /^(HR|AR|R)$/.test(segs[0]) && /^Sp/.test(segs[1])) {
+    if ((morphPos || null) !== 'preposition') {
+      return `Derived morph_pos mismatch: DB '${morphPos}' vs OSHB preposition '${tag}'`;
+    }
+    if (morphStem || morphTense || morphVoice || morphMood) {
+      return `Non-verbal OSHB token '${tag}' has verbal attributes`;
+    }
+    return null;
+  }
+
+  const coreSeg = (segs.length >= 2 && /^Sp/.test(segs[segs.length - 1])) ? segs[segs.length - 2] : segs[segs.length - 1];
+  const core = coreSeg.replace(/^[HA]/, '');
+  const isAramaic = tag.startsWith('A') || lang === 'aramaic';
+  const gMap = { m: 'masculine', f: 'feminine', b: 'common', c: 'common' };
+  const nMap = { s: 'singular', p: 'plural', d: 'dual' };
+
+  if (core[0] === 'V') {
+    if (morphPos !== 'verb') return `Derived morph_pos mismatch: DB '${morphPos}' vs OSHB verb '${tag}'`;
+    const stemMap = isAramaic
+      ? { q: 'peal', Q: 'peil', p: 'pael', P: 'pael_passive', a: 'aphel', A: 'haphel_passive', h: 'haphel', u: 'hithpeel', t: 'hithpaal', o: 'polel', O: 'polal', e: 'ethpeel', i: 'ithpaal' }
+      : { q: 'qal', Q: 'qal_passive', N: 'niphal', p: 'piel', P: 'pual', h: 'hiphil', H: 'hophal', t: 'hithpael', o: 'polel', O: 'polal', c: 'pilpel', C: 'polpal' };
+    const expStem = stemMap[core[1]];
+    if (expStem && (morphStem || null) !== expStem) {
+      return `Derived morph_stem mismatch: DB '${morphStem}' vs OSHB stem '${expStem}' (${tag})`;
+    }
+    const conj = core[2];
+    const tenseMap = { p: 'qatal', q: 'weqatal', i: 'yiqtol', w: 'wayyiqtol', j: 'yiqtol', h: 'yiqtol' };
+    const expTense = tenseMap[conj] || null;
+    if ((morphTense || null) !== expTense) {
+      return `Derived morph_tense mismatch: DB '${morphTense}' vs OSHB tense '${expTense}' (${tag})`;
+    }
+    const moodMap = { p: 'indicative', q: 'indicative', i: 'indicative', w: 'indicative', v: 'imperative', j: 'jussive', h: 'cohortative', r: 'participle', s: 'passive_participle', c: 'infinitive_construct', a: 'infinitive_absolute' };
+    const expMood = moodMap[conj];
+    if (expMood && (morphMood || null) !== expMood) {
+      return `Derived morph_mood mismatch: DB '${morphMood}' vs OSHB mood '${expMood}' (${tag})`;
+    }
+    if ((core[1] === 'N' || core[1] === 'Q' || core[1] === 'u' || conj === 's') && morphVoice !== 'passive') {
+      return `Derived morph_voice mismatch: DB '${morphVoice}' vs expected 'passive' (${tag})`;
+    }
+    if ('pqiwjhv'.includes(conj)) {
+      if (normPerson(morphPerson) !== (['1', '2', '3'].includes(core[3]) ? core[3] : null)) {
+        return `Derived morph_person mismatch: DB '${morphPerson}' vs OSHB '${core[3]}' (${tag})`;
+      }
+      if ((morphGender || null) !== (gMap[core[4]] || null)) {
+        return `Derived morph_gender mismatch: DB '${morphGender}' vs OSHB '${core[4]}' (${tag})`;
+      }
+      if ((morphNumber || null) !== (nMap[core[5]] || null)) {
+        return `Derived morph_number mismatch: DB '${morphNumber}' vs OSHB '${core[5]}' (${tag})`;
+      }
+    } else if (conj === 'r' || conj === 's') {
+      if (normPerson(morphPerson) !== null) return `Participle '${tag}' cannot carry morph_person '${morphPerson}'`;
+      if ((morphGender || null) !== (gMap[core[3]] || null)) return `Derived morph_gender mismatch: DB '${morphGender}' vs OSHB '${core[3]}' (${tag})`;
+      if ((morphNumber || null) !== (nMap[core[4]] || null)) return `Derived morph_number mismatch: DB '${morphNumber}' vs OSHB '${core[4]}' (${tag})`;
+    }
+  } else if ((core[0] === 'N' || core[0] === 'A') && core[1] !== 'p') {
+    if (morphStem || morphTense || morphVoice || morphMood || morphPerson) {
+      return `Nominal OSHB token '${tag}' carries verbal/person attributes`;
+    }
+    if ((morphGender || null) !== (gMap[core[2]] || null)) {
+      return `Derived morph_gender mismatch: DB '${morphGender}' vs OSHB '${core[2]}' (${tag})`;
+    }
+    if ((morphNumber || null) !== (nMap[core[3]] || null)) {
+      return `Derived morph_number mismatch: DB '${morphNumber}' vs OSHB '${core[3]}' (${tag})`;
+    }
+  } else if (core[0] === 'P' && '123'.includes(core[2])) {
+    if (morphStem || morphTense || morphVoice || morphMood) {
+      return `Pronoun OSHB token '${tag}' carries verbal attributes`;
+    }
+    if (normPerson(morphPerson) !== core[2]) {
+      return `Derived morph_person mismatch: DB '${morphPerson}' vs OSHB '${core[2]}' (${tag})`;
+    }
+    if ((morphGender || null) !== (gMap[core[3]] || null)) {
+      return `Derived morph_gender mismatch: DB '${morphGender}' vs OSHB '${core[3]}' (${tag})`;
+    }
+    if ((morphNumber || null) !== (nMap[core[4]] || null)) {
+      return `Derived morph_number mismatch: DB '${morphNumber}' vs OSHB '${core[4]}' (${tag})`;
+    }
+  }
+  return null;
+}
+
 // Load canonical manifest directly
 const manifestPath = process.env.AUDIT_MANIFEST_PATH || path.resolve(__dirname, 'batch_20_verses_manifest.json');
 if (!fs.existsSync(manifestPath)) {
@@ -275,6 +415,10 @@ for (const v of targetVerses) {
       if (origWord !== '—' && origWord !== null && origWord !== '') {
         axisFindings.lemmaSurface.status = 'fail';
         axisFindings.lemmaSurface.note = `Syntactic item has orig_word: ${origWord}`;
+      }
+      if (manifestRec && Object.prototype.hasOwnProperty.call(manifestRec, 'morphPos') && (morphPos || null) !== (manifestRec.morphPos || null)) {
+        axisFindings.morphology.status = 'fail';
+        axisFindings.morphology.note = `Syntactic morphPos mismatch: DB '${morphPos}' vs manifest '${manifestRec.morphPos}'`;
       }
     } else {
       // 1. Lexical Axis: Strong's presence and accuracy against source lemma
@@ -401,19 +545,14 @@ for (const v of targetVerses) {
               axisFindings.morphology.note = `Morph mismatch: DB '${origMorph}' vs Source '${sourceToken.morph}' (id: ${sourceToken.id})`;
             }
 
-            // Check OSHB Verb Stem integrity (prevents silently corrupting morph_stem in DB)
-            if (sourceToken.morph) {
-              const coreMorph = sourceToken.morph.split('/').pop();
-              if (coreMorph.startsWith('V') && coreMorph.length >= 3) {
-                const stemMap = v.lang === 'aramaic'
-                  ? { q: 'peal', Q: 'peil', p: 'pael', a: 'aphel', h: 'haphel', u: 'hithpeel', t: 'hithpaal' }
-                  : { q: 'qal', N: 'niphal', p: 'piel', P: 'pual', h: 'hiphil', H: 'hophal', t: 'hithpael' };
-                const expectedStem = stemMap[coreMorph[1]];
-                if (expectedStem && morphStem && morphStem !== expectedStem) {
-                  axisFindings.morphology.status = 'fail';
-                  axisFindings.morphology.note = `Derived morph_stem mismatch: DB '${morphStem}' vs OSHB stem '${expectedStem}' (${sourceToken.morph})`;
-                }
-              }
+            // General OSHB derived morphology validation across all Hebrew/Aramaic units
+            const derivedOshbErr = verifyDerivedMorphologyAgainstSource(
+              v.lang, origMorph, sourceToken.morph,
+              { morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase }
+            );
+            if (derivedOshbErr) {
+              axisFindings.morphology.status = 'fail';
+              axisFindings.morphology.note = derivedOshbErr;
             }
 
             // Check OSHB Lexical / Strongs accuracy
@@ -470,6 +609,15 @@ for (const v of targetVerses) {
             if (origWord && sourceToken.lemma && origWord !== sourceToken.lemma) {
               axisFindings.lemmaSurface.status = 'fail';
               axisFindings.lemmaSurface.note = `Lemma mismatch: DB '${origWord}' vs SBLGNT '${sourceToken.lemma}'`;
+            }
+            // General SBLGNT / MorphGNT derived morphology validation across all Greek units
+            const derivedGrErr = verifyDerivedMorphologyAgainstSource(
+              'greek', origMorph, sourceToken.morph,
+              { morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase }
+            );
+            if (derivedGrErr) {
+              axisFindings.morphology.status = 'fail';
+              axisFindings.morphology.note = derivedGrErr;
             }
           }
         }

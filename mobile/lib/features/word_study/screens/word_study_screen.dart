@@ -490,8 +490,9 @@ class _WordRow extends StatelessWidget {
                             ),
                           );
                         }
+                        final isSemitic = mapping.isHebrew || mapping.isAramaic;
                         return Directionality(
-                          textDirection: mapping.isHebrew ? TextDirection.rtl : TextDirection.ltr,
+                          textDirection: isSemitic ? TextDirection.rtl : TextDirection.ltr,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -499,10 +500,10 @@ class _WordRow extends StatelessWidget {
                                 (mapping.origSurface != null && mapping.origSurface!.trim().isNotEmpty)
                                     ? mapping.origSurface!
                                     : mapping.origWord,
-                                style: mapping.isHebrew
+                                style: isSemitic
                                     ? AppTheme.hebrewText(size: 17)
                                     : AppTheme.greekText(size: 16),
-                                textAlign: mapping.isHebrew ? TextAlign.right : TextAlign.right,
+                                textAlign: TextAlign.right,
                               ),
                               if (hasGrammarNotes)
                                 Directionality(
