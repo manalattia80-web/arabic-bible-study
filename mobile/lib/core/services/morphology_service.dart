@@ -178,6 +178,7 @@ class MorphologyService {
     'hophal':    'وزن هوفعل السببي المجهول (Hophal)',
     'hithpael':  'وزن هيثباعل الانعكاسي (Hithpael)',
     'peal':      'وزن بعل الآرامي المجرد (Peal)',
+    'peil':      'وزن بَعِيل الآرامي المجهول (Peil)',
     'pael':      'وزن باعل الآرامي المشدد (Pael)',
     'haphel':    'وزن هفعل الآرامي السببي (Haphel)',
     'aphel':     'وزن أفعل الآرامي السببي (Aphel)',
@@ -217,6 +218,7 @@ class MorphologyService {
     'infinitive_construct': 'المصدر المضاف العبري (Infinitive Construct)',
     'infinitive_absolute':  'المصدر المطلق العبري (Infinitive Absolute)',
     'participle':           'اسم فاعل / مفعول (Participle)',
+    'passive_participle':   'اسم مفعول (Passive Participle)',
     'jussive':              'صيغة الجزم والطلب (Jussive)',
     'cohortative':          'صيغة الحث والطلب الذاتي (Cohortative)',
   };
@@ -273,7 +275,7 @@ class MorphologyService {
       prefixes.add('هاء التعريف (הַ)');
     }
     final cleanCode = (code ?? '').trim();
-    final isBetPrepByMorph = cleanCode.startsWith('HR/') || cleanCode.startsWith('R/');
+    final isBetPrepByMorph = cleanCode.startsWith('HR/') || cleanCode.startsWith('R/') || cleanCode.startsWith('AR/');
     final isBetPrepByLegacy = cleanCode.isEmpty && !isBetRoot && (surfaceWord.startsWith('בְּ') || surfaceWord.startsWith('בְּ') || surfaceWord.startsWith('בַּ') || surfaceWord.startsWith('בִּ'));
     if (cons.startsWith('ב') && (isBetPrepByMorph || isBetPrepByLegacy)) {
       prefixes.add('باء الجر والظرفية (בְּ)');
@@ -342,7 +344,11 @@ class MorphologyService {
     final personLabel = (personKey != null && personKey.isNotEmpty) ? _structuredPersonLabels[personKey] : null;
     final numberLabel = (numberKey != null && numberKey.isNotEmpty) ? _structuredNumberLabels[numberKey] : null;
     final genderLabel = (genderKey != null && genderKey.isNotEmpty) ? _structuredGenderLabels[genderKey] : null;
-    final caseLabel   = (caseKey != null && caseKey.isNotEmpty)     ? _structuredCaseLabels[caseKey]     : null;
+    final caseLabel   = (caseKey != null && caseKey.isNotEmpty)
+        ? (caseKey == 'construct' && lang == 'aramaic'
+            ? 'حالة الإضافة الآرامية (Construct)'
+            : _structuredCaseLabels[caseKey])
+        : null;
 
     final hasStructuredInflection = stemLabel != null ||
         tenseLabel != null ||

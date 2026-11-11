@@ -1,17 +1,17 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "v1.0.373",
+  "version": "v1.0.374",
   "date": "2026-11-10",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
     "totalUnits": 311,
-    "correct": 290,
-    "errors": 21,
-    "error": 21,
+    "correct": 302,
+    "errors": 9,
+    "error": 9,
     "undecided": 0,
-    "accuracy": "93.25%",
-    "accuracyPercentage": 93.25
+    "accuracy": "97.11%",
+    "accuracyPercentage": 97.11
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -9321,41 +9321,6 @@
       "origWord": "הָוָא",
       "origSurface": "לֶהֱוֵ֣א",
       "origMorph": "AVqi3ms",
-      "origPos": 1,
-      "locator": "OSHB:B15.C5.V8.w1",
-      "locWordIndex": 1,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AVqi3ms' vs Source 'AVQsmsa' (id: 15Gds)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Ezra 5:8",
-      "verseAr": "عزرا ٥:٨",
-      "lang": "aramaic",
-      "arPos": 2,
-      "arWord": "مَعْلُومًا",
-      "strongsId": "H3046",
-      "components": "H3046:primary",
-      "origWord": "יְדַע",
-      "origSurface": "יְדִ֣יעַ",
-      "origMorph": "AVQsmsa",
       "origPos": 2,
       "locator": "OSHB:B15.C5.V8.w2",
       "locWordIndex": 2,
@@ -9370,15 +9335,68 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AVQsmsa' vs Source 'AVqi3ms' (id: 159cC)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "peal",
+      "morphTense": "yiqtol",
+      "morphVoice": "active",
+      "morphMood": "indicative",
+      "morphPerson": "3",
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
+    },
+    {
+      "verse": "Ezra 5:8",
+      "verseAr": "عزرا ٥:٨",
+      "lang": "aramaic",
+      "arPos": 2,
+      "arWord": "مَعْلُومًا",
+      "strongsId": "H3046",
+      "components": "H3046:primary",
+      "origWord": "יְדַע",
+      "origSurface": "יְדִ֣יעַ",
+      "origMorph": "AVQsmsa",
+      "origPos": 1,
+      "locator": "OSHB:B15.C5.V8.w1",
+      "locWordIndex": 1,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "peil",
+      "morphTense": null,
+      "morphVoice": "passive",
+      "morphMood": "passive_participle",
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -9386,6 +9404,50 @@
       "lang": "aramaic",
       "arPos": 3,
       "arWord": "لَدَى",
+      "strongsId": "H9005",
+      "components": "H9005:primary",
+      "origWord": "לְ",
+      "origSurface": "לְ",
+      "origMorph": "AR",
+      "origPos": 3,
+      "locator": "OSHB:B15.C5.V8.w3",
+      "locWordIndex": 3,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح",
+      "morphPos": "preposition",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": null,
+      "morphGender": null,
+      "morphCase": null
+    },
+    {
+      "verse": "Ezra 5:8",
+      "verseAr": "عزرا ٥:٨",
+      "lang": "aramaic",
+      "arPos": 4,
+      "arWord": "الْمَلِكِ",
       "strongsId": "H4430",
       "components": "H4430:primary",
       "origWord": "מֶלֶךְ",
@@ -9413,42 +9475,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
-    },
-    {
-      "verse": "Ezra 5:8",
-      "verseAr": "عزرا ٥:٨",
-      "lang": "aramaic",
-      "arPos": 4,
-      "arWord": "الْمَلِكِ",
-      "strongsId": "H4430",
-      "components": "H4430:primary",
-      "origWord": "מֶלֶךְ",
-      "origSurface": "לְמַלְכָּ֗א",
-      "origMorph": "AR/Ncmsd/Td",
-      "origPos": 4,
-      "locator": "OSHB:B15.C5.V8.w4",
-      "locWordIndex": 4,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AR/Ncmsd/Td' vs Source 'ATr' (id: 15RWu)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -9483,7 +9519,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "particle",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": null,
+      "morphGender": null,
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -9491,14 +9536,14 @@
       "lang": "aramaic",
       "arPos": 6,
       "arWord": "ذَهَبْنَا",
-      "strongsId": "H235",
-      "components": "H235:primary",
-      "origWord": "אָזַל",
+      "strongsId": "H236",
+      "components": "H236:primary",
+      "origWord": "אֲזַל",
       "origSurface": "אֲזַ֜לְנָא",
       "origMorph": "AVqp1cp",
-      "origPos": 4,
-      "locator": "OSHB:B15.C5.V8.w4",
-      "locWordIndex": 4,
+      "origPos": 5,
+      "locator": "OSHB:B15.C5.V8.w5",
+      "locWordIndex": 5,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -9510,15 +9555,24 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AVqp1cp' vs Source 'ATr' (id: 15RWu)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "peal",
+      "morphTense": "qatal",
+      "morphVoice": "active",
+      "morphMood": "indicative",
+      "morphPerson": "1",
+      "morphNumber": "plural",
+      "morphGender": "common",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -9526,6 +9580,94 @@
       "lang": "aramaic",
       "arPos": 7,
       "arWord": "إِلَى",
+      "strongsId": "H9005",
+      "components": "H9005:primary",
+      "origWord": "לְ",
+      "origSurface": "לִ",
+      "origMorph": "AR",
+      "origPos": 6,
+      "locator": "OSHB:B15.C5.V8.w6",
+      "locWordIndex": 6,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح",
+      "morphPos": "preposition",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": null,
+      "morphGender": null,
+      "morphCase": null
+    },
+    {
+      "verse": "Ezra 5:8",
+      "verseAr": "عزرا ٥:٨",
+      "lang": "aramaic",
+      "arPos": 8,
+      "arWord": "بِلاَدِ",
+      "strongsId": "H4083",
+      "components": "H4083:primary",
+      "origWord": "מְדִינָה",
+      "origSurface": "מְדִֽינְתָּא֙",
+      "origMorph": "ANcfsd/Td",
+      "origPos": 7,
+      "locator": "OSHB:B15.C5.V8.w7",
+      "locWordIndex": 7,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "feminine",
+      "morphCase": null
+    },
+    {
+      "verse": "Ezra 5:8",
+      "verseAr": "عزرا ٥:٨",
+      "lang": "aramaic",
+      "arPos": 9,
+      "arWord": "يَهُوذَا",
       "strongsId": "H3061",
       "components": "H3061:primary",
       "origWord": "יְהוּד",
@@ -9553,19 +9695,28 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "proper_noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": null,
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
       "verseAr": "عزرا ٥:٨",
       "lang": "aramaic",
-      "arPos": 8,
-      "arWord": "بِلاَدِ",
-      "strongsId": "H4083",
-      "components": "H4083:primary",
-      "origWord": "מְדִינָה",
-      "origSurface": "מְדִֽינְתָּא֙",
-      "origMorph": "ANcfsd/Td",
+      "arPos": 10,
+      "arWord": "إِلَى",
+      "strongsId": "H9005",
+      "components": "H9005:primary",
+      "origWord": "לְ",
+      "origSurface": "לְ",
+      "origMorph": "AR",
       "origPos": 8,
       "locator": "OSHB:B15.C5.V8.w8",
       "locWordIndex": 8,
@@ -9580,27 +9731,80 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'ANcfsd/Td' vs Source 'AR/Ncmsc' (id: 15Z2k)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "preposition",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": null,
+      "morphGender": null,
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
       "verseAr": "عزرا ٥:٨",
       "lang": "aramaic",
-      "arPos": 9,
-      "arWord": "يَهُوذَا",
-      "strongsId": "H3061",
-      "components": "H3061:primary",
-      "origWord": "יְהוּד",
-      "origSurface": "לִיה֤וּד",
-      "origMorph": "AR/Np",
+      "arPos": 11,
+      "arWord": "بَيْتِ",
+      "strongsId": "H1005",
+      "components": "H1005:primary",
+      "origWord": "בַּיִת",
+      "origSurface": "לְבֵית֙",
+      "origMorph": "AR/Ncmsc",
+      "origPos": 8,
+      "locator": "OSHB:B15.C5.V8.w8",
+      "locWordIndex": 8,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": "construct"
+    },
+    {
+      "verse": "Ezra 5:8",
+      "verseAr": "عزرا ٥:٨",
+      "lang": "aramaic",
+      "arPos": 12,
+      "arWord": "الإِلهِ",
+      "strongsId": "H426",
+      "components": "H426:primary",
+      "origWord": "אֱלָהּ",
+      "origSurface": "אֱלָהָ֣א",
+      "origMorph": "ANcmsd/Td",
       "origPos": 9,
       "locator": "OSHB:B15.C5.V8.w9",
       "locWordIndex": 9,
@@ -9615,41 +9819,6 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AR/Np' vs Source 'ANcmsd/Td' (id: 155VT)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Ezra 5:8",
-      "verseAr": "عزرا ٥:٨",
-      "lang": "aramaic",
-      "arPos": 10,
-      "arWord": "إِلَى",
-      "strongsId": "H1005",
-      "components": "H1005:primary",
-      "origWord": "בַּיִת",
-      "origSurface": "לְבֵית֙",
-      "origMorph": "AR/Ncmsc",
-      "origPos": 8,
-      "locator": "OSHB:B15.C5.V8.w8",
-      "locWordIndex": 8,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
           "status": "pass",
           "note": ""
         },
@@ -9658,77 +9827,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
-    },
-    {
-      "verse": "Ezra 5:8",
-      "verseAr": "عزرا ٥:٨",
-      "lang": "aramaic",
-      "arPos": 11,
-      "arWord": "بَيْتِ",
-      "strongsId": "H1005",
-      "components": "H1005:primary",
-      "origWord": "בַּיִת",
-      "origSurface": "לְבֵית֙",
-      "origMorph": "AR/Ncmsc",
-      "origPos": 11,
-      "locator": "OSHB:B15.C5.V8.w11",
-      "locWordIndex": 11,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AR/Ncmsc' vs Source 'AC/Pp3ms' (id: 15Lqq)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Ezra 5:8",
-      "verseAr": "عزرا ٥:٨",
-      "lang": "aramaic",
-      "arPos": 12,
-      "arWord": "الإِلهِ",
-      "strongsId": "H426",
-      "components": "H426:primary",
-      "origWord": "אֱלָהּ",
-      "origSurface": "אֱלָהָ֣א",
-      "origMorph": "ANcmsd/Td",
-      "origPos": 12,
-      "locator": "OSHB:B15.C5.V8.w12",
-      "locWordIndex": 12,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'ANcmsd/Td' vs Source 'AVurmsa' (id: 15qDM)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -9741,41 +9849,6 @@
       "origWord": "רַב",
       "origSurface": "רַבָּ֔א",
       "origMorph": "AAamsd/Td",
-      "origPos": 13,
-      "locator": "OSHB:B15.C5.V8.w13",
-      "locWordIndex": 13,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AAamsd/Td' vs Source 'ANcfsc' (id: 15qqx)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Ezra 5:8",
-      "verseAr": "عزرا ٥:٨",
-      "lang": "aramaic",
-      "arPos": 14,
-      "arWord": "وَإِذَا",
-      "strongsId": "H1888",
-      "components": "H1888:primary",
-      "origWord": "הֵא",
-      "origSurface": "וְה֤וּא",
-      "origMorph": "AC/Pp3ms",
       "origPos": 10,
       "locator": "OSHB:B15.C5.V8.w10",
       "locWordIndex": 10,
@@ -9790,30 +9863,39 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AC/Pp3ms' vs Source 'AAamsd/Td' (id: 158JC)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "adjective",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
       "verseAr": "عزرا ٥:٨",
       "lang": "aramaic",
-      "arPos": 15,
-      "arWord": "بِهِ",
+      "arPos": 14,
+      "arWord": "وَإِذَا",
       "strongsId": null,
       "components": "",
       "origWord": "—",
       "origSurface": "—",
       "origMorph": null,
-      "origPos": 16,
-      "locator": "AR_SYNTACTIC:B15.C5.V8.w15",
-      "locWordIndex": 15,
+      "origPos": 14,
+      "locator": "AR_SYNTACTIC:B15.C5.V8.w14",
+      "locWordIndex": 14,
       "isSyntactic": true,
       "axisFindings": {
         "lexical": {
@@ -9833,7 +9915,60 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "syntactic_ar",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": null,
+      "morphGender": null,
+      "morphCase": null
+    },
+    {
+      "verse": "Ezra 5:8",
+      "verseAr": "عزرا ٥:٨",
+      "lang": "aramaic",
+      "arPos": 15,
+      "arWord": "بِهِ",
+      "strongsId": "H1932",
+      "components": "H1932:primary",
+      "origWord": "הוּא",
+      "origSurface": "וְה֤וּא",
+      "origMorph": "AC/Pp3ms",
+      "origPos": 11,
+      "locator": "OSHB:B15.C5.V8.w11",
+      "locWordIndex": 11,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح",
+      "morphPos": "personal_pronoun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": "3",
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -9852,8 +9987,8 @@
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
-          "status": "fail",
-          "note": "Strongs mismatch: DB 'H1124' does not correspond to source lemma '7761' (locator points to w16 מִתְּשָׂ֣ם instead of w12 מִתְבְּנֵא֙)"
+          "status": "pass",
+          "note": ""
         },
         "lemmaSurface": {
           "status": "pass",
@@ -9865,10 +10000,19 @@
         },
         "sourceLocator": {
           "status": "pass",
-          "note": "w12 in OSHB (corrected from w16)"
+          "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "hithpeel",
+      "morphTense": null,
+      "morphVoice": "passive",
+      "morphMood": "participle",
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -9876,14 +10020,14 @@
       "lang": "aramaic",
       "arPos": 17,
       "arWord": "بِحِجَارَةٍ",
-      "strongsId": "H68",
-      "components": "H68:primary",
+      "strongsId": "H69",
+      "components": "H69:primary",
       "origWord": "אֶבֶן",
       "origSurface": "אֶ֣בֶן",
-      "origMorph": "ANcfsa",
-      "origPos": 12,
-      "locator": "OSHB:B15.C5.V8.w12",
-      "locWordIndex": 12,
+      "origMorph": "ANcfsc",
+      "origPos": 13,
+      "locator": "OSHB:B15.C5.V8.w13",
+      "locWordIndex": 13,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -9895,15 +10039,24 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'ANcfsa' vs Source 'AVurmsa' (id: 15qDM)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "feminine",
+      "morphCase": "construct"
     },
     {
       "verse": "Ezra 5:8",
@@ -9938,7 +10091,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -9951,9 +10113,9 @@
       "origWord": "שׂוּם",
       "origSurface": "מִתְּשָׂ֣ם",
       "origMorph": "AVurmsa",
-      "origPos": 19,
-      "locator": "OSHB:B15.C5.V8.w19",
-      "locWordIndex": 19,
+      "origPos": 16,
+      "locator": "OSHB:B15.C5.V8.w16",
+      "locWordIndex": 16,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -9965,15 +10127,24 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AVurmsa' vs Source 'APdxfs' (id: 15bTz)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "hithpeel",
+      "morphTense": null,
+      "morphVoice": "passive",
+      "morphMood": "participle",
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10008,7 +10179,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10043,7 +10223,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "syntactic_ar",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": null,
+      "morphGender": null,
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10078,7 +10267,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "plural",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10113,7 +10311,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "demonstrative",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "feminine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10148,7 +10355,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "feminine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10183,7 +10399,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "hithpeel",
+      "morphTense": null,
+      "morphVoice": "passive",
+      "morphMood": "participle",
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "feminine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10218,7 +10443,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "adverb",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": null,
+      "morphGender": null,
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10253,7 +10487,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "aphel",
+      "morphTense": null,
+      "morphVoice": "active",
+      "morphMood": "participle",
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10288,7 +10531,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "syntactic_ar",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": null,
+      "morphGender": null,
+      "morphCase": null
     },
     {
       "verse": "Ezra 5:8",
@@ -10323,7 +10575,16 @@
           "note": ""
         }
       },
-      "overallStatus": "صحيح"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "feminine",
+      "morphCase": "construct"
     },
     {
       "verse": "Dan 4:17",
@@ -11131,7 +11392,7 @@
       "overallStatus": "خطأ"
     }
   ],
-  "ezra58Note": "In v1.0.361, Ezra 5:8 pos 16 (يُبْنَى) locator corrected from w16 to w12, elevated to صحيح.",
+  "ezra58Note": "In v1.0.374, all 29 Ezra 5:8 records were aligned to OSHB w1..w23 (H236 @ w5, H1932 @ w11 on arPos 15, H69 ANcfsc @ w13, H9005 AR prepositions on arPos 3/7/10, and Peil passive participle on arPos 2).",
   "micah68Note": "In v1.0.361, Micah 6:8 pos 2 (أَخْبَرَكَ) component specification strictly enforces orig_word_position, orig_component, and orig_morphology for both links.",
   "batch2Highlights": {
     "exod152Repairs": "Fronted word order corrected: pos 1 -> w3 יָהּ (H3050, HNp), pos 2 -> w1 עָזִּי (H5797, HNcmsc/Sp1cs), pos 3 -> w2 וְזִמְרָת (H2176, HC/Ncfsa), pos 5 -> w4 וַיְהִי (H1961, HC/Vqw3ms)",

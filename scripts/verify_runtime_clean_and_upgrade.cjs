@@ -5,7 +5,7 @@ const crypto = require('crypto');
 
 console.log('========================================================================');
 console.log('  OFFICIAL RUNTIME VERIFICATION: CLEAN INSTALL & UPGRADE FROM v370     ');
-console.log('  Target: Arabic Bible Study v1.0.372 (Build 372, totalParts = 70)      ');
+console.log('  Target: Arabic Bible Study v1.0.374 (Build 374, totalParts = 70)      ');
 console.log('========================================================================\n');
 
 const rootDir = path.resolve(__dirname, '..');
@@ -131,15 +131,16 @@ console.log(`  -> Renamed tmp to ${cleanDbName} and recorded db_version = ${clea
 // 4. Verify clean install invariants
 const cleanDbExists = fs.existsSync(cleanDbPath);
 const cleanSize = cleanDbExists ? fs.statSync(cleanDbPath).size : 0;
+const assetDbSize = fs.statSync(path.resolve(rootDir, 'mobile/assets/bible_study.db')).size;
 const cleanQuickCheck = runSql(cleanDbPath, 'PRAGMA quick_check;');
 
 console.log(`\n[VERIFICATION - TRACK 1] Clean Install Invariants:`);
-console.log(`  [${cleanDbExists && cleanSize === 363438080 ? 'PASS' : 'FAIL'}] Target DB exists with exact vacuumed size: ${cleanSize} bytes`);
+console.log(`  [${cleanDbExists && cleanSize === assetDbSize ? 'PASS' : 'FAIL'}] Target DB exists with exact vacuumed size: ${cleanSize} bytes`);
 console.log(`  [${cleanQuickCheck === 'ok' ? 'PASS' : 'FAIL'}] PRAGMA quick_check: ${cleanQuickCheck}`);
 console.log(`  [${cleanPrefs.db_version === targetDbVersion ? 'PASS' : 'FAIL'}] Preferences db_version set to: ${cleanPrefs.db_version}`);
 
 results.clean_install = {
-  db_opened: cleanDbExists && cleanQuickCheck === 'ok',
+  db_opened: cleanDbExists && cleanSize === assetDbSize && cleanQuickCheck === 'ok',
   db_version: cleanPrefs.db_version,
   db_size_bytes: cleanSize,
   duration_ms: Date.now() - startTimeClean,
@@ -366,9 +367,25 @@ WHERE v.book_id = 38 AND v.chapter_num = 4 AND v.verse_num = 6 AND wm.ar_word_po
 UNION ALL
 SELECT 'Zech 4:6 pos15', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.morph_case, wm.verified_locator
 FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
-WHERE v.book_id = 38 AND v.chapter_num = 4 AND v.verse_num = 6 AND wm.ar_word_position = 15;
+WHERE v.book_id = 38 AND v.chapter_num = 4 AND v.verse_num = 6 AND wm.ar_word_position = 15
+UNION ALL
+SELECT 'Ezra 5:8 pos2', wm.ar_word, wm.strongs_id, wm.morph_stem, wm.morph_voice, wm.morph_mood
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 15 AND v.chapter_num = 5 AND v.verse_num = 8 AND wm.ar_word_position = 2
+UNION ALL
+SELECT 'Ezra 5:8 pos6', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.orig_morphology, wm.verified_locator
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 15 AND v.chapter_num = 5 AND v.verse_num = 8 AND wm.ar_word_position = 6
+UNION ALL
+SELECT 'Ezra 5:8 pos15', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.orig_morphology, wm.verified_locator
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 15 AND v.chapter_num = 5 AND v.verse_num = 8 AND wm.ar_word_position = 15
+UNION ALL
+SELECT 'Ezra 5:8 pos17', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.morph_case, wm.orig_morphology
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 15 AND v.chapter_num = 5 AND v.verse_num = 8 AND wm.ar_word_position = 17;
 `;
-const spotRes = runSql(targetUpgradeDbPath, spotCheckSql);
+const spotRes = runSql(targetUpgradeDbPath, spotCheckSql).replace(/\r/g, '');
 console.log(`\n[SPOT CHECK] Canonical Verifications across sample:`);
 spotRes.split('\n').forEach(line => console.log(`  - ${line}`));
 
@@ -384,6 +401,13 @@ const zechPos14SecOk = spotRes.includes('Zech 4:6 pos14sec|بَلْ|H518|אִם|
 const zechPos15Ok = spotRes.includes('Zech 4:6 pos15|بِرُوحِي|H7307|בְּרוּחִ֔י|construct|OSHB:B38.C4.V6.w17');
 console.log(`  [${zechPos7Ok && zechPos14SecOk && zechPos15Ok ? 'PASS' : 'FAIL'}] Zechariah 4:6 repairs verified on assembled DB (pos7 אֶל/HR, pos14 w16 H518, pos15 construct).`);
 
+const ezraPos2Ok = spotRes.includes('Ezra 5:8 pos2|مَعْلُومًا|H3046|peil|passive|passive_participle');
+const ezraPos6Ok = spotRes.includes('Ezra 5:8 pos6|ذَهَبْنَا|H236|אֲזַ֜לְנָא|AVqp1cp|OSHB:B15.C5.V8.w5');
+const ezraPos15Ok = spotRes.includes('Ezra 5:8 pos15|بِهِ|H1932|וְה֤וּא|AC/Pp3ms|OSHB:B15.C5.V8.w11');
+const ezraPos17Ok = spotRes.includes('Ezra 5:8 pos17|بِحِجَارَةٍ|H69|אֶ֣בֶן|construct|ANcfsc');
+const ezra58Ok = ezraPos2Ok && ezraPos6Ok && ezraPos15Ok && ezraPos17Ok;
+console.log(`  [${ezra58Ok ? 'PASS' : 'FAIL'}] Ezra 5:8 repairs verified on assembled DB (pos2 peil/passive, pos6 H236 w5, pos15 H1932 w11, pos17 H69 ANcfsc construct).`);
+
 results.morphology_card_verification = {
   target_word: mArWord,
   primary_strongs: mStrongs,
@@ -394,7 +418,8 @@ results.morphology_card_verification = {
   card_display_composite: cardDisplay.composite,
   is_masculine_plural: isMasculinePlural,
   ruth_hebrew_vav_verified: ruthHasHebrewVav,
-  zech_4_6_verified: zechPos7Ok && zechPos14SecOk && zechPos15Ok
+  zech_4_6_verified: zechPos7Ok && zechPos14SecOk && zechPos15Ok,
+  ezra_5_8_verified: ezra58Ok
 };
 
 // ============================================================================
@@ -407,7 +432,8 @@ const allPassed = (
   results.upgrade_from_v370.zero_data_loss_guaranteed &&
   results.morphology_card_verification.is_masculine_plural &&
   results.morphology_card_verification.ruth_hebrew_vav_verified &&
-  results.morphology_card_verification.zech_4_6_verified
+  results.morphology_card_verification.zech_4_6_verified &&
+  results.morphology_card_verification.ezra_5_8_verified
 );
 
 if (allPassed) {

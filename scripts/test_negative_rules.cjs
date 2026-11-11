@@ -620,6 +620,66 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 6 AND book_id = 38)
         AND ar_word_position = 15;
     `
+  },
+  {
+    gateNum: 46,
+    name: 'ezra_5_8_maluman_reverted_to_peal_active',
+    expectedFailTag: '[FAIL] Ezra 5:8 w2 (مَعْلُومًا) Peil Passive Participle',
+    description: 'Reverted Ezra 5:8 pos 2 (مَعْلُومًا) morph_stem/voice back to peal active',
+    mutationSql: `
+      UPDATE word_mappings
+      SET morph_stem = 'peal', morph_voice = 'active'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 8 AND book_id = 15)
+        AND ar_word_position = 2;
+    `
+  },
+  {
+    gateNum: 47,
+    name: 'ezra_5_8_lamed_h9005_polluted_with_h4430',
+    expectedFailTag: '[FAIL] Ezra 5:8 Lamed Preposition H9005 AR vs Noun Isolation',
+    description: 'Replaced Ezra 5:8 pos 3 (لَدَى H9005) with attached noun Strongs H4430',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H4430'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 8 AND book_id = 15)
+        AND ar_word_position = 3;
+    `
+  },
+  {
+    gateNum: 48,
+    name: 'ezra_5_8_dhahabna_reverted_to_h235',
+    expectedFailTag: '[FAIL] Ezra 5:8 arPos 6 (ذَهَبْنَا H236 w5)',
+    description: 'Reverted Ezra 5:8 pos 6 (ذَهَبْنَا) back to erroneous Strongs H235',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H235'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 8 AND book_id = 15)
+        AND ar_word_position = 6;
+    `
+  },
+  {
+    gateNum: 49,
+    name: 'ezra_5_8_bihijarah_missing_construct',
+    expectedFailTag: '[FAIL] Ezra 5:8 arPos 17 (بِحِجَارَةٍ H69 ANcfsc construct)',
+    description: 'Cleared morph_case construct from Ezra 5:8 pos 17 (بِحِجَارَةٍ)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET morph_case = NULL
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 8 AND book_id = 15)
+        AND ar_word_position = 17;
+    `
+  },
+  {
+    gateNum: 50,
+    name: 'ezra_5_8_stale_h1506_note_restored',
+    expectedFailTag: '[FAIL] Ezra 5:8 Clean Grammar Notes (no stale IDs)',
+    description: 'Restored stale H1506 error note on Ezra 5:8 pos 17 (بِحِجَارَةٍ)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET grammar_notes = 'الربط السابق بـ H1506 خاطئ'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 5 AND verse_num = 8 AND book_id = 15)
+        AND ar_word_position = 17;
+    `
   }
 ];
 

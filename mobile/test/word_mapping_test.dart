@@ -157,5 +157,73 @@ void main() {
       );
       expect(constructWord.grammaticalCase, contains('الإضافة'));
     });
+
+    test('Aramaic AR/ Bet prefix detector, non-Bet بِحِجَارَةٍ, Aramaic construct label & Peil passive (v1.0.374)', () {
+      // 4 Aramaic forms starting with Bet preposition (AR/): Ezra 5:8 (בְּכֻתְלַיָּא, בְּיֶדְהֹם) & Dan 4:17 (בִּגְזֵרַת, בְּמַלְכ֣וּת)
+      final arBetCases = [
+        (code: 'AR/Ncmpd/Td', ar: 'الْحِيطَانِ', orig: 'כְּתַל', surf: 'בְּכֻתְלַיָּ֑א', id: 'H3797', gen: 'masculine', num: 'plural', c: null),
+        (code: 'AR/Ncfsc/Sp3mp', ar: 'أَيْدِيهِمْ', orig: 'יַד', surf: 'בְּיֶדְהֹֽם', id: 'H3028', gen: 'feminine', num: 'singular', c: 'construct'),
+        (code: 'AR/Ncfsc', ar: 'بِقَضَاءِ', orig: 'גְּזֵרָה', surf: 'בִּגְזֵרַ֤ת', id: 'H1510', gen: 'feminine', num: 'singular', c: 'construct'),
+        (code: 'AR/Ncfsc', ar: 'مَمْلَكَةِ', orig: 'מַלְכוּ', surf: 'בְּמַלְכ֣וּת', id: 'H4437', gen: 'feminine', num: 'singular', c: 'construct'),
+      ];
+      for (final item in arBetCases) {
+        final m = MorphologyService.parse(
+          code: item.code,
+          language: 'aramaic',
+          arWord: item.ar,
+          origWord: item.orig,
+          origSurface: item.surf,
+          strongsId: item.id,
+          morphPos: 'noun',
+          morphGender: item.gen,
+          morphNumber: item.num,
+          morphCase: item.c,
+          morphSource: 'oshb_wlc',
+        );
+        expect(m.prefixes, contains('باء الجر والظرفية (בְּ)'), reason: 'Missing Bet prefix on ${item.surf} (${item.code})');
+        if (item.c == 'construct') {
+          expect(m.grammaticalCase, equals('حالة الإضافة الآرامية (Construct)'));
+        }
+      }
+
+      // Negative test: Ezra 5:8 بِحِجَارَةٍ (אֶ֣בֶן, H69, ANcfsc) has Arabic بِـ only, NO Aramaic Bet prefix
+      final stones = MorphologyService.parse(
+        code: 'ANcfsc',
+        language: 'aramaic',
+        arWord: 'بِحِجَارَةٍ',
+        origWord: 'אֶבֶן',
+        origSurface: 'אֶ֣בֶן',
+        strongsId: 'H69',
+        morphPos: 'noun',
+        morphGender: 'feminine',
+        morphNumber: 'singular',
+        morphCase: 'construct',
+        morphSource: 'oshb_wlc',
+        verifiedLocator: 'OSHB:B15.C5.V8.w13',
+      );
+      expect(stones.prefixes.any((p) => p.contains('باء')), isFalse);
+      expect(stones.grammaticalCase, equals('حالة الإضافة الآرامية (Construct)'));
+
+      // Ezra 5:8 arPos 2 مَعْلُومًا (יְדִ֣יעַ, H3046, AVQsmsa): Peil passive participle
+      final known = MorphologyService.parse(
+        code: 'AVQsmsa',
+        language: 'aramaic',
+        arWord: 'مَعْلُومًا',
+        origWord: 'יְדַע',
+        origSurface: 'יְדִ֣יעַ',
+        strongsId: 'H3046',
+        morphPos: 'verb',
+        morphStem: 'peil',
+        morphVoice: 'passive',
+        morphMood: 'passive_participle',
+        morphGender: 'masculine',
+        morphNumber: 'singular',
+        morphSource: 'oshb_wlc',
+        verifiedLocator: 'OSHB:B15.C5.V8.w1',
+      );
+      expect(known.stem, contains('Peil'));
+      expect(known.voice, contains('Passive'));
+      expect(known.mood, contains('اسم مفعول'));
+    });
   });
 }

@@ -1252,9 +1252,9 @@ const batch20ComprehensiveCases = [
   // 15. Ezra 5:8 w3 (لدى)
   {
     ref: 'Ezra 5:8 w3 (لدى)', book: 15, ch: 5, vs: 8, pos: 3,
-    expStrongs: 'H4430', expOrig: 'מֶלֶךְ', expSurface: 'לְמַלְכָּ֗א',
-    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
-    expMorph: 'AR/Ncmsd/Td', expLoc: 'OSHB:B15.C5.V8.w3',
+    expStrongs: 'H9005', expOrig: 'לְ', expSurface: 'לְ',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'AR', expLoc: 'OSHB:B15.C5.V8.w3',
     oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 3, oshbExpectedId: '15Y4b'
   },
   // 16. Ezra 5:8 w5 (أننا)
@@ -1268,17 +1268,17 @@ const batch20ComprehensiveCases = [
   // 17. Ezra 5:8 w7 (إلى)
   {
     ref: 'Ezra 5:8 w7 (إلى)', book: 15, ch: 5, vs: 8, pos: 7,
-    expStrongs: 'H3061', expOrig: 'יְהוּד', expSurface: 'לִיה֤וּד',
-    expPos: 'proper_noun', expGender: null, expNumber: 'singular', expPerson: null,
-    expMorph: 'AR/Np', expLoc: 'OSHB:B15.C5.V8.w6',
+    expStrongs: 'H9005', expOrig: 'לְ', expSurface: 'לִ',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'AR', expLoc: 'OSHB:B15.C5.V8.w6',
     oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 6, oshbExpectedId: '15DKB'
   },
   // 18. Ezra 5:8 w10 (إلى)
   {
     ref: 'Ezra 5:8 w10 (إلى)', book: 15, ch: 5, vs: 8, pos: 10,
-    expStrongs: 'H1005', expOrig: 'בַּיִת', expSurface: 'לְבֵית֙',
-    expPos: 'noun', expGender: 'masculine', expNumber: 'singular', expPerson: null,
-    expMorph: 'AR/Ncmsc', expLoc: 'OSHB:B15.C5.V8.w8',
+    expStrongs: 'H9005', expOrig: 'לְ', expSurface: 'לְ',
+    expPos: 'preposition', expGender: null, expNumber: null, expPerson: null,
+    expMorph: 'AR', expLoc: 'OSHB:B15.C5.V8.w8',
     oshbBook: 'Ezra', oshbOsis: 'Ezra.5.8', oshbWordIndex: 8, oshbExpectedId: '15Z2k'
   },
   // 19. Ezra 5:8 w18 (عظيمة)
@@ -2354,8 +2354,76 @@ assertCondition('Zechariah 4:6 w15 (بِرُوحِي) Construct Case (HR/Ncbsc/S
 // 45. Bet Prefix Detector Source Code Invariant (morphology_service.dart)
 const morphServicePath = path.resolve(__dirname, '../mobile/lib/core/services/morphology_service.dart');
 const morphServiceCode = fs.readFileSync(morphServicePath, 'utf8');
-const hasMorphBetCheck = morphServiceCode.includes("startsWith('HR/')") && morphServiceCode.includes("cons.startsWith('ב')");
-assertCondition('MorphologyService Bet Prefix Detector relies on HR/ + stripped ב consonant', hasMorphBetCheck, 'Missing HR/ + stripped ב prefix check in morphology_service.dart');
+const hasMorphBetCheck = morphServiceCode.includes("startsWith('HR/')") && morphServiceCode.includes("startsWith('AR/')") && morphServiceCode.includes("cons.startsWith('ב')");
+assertCondition('MorphologyService Bet Prefix Detector relies on HR/ + AR/ + stripped ב consonant', hasMorphBetCheck, 'Missing HR/ or AR/ + stripped ב prefix check in morphology_service.dart');
+
+// 46. Ezra 5:8 arPos 2 ("مَعْلُومًا") Peil Passive Participle (H3046 w1 AVQsmsa)
+const ezra2Row = query(`
+  SELECT COALESCE(wm.strongs_id,'') || '|' || COALESCE(wm.orig_word_position,'') || '|' || COALESCE(wm.orig_morphology,'') || '|' || COALESCE(wm.morph_stem,'') || '|' || COALESCE(wm.morph_voice,'') || '|' || COALESCE(wm.morph_mood,'') || '|' || COALESCE(wm.morph_tense,'NULL')
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 15 AND chapter_num = 5 AND verse_num = 8)
+    AND wm.ar_word_position = 2;
+`).replace(/\r/g, '').trim();
+assertCondition('Ezra 5:8 w2 (مَعْلُومًا) Peil Passive Participle (H3046 w1 AVQsmsa)', ezra2Row === 'H3046|1|AVQsmsa|peil|passive|passive_participle|NULL', `Found=${ezra2Row}`);
+
+// 47. Ezra 5:8 Lamed Preposition H9005 AR vs Noun Isolation (pos 3/4, 7/9, 10/11)
+const ezraLamedRows = query(`
+  SELECT wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'') || '|' || COALESCE(wm.orig_morphology,'') || '|' || COALESCE(wm.morph_pos,'') || '|' || COALESCE(wm.morph_gender,'NULL') || '|' || COALESCE(wm.morph_number,'NULL') || '|' || COALESCE(wm.morph_case,'NULL')
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 15 AND chapter_num = 5 AND verse_num = 8)
+    AND wm.ar_word_position IN (3, 4, 7, 9, 10, 11)
+  ORDER BY wm.ar_word_position ASC;
+`).replace(/\r/g, '').trim();
+const expectedEzraLamed = [
+  '3|H9005|AR|preposition|NULL|NULL|NULL',
+  '4|H4430|AR/Ncmsd/Td|noun|masculine|singular|NULL',
+  '7|H9005|AR|preposition|NULL|NULL|NULL',
+  '9|H3061|AR/Np|proper_noun|NULL|singular|NULL',
+  '10|H9005|AR|preposition|NULL|NULL|NULL',
+  '11|H1005|AR/Ncmsc|noun|masculine|singular|construct'
+].join('\n');
+assertCondition('Ezra 5:8 Lamed Preposition H9005 AR vs Noun Isolation (pos 3/4, 7/9, 10/11)', ezraLamedRows === expectedEzraLamed, `Found=\n${ezraLamedRows}`);
+
+// 48. Ezra 5:8 arPos 6 (ذَهَبْنَا H236 w5) & arPos 14-15 (وَإِذَا بِهِ H1932 w11)
+const ezra6And1415Rows = query(`
+  SELECT wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'NULL') || '|' || COALESCE(wm.orig_word_position,'NULL') || '|' || COALESCE(wm.orig_morphology,'') || '|' || COALESCE(wm.morph_pos,'') || '|' || (SELECT COUNT(*) FROM word_mapping_strongs WHERE mapping_id = wm.id)
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 15 AND chapter_num = 5 AND verse_num = 8)
+    AND wm.ar_word_position IN (6, 14, 15)
+  ORDER BY wm.ar_word_position ASC;
+`).replace(/\r/g, '').trim();
+const expectedEzra6And1415 = [
+  '6|H236|5|AVqp1cp|verb|1',
+  '14|NULL|14||syntactic_ar|0',
+  '15|H1932|11|AC/Pp3ms|personal_pronoun|1'
+].join('\n');
+assertCondition('Ezra 5:8 arPos 6 (ذَهَبْنَا H236 w5) & arPos 14-15 (وَإِذَا syntactic / بِهِ H1932 w11)', ezra6And1415Rows === expectedEzra6And1415, `Found=\n${ezra6And1415Rows}`);
+
+// 49. Ezra 5:8 arPos 17 (بِحِجَارَةٍ H69 ANcfsc construct) & arPos 29 (أَيْدِيهِمْ H3028 AR/Ncfsc/Sp3mp construct)
+const ezraConstructRows = query(`
+  SELECT wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'') || '|' || COALESCE(wm.orig_word_position,'') || '|' || COALESCE(wm.orig_morphology,'') || '|' || COALESCE(wm.morph_case,'NULL')
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 15 AND chapter_num = 5 AND verse_num = 8)
+    AND wm.ar_word_position IN (17, 29)
+  ORDER BY wm.ar_word_position ASC;
+`).replace(/\r/g, '').trim();
+const expectedEzraConstruct = [
+  '17|H69|13|ANcfsc|construct',
+  '29|H3028|23|AR/Ncfsc/Sp3mp|construct'
+].join('\n');
+assertCondition('Ezra 5:8 arPos 17 (بِحِجَارَةٍ H69 ANcfsc construct) & arPos 29 (أَيْدِيهِمْ AR/Ncfsc/Sp3mp construct)', ezraConstructRows === expectedEzraConstruct, `Found=\n${ezraConstructRows}`);
+
+// 50. Ezra 5:8 Clean Grammar Notes & Aramaic UI Labels
+const ezraStaleNotes = query(`
+  SELECT COUNT(*)
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 15 AND chapter_num = 5 AND verse_num = 8)
+    AND (wm.grammar_notes LIKE '%H413%' OR wm.grammar_notes LIKE '%H1836%' OR wm.grammar_notes LIKE '%H1506%'
+         OR wm.grammar_notes LIKE '%H6088%' OR wm.grammar_notes LIKE '%H7870%' OR wm.grammar_notes LIKE '%H1790%'
+         OR wm.grammar_notes LIKE '%H628%');
+`).replace(/\r/g, '').trim();
+const hasAramaicLabels = morphServiceCode.includes("'peil'") && morphServiceCode.includes("'passive_participle'") && morphServiceCode.includes('حالة الإضافة الآرامية (Construct)');
+assertCondition('Ezra 5:8 Clean Grammar Notes (no stale IDs) & Aramaic UI Construct/Peil Labels', ezraStaleNotes === '0' && hasAramaicLabels, `staleNotes=${ezraStaleNotes}, hasAramaicLabels=${hasAramaicLabels}`);
 
 
 

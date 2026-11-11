@@ -146,12 +146,11 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Zechariah 4:6 Canonical OSHB Alignment & Morphology Polish (v1.0.373)
-          - **Zechariah 4:6 Full Canonical Alignment**: Resolved all 15 remaining Hebrew benchmark errors by mapping all 18 Arabic words across all 20 OSHB tokens (`w1..w20`), adding `H413` (`אֵלַי֙` · `HR/Sp1cs`) at `w3` inside «وَكَلَّمَنِي» (`arPos 2`) and `H518` (`אִם` · `HC`) at `w16` inside «بَلْ» (`arPos 14`), fixing «إِلَى» (`w8`, `אֶל`, `HR`), and cleaning the stale `H562` note on «كَلِمَةُ».
-          - **Hebrew Bet Preposition Prefix Detector**: Updated `MorphologyService._detectHebrewSurfacePrefixes` to classify Bet (`בְּ`) deterministically via `HR/` morphology + diacritic-stripped initial `ב`, supporting literal OSHB surfaces (`בְחַ֨יִל֙`, `בְכֹ֔חַ`, `בְּרוּחִ֔י`) while rejecting root-Bet controls (`בַּיִת`, `HNcmsa`).
-          - **Construct Case & Negative Gates 41–45**: Set `morph_case = 'construct'` on «كَلِمَةُ» (`HNcmsc`) and «بِرُوحِي» (`HR/Ncbsc/Sp1cs`), and enforced 5 new negative quality gates (Gates 41–45).
-          - **Post-Build APK Asset Gate**: Runs `verify_apk_asset_integrity.cjs` directly against the built APK ZIP central directory and reassembles chunks before publishing.
-          - **Benchmark Status**: 311 units audited: **290 correct (93.25%)**, **21 errors** (Aramaic only: 12 Ezra 5:8, 9 Daniel 4:17), **0 Hebrew/Greek errors**, **0 undecided**. All 45 negative gates passing.
+          ## 🚀 Ezra 5:8 Canonical OSHB Alignment & Aramaic Morphology Support (v1.0.374)
+          - **Ezra 5:8 Full Canonical Alignment**: Resolved all 12 Ezra 5:8 errors across all 29 Arabic words and 23 OSHB Aramaic tokens (`w1..w23`), preserving Lamed `H9005` (`AR`) vs attached noun Strong's (`H4430`, `H3061`, `H1005`), restoring `H236` (`אֲזַ֜לְנָא` · `AVqp1cp`) at `w5`, moving `H1932` (`וְה֤וּא` · `AC/Pp3ms`) to `arPos 15` («بِهِ» @ `w11`) and `arPos 14` («وَإِذَا») to `syntactic_ar`, fixing `arPos 17` («بِحِجَارَةٍ» · `H69` · `ANcfsc`), fixing `arPos 2` («مَعْلُومًا» · `H3046` · `AVQsmsa`) to `peil`/`passive`/`passive_participle`, and cleaning all stale `grammar_notes`.
+          - **Aramaic App & Morphology Fixes**: Enabled `AR/` Bet prefix detection in `MorphologyService._detectHebrewSurfacePrefixes`, added Aramaic construct label (`حالة الإضافة الآرامية (Construct)`), and mapped `peil` / `passive_participle` labels with unit tests in `word_mapping_test.dart`.
+          - **Hardened Auditor & Negative Gates 46–50**: Upgraded `audit_20_verses_311_units.cjs` to enforce surface forms, derived morphology columns, verb stems, and `word_mapping_strongs` component integrity; enforced 5 new negative gates (Gates 46–50).
+          - **Benchmark Status**: 311 units audited: **302 correct (97.11%)**, **9 errors** (Daniel 4:17 remaining for next independent release `v1.0.375`), **0 Ezra/Hebrew/Greek errors**, **0 undecided**. All 50 negative gates passing.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

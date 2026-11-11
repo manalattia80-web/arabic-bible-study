@@ -38,7 +38,9 @@ function extractOshbVerse(bookName, osisRef) {
   let idx = 1;
   while ((wMatch = wordRegex.exec(verseXml)) !== null) {
     const attrs = wMatch[1];
-    const text = wMatch[2].replace(/<[^>]+>/g, '').trim();
+    const rawText = wMatch[2].replace(/<[^>]+>/g, '').trim();
+    const rawParts = rawText.split('/');
+    const text = rawText.replace(/\//g, '');
     const lemmaMatch = attrs.match(/lemma="([^"]+)"/);
     const morphMatch = attrs.match(/morph="([^"]+)"/);
     const idMatch = attrs.match(/id="([^"]+)"/);
@@ -47,7 +49,8 @@ function extractOshbVerse(bookName, osisRef) {
       id: idMatch ? idMatch[1] : null,
       lemma: lemmaMatch ? lemmaMatch[1] : null,
       morph: morphMatch ? morphMatch[1] : null,
-      text: text
+      text: text,
+      rawParts: rawParts
     });
   }
   return words;
@@ -99,6 +102,9 @@ function extractSblgntVerse(bookId, ch, vs) {
   return tokens;
 }
 
+const normOshbSurface = s => (s || '').replace(/[\u0591-\u05AF\u05BD\u05BE׃\s/]/g, '').trim();
+const normGreekSurface = s => (s || '').normalize('NFC').replace(/\u1F77/g, '\u03AF').replace(/[,.;·]/g, '').trim();
+
 function morphMatches(dbMorph, sourceMorph) {
   if (!dbMorph || !sourceMorph) return false;
   if (dbMorph === sourceMorph) return true;
@@ -121,25 +127,25 @@ function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, morphStr, dbMorph)
 
   // Preposition prefix H9005 (לְ): strictly requires preposition morphology on the mapped unit
   if (strongsId === 'H9005') {
-    const isPrep = dbMorph === 'HR' || (dbMorph && dbMorph.startsWith('HR/')) || (dbMorph && dbMorph.startsWith('R'));
+    const isPrep = dbMorph === 'HR' || dbMorph === 'AR' || (dbMorph && (dbMorph.startsWith('HR/') || dbMorph.startsWith('AR/') || dbMorph.startsWith('R')));
     const hasL = lemmaStr.split('/').includes('l') || lemmaStr === 'l';
     return isPrep && hasL;
   }
   // Conjunction prefix H9002 (וְ): strictly requires conjunction morphology
   if (strongsId === 'H9002') {
-    const isConj = dbMorph === 'HC' || (dbMorph && dbMorph.startsWith('HC/')) || (dbMorph && dbMorph.startsWith('C'));
+    const isConj = dbMorph === 'HC' || dbMorph === 'AC' || (dbMorph && (dbMorph.startsWith('HC/') || dbMorph.startsWith('AC/') || dbMorph.startsWith('C')));
     const hasC = lemmaStr.split('/').includes('c') || lemmaStr === 'c';
     return isConj && hasC;
   }
   // Preposition prefix H9003 (בְּ): strictly requires preposition morphology
   if (strongsId === 'H9003') {
-    const isPrep = dbMorph === 'HR' || (dbMorph && dbMorph.startsWith('HR/')) || (dbMorph && dbMorph.startsWith('R'));
+    const isPrep = dbMorph === 'HR' || dbMorph === 'AR' || (dbMorph && (dbMorph.startsWith('HR/') || dbMorph.startsWith('AR/') || dbMorph.startsWith('R')));
     const hasB = lemmaStr.split('/').includes('b') || lemmaStr === 'b';
     return isPrep && hasB;
   }
   // Preposition prefix H9004 (כְּ): strictly requires preposition morphology
   if (strongsId === 'H9004') {
-    const isPrep = dbMorph === 'HR' || (dbMorph && dbMorph.startsWith('HR/')) || (dbMorph && dbMorph.startsWith('R'));
+    const isPrep = dbMorph === 'HR' || dbMorph === 'AR' || (dbMorph && (dbMorph.startsWith('HR/') || dbMorph.startsWith('AR/') || dbMorph.startsWith('R')));
     const hasK = lemmaStr.split('/').includes('k') || lemmaStr === 'k';
     return isPrep && hasK;
   }
@@ -150,8 +156,8 @@ function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, morphStr, dbMorph)
     return isArt && hasD;
   }
 
-  // Preposition purity: standalone preposition (HR) cannot hold a noun Strong's number
-  if (dbMorph === 'HR' && !['H9005', 'H9003', 'H9004', 'H413', 'H5921', 'H4480', 'H5973', 'H8478', 'H996', 'H310', 'H854', 'H5704'].includes(strongsId)) {
+  // Preposition purity: standalone preposition (HR / AR) cannot hold a noun Strong's number
+  if ((dbMorph === 'HR' || dbMorph === 'AR') && !['H9005', 'H9003', 'H9004', 'H413', 'H5921', 'H5922', 'H4480', 'H5973', 'H8478', 'H996', 'H310', 'H854', 'H5704', 'H5705'].includes(strongsId)) {
     return false;
   }
 
@@ -161,6 +167,9 @@ function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, morphStr, dbMorph)
     const cleanPart = part.replace(/\s+[a-z]$/, '').trim();
     if (cleanPart === numStr) return true;
     if ((numStr === '1980' && cleanPart === '3212') || (numStr === '3212' && cleanPart === '1980')) {
+      return true;
+    }
+    if (numStr === '4480' && cleanPart === 'm') {
       return true;
     }
   }
@@ -202,14 +211,15 @@ for (const v of targetVerses) {
            (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role, ';') 
             FROM (SELECT strongs_id, link_role FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as components,
            (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || COALESCE(wms.orig_word_position, '') || '[' || COALESCE(wms.orig_component, '') || ':' || COALESCE(wms.orig_morphology, '') || ']', ';') 
-            FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as components_detailed
+            FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms) as components_detailed,
+           wm.morph_tense, wm.morph_voice, wm.morph_case
     FROM word_mappings wm
     JOIN verses vr ON wm.verse_id = vr.id
     WHERE vr.book_id = ${v.book} AND vr.chapter_num = ${v.ch} AND vr.verse_num = ${v.vs}
     ORDER BY wm.ar_word_position ASC;
   `);
 
-  const lines = rawRows.split('\n').filter(l => l.trim().length > 0);
+  const lines = rawRows.replace(/\r/g, '').split('\n').filter(l => l.trim().length > 0);
 
   for (const line of lines) {
     const parts = line.split('|');
@@ -230,6 +240,9 @@ for (const v of targetVerses) {
     const locator = parts[14] || null;
     const components = parts[15] || '';
     const componentsDetailed = parts[16] || '';
+    const morphTense = parts[17] || null;
+    const morphVoice = parts[18] || null;
+    const morphCase = parts[19] || null;
 
     // Manifest specification for this unit
     const manifestRec = manifest.records.find(r => r.verse === v.name && r.arPos === arPos);
@@ -277,6 +290,18 @@ for (const v of targetVerses) {
       }
 
       // Check multi-component integrity: reject missing or mismatched components, including position, surface form, and morphology
+      // Check multi-component & link completeness in word_mapping_strongs
+      if (!components || components.trim() === '') {
+        axisFindings.lexical.status = 'fail';
+        axisFindings.lexical.note = 'Missing row(s) in word_mapping_strongs for content word';
+      } else {
+        const primaryComp = components.split(';').find(c => c.endsWith(':primary'));
+        if (!primaryComp || primaryComp.split(':')[0] !== strongsId) {
+          axisFindings.lexical.status = 'fail';
+          axisFindings.lexical.note = `Primary link in word_mapping_strongs (${primaryComp || 'none'}) != word_mappings.strongs_id (${strongsId})`;
+        }
+      }
+
       if (manifestRec && manifestRec.components) {
         const normExpComp = manifestRec.components.trim().replace(/\r/g, '');
         if (normExpComp.includes('@w')) {
@@ -312,10 +337,41 @@ for (const v of targetVerses) {
         axisFindings.sourceLocator.note = `Locator mismatch: DB '${locator}' vs manifest '${manifestRec.locator}'`;
       }
 
-      // 3. Morphology Axis: Check against manifest expected morphology
+      // 3. Morphology Axis: Check against manifest expected morphology & derived morph_* fields
       if (manifestRec && manifestRec.origMorph && origMorph !== manifestRec.origMorph) {
         axisFindings.morphology.status = 'fail';
         axisFindings.morphology.note = `Orig morphology mismatch: DB '${origMorph}' vs manifest '${manifestRec.origMorph}'`;
+      }
+      if (manifestRec) {
+        const derivedChecks = [
+          ['morphPos', morphPos],
+          ['morphStem', morphStem],
+          ['morphTense', morphTense],
+          ['morphVoice', morphVoice],
+          ['morphMood', morphMood],
+          ['morphPerson', morphPerson],
+          ['morphNumber', morphNumber],
+          ['morphGender', morphGender],
+          ['morphCase', morphCase]
+        ];
+        for (const [mKey, dbVal] of derivedChecks) {
+          if (Object.prototype.hasOwnProperty.call(manifestRec, mKey) && (dbVal || null) !== (manifestRec[mKey] || null)) {
+            axisFindings.morphology.status = 'fail';
+            axisFindings.morphology.note = `Derived ${mKey} mismatch: DB '${dbVal}' vs manifest '${manifestRec[mKey]}'`;
+            break;
+          }
+        }
+      }
+
+      // Surface check against manifest (preserving consonants & niqqud; ignores cantillation marks only)
+      if (manifestRec && manifestRec.origSurface) {
+        const surfOk = v.lang === 'greek'
+          ? normGreekSurface(origSurface) === normGreekSurface(manifestRec.origSurface)
+          : normOshbSurface(origSurface) === normOshbSurface(manifestRec.origSurface);
+        if (!surfOk) {
+          axisFindings.lemmaSurface.status = 'fail';
+          axisFindings.lemmaSurface.note = `Surface mismatch: DB '${origSurface}' vs manifest '${manifestRec.origSurface}'`;
+        }
       }
 
       // Source token checks
@@ -326,11 +382,40 @@ for (const v of targetVerses) {
           axisFindings.sourceLocator.note = `Locator index ${locWordIndex} exceeds source token count (${sourceTokens.length})`;
         } else {
           if (v.lang === 'hebrew' || v.lang === 'aramaic') {
+            // Check OSHB Surface Form (strict on all consonants & niqqud; ignores cantillation marks only)
+            const dbSurfNorm = normOshbSurface(origSurface);
+            const tokFullNorm = normOshbSurface(sourceToken.text);
+            const rawParts = sourceToken.rawParts || [sourceToken.text];
+            const partMatch =
+              dbSurfNorm === tokFullNorm ||
+              rawParts.map(normOshbSurface).includes(dbSurfNorm) ||
+              normOshbSurface(rawParts.slice(1).join('')) === dbSurfNorm;
+            if (!origSurface || !partMatch) {
+              axisFindings.lemmaSurface.status = 'fail';
+              axisFindings.lemmaSurface.note = `Surface mismatch: DB '${origSurface}' does not match OSHB '${sourceToken.text}' at w${locWordIndex}`;
+            }
+
             // Check OSHB Morphology
             if (origMorph && sourceToken.morph && !morphMatches(origMorph, sourceToken.morph)) {
               axisFindings.morphology.status = 'fail';
               axisFindings.morphology.note = `Morph mismatch: DB '${origMorph}' vs Source '${sourceToken.morph}' (id: ${sourceToken.id})`;
             }
+
+            // Check OSHB Verb Stem integrity (prevents silently corrupting morph_stem in DB)
+            if (sourceToken.morph) {
+              const coreMorph = sourceToken.morph.split('/').pop();
+              if (coreMorph.startsWith('V') && coreMorph.length >= 3) {
+                const stemMap = v.lang === 'aramaic'
+                  ? { q: 'peal', Q: 'peil', p: 'pael', a: 'aphel', h: 'haphel', u: 'hithpeel', t: 'hithpaal' }
+                  : { q: 'qal', N: 'niphal', p: 'piel', P: 'pual', h: 'hiphil', H: 'hophal', t: 'hithpael' };
+                const expectedStem = stemMap[coreMorph[1]];
+                if (expectedStem && morphStem && morphStem !== expectedStem) {
+                  axisFindings.morphology.status = 'fail';
+                  axisFindings.morphology.note = `Derived morph_stem mismatch: DB '${morphStem}' vs OSHB stem '${expectedStem}' (${sourceToken.morph})`;
+                }
+              }
+            }
+
             // Check OSHB Lexical / Strongs accuracy
             if (strongsId && sourceToken.lemma) {
               const strongsOk = verifyHebrewStrongsAgainstLemma(strongsId, sourceToken.lemma, sourceToken.morph, origMorph);
@@ -339,7 +424,43 @@ for (const v of targetVerses) {
                 axisFindings.lexical.note = `Strongs mismatch: DB '${strongsId}' does not correspond to source lemma '${sourceToken.lemma}'`;
               }
             }
+
+            // Check every component inside word_mapping_strongs against sourceTokens
+            if (componentsDetailed) {
+              for (const compStr of componentsDetailed.split(';')) {
+                const mComp = compStr.match(/^([^:]+):[^@]+@w(\d+)\[(.*):([^\]]*)\]$/);
+                if (!mComp) continue;
+                const [, cStrongs, cPosStr, cSurf, cMorph] = mComp;
+                const cTok = sourceTokens.find(t => t.index === parseInt(cPosStr, 10));
+                if (!cTok) {
+                  axisFindings.lexical.status = 'fail';
+                  axisFindings.lexical.note = `Component wms position w${cPosStr} missing in OSHB`;
+                  break;
+                }
+                if (!verifyHebrewStrongsAgainstLemma(cStrongs, cTok.lemma, cTok.morph, cMorph || origMorph)) {
+                  axisFindings.lexical.status = 'fail';
+                  axisFindings.lexical.note = `Component ${cStrongs}@w${cPosStr} fails OSHB lemma check ('${cTok.lemma}')`;
+                  break;
+                }
+                if (cSurf) {
+                  const cSurfNorm = normOshbSurface(cSurf);
+                  const cTokNorm = normOshbSurface(cTok.text);
+                  const cParts = (cTok.rawParts || [cTok.text]).map(normOshbSurface);
+                  if (cSurfNorm !== cTokNorm && !cParts.includes(cSurfNorm) && normOshbSurface((cTok.rawParts || []).slice(1).join('')) !== cSurfNorm) {
+                    axisFindings.lemmaSurface.status = 'fail';
+                    axisFindings.lemmaSurface.note = `Component ${cStrongs}@w${cPosStr} surface '${cSurf}' does not match OSHB '${cTok.text}'`;
+                    break;
+                  }
+                }
+              }
+            }
           } else if (v.lang === 'greek') {
+            // Check SBLGNT Surface Form
+            const dbGrNorm = normGreekSurface(origSurface);
+            if (!origSurface || ![sourceToken.surfacePunct, sourceToken.surfaceClean, sourceToken.surfaceNorm].map(normGreekSurface).includes(dbGrNorm)) {
+              axisFindings.lemmaSurface.status = 'fail';
+              axisFindings.lemmaSurface.note = `Greek surface mismatch: DB '${origSurface}' vs SBLGNT '${sourceToken.surfaceClean}'`;
+            }
             // Check SBLGNT Morphology
             if (origMorph && sourceToken.morph && origMorph !== sourceToken.morph) {
               axisFindings.morphology.status = 'fail';
