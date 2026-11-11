@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "baseline_commit_anchor": "3a0a478",
+  "db_sha256": "777393cbc06d2a0c560cf32f3c20430ba7d4f3b6fdeb1dc867c4200f79a2aa00",
+  "preserved_automated_baseline_file": "scripts/unseen_holdout_4axis_v376.json",
+  "preserved_automated_baseline_sha256": "0fc9edb5700a5e773558f8e0c11b84d2d5b36705f5b1a44aba5c5ebcac9208f5",
+  "manifest_file": "scripts/unseen_holdout_15_verses_manifest.json",
+  "manifest_sha256": "08700e081267bf6e255a70d9f2dac50196ab98eb81d292f346345ce7d5c58bc8",
+  "exclusion_provenance_summary": {
+    "total_sources_scanned": 84,
+    "git_tracked_sources": 58,
+    "untracked_local_sources": 26,
+    "unique_excluded_verses": 2604,
+    "overlap_count": 0
+  },
+  "comparison_totals": {
+    "totalUnits": 253,
+    "automatedBaseline": {
+      "cleanUnits": 79,
+      "alertedUnits": 174,
+      "cleanPct": 31.23
+    },
+    "manualAdjudication": {
+      "cleanUnits": 75,
+      "defectiveUnits": 178,
+      "missedByAuditorCount": 4,
+      "cleanPct": 29.64
+    }
+  },
+  "missedByAutomatedAuditor": [
+    {
+      "verse": "Mark 12:30",
+      "pos": 7,
+      "arWord": "وَمِنْ",
+      "reason": "Repeated-clause mis-attachment: points to Clause 1 w7 (ἐξ) instead of Clause 2 w13 (ἐξ before ψυχῆς w16)"
+    },
+    {
+      "verse": "Mark 12:30",
+      "pos": 8,
+      "arWord": "كُلِّ",
+      "reason": "Repeated-clause mis-attachment: points to Clause 1 w8 (ὅλης) instead of Clause 2 w14 (ὅλης before ψυχῆς w16)"
+    },
+    {
+      "verse": "Mark 12:30",
+      "pos": 13,
+      "arWord": "وَمِنْ",
+      "reason": "Repeated-clause mis-attachment: points to Clause 2 w13 (ἐξ) instead of Clause 4 w25 (ἐξ before ἰσχύος w28)"
+    },
+    {
+      "verse": "Mark 12:30",
+      "pos": 14,
+      "arWord": "كُلِّ",
+      "reason": "Repeated-clause mis-attachment: points to Clause 2 w14 (ὅλης) instead of Clause 4 w26 (ὅλης before ἰσχύος w28)"
+    }
+  ],
+  "byLanguageManual": {
+    "greek": {
+      "total": 81,
+      "automatedClean": 18,
+      "manualClean": 14,
+      "manualDefects": 67,
+      "manualCleanPct": 17.28
+    },
+    "hebrew": {
+      "total": 87,
+      "automatedClean": 47,
+      "manualClean": 47,
+      "manualDefects": 40,
+      "manualCleanPct": 54.02
+    },
+    "aramaic": {
+      "total": 85,
+      "automatedClean": 14,
+      "manualClean": 14,
+      "manualDefects": 71,
+      "manualCleanPct": 16.47
+    }
+  },
+  "execution_order_batches": [
+    {
+      "batch": 1,
+      "lang": "greek",
+      "order": [
+        "1Thess 5:16",
+        "Mark 12:30",
+        "Luke 19:10",
+        "Rom 12:1",
+        "Eph 6:11",
+        "1Pet 2:9"
+      ]
+    },
+    {
+      "batch": 2,
+      "lang": "hebrew",
+      "control": "Exod 20:13",
+      "order": [
+        "Lev 19:18",
+        "Deut 8:3",
+        "Josh 24:15",
+        "Prov 16:9"
+      ]
+    },
+    {
+      "batch": 3,
+      "lang": "aramaic",
+      "order": [
+        "Ezra 4:12",
+        "Ezra 6:14",
+        "Ezra 7:12",
+        "Dan 2:44"
+      ]
+    }
+  ],
+  "perVerse": [
+    {
+      "verse": "Exod 20:13",
+      "lang": "hebrew",
+      "total": 2,
+      "automatedClean": 2,
+      "automatedAlerts": 0,
+      "manualMissedByAuditor": 0,
+      "manualClean": 2,
+      "manualDefects": 0,
+      "manualCleanPct": 100
+    },
+    {
+      "verse": "Lev 19:18",
+      "lang": "hebrew",
+      "total": 13,
+      "automatedClean": 6,
+      "automatedAlerts": 7,
+      "manualMissedByAuditor": 0,
+      "manualClean": 6,
+      "manualDefects": 7,
+      "manualCleanPct": 46.15
+    },
+    {
+      "verse": "Deut 8:3",
+      "lang": "hebrew",
+      "total": 28,
+      "automatedClean": 15,
+      "automatedAlerts": 13,
+      "manualMissedByAuditor": 0,
+      "manualClean": 15,
+      "manualDefects": 13,
+      "manualCleanPct": 53.57
+    },
+    {
+      "verse": "Josh 24:15",
+      "lang": "hebrew",
+      "total": 36,
+      "automatedClean": 20,
+      "automatedAlerts": 16,
+      "manualMissedByAuditor": 0,
+      "manualClean": 20,
+      "manualDefects": 16,
+      "manualCleanPct": 55.56
+    },
+    {
+      "verse": "Prov 16:9",
+      "lang": "hebrew",
+      "total": 8,
+      "automatedClean": 4,
+      "automatedAlerts": 4,
+      "manualMissedByAuditor": 0,
+      "manualClean": 4,
+      "manualDefects": 4,
+      "manualCleanPct": 50
+    },
+    {
+      "verse": "Ezra 4:12",
+      "lang": "aramaic",
+      "total": 22,
+      "automatedClean": 6,
+      "automatedAlerts": 16,
+      "manualMissedByAuditor": 0,
+      "manualClean": 6,
+      "manualDefects": 16,
+      "manualCleanPct": 27.27
+    },
+    {
+      "verse": "Ezra 6:14",
+      "lang": "aramaic",
+      "total": 24,
+      "automatedClean": 0,
+      "automatedAlerts": 24,
+      "manualMissedByAuditor": 0,
+      "manualClean": 0,
+      "manualDefects": 24,
+      "manualCleanPct": 0
+    },
+    {
+      "verse": "Ezra 7:12",
+      "lang": "aramaic",
+      "total": 14,
+      "automatedClean": 2,
+      "automatedAlerts": 12,
+      "manualMissedByAuditor": 0,
+      "manualClean": 2,
+      "manualDefects": 12,
+      "manualCleanPct": 14.29
+    },
+    {
+      "verse": "Dan 2:44",
+      "lang": "aramaic",
+      "total": 25,
+      "automatedClean": 6,
+      "automatedAlerts": 19,
+      "manualMissedByAuditor": 0,
+      "manualClean": 6,
+      "manualDefects": 19,
+      "manualCleanPct": 24
+    },
+    {
+      "verse": "Mark 12:30",
+      "lang": "greek",
+      "total": 19,
+      "automatedClean": 4,
+      "automatedAlerts": 15,
+      "manualMissedByAuditor": 4,
+      "manualClean": 0,
+      "manualDefects": 19,
+      "manualCleanPct": 0
+    },
+    {
+      "verse": "Luke 19:10",
+      "lang": "greek",
+      "total": 11,
+      "automatedClean": 4,
+      "automatedAlerts": 7,
+      "manualMissedByAuditor": 0,
+      "manualClean": 4,
+      "manualDefects": 7,
+      "manualCleanPct": 36.36
+    },
+    {
+      "verse": "Rom 12:1",
+      "lang": "greek",
+      "total": 17,
+      "automatedClean": 3,
+      "automatedAlerts": 14,
+      "manualMissedByAuditor": 0,
+      "manualClean": 3,
+      "manualDefects": 14,
+      "manualCleanPct": 17.65
+    },
+    {
+      "verse": "Eph 6:11",
+      "lang": "greek",
+      "total": 11,
+      "automatedClean": 2,
+      "automatedAlerts": 9,
+      "manualMissedByAuditor": 0,
+      "manualClean": 2,
+      "manualDefects": 9,
+      "manualCleanPct": 18.18
+    },
+    {
+      "verse": "1Thess 5:16",
+      "lang": "greek",
+      "total": 3,
+      "automatedClean": 0,
+      "automatedAlerts": 3,
+      "manualMissedByAuditor": 0,
+      "manualClean": 0,
+      "manualDefects": 3,
+      "manualCleanPct": 0
+    },
+    {
+      "verse": "1Pet 2:9",
+      "lang": "greek",
+      "total": 20,
+      "automatedClean": 5,
+      "automatedAlerts": 15,
+      "manualMissedByAuditor": 0,
+      "manualClean": 5,
+      "manualDefects": 15,
+      "manualCleanPct": 25
+    }
+  ]
+}

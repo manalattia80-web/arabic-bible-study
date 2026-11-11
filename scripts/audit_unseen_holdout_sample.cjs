@@ -16,6 +16,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { execFileSync } = require('child_process');
+const { verifyTrDerivedMorphology } = require('./robinson_tr_helper.cjs');
 
 const repoRoot = path.resolve(__dirname, '..');
 const sha256File = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
@@ -229,9 +230,7 @@ function verifyDerived(lang, dbMorph, srcMorph, d, isTr = false) {
   const normPerson = p => ({ first: '1', second: '2', third: '3' }[p] || p || null);
   if (lang === 'greek') {
     if (isTr) {
-      // Minimal Robinson TR checks: POS family check against Scrivener grammar tag
-      if (!dbMorph || dbMorph.trim() === '') return 'missing orig_morphology for TR token';
-      return null;
+      return verifyTrDerivedMorphology(dbMorph, srcMorph, d);
     }
     const m = (srcMorph || '').trim();
     if (m.length < 11) return null;
@@ -413,6 +412,7 @@ for (const v of holdoutVerses) {
   const lines = rowsRaw.split('\n').filter(Boolean);
   const vAxes = { lexical: 0, lemmaSurface: 0, morphology: 0, sourceLocator: 0 };
   let vClean = 0, vAlert = 0;
+  const seenPrimaryLocators = new Map();
 
   for (const line of lines) {
     const [
@@ -447,8 +447,16 @@ for (const v of holdoutVerses) {
       const locIdx = mLoc ? parseInt(mLoc[1], 10) : null;
       if (!locator || !locIdx) {
         failAxis('sourceLocator', `invalid locator '${locator}'`);
-      } else if (origPos !== locIdx) {
-        failAxis('sourceLocator', `orig_word_position (${origPos}) != locator w${locIdx}`);
+      } else {
+        if (origPos !== locIdx) {
+          failAxis('sourceLocator', `orig_word_position (${origPos}) != locator w${locIdx}`);
+        }
+        const edKey = `${locator.split(':')[0]}:w${locIdx}`;
+        if (seenPrimaryLocators.has(edKey)) {
+          failAxis('sourceLocator', `duplicate primary token collision: ${edKey} already claimed by arPos #${seenPrimaryLocators.get(edKey)}`);
+        } else {
+          seenPrimaryLocators.set(edKey, arPos);
+        }
       }
 
       if (v.lang === 'greek') {
@@ -640,10 +648,11 @@ const report = {
   perVerse: verseSummaries,
   alerts: allAlerts
 };
-const canonicalOutPath = path.join(__dirname, 'unseen_holdout_4axis_v376.json');
-fs.writeFileSync(canonicalOutPath, JSON.stringify(report, null, 2) + '\n', 'utf8');
-const scratchOutPath = path.join(repoRoot, 'scratch/unseen_holdout_4axis_v376.json');
-if (fs.existsSync(path.dirname(scratchOutPath))) {
-  fs.writeFileSync(scratchOutPath, JSON.stringify(report, null, 2) + '\n', 'utf8');
-}
-console.log(`\nWritten calibrated 4-axis holdout report: ${canonicalOutPath}`);
+const outIdx = process.argv.indexOf('--out');
+const targetOutPath = (outIdx !== -1 && process.argv[outIdx + 1])
+  ? path.resolve(process.cwd(), process.argv[outIdx + 1])
+  : path.join(repoRoot, 'scratch/unseen_holdout_4axis_latest.json');
+fs.mkdirSync(path.dirname(targetOutPath), { recursive: true });
+fs.writeFileSync(targetOutPath, JSON.stringify(report, null, 2) + '\n', 'utf8');
+console.log(`\nWritten calibrated 4-axis holdout report: ${targetOutPath}`);
+console.log(`(Preserved baseline untouched: ${path.join(__dirname, 'unseen_holdout_4axis_v376.json')})`);
