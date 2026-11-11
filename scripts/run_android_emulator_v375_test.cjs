@@ -338,9 +338,9 @@ function hasForbiddenHebrewConstructOcr(ocr) {
 }
 
 function hasPeilPassiveOcr(ocr) {
-  const hasPeil = /\bPeil\b/i.test(ocr) || ocr.includes('بَعِيل') || ocr.includes('بعيل') || ocr.includes('الآرامي المجهول');
-  const hasPassive = /\bPassive\b/i.test(ocr) || ocr.includes('المجهول') || ocr.includes('اسم مفعول') || /Passive\s*Participle/i.test(ocr);
-  const hasArStemLabel = ocr.includes('الوزن الصرفي الآرامي') || ocr.includes('الآرامي') || !ocr.includes('الوزن الصرفي العبري');
+  const hasPeil = /\bPe[il1t]{2,3}\b/i.test(ocr) || ocr.includes('بَعِيل') || ocr.includes('بعيل') || /[بت]عيل/.test(ocr) || ocr.includes('الآرامي المجهول');
+  const hasPassive = /\bPassive\b/i.test(ocr) || ocr.includes('المجهول') || /م[فقع]عول/.test(ocr) || /Passive\s*Participle/i.test(ocr);
+  const hasArStemLabel = !ocr.includes('الوزن الصرفي العبري') && (ocr.includes('الوزن الصرفي الآرامي') || /ال[آأا]رامي|آرامي|الأنامي/.test(ocr));
   return hasPeil && hasPassive && hasArStemLabel;
 }
 
