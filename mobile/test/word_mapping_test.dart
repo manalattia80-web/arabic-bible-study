@@ -267,6 +267,10 @@ void main() {
         StrongsModal.resolveMorphologyLanguage(mapping: null, entry: entry),
         equals('hebrew'),
       );
+      expect(StrongsModal.formatLanguageBadge('aramaic'), equals('الآرامية'));
+      expect(StrongsModal.formatLanguageBadge('Aramaic'), equals('الآرامية'));
+      expect(StrongsModal.formatLanguageBadge('hebrew'), equals('Hebrew'));
+      expect(StrongsModal.formatLanguageBadge('greek'), equals('Greek'));
     });
   });
 
@@ -326,6 +330,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      expect(find.byKey(const Key('strongs_modal_lang_badge')), findsOneWidget);
+      expect(find.text('الآرامية'), findsOneWidget);
+      expect(find.text('Hebrew'), findsNothing);
+      expect(find.text('H1005'), findsOneWidget);
       expect(find.textContaining('حالة الإضافة الآرامية (Construct)'), findsOneWidget);
       expect(find.textContaining('حالة الإضافة العبرية'), findsNothing);
     });
@@ -387,6 +395,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      expect(find.text('الآرامية'), findsOneWidget);
+      expect(find.text('Hebrew'), findsNothing);
+      expect(find.text('H3046'), findsOneWidget);
       expect(find.textContaining('وزن بَعِيل الآرامي المجهول (Peil)'), findsOneWidget);
       expect(find.textContaining('الوزن الصرفي الآرامي'), findsOneWidget);
       expect(find.textContaining('اسم مفعول'), findsWidgets);
@@ -462,6 +473,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      expect(find.text('الآرامية'), findsOneWidget);
+      expect(find.text('Hebrew'), findsNothing);
+      expect(find.text('H69'), findsOneWidget);
       expect(find.textContaining('حالة الإضافة الآرامية (Construct)'), findsOneWidget);
       expect(find.textContaining('حالة الإضافة العبرية'), findsNothing);
       expect(find.textContaining('باء الجر'), findsNothing);
@@ -527,6 +541,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      expect(find.text('الآرامية'), findsOneWidget);
+      expect(find.text('Hebrew'), findsNothing);
+      expect(find.text('H6634'), findsOneWidget);
       expect(find.textContaining('الوزن الصرفي الآرامي'), findsOneWidget);
       expect(find.textContaining('Yiqtol'), findsWidgets);
       expect(find.textContaining('AVqp3ms'), findsWidgets);
@@ -567,6 +584,66 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.textContaining('اللغة الآرامية للعهد القديم'), findsOneWidget);
       expect(find.textContaining('وزن أفعل الآرامي السببي (Aphel)'), findsWidgets);
+    });
+
+    testWidgets('StrongsModal keeps Hebrew badge for Hebrew record while preserving Strong ID', (WidgetTester tester) async {
+      tester.view.physicalSize = const Size(800, 3000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      const hebrewEntry = StrongsEntry(
+        strongsId: 'H1697',
+        language: 'hebrew',
+        originalWord: 'דָּבָר',
+        transliteration: 'dabar',
+        definitionEn: 'word, matter',
+        arIsVerified: true,
+      );
+      const hebrewMapping = WordMapping(
+        id: 'wm_zech_4_6_6',
+        verseId: 'zech_4_6',
+        arWordPosition: 6,
+        origWordPosition: 6,
+        arWord: 'كَلِمَةُ',
+        origWord: 'דָּבָר',
+        origSurface: 'דְּבַר־',
+        origWordLang: 'hebrew',
+        origMorphology: 'HNcmsc',
+        morphPos: 'noun',
+        morphGender: 'masculine',
+        morphNumber: 'singular',
+        morphCase: 'construct',
+        strongsId: 'H1697',
+        strongsIds: ['H1697'],
+        isVerified: true,
+      );
+
+      final studyProvider = WordStudyProvider()..setTestStrongsEntry(hebrewEntry);
+      final themeProvider = ThemeProvider();
+      addTearDown(studyProvider.dispose);
+      addTearDown(themeProvider.dispose);
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<WordStudyProvider>.value(value: studyProvider),
+            ChangeNotifierProvider<ThemeProvider>.value(value: themeProvider),
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: SizedBox.expand(
+                child: StrongsModal(strongsId: 'H1697', mapping: hebrewMapping),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Hebrew'), findsOneWidget);
+      expect(find.text('الآرامية'), findsNothing);
+      expect(find.text('H1697'), findsOneWidget);
     });
   });
 }

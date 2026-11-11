@@ -48,6 +48,17 @@ class StrongsModal extends StatefulWidget {
     return entry.isAramaic ? 'aramaic' : entry.language;
   }
 
+  static String formatLanguageBadge(String lang) {
+    final trimmed = lang.trim();
+    if (trimmed.isEmpty) return '';
+    switch (trimmed.toLowerCase()) {
+      case 'aramaic':
+        return 'الآرامية';
+      default:
+        return trimmed[0].toUpperCase() + trimmed.substring(1);
+    }
+  }
+
   static Future<void> show(
     BuildContext context,
     String strongsId, {
@@ -206,6 +217,14 @@ class _StrongsModalState extends State<StrongsModal> {
     final theme    = context.watch<ThemeProvider>();
     final mapping  = widget.mapping;
     final entry    = provider.selectedStrongs ?? (mapping != null ? _buildFallbackEntry(mapping!) : null);
+    final resolvedLang = entry != null
+        ? StrongsModal.resolveMorphologyLanguage(mapping: mapping, entry: entry)
+        : '';
+    final bool isSemitic = entry != null &&
+        (entry.isHebrew ||
+            entry.isAramaic ||
+            resolvedLang.toLowerCase() == 'aramaic' ||
+            resolvedLang.toLowerCase() == 'hebrew');
 
     return DraggableScrollableSheet(
       initialChildSize: 0.65,
@@ -376,10 +395,10 @@ class _StrongsModalState extends State<StrongsModal> {
                             ),
                             const SizedBox(height: 2),
                             Directionality(
-                              textDirection: entry.isHebrew ? TextDirection.rtl : TextDirection.ltr,
+                              textDirection: isSemitic ? TextDirection.rtl : TextDirection.ltr,
                               child: Text(
                                 entry.originalWord,
-                                style: entry.isHebrew
+                                style: isSemitic
                                     ? AppTheme.hebrewText(size: 36)
                                     : AppTheme.greekText(size: 32),
                               ),
@@ -395,12 +414,12 @@ class _StrongsModalState extends State<StrongsModal> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                             decoration: BoxDecoration(
-                              color:        entry.isHebrew
+                              color:        isSemitic
                                   ? AppColors.hebrewText.withOpacity(0.12)
                                   : AppColors.greekText.withOpacity(0.12),
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(
-                                color: entry.isHebrew
+                                color: isSemitic
                                     ? AppColors.hebrewText.withOpacity(0.4)
                                     : AppColors.greekText.withOpacity(0.4),
                               ),
@@ -408,7 +427,7 @@ class _StrongsModalState extends State<StrongsModal> {
                             child: Text(
                               entry.strongsId,
                               style: TextStyle(
-                                color: entry.isHebrew ? AppColors.hebrewText : AppColors.greekText,
+                                color: isSemitic ? AppColors.hebrewText : AppColors.greekText,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'monospace',
@@ -416,7 +435,7 @@ class _StrongsModalState extends State<StrongsModal> {
                             ),
                           ),
                           const SizedBox(height: 6),
-                          _langBadge(entry.language),
+                          _langBadge(resolvedLang),
                         ],
                       ),
                     ],
@@ -513,10 +532,10 @@ class _StrongsModalState extends State<StrongsModal> {
                       children: [
                         Text('الجذر: ', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
                         Directionality(
-                          textDirection: entry.isHebrew ? TextDirection.rtl : TextDirection.ltr,
+                          textDirection: isSemitic ? TextDirection.rtl : TextDirection.ltr,
                           child: Text(
                             entry.rootWord!,
-                            style: entry.isHebrew
+                            style: isSemitic
                                 ? AppTheme.hebrewText(size: 16)
                                 : AppTheme.greekText(size: 14),
                           ),
@@ -1237,18 +1256,22 @@ class _StrongsModalState extends State<StrongsModal> {
     return spans;
   }
 
-  Widget _langBadge(String lang) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-    decoration: BoxDecoration(
-      color:        AppColors.bgSurface,
-      borderRadius: BorderRadius.circular(100),
-      border:       Border.all(color: AppColors.border),
-    ),
-    child: Text(
-      lang[0].toUpperCase() + lang.substring(1),
-      style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w600),
-    ),
-  );
+  Widget _langBadge(String lang) {
+    final label = StrongsModal.formatLanguageBadge(lang);
+    return Container(
+      key: const Key('strongs_modal_lang_badge'),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color:        AppColors.bgSurface,
+        borderRadius: BorderRadius.circular(100),
+        border:       Border.all(color: AppColors.border),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(color: AppColors.textMuted, fontSize: 10, fontWeight: FontWeight.w600),
+      ),
+    );
+  }
 
   List<Widget> _buildGrammarTable(MorphologyAnalysis m, {bool isAramaic = false}) {
     final rows = <({String label, String value, bool isMonospace})>[];
