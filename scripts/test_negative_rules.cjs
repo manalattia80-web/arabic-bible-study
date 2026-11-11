@@ -692,6 +692,65 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 10 AND verse_num = 45 AND book_id = 41)
         AND ar_word_position = 6;
     `
+  },
+  {
+    gateNum: 52,
+    name: 'dan_4_17_likay_w9_di_deleted',
+    expectedFailTag: '[FAIL] Daniel 4:17 pos 8 (لِكَىْ) Multi-Component Integrity',
+    description: 'Deleted secondary component H1768@w9 from Daniel 4:17 pos 8 (لِكَىْ)',
+    mutationSql: `
+      DELETE FROM word_mapping_strongs
+      WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 17 AND book_id = 27) AND ar_word_position = 8)
+        AND strongs_id = 'H1768';
+    `
+  },
+  {
+    gateNum: 53,
+    name: 'dan_4_17_qere_pos16_reverted_to_w16',
+    expectedFailTag: '[FAIL] Daniel 4:17 Qere Loci',
+    description: 'Reverted Daniel 4:17 pos 16 (النَّاسِ) from Qere w18 back to corrupted w16',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word_position = 16, verified_locator = 'OSHB:B27.C4.V14.w16'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 17 AND book_id = 27)
+        AND ar_word_position = 16;
+    `
+  },
+  {
+    gateNum: 54,
+    name: 'dan_4_17_give_reverted_to_h3052_w20',
+    expectedFailTag: '[FAIL] Daniel 4:17 Tail Repairs',
+    description: 'Reverted Daniel 4:17 pos 17 (فَيُعْطِيهَا) from H5415@w22 back to H3052@w20',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H3052', orig_word_position = 20, verified_locator = 'OSHB:B27.C4.V14.w20'
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 17 AND book_id = 27)
+        AND ar_word_position = 17;
+    `
+  },
+  {
+    gateNum: 55,
+    name: 'dan_4_17_yasha_discrepancy_note_cleared',
+    expectedFailTag: '[FAIL] Daniel 4:17 pos 19 (يَشَاءُ H6634 w21)',
+    description: 'Cleared OSHB AVqp3ms vs BDB Yiqtol discrepancy note on Daniel 4:17 pos 19 (يَشَاءُ)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET grammar_notes = NULL
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 17 AND book_id = 27)
+        AND ar_word_position = 19;
+    `
+  },
+  {
+    gateNum: 56,
+    name: 'dan_4_17_construct_cleared_or_stale_note',
+    expectedFailTag: '[FAIL] Daniel 4:17 Construct States (pos 3,6,8,15,22) & Clean Notes',
+    description: 'Cleared morph_case construct on Daniel 4:17 pos 15 (مَمْلَكَةِ)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET morph_case = NULL
+      WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 17 AND book_id = 27)
+        AND ar_word_position = 15;
+    `
   }
 ];
 

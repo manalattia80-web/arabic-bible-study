@@ -146,11 +146,14 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Modal Verse-Language Precedence & Generalized 311-Unit Morphology Gate (v1.0.375)
-          - **Aramaic Morphology Language Precedence (`StrongsModal` & `MorphologyModal`)**: Fixed [`strongs_modal.dart`](mobile/lib/features/word_study/widgets/strongs_modal.dart) to pass the verse mapping language (`mapping.origWordLang`) via `StrongsModal.resolveMorphologyLanguage` instead of `entry.language` (which stored `'hebrew'` for Aramaic `H` Strong's entries), ensuring Ezra 5:8 construct cards display **«حالة الإضافة الآرامية (Construct)»** and **«الوزن الصرفي الآرامي»** rather than Hebrew labels; also fixed Aramaic RTL/label rendering in `MorphologyModal` and `WordStudyScreen`.
-          - **Actual Widget Tests Added**: Added `testWidgets` cases in `mobile/test/word_mapping_test.dart` pumping real `StrongsModal` and `MorphologyModal` widgets on Ezra 5:8 `H1005` («بَيْتِ»), `H3046` («مَعْلُومًا»), and `H69` («بِحِجَارَةٍ»).
-          - **Generalized 311-Unit Derived Morphology Audit & Gate 51**: Extended `audit_20_verses_311_units.cjs` with universal OSHB + MorphGNT derived column checks (`morph_pos`, `morph_stem`, `morph_tense`, `morph_voice`, `morph_mood`, `morph_person`, `morph_number`, `morph_gender`, `morph_case`) across all 311 units, populated derived fields for all 302 passing records in `scripts/batch_20_verses_manifest.json`, and enforced Gate 51 (Mark 10:45 «يَأْتِ» person tamper).
-          - **Benchmark Status**: **302 / 311 correct (97.11%)**, **9 errors** (Daniel 4:17 intentionally reserved for next independent release `v1.0.376`), **0 Ezra/Hebrew/Greek errors**, **0 undecided**. All 51 negative gates passing.
+          ## 🚀 Daniel 4:17 Canonical OSHB Alignment — 100% 20-Verse Benchmark Completion (v1.0.376)
+          - **Daniel 4:17 Full Canonical Alignment (`OSHB Dan.4.14` `w1..w27`)**: Resolved all 9 remaining benchmark errors, bringing the 20-verse benchmark from 302/311 (97.11%) to **311/311 (100.00%, 0 errors, 0 undecided)**:
+            - Fixed `arPos 8` («لِكَىْ») multi-component alignment (`H1701@w8` `דִּבְרַ֡ת` `ANcfsc` construct + `H5705@w7` `עַד` + `H1768@w9` `דִּ֣י`) and `arPos 18` («مَنْ») (`H4479@w19` + `H1768@w20`).
+            - Documented all 3 Ketiv/Qere pairs explicitly (`w14`/`w15` on `arPos 12`, `w17`/`w18` on `arPos 16`, `w26`/`w27` on `arPos 21`) and updated shifted loci (`w18, w21, w22, w23, w24, w25, w27`).
+            - Corrected `arPos 13` (`AAamsa`), `arPos 17` (`H5415@w22`), `arPos 20` (`AVai3ms` `aphel` @ `w25`), `arPos 22` (`H8215@w23`), set Aramaic construct on `arPos 3, 6, 8, 15, 22`, and cleaned all stale error notes.
+            - Preserved OSHB literal tag `AVqp3ms` alongside Biblical Aramaic Peal Yiqtol 3ms (`yiqtol`) on `arPos 19` («يَشَاءُ», `H6634@w21`) with explicit discrepancy note.
+          - **Unseen Holdout Measurement**: Added read-only holdout audit script [`scripts/audit_unseen_holdout_sample.cjs`](scripts/audit_unseen_holdout_sample.cjs) measuring untouched OT Hebrew, OT Aramaic, and NT Greek verses directly against OSHB XML and SBLGNT MorphGNT.
+          - **Benchmark Status**: **311 / 311 correct (100.00%)**, **0 errors**, **0 undecided**, **56/56 negative gates passing**.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

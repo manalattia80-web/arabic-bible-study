@@ -466,5 +466,107 @@ void main() {
       expect(find.textContaining('حالة الإضافة العبرية'), findsNothing);
       expect(find.textContaining('باء الجر'), findsNothing);
     });
+
+    testWidgets('StrongsModal renders Dan 4:17 H6634 (יَشَاءُ) Yiqtol + OSHB AVqp3ms note & H6966 Aphel (v1.0.376)', (WidgetTester tester) async {
+      tester.view.physicalSize = const Size(800, 3000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      const entryYasha = StrongsEntry(
+        strongsId: 'H6634',
+        language: 'hebrew',
+        originalWord: 'צְבָא',
+        transliteration: 'tsebâʼ',
+        definitionEn: '(Aramaic) to please, desire',
+        arIsVerified: true,
+      );
+      const mappingYasha = WordMapping(
+        id: 'wm_dan_4_17_19',
+        verseId: 'dan_4_17',
+        arWordPosition: 19,
+        origWordPosition: 21,
+        arWord: 'يَشَاءُ',
+        origWord: 'צְבָא',
+        origSurface: 'יִצְבֵּא֙',
+        origWordLang: 'aramaic',
+        origMorphology: 'AVqp3ms',
+        morphPos: 'verb',
+        morphStem: 'peal',
+        morphTense: 'yiqtol',
+        morphVoice: 'active',
+        morphMood: 'indicative',
+        morphPerson: '3',
+        morphNumber: 'singular',
+        morphGender: 'masculine',
+        strongsId: 'H6634',
+        strongsIds: ['H6634'],
+        grammarNotes: 'ملاحظة الوسم: ورد اللفظ «יִצְבֵּא» (w21) في مدونة OSHB بالوسم الحرفي AVqp3ms، بينما تدرجه المعاجم فعلاً مضارعًا (Peal Yiqtol 3ms).',
+        isVerified: true,
+      );
+
+      final studyProvider = WordStudyProvider()..setTestStrongsEntry(entryYasha);
+      final themeProvider = ThemeProvider();
+      addTearDown(studyProvider.dispose);
+      addTearDown(themeProvider.dispose);
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<WordStudyProvider>.value(value: studyProvider),
+            ChangeNotifierProvider<ThemeProvider>.value(value: themeProvider),
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: SizedBox.expand(
+                child: StrongsModal(strongsId: 'H6634', mapping: mappingYasha),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('الوزن الصرفي الآرامي'), findsOneWidget);
+      expect(find.textContaining('Yiqtol'), findsWidgets);
+      expect(find.textContaining('AVqp3ms'), findsWidgets);
+      expect(find.textContaining('المعاجم'), findsOneWidget);
+
+      // Verify H6966 (وَيُنَصِّبَ) Aphel stem renders with Aramaic label
+      const mappingAphel = WordMapping(
+        id: 'wm_dan_4_17_20',
+        verseId: 'dan_4_17',
+        arWordPosition: 20,
+        origWordPosition: 25,
+        arWord: 'وَيُنَصِّبَ',
+        origWord: 'קוּם',
+        origSurface: 'יְקִ֥ים',
+        origWordLang: 'aramaic',
+        origMorphology: 'AVai3ms',
+        morphPos: 'verb',
+        morphStem: 'aphel',
+        morphTense: 'yiqtol',
+        morphVoice: 'active',
+        morphMood: 'indicative',
+        morphPerson: '3',
+        morphNumber: 'singular',
+        morphGender: 'masculine',
+        strongsId: 'H6966',
+        strongsIds: ['H6966'],
+        isVerified: true,
+      );
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SizedBox.expand(
+              child: MorphologyModal(mapping: mappingAphel),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.textContaining('اللغة الآرامية للعهد القديم'), findsOneWidget);
+      expect(find.textContaining('وزن أفعل الآرامي السببي (Aphel)'), findsWidgets);
+    });
   });
 }

@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 375; // v1.0.375: StrongsModal/MorphologyModal Aramaic verse language precedence, widget tests, generalized 311-unit derived morphology auditor, Gate 51
+    const targetDbVersion = 376; // v1.0.376: Daniel 4:17 canonical OSHB Dan.4.14 alignment (311/311 = 100.00%), Ketiv/Qere docs, AVqp3ms/Yiqtol note, gates 52-56
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();

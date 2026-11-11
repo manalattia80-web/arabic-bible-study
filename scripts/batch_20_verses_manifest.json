@@ -1,17 +1,17 @@
 {
   "title": "Canonical 20-Verse Diagnostic Review & Audit Manifest (Post Batch-1 Priority Fixes)",
-  "version": "v1.0.375",
-  "date": "2026-11-10",
+  "version": "v1.0.376",
+  "date": "2026-11-11",
   "totalVerses": 20,
   "totalRecords": 311,
   "summary": {
     "totalUnits": 311,
-    "correct": 302,
-    "errors": 9,
-    "error": 9,
+    "correct": 311,
+    "errors": 0,
+    "error": 0,
     "undecided": 0,
-    "accuracy": "97.11%",
-    "accuracyPercentage": 97.11
+    "accuracy": "100.00%",
+    "accuracyPercentage": 100
   },
   "batch1Highlights": {
     "isaiah408": "10/10 (100%) - Eliminated out-of-bounds locators w9 & w10; mapped to w8 (HR/Ncmsa).",
@@ -13047,7 +13047,7 @@
       "morphPerson": null,
       "morphNumber": "singular",
       "morphGender": "feminine",
-      "morphCase": null
+      "morphCase": "construct"
     },
     {
       "verse": "Dan 4:17",
@@ -13179,7 +13179,7 @@
       "morphPerson": null,
       "morphNumber": "singular",
       "morphGender": "masculine",
-      "morphCase": null
+      "morphCase": "construct"
     },
     {
       "verse": "Dan 4:17",
@@ -13232,10 +13232,10 @@
       "arPos": 8,
       "arWord": "لِكَىْ",
       "strongsId": "H1701",
-      "components": "H1701:primary",
-      "origWord": "דִּבְרָה",
-      "origSurface": "עַד דִּבְרַ֡ת",
-      "origMorph": "AR/Ncfsc",
+      "components": "H1701:primary;H5705:secondary;H1768:secondary",
+      "origWord": "דִּבְרָה",
+      "origSurface": "דִּבְרַ֡ת",
+      "origMorph": "ANcfsc",
       "origPos": 8,
       "locator": "OSHB:B27.C4.V14.w8",
       "locWordIndex": 8,
@@ -13250,15 +13250,24 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AR/Ncfsc' vs Source 'ANcfsc' (id: 27CNX)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "feminine",
+      "morphCase": "construct"
     },
     {
       "verse": "Dan 4:17",
@@ -13356,7 +13365,7 @@
       "arWord": "أَنَّ",
       "strongsId": "H1768",
       "components": "H1768:primary",
-      "origWord": "דִּי",
+      "origWord": "דִּי",
       "origSurface": "דִּֽי",
       "origMorph": "ATr",
       "origPos": 12,
@@ -13446,7 +13455,7 @@
       "components": "H7990:primary",
       "origWord": "שַׁלִּיט",
       "origSurface": "שַׁלִּ֨יט",
-      "origMorph": "AAamsn",
+      "origMorph": "AAamsa",
       "origPos": 13,
       "locator": "OSHB:B27.C4.V14.w13",
       "locWordIndex": 13,
@@ -13461,15 +13470,24 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AAamsn' vs Source 'AAamsa' (id: 279ok)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "adjective",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Dan 4:17",
@@ -13557,7 +13575,7 @@
       "morphPerson": null,
       "morphNumber": "singular",
       "morphGender": "feminine",
-      "morphCase": null
+      "morphCase": "construct"
     },
     {
       "verse": "Dan 4:17",
@@ -13570,9 +13588,9 @@
       "origWord": "אֱנָשׁ",
       "origSurface": "אֲנָשָׁ֗א",
       "origMorph": "ANcmsd/Td",
-      "origPos": 16,
-      "locator": "OSHB:B27.C4.V14.w16",
-      "locWordIndex": 16,
+      "origPos": 18,
+      "locator": "OSHB:B27.C4.V14.w18",
+      "locWordIndex": 18,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -13584,15 +13602,24 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'ANcmsd/Td' vs Source 'AR/Ncfsc' (id: 27ant)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Dan 4:17",
@@ -13600,14 +13627,14 @@
       "lang": "aramaic",
       "arPos": 17,
       "arWord": "فَيُعْطِيهَا",
-      "strongsId": "H3052",
-      "components": "H3052:primary",
-      "origWord": "יְהַב",
+      "strongsId": "H5415",
+      "components": "H5415:primary",
+      "origWord": "נְתַן",
       "origSurface": "יִתְּנִנַּ֔הּ",
       "origMorph": "AVqi3ms/Sp3fs",
-      "origPos": 20,
-      "locator": "OSHB:B27.C4.V14.w20",
-      "locWordIndex": 20,
+      "origPos": 22,
+      "locator": "OSHB:B27.C4.V14.w22",
+      "locWordIndex": 22,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -13619,15 +13646,24 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AVqi3ms/Sp3fs' vs Source 'APfxcs' (id: 27p9L)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "peal",
+      "morphTense": "yiqtol",
+      "morphVoice": "active",
+      "morphMood": "indicative",
+      "morphPerson": "3",
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
     },
     {
       "verse": "Dan 4:17",
@@ -13636,7 +13672,7 @@
       "arPos": 18,
       "arWord": "مَنْ",
       "strongsId": "H4479",
-      "components": "H4479:primary",
+      "components": "H4479:primary;H1768:secondary",
       "origWord": "מַן",
       "origSurface": "וּלְמַן",
       "origMorph": "AC/R/Pfxcs",
@@ -13683,112 +13719,7 @@
       "components": "H6634:primary",
       "origWord": "צְבָא",
       "origSurface": "יִצְבֵּא֙",
-      "origMorph": "AVqi3ms",
-      "origPos": 19,
-      "locator": "OSHB:B27.C4.V14.w19",
-      "locWordIndex": 19,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AVqi3ms' vs Source 'AC/R/Pfxcs' (id: 27fns)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Dan 4:17",
-      "verseAr": "دانيال ٤:١٧",
-      "lang": "aramaic",
-      "arPos": 20,
-      "arWord": "وَيُنَصِّبَ",
-      "strongsId": "H6966",
-      "components": "H6966:primary",
-      "origWord": "קוּם",
-      "origSurface": "יְקִ֥ים",
-      "origMorph": "AC/Vhi3ms",
-      "origPos": 23,
-      "locator": "OSHB:B27.C4.V14.w23",
-      "locWordIndex": 23,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AC/Vhi3ms' vs Source 'AC/Aamsc' (id: 27cTb)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Dan 4:17",
-      "verseAr": "دانيال ٤:١٧",
-      "lang": "aramaic",
-      "arPos": 21,
-      "arWord": "عَلَيْهَا",
-      "strongsId": "H5922",
-      "components": "H5922:primary",
-      "origWord": "עַל",
-      "origSurface": "עֲלַֽהּ׃",
-      "origMorph": "AR/Sp3fs",
-      "origPos": 24,
-      "locator": "OSHB:B27.C4.V14.w24",
-      "locWordIndex": 24,
-      "isSyntactic": false,
-      "axisFindings": {
-        "lexical": {
-          "status": "pass",
-          "note": ""
-        },
-        "lemmaSurface": {
-          "status": "pass",
-          "note": ""
-        },
-        "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AR/Sp3fs' vs Source 'ANcmpa' (id: 27EZX)"
-        },
-        "sourceLocator": {
-          "status": "pass",
-          "note": ""
-        }
-      },
-      "overallStatus": "خطأ"
-    },
-    {
-      "verse": "Dan 4:17",
-      "verseAr": "دانيال ٤:١٧",
-      "lang": "aramaic",
-      "arPos": 22,
-      "arWord": "أَدْنَى",
-      "strongsId": "H8214",
-      "components": "H8214:primary",
-      "origWord": "שְׁפַל",
-      "origSurface": "וּשְׁפַ֥ל",
-      "origMorph": "AC/Aamsc",
+      "origMorph": "AVqp3ms",
       "origPos": 21,
       "locator": "OSHB:B27.C4.V14.w21",
       "locWordIndex": 21,
@@ -13803,15 +13734,156 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'AC/Aamsc' vs Source 'AVqp3ms' (id: 27ZUC)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "peal",
+      "morphTense": "yiqtol",
+      "morphVoice": "active",
+      "morphMood": "indicative",
+      "morphPerson": "3",
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
+    },
+    {
+      "verse": "Dan 4:17",
+      "verseAr": "دانيال ٤:١٧",
+      "lang": "aramaic",
+      "arPos": 20,
+      "arWord": "وَيُنَصِّبَ",
+      "strongsId": "H6966",
+      "components": "H6966:primary",
+      "origWord": "קוּם",
+      "origSurface": "יְקִ֥ים",
+      "origMorph": "AVai3ms",
+      "origPos": 25,
+      "locator": "OSHB:B27.C4.V14.w25",
+      "locWordIndex": 25,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح",
+      "morphPos": "verb",
+      "morphStem": "aphel",
+      "morphTense": "yiqtol",
+      "morphVoice": "active",
+      "morphMood": "indicative",
+      "morphPerson": "3",
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": null
+    },
+    {
+      "verse": "Dan 4:17",
+      "verseAr": "دانيال ٤:١٧",
+      "lang": "aramaic",
+      "arPos": 21,
+      "arWord": "عَلَيْهَا",
+      "strongsId": "H5922",
+      "components": "H5922:primary",
+      "origWord": "עַל",
+      "origSurface": "עֲלַֽהּ",
+      "origMorph": "AR/Sp3fs",
+      "origPos": 27,
+      "locator": "OSHB:B27.C4.V14.w27",
+      "locWordIndex": 27,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح",
+      "morphPos": "preposition",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": null,
+      "morphGender": null,
+      "morphCase": null
+    },
+    {
+      "verse": "Dan 4:17",
+      "verseAr": "دانيال ٤:١٧",
+      "lang": "aramaic",
+      "arPos": 22,
+      "arWord": "أَدْنَى",
+      "strongsId": "H8215",
+      "components": "H8215:primary",
+      "origWord": "שְׁפַל",
+      "origSurface": "וּשְׁפַ֥ל",
+      "origMorph": "AC/Aamsc",
+      "origPos": 23,
+      "locator": "OSHB:B27.C4.V14.w23",
+      "locWordIndex": 23,
+      "isSyntactic": false,
+      "axisFindings": {
+        "lexical": {
+          "status": "pass",
+          "note": ""
+        },
+        "lemmaSurface": {
+          "status": "pass",
+          "note": ""
+        },
+        "morphology": {
+          "status": "pass",
+          "note": ""
+        },
+        "sourceLocator": {
+          "status": "pass",
+          "note": ""
+        }
+      },
+      "overallStatus": "صحيح",
+      "morphPos": "adjective",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "singular",
+      "morphGender": "masculine",
+      "morphCase": "construct"
     },
     {
       "verse": "Dan 4:17",
@@ -13824,9 +13896,9 @@
       "origWord": "אֱנָשׁ",
       "origSurface": "אֲנָשִׁ֖ים",
       "origMorph": "ANcmpa",
-      "origPos": 22,
-      "locator": "OSHB:B27.C4.V14.w22",
-      "locWordIndex": 22,
+      "origPos": 24,
+      "locator": "OSHB:B27.C4.V14.w24",
+      "locWordIndex": 24,
       "isSyntactic": false,
       "axisFindings": {
         "lexical": {
@@ -13838,15 +13910,24 @@
           "note": ""
         },
         "morphology": {
-          "status": "fail",
-          "note": "Morph mismatch: DB 'ANcmpa' vs Source 'AVqi3ms/Sp3fs' (id: 27JCj)"
+          "status": "pass",
+          "note": ""
         },
         "sourceLocator": {
           "status": "pass",
           "note": ""
         }
       },
-      "overallStatus": "خطأ"
+      "overallStatus": "صحيح",
+      "morphPos": "noun",
+      "morphStem": null,
+      "morphTense": null,
+      "morphVoice": null,
+      "morphMood": null,
+      "morphPerson": null,
+      "morphNumber": "plural",
+      "morphGender": "masculine",
+      "morphCase": null
     }
   ],
   "ezra58Note": "In v1.0.374, all 29 Ezra 5:8 records were aligned to OSHB w1..w23 (H236 @ w5, H1932 @ w11 on arPos 15, H69 ANcfsc @ w13, H9005 AR prepositions on arPos 3/7/10, and Peil passive participle on arPos 2).",
@@ -13858,5 +13939,6 @@
   },
   "batch3Highlights": {
     "josh19Repairs": "Fronted predicate shift corrected: pos 10 -> w11 יְהוָה (H3068, HNp), pos 11 -> w12 אֱלֹהֶיךָ (H430, HNcmpc/Sp2ms), pos 12 -> w10 עִמְּךָ (H5973, HR/Sp2ms), pos 13 -> w14 אֲשֶׁר (H834, HTr) with secondary component w13 בְּכֹל (H3605, HR/Ncmsa)"
-  }
+  },
+  "dan417Note": "In v1.0.376, all 23 Daniel 4:17 records were aligned to OSHB Dan.4.14 w1..w27, documenting Ketiv/Qere pairs (w14/w15, w17/w18, w26/w27), compound phrases (pos 8 w7-w9, pos 18 w19-w20), H5415 @ w22, H8215 @ w23, AVai3ms aphel @ w25, and the OSHB AVqp3ms vs BDB Yiqtol discrepancy on pos 19 (w21)."
 }

@@ -1389,7 +1389,7 @@ const batch20ComprehensiveCases = [
   // 32. Daniel 4:17 w18 (من)
   {
     ref: 'Dan 4:17 w18 (من)', book: 27, ch: 4, vs: 17, pos: 18,
-    expStrongs: 'H4479', expOrig: 'מַן', expSurface: 'וּלְמַן',
+    expStrongs: 'H4479,H1768', expOrig: 'מַן', expSurface: 'וּלְמַן',
     expPos: 'pronoun', expGender: 'common', expNumber: 'singular', expPerson: null,
     expMorph: 'AC/R/Pfxcs', expLoc: 'OSHB:B27.C4.V14.w19',
     oshbBook: 'Dan', oshbOsis: 'Dan.4.14', oshbWordIndex: 19, oshbExpectedId: '27fns'
@@ -2438,6 +2438,80 @@ const hasModalLangFix =
   morphModalCode.includes('اللغة الآرامية للعهد القديم') &&
   morphModalCode.includes('الوزن الصرفي الآرامي');
 assertCondition('StrongsModal & MorphologyModal prioritize verse origWordLang over entry.language for Aramaic cards', hasModalLangFix, 'Language propagation or Aramaic stem label missing in modals');
+
+// 52. Daniel 4:17 arPos 8 (لِكَىْ) Multi-Component Integrity (H1701@w8 + H5705@w7 + H1768@w9) & Construct Case
+const dan8Row = query(`
+  SELECT wm.strongs_id || '|' || wm.orig_word_position || '|' || wm.orig_morphology || '|' || COALESCE(wm.morph_case,'NULL') || '|' ||
+         (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position, ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms)
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 4 AND verse_num = 17)
+    AND wm.ar_word_position = 8;
+`).replace(/\r/g, '').trim();
+assertCondition('Daniel 4:17 pos 8 (لِكَىْ) Multi-Component Integrity (H1701@w8 + H5705@w7 + H1768@w9 ANcfsc construct)', dan8Row === 'H1701|8|ANcfsc|construct|H1701:primary@w8;H5705:secondary@w7;H1768:secondary@w9', `Found=${dan8Row}`);
+
+// 53. Daniel 4:17 Qere Alignments (w15, w18, w27) & Ketiv/Qere Documentation + pos 13 AAamsa
+const danQereRows = query(`
+  SELECT wm.ar_word_position || '|' || wm.orig_word_position || '|' || wm.orig_morphology || '|' ||
+         (CASE WHEN COALESCE(wm.grammar_notes,'') LIKE '%Qere%' AND COALESCE(wm.grammar_notes,'') LIKE '%Ketiv%' THEN 'DOC_OK' ELSE 'NO_DOC' END)
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 4 AND verse_num = 17)
+    AND wm.ar_word_position IN (12, 13, 16, 21)
+  ORDER BY wm.ar_word_position ASC;
+`).replace(/\r/g, '').trim();
+const expectedDanQere = [
+  '12|15|ANcmsd/Td|DOC_OK',
+  '13|13|AAamsa|NO_DOC',
+  '16|18|ANcmsd/Td|DOC_OK',
+  '21|27|AR/Sp3fs|DOC_OK'
+].join('\n');
+assertCondition('Daniel 4:17 Qere Loci (pos 12 w15, pos 16 w18, pos 21 w27) with Ketiv/Qere Notes & pos 13 AAamsa', danQereRows === expectedDanQere, `Found=\n${danQereRows}`);
+
+// 54. Daniel 4:17 Shifted End Positions & Strongs (pos 17 H5415@w22, pos 18 H4479@w19+H1768@w20, pos 20 AVai3ms aphel@w25, pos 22 H8215@w23, pos 23 H606@w24)
+const danTailRows = query(`
+  SELECT wm.ar_word_position || '|' || wm.strongs_id || '|' || wm.orig_word_position || '|' || wm.orig_morphology || '|' || COALESCE(wm.morph_stem,'NULL') || '|' || COALESCE(wm.morph_voice,'NULL') || '|' ||
+         (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || wms.orig_word_position, ';')
+          FROM (SELECT strongs_id, link_role, orig_word_position FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms)
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 4 AND verse_num = 17)
+    AND wm.ar_word_position IN (17, 18, 20, 22, 23)
+  ORDER BY wm.ar_word_position ASC;
+`).replace(/\r/g, '').trim();
+const expectedDanTail = [
+  '17|H5415|22|AVqi3ms/Sp3fs|peal|active|H5415:primary@w22',
+  '18|H4479|19|AC/R/Pfxcs|NULL|NULL|H4479:primary@w19;H1768:secondary@w20',
+  '20|H6966|25|AVai3ms|aphel|active|H6966:primary@w25',
+  '22|H8215|23|AC/Aamsc|NULL|NULL|H8215:primary@w23',
+  '23|H606|24|ANcmpa|NULL|NULL|H606:primary@w24'
+].join('\n');
+assertCondition('Daniel 4:17 Tail Repairs (pos 17 H5415@w22, pos 18 w19+w20, pos 20 AVai3ms aphel@w25, pos 22 H8215@w23, pos 23 H606@w24)', danTailRows === expectedDanTail, `Found=\n${danTailRows}`);
+
+// 55. Daniel 4:17 pos 19 (يَشَاءُ H6634 @ w21): Documented OSHB AVqp3ms vs BDB Peal Yiqtol 3ms Discrepancy
+const dan19Row = query(`
+  SELECT wm.strongs_id || '|' || wm.orig_word_position || '|' || wm.orig_morphology || '|' || COALESCE(wm.morph_stem,'') || '|' || COALESCE(wm.morph_tense,'') || '|' ||
+         (CASE WHEN COALESCE(wm.grammar_notes,'') LIKE '%AVqp3ms%' AND COALESCE(wm.grammar_notes,'') LIKE '%Yiqtol%' THEN 'DOC_OK' ELSE 'NO_DOC' END)
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 4 AND verse_num = 17)
+    AND wm.ar_word_position = 19;
+`).replace(/\r/g, '').trim();
+assertCondition('Daniel 4:17 pos 19 (يَشَاءُ H6634 w21) Preserves OSHB AVqp3ms + Derived Yiqtol + Explicit Discrepancy Note', dan19Row === 'H6634|21|AVqp3ms|peal|yiqtol|DOC_OK', `Found=${dan19Row}`);
+
+// 56. Daniel 4:17 Construct States (pos 3,6,8,15,22) & Clean Notes (no stale H4406/H560/H1612/H6933/H5921/H4481)
+const danConstructs = query(`
+  SELECT COUNT(*)
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 4 AND verse_num = 17)
+    AND wm.ar_word_position IN (3, 6, 8, 15, 22)
+    AND wm.morph_case = 'construct';
+`).replace(/\r/g, '').trim();
+const danStaleNotes = query(`
+  SELECT COUNT(*)
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 4 AND verse_num = 17)
+    AND (wm.grammar_notes LIKE '%H4406%' OR wm.grammar_notes LIKE '%H560%' OR wm.grammar_notes LIKE '%H1612%'
+         OR wm.grammar_notes LIKE '%H6933%' OR wm.grammar_notes LIKE '%H5921%' OR wm.grammar_notes LIKE '%H4481%');
+`).replace(/\r/g, '').trim();
+assertCondition('Daniel 4:17 Construct States (pos 3,6,8,15,22) & Clean Notes (zero stale IDs)', danConstructs === '5' && danStaleNotes === '0', `constructs=${danConstructs}, staleNotes=${danStaleNotes}`);
 
 
 

@@ -5,7 +5,7 @@ const crypto = require('crypto');
 
 console.log('========================================================================');
 console.log('  OFFICIAL RUNTIME VERIFICATION: CLEAN INSTALL & UPGRADE FROM v370     ');
-console.log('  Target: Arabic Bible Study v1.0.375 (Build 375, totalParts = 70)      ');
+console.log('  Target: Arabic Bible Study v1.0.376 (Build 376, totalParts = 70)      ');
 console.log('========================================================================\n');
 
 const rootDir = path.resolve(__dirname, '..');
@@ -383,7 +383,27 @@ WHERE v.book_id = 15 AND v.chapter_num = 5 AND v.verse_num = 8 AND wm.ar_word_po
 UNION ALL
 SELECT 'Ezra 5:8 pos17', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.morph_case, wm.orig_morphology
 FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
-WHERE v.book_id = 15 AND v.chapter_num = 5 AND v.verse_num = 8 AND wm.ar_word_position = 17;
+WHERE v.book_id = 15 AND v.chapter_num = 5 AND v.verse_num = 8 AND wm.ar_word_position = 17
+UNION ALL
+SELECT 'Dan 4:17 pos8', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.morph_case, wm.verified_locator
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 27 AND v.chapter_num = 4 AND v.verse_num = 17 AND wm.ar_word_position = 8
+UNION ALL
+SELECT 'Dan 4:17 pos17', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.orig_morphology, wm.verified_locator
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 27 AND v.chapter_num = 4 AND v.verse_num = 17 AND wm.ar_word_position = 17
+UNION ALL
+SELECT 'Dan 4:17 pos19', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.morph_tense, wm.orig_morphology
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 27 AND v.chapter_num = 4 AND v.verse_num = 17 AND wm.ar_word_position = 19
+UNION ALL
+SELECT 'Dan 4:17 pos20', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.morph_stem, wm.orig_morphology
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 27 AND v.chapter_num = 4 AND v.verse_num = 17 AND wm.ar_word_position = 20
+UNION ALL
+SELECT 'Dan 4:17 pos21', wm.ar_word, wm.strongs_id, wm.orig_surface, wm.orig_morphology, wm.verified_locator
+FROM word_mappings wm JOIN verses v ON wm.verse_id = v.id
+WHERE v.book_id = 27 AND v.chapter_num = 4 AND v.verse_num = 17 AND wm.ar_word_position = 21;
 `;
 const spotRes = runSql(targetUpgradeDbPath, spotCheckSql).replace(/\r/g, '');
 console.log(`\n[SPOT CHECK] Canonical Verifications across sample:`);
@@ -408,6 +428,14 @@ const ezraPos17Ok = spotRes.includes('Ezra 5:8 pos17|بِحِجَارَةٍ|H69|
 const ezra58Ok = ezraPos2Ok && ezraPos6Ok && ezraPos15Ok && ezraPos17Ok;
 console.log(`  [${ezra58Ok ? 'PASS' : 'FAIL'}] Ezra 5:8 repairs verified on assembled DB (pos2 peil/passive, pos6 H236 w5, pos15 H1932 w11, pos17 H69 ANcfsc construct).`);
 
+const danPos8Ok = spotRes.includes('Dan 4:17 pos8|لِكَىْ|H1701|דִּבְרַ֡ת|construct|OSHB:B27.C4.V14.w8');
+const danPos17Ok = spotRes.includes('Dan 4:17 pos17|فَيُعْطِيهَا|H5415|יִתְּנִנַּ֔הּ|AVqi3ms/Sp3fs|OSHB:B27.C4.V14.w22');
+const danPos19Ok = spotRes.includes('Dan 4:17 pos19|يَشَاءُ|H6634|יִצְבֵּא֙|yiqtol|AVqp3ms');
+const danPos20Ok = spotRes.includes('Dan 4:17 pos20|وَيُنَصِّبَ|H6966|יְקִ֥ים|aphel|AVai3ms');
+const danPos21Ok = spotRes.includes('Dan 4:17 pos21|عَلَيْهَا|H5922|עֲלַֽהּ|AR/Sp3fs|OSHB:B27.C4.V14.w27');
+const dan417Ok = danPos8Ok && danPos17Ok && danPos19Ok && danPos20Ok && danPos21Ok;
+console.log(`  [${dan417Ok ? 'PASS' : 'FAIL'}] Daniel 4:17 repairs verified on assembled DB (pos8 w8 H1701, pos17 H5415 w22, pos19 H6634 yiqtol, pos20 aphel AVai3ms, pos21 w27 Qere).`);
+
 results.morphology_card_verification = {
   target_word: mArWord,
   primary_strongs: mStrongs,
@@ -419,7 +447,8 @@ results.morphology_card_verification = {
   is_masculine_plural: isMasculinePlural,
   ruth_hebrew_vav_verified: ruthHasHebrewVav,
   zech_4_6_verified: zechPos7Ok && zechPos14SecOk && zechPos15Ok,
-  ezra_5_8_verified: ezra58Ok
+  ezra_5_8_verified: ezra58Ok,
+  dan_4_17_verified: dan417Ok
 };
 
 // ============================================================================
@@ -433,7 +462,8 @@ const allPassed = (
   results.morphology_card_verification.is_masculine_plural &&
   results.morphology_card_verification.ruth_hebrew_vav_verified &&
   results.morphology_card_verification.zech_4_6_verified &&
-  results.morphology_card_verification.ezra_5_8_verified
+  results.morphology_card_verification.ezra_5_8_verified &&
+  results.morphology_card_verification.dan_4_17_verified
 );
 
 if (allPassed) {
