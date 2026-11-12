@@ -751,6 +751,42 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE chapter_num = 4 AND verse_num = 17 AND book_id = 27)
         AND ar_word_position = 15;
     `
+  },
+  {
+    gateNum: 57,
+    name: 'mark_12_30_repeated_clause_reverted_to_w7',
+    expectedFailTag: '[FAIL] 1Thess 5:16 & Mark 12:30 Repeated-Clause Context Anti-Collision Non-Regression',
+    description: 'Reverted Mark 12:30 pos 7 (وَمِنْ) from Clause 2 w13 back to Clause 1 w7 (identical word & morph)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET orig_word_position = 7, verified_locator = 'SBLGNT:B41.C12.V30.w7'
+      WHERE verse_id = (SELECT id FROM verses WHERE book_id = 41 AND chapter_num = 12 AND verse_num = 30)
+        AND ar_word_position = 7;
+    `
+  },
+  {
+    gateNum: 58,
+    name: 'mark_12_30_tr_robinson_morph_case_mutated',
+    expectedFailTag: '[FAIL] Scrivener TR Robinson Morphology Literal + All Derived Fields (Mark 12:30 pos 16,18,19)',
+    description: 'Mutated Mark 12:30 TR pos 16 (D-NSF) morph_case to accusative while keeping Strongs/surface/locator valid',
+    mutationSql: `
+      UPDATE word_mappings
+      SET morph_case = 'accusative'
+      WHERE verse_id = (SELECT id FROM verses WHERE book_id = 41 AND chapter_num = 12 AND verse_num = 30)
+        AND ar_word_position = 16;
+    `
+  },
+  {
+    gateNum: 59,
+    name: '1thess_5_16_fabricated_kairos_restored',
+    expectedFailTag: '[FAIL] 1Thess 5:16 & Mark 12:30 Repeated-Clause Context Anti-Collision Non-Regression',
+    description: 'Restored fabricated G2540 @ TR:w3 onto 1Thess 5:16 pos 3 (حِينٍ)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'G2540', orig_word_position = 3, verified_locator = 'TR:B52.C5.V16.w3'
+      WHERE verse_id = (SELECT id FROM verses WHERE book_id = 52 AND chapter_num = 5 AND verse_num = 16)
+        AND ar_word_position = 3;
+    `
   }
 ];
 

@@ -2513,6 +2513,105 @@ const danStaleNotes = query(`
 `).replace(/\r/g, '').trim();
 assertCondition('Daniel 4:17 Construct States (pos 3,6,8,15,22) & Clean Notes (zero stale IDs)', danConstructs === '5' && danStaleNotes === '0', `constructs=${danConstructs}, staleNotes=${danStaleNotes}`);
 
+const { verifyTrDerivedMorphology } = require('./robinson_tr_helper.cjs');
+
+// 57. Holdout Batch 1 (1Thess 5:16 1-to-2 & Mark 12:30 Repeated Clauses Anti-Collision)
+const thessRows = query(`
+  SELECT wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'NULL') || '|' || COALESCE(wm.orig_word_position,'NULL') || '|' || COALESCE(wm.verified_locator,'NULL')
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 52 AND chapter_num = 5 AND verse_num = 16)
+  ORDER BY wm.ar_word_position ASC;
+`).replace(/\r/g, '').trim();
+const expectedThess = [
+  '1|G5463|2|SBLGNT:B52.C5.V16.w2',
+  '2|G3842|1|SBLGNT:B52.C5.V16.w1',
+  '3|NULL|0|AR_SYNTACTIC:B52.C5.V16.w3'
+].join('\n');
+
+const markClauseRows = query(`
+  SELECT wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'NULL') || '|' || COALESCE(wm.orig_word_position,'NULL') || '|' || COALESCE(wm.verified_locator,'NULL')
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 41 AND chapter_num = 12 AND verse_num = 30)
+    AND wm.ar_word_position IN (4,5,6,7,8,9,10,11,12,13,14,15)
+  ORDER BY wm.ar_word_position ASC;
+`).replace(/\r/g, '').trim();
+const expectedMarkClauses = [
+  '4|G1537|7|SBLGNT:B41.C12.V30.w7',
+  '5|G3650|8|SBLGNT:B41.C12.V30.w8',
+  '6|G2588|10|SBLGNT:B41.C12.V30.w10',
+  '7|G1537|13|SBLGNT:B41.C12.V30.w13',
+  '8|G3650|14|SBLGNT:B41.C12.V30.w14',
+  '9|G5590|16|SBLGNT:B41.C12.V30.w16',
+  '10|G1537|19|SBLGNT:B41.C12.V30.w19',
+  '11|G3650|20|SBLGNT:B41.C12.V30.w20',
+  '12|G1271|22|SBLGNT:B41.C12.V30.w22',
+  '13|G1537|25|SBLGNT:B41.C12.V30.w25',
+  '14|G3650|26|SBLGNT:B41.C12.V30.w26',
+  '15|G2479|28|SBLGNT:B41.C12.V30.w28'
+].join('\n');
+assertCondition('1Thess 5:16 & Mark 12:30 Repeated-Clause Context Anti-Collision Non-Regression', thessRows === expectedThess && markClauseRows === expectedMarkClauses, `thess=\n${thessRows}\nmark=\n${markClauseRows}`);
+
+// 58. Mark 12:30 Scrivener TR Robinson Morphology Strict Validation (w30 D-NSF, w32 N-NSF, w31 A-NSF-S)
+const markTrRows = query(`
+  SELECT wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'') || '|' || COALESCE(wm.orig_word_position,'') || '|' || COALESCE(wm.orig_surface,'') || '|' ||
+         COALESCE(wm.orig_morphology,'') || '|' || COALESCE(wm.morph_pos,'') || '|' || COALESCE(wm.morph_stem,'') || '|' || COALESCE(wm.morph_tense,'') || '|' ||
+         COALESCE(wm.morph_voice,'') || '|' || COALESCE(wm.morph_mood,'') || '|' || COALESCE(wm.morph_person,'') || '|' || COALESCE(wm.morph_number,'') || '|' ||
+         COALESCE(wm.morph_gender,'') || '|' || COALESCE(wm.morph_case,'') || '|' || COALESCE(wm.verified_locator,'')
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 41 AND chapter_num = 12 AND verse_num = 30)
+    AND wm.ar_word_position IN (16, 18, 19)
+  ORDER BY wm.ar_word_position ASC;
+`).replace(/\r/g, '').trim().split('\n').filter(Boolean);
+const trExpectedTags = { '16': 'D-NSF', '18': 'N-NSF', '19': 'A-NSF-S' };
+const trErrors = [];
+if (markTrRows.length !== 3) trErrors.push(`Expected 3 TR rows, got ${markTrRows.length}`);
+for (const rowStr of markTrRows) {
+  const [arPos, sId, origPos, surf, origM, mPos, mStem, mTense, mVoice, mMood, mPers, mNum, mGen, mCase, loc] = rowStr.split('|');
+  const err = verifyTrDerivedMorphology(origM, trExpectedTags[arPos], {
+    morphPos: mPos || null, morphStem: mStem || null, morphTense: mTense || null,
+    morphVoice: mVoice || null, morphMood: mMood || null, morphPerson: mPers || null,
+    morphNumber: mNum || null, morphGender: mGen || null, morphCase: mCase || null
+  });
+  if (err) trErrors.push(`pos ${arPos}: ${err}`);
+  if (!loc.startsWith(`TR:B41.C12.V30.w${origPos}`)) trErrors.push(`pos ${arPos} bad loc ${loc}`);
+}
+assertCondition('Scrivener TR Robinson Morphology Literal + All Derived Fields (Mark 12:30 pos 16,18,19)', trErrors.length === 0, trErrors.join('; '));
+
+// 59. Remaining Batch 1 Greek Repaired Verses (Luke 19:10, Rom 12:1, Eph 6:11, 1Pet 2:9) + Exod 20:13 Control
+const greek59Checks = query(`
+  SELECT vr.book_id || ':' || vr.chapter_num || ':' || vr.verse_num || '#' || wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'NULL') || '|' || COALESCE(wm.orig_word_position,'0') || '|' || COALESCE(wm.verified_locator,'')
+  FROM word_mappings wm JOIN verses vr ON wm.verse_id = vr.id
+  WHERE (vr.book_id=42 AND vr.chapter_num=19 AND vr.verse_num=10 AND wm.ar_word_position IN (5,6))
+     OR (vr.book_id=45 AND vr.chapter_num=12 AND vr.verse_num=1 AND wm.ar_word_position IN (2,3,14,15,16,17))
+     OR (vr.book_id=49 AND vr.chapter_num=6 AND vr.verse_num=11 AND wm.ar_word_position IN (2,4,11))
+     OR (vr.book_id=60 AND vr.chapter_num=2 AND vr.verse_num=9 AND wm.ar_word_position IN (1,2,5,6,15,19,20))
+     OR (vr.book_id=2 AND vr.chapter_num=20 AND vr.verse_num=13)
+  ORDER BY vr.book_id, wm.ar_word_position;
+`).replace(/\r/g, '').trim();
+const expectedGreek59 = [
+  '2:20:13#1|H3808|1|OSHB:B2.C20.V13.w1',
+  '2:20:13#2|H7523|2|OSHB:B2.C20.V13.w2',
+  '42:19:10#5|G2064|1|SBLGNT:B42.C19.V10.w1',
+  '42:19:10#6|NULL|0|AR_SYNTACTIC:B42.C19.V10.w6',
+  '45:12:1#2|G4771|3|SBLGNT:B45.C12.V1.w3',
+  '45:12:1#3|NULL|0|AR_SYNTACTIC:B45.C12.V1.w3',
+  '45:12:1#14|NULL|0|AR_SYNTACTIC:B45.C12.V1.w14',
+  '45:12:1#15|G2316|19|SBLGNT:B45.C12.V1.w19',
+  '45:12:1#16|G2999|22|SBLGNT:B45.C12.V1.w22',
+  '45:12:1#17|G3050|21|SBLGNT:B45.C12.V1.w21',
+  '49:6:11#2|G3833|3|SBLGNT:B49.C6.V11.w3',
+  '49:6:11#4|NULL|0|AR_SYNTACTIC:B49.C6.V11.w4',
+  '49:6:11#11|G1228|15|SBLGNT:B49.C6.V11.w15',
+  '60:2:9#1|G1161|2|SBLGNT:B60.C2.V9.w2',
+  '60:2:9#2|G4771|1|SBLGNT:B60.C2.V9.w1',
+  '60:2:9#5|G2406|6|SBLGNT:B60.C2.V9.w6',
+  '60:2:9#6|G934|5|SBLGNT:B60.C2.V9.w5',
+  '60:2:9#15|G2564|20|SBLGNT:B60.C2.V9.w20',
+  '60:2:9#19|G5457|25|SBLGNT:B60.C2.V9.w25',
+  '60:2:9#20|G2298|23|SBLGNT:B60.C2.V9.w23'
+].join('\n');
+assertCondition('Holdout Batch 1 Greek Non-Regression (Luke 19:10, Rom 12:1, Eph 6:11, 1Pet 2:9) + Exod 20:13 Control', greek59Checks === expectedGreek59, `Found=\n${greek59Checks}`);
+
 
 
 
