@@ -17,6 +17,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const { verifyTrDerivedMorphology } = require('./robinson_tr_helper.cjs');
+const { validateCanonicalLocator } = require('./locator_validator_helper.cjs');
 
 const repoRoot = path.resolve(__dirname, '..');
 const sha256File = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
@@ -450,7 +451,25 @@ for (const v of holdoutVerses) {
     };
     const failAxis = (k, msg) => { ax[k].status = 'fail'; ax[k].notes.push(msg); };
 
+    const tokCount = v.lang === 'greek'
+      ? ((isTr ? trTokens : sblTokens) ? (isTr ? trTokens : sblTokens).length : 0)
+      : (oshbTokens ? oshbTokens.length : 0);
+    const locRes = validateCanonicalLocator({
+      locator,
+      isSyntactic,
+      lang: v.lang,
+      book: v.book,
+      ch: v.ch,
+      vs: v.vs,
+      oshbOsis: v.oshbOsis,
+      arPos,
+      origPos,
+      morphSource,
+      tokenCount: tokCount
+    });
+
     if (isSyntactic) {
+      if (!locRes.ok) failAxis('sourceLocator', locRes.error);
       if (strongsId) failAxis('lexical', `syntactic row has strongs_id='${strongsId}'`);
       if (compDetailed) failAxis('lexical', `syntactic row has word_mapping_strongs '${compDetailed}'`);
       if (origWord && origWord !== '—') failAxis('lemmaSurface', `syntactic row has orig_word='${origWord}'`);
@@ -459,15 +478,11 @@ for (const v of holdoutVerses) {
       if (!strongsId) failAxis('lexical', 'missing strongs_id');
       if (!compDetailed) failAxis('lexical', 'empty word_mapping_strongs');
 
-      const mLoc = locator ? locator.match(/\.w(\d+)/) : null;
-      const locIdx = mLoc ? parseInt(mLoc[1], 10) : null;
-      if (!locator || !locIdx) {
-        failAxis('sourceLocator', `invalid locator '${locator}'`);
+      const locIdx = locRes.locW || null;
+      if (!locRes.ok) {
+        failAxis('sourceLocator', locRes.error);
       } else {
-        if (origPos !== locIdx) {
-          failAxis('sourceLocator', `orig_word_position (${origPos}) != locator w${locIdx}`);
-        }
-        const edKey = `${locator.split(':')[0]}:w${locIdx}`;
+        const edKey = `${locRes.edition}:w${locIdx}`;
         if (seenPrimaryLocators.has(edKey)) {
           const prev = seenPrimaryLocators.get(edKey);
           const isDocumentedSharedUnit =
@@ -661,13 +676,16 @@ for (const l of ['hebrew', 'aramaic', 'greek']) {
 }
 console.log(`  OVERALL : clean ${gClean}/${gTotal} (${((gClean/gTotal)*100).toFixed(2)}%), alerts=${gAlerts}`);
 
+const dartDbVerMatch = fs.readFileSync(path.join(repoRoot, 'mobile/lib/core/services/database_service.dart'), 'utf8').match(/const\s+targetDbVersion\s*=\s*(\d+);/);
 const report = {
-  version: 'v1.0.376',
+  version: dartDbVerMatch ? `v1.0.${dartDbVerMatch[1]}` : 'v1.0.379',
   dbSha256,
-  manifestPath: 'scripts/unseen_holdout_15_verses_manifest.json',
+  manifestPath: path.relative(repoRoot, manifestPath).replace(/\\/g, '/'),
   manifestSha256,
   exclusionKeysSha256: manifestExHash,
-  trSourceMode: (!process.env.USE_TR_SLICE && fs.existsSync(trFullPath)) ? 'scripts/data/gnt_scrivener.json' : 'scripts/unseen_holdout_tr_scrivener_slice.json',
+  trSourceMode: (!process.env.USE_TR_SLICE && fs.existsSync(trFullPath))
+    ? 'scripts/data/gnt_scrivener.json'
+    : path.relative(repoRoot, trSlicePath).replace(/\\/g, '/'),
   historicalExclusionsCount: historicalExclusions.size,
   overlapCount: 0,
   summary: { totalUnits: gTotal, cleanUnits: gClean, alertedUnits: gAlerts, cleanPct: Number(((gClean/gTotal)*100).toFixed(2)) },
