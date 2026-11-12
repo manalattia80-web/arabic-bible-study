@@ -2612,6 +2612,46 @@ const expectedGreek59 = [
 ].join('\n');
 assertCondition('Holdout Batch 1 Greek Non-Regression (Luke 19:10, Rom 12:1, Eph 6:11, 1Pet 2:9) + Exod 20:13 Control', greek59Checks === expectedGreek59, `Found=\n${greek59Checks}`);
 
+// 60. Holdout Batch 2 Hebrew Non-Regression (Lev 19:18, Deut 8:3, Josh 24:15)
+const heb60Rows = query(`
+  SELECT vr.book_id || ':' || vr.chapter_num || ':' || vr.verse_num || '|' || wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'NULL') || '|' || wm.orig_word_position || '|' || COALESCE(wm.orig_morphology,'NULL') || '|' || COALESCE(wm.verified_locator,'NULL')
+  FROM word_mappings wm
+  JOIN verses vr ON wm.verse_id = vr.id
+  WHERE (vr.book_id = 3 AND vr.chapter_num = 19 AND vr.verse_num = 18 AND wm.ar_word_position = 11)
+     OR (vr.book_id = 5 AND vr.chapter_num = 8 AND vr.verse_num = 3 AND wm.ar_word_position IN (7, 23))
+     OR (vr.book_id = 6 AND vr.chapter_num = 24 AND vr.verse_num = 15 AND wm.ar_word_position IN (9, 13, 32, 36))
+  ORDER BY vr.book_id, wm.ar_word_position;
+`).replace(/\r/g, '').trim();
+const expectedHeb60 = [
+  '3:19:18|11|H3644|10|HR/Sp2ms|OSHB:B3.C19.V18.w10',
+  '5:8:3|7|NULL|0|NULL|AR_SYNTACTIC:B5.C8.V3.w7',
+  '5:8:3|23|H4161|24|HNcmsc|OSHB:B5.C8.V3.w24',
+  '6:24:15|9|H9005|8|HR/Sp2mp|OSHB:B6.C24.V15.w8',
+  '6:24:15|13|H518|13|HC|OSHB:B6.C24.V15.w13',
+  '6:24:15|32|NULL|0|NULL|AR_SYNTACTIC:B6.C24.V15.w32',
+  '6:24:15|36|H3068|35|HNp|OSHB:B6.C24.V15.w35'
+].join('\n');
+assertCondition('Holdout Batch 2 Hebrew Lev 19:18, Deut 8:3, Josh 24:15 Non-Regression', heb60Rows === expectedHeb60, `Found=\n${heb60Rows}`);
+
+// 61. Holdout Batch 2 Hebrew Prov 16:9 Alignment & Control Exod 20:13 Untouched
+const heb61Rows = query(`
+  SELECT vr.book_id || ':' || vr.chapter_num || ':' || vr.verse_num || '|' || wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'NULL') || '|' || wm.orig_word_position || '|' || COALESCE(wm.orig_morphology,'NULL') || '|' || COALESCE(wm.verified_locator,'NULL')
+  FROM word_mappings wm
+  JOIN verses vr ON wm.verse_id = vr.id
+  WHERE (vr.book_id = 20 AND vr.chapter_num = 16 AND vr.verse_num = 9 AND wm.ar_word_position BETWEEN 5 AND 8)
+     OR (vr.book_id = 2 AND vr.chapter_num = 20 AND vr.verse_num = 13)
+  ORDER BY vr.book_id, wm.ar_word_position;
+`).replace(/\r/g, '').trim();
+const expectedHeb61 = [
+  '2:20:13|1|H3808|1|HTn|OSHB:B2.C20.V13.w1',
+  '2:20:13|2|H7523|2|HVqi2ms|OSHB:B2.C20.V13.w2',
+  '20:16:9|5|H1870|4|HNcbsc/Sp3ms|OSHB:B20.C16.V9.w4',
+  '20:16:9|6|H3068|5|HC/Np|OSHB:B20.C16.V9.w5',
+  '20:16:9|7|H3559|6|HVhi3ms|OSHB:B20.C16.V9.w6',
+  '20:16:9|8|H6806|7|HNcmsc/Sp3ms|OSHB:B20.C16.V9.w7'
+].join('\n');
+assertCondition('Holdout Batch 2 Hebrew Prov 16:9 Alignment & Control Exod 20:13 Untouched', heb61Rows === expectedHeb61, `Found=\n${heb61Rows}`);
+
 
 
 

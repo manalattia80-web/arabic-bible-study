@@ -336,10 +336,16 @@ function buildHistoricalExclusionSet() {
   }
   const sFiles = [path.join(repoRoot, 'scripts/automated_database_audit.cjs')];
   for (const f of fs.readdirSync(path.join(repoRoot, 'scripts'))) {
-    if (/^apply_.*\.(cjs|sql)$/.test(f)) sFiles.push(path.join(repoRoot, 'scripts', f));
+    if (/^apply_.*\.(cjs|sql)$/.test(f) && !/^apply_holdout_/.test(f)) {
+      sFiles.push(path.join(repoRoot, 'scripts', f));
+    }
   }
   for (const f of sFiles) {
-    const txt = fs.readFileSync(f, 'utf8');
+    let txt = fs.readFileSync(f, 'utf8');
+    if (f.endsWith('automated_database_audit.cjs')) {
+      const idx = txt.indexOf('// 57. Holdout Batch 1');
+      if (idx !== -1) txt = txt.slice(0, idx);
+    }
     for (const m of txt.matchAll(/11111111-0000-0000-00(\d{2})-000000(\d{3})(\d{3})/g)) addK(m[1], m[2], m[3]);
     for (const m of txt.matchAll(/B(\d+)\.C(\d+)\.V(\d+)/g)) addK(m[1], m[2], m[3]);
     for (const m of txt.matchAll(/book_id\s*=\s*(\d+)\s+AND\s+chapter_num\s*=\s*(\d+)\s+AND\s+verse_num\s*=\s*(\d+)/g)) addK(m[1], m[2], m[3]);

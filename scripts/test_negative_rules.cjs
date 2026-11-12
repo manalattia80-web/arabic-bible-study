@@ -787,6 +787,30 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE book_id = 52 AND chapter_num = 5 AND verse_num = 16)
         AND ar_word_position = 3;
     `
+  },
+  {
+    gateNum: 60,
+    name: 'josh_24_15_fabricated_h517_restored',
+    expectedFailTag: '[FAIL] Holdout Batch 2 Hebrew Lev 19:18, Deut 8:3, Josh 24:15 Non-Regression',
+    description: 'Restored fabricated H517 onto Josh 24:15 pos 32 (أم particle mislinked as mother noun)',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H517', orig_word_position = 13, verified_locator = 'OSHB:B6.C24.V15.w13', morph_source = 'oshb_wlc'
+      WHERE verse_id = (SELECT id FROM verses WHERE book_id = 6 AND chapter_num = 24 AND verse_num = 15)
+        AND ar_word_position = 32;
+    `
+  },
+  {
+    gateNum: 61,
+    name: 'prov_16_9_shifted_w4_regression',
+    expectedFailTag: '[FAIL] Holdout Batch 2 Hebrew Prov 16:9 Alignment & Control Exod 20:13 Untouched',
+    description: 'Reverted Prov 16:9 pos 6 (الرب) back to stale w4/H1870 shift',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H1870', orig_word_position = 4, verified_locator = 'OSHB:B20.C16.V9.w4'
+      WHERE verse_id = (SELECT id FROM verses WHERE book_id = 20 AND chapter_num = 16 AND verse_num = 9)
+        AND ar_word_position = 6;
+    `
   }
 ];
 
