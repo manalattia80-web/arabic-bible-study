@@ -146,14 +146,11 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Language-Split Holdout Repairs, Scrivener TR Robinson Verification & Gates 57–63 (v1.0.378)
-          - **Preserved Pre-Edit Baseline (`v1.0.376` / `3a0a478`)**: Automated holdout baseline [`scripts/unseen_holdout_4axis_v376.json`](scripts/unseen_holdout_4axis_v376.json) remains strictly untouched (`79/253` clean = `31.23%`, `174` alerts), paired with separate manual adjudication [`scripts/unseen_holdout_manual_adjudication_v376.json`](scripts/unseen_holdout_manual_adjudication_v376.json) (`75/253` clean = `29.64%`, `178` defects including 4 missed repeated-clause errors in Mark 12:30).
-          - **Scrivener TR Robinson & Repeated-Clause Gates**: Added full 8-field + literal Robinson verifier [`scripts/robinson_tr_helper.cjs`](scripts/robinson_tr_helper.cjs) (`1,065/1,065` tags parsed) and primary-locator collision detection across [`scripts/audit_unseen_holdout_sample.cjs`](scripts/audit_unseen_holdout_sample.cjs), validated by `24/24` self-test assertions.
-          - **Sequential Language Batches (`253/253` Repaired/Control Clean)**:
-            - **Batch 1 — Greek (`81/81`)**: `1Thess 5:16` (`1-to-2`), `Mark 12:30` (4 repeated-clause collisions + TR Robinson), `Luke 19:10`, `Rom 12:1`, `Eph 6:11`, `1Pet 2:9` ([`scripts/batch1_greek_comparison.json`](scripts/batch1_greek_comparison.json)).
-            - **Batch 2 — Hebrew (`87/87`)**: `Lev 19:18`, `Deut 8:3`, `Josh 24:15`, `Prov 16:9`, with `Exod 20:13` preserved bitwise untouched as control ([`scripts/batch2_hebrew_comparison.json`](scripts/batch2_hebrew_comparison.json)).
-            - **Batch 3 — Aramaic (`85/85`)**: `Ezra 4:12` (incl. Qere & Peil), `Ezra 6:14`, `Ezra 7:12`, `Dan 2:44`, zero `strongs_lexicon` provenance ([`scripts/batch3_aramaic_comparison.json`](scripts/batch3_aramaic_comparison.json)).
-          - **Verification (`targetDbVersion = 378`)**: `311 / 311 (100.00%)` canonical benchmark, `253 / 253 (100.00%)` post-repair holdout verification, and `63 / 63` negative CI gates passing.
+          ## 🚀 Aramaic Shaphel Stem Fix & Shared-Link Unit Validation (v1.0.379)
+          - **OSHB Aramaic `e` = `shaphel` Correction**: Fixed OSHB Aramaic stem mapping across auditor and repair scripts (`e` -> `shaphel` active with `morph_voice = NULL`, not `ethpeel` passive) and updated `Ezra 4:12 #19` (`AVep3mp`) and `Ezra 6:14 #14` (`AC/Vep3mp`), plus Arabic stem label `'shaphel'` in [`morphology_service.dart`](mobile/lib/core/services/morphology_service.dart).
+          - **Documented Shared-Link Unit (`1Thess 5:16` «كُلَّ حِينٍ» → `πάντοτε / G3842 @ w1`)**: Refined primary-locator collision detection to allow contiguous, documented `compound_phrase` shared links while keeping Mark 12:30 backward repeated-clause collisions strictly rejected; added positive acceptance test in [`test_tr_robinson_and_context_gates.cjs`](scripts/test_tr_robinson_and_context_gates.cjs).
+          - **Preserved Pre-Edit Baseline (`v1.0.376`)**: [`scripts/unseen_holdout_4axis_v376.json`](scripts/unseen_holdout_4axis_v376.json) remains strictly untouched (`79/253` clean = `31.23%`, `174` alerts).
+          - **Verification (`targetDbVersion = 379`)**: `311 / 311 (100.00%)` canonical benchmark, `253 / 253` repaired/control holdout verification, and `64 / 64` negative CI gates passing.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

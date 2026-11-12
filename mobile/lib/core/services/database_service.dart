@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 378; // v1.0.378: Language-split holdout repairs (Greek 81/81, Hebrew 87/87 w/ Exod 20:13 control untouched, Aramaic 85/85), TR Robinson verifier, gates 57-63
+    const targetDbVersion = 379; // v1.0.379: Aramaic e=shaphel (Ezra 4:12, 6:14) & 1Thess 5:16 documented shared-link unit G3842@w1 (gates 1-64)
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();

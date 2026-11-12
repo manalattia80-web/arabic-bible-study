@@ -184,6 +184,7 @@ class MorphologyService {
     'aphel':     'وزن أفعل الآرامي السببي (Aphel)',
     'hithpeel':  'وزن هيثبعل الآرامي المطاوع (Hithpeel)',
     'hithpaal':  'وزن هيثباعل الآرامي المطاوع (Hithpaal)',
+    'shaphel':   'وزن شفعل الآرامي السببي (Shaphel)',
   };
 
   static const Map<String, String> _structuredTenseLabels = {

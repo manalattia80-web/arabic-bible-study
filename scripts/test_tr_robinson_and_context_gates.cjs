@@ -16,11 +16,23 @@ function validateRepeatedClauseContext(rows) {
   for (const r of rows) {
     if (r.isSyntactic) continue;
     if (primarySeen.has(r.origPos)) {
-      errors.push(`Duplicate primary token collision: arPos #${r.arPos} ('${r.arWord}') reuses w${r.origPos} already claimed by #${primarySeen.get(r.origPos)}`);
+      const prev = primarySeen.get(r.origPos);
+      const isDocumentedSharedUnit =
+        r.relationType === 'compound_phrase' &&
+        prev.relationType === 'compound_phrase' &&
+        prev.strongsId && r.strongsId === prev.strongsId &&
+        r.arPos === prev.arPos + 1 &&
+        Boolean(r.grammarNotes && r.grammarNotes.trim().length > 0) &&
+        Boolean(prev.grammarNotes && prev.grammarNotes.trim().length > 0);
+      if (!isDocumentedSharedUnit) {
+        errors.push(`Duplicate primary token collision: arPos #${r.arPos} ('${r.arWord}') reuses w${r.origPos} already claimed by #${prev.arPos}`);
+      } else {
+        primarySeen.set(r.origPos, r);
+      }
     } else {
-      primarySeen.set(r.origPos, r.arPos);
+      primarySeen.set(r.origPos, r);
     }
-    if (r.origPos <= lastClausePos) {
+    if (r.enforceMonotonic !== false && r.origPos <= lastClausePos) {
       errors.push(`Monotonic repeated-clause violation: arPos #${r.arPos} ('${r.arWord}') points backward to w${r.origPos} <= prior anchor w${lastClausePos}`);
     }
     lastClausePos = r.origPos;
@@ -101,6 +113,19 @@ for (const [label, arPos, badOrig] of [
   const mutated = cleanMark1230.map(r => (r.arPos === arPos ? { ...r, origPos: badOrig } : r));
   check(`Mark 12:30 negative: ${label}`, false, validateRepeatedClauseContext(mutated).join('; ') || null);
 }
+
+// --- C. Documented Shared-Link Unit Positive Acceptance & Undocumented Rejection (1Thess 5:16) ---
+console.log('\n▶ PART C: Shared-Link Unit Acceptance (1Thess 5:16 كُلَّ حِينٍ -> G3842 @ w1)');
+const sharedNote = 'وحدة ربط مشتركة (Shared phrase): «كُلَّ حِينٍ» تقابل معًا πάντοτε (G3842 @ w1)';
+const clean1Thess516Shared = [
+  { arPos: 1, arWord: 'افْرَحُوا', origPos: 2, strongsId: 'G5463', relationType: null, grammarNotes: '', enforceMonotonic: false },
+  { arPos: 2, arWord: 'كُلَّ',    origPos: 1, strongsId: 'G3842', relationType: 'compound_phrase', grammarNotes: sharedNote, enforceMonotonic: false },
+  { arPos: 3, arWord: 'حِينٍ',   origPos: 1, strongsId: 'G3842', relationType: 'compound_phrase', grammarNotes: sharedNote, enforceMonotonic: false }
+];
+check('1Thess 5:16 positive: documented shared-link unit كُلَّ حِينٍ -> G3842 @ w1', true, validateRepeatedClauseContext(clean1Thess516Shared).join('; ') || null);
+
+const undocumentedShared = clean1Thess516Shared.map(r => (r.arPos === 3 ? { ...r, relationType: null, grammarNotes: '' } : r));
+check('1Thess 5:16 negative: undocumented duplicate primary w1 rejected', false, validateRepeatedClauseContext(undocumentedShared).join('; ') || null);
 
 console.log(`\nSUMMARY: ${passed}/${total} Robinson TR & Repeated-Clause Context Gate assertions passed.`);
 if (passed !== total) process.exit(1);

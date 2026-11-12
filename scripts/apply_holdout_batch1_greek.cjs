@@ -97,8 +97,8 @@ const batchPlan = [
     name: '1Thess 5:16', book: 52, ch: 5, vs: 16,
     ops: [
       { pos: 1, mode: 'SBLGNT', w: 2, s: 'G5463' },
-      { pos: 2, mode: 'SBLGNT', w: 1, s: 'G3842' },
-      { pos: 3, mode: 'AR_SYNTACTIC', note: 'مكمّل تركيبي في العربية لعبارة «كُلَّ حِينٍ» المقابلة للظرف اليوناني المفرد πάντοτε (G3842 @ w1)، ولا يُسند إليه مدخل G2540 مستقل.' }
+      { pos: 2, mode: 'SBLGNT', w: 1, s: 'G3842', rel: 'compound_phrase', note: 'وحدة ربط مشتركة (Shared phrase): «كُلَّ حِينٍ» تقابل معًا πάντοτε (G3842 @ w1)' },
+      { pos: 3, mode: 'SBLGNT', w: 1, s: 'G3842', rel: 'compound_phrase', note: 'وحدة ربط مشتركة (Shared phrase): «كُلَّ حِينٍ» تقابل معًا πάντοτε (G3842 @ w1)' }
     ]
   },
   {
@@ -252,7 +252,9 @@ for (const vp of batchPlan) {
         ? `Aligned to SBLGNT w${op.w} (${op.s})`
         : `Completed secondary component / surface metadata at w${op.w}`;
 
-      const relClause = op.keepRelation ? '' : `, relation_type=NULL, grammar_notes=NULL`;
+      const relClause = op.rel
+        ? `, relation_type=${esc(op.rel)}, grammar_notes=${esc(op.note || null)}`
+        : (op.keepRelation ? '' : `, relation_type=NULL, grammar_notes=NULL`);
       sqlStmts.push(
         `UPDATE word_mappings SET strongs_id=${esc(op.s)}, orig_word_position=${op.w}, orig_word=${esc(tok.lemma)}, orig_surface=${esc(tok.surface)}, orig_morphology=${esc(tok.morph)}, ` +
         `morph_pos=${esc(d.morphPos)}, morph_stem=NULL, morph_tense=${esc(d.morphTense)}, morph_voice=${esc(d.morphVoice)}, morph_mood=${esc(d.morphMood)}, morph_person=${esc(d.morphPerson)}, morph_number=${esc(d.morphNumber)}, morph_gender=${esc(d.morphGender)}, morph_case=${esc(d.morphCase)}, ` +

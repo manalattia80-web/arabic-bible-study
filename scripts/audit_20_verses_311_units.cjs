@@ -255,7 +255,7 @@ function verifyDerivedMorphologyAgainstSource(lang, dbMorph, srcMorph, derived, 
   if (core[0] === 'V') {
     if (morphPos !== 'verb') return `Derived morph_pos mismatch: DB '${morphPos}' vs OSHB verb '${tag}'`;
     const stemMap = isAramaic
-      ? { q: 'peal', Q: 'peil', p: 'pael', P: 'pael_passive', a: 'aphel', A: 'haphel_passive', h: 'haphel', u: 'hithpeel', t: 'hithpaal', o: 'polel', O: 'polal', e: 'ethpeel', i: 'ithpaal' }
+      ? { q: 'peal', Q: 'peil', p: 'pael', P: 'pael_passive', a: 'aphel', A: 'haphel_passive', h: 'haphel', u: 'hithpeel', t: 'hithpaal', o: 'polel', O: 'polal', e: 'shaphel', i: 'ithpaal' }
       : { q: 'qal', Q: 'qal_passive', N: 'niphal', p: 'piel', P: 'pual', h: 'hiphil', H: 'hophal', t: 'hithpael', o: 'polel', O: 'polal', c: 'pilpel', C: 'polpal' };
     const expStem = stemMap[core[1]];
     if (expStem && (morphStem || null) !== expStem) {

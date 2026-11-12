@@ -835,6 +835,18 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 2 AND verse_num = 44)
         AND ar_word_position = 14;
     `
+  },
+  {
+    gateNum: 64,
+    name: 'ezra_4_12_shaphel_reverted_to_ethpeel_passive',
+    expectedFailTag: '[FAIL] Holdout Batch 3 Aramaic Ezra 4:12 Qere/Peil & Zero strongs_lexicon Provenance',
+    description: 'Reverted Ezra 4:12 pos 19 (AVep3mp) back to erroneous ethpeel/passive instead of shaphel active',
+    mutationSql: `
+      UPDATE word_mappings
+      SET morph_stem = 'ethpeel', morph_voice = 'passive'
+      WHERE verse_id = (SELECT id FROM verses WHERE book_id = 15 AND chapter_num = 4 AND verse_num = 12)
+        AND ar_word_position = 19;
+    `
   }
 ];
 

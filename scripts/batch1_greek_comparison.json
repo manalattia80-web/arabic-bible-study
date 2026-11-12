@@ -213,7 +213,7 @@
         "wms": "G3842:primary@w1[πάντοτε]"
       },
       "source": "SBLGNT MorphGNT w1 (πάντοτε | πάντοτε | D- --------)",
-      "change": "Aligned to SBLGNT w1 (G3842)",
+      "change": "Shared-link unit part 1/2 to SBLGNT w1 (G3842, compound_phrase)",
       "testResult": "PASS"
     },
     {
@@ -241,13 +241,12 @@
         "wms": "G2540:primary@w3[καιρός]"
       },
       "expected": {
-        "strongsId": null,
-        "origWordPos": 0,
-        "origWord": "—",
-        "origSurface": "—",
-        "origMorph": null,
-        "morphPos": "syntactic_ar",
-        "morphStem": null,
+        "strongsId": "G3842",
+        "origWordPos": 1,
+        "origWord": "πάντοτε",
+        "origSurface": "πάντοτε",
+        "origMorph": "D- --------",
+        "morphPos": "adverb",
         "morphTense": null,
         "morphVoice": null,
         "morphMood": null,
@@ -255,12 +254,13 @@
         "morphNumber": null,
         "morphGender": null,
         "morphCase": null,
-        "morphSource": "syntactic_ar",
-        "verifiedLocator": "AR_SYNTACTIC:B52.C5.V16.w3",
-        "wms": ""
+        "morphSource": "morphgnt_sblgnt",
+        "verifiedLocator": "SBLGNT:B52.C5.V16.w1",
+        "wms": "G3842:primary@w1[πάντοτε]",
+        "relationType": "compound_phrase"
       },
-      "source": "Arabic Syntactic Structure (Van Dyck translation alignment)",
-      "change": "Reclassified to AR_SYNTACTIC & removed fabricated Greek link",
+      "source": "SBLGNT MorphGNT w1 (πάντοτε | πάντοτε | D- --------) [shared phrase]",
+      "change": "Shared-link unit part 2/2 to SBLGNT w1 (G3842, compound_phrase); removed fabricated G2540",
       "testResult": "PASS"
     },
     {

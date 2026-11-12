@@ -267,10 +267,13 @@ function verifyDerived(lang, dbMorph, srcMorph, d, isTr = false) {
   if (core[0] === 'V') {
     if (d.morphPos !== 'verb') return `pos '${d.morphPos}' vs verb '${tag}'`;
     const stemMap = isAr
-      ? { q:'peal', Q:'peil', p:'pael', P:'pael_passive', a:'aphel', A:'haphel_passive', h:'haphel', u:'hithpeel', t:'hithpaal', o:'polel', O:'polal', e:'ethpeel', i:'ithpaal' }
+      ? { q:'peal', Q:'peil', p:'pael', P:'pael_passive', a:'aphel', A:'haphel_passive', h:'haphel', u:'hithpeel', t:'hithpaal', o:'polel', O:'polal', e:'shaphel', i:'ithpaal' }
       : { q:'qal', Q:'qal_passive', N:'niphal', p:'piel', P:'pual', h:'hiphil', H:'hophal', t:'hithpael', o:'polel', O:'polal', c:'pilpel', C:'polpal' };
     if (stemMap[core[1]] && (d.morphStem || null) !== stemMap[core[1]]) return `stem '${d.morphStem}' vs '${stemMap[core[1]]}'`;
     const conj = core[2];
+    const isPassive = ((isAr ? 'QPAui' : 'NQPH').includes(core[1]) || conj === 's');
+    if (isPassive && (d.morphVoice || null) !== 'passive') return `voice '${d.morphVoice}' vs 'passive'`;
+    if (!isPassive && d.morphVoice === 'passive') return `voice 'passive' unexpected on active stem '${tag}'`;
     const tenseMap = { p:'qatal', q:'weqatal', i:'yiqtol', w:'wayyiqtol', j:'yiqtol', h:'yiqtol' };
     if ((d.morphTense || null) !== (tenseMap[conj] || null)) return `tense '${d.morphTense}' vs '${tenseMap[conj] || null}'`;
     const moodMap = { p:'indicative', q:'indicative', i:'indicative', w:'indicative', v:'imperative', j:'jussive', h:'cohortative', r:'participle', s:'passive_participle', c:'infinitive_construct', a:'infinitive_absolute' };
@@ -353,7 +356,10 @@ function buildHistoricalExclusionSet() {
   return ex;
 }
 
-const manifestPath = path.join(__dirname, 'unseen_holdout_15_verses_manifest.json');
+const manifestArgIdx = process.argv.indexOf('--manifest');
+const manifestPath = (manifestArgIdx !== -1 && process.argv[manifestArgIdx + 1])
+  ? path.resolve(process.cwd(), process.argv[manifestArgIdx + 1])
+  : path.join(__dirname, 'unseen_holdout_15_verses_manifest.json');
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const manifestSha256 = sha256File(manifestPath);
 const dbSha256 = sha256File(dbPath);
@@ -407,6 +413,7 @@ for (const v of holdoutVerses) {
            wm.morph_pos, wm.orig_morphology, wm.morph_gender, wm.morph_number, wm.morph_person,
            wm.morph_stem, wm.morph_mood, wm.orig_word_position, wm.verified_locator,
            wm.morph_tense, wm.morph_voice, wm.morph_case, COALESCE(wm.morph_source,''),
+           COALESCE(wm.relation_type,''), COALESCE(wm.grammar_notes,''),
            (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || COALESCE(wms.orig_word_position,'') || '[' || COALESCE(wms.orig_component,'') || ':' || COALESCE(wms.orig_morphology,'') || ']', ';')
             FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms)
     FROM word_mappings wm
@@ -424,7 +431,7 @@ for (const v of holdoutVerses) {
     const [
       posStr, arWord, strongsId, origWord, origSurface, morphPos, origMorph,
       morphGender, morphNumber, morphPerson, morphStem, morphMood, origPosStr,
-      locator, morphTense, morphVoice, morphCase, morphSource, compDetailed
+      locator, morphTense, morphVoice, morphCase, morphSource, relationType, grammarNotes, compDetailed
     ] = line.split('|');
 
     const arPos = parseInt(posStr, 10);
@@ -459,9 +466,21 @@ for (const v of holdoutVerses) {
         }
         const edKey = `${locator.split(':')[0]}:w${locIdx}`;
         if (seenPrimaryLocators.has(edKey)) {
-          failAxis('sourceLocator', `duplicate primary token collision: ${edKey} already claimed by arPos #${seenPrimaryLocators.get(edKey)}`);
+          const prev = seenPrimaryLocators.get(edKey);
+          const isDocumentedSharedUnit =
+            relationType === 'compound_phrase' &&
+            prev.relationType === 'compound_phrase' &&
+            prev.strongsId && strongsId === prev.strongsId &&
+            arPos === prev.arPos + 1 &&
+            Boolean(grammarNotes && grammarNotes.trim().length > 0) &&
+            Boolean(prev.grammarNotes && prev.grammarNotes.trim().length > 0);
+          if (!isDocumentedSharedUnit) {
+            failAxis('sourceLocator', `duplicate primary token collision: ${edKey} already claimed by arPos #${prev.arPos}`);
+          } else {
+            seenPrimaryLocators.set(edKey, { arPos, strongsId, relationType, grammarNotes });
+          }
         } else {
-          seenPrimaryLocators.set(edKey, arPos);
+          seenPrimaryLocators.set(edKey, { arPos, strongsId, relationType, grammarNotes });
         }
       }
 

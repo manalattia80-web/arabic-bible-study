@@ -60,11 +60,11 @@ function deriveFromAramaicOshb(morph) {
   const cMap = { c:'construct', a:'absolute' };
 
   if (core[0] === 'V') {
-    const stemMap = { q:'peal', Q:'peil', p:'pael', P:'pael_passive', a:'aphel', A:'haphel_passive', h:'haphel', u:'hithpeel', t:'hithpaal', M:'hithpaal', o:'polel', O:'polal', e:'ethpeel', i:'ithpaal' };
+    const stemMap = { q:'peal', Q:'peil', p:'pael', P:'pael_passive', a:'aphel', A:'haphel_passive', h:'haphel', u:'hithpeel', t:'hithpaal', M:'hithpaal', o:'polel', O:'polal', e:'shaphel', i:'ithpaal' };
     const conj = core[2];
     const tenseMap = { p:'qatal', q:'weqatal', i:'yiqtol', w:'wayyiqtol', j:'yiqtol', h:'yiqtol' };
     const moodMap = { p:'indicative', q:'indicative', i:'indicative', w:'indicative', v:'imperative', j:'jussive', h:'cohortative', r:'participle', s:'passive_participle', c:'infinitive_construct', a:'infinitive_absolute' };
-    const voice = (core[1] === 'Q' || core[1] === 'u' || core[1] === 'P' || core[1] === 'A' || core[1] === 'e' || conj === 's') ? 'passive' : null;
+    const voice = (core[1] === 'Q' || core[1] === 'u' || core[1] === 'P' || core[1] === 'A' || core[1] === 'i' || conj === 's') ? 'passive' : null;
     const out = { ...empty, morphPos: 'verb', morphStem: stemMap[core[1]] || null, morphTense: tenseMap[conj] || null, morphVoice: voice, morphMood: moodMap[conj] || null };
     if ('pqiwjhv'.includes(conj)) {
       out.morphPerson = ['1','2','3'].includes(core[3]) ? core[3] : null;
