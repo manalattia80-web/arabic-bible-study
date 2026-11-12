@@ -149,10 +149,7 @@ const trBookOsisMap = {
   41: 'Mark', 42: 'Luke', 45: 'Rom', 48: 'Gal', 49: 'Eph', 50: 'Phil', 52: '1Thess', 60: '1Pet'
 };
 const trFullPath = path.join(__dirname, 'data/gnt_scrivener.json');
-const trSlicePath = path.join(__dirname, 'unseen_holdout_tr_scrivener_slice.json');
-const scrData = (!process.env.USE_TR_SLICE && fs.existsSync(trFullPath))
-  ? JSON.parse(fs.readFileSync(trFullPath, 'utf8'))
-  : JSON.parse(fs.readFileSync(trSlicePath, 'utf8')).verses;
+const defaultTrSlicePath = path.join(__dirname, 'unseen_holdout_tr_scrivener_slice.json');
 function extractTrVerse(bookId, ch, vs) {
   const osis = trBookOsisMap[bookId];
   if (!osis) return null;
@@ -361,6 +358,12 @@ const manifestPath = (manifestArgIdx !== -1 && process.argv[manifestArgIdx + 1])
   ? path.resolve(process.cwd(), process.argv[manifestArgIdx + 1])
   : path.join(__dirname, 'unseen_holdout_15_verses_manifest.json');
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+const trSlicePath = manifest.tr_scrivener_slice_path
+  ? path.resolve(repoRoot, manifest.tr_scrivener_slice_path)
+  : defaultTrSlicePath;
+const scrData = (!process.env.USE_TR_SLICE && fs.existsSync(trFullPath))
+  ? JSON.parse(fs.readFileSync(trFullPath, 'utf8'))
+  : JSON.parse(fs.readFileSync(trSlicePath, 'utf8')).verses;
 const manifestSha256 = sha256File(manifestPath);
 const dbSha256 = sha256File(dbPath);
 

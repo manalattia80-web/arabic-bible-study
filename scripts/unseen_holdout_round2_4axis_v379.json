@@ -1,0 +1,5194 @@
+{
+  "version": "v1.0.376",
+  "dbSha256": "e652263b488a8c7ae064dcc79bb3115656d4ea57060af83b6206a23bf2b5a591",
+  "manifestPath": "scripts/unseen_holdout_15_verses_manifest.json",
+  "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
+  "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
+  "trSourceMode": "scripts/data/gnt_scrivener.json",
+  "historicalExclusionsCount": 2619,
+  "overlapCount": 0,
+  "summary": {
+    "totalUnits": 255,
+    "cleanUnits": 39,
+    "alertedUnits": 216,
+    "cleanPct": 15.29
+  },
+  "axisBreakdown": {
+    "lexical": {
+      "pass": 59,
+      "fail": 196
+    },
+    "lemmaSurface": {
+      "pass": 55,
+      "fail": 200
+    },
+    "morphology": {
+      "pass": 73,
+      "fail": 182
+    },
+    "sourceLocator": {
+      "pass": 233,
+      "fail": 22
+    }
+  },
+  "byLanguage": {
+    "hebrew": {
+      "total": 85,
+      "clean": 17,
+      "alerts": 68,
+      "axes": {
+        "lexical": 60,
+        "lemmaSurface": 61,
+        "morphology": 59,
+        "sourceLocator": 6
+      }
+    },
+    "aramaic": {
+      "total": 81,
+      "clean": 13,
+      "alerts": 68,
+      "axes": {
+        "lexical": 58,
+        "lemmaSurface": 61,
+        "morphology": 47,
+        "sourceLocator": 11
+      }
+    },
+    "greek": {
+      "total": 89,
+      "clean": 9,
+      "alerts": 80,
+      "axes": {
+        "lexical": 78,
+        "lemmaSurface": 78,
+        "morphology": 76,
+        "sourceLocator": 5
+      }
+    }
+  },
+  "perVerse": [
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "total": 17,
+      "clean": 5,
+      "alerts": 12,
+      "pctClean": 29.41,
+      "axisAlerts": {
+        "lexical": 9,
+        "lemmaSurface": 9,
+        "morphology": 8,
+        "sourceLocator": 2
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "total": 14,
+      "clean": 5,
+      "alerts": 9,
+      "pctClean": 35.71,
+      "axisAlerts": {
+        "lexical": 9,
+        "lemmaSurface": 9,
+        "morphology": 9,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "total": 19,
+      "clean": 1,
+      "alerts": 18,
+      "pctClean": 5.26,
+      "axisAlerts": {
+        "lexical": 17,
+        "lemmaSurface": 17,
+        "morphology": 17,
+        "sourceLocator": 1
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "total": 22,
+      "clean": 0,
+      "alerts": 22,
+      "pctClean": 0,
+      "axisAlerts": {
+        "lexical": 21,
+        "lemmaSurface": 21,
+        "morphology": 20,
+        "sourceLocator": 1
+      }
+    },
+    {
+      "verse": "1Kgs 19:12",
+      "lang": "hebrew",
+      "total": 13,
+      "clean": 6,
+      "alerts": 7,
+      "pctClean": 46.15,
+      "axisAlerts": {
+        "lexical": 4,
+        "lemmaSurface": 5,
+        "morphology": 5,
+        "sourceLocator": 2
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "total": 18,
+      "clean": 5,
+      "alerts": 13,
+      "pctClean": 27.78,
+      "axisAlerts": {
+        "lexical": 11,
+        "lemmaSurface": 11,
+        "morphology": 8,
+        "sourceLocator": 4
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "total": 25,
+      "clean": 4,
+      "alerts": 21,
+      "pctClean": 16,
+      "axisAlerts": {
+        "lexical": 20,
+        "lemmaSurface": 21,
+        "morphology": 18,
+        "sourceLocator": 1
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "total": 19,
+      "clean": 2,
+      "alerts": 17,
+      "pctClean": 10.53,
+      "axisAlerts": {
+        "lexical": 11,
+        "lemmaSurface": 13,
+        "morphology": 8,
+        "sourceLocator": 3
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "total": 19,
+      "clean": 2,
+      "alerts": 17,
+      "pctClean": 10.53,
+      "axisAlerts": {
+        "lexical": 16,
+        "lemmaSurface": 16,
+        "morphology": 13,
+        "sourceLocator": 3
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "total": 11,
+      "clean": 1,
+      "alerts": 10,
+      "pctClean": 9.09,
+      "axisAlerts": {
+        "lexical": 10,
+        "lemmaSurface": 10,
+        "morphology": 9,
+        "sourceLocator": 2
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "total": 12,
+      "clean": 0,
+      "alerts": 12,
+      "pctClean": 0,
+      "axisAlerts": {
+        "lexical": 12,
+        "lemmaSurface": 12,
+        "morphology": 12,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "total": 27,
+      "clean": 5,
+      "alerts": 22,
+      "pctClean": 18.52,
+      "axisAlerts": {
+        "lexical": 22,
+        "lemmaSurface": 22,
+        "morphology": 21,
+        "sourceLocator": 1
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "total": 16,
+      "clean": 1,
+      "alerts": 15,
+      "pctClean": 6.25,
+      "axisAlerts": {
+        "lexical": 15,
+        "lemmaSurface": 15,
+        "morphology": 15,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Phil 2:5",
+      "lang": "greek",
+      "total": 9,
+      "clean": 1,
+      "alerts": 8,
+      "pctClean": 11.11,
+      "axisAlerts": {
+        "lexical": 8,
+        "lemmaSurface": 8,
+        "morphology": 8,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "total": 14,
+      "clean": 1,
+      "alerts": 13,
+      "pctClean": 7.14,
+      "axisAlerts": {
+        "lexical": 11,
+        "lemmaSurface": 11,
+        "morphology": 11,
+        "sourceLocator": 2
+      }
+    }
+  ],
+  "alerts": [
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 5,
+      "arWord": "أَجْرُكِ",
+      "strongsId": "H7939",
+      "locator": "OSHB:B8.C2.V12.w5",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H7939' != OSHB lemma '4909' @ w5",
+          "wms H7939@w5 fails OSHB lemma '4909'"
+        ],
+        "lemmaSurface": [],
+        "morphology": [
+          "derived(gender '' vs 'f')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 7,
+      "arWord": "مِنْ",
+      "strongsId": "H4480",
+      "locator": "OSHB:B8.C2.V12.w7",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [
+          "surface 'מִן' != OSHB 'מֵעִ֤ם' @ w7",
+          "wms H4480@w7 surface 'מִן' != OSHB 'מֵעִ֤ם'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 8,
+      "arWord": "عِنْدِ",
+      "strongsId": "H5973",
+      "locator": "OSHB:B8.C2.V12.w8",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5973' != OSHB lemma '3068' @ w8",
+          "wms H5973@w8 fails OSHB lemma '3068'"
+        ],
+        "lemmaSurface": [
+          "surface 'מֵעִ֤ם' != OSHB 'יְהוָה֙' @ w8",
+          "wms H5973@w8 surface 'מֵעִ֤ם' != OSHB 'יְהוָה֙'"
+        ],
+        "morphology": [
+          "morph 'HR/R' != OSHB 'HNp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 9,
+      "arWord": "الرَّبِّ",
+      "strongsId": "H3068",
+      "locator": "OSHB:B8.C2.V12.w9",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3068' != OSHB lemma '430' @ w9",
+          "wms H3068@w9 fails OSHB lemma '430'"
+        ],
+        "lemmaSurface": [
+          "surface 'יְהוָה֙' != OSHB 'אֱלֹהֵ֣י' @ w9",
+          "wms H3068@w9 surface 'יְהוָה֙' != OSHB 'אֱלֹהֵ֣י'"
+        ],
+        "morphology": [
+          "morph 'HNp' != OSHB 'HNcmpc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 10,
+      "arWord": "إِلهِ",
+      "strongsId": "H430",
+      "locator": "OSHB:B8.C2.V12.w10",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H430' != OSHB lemma '3478' @ w10",
+          "wms H430@w10 fails OSHB lemma '3478'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֱלֹהֵ֣י' != OSHB 'יִשְׂרָאֵ֔ל' @ w10",
+          "wms H430@w10 surface 'אֱלֹהֵ֣י' != OSHB 'יִשְׂרָאֵ֔ל'"
+        ],
+        "morphology": [
+          "morph 'HNcmpc' != OSHB 'HNp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 11,
+      "arWord": "إِسْرَائِيلَ",
+      "strongsId": "H3478",
+      "locator": "OSHB:B8.C2.V12.w11",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3478' != OSHB lemma '834 a' @ w11",
+          "wms H3478@w11 fails OSHB lemma '834 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'יִשְׂרָאֵ֔ל' != OSHB 'אֲשֶׁר' @ w11",
+          "wms H3478@w11 surface 'יִשְׂרָאֵ֔ל' != OSHB 'אֲשֶׁר'"
+        ],
+        "morphology": [
+          "morph 'HNp' != OSHB 'HTr'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 12,
+      "arWord": "الَّذِي",
+      "strongsId": "H834",
+      "locator": "OSHB:B8.C2.V12.w12",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H834' != OSHB lemma '935' @ w12",
+          "wms H834@w12 fails OSHB lemma '935'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֲשֶׁר' != OSHB 'בָּ֖את' @ w12",
+          "wms H834@w12 surface 'אֲשֶׁר' != OSHB 'בָּ֖את'"
+        ],
+        "morphology": [
+          "morph 'HTr' != OSHB 'HVqp2fs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 13,
+      "arWord": "جِئْتِ",
+      "strongsId": "H935",
+      "locator": "OSHB:B8.C2.V12.w13",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H935' != OSHB lemma 'l/2620' @ w13",
+          "wms H935@w13 fails OSHB lemma 'l/2620'"
+        ],
+        "lemmaSurface": [
+          "surface 'בָּ֖את' != OSHB 'לַחֲס֥וֹת' @ w13",
+          "wms H935@w13 surface 'בָּ֖את' != OSHB 'לַחֲס֥וֹת'"
+        ],
+        "morphology": [
+          "morph 'HVqp2fs' != OSHB 'HR/Vqc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 14,
+      "arWord": "لِكَيْ",
+      "strongsId": "H413",
+      "locator": "OSHB:B8.C2.V12.w14",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H413' != OSHB lemma '8478' @ w14",
+          "wms H413@w14 fails OSHB lemma '8478'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֵל' != OSHB 'תַּֽחַת' @ w14",
+          "wms H413@w14 surface 'אֵל' != OSHB 'תַּֽחַת'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 15,
+      "arWord": "تَحْتَمِي",
+      "strongsId": "H2620",
+      "locator": "OSHB:B8.C2.V12.w15",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H2620' != OSHB lemma '3671' @ w15",
+          "wms H2620@w15 fails OSHB lemma '3671'"
+        ],
+        "lemmaSurface": [
+          "surface 'לַחֲס֥וֹת' != OSHB 'כְּנָפָֽיו' @ w15",
+          "wms H2620@w15 surface 'לַחֲס֥וֹת' != OSHB 'כְּנָפָֽיו'"
+        ],
+        "morphology": [
+          "morph 'HR/Vqc' != OSHB 'HNcfpc/Sp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 16,
+      "arWord": "تَحْتَ",
+      "strongsId": "H8478",
+      "locator": "OSHB:B8.C2.V12.w16",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB w16 exceeds token count (15)",
+          "wms component H8478@w16 missing in OSHB"
+        ]
+      }
+    },
+    {
+      "verse": "Ruth 2:12",
+      "lang": "hebrew",
+      "pos": 17,
+      "arWord": "جَنَاحَيْهِ",
+      "strongsId": "H3671",
+      "locator": "OSHB:B8.C2.V12.w17",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB w17 exceeds token count (15)",
+          "wms component H3671@w17 missing in OSHB"
+        ]
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "pos": 5,
+      "arWord": "لاَ",
+      "strongsId": "H408",
+      "locator": "OSHB:B23.C41.V10.w5",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H408' != OSHB lemma '589' @ w5",
+          "wms H408@w5 fails OSHB lemma '589'"
+        ],
+        "lemmaSurface": [
+          "surface 'אַל' != OSHB 'אָ֔נִי' @ w5",
+          "wms H408@w5 surface 'אַל' != OSHB 'אָ֔נִי'"
+        ],
+        "morphology": [
+          "morph 'HTn' != OSHB 'HPp1cs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "pos": 6,
+      "arWord": "تَتَلَفَّتْ",
+      "strongsId": "H8159",
+      "locator": "OSHB:B23.C41.V10.w6",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8159' != OSHB lemma '408' @ w6",
+          "wms H8159@w6 fails OSHB lemma '408'"
+        ],
+        "lemmaSurface": [
+          "surface 'תִּשְׁתָּ֖ע' != OSHB 'אַל' @ w6",
+          "wms H8159@w6 surface 'תִּשְׁתָּ֖ע' != OSHB 'אַל'"
+        ],
+        "morphology": [
+          "morph 'HVqj2ms' != OSHB 'HTn'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "pos": 7,
+      "arWord": "لأَنِّي",
+      "strongsId": "H3588",
+      "locator": "OSHB:B23.C41.V10.w7",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3588' != OSHB lemma '8159' @ w7",
+          "wms H3588@w7 fails OSHB lemma '8159'"
+        ],
+        "lemmaSurface": [
+          "surface 'כִּֽי' != OSHB 'תִּשְׁתָּ֖ע' @ w7",
+          "wms H3588@w7 surface 'כִּֽי' != OSHB 'תִּשְׁתָּ֖ע'"
+        ],
+        "morphology": [
+          "morph 'HC' != OSHB 'HVqj2ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "pos": 8,
+      "arWord": "إِلهُكَ",
+      "strongsId": "H430",
+      "locator": "OSHB:B23.C41.V10.w8",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H430' != OSHB lemma '3588 a' @ w8",
+          "wms H430@w8 fails OSHB lemma '3588 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֱלֹהֶ֑יךָ' != OSHB 'כִּֽי' @ w8",
+          "wms H430@w8 surface 'אֱלֹהֶ֑יךָ' != OSHB 'כִּֽי'"
+        ],
+        "morphology": [
+          "morph 'HNcmpc/Sp2ms' != OSHB 'HC'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "pos": 10,
+      "arWord": "أَيَّدْتُكَ",
+      "strongsId": "H553",
+      "locator": "OSHB:B23.C41.V10.w10",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H553' != OSHB lemma '430' @ w10",
+          "wms H553@w10 fails OSHB lemma '430'"
+        ],
+        "lemmaSurface": [
+          "surface 'אִמַּצְתִּ֨יךָ֙' != OSHB 'אֱלֹהֶ֑יךָ' @ w10",
+          "wms H553@w10 surface 'אִמַּצְתִּ֨יךָ֙' != OSHB 'אֱלֹהֶ֑יךָ'"
+        ],
+        "morphology": [
+          "morph 'HVpp1cs/Sp2ms' != OSHB 'HNcmpc/Sp2ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "pos": 11,
+      "arWord": "وَأَعَنْتُكَ",
+      "strongsId": "H5826",
+      "locator": "OSHB:B23.C41.V10.w11",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5826' != OSHB lemma '553' @ w11",
+          "wms H5826@w11 fails OSHB lemma '553'"
+        ],
+        "lemmaSurface": [
+          "surface 'עֲזַרְתִּ֔יךָ' != OSHB 'אִמַּצְתִּ֨יךָ֙' @ w11",
+          "wms H5826@w11 surface 'עֲזַרְתִּ֔יךָ' != OSHB 'אִמַּצְתִּ֨יךָ֙'"
+        ],
+        "morphology": [
+          "morph 'HVqp1cs/Sp2ms' != OSHB 'HVpp1cs/Sp2ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "pos": 12,
+      "arWord": "وَعَضَدْتُكَ",
+      "strongsId": "H8551",
+      "locator": "OSHB:B23.C41.V10.w12",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8551' != OSHB lemma '637' @ w12",
+          "wms H8551@w12 fails OSHB lemma '637'"
+        ],
+        "lemmaSurface": [
+          "surface 'תְּמַכְתִּ֖יךָ' != OSHB 'אַף' @ w12",
+          "wms H8551@w12 surface 'תְּמַכְתִּ֖יךָ' != OSHB 'אַף'"
+        ],
+        "morphology": [
+          "morph 'HVqp1cs/Sp2ms' != OSHB 'HTa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "pos": 13,
+      "arWord": "بِيَمِينِ",
+      "strongsId": "H3225",
+      "locator": "OSHB:B23.C41.V10.w13",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3225' != OSHB lemma '5826' @ w13",
+          "wms H3225@w13 fails OSHB lemma '5826'"
+        ],
+        "lemmaSurface": [
+          "surface 'בִּימִ֥ין' != OSHB 'עֲזַרְתִּ֔יךָ' @ w13",
+          "wms H3225@w13 surface 'בִּימִ֥ין' != OSHB 'עֲזַרְתִּ֔יךָ'"
+        ],
+        "morphology": [
+          "morph 'HR/Ncfsc' != OSHB 'HVqp1cs/Sp2ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Isa 41:10",
+      "lang": "hebrew",
+      "pos": 14,
+      "arWord": "بِرِّي",
+      "strongsId": "H6664",
+      "locator": "OSHB:B23.C41.V10.w14",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6664' != OSHB lemma '637' @ w14",
+          "wms H6664@w14 fails OSHB lemma '637'"
+        ],
+        "lemmaSurface": [
+          "surface 'צִדְקִֽי' != OSHB 'אַף' @ w14",
+          "wms H6664@w14 surface 'צִדְקִֽי' != OSHB 'אַף'"
+        ],
+        "morphology": [
+          "morph 'HNcmsc/Sp1cs' != OSHB 'HTa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 2,
+      "arWord": "هُوَ",
+      "strongsId": "H1931",
+      "locator": "OSHB:B33.C7.V18.w2",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1931' != OSHB lemma '410' @ w2",
+          "wms H1931@w2 fails OSHB lemma '410'"
+        ],
+        "lemmaSurface": [
+          "surface 'הֽוּא' != OSHB 'אֵ֣ל' @ w2",
+          "wms H1931@w2 surface 'הֽוּא' != OSHB 'אֵ֣ל'"
+        ],
+        "morphology": [
+          "morph 'HPp3ms' != OSHB 'HNcmsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 3,
+      "arWord": "إِلهٌ",
+      "strongsId": "H410",
+      "locator": "OSHB:B33.C7.V18.w3",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H410' != OSHB lemma '3644' @ w3",
+          "wms H410@w3 fails OSHB lemma '3644'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֵ֣ל' != OSHB 'כָּמ֗וֹךָ' @ w3",
+          "wms H410@w3 surface 'אֵ֣ל' != OSHB 'כָּמ֗וֹךָ'"
+        ],
+        "morphology": [
+          "morph 'HNcmsa' != OSHB 'HR/Sp2ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 4,
+      "arWord": "مِثْلُكَ",
+      "strongsId": "H3644",
+      "locator": "OSHB:B33.C7.V18.w4",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3644' != OSHB lemma '5375' @ w4",
+          "wms H3644@w4 fails OSHB lemma '5375'"
+        ],
+        "lemmaSurface": [
+          "surface 'כָּמ֗וֹךָ' != OSHB 'נֹשֵׂ֤א' @ w4",
+          "wms H3644@w4 surface 'כָּמ֗וֹךָ' != OSHB 'נֹשֵׂ֤א'"
+        ],
+        "morphology": [
+          "morph 'HR/Sp2ms' != OSHB 'HVqrmsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 5,
+      "arWord": "غَافِرٌ",
+      "strongsId": "H5375",
+      "locator": "OSHB:B33.C7.V18.w5",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5375' != OSHB lemma '5771' @ w5",
+          "wms H5375@w5 fails OSHB lemma '5771'"
+        ],
+        "lemmaSurface": [
+          "surface 'נֹשֵׂ֤א' != OSHB 'עָוֺן֙' @ w5",
+          "wms H5375@w5 surface 'נֹשֵׂ֤א' != OSHB 'עָוֺן֙'"
+        ],
+        "morphology": [
+          "morph 'HVqrmsa' != OSHB 'HNcbsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 6,
+      "arWord": "الإِثْمَ",
+      "strongsId": "H5771",
+      "locator": "OSHB:B33.C7.V18.w6",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5771' != OSHB lemma 'c/5674 a' @ w6",
+          "wms H5771@w6 fails OSHB lemma 'c/5674 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'עָוֹן' != OSHB 'וְעֹבֵ֣ר' @ w6",
+          "wms H5771@w6 surface 'עָוֹן' != OSHB 'וְעֹבֵ֣ר'"
+        ],
+        "morphology": [
+          "morph 'HNcbsa' != OSHB 'HC/Vqrmsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 7,
+      "arWord": "وَصَافِحٌ",
+      "strongsId": "H5674",
+      "locator": "OSHB:B33.C7.V18.w7",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5674' != OSHB lemma '5921 a' @ w7",
+          "wms H5674@w7 fails OSHB lemma '5921 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'וְעֹבֵ֣ר' != OSHB 'עַל' @ w7",
+          "wms H5674@w7 surface 'וְעֹבֵ֣ר' != OSHB 'עַל'"
+        ],
+        "morphology": [
+          "morph 'HC/Vqrmsa' != OSHB 'HR'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 8,
+      "arWord": "عَنِ",
+      "strongsId": "H5921",
+      "locator": "OSHB:B33.C7.V18.w8",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5921' != OSHB lemma '6588' @ w8",
+          "wms H5921@w8 fails OSHB lemma '6588'"
+        ],
+        "lemmaSurface": [
+          "surface 'עַל' != OSHB 'פֶּ֔שַׁע' @ w8",
+          "wms H5921@w8 surface 'עַל' != OSHB 'פֶּ֔שַׁע'"
+        ],
+        "morphology": [
+          "morph 'HR' != OSHB 'HNcmsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 9,
+      "arWord": "الذَّنْبِ",
+      "strongsId": "H5771",
+      "locator": "OSHB:B33.C7.V18.w9",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5771' != OSHB lemma 'l/7611' @ w9",
+          "wms H5771@w9 fails OSHB lemma 'l/7611'"
+        ],
+        "lemmaSurface": [
+          "surface 'עָוֹן' != OSHB 'לִשְׁאֵרִ֖ית' @ w9",
+          "wms H5771@w9 surface 'עָוֹן' != OSHB 'לִשְׁאֵרִ֖ית'"
+        ],
+        "morphology": [
+          "morph 'HNcbsa' != OSHB 'HR/Ncfsc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 10,
+      "arWord": "لِبَقِيَّةِ",
+      "strongsId": "H7611",
+      "locator": "OSHB:B33.C7.V18.w10",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H7611' != OSHB lemma '5159' @ w10",
+          "wms H7611@w10 fails OSHB lemma '5159'"
+        ],
+        "lemmaSurface": [
+          "surface 'לִשְׁאֵרִ֖ית' != OSHB 'נַחֲלָת֑וֹ' @ w10",
+          "wms H7611@w10 surface 'לִשְׁאֵרִ֖ית' != OSHB 'נַחֲלָת֑וֹ'"
+        ],
+        "morphology": [
+          "morph 'HR/Ncfsc' != OSHB 'HNcfsc/Sp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 11,
+      "arWord": "مِيرَاثِهِ",
+      "strongsId": "H5159",
+      "locator": "OSHB:B33.C7.V18.w11",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5159' != OSHB lemma '3808' @ w11",
+          "wms H5159@w11 fails OSHB lemma '3808'"
+        ],
+        "lemmaSurface": [
+          "surface 'נַחֲלָת֑וֹ' != OSHB 'לֹא' @ w11",
+          "wms H5159@w11 surface 'נַחֲלָת֑וֹ' != OSHB 'לֹא'"
+        ],
+        "morphology": [
+          "morph 'HNcfsc/Sp3ms' != OSHB 'HTn'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 12,
+      "arWord": "لاَ",
+      "strongsId": "H4480",
+      "locator": "OSHB:B33.C7.V18.w12",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4480' != OSHB lemma '2388' @ w12",
+          "wms H4480@w12 fails OSHB lemma '2388'"
+        ],
+        "lemmaSurface": [
+          "surface 'מִן' != OSHB 'הֶחֱזִ֤יק' @ w12",
+          "wms H4480@w12 surface 'מִן' != OSHB 'הֶחֱזִ֤יק'"
+        ],
+        "morphology": [
+          "derived(pos 'preposition' vs verb 'HVhp3ms')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 13,
+      "arWord": "يَحْفَظُ",
+      "strongsId": "H5201",
+      "locator": "OSHB:B33.C7.V18.w13",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5201' != OSHB lemma 'l/5703' @ w13",
+          "wms H5201@w13 fails OSHB lemma 'l/5703'"
+        ],
+        "lemmaSurface": [
+          "surface 'נָטַר' != OSHB 'לָעַד֙' @ w13",
+          "wms H5201@w13 surface 'נָטַר' != OSHB 'לָעַד֙'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'm')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 14,
+      "arWord": "إِلَى",
+      "strongsId": "H5703",
+      "locator": "OSHB:B33.C7.V18.w14",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5703' != OSHB lemma '639' @ w14",
+          "wms H5703@w14 fails OSHB lemma '639'"
+        ],
+        "lemmaSurface": [
+          "surface 'לָעַד֙' != OSHB 'אַפּ֔וֹ' @ w14",
+          "wms H5703@w14 surface 'לָעַד֙' != OSHB 'אַפּ֔וֹ'"
+        ],
+        "morphology": [
+          "morph 'HR/Ncmsa' != OSHB 'HNcmsc/Sp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 15,
+      "arWord": "الأَبَدِ",
+      "strongsId": "H5703",
+      "locator": "OSHB:B33.C7.V18.w15",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5703' != OSHB lemma '3588 a' @ w15",
+          "wms H5703@w15 fails OSHB lemma '3588 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'לָעַד֙' != OSHB 'כִּֽי' @ w15",
+          "wms H5703@w15 surface 'לָעַד֙' != OSHB 'כִּֽי'"
+        ],
+        "morphology": [
+          "morph 'HR/Ncmsa' != OSHB 'HC'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 16,
+      "arWord": "غَضَبَهُ",
+      "strongsId": "H639",
+      "locator": "OSHB:B33.C7.V18.w16",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H639' != OSHB lemma '2654 a' @ w16",
+          "wms H639@w16 fails OSHB lemma '2654 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'אַפּ֔וֹ' != OSHB 'חָפֵ֥ץ' @ w16",
+          "wms H639@w16 surface 'אַפּ֔וֹ' != OSHB 'חָפֵ֥ץ'"
+        ],
+        "morphology": [
+          "morph 'HNcmsc/Sp3ms' != OSHB 'HVqp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 17,
+      "arWord": "فَإِنَّهُ",
+      "strongsId": "H1931",
+      "locator": "OSHB:B33.C7.V18.w17",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1931' != OSHB lemma '2617 a' @ w17",
+          "wms H1931@w17 fails OSHB lemma '2617 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'הֽוּא' != OSHB 'חֶ֖סֶד' @ w17",
+          "wms H1931@w17 surface 'הֽוּא' != OSHB 'חֶ֖סֶד'"
+        ],
+        "morphology": [
+          "morph 'HPp3ms' != OSHB 'HNcmsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 18,
+      "arWord": "يُسَرُّ",
+      "strongsId": "H2654",
+      "locator": "OSHB:B33.C7.V18.w18",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H2654' != OSHB lemma '1931' @ w18",
+          "wms H2654@w18 fails OSHB lemma '1931'"
+        ],
+        "lemmaSurface": [
+          "surface 'חָפֵ֥ץ' != OSHB 'הֽוּא' @ w18",
+          "wms H2654@w18 surface 'חָפֵ֥ץ' != OSHB 'הֽוּא'"
+        ],
+        "morphology": [
+          "morph 'HVqp3ms' != OSHB 'HPp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mic 7:18",
+      "lang": "hebrew",
+      "pos": 19,
+      "arWord": "بِالرَّأْفَةِ",
+      "strongsId": "H2617",
+      "locator": "OSHB:B33.C7.V18.w19",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB w19 exceeds token count (18)",
+          "wms component H2617@w19 missing in OSHB"
+        ]
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 1,
+      "arWord": "فَإِذَا",
+      "strongsId": "H834",
+      "locator": "OSHB:B14.C7.V14.w1",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H834' != OSHB lemma 'c/3665' @ w1",
+          "wms H834@w1 fails OSHB lemma 'c/3665'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֲשֶׁר' != OSHB 'וְיִכָּנְע֨וּ' @ w1",
+          "wms H834@w1 surface 'אֲשֶׁר' != OSHB 'וְיִכָּנְע֨וּ'"
+        ],
+        "morphology": [
+          "morph 'HTr' != OSHB 'HC/VNi3mp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 2,
+      "arWord": "تَوَاضَعَ",
+      "strongsId": "H3665",
+      "locator": "OSHB:B14.C7.V14.w2",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3665' != OSHB lemma '5971 a' @ w2",
+          "wms H3665@w2 fails OSHB lemma '5971 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'וְיִכָּנְע֨וּ' != OSHB 'עַמִּ֜י' @ w2",
+          "wms H3665@w2 surface 'וְיִכָּנְע֨וּ' != OSHB 'עַמִּ֜י'"
+        ],
+        "morphology": [
+          "morph 'HC/VNi3mp' != OSHB 'HNcmsc/Sp1cs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 3,
+      "arWord": "شَعْبِي",
+      "strongsId": "H5971",
+      "locator": "OSHB:B14.C7.V14.w3",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5971' != OSHB lemma '834 a' @ w3",
+          "wms H5971@w3 fails OSHB lemma '834 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'עַמִּ֜י' != OSHB 'אֲשֶׁ֧ר' @ w3",
+          "wms H5971@w3 surface 'עַמִּ֜י' != OSHB 'אֲשֶׁ֧ר'"
+        ],
+        "morphology": [
+          "morph 'HNcmsc/Sp1cs' != OSHB 'HTr'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 4,
+      "arWord": "الَّذِينَ",
+      "strongsId": "H834",
+      "locator": "OSHB:B14.C7.V14.w4",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H834' != OSHB lemma '7121' @ w4",
+          "wms H834@w4 fails OSHB lemma '7121'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֲשֶׁר' != OSHB 'נִֽקְרָא' @ w4",
+          "wms H834@w4 surface 'אֲשֶׁר' != OSHB 'נִֽקְרָא'"
+        ],
+        "morphology": [
+          "morph 'HTr' != OSHB 'HVNp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 5,
+      "arWord": "دُعِيَ",
+      "strongsId": "H7121",
+      "locator": "OSHB:B14.C7.V14.w5",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H7121' != OSHB lemma '8034' @ w5",
+          "wms H7121@w5 fails OSHB lemma '8034'"
+        ],
+        "lemmaSurface": [
+          "surface 'נִֽקְרָא' != OSHB 'שְׁמִ֣י' @ w5",
+          "wms H7121@w5 surface 'נִֽקְרָא' != OSHB 'שְׁמִ֣י'"
+        ],
+        "morphology": [
+          "morph 'HVNp3ms' != OSHB 'HNcmsc/Sp1cs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 6,
+      "arWord": "اسْمِي",
+      "strongsId": "H8034",
+      "locator": "OSHB:B14.C7.V14.w6",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8034' != OSHB lemma '5921 a' @ w6",
+          "wms H8034@w6 fails OSHB lemma '5921 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'שְׁמִ֣י' != OSHB 'עֲלֵיהֶ֗ם' @ w6",
+          "wms H8034@w6 surface 'שְׁמִ֣י' != OSHB 'עֲלֵיהֶ֗ם'"
+        ],
+        "morphology": [
+          "morph 'HNcmsc/Sp1cs' != OSHB 'HR/Sp3mp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 7,
+      "arWord": "عَلَيْهِمْ",
+      "strongsId": "H5921",
+      "locator": "OSHB:B14.C7.V14.w7",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5921' != OSHB lemma 'c/6419' @ w7",
+          "wms H5921@w7 fails OSHB lemma 'c/6419'"
+        ],
+        "lemmaSurface": [
+          "surface 'עֲלֵיהֶ֗ם' != OSHB 'וְיִֽתְפַּֽלְלוּ֙' @ w7",
+          "wms H5921@w7 surface 'עֲלֵיהֶ֗ם' != OSHB 'וְיִֽתְפַּֽלְלוּ֙'"
+        ],
+        "morphology": [
+          "morph 'HR/Sp3mp' != OSHB 'HC/Vti3mp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 8,
+      "arWord": "وَصَلَّوْا",
+      "strongsId": "H6419",
+      "locator": "OSHB:B14.C7.V14.w8",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6419' != OSHB lemma 'c/1245' @ w8",
+          "wms H6419@w8 fails OSHB lemma 'c/1245'"
+        ],
+        "lemmaSurface": [
+          "surface 'וְיִֽתְפַּֽלְלוּ֙' != OSHB 'וִֽיבַקְשׁ֣וּ' @ w8",
+          "wms H6419@w8 surface 'וְיִֽתְפַּֽלְלוּ֙' != OSHB 'וִֽיבַקְשׁ֣וּ'"
+        ],
+        "morphology": [
+          "morph 'HC/Vti3mp' != OSHB 'HC/Vpi3mp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 9,
+      "arWord": "وَطَلَبُوا",
+      "strongsId": "H1245",
+      "locator": "OSHB:B14.C7.V14.w9",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1245' != OSHB lemma '6440' @ w9",
+          "wms H1245@w9 fails OSHB lemma '6440'"
+        ],
+        "lemmaSurface": [
+          "surface 'וִֽיבַקְשׁ֣וּ' != OSHB 'פָנַ֔י' @ w9",
+          "wms H1245@w9 surface 'וִֽיבַקְשׁ֣וּ' != OSHB 'פָנַ֔י'"
+        ],
+        "morphology": [
+          "morph 'HC/Vpi3mp' != OSHB 'HNcbpc/Sp1cs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 10,
+      "arWord": "وَجْهِي",
+      "strongsId": "H6440",
+      "locator": "OSHB:B14.C7.V14.w10",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6440' != OSHB lemma 'c/7725' @ w10",
+          "wms H6440@w10 fails OSHB lemma 'c/7725'"
+        ],
+        "lemmaSurface": [
+          "surface 'פָנַ֔י' != OSHB 'וְיָשֻׁ֖בוּ' @ w10",
+          "wms H6440@w10 surface 'פָנַ֔י' != OSHB 'וְיָשֻׁ֖בוּ'"
+        ],
+        "morphology": [
+          "morph 'HNcbpc/Sp1cs' != OSHB 'HC/Vqi3mp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 11,
+      "arWord": "وَرَجَعُوا",
+      "strongsId": "H7725",
+      "locator": "OSHB:B14.C7.V14.w11",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H7725' != OSHB lemma 'm/1870' @ w11",
+          "wms H7725@w11 fails OSHB lemma 'm/1870'"
+        ],
+        "lemmaSurface": [
+          "surface 'וְיָשֻׁ֖בוּ' != OSHB 'מִדַּרְכֵיהֶ֣ם' @ w11",
+          "wms H7725@w11 surface 'וְיָשֻׁ֖בוּ' != OSHB 'מִדַּרְכֵיהֶ֣ם'"
+        ],
+        "morphology": [
+          "morph 'HC/Vqi3mp' != OSHB 'HR/Ncbpc/Sp3mp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 12,
+      "arWord": "عَنْ",
+      "strongsId": "H4480",
+      "locator": "OSHB:B14.C7.V14.w12",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4480' != OSHB lemma 'd/7451 a' @ w12",
+          "wms H4480@w12 fails OSHB lemma 'd/7451 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'מִן' != OSHB 'הָרָעִ֑ים' @ w12",
+          "wms H4480@w12 surface 'מִן' != OSHB 'הָרָעִ֑ים'"
+        ],
+        "morphology": [
+          "morph 'HR' != OSHB 'HTd/Aampa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 13,
+      "arWord": "طُرُقِهِمِ",
+      "strongsId": "H1870",
+      "locator": "OSHB:B14.C7.V14.w13",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1870' != OSHB lemma 'c/589' @ w13",
+          "wms H1870@w13 fails OSHB lemma 'c/589'"
+        ],
+        "lemmaSurface": [
+          "surface 'מִדַּרְכֵיהֶ֣ם' != OSHB 'וַאֲנִי֙' @ w13",
+          "wms H1870@w13 surface 'מִדַּרְכֵיהֶ֣ם' != OSHB 'וַאֲנִי֙'"
+        ],
+        "morphology": [
+          "morph 'HR/Ncbpc/Sp3mp' != OSHB 'HC/Pp1cs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 14,
+      "arWord": "الرَّدِيةِ",
+      "strongsId": "H7451",
+      "locator": "OSHB:B14.C7.V14.w14",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H7451' != OSHB lemma '8085' @ w14",
+          "wms H7451@w14 fails OSHB lemma '8085'"
+        ],
+        "lemmaSurface": [
+          "surface 'הָרָעִ֑ים' != OSHB 'אֶשְׁמַ֣ע' @ w14",
+          "wms H7451@w14 surface 'הָרָעִ֑ים' != OSHB 'אֶשְׁמַ֣ע'"
+        ],
+        "morphology": [
+          "morph 'HTd/Aampa' != OSHB 'HVqi1cs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 15,
+      "arWord": "فَإِنَّنِي",
+      "strongsId": "H589",
+      "locator": "OSHB:B14.C7.V14.w15",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H589' != OSHB lemma '4480 a' @ w15",
+          "wms H589@w15 fails OSHB lemma '4480 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'וַאֲנִי֙' != OSHB 'מִן' @ w15",
+          "wms H589@w15 surface 'וַאֲנִי֙' != OSHB 'מִן'"
+        ],
+        "morphology": [
+          "morph 'HC/Pp1cs' != OSHB 'HR'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 16,
+      "arWord": "أَسْمَعُ",
+      "strongsId": "H8085",
+      "locator": "OSHB:B14.C7.V14.w16",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8085' != OSHB lemma 'd/8064' @ w16",
+          "wms H8085@w16 fails OSHB lemma 'd/8064'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֶשְׁמַ֣ע' != OSHB 'הַשָּׁמַ֔יִם' @ w16",
+          "wms H8085@w16 surface 'אֶשְׁמַ֣ע' != OSHB 'הַשָּׁמַ֔יִם'"
+        ],
+        "morphology": [
+          "morph 'HVqi1cs' != OSHB 'HTd/Ncmpa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 17,
+      "arWord": "مِنَ",
+      "strongsId": "H4480",
+      "locator": "OSHB:B14.C7.V14.w17",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4480' != OSHB lemma 'c/5545' @ w17",
+          "wms H4480@w17 fails OSHB lemma 'c/5545'"
+        ],
+        "lemmaSurface": [
+          "surface 'מִן' != OSHB 'וְאֶסְלַח֙' @ w17",
+          "wms H4480@w17 surface 'מִן' != OSHB 'וְאֶסְלַח֙'"
+        ],
+        "morphology": [
+          "morph 'HR' != OSHB 'HC/Vqi1cs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 18,
+      "arWord": "السَّمَاءِ",
+      "strongsId": "H8064",
+      "locator": "OSHB:B14.C7.V14.w18",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8064' != OSHB lemma 'l/2403 b' @ w18",
+          "wms H8064@w18 fails OSHB lemma 'l/2403 b'"
+        ],
+        "lemmaSurface": [
+          "surface 'הַשָּׁמַ֔יִם' != OSHB 'לְחַטָּאתָ֔ם' @ w18",
+          "wms H8064@w18 surface 'הַשָּׁמַ֔יִם' != OSHB 'לְחַטָּאתָ֔ם'"
+        ],
+        "morphology": [
+          "morph 'HTd/Ncmpa' != OSHB 'HR/Ncfsc/Sp3mp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 19,
+      "arWord": "وَأَغْفِرُ",
+      "strongsId": "H5545",
+      "locator": "OSHB:B14.C7.V14.w19",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5545' != OSHB lemma 'c/7495' @ w19",
+          "wms H5545@w19 fails OSHB lemma 'c/7495'"
+        ],
+        "lemmaSurface": [
+          "surface 'וְאֶסְלַח֙' != OSHB 'וְאֶרְפָּ֖א' @ w19",
+          "wms H5545@w19 surface 'וְאֶסְלַח֙' != OSHB 'וְאֶרְפָּ֖א'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 20,
+      "arWord": "خَطِيَّتَهُمْ",
+      "strongsId": "H2403",
+      "locator": "OSHB:B14.C7.V14.w20",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H2403' != OSHB lemma '853' @ w20",
+          "wms H2403@w20 fails OSHB lemma '853'"
+        ],
+        "lemmaSurface": [
+          "surface 'לְחַטָּאתָ֔ם' != OSHB 'אֶת' @ w20",
+          "wms H2403@w20 surface 'לְחַטָּאתָ֔ם' != OSHB 'אֶת'"
+        ],
+        "morphology": [
+          "morph 'HR/Ncfsc/Sp3mp' != OSHB 'HTo'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 21,
+      "arWord": "وَأُبْرِئُ",
+      "strongsId": "H7495",
+      "locator": "OSHB:B14.C7.V14.w21",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H7495' != OSHB lemma '776' @ w21",
+          "wms H7495@w21 fails OSHB lemma '776'"
+        ],
+        "lemmaSurface": [
+          "surface 'וְאֶרְפָּ֖א' != OSHB 'אַרְצָֽם' @ w21",
+          "wms H7495@w21 surface 'וְאֶרְפָּ֖א' != OSHB 'אַרְצָֽם'"
+        ],
+        "morphology": [
+          "morph 'HC/Vqi1cs' != OSHB 'HNcbsc/Sp3mp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "2Chr 7:14",
+      "lang": "hebrew",
+      "pos": 22,
+      "arWord": "أَرْضَهُمْ",
+      "strongsId": "H776",
+      "locator": "OSHB:B14.C7.V14.w22",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB w22 exceeds token count (21)",
+          "wms component H776@w22 missing in OSHB"
+        ]
+      }
+    },
+    {
+      "verse": "1Kgs 19:12",
+      "lang": "hebrew",
+      "pos": 5,
+      "arWord": "يَكُنِ",
+      "strongsId": "H1961",
+      "locator": "OSHB:B11.C19.V12.w5",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1961' != OSHB lemma 'b/784' @ w5",
+          "wms H1961@w5 fails OSHB lemma 'b/784'"
+        ],
+        "lemmaSurface": [
+          "surface 'הָיָה' != OSHB 'בָאֵ֖שׁ' @ w5",
+          "wms H1961@w5 surface 'הָיָה' != OSHB 'בָאֵ֖שׁ'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'b')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Kgs 19:12",
+      "lang": "hebrew",
+      "pos": 8,
+      "arWord": "النَّارِ",
+      "strongsId": "H784",
+      "locator": "OSHB:B11.C19.V12.w8",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [
+          "surface 'בָאֵ֖שׁ' != OSHB 'הָאֵ֔שׁ' @ w8",
+          "wms H784@w8 surface 'בָאֵ֖שׁ' != OSHB 'הָאֵ֔שׁ'"
+        ],
+        "morphology": [
+          "morph 'HRd/Ncbsa' != OSHB 'HTd/Ncbsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Kgs 19:12",
+      "lang": "hebrew",
+      "pos": 9,
+      "arWord": "وَبَعْدَ",
+      "strongsId": "H310",
+      "locator": "OSHB:B11.C19.V12.w9",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H310' != OSHB lemma '6963 a' @ w9",
+          "wms H310@w9 fails OSHB lemma '6963 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'וְאַחַ֣ר' != OSHB 'ק֖וֹל' @ w9",
+          "wms H310@w9 surface 'וְאַחַ֣ר' != OSHB 'ק֖וֹל'"
+        ],
+        "morphology": [
+          "morph 'HC/R' != OSHB 'HNcmsc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Kgs 19:12",
+      "lang": "hebrew",
+      "pos": 10,
+      "arWord": "النَّارِ",
+      "strongsId": "H784",
+      "locator": "OSHB:B11.C19.V12.w10",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H784' != OSHB lemma '1827' @ w10",
+          "wms H784@w10 fails OSHB lemma '1827'"
+        ],
+        "lemmaSurface": [
+          "surface 'הָאֵ֔שׁ' != OSHB 'דְּמָמָ֥ה' @ w10",
+          "wms H784@w10 surface 'הָאֵ֔שׁ' != OSHB 'דְּמָמָ֥ה'"
+        ],
+        "morphology": [
+          "morph 'HTd/Ncbsa' != OSHB 'HNcfsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Kgs 19:12",
+      "lang": "hebrew",
+      "pos": 11,
+      "arWord": "صَوْتٌ",
+      "strongsId": "H6963",
+      "locator": "OSHB:B11.C19.V12.w11",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6963' != OSHB lemma '1851' @ w11",
+          "wms H6963@w11 fails OSHB lemma '1851'"
+        ],
+        "lemmaSurface": [
+          "surface 'ק֖וֹל' != OSHB 'דַקָּֽה' @ w11",
+          "wms H6963@w11 surface 'ק֖וֹל' != OSHB 'דַקָּֽה'"
+        ],
+        "morphology": [
+          "morph 'HNcmsc' != OSHB 'HAafsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Kgs 19:12",
+      "lang": "hebrew",
+      "pos": 12,
+      "arWord": "مُنْخَفِضٌ",
+      "strongsId": "H1877",
+      "locator": "OSHB:B11.C19.V12.w12",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB w12 exceeds token count (11)",
+          "wms component H1877@w12 missing in OSHB"
+        ]
+      }
+    },
+    {
+      "verse": "1Kgs 19:12",
+      "lang": "hebrew",
+      "pos": 13,
+      "arWord": "خَفِيفٌ",
+      "strongsId": "H1877",
+      "locator": "OSHB:B11.C19.V12.w13",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB w13 exceeds token count (11)",
+          "wms component H1877@w13 missing in OSHB"
+        ]
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 3,
+      "arWord": "عَمَلُ",
+      "strongsId": "H5648",
+      "locator": "OSHB:B15.C4.V24.w3",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5648' != OSHB lemma '5673' @ w3",
+          "wms H5648@w3 fails OSHB lemma '5673'"
+        ],
+        "lemmaSurface": [
+          "surface 'עֲבַד' != OSHB 'עֲבִידַ֣ת' @ w3",
+          "wms H5648@w3 surface 'עֲבַד' != OSHB 'עֲבִידַ֣ת'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'f')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 7,
+      "arWord": "فِي",
+      "strongsId": "H1836",
+      "locator": "OSHB:B15.C4.V24.w7",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1836' != OSHB lemma 'b/3390' @ w7",
+          "wms H1836@w7 fails OSHB lemma 'b/3390'"
+        ],
+        "lemmaSurface": [
+          "surface 'דֵּן' != OSHB 'בִּירוּשְׁלֶ֑ם' @ w7",
+          "wms H1836@w7 surface 'דֵּן' != OSHB 'בִּירוּשְׁלֶ֑ם'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 8,
+      "arWord": "أُورُشَلِيمَ",
+      "strongsId": "H3390",
+      "locator": "OSHB:B15.C4.V24.w8",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3390' != OSHB lemma 'c/1934' @ w8",
+          "wms H3390@w8 fails OSHB lemma 'c/1934'"
+        ],
+        "lemmaSurface": [
+          "surface 'בִּירוּשְׁלֶ֑ם' != OSHB 'וַהֲוָת֙' @ w8",
+          "wms H3390@w8 surface 'בִּירוּשְׁלֶ֑ם' != OSHB 'וַהֲוָת֙'"
+        ],
+        "morphology": [
+          "morph 'AR/Np' != OSHB 'AC/Vqp3fs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 9,
+      "arWord": "وَكَانَ",
+      "strongsId": "H1934",
+      "locator": "OSHB:B15.C4.V24.w9",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1934' != OSHB lemma '989' @ w9",
+          "wms H1934@w9 fails OSHB lemma '989'"
+        ],
+        "lemmaSurface": [
+          "surface 'וַהֲוָת֙' != OSHB 'בָּֽטְלָ֔א' @ w9",
+          "wms H1934@w9 surface 'וַהֲוָת֙' != OSHB 'בָּֽטְלָ֔א'"
+        ],
+        "morphology": [
+          "morph 'AC/Vqp3fs' != OSHB 'AVqrfsa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 10,
+      "arWord": "مُتَوَقِّفًا",
+      "strongsId": "H989",
+      "locator": "OSHB:B15.C4.V24.w10",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H989' != OSHB lemma '5705' @ w10",
+          "wms H989@w10 fails OSHB lemma '5705'"
+        ],
+        "lemmaSurface": [
+          "surface 'בָּֽטְלָ֔א' != OSHB 'עַ֚ד' @ w10",
+          "wms H989@w10 surface 'בָּֽטְלָ֔א' != OSHB 'עַ֚ד'"
+        ],
+        "morphology": [
+          "morph 'AVqrfsa' != OSHB 'AR'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 11,
+      "arWord": "إِلَى",
+      "strongsId": "H5705",
+      "locator": "OSHB:B15.C4.V24.w11",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5705' != OSHB lemma '8140' @ w11",
+          "wms H5705@w11 fails OSHB lemma '8140'"
+        ],
+        "lemmaSurface": [
+          "surface 'עַ֚ד' != OSHB 'שְׁנַ֣ת' @ w11",
+          "wms H5705@w11 surface 'עַ֚ד' != OSHB 'שְׁנַ֣ת'"
+        ],
+        "morphology": [
+          "morph 'AR' != OSHB 'ANcfsc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 12,
+      "arWord": "السَّنَةِ",
+      "strongsId": "H8139",
+      "locator": "OSHB:B15.C4.V24.w12",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8139' != OSHB lemma '8648' @ w12",
+          "wms H8139@w12 fails OSHB lemma '8648'"
+        ],
+        "lemmaSurface": [
+          "surface 'שְׁנָה' != OSHB 'תַּרְתֵּ֔ין' @ w12",
+          "wms H8139@w12 surface 'שְׁנָה' != OSHB 'תַּרְתֵּ֔ין'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'c')"
+        ],
+        "sourceLocator": [
+          "OSHB locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 13,
+      "arWord": "الثَّانِيَةِ",
+      "strongsId": "H8524",
+      "locator": "OSHB:B15.C4.V24.w13",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8524' != OSHB lemma 'l/4437' @ w13",
+          "wms H8524@w13 fails OSHB lemma 'l/4437'"
+        ],
+        "lemmaSurface": [
+          "surface 'תָּלַל' != OSHB 'לְמַלְכ֖וּת' @ w13",
+          "wms H8524@w13 surface 'תָּלַל' != OSHB 'לְמַלְכ֖וּת'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'f')"
+        ],
+        "sourceLocator": [
+          "OSHB locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 14,
+      "arWord": "مِنْ",
+      "strongsId": "H4481",
+      "locator": "OSHB:B15.C4.V24.w14",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4481' != OSHB lemma '1868' @ w14",
+          "wms H4481@w14 fails OSHB lemma '1868'"
+        ],
+        "lemmaSurface": [
+          "surface 'מִן' != OSHB 'דָּרְיָ֥וֶשׁ' @ w14",
+          "wms H4481@w14 surface 'מִן' != OSHB 'דָּרְיָ֥וֶשׁ'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 15,
+      "arWord": "مُلْكِ",
+      "strongsId": "H4437",
+      "locator": "OSHB:B15.C4.V24.w15",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4437' != OSHB lemma '4430' @ w15",
+          "wms H4437@w15 fails OSHB lemma '4430'"
+        ],
+        "lemmaSurface": [
+          "surface 'לְמַלְכוּת' != OSHB 'מֶֽלֶךְ' @ w15",
+          "wms H4437@w15 surface 'לְמַלְכוּת' != OSHB 'מֶֽלֶךְ'"
+        ],
+        "morphology": [
+          "morph 'AR/Ncfsc' != OSHB 'ANcmsc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 16,
+      "arWord": "دَارِيُوسَ",
+      "strongsId": "H1868",
+      "locator": "OSHB:B15.C4.V24.w16",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1868' != OSHB lemma '6540' @ w16",
+          "wms H1868@w16 fails OSHB lemma '6540'"
+        ],
+        "lemmaSurface": [
+          "surface 'דָּרְיָ֥וֶשׁ' != OSHB 'פָּרָֽס' @ w16",
+          "wms H1868@w16 surface 'דָּרְיָ֥וֶשׁ' != OSHB 'פָּרָֽס'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 17,
+      "arWord": "مَلِكِ",
+      "strongsId": "H4437",
+      "locator": "OSHB:B15.C4.V24.w17",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB w17 exceeds token count (16)",
+          "wms component H4437@w17 missing in OSHB"
+        ]
+      }
+    },
+    {
+      "verse": "Ezra 4:24",
+      "lang": "aramaic",
+      "pos": 18,
+      "arWord": "فَارِسَ",
+      "strongsId": "H6543",
+      "locator": "OSHB:B15.C4.V24.w18",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB locator carries morph_source='strongs_lexicon'",
+          "OSHB w18 exceeds token count (16)",
+          "wms component H6543@w18 missing in OSHB"
+        ]
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 2,
+      "arWord": "هذَا",
+      "strongsId": "H1836",
+      "locator": "OSHB:B15.C5.V11.w2",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1836' != OSHB lemma '6600' @ w2",
+          "wms H1836@w2 fails OSHB lemma '6600'"
+        ],
+        "lemmaSurface": [
+          "surface 'דְּנָה֙' != OSHB 'פִתְגָמָ֖א' @ w2",
+          "wms H1836@w2 surface 'דְּנָה֙' != OSHB 'פִתְגָמָ֖א'"
+        ],
+        "morphology": [
+          "morph 'APdxms' != OSHB 'ANcmsd/Td'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 3,
+      "arWord": "الْجَوَابِ",
+      "strongsId": "H6593",
+      "locator": "OSHB:B15.C5.V11.w3",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6593' != OSHB lemma '8421' @ w3",
+          "wms H6593@w3 fails OSHB lemma '8421'"
+        ],
+        "lemmaSurface": [
+          "surface 'פִּשְׁתֶּה' != OSHB 'הֲתִיב֣וּנָא' @ w3",
+          "wms H6593@w3 surface 'פִּשְׁתֶּה' != OSHB 'הֲתִיב֣וּנָא'"
+        ],
+        "morphology": [
+          "derived(pos 'noun' vs verb 'AVhp3mp/Sp1cp')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 4,
+      "arWord": "جَاوَبُوا",
+      "strongsId": "H8422",
+      "locator": "OSHB:B15.C5.V11.w4",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8422' != OSHB lemma 'l/560' @ w4",
+          "wms H8422@w4 fails OSHB lemma 'l/560'"
+        ],
+        "lemmaSurface": [
+          "surface 'תּוּבַל' != OSHB 'לְמֵמַ֑ר' @ w4",
+          "wms H8422@w4 surface 'תּוּבַל' != OSHB 'לְמֵמַ֑ר'"
+        ],
+        "morphology": [
+          "derived(pos 'proper_noun' vs verb 'AR/Vqc')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 5,
+      "arWord": "قَائِلِينَ",
+      "strongsId": "H560",
+      "locator": "OSHB:B15.C5.V11.w5",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H560' != OSHB lemma '586' @ w5",
+          "wms H560@w5 fails OSHB lemma '586'"
+        ],
+        "lemmaSurface": [
+          "surface 'לְמֵמַ֑ר' != OSHB 'אֲנַ֣חְנָא' @ w5",
+          "wms H560@w5 surface 'לְמֵמַ֑ר' != OSHB 'אֲנַ֣חְנָא'"
+        ],
+        "morphology": [
+          "morph 'AR/Vqc' != OSHB 'APp1cp'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 6,
+      "arWord": "نَحْنُ",
+      "strongsId": "H586",
+      "locator": "OSHB:B15.C5.V11.w6",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H586' != OSHB lemma '1994' @ w6",
+          "wms H586@w6 fails OSHB lemma '1994'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֲנַ֣חְנָא' != OSHB 'הִמּ֡וֹ' @ w6",
+          "wms H586@w6 surface 'אֲנַ֣חְנָא' != OSHB 'הִמּ֡וֹ'"
+        ],
+        "morphology": [
+          "morph 'APp1cp' != OSHB 'ATa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 7,
+      "arWord": "عَبِيدُ",
+      "strongsId": "H5650",
+      "locator": "OSHB:B15.C5.V11.w7",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5650' != OSHB lemma '5649' @ w7",
+          "wms H5650@w7 fails OSHB lemma '5649'"
+        ],
+        "lemmaSurface": [
+          "surface 'עַבְדֹוהִי' != OSHB 'עַבְדוֹהִי֩' @ w7",
+          "wms H5650@w7 surface 'עַבְדֹוהִי' != OSHB 'עַבְדוֹהִי֩'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'm')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 8,
+      "arWord": "إِلهِ",
+      "strongsId": "H426",
+      "locator": "OSHB:B15.C5.V11.w8",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H426' != OSHB lemma '1768' @ w8",
+          "wms H426@w8 fails OSHB lemma '1768'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֱלָ֨הּ' != OSHB 'דִֽי' @ w8",
+          "wms H426@w8 surface 'אֱלָ֨הּ' != OSHB 'דִֽי'"
+        ],
+        "morphology": [
+          "morph 'ANcmsc' != OSHB 'ATr'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 9,
+      "arWord": "السَّمَاءِ",
+      "strongsId": "H8065",
+      "locator": "OSHB:B15.C5.V11.w9",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8065' != OSHB lemma '426' @ w9",
+          "wms H8065@w9 fails OSHB lemma '426'"
+        ],
+        "lemmaSurface": [
+          "surface 'שְׁמַיָּ֜א' != OSHB 'אֱלָ֨הּ' @ w9",
+          "wms H8065@w9 surface 'שְׁמַיָּ֜א' != OSHB 'אֱלָ֨הּ'"
+        ],
+        "morphology": [
+          "morph 'ANcmpd/Td' != OSHB 'ANcmsc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 10,
+      "arWord": "وَالأَرْضِ",
+      "strongsId": "H772",
+      "locator": "OSHB:B15.C5.V11.w10",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H772' != OSHB lemma '8065' @ w10",
+          "wms H772@w10 fails OSHB lemma '8065'"
+        ],
+        "lemmaSurface": [
+          "surface 'וְאַרְעָ֗א' != OSHB 'שְׁמַיָּ֜א' @ w10",
+          "wms H772@w10 surface 'וְאַרְעָ֗א' != OSHB 'שְׁמַיָּ֜א'"
+        ],
+        "morphology": [
+          "morph 'AC/Ncfsd/Td' != OSHB 'ANcmpd/Td'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 11,
+      "arWord": "وَنَبْنِي",
+      "strongsId": "H1129",
+      "locator": "OSHB:B15.C5.V11.w11",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1129' != OSHB lemma 'c/772' @ w11",
+          "wms H1129@w11 fails OSHB lemma 'c/772'"
+        ],
+        "lemmaSurface": [
+          "surface 'בָּנָה' != OSHB 'וְאַרְעָ֗א' @ w11",
+          "wms H1129@w11 surface 'בָּנָה' != OSHB 'וְאַרְעָ֗א'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 12,
+      "arWord": "هذَا",
+      "strongsId": "H1836",
+      "locator": "OSHB:B15.C5.V11.w12",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1836' != OSHB lemma 'c/1124' @ w12",
+          "wms H1836@w12 fails OSHB lemma 'c/1124'"
+        ],
+        "lemmaSurface": [
+          "surface 'דְּנָה֙' != OSHB 'וּבָנַ֤יִן' @ w12",
+          "wms H1836@w12 surface 'דְּנָה֙' != OSHB 'וּבָנַ֤יִן'"
+        ],
+        "morphology": [
+          "morph 'APdxms' != OSHB 'AC/Vqrmpa'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 14,
+      "arWord": "الَّذِي",
+      "strongsId": "H1768",
+      "locator": "OSHB:B15.C5.V11.w14",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [
+          "surface 'אֲשֶׁר' != OSHB 'דִּֽי' @ w14"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 15,
+      "arWord": "بُنِيَ",
+      "strongsId": "H1129",
+      "locator": "OSHB:B15.C5.V11.w15",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1129' != OSHB lemma '1934' @ w15",
+          "wms H1129@w15 fails OSHB lemma '1934'"
+        ],
+        "lemmaSurface": [
+          "surface 'בָּנָה' != OSHB 'הֲוָ֨א' @ w15",
+          "wms H1129@w15 surface 'בָּנָה' != OSHB 'הֲוָ֨א'"
+        ],
+        "morphology": [
+          "derived(stem '' vs 'peal')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 16,
+      "arWord": "قَبْلَ",
+      "strongsId": "H4481",
+      "locator": "OSHB:B15.C5.V11.w16",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4481' != OSHB lemma '1124' @ w16",
+          "wms H4481@w16 fails OSHB lemma '1124'"
+        ],
+        "lemmaSurface": [
+          "surface 'מִן' != OSHB 'בְנֵ֜ה' @ w16",
+          "wms H4481@w16 surface 'מִן' != OSHB 'בְנֵ֜ה'"
+        ],
+        "morphology": [
+          "derived(pos 'preposition' vs verb 'AVqsmsa')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 17,
+      "arWord": "هذِهِ",
+      "strongsId": "H479",
+      "locator": "OSHB:B15.C5.V11.w17",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H479' != OSHB lemma 'm/6928' @ w17",
+          "wms H479@w17 fails OSHB lemma 'm/6928'"
+        ],
+        "lemmaSurface": [
+          "surface 'אִלֵּךְ' != OSHB 'מִקַּדְמַ֤ת' @ w17",
+          "wms H479@w17 surface 'אִלֵּךְ' != OSHB 'מִקַּדְמַ֤ת'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'f')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 18,
+      "arWord": "السِّنِينَ",
+      "strongsId": "H8139",
+      "locator": "OSHB:B15.C5.V11.w18",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8139' != OSHB lemma '1836' @ w18",
+          "wms H8139@w18 fails OSHB lemma '1836'"
+        ],
+        "lemmaSurface": [
+          "surface 'שְׁנָה' != OSHB 'דְּנָה֙' @ w18",
+          "wms H8139@w18 surface 'שְׁנָה' != OSHB 'דְּנָה֙'"
+        ],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 19,
+      "arWord": "الْكَثِيرَةِ",
+      "strongsId": "H7227",
+      "locator": "OSHB:B15.C5.V11.w19",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H7227' != OSHB lemma '8140' @ w19",
+          "wms H7227@w19 fails OSHB lemma '8140'"
+        ],
+        "lemmaSurface": [
+          "surface 'רַב' != OSHB 'שְׁנִ֣ין' @ w19",
+          "wms H7227@w19 surface 'רַב' != OSHB 'שְׁנִ֣ין'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'f')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 21,
+      "arWord": "بَنَاهُ",
+      "strongsId": "H1129",
+      "locator": "OSHB:B15.C5.V11.w21",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1129' != OSHB lemma 'c/4430' @ w21",
+          "wms H1129@w21 fails OSHB lemma 'c/4430'"
+        ],
+        "lemmaSurface": [
+          "surface 'בָּנָה' != OSHB 'וּמֶ֤לֶךְ' @ w21",
+          "wms H1129@w21 surface 'בָּנָה' != OSHB 'וּמֶ֤לֶךְ'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'm')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 22,
+      "arWord": "مَلِكٌ",
+      "strongsId": "H4430",
+      "locator": "OSHB:B15.C5.V11.w22",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4430' != OSHB lemma 'l/3479' @ w22",
+          "wms H4430@w22 fails OSHB lemma 'l/3479'"
+        ],
+        "lemmaSurface": [
+          "surface 'וּמֶ֤לֶךְ' != OSHB 'לְיִשְׂרָאֵל֙' @ w22",
+          "wms H4430@w22 surface 'וּמֶ֤לֶךְ' != OSHB 'לְיִשְׂרָאֵל֙'"
+        ],
+        "morphology": [
+          "morph 'AC/Ncmsa' != OSHB 'AR/Np'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 24,
+      "arWord": "لإِسْرَائِيلَ",
+      "strongsId": "H3479",
+      "locator": "OSHB:B15.C5.V11.w24",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3479' != OSHB lemma '1124' @ w24",
+          "wms H3479@w24 fails OSHB lemma '1124'"
+        ],
+        "lemmaSurface": [
+          "surface 'לְיִשְׂרָאֵל֙' != OSHB 'בְּנָ֖הִי' @ w24",
+          "wms H3479@w24 surface 'לְיִשְׂרָאֵל֙' != OSHB 'בְּנָ֖הִי'"
+        ],
+        "morphology": [
+          "morph 'AR/Np' != OSHB 'AVqp3ms/Sp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Ezra 5:11",
+      "lang": "aramaic",
+      "pos": 25,
+      "arWord": "وَأَكْمَلَهُ",
+      "strongsId": "H8352",
+      "locator": "OSHB:B15.C5.V11.w25",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8352' != OSHB lemma 'c/3635 a' @ w25",
+          "wms H8352@w25 fails OSHB lemma 'c/3635 a'"
+        ],
+        "lemmaSurface": [
+          "surface 'שֵׁת' != OSHB 'וְשַׁכְלְלֵֽהּ' @ w25",
+          "wms H8352@w25 surface 'שֵׁת' != OSHB 'וְשַׁכְלְלֵֽהּ'"
+        ],
+        "morphology": [
+          "derived(pos 'proper_noun' vs verb 'AC/Vep3ms/Sp3ms')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 1,
+      "arWord": "إِلهِي",
+      "strongsId": "H426",
+      "locator": "OSHB:B27.C6.V22.w1",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [
+          "derived(gender '' vs 'm')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 2,
+      "arWord": "أَرْسَلَ",
+      "strongsId": "H7972",
+      "locator": "OSHB:B27.C6.V22.w2",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [
+          "derived(stem '' vs 'peal')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 3,
+      "arWord": "مَلاَكَهُ",
+      "strongsId": "H4305",
+      "locator": "OSHB:B27.C6.V22.w3",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4305' != OSHB lemma '4398' @ w3",
+          "wms H4305@w3 fails OSHB lemma '4398'"
+        ],
+        "lemmaSurface": [
+          "surface 'מָטַר' != OSHB 'מַלְאֲכֵ֗הּ' @ w3",
+          "wms H4305@w3 surface 'מָטַר' != OSHB 'מַלְאֲכֵ֗הּ'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'm')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 4,
+      "arWord": "وَسَدَّ",
+      "strongsId": "H5463",
+      "locator": "OSHB:B27.C6.V22.w4",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [
+          "derived(stem '' vs 'peal')"
+        ],
+        "sourceLocator": [
+          "OSHB locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 5,
+      "arWord": "أَفْوَاهَ",
+      "strongsId": "H6413",
+      "locator": "OSHB:B27.C6.V22.w5",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6413' != OSHB lemma '6433' @ w5",
+          "wms H6413@w5 fails OSHB lemma '6433'"
+        ],
+        "lemmaSurface": [
+          "surface 'פְּלֵיטָה' != OSHB 'פֻּ֥ם' @ w5",
+          "wms H6413@w5 surface 'פְּלֵיטָה' != OSHB 'פֻּ֥ם'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'm')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 6,
+      "arWord": "الأُسُودِ",
+      "strongsId": "H744",
+      "locator": "OSHB:B27.C6.V22.w6",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [
+          "surface 'אַרְיֵה' != OSHB 'אַרְיָוָתָ֖א' @ w6",
+          "wms H744@w6 surface 'אַרְיֵה' != OSHB 'אַרְיָוָתָ֖א'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 8,
+      "arWord": "تَضُرَّنِي",
+      "strongsId": "H2255",
+      "locator": "OSHB:B27.C6.V22.w8",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [
+          "derived(stem '' vs 'pael')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 9,
+      "arWord": "لأَنِّي",
+      "strongsId": "H6903",
+      "locator": "OSHB:B27.C6.V22.w9",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6903' != OSHB lemma 'k/3606' @ w9",
+          "wms H6903@w9 fails OSHB lemma 'k/3606'"
+        ],
+        "lemmaSurface": [
+          "surface 'קֳבֵל' != OSHB 'כָּל' @ w9",
+          "wms H6903@w9 surface 'קֳבֵל' != OSHB 'כָּל'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 10,
+      "arWord": "وُجِدْتُ",
+      "strongsId": "H7912",
+      "locator": "OSHB:B27.C6.V22.w10",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H7912' != OSHB lemma '6903' @ w10",
+          "wms H7912@w10 fails OSHB lemma '6903'"
+        ],
+        "lemmaSurface": [
+          "surface 'שְׁכַח' != OSHB 'קֳבֵ֗ל' @ w10",
+          "wms H7912@w10 surface 'שְׁכַח' != OSHB 'קֳבֵ֗ל'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 11,
+      "arWord": "بَرِيئًا",
+      "strongsId": "H2136",
+      "locator": "OSHB:B27.C6.V22.w11",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "Strongs 'H2136' != OSHB lemma '1768' @ w11",
+          "wms H2136@w11 fails OSHB lemma '1768'"
+        ],
+        "lemmaSurface": [
+          "surface 'זָכוּ' != OSHB 'דִּ֤י' @ w11",
+          "wms H2136@w11 surface 'זָכוּ' != OSHB 'דִּ֤י'"
+        ],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 12,
+      "arWord": "قُدَّامَهُ",
+      "strongsId": "H6925",
+      "locator": "OSHB:B27.C6.V22.w12",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [
+          "surface 'קֳדָם' != OSHB 'קָֽדָמ֨וֹהִי֙' @ w12",
+          "wms H6925@w12 surface 'קֳדָם' != OSHB 'קָֽדָמ֨וֹהִי֙'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 13,
+      "arWord": "وَقُدَّامَكَ",
+      "strongsId": "H6925",
+      "locator": "OSHB:B27.C6.V22.w13",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6925' != OSHB lemma '2136' @ w13",
+          "wms H6925@w13 fails OSHB lemma '2136'"
+        ],
+        "lemmaSurface": [
+          "surface 'קֳדָם' != OSHB 'זָכוּ֙' @ w13",
+          "wms H6925@w13 surface 'קֳדָם' != OSHB 'זָכוּ֙'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'f')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 14,
+      "arWord": "أَيْضًا",
+      "strongsId": "H638",
+      "locator": "OSHB:B27.C6.V22.w14",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H638' != OSHB lemma '7912' @ w14",
+          "wms H638@w14 fails OSHB lemma '7912'"
+        ],
+        "lemmaSurface": [
+          "surface 'אַף' != OSHB 'הִשְׁתְּכַ֣חַת' @ w14",
+          "wms H638@w14 surface 'אַף' != OSHB 'הִשְׁתְּכַ֣חַת'"
+        ],
+        "morphology": [
+          "derived(pos 'particle' vs verb 'AVup3fs')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 16,
+      "arWord": "الْمَلِكُ",
+      "strongsId": "H4399",
+      "locator": "OSHB:B27.C6.V22.w16",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4399' != OSHB lemma 'c/638' @ w16",
+          "wms H4399@w16 fails OSHB lemma 'c/638'"
+        ],
+        "lemmaSurface": [
+          "surface 'מַלְאֲכֵהּ' != OSHB 'וְאַ֤ף' @ w16",
+          "wms H4399@w16 surface 'מַלְאֲכֵהּ' != OSHB 'וְאַ֤ף'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 17,
+      "arWord": "لَمْ",
+      "strongsId": "H3809",
+      "locator": "OSHB:B27.C6.V22.w17",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3809' != OSHB lemma '6925' @ w17",
+          "wms H3809@w17 fails OSHB lemma '6925'"
+        ],
+        "lemmaSurface": [
+          "surface 'לָא' != OSHB 'קדמיך' @ w17",
+          "wms H3809@w17 surface 'לָא' != OSHB 'קדמיך'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 18,
+      "arWord": "أَفْعَلْ",
+      "strongsId": "H5648",
+      "locator": "OSHB:B27.C6.V22.w18",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5648' != OSHB lemma '6925' @ w18",
+          "wms H5648@w18 fails OSHB lemma '6925'"
+        ],
+        "lemmaSurface": [
+          "surface 'עַבְדֵֽת' != OSHB 'קָֽדָמָךְ֙' @ w18",
+          "wms H5648@w18 surface 'עַבְדֵֽת' != OSHB 'קָֽדָמָךְ֙'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 6:22",
+      "lang": "aramaic",
+      "pos": 19,
+      "arWord": "ذَنْبًا",
+      "strongsId": "H2269",
+      "locator": "OSHB:B27.C6.V22.w19",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "Strongs 'H2269' != OSHB lemma '4430' @ w19",
+          "wms H2269@w19 fails OSHB lemma '4430'"
+        ],
+        "lemmaSurface": [
+          "surface 'חֲבַר' != OSHB 'מַלְכָּ֔א' @ w19",
+          "wms H2269@w19 surface 'חֲבַר' != OSHB 'מַלְכָּ֔א'"
+        ],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 1,
+      "arWord": "كُنْتُ",
+      "strongsId": "H607",
+      "locator": "OSHB:B27.C7.V13.w1",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H607' != OSHB lemma '2370' @ w1",
+          "wms H607@w1 fails OSHB lemma '2370'"
+        ],
+        "lemmaSurface": [
+          "surface 'אַנְתָּה' != OSHB 'חָזֵ֤ה' @ w1",
+          "wms H607@w1 surface 'אַנְתָּה' != OSHB 'חָזֵ֤ה'"
+        ],
+        "morphology": [
+          "derived(pos 'pronoun' vs verb 'AVqrmsa')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 2,
+      "arWord": "أَرَى",
+      "strongsId": "H2370",
+      "locator": "OSHB:B27.C7.V13.w2",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H2370' != OSHB lemma '1934' @ w2",
+          "wms H2370@w2 fails OSHB lemma '1934'"
+        ],
+        "lemmaSurface": [
+          "surface 'חָזֵ֤ה' != OSHB 'הֲוֵית֙' @ w2",
+          "wms H2370@w2 surface 'חָזֵ֤ה' != OSHB 'הֲוֵית֙'"
+        ],
+        "morphology": [
+          "morph 'AVqrmsa' != OSHB 'AVqp1cs'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 4,
+      "arWord": "رُؤَى",
+      "strongsId": "H2376",
+      "locator": "OSHB:B27.C7.V13.w4",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H2376' != OSHB lemma '3916' @ w4",
+          "wms H2376@w4 fails OSHB lemma '3916'"
+        ],
+        "lemmaSurface": [
+          "surface 'בְּחֶזְוֵ֣י' != OSHB 'לֵֽילְיָ֔א' @ w4",
+          "wms H2376@w4 surface 'בְּחֶזְוֵ֣י' != OSHB 'לֵֽילְיָ֔א'"
+        ],
+        "morphology": [
+          "morph 'AR/Ncmpc' != OSHB 'ANcmsd/Td'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 5,
+      "arWord": "اللَّيْلِ",
+      "strongsId": "H3916",
+      "locator": "OSHB:B27.C7.V13.w5",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3916' != OSHB lemma 'c/718' @ w5",
+          "wms H3916@w5 fails OSHB lemma 'c/718'"
+        ],
+        "lemmaSurface": [
+          "surface 'לֵֽילְיָ֔א' != OSHB 'וַאֲרוּ֙' @ w5",
+          "wms H3916@w5 surface 'לֵֽילְיָ֔א' != OSHB 'וַאֲרוּ֙'"
+        ],
+        "morphology": [
+          "morph 'ANcmsd/Td' != OSHB 'AC/Tm'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 6,
+      "arWord": "وَإِذَا",
+      "strongsId": "H1768",
+      "locator": "OSHB:B27.C7.V13.w6",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1768' != OSHB lemma '5974' @ w6",
+          "wms H1768@w6 fails OSHB lemma '5974'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֲשֶׁר' != OSHB 'עִם' @ w6",
+          "wms H1768@w6 surface 'דִּי' != OSHB 'עִם'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 7,
+      "arWord": "مَعَ",
+      "strongsId": "H5974",
+      "locator": "OSHB:B27.C7.V13.w7",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H5974' != OSHB lemma '6050' @ w7",
+          "wms H5974@w7 fails OSHB lemma '6050'"
+        ],
+        "lemmaSurface": [
+          "surface 'עִם' != OSHB 'עֲנָנֵ֣י' @ w7",
+          "wms H5974@w7 surface 'עִם' != OSHB 'עֲנָנֵ֣י'"
+        ],
+        "morphology": [
+          "morph 'AR' != OSHB 'ANcmpc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 8,
+      "arWord": "سُحُبِ",
+      "strongsId": "H6053",
+      "locator": "OSHB:B27.C7.V13.w8",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6053' != OSHB lemma '8065' @ w8",
+          "wms H6053@w8 fails OSHB lemma '8065'"
+        ],
+        "lemmaSurface": [
+          "surface 'עֲנָנָה' != OSHB 'שְׁמַיָּ֔א' @ w8",
+          "wms H6053@w8 surface 'עֲנָנָה' != OSHB 'שְׁמַיָּ֔א'"
+        ],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 9,
+      "arWord": "السَّمَاءِ",
+      "strongsId": "H8065",
+      "locator": "OSHB:B27.C7.V13.w9",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H8065' != OSHB lemma 'k/1247' @ w9",
+          "wms H8065@w9 fails OSHB lemma 'k/1247'"
+        ],
+        "lemmaSurface": [
+          "surface 'שְׁמַיָּ֔א' != OSHB 'כְּבַ֥ר' @ w9",
+          "wms H8065@w9 surface 'שְׁמַיָּ֔א' != OSHB 'כְּבַ֥ר'"
+        ],
+        "morphology": [
+          "morph 'ANcmpd/Td' != OSHB 'AR/Ncmsc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 10,
+      "arWord": "مِثْلُ",
+      "strongsId": "H3607",
+      "locator": "OSHB:B27.C7.V13.w10",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3607' != OSHB lemma '606' @ w10",
+          "wms H3607@w10 fails OSHB lemma '606'"
+        ],
+        "lemmaSurface": [
+          "surface 'כָּלָא' != OSHB 'אֱנָ֖שׁ' @ w10",
+          "wms H3607@w10 surface 'כָּלָא' != OSHB 'אֱנָ֖שׁ'"
+        ],
+        "morphology": [
+          "derived(gender '' vs 'm')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 11,
+      "arWord": "ابْنِ",
+      "strongsId": "H1248",
+      "locator": "OSHB:B27.C7.V13.w11",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "Strongs 'H1248' != OSHB lemma '858' @ w11",
+          "wms H1248@w11 fails OSHB lemma '858'"
+        ],
+        "lemmaSurface": [
+          "surface 'בַּר' != OSHB 'אָתֵ֣ה' @ w11",
+          "wms H1248@w11 surface 'בַּר' != OSHB 'אָתֵ֣ה'"
+        ],
+        "morphology": [
+          "derived(pos 'noun' vs verb 'AVqrmsa')"
+        ],
+        "sourceLocator": [
+          "OSHB locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 12,
+      "arWord": "إِنْسَانٍ",
+      "strongsId": "H606",
+      "locator": "OSHB:B27.C7.V13.w12",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H606' != OSHB lemma '1934' @ w12",
+          "wms H606@w12 fails OSHB lemma '1934'"
+        ],
+        "lemmaSurface": [
+          "surface 'אֱנָ֖שׁ' != OSHB 'הֲוָ֑ה' @ w12",
+          "wms H606@w12 surface 'אֱנָ֖שׁ' != OSHB 'הֲוָ֑ה'"
+        ],
+        "morphology": [
+          "morph 'ANcmsa' != OSHB 'AVqp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 13,
+      "arWord": "أَتَى",
+      "strongsId": "H858",
+      "locator": "OSHB:B27.C7.V13.w13",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H858' != OSHB lemma 'c/5705' @ w13",
+          "wms H858@w13 fails OSHB lemma 'c/5705'"
+        ],
+        "lemmaSurface": [
+          "surface 'אָתֵה' != OSHB 'וְעַד' @ w13",
+          "wms H858@w13 surface 'אָתֵה' != OSHB 'וְעַד'"
+        ],
+        "morphology": [
+          "morph 'AVqrmsa' != OSHB 'AC/R'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 14,
+      "arWord": "وَجَاءَ",
+      "strongsId": "H858",
+      "locator": "OSHB:B27.C7.V13.w14",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H858' != OSHB lemma '6268' @ w14",
+          "wms H858@w14 fails OSHB lemma '6268'"
+        ],
+        "lemmaSurface": [
+          "surface 'אָתֵה' != OSHB 'עַתִּ֤יק' @ w14",
+          "wms H858@w14 surface 'אָתֵה' != OSHB 'עַתִּ֤יק'"
+        ],
+        "morphology": [
+          "morph 'AVqrmsa' != OSHB 'AAamsc'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 15,
+      "arWord": "إِلَى",
+      "strongsId": "H4481",
+      "locator": "OSHB:B27.C7.V13.w15",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H4481' != OSHB lemma '3118' @ w15",
+          "wms H4481@w15 fails OSHB lemma '3118'"
+        ],
+        "lemmaSurface": [
+          "surface 'מִן' != OSHB 'יֽוֹמַיָּא֙' @ w15",
+          "wms H4481@w15 surface 'מִן' != OSHB 'יֽוֹמַיָּא֙'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 16,
+      "arWord": "الْقَدِيمِ",
+      "strongsId": "H6268",
+      "locator": "OSHB:B27.C7.V13.w16",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H6268' != OSHB lemma '4291' @ w16",
+          "wms H6268@w16 fails OSHB lemma '4291'"
+        ],
+        "lemmaSurface": [
+          "surface 'עַתִּ֤יק' != OSHB 'מְטָ֔ה' @ w16",
+          "wms H6268@w16 surface 'עַתִּ֤יק' != OSHB 'מְטָ֔ה'"
+        ],
+        "morphology": [
+          "morph 'AAamsc' != OSHB 'AVqp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 17,
+      "arWord": "الأَيَّامِ",
+      "strongsId": "H3118",
+      "locator": "OSHB:B27.C7.V13.w17",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [
+          "Strongs 'H3118' != OSHB lemma 'c/6925' @ w17",
+          "wms H3118@w17 fails OSHB lemma 'c/6925'"
+        ],
+        "lemmaSurface": [
+          "surface 'יֽוֹמַיָּא֙' != OSHB 'וּקְדָמ֖וֹהִי' @ w17",
+          "wms H3118@w17 surface 'יֽוֹמַיָּא֙' != OSHB 'וּקְדָמ֖וֹהִי'"
+        ],
+        "morphology": [
+          "morph 'ANcmpd/Td' != OSHB 'AC/R/Sp3ms'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Dan 7:13",
+      "lang": "aramaic",
+      "pos": 19,
+      "arWord": "قُدَّامَهُ",
+      "strongsId": "H6925",
+      "locator": "OSHB:B27.C7.V13.w19",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "OSHB w19 exceeds token count (18)",
+          "wms component H6925@w19 missing in OSHB"
+        ]
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 1,
+      "arWord": "وَكَمَا",
+      "strongsId": "G2531",
+      "locator": "SBLGNT:B42.C6.V31.w1",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2531' (καθώς) != SBLGNT lemma 'καί' @ w1",
+          "wms G2531@w1 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'καθὼς' != 'καὶ' @ w1",
+          "SBLGNT lemma 'καθώς' != 'καί' @ w1"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "تُرِيدُونَ",
+      "strongsId": "G2309",
+      "locator": "SBLGNT:B42.C6.V31.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2309' (θέλω) != SBLGNT lemma 'καθώς' @ w2",
+          "wms G2309@w2 != SBLGNT 'καθώς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θέλετε' != 'καθὼς' @ w2",
+          "SBLGNT lemma 'θέλω' != 'καθώς' @ w2"
+        ],
+        "morphology": [
+          "morph 'V- 2PAI-P--' != SBLGNT 'C- --------'",
+          "derived(pos 'verb' vs 'C-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 3,
+      "arWord": "أَنْ",
+      "strongsId": "G2443",
+      "locator": "SBLGNT:B42.C6.V31.w3",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2443' (ἵνα) != SBLGNT lemma 'θέλω' @ w3",
+          "wms G2443@w3 != SBLGNT 'θέλω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἵνα' != 'θέλετε' @ w3",
+          "SBLGNT lemma 'ἵνα' != 'θέλω' @ w3"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'V- 2PAI-P--'",
+          "derived(pos 'conjunction' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "يَفْعَلَ",
+      "strongsId": "G4160",
+      "locator": "SBLGNT:B42.C6.V31.w4",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4160' (ποιέω) != SBLGNT lemma 'ἵνα' @ w4",
+          "wms G4160@w4 != SBLGNT 'ἵνα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ποιῶσιν' != 'ἵνα' @ w4",
+          "SBLGNT lemma 'ποιέω' != 'ἵνα' @ w4"
+        ],
+        "morphology": [
+          "morph 'V- 3PAS-P--' != SBLGNT 'C- --------'",
+          "derived(pos 'verb' vs 'C-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 5,
+      "arWord": "النَّاسُ",
+      "strongsId": "G444",
+      "locator": "SBLGNT:B42.C6.V31.w5",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G444' (ἄνθρωπος) != SBLGNT lemma 'ποιέω' @ w5",
+          "wms G444@w5 != SBLGNT 'ποιέω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἄνθρωποι' != 'ποιῶσιν' @ w5",
+          "SBLGNT lemma 'ἄνθρωπος' != 'ποιέω' @ w5"
+        ],
+        "morphology": [
+          "morph 'N- ----NPM-' != SBLGNT 'V- 3PAS-P--'",
+          "derived(pos 'noun' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "بِكُمُ",
+      "strongsId": "G5213",
+      "locator": "TR:B42.C6.V31.w6",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G5213' != 'G4771' @ w6",
+          "wms G5213@w6 != TR 'G4771'"
+        ],
+        "lemmaSurface": [
+          "TR lemma 'ὑμῖν' != 'σύ' @ w6"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token"
+        ],
+        "sourceLocator": [
+          "TR locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "افْعَلُوا",
+      "strongsId": "G4160",
+      "locator": "SBLGNT:B42.C6.V31.w7",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4160' (ποιέω) != SBLGNT lemma 'ὁ' @ w7",
+          "wms G4160@w7 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ποιεῖτε' != 'οἱ' @ w7",
+          "SBLGNT lemma 'ποιέω' != 'ὁ' @ w7"
+        ],
+        "morphology": [
+          "morph 'V- 2PAD-P--' != SBLGNT 'RA ----NPM-'",
+          "derived(pos 'verb' vs 'RA')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "أَنْتُمْ",
+      "strongsId": "G4771",
+      "locator": "SBLGNT:B42.C6.V31.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4771' (σύ) != SBLGNT lemma 'ἄνθρωπος' @ w8",
+          "wms G4771@w8 != SBLGNT 'ἄνθρωπος'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὑμῖν' != 'ἄνθρωποι' @ w8",
+          "SBLGNT lemma 'σύ' != 'ἄνθρωπος' @ w8"
+        ],
+        "morphology": [
+          "morph 'RP ----DP--' != SBLGNT 'N- ----NPM-'",
+          "derived(pos 'pronoun' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 9,
+      "arWord": "أَيْضًا",
+      "strongsId": "G2532",
+      "locator": "SBLGNT:B42.C6.V31.w9",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2532' (καί) != SBLGNT lemma 'ποιέω' @ w9",
+          "wms G2532@w9 != SBLGNT 'ποιέω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'καὶ' != 'ποιεῖτε' @ w9",
+          "SBLGNT lemma 'καί' != 'ποιέω' @ w9"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'V- 2PAD-P--'",
+          "derived(pos 'conjunction' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 6:31",
+      "lang": "greek",
+      "pos": 11,
+      "arWord": "هكَذَا",
+      "strongsId": "G3779",
+      "locator": "TR:B42.C6.V31.w11",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G3779' != 'G4160' @ w11",
+          "wms G3779@w11 != TR 'G4160'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'οὕτω' != 'ποιεῖτε' @ w11",
+          "TR lemma 'οὕτω' != 'ποιέω' @ w11"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token"
+        ],
+        "sourceLocator": [
+          "TR locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 1,
+      "arWord": "وَلكِنَّ",
+      "strongsId": "G1161",
+      "locator": "SBLGNT:B45.C5.V8.w1",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1161' (δέ) != SBLGNT lemma 'συνίστημι' @ w1",
+          "wms G1161@w1 != SBLGNT 'συνίστημι'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'δὲ' != 'συνίστησιν' @ w1",
+          "SBLGNT lemma 'δέ' != 'συνίστημι' @ w1"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'V- 3PAI-S--'",
+          "derived(pos 'conjunction' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "اللهَ",
+      "strongsId": "G2316",
+      "locator": "SBLGNT:B45.C5.V8.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2316' (θεός) != SBLGNT lemma 'δέ' @ w2",
+          "wms G2316@w2 != SBLGNT 'δέ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θεὸς' != 'δὲ' @ w2",
+          "SBLGNT lemma 'θεός' != 'δέ' @ w2"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'C- --------'",
+          "derived(pos 'noun' vs 'C-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 3,
+      "arWord": "بَيَّنَ",
+      "strongsId": "G1519",
+      "locator": "SBLGNT:B45.C5.V8.w3",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1519' (εἰς) != SBLGNT lemma 'ὁ' @ w3",
+          "wms G1519@w3 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'εἰς' != 'τὴν' @ w3",
+          "SBLGNT lemma 'εἰς' != 'ὁ' @ w3"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'RA ----ASF-'",
+          "derived(pos 'preposition' vs 'RA')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "مَحَبَّتَهُ",
+      "strongsId": "G26",
+      "locator": "SBLGNT:B45.C5.V8.w4",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G26' (ἀγάπη) != SBLGNT lemma 'ἑαυτοῦ' @ w4",
+          "wms G26@w4 != SBLGNT 'ἑαυτοῦ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἀγάπην' != 'ἑαυτοῦ' @ w4",
+          "SBLGNT lemma 'ἀγάπη' != 'ἑαυτοῦ' @ w4"
+        ],
+        "morphology": [
+          "morph 'N- ----ASF-' != SBLGNT 'RP ----GSM-'",
+          "derived(pos 'noun' vs 'RP')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 5,
+      "arWord": "لَنَا",
+      "strongsId": "G1510",
+      "locator": "SBLGNT:B45.C5.V8.w5",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1510' (εἰμί) != SBLGNT lemma 'ἀγάπη' @ w5",
+          "wms G1510@w5 != SBLGNT 'ἀγάπη'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὄντων' != 'ἀγάπην' @ w5",
+          "SBLGNT lemma 'εἰμί' != 'ἀγάπη' @ w5"
+        ],
+        "morphology": [
+          "morph 'V- -PAPGPM-' != SBLGNT 'N- ----ASF-'",
+          "derived(pos 'verb' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "لأَنَّهُ",
+      "strongsId": "G3754",
+      "locator": "SBLGNT:B45.C5.V8.w6",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3754' (ὅτι) != SBLGNT lemma 'εἰς' @ w6",
+          "wms G3754@w6 != SBLGNT 'εἰς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὅτι' != 'εἰς' @ w6",
+          "SBLGNT lemma 'ὅτι' != 'εἰς' @ w6"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'P- --------'",
+          "derived(pos 'conjunction' vs 'P-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "وَنَحْنُ",
+      "strongsId": "G1161",
+      "locator": "SBLGNT:B45.C5.V8.w7",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1161' (δέ) != SBLGNT lemma 'ἐγώ' @ w7",
+          "wms G1161@w7 != SBLGNT 'ἐγώ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'δὲ' != 'ἡμᾶς' @ w7",
+          "SBLGNT lemma 'δέ' != 'ἐγώ' @ w7"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'RP ----AP--'",
+          "derived(pos 'conjunction' vs 'RP')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "بَعْدُ",
+      "strongsId": "G2089",
+      "locator": "SBLGNT:B45.C5.V8.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2089' (ἔτι) != SBLGNT lemma 'ὁ' @ w8",
+          "wms G2089@w8 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἔτι' != 'ὁ' @ w8",
+          "SBLGNT lemma 'ἔτι' != 'ὁ' @ w8"
+        ],
+        "morphology": [
+          "morph 'D- --------' != SBLGNT 'RA ----NSM-'",
+          "derived(pos 'adverb' vs 'RA')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 9,
+      "arWord": "خُطَاةٌ",
+      "strongsId": "G268",
+      "locator": "SBLGNT:B45.C5.V8.w9",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G268' (ἁμαρτωλός) != SBLGNT lemma 'θεός' @ w9",
+          "wms G268@w9 != SBLGNT 'θεός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἁμαρτωλῶν' != 'θεὸς' @ w9",
+          "SBLGNT lemma 'ἁμαρτωλός' != 'θεός' @ w9"
+        ],
+        "morphology": [
+          "morph 'A- ----GPM-' != SBLGNT 'N- ----NSM-'",
+          "derived(pos 'adjective' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 10,
+      "arWord": "مَاتَ",
+      "strongsId": "G599",
+      "locator": "TR:B45.C5.V8.w10",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G599' != 'G3754' @ w10",
+          "wms G599@w10 != TR 'G3754'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'ἀποθνῄσκω' != 'ὅτι' @ w10",
+          "TR lemma 'ἀποθνῄσκω' != 'ὅτι' @ w10"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 11,
+      "arWord": "الْمَسِيحُ",
+      "strongsId": "G5547",
+      "locator": "SBLGNT:B45.C5.V8.w11",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'ἔτι' @ w11",
+          "wms G5547@w11 != SBLGNT 'ἔτι'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Χριστὸς' != 'ἔτι' @ w11",
+          "SBLGNT lemma 'Χριστός' != 'ἔτι' @ w11"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'D- --------'",
+          "derived(pos 'proper_noun' vs 'D-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 5:8",
+      "lang": "greek",
+      "pos": 12,
+      "arWord": "لأَجْلِنَا",
+      "strongsId": "G5228",
+      "locator": "SBLGNT:B45.C5.V8.w12",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5228' (ὑπέρ) != SBLGNT lemma 'ἁμαρτωλός' @ w12",
+          "wms G5228@w12 != SBLGNT 'ἁμαρτωλός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὑπὲρ' != 'ἁμαρτωλῶν' @ w12",
+          "SBLGNT lemma 'ὑπέρ' != 'ἁμαρτωλός' @ w12"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'A- ----GPM-'",
+          "derived(pos 'preposition' vs 'A-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 1,
+      "arWord": "مَعَ",
+      "strongsId": "G2532",
+      "locator": "SBLGNT:B48.C2.V20.w1",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2532' (καί) != SBLGNT lemma 'ζάω' @ w1",
+          "wms G2532@w1 != SBLGNT 'ζάω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'καὶ' != 'ζῶ' @ w1",
+          "SBLGNT lemma 'καί' != 'ζάω' @ w1"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'V- 1PAI-S--'",
+          "derived(pos 'conjunction' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "الْمَسِيحِ",
+      "strongsId": "G5547",
+      "locator": "SBLGNT:B48.C2.V20.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'δέ' @ w2",
+          "wms G5547@w2 != SBLGNT 'δέ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Χριστός' != 'δὲ' @ w2",
+          "SBLGNT lemma 'Χριστός' != 'δέ' @ w2"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'C- --------'",
+          "derived(pos 'proper_noun' vs 'C-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 3,
+      "arWord": "صُلِبْتُ",
+      "strongsId": "G4957",
+      "locator": "TR:B48.C2.V20.w3",
+      "morphSource": "strongs_lexicon",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G4957' != 'G2198' @ w3",
+          "wms G4957@w3 != TR 'G2198'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'συσταυρόω' != 'ζῶ' @ w3",
+          "TR lemma 'συσταυρόω' != 'ζάω' @ w3"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token"
+        ],
+        "sourceLocator": [
+          "TR locator carries morph_source='strongs_lexicon'"
+        ]
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "فَأَحْيَا",
+      "strongsId": "G2198",
+      "locator": "SBLGNT:B48.C2.V20.w4",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2198' (ζάω) != SBLGNT lemma 'ἐγώ' @ w4",
+          "wms G2198@w4 != SBLGNT 'ἐγώ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ζῶ' != 'ἐγώ' @ w4",
+          "SBLGNT lemma 'ζάω' != 'ἐγώ' @ w4"
+        ],
+        "morphology": [
+          "morph 'V- 1PAI-S--' != SBLGNT 'RP ----NS--'",
+          "derived(pos 'verb' vs 'RP')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "أَنَا",
+      "strongsId": "G1473",
+      "locator": "SBLGNT:B48.C2.V20.w6",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1473' (ἐγώ) != SBLGNT lemma 'δέ' @ w6",
+          "wms G1473@w6 != SBLGNT 'δέ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐγώ' != 'δὲ' @ w6",
+          "SBLGNT lemma 'ἐγώ' != 'δέ' @ w6"
+        ],
+        "morphology": [
+          "derived(pos 'pronoun' vs 'C-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "بَلِ",
+      "strongsId": "G1161",
+      "locator": "SBLGNT:B48.C2.V20.w7",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1161' (δέ) != SBLGNT lemma 'ἐν' @ w7",
+          "wms G1161@w7 != SBLGNT 'ἐν'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'δέ' != 'ἐν' @ w7",
+          "SBLGNT lemma 'δέ' != 'ἐν' @ w7"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'P- --------'",
+          "derived(pos 'conjunction' vs 'P-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "الْمَسِيحُ",
+      "strongsId": "G5547",
+      "locator": "SBLGNT:B48.C2.V20.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'ἐγώ' @ w8",
+          "wms G5547@w8 != SBLGNT 'ἐγώ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Χριστός' != 'ἐμοὶ' @ w8",
+          "SBLGNT lemma 'Χριστός' != 'ἐγώ' @ w8"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'RP ----DS--'",
+          "derived(pos 'proper_noun' vs 'RP')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 9,
+      "arWord": "يَحْيَا",
+      "strongsId": "G2198",
+      "locator": "SBLGNT:B48.C2.V20.w9",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2198' (ζάω) != SBLGNT lemma 'Χριστός' @ w9",
+          "wms G2198@w9 != SBLGNT 'Χριστός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ζῇ' != 'Χριστός' @ w9",
+          "SBLGNT lemma 'ζάω' != 'Χριστός' @ w9"
+        ],
+        "morphology": [
+          "morph 'V- 3PAI-S--' != SBLGNT 'N- ----NSM-'",
+          "derived(pos 'verb' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 10,
+      "arWord": "فِيَّ",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B48.C2.V20.w10",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'ὅς' @ w10",
+          "wms G1722@w10 != SBLGNT 'ὅς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'ὃ' @ w10",
+          "SBLGNT lemma 'ἐν' != 'ὅς' @ w10"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'RR ----ASN-'",
+          "derived(pos 'preposition' vs 'RR')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 11,
+      "arWord": "فَمَا",
+      "strongsId": "G3739",
+      "locator": "SBLGNT:B48.C2.V20.w11",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3739' (ὅς) != SBLGNT lemma 'δέ' @ w11",
+          "wms G3739@w11 != SBLGNT 'δέ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὃ' != 'δὲ' @ w11",
+          "SBLGNT lemma 'ὅς' != 'δέ' @ w11"
+        ],
+        "morphology": [
+          "morph 'RR ----ASN-' != SBLGNT 'C- --------'",
+          "derived(pos 'relative_pronoun' vs 'C-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 12,
+      "arWord": "أَحْيَاهُ",
+      "strongsId": "G2198",
+      "locator": "SBLGNT:B48.C2.V20.w12",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2198' (ζάω) != SBLGNT lemma 'νῦν' @ w12",
+          "wms G2198@w12 != SBLGNT 'νῦν'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ζῶ' != 'νῦν' @ w12",
+          "SBLGNT lemma 'ζάω' != 'νῦν' @ w12"
+        ],
+        "morphology": [
+          "morph 'V- 1PAI-S--' != SBLGNT 'D- --------'",
+          "derived(pos 'verb' vs 'D-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 13,
+      "arWord": "الآنَ",
+      "strongsId": "G3568",
+      "locator": "SBLGNT:B48.C2.V20.w13",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3568' (νῦν) != SBLGNT lemma 'ζάω' @ w13",
+          "wms G3568@w13 != SBLGNT 'ζάω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'νῦν' != 'ζῶ' @ w13",
+          "SBLGNT lemma 'νῦν' != 'ζάω' @ w13"
+        ],
+        "morphology": [
+          "morph 'D- --------' != SBLGNT 'V- 1PAI-S--'",
+          "derived(pos 'adverb' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 17,
+      "arWord": "أَحْيَاهُ",
+      "strongsId": "G2198",
+      "locator": "SBLGNT:B48.C2.V20.w17",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2198' (ζάω) != SBLGNT lemma 'πίστις' @ w17",
+          "wms G2198@w17 != SBLGNT 'πίστις'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ζῶ' != 'πίστει' @ w17",
+          "SBLGNT lemma 'ζάω' != 'πίστις' @ w17"
+        ],
+        "morphology": [
+          "morph 'V- 1PAI-S--' != SBLGNT 'N- ----DSF-'",
+          "derived(pos 'verb' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 18,
+      "arWord": "فِي",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B48.C2.V20.w18",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'ζάω' @ w18",
+          "wms G1722@w18 != SBLGNT 'ζάω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'ζῶ' @ w18",
+          "SBLGNT lemma 'ἐν' != 'ζάω' @ w18"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'V- 1PAI-S--'",
+          "derived(pos 'preposition' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 19,
+      "arWord": "الإِيمَانِ",
+      "strongsId": "G4102",
+      "locator": "SBLGNT:B48.C2.V20.w19",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4102' (πίστις) != SBLGNT lemma 'ὁ' @ w19",
+          "wms G4102@w19 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'πίστει' != 'τῇ' @ w19",
+          "SBLGNT lemma 'πίστις' != 'ὁ' @ w19"
+        ],
+        "morphology": [
+          "morph 'N- ----DSF-' != SBLGNT 'RA ----DSF-'",
+          "derived(pos 'noun' vs 'RA')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 20,
+      "arWord": "إِيمَانِ",
+      "strongsId": "G4102",
+      "locator": "SBLGNT:B48.C2.V20.w20",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4102' (πίστις) != SBLGNT lemma 'ὁ' @ w20",
+          "wms G4102@w20 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'πίστει' != 'τοῦ' @ w20",
+          "SBLGNT lemma 'πίστις' != 'ὁ' @ w20"
+        ],
+        "morphology": [
+          "morph 'N- ----DSF-' != SBLGNT 'RA ----GSM-'",
+          "derived(pos 'noun' vs 'RA')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 22,
+      "arWord": "اللهِ",
+      "strongsId": "G2316",
+      "locator": "SBLGNT:B48.C2.V20.w22",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2316' (θεός) != SBLGNT lemma 'ὁ' @ w22",
+          "wms G2316@w22 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θεοῦ' != 'τοῦ' @ w22",
+          "SBLGNT lemma 'θεός' != 'ὁ' @ w22"
+        ],
+        "morphology": [
+          "morph 'N- ----GSM-' != SBLGNT 'RA ----GSM-'",
+          "derived(pos 'noun' vs 'RA')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 23,
+      "arWord": "الَّذِي",
+      "strongsId": "G3739",
+      "locator": "SBLGNT:B48.C2.V20.w23",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3739' (ὅς) != SBLGNT lemma 'θεός' @ w23",
+          "wms G3739@w23 != SBLGNT 'θεός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὃ' != 'θεοῦ' @ w23",
+          "SBLGNT lemma 'ὅς' != 'θεός' @ w23"
+        ],
+        "morphology": [
+          "morph 'RR ----ASN-' != SBLGNT 'N- ----GSM-'",
+          "derived(pos 'relative_pronoun' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 24,
+      "arWord": "أَحَبَّنِي",
+      "strongsId": "G25",
+      "locator": "SBLGNT:B48.C2.V20.w24",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G25' (ἀγαπάω) != SBLGNT lemma 'ὁ' @ w24",
+          "wms G25@w24 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἀγαπήσαντός' != 'τοῦ' @ w24",
+          "SBLGNT lemma 'ἀγαπάω' != 'ὁ' @ w24"
+        ],
+        "morphology": [
+          "morph 'V- -AAPGSM-' != SBLGNT 'RA ----GSM-'",
+          "derived(pos 'verb' vs 'RA')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 25,
+      "arWord": "وَأَسْلَمَ",
+      "strongsId": "G3860",
+      "locator": "SBLGNT:B48.C2.V20.w25",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3860' (παραδίδωμι) != SBLGNT lemma 'ἀγαπάω' @ w25",
+          "wms G3860@w25 != SBLGNT 'ἀγαπάω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'παραδόντος' != 'ἀγαπήσαντός' @ w25",
+          "SBLGNT lemma 'παραδίδωμι' != 'ἀγαπάω' @ w25"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 26,
+      "arWord": "نَفْسَهُ",
+      "strongsId": "G1438",
+      "locator": "SBLGNT:B48.C2.V20.w26",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1438' (ἑαυτοῦ) != SBLGNT lemma 'ἐγώ' @ w26",
+          "wms G1438@w26 != SBLGNT 'ἐγώ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἑαυτὸν' != 'με' @ w26",
+          "SBLGNT lemma 'ἑαυτοῦ' != 'ἐγώ' @ w26"
+        ],
+        "morphology": [
+          "morph 'RP ----ASM-' != SBLGNT 'RP ----AS--'",
+          "derived(gender 'masculine' vs 'null')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 2:20",
+      "lang": "greek",
+      "pos": 27,
+      "arWord": "لأَجْلِي",
+      "strongsId": "G5228",
+      "locator": "SBLGNT:B48.C2.V20.w27",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5228' (ὑπέρ) != SBLGNT lemma 'καί' @ w27",
+          "wms G5228@w27 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὑπὲρ' != 'καὶ' @ w27",
+          "SBLGNT lemma 'ὑπέρ' != 'καί' @ w27"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'C- --------'",
+          "derived(pos 'preposition' vs 'C-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 1,
+      "arWord": "لأَنَّنَا",
+      "strongsId": "G1063",
+      "locator": "SBLGNT:B49.C2.V10.w1",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1063' (γάρ) != SBLGNT lemma 'αὐτός' @ w1",
+          "wms G1063@w1 != SBLGNT 'αὐτός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'γάρ' != 'αὐτοῦ' @ w1",
+          "SBLGNT lemma 'γάρ' != 'αὐτός' @ w1"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'RP ----GSM-'",
+          "derived(pos 'conjunction' vs 'RP')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "نَحْنُ",
+      "strongsId": "G1510",
+      "locator": "SBLGNT:B49.C2.V10.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1510' (εἰμί) != SBLGNT lemma 'γάρ' @ w2",
+          "wms G1510@w2 != SBLGNT 'γάρ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐσμεν' != 'γάρ' @ w2",
+          "SBLGNT lemma 'εἰμί' != 'γάρ' @ w2"
+        ],
+        "morphology": [
+          "morph 'V- 1PAI-P--' != SBLGNT 'C- --------'",
+          "derived(pos 'verb' vs 'C-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 3,
+      "arWord": "عَمَلُهُ",
+      "strongsId": "G4161",
+      "locator": "SBLGNT:B49.C2.V10.w3",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4161' (ποίημα) != SBLGNT lemma 'εἰμί' @ w3",
+          "wms G4161@w3 != SBLGNT 'εἰμί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ποίημα' != 'ἐσμεν' @ w3",
+          "SBLGNT lemma 'ποίημα' != 'εἰμί' @ w3"
+        ],
+        "morphology": [
+          "morph 'N- ----NSN-' != SBLGNT 'V- 1PAI-P--'",
+          "derived(pos 'noun' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "مَخْلُوقِينَ",
+      "strongsId": "G2936",
+      "locator": "SBLGNT:B49.C2.V10.w4",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2936' (κτίζω) != SBLGNT lemma 'ποίημα' @ w4",
+          "wms G2936@w4 != SBLGNT 'ποίημα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'κτισθέντες' != 'ποίημα' @ w4",
+          "SBLGNT lemma 'κτίζω' != 'ποίημα' @ w4"
+        ],
+        "morphology": [
+          "morph 'V- -APPNPM-' != SBLGNT 'N- ----NSN-'",
+          "derived(pos 'verb' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 5,
+      "arWord": "فِي",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B49.C2.V10.w5",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'κτίζω' @ w5",
+          "wms G1722@w5 != SBLGNT 'κτίζω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'κτισθέντες' @ w5",
+          "SBLGNT lemma 'ἐν' != 'κτίζω' @ w5"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'V- -APPNPM-'",
+          "derived(pos 'preposition' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "الْمَسِيحِ",
+      "strongsId": "G5547",
+      "locator": "SBLGNT:B49.C2.V10.w6",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'ἐν' @ w6",
+          "wms G5547@w6 != SBLGNT 'ἐν'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Χριστῷ' != 'ἐν' @ w6",
+          "SBLGNT lemma 'Χριστός' != 'ἐν' @ w6"
+        ],
+        "morphology": [
+          "morph 'N- ----DSM-' != SBLGNT 'P- --------'",
+          "derived(pos 'proper_noun' vs 'P-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "يَسُوعَ",
+      "strongsId": "G2424",
+      "locator": "SBLGNT:B49.C2.V10.w7",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2424' (Ἰησοῦς) != SBLGNT lemma 'Χριστός' @ w7",
+          "wms G2424@w7 != SBLGNT 'Χριστός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Ἰησοῦ' != 'Χριστῷ' @ w7",
+          "SBLGNT lemma 'Ἰησοῦς' != 'Χριστός' @ w7"
+        ],
+        "morphology": [
+          "derived(pos 'proper_noun' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "لأَعْمَال",
+      "strongsId": "G2041",
+      "locator": "SBLGNT:B49.C2.V10.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2041' (ἔργον) != SBLGNT lemma 'Ἰησοῦς' @ w8",
+          "wms G2041@w8 != SBLGNT 'Ἰησοῦς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἔργοις' != 'Ἰησοῦ' @ w8",
+          "SBLGNT lemma 'ἔργον' != 'Ἰησοῦς' @ w8"
+        ],
+        "morphology": [
+          "morph 'N- ----DPN-' != SBLGNT 'N- ----DSM-'",
+          "derived(number 'plural' vs 'singular')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 9,
+      "arWord": "صَالِحَةٍ",
+      "strongsId": "G18",
+      "locator": "SBLGNT:B49.C2.V10.w9",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G18' (ἀγαθός) != SBLGNT lemma 'ἐπί' @ w9",
+          "wms G18@w9 != SBLGNT 'ἐπί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἀγαθοῖς' != 'ἐπὶ' @ w9",
+          "SBLGNT lemma 'ἀγαθός' != 'ἐπί' @ w9"
+        ],
+        "morphology": [
+          "morph 'A- ----DPN-' != SBLGNT 'P- --------'",
+          "derived(pos 'adjective' vs 'P-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 11,
+      "arWord": "سَبَقَ",
+      "strongsId": "G4300",
+      "locator": "TR:B49.C2.V10.w11",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G4300' != 'G18' @ w11",
+          "wms G4300@w11 != TR 'G18'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'προκυρόω' != 'ἀγαθοῖς,' @ w11",
+          "TR lemma 'προκυρόω' != 'ἀγαθός' @ w11"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 12,
+      "arWord": "اللهُ",
+      "strongsId": "G2316",
+      "locator": "SBLGNT:B49.C2.V10.w12",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2316' (θεός) != SBLGNT lemma 'ὅς' @ w12",
+          "wms G2316@w12 != SBLGNT 'ὅς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θεὸς' != 'οἷς' @ w12",
+          "SBLGNT lemma 'θεός' != 'ὅς' @ w12"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'RR ----DPN-'",
+          "derived(pos 'noun' vs 'RR')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 13,
+      "arWord": "فَأَعَدَّهَا",
+      "strongsId": "G2090",
+      "locator": "TR:B49.C2.V10.w13",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G2090' != 'G4282' @ w13",
+          "wms G2090@w13 != TR 'G4282'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'ἑτοιμάζω' != 'προητοίμασεν' @ w13",
+          "TR lemma 'ἑτοιμάζω' != 'προετοιμάζω' @ w13"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 14,
+      "arWord": "لِكَيْ",
+      "strongsId": "G2443",
+      "locator": "SBLGNT:B49.C2.V10.w14",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2443' (ἵνα) != SBLGNT lemma 'ὁ' @ w14",
+          "wms G2443@w14 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἵνα' != 'ὁ' @ w14",
+          "SBLGNT lemma 'ἵνα' != 'ὁ' @ w14"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'RA ----NSM-'",
+          "derived(pos 'conjunction' vs 'RA')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 15,
+      "arWord": "نَسْلُكَ",
+      "strongsId": "G4043",
+      "locator": "SBLGNT:B49.C2.V10.w15",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4043' (περιπατέω) != SBLGNT lemma 'θεός' @ w15",
+          "wms G4043@w15 != SBLGNT 'θεός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'περιπατήσωμεν' != 'θεὸς' @ w15",
+          "SBLGNT lemma 'περιπατέω' != 'θεός' @ w15"
+        ],
+        "morphology": [
+          "morph 'V- 1AAS-P--' != SBLGNT 'N- ----NSM-'",
+          "derived(pos 'verb' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 2:10",
+      "lang": "greek",
+      "pos": 16,
+      "arWord": "فِيهَا",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B49.C2.V10.w16",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'ἵνα' @ w16",
+          "wms G1722@w16 != SBLGNT 'ἵνα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'ἵνα' @ w16",
+          "SBLGNT lemma 'ἐν' != 'ἵνα' @ w16"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'C- --------'",
+          "derived(pos 'preposition' vs 'C-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Phil 2:5",
+      "lang": "greek",
+      "pos": 1,
+      "arWord": "فَلْيَكُنْ",
+      "strongsId": "G1510",
+      "locator": "TR:B50.C2.V5.w1",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G1510' != 'G3778' @ w1",
+          "wms G1510@w1 != TR 'G3778'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'εἰμί' != 'τοῦτο' @ w1",
+          "TR lemma 'εἰμί' != 'οὗτος' @ w1"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Phil 2:5",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "فِيكُمْ",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B50.C2.V5.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'φρονέω' @ w2",
+          "wms G1722@w2 != SBLGNT 'φρονέω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'φρονεῖτε' @ w2",
+          "SBLGNT lemma 'ἐν' != 'φρονέω' @ w2"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'V- 2PAD-P--'",
+          "derived(pos 'preposition' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Phil 2:5",
+      "lang": "greek",
+      "pos": 3,
+      "arWord": "هذَا",
+      "strongsId": "G3778",
+      "locator": "SBLGNT:B50.C2.V5.w3",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3778' (οὗτος) != SBLGNT lemma 'ἐν' @ w3",
+          "wms G3778@w3 != SBLGNT 'ἐν'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'τοῦτο' != 'ἐν' @ w3",
+          "SBLGNT lemma 'οὗτος' != 'ἐν' @ w3"
+        ],
+        "morphology": [
+          "morph 'RD ----ASN-' != SBLGNT 'P- --------'",
+          "derived(pos 'demonstrative' vs 'P-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Phil 2:5",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "الْفِكْرُ",
+      "strongsId": "G5426",
+      "locator": "TR:B50.C2.V5.w4",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G5426' != 'G1722' @ w4",
+          "wms G5426@w4 != TR 'G1722'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'φρονείσθω' != 'ἐν' @ w4",
+          "TR lemma 'φρονέω' != 'ἐν' @ w4"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Phil 2:5",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "فِي",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B50.C2.V5.w6",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'καί' @ w6",
+          "wms G1722@w6 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'καὶ' @ w6",
+          "SBLGNT lemma 'ἐν' != 'καί' @ w6"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'D- --------'",
+          "derived(pos 'preposition' vs 'D-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Phil 2:5",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "الْمَسِيحِ",
+      "strongsId": "G5547",
+      "locator": "SBLGNT:B50.C2.V5.w7",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'ἐν' @ w7",
+          "wms G5547@w7 != SBLGNT 'ἐν'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Χριστῷ' != 'ἐν' @ w7",
+          "SBLGNT lemma 'Χριστός' != 'ἐν' @ w7"
+        ],
+        "morphology": [
+          "morph 'N- ----DSM-' != SBLGNT 'P- --------'",
+          "derived(pos 'proper_noun' vs 'P-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Phil 2:5",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "يَسُوعَ",
+      "strongsId": "G2424",
+      "locator": "SBLGNT:B50.C2.V5.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2424' (Ἰησοῦς) != SBLGNT lemma 'Χριστός' @ w8",
+          "wms G2424@w8 != SBLGNT 'Χριστός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Ἰησοῦ' != 'Χριστῷ' @ w8",
+          "SBLGNT lemma 'Ἰησοῦς' != 'Χριστός' @ w8"
+        ],
+        "morphology": [
+          "derived(pos 'proper_noun' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Phil 2:5",
+      "lang": "greek",
+      "pos": 9,
+      "arWord": "أَيْضًا",
+      "strongsId": "G2532",
+      "locator": "SBLGNT:B50.C2.V5.w9",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2532' (καί) != SBLGNT lemma 'Ἰησοῦς' @ w9",
+          "wms G2532@w9 != SBLGNT 'Ἰησοῦς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'καὶ' != 'Ἰησοῦ' @ w9",
+          "SBLGNT lemma 'καί' != 'Ἰησοῦς' @ w9"
+        ],
+        "morphology": [
+          "morph 'D- --------' != SBLGNT 'N- ----DSM-'",
+          "derived(pos 'adverb' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 1,
+      "arWord": "اشْكُرُوا",
+      "strongsId": "G2168",
+      "locator": "SBLGNT:B52.C5.V18.w1",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2168' (εὐχαριστέω) != SBLGNT lemma 'ἐν' @ w1",
+          "wms G2168@w1 != SBLGNT 'ἐν'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'εὐχαριστεῖτε' != 'ἐν' @ w1",
+          "SBLGNT lemma 'εὐχαριστέω' != 'ἐν' @ w1"
+        ],
+        "morphology": [
+          "morph 'V- 2PAD-P--' != SBLGNT 'P- --------'",
+          "derived(pos 'verb' vs 'P-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "فِي",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B52.C5.V18.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'πᾶς' @ w2",
+          "wms G1722@w2 != SBLGNT 'πᾶς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'παντὶ' @ w2",
+          "SBLGNT lemma 'ἐν' != 'πᾶς' @ w2"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'A- ----DSN-'",
+          "derived(pos 'preposition' vs 'A-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 3,
+      "arWord": "كُلِّ",
+      "strongsId": "G3956",
+      "locator": "SBLGNT:B52.C5.V18.w3",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3956' (πᾶς) != SBLGNT lemma 'εὐχαριστέω' @ w3",
+          "wms G3956@w3 != SBLGNT 'εὐχαριστέω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'παντὶ' != 'εὐχαριστεῖτε' @ w3",
+          "SBLGNT lemma 'πᾶς' != 'εὐχαριστέω' @ w3"
+        ],
+        "morphology": [
+          "morph 'A- ----DSN-' != SBLGNT 'V- 2PAD-P--'",
+          "derived(pos 'adjective' vs 'V-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "شَيْءٍ",
+      "strongsId": "G3956",
+      "locator": "SBLGNT:B52.C5.V18.w4",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3956' (πᾶς) != SBLGNT lemma 'οὗτος' @ w4",
+          "wms G3956@w4 != SBLGNT 'οὗτος'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'παντὶ' != 'τοῦτο' @ w4",
+          "SBLGNT lemma 'πᾶς' != 'οὗτος' @ w4"
+        ],
+        "morphology": [
+          "morph 'A- ----DSN-' != SBLGNT 'RD ----NSN-'",
+          "derived(pos 'adjective' vs 'RD')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "هذِهِ",
+      "strongsId": "G3778",
+      "locator": "SBLGNT:B52.C5.V18.w6",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3778' (οὗτος) != SBLGNT lemma 'θέλημα' @ w6",
+          "wms G3778@w6 != SBLGNT 'θέλημα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'τοῦτο' != 'θέλημα' @ w6",
+          "SBLGNT lemma 'οὗτος' != 'θέλημα' @ w6"
+        ],
+        "morphology": [
+          "morph 'RD ----NSN-' != SBLGNT 'N- ----NSN-'",
+          "derived(pos 'demonstrative' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "هِيَ",
+      "strongsId": "G3778",
+      "locator": "SBLGNT:B52.C5.V18.w7",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3778' (οὗτος) != SBLGNT lemma 'θεός' @ w7",
+          "wms G3778@w7 != SBLGNT 'θεός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'τοῦτο' != 'θεοῦ' @ w7",
+          "SBLGNT lemma 'οὗτος' != 'θεός' @ w7"
+        ],
+        "morphology": [
+          "morph 'RD ----NSN-' != SBLGNT 'N- ----GSM-'",
+          "derived(pos 'demonstrative' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "مَشِيئَةُ",
+      "strongsId": "G2307",
+      "locator": "SBLGNT:B52.C5.V18.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2307' (θέλημα) != SBLGNT lemma 'ἐν' @ w8",
+          "wms G2307@w8 != SBLGNT 'ἐν'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θέλημα' != 'ἐν' @ w8",
+          "SBLGNT lemma 'θέλημα' != 'ἐν' @ w8"
+        ],
+        "morphology": [
+          "morph 'N- ----NSN-' != SBLGNT 'P- --------'",
+          "derived(pos 'noun' vs 'P-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 9,
+      "arWord": "اللهِ",
+      "strongsId": "G2316",
+      "locator": "SBLGNT:B52.C5.V18.w9",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2316' (θεός) != SBLGNT lemma 'Χριστός' @ w9",
+          "wms G2316@w9 != SBLGNT 'Χριστός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θεοῦ' != 'Χριστῷ' @ w9",
+          "SBLGNT lemma 'θεός' != 'Χριστός' @ w9"
+        ],
+        "morphology": [
+          "morph 'N- ----GSM-' != SBLGNT 'N- ----DSM-'",
+          "derived(case 'genitive' vs 'dative')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 10,
+      "arWord": "فِي",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B52.C5.V18.w10",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'Ἰησοῦς' @ w10",
+          "wms G1722@w10 != SBLGNT 'Ἰησοῦς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'Ἰησοῦ' @ w10",
+          "SBLGNT lemma 'ἐν' != 'Ἰησοῦς' @ w10"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'N- ----DSM-'",
+          "derived(pos 'preposition' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 11,
+      "arWord": "الْمَسِيحِ",
+      "strongsId": "G5547",
+      "locator": "SBLGNT:B52.C5.V18.w11",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'εἰς' @ w11",
+          "wms G5547@w11 != SBLGNT 'εἰς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Χριστῷ' != 'εἰς' @ w11",
+          "SBLGNT lemma 'Χριστός' != 'εἰς' @ w11"
+        ],
+        "morphology": [
+          "morph 'N- ----DSM-' != SBLGNT 'P- --------'",
+          "derived(pos 'proper_noun' vs 'P-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 12,
+      "arWord": "يَسُوعَ",
+      "strongsId": "G2424",
+      "locator": "SBLGNT:B52.C5.V18.w12",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2424' (Ἰησοῦς) != SBLGNT lemma 'σύ' @ w12",
+          "wms G2424@w12 != SBLGNT 'σύ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Ἰησοῦ' != 'ὑμᾶς' @ w12",
+          "SBLGNT lemma 'Ἰησοῦς' != 'σύ' @ w12"
+        ],
+        "morphology": [
+          "morph 'N- ----DSM-' != SBLGNT 'RP ----AP--'",
+          "derived(pos 'proper_noun' vs 'RP')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 13,
+      "arWord": "مِنْ",
+      "strongsId": "G1519",
+      "locator": "SBLGNT:B52.C5.V18.w13",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "SBLGNT w13 exceeds token count (12)",
+          "wms component G1519@w13 exceeds SBLGNT token count (12)"
+        ]
+      }
+    },
+    {
+      "verse": "1Thess 5:18",
+      "lang": "greek",
+      "pos": 14,
+      "arWord": "جِهَتِكُمْ",
+      "strongsId": "G4771",
+      "locator": "SBLGNT:B52.C5.V18.w14",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "SBLGNT w14 exceeds token count (12)",
+          "wms component G4771@w14 exceeds SBLGNT token count (12)"
+        ]
+      }
+    }
+  ]
+}
