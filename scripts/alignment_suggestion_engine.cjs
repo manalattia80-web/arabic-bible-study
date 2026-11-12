@@ -220,21 +220,50 @@ const outIdx = process.argv.indexOf('--out');
 const outPath = (outIdx !== -1 && process.argv[outIdx + 1])
   ? path.resolve(process.cwd(), process.argv[outIdx + 1])
   : path.join(__dirname, 'round2_alignment_proposals.json');
-const strictAuditPath = path.join(__dirname, 'unseen_holdout_round2_4axis_v379_strict_locator.json');
-const fixedAuditPath = path.join(__dirname, 'unseen_holdout_round2_4axis_v379_locator_and_axes_fixed.json');
-const auditLookup = new Map();
-const auditSrcPath = fs.existsSync(fixedAuditPath) ? fixedAuditPath : strictAuditPath;
-if (fs.existsSync(auditSrcPath)) {
-  const auditJson = JSON.parse(fs.readFileSync(auditSrcPath, 'utf8'));
-  for (const a of (auditJson.alerts || [])) {
-    auditLookup.set(`${a.verse}#${a.pos}`, a.axes);
-  }
-}
+const auditArgIdx = process.argv.indexOf('--audit-report');
+const auditSrcPath = (auditArgIdx !== -1 && process.argv[auditArgIdx + 1])
+  ? path.resolve(process.cwd(), process.argv[auditArgIdx + 1])
+  : path.join(__dirname, 'unseen_holdout_round2_4axis_v379_locator_and_axes_fixed.json');
 
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const dbSha256 = sha256File(dbPath);
 const manifestSha256 = sha256File(manifestPath);
 const exclusionKeysSha256 = sha256Str((manifest.excluded_verse_keys || []).join('\n') + '\n');
+
+if (!fs.existsSync(auditSrcPath)) {
+  console.error(`FATAL: Required matching audit report not found: ${auditSrcPath}`);
+  process.exit(1);
+}
+let auditJson;
+try {
+  auditJson = JSON.parse(fs.readFileSync(auditSrcPath, 'utf8'));
+} catch (err) {
+  console.error(`FATAL: Failed to parse audit report ${auditSrcPath}: ${err.message}`);
+  process.exit(1);
+}
+if (!auditJson || !Array.isArray(auditJson.alerts)) {
+  console.error(`FATAL: Invalid audit report structure (missing alerts array): ${auditSrcPath}`);
+  process.exit(1);
+}
+if (!auditJson.dbSha256 || auditJson.dbSha256 !== dbSha256) {
+  console.error(`FATAL: Audit report dbSha256 (${auditJson.dbSha256 || 'missing'}) does not match current DB (${dbSha256}). Re-run audit_unseen_holdout_sample.cjs first.`);
+  process.exit(1);
+}
+if (!auditJson.manifestSha256 || auditJson.manifestSha256 !== manifestSha256) {
+  console.error(`FATAL: Audit report manifestSha256 (${auditJson.manifestSha256 || 'missing'}) does not match manifest (${manifestSha256}).`);
+  process.exit(1);
+}
+if (auditJson.exclusionKeysSha256 && auditJson.exclusionKeysSha256 !== exclusionKeysSha256) {
+  console.error(`FATAL: Audit report exclusionKeysSha256 (${auditJson.exclusionKeysSha256}) does not match manifest (${exclusionKeysSha256}).`);
+  process.exit(1);
+}
+
+const auditReportSha256 = sha256File(auditSrcPath);
+const auditLookup = new Map();
+for (const a of auditJson.alerts) {
+  auditLookup.set(`${a.verse}#${a.pos}`, a.axes);
+}
+
 const dartDbVerMatch = fs.readFileSync(path.join(repoRoot, 'mobile/lib/core/services/database_service.dart'), 'utf8').match(/const\s+targetDbVersion\s*=\s*(\d+);/);
 const version = dartDbVerMatch ? `v1.0.${dartDbVerMatch[1]}` : 'v1.0.379';
 
@@ -353,6 +382,11 @@ for (const v of manifest.holdout_verses) {
   console.log(`  ${v.name.padEnd(11)} [${v.lang.padEnd(7)}]: clean=${String(vSummary.verifiedClean).padStart(2)}, keep_link_fix_meta=${String(vSummary.keepLinkRepairMetadata).padStart(2)}, proposed=${String(vSummary.proposedRepair).padStart(2)}, pending=${String(vSummary.pendingReview).padStart(2)}`);
 }
 
+if (auditJson.summary && typeof auditJson.summary.totalUnits === 'number' && totals.totalUnits !== auditJson.summary.totalUnits) {
+  console.error(`FATAL: Unit count mismatch between DB (${totals.totalUnits}) and audit report (${auditJson.summary.totalUnits}).`);
+  process.exit(1);
+}
+
 console.log('\n--- ALIGNMENT ENGINE SUMMARY (CALIBRATED) ---');
 console.log(`  Total Units               : ${totals.totalUnits}`);
 console.log(`  VERIFIED_CLEAN            : ${totals.verifiedClean}`);
@@ -366,6 +400,8 @@ const output = {
   manifestPath: path.relative(repoRoot, manifestPath).replace(/\\/g, '/'),
   manifestSha256,
   exclusionKeysSha256,
+  auditReportPath: path.relative(repoRoot, auditSrcPath).replace(/\\/g, '/'),
+  auditReportSha256,
   note: 'Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.',
   totals,
   verses: verseProposals

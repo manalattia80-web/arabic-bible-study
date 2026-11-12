@@ -4,6 +4,8 @@
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
+  "auditReportPath": "scripts/unseen_holdout_round2_4axis_v379_locator_and_axes_fixed.json",
+  "auditReportSha256": "f8069605d639ac87e2752ba6e62bcae85250b635edde3d675d9e65b768f703b3",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,
