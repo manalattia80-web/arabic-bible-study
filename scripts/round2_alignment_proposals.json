@@ -1,16 +1,16 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "e652263b488a8c7ae064dcc79bb3115656d4ea57060af83b6206a23bf2b5a591",
+  "dbSha256": "f03a9d7520346c93aa5a8ecab1f2a8158a390adf38739c43931e09950852c3f3",
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
-  "auditReportPath": "scripts/unseen_holdout_round2_4axis_v379_locator_and_axes_fixed.json",
-  "auditReportSha256": "f8069605d639ac87e2752ba6e62bcae85250b635edde3d675d9e65b768f703b3",
+  "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch1.json",
+  "auditReportSha256": "a1ae1e924b6085744352e0f0af712626b1f1d2c4dbbe5e6602aae876b815795e",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,
-    "verifiedClean": 38,
-    "keepLinkRepairMetadata": 3,
+    "verifiedClean": 41,
+    "keepLinkRepairMetadata": 0,
     "proposedRepair": 21,
     "pendingReview": 193
   },
@@ -19,8 +19,8 @@
       "verse": "Ruth 2:12",
       "lang": "hebrew",
       "summary": {
-        "verifiedClean": 5,
-        "keepLinkRepairMetadata": 1,
+        "verifiedClean": 6,
+        "keepLinkRepairMetadata": 0,
         "proposedRepair": 1,
         "pendingReview": 10
       },
@@ -426,36 +426,19 @@
             "morphSource": "oshb_wlc",
             "relationType": null,
             "components": [
-              "H4480:primary@w7[מִן::oshb_wlc]"
+              "H4480:primary@w7[מֵעִ֤ם:HR/R:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [
-              "surface 'מִן' != OSHB 'מֵעִ֤ם' @ w7",
-              "wms H4480@w7 surface 'מִן' != OSHB 'מֵעִ֤ם'"
-            ],
-            "morphology": [],
-            "sourceLocator": []
-          },
-          "status": "KEEP_LINK_REPAIR_METADATA",
-          "proposalType": "keep_link_rederive_metadata",
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
           "proposed": {
             "w": 7,
             "strongsId": "H4480",
             "locator": "OSHB:B8.C2.V12.w7",
             "components": [
-              "H4480:primary@w7[מִן::oshb_wlc]"
-            ],
-            "existingAlerts": {
-              "lexical": [],
-              "lemmaSurface": [
-                "surface 'מִן' != OSHB 'מֵעִ֤ם' @ w7",
-                "wms H4480@w7 surface 'מִן' != OSHB 'מֵעִ֤ם'"
-              ],
-              "morphology": [],
-              "sourceLocator": []
-            }
+              "H4480:primary@w7[מֵעִ֤ם:HR/R:oshb_wlc]"
+            ]
           },
           "topCandidates": [
             {
@@ -5087,8 +5070,8 @@
       "verse": "1Kgs 19:12",
       "lang": "hebrew",
       "summary": {
-        "verifiedClean": 6,
-        "keepLinkRepairMetadata": 1,
+        "verifiedClean": 7,
+        "keepLinkRepairMetadata": 0,
         "proposedRepair": 0,
         "pendingReview": 6
       },
@@ -5558,40 +5541,19 @@
             "morphSource": "oshb_wlc",
             "relationType": null,
             "components": [
-              "H784:primary@w8[בָאֵ֖שׁ:HRd/Ncbsa:oshb_wlc]"
+              "H784:primary@w8[הָאֵ֔שׁ:HTd/Ncbsa:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [
-              "surface 'בָאֵ֖שׁ' != OSHB 'הָאֵ֔שׁ' @ w8",
-              "wms H784@w8 surface 'בָאֵ֖שׁ' != OSHB 'הָאֵ֔שׁ'"
-            ],
-            "morphology": [
-              "morph 'HRd/Ncbsa' != OSHB 'HTd/Ncbsa'"
-            ],
-            "sourceLocator": []
-          },
-          "status": "KEEP_LINK_REPAIR_METADATA",
-          "proposalType": "keep_link_rederive_metadata",
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
           "proposed": {
             "w": 8,
             "strongsId": "H784",
             "locator": "OSHB:B11.C19.V12.w8",
             "components": [
-              "H784:primary@w8[בָאֵ֖שׁ:HRd/Ncbsa:oshb_wlc]"
-            ],
-            "existingAlerts": {
-              "lexical": [],
-              "lemmaSurface": [
-                "surface 'בָאֵ֖שׁ' != OSHB 'הָאֵ֔שׁ' @ w8",
-                "wms H784@w8 surface 'בָאֵ֖שׁ' != OSHB 'הָאֵ֔שׁ'"
-              ],
-              "morphology": [
-                "morph 'HRd/Ncbsa' != OSHB 'HTd/Ncbsa'"
-              ],
-              "sourceLocator": []
-            }
+              "H784:primary@w8[הָאֵ֔שׁ:HTd/Ncbsa:oshb_wlc]"
+            ]
           },
           "topCandidates": [
             {
@@ -7250,8 +7212,8 @@
       "verse": "Ezra 5:11",
       "lang": "aramaic",
       "summary": {
-        "verifiedClean": 4,
-        "keepLinkRepairMetadata": 1,
+        "verifiedClean": 5,
+        "keepLinkRepairMetadata": 0,
         "proposedRepair": 1,
         "pendingReview": 19
       },
@@ -8147,34 +8109,19 @@
             "morphSource": "oshb_wlc",
             "relationType": null,
             "components": [
-              "H1768:primary@w14[דִּי::oshb_wlc]"
+              "H1768:primary@w14[דִּֽי:ATr:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [
-              "surface 'אֲשֶׁר' != OSHB 'דִּֽי' @ w14"
-            ],
-            "morphology": [],
-            "sourceLocator": []
-          },
-          "status": "KEEP_LINK_REPAIR_METADATA",
-          "proposalType": "keep_link_rederive_metadata",
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
           "proposed": {
             "w": 14,
             "strongsId": "H1768",
             "locator": "OSHB:B15.C5.V11.w14",
             "components": [
-              "H1768:primary@w14[דִּי::oshb_wlc]"
-            ],
-            "existingAlerts": {
-              "lexical": [],
-              "lemmaSurface": [
-                "surface 'אֲשֶׁר' != OSHB 'דִּֽי' @ w14"
-              ],
-              "morphology": [],
-              "sourceLocator": []
-            }
+              "H1768:primary@w14[דִּֽי:ATr:oshb_wlc]"
+            ]
           },
           "topCandidates": [
             {

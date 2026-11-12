@@ -19,7 +19,7 @@ const proposalsPath = (pIdx !== -1 && process.argv[pIdx + 1])
 const aIdx = process.argv.indexOf('--audit');
 const auditPath = (aIdx !== -1 && process.argv[aIdx + 1])
   ? path.resolve(process.cwd(), process.argv[aIdx + 1])
-  : path.join(__dirname, 'unseen_holdout_round2_4axis_v379_locator_and_axes_fixed.json');
+  : path.join(__dirname, 'unseen_holdout_round2_4axis_batch1.json');
 
 const prop = JSON.parse(fs.readFileSync(proposalsPath, 'utf8'));
 const fixedAudit = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
@@ -72,11 +72,13 @@ const luke1910 = r1Prop.verses.find(v => v.verse === 'Luke 19:10');
 const lukeQad = luke1910.units.find(u => u.arWord === 'قَدْ');
 check('Luke 19:10 "قَدْ" does NOT propose G5207 (υἱός)', Boolean(lukeQad) && !(lukeQad.proposed && lukeQad.proposed.strongsId === 'G5207'), JSON.stringify(lukeQad));
 
-// Gate D: 1Kgs 19:12 "النَّارِ" & Ezra 5:11 "الَّذِي" not VERIFIED_CLEAN while dirty
+// Gate D: 1Kgs 19:12 "النَّارِ" & Ezra 5:11 "الَّذِي" match their audit state (VERIFIED_CLEAN iff 0 alerts; never VERIFIED_CLEAN when alerted)
 const kgsFire = prop.verses.find(v => v.verse === '1Kgs 19:12').units.find(u => u.arWord.includes('النَّار') || u.arWord.includes('النار') || u.arWord.includes('النَّار'));
 const ezraAlladhi = ezra511.units.find(u => u.arWord.includes('الَّذ') || u.arWord.includes('الَّذ'));
-check('1Kgs 19:12 "النَّارِ" NOT VERIFIED_CLEAN while carrying alerts', Boolean(kgsFire) && kgsFire.status !== 'VERIFIED_CLEAN', kgsFire ? kgsFire.status : 'missing');
-check('Ezra 5:11 "الَّذِي" NOT VERIFIED_CLEAN while carrying alerts', Boolean(ezraAlladhi) && ezraAlladhi.status !== 'VERIFIED_CLEAN', ezraAlladhi ? ezraAlladhi.status : 'missing');
+const kgsHasAlerts = Boolean(kgsFire && alertKeys.has(`1Kgs 19:12#${kgsFire.arPos}`));
+const ezraHasAlerts = Boolean(ezraAlladhi && alertKeys.has(`Ezra 5:11#${ezraAlladhi.arPos}`));
+check('1Kgs 19:12 "النَّارِ" status matches audit cleanliness', Boolean(kgsFire) && (kgsHasAlerts ? kgsFire.status !== 'VERIFIED_CLEAN' : kgsFire.status === 'VERIFIED_CLEAN'), kgsFire ? `${kgsFire.status} (alerts=${kgsHasAlerts})` : 'missing');
+check('Ezra 5:11 "الَّذِي" status matches audit cleanliness', Boolean(ezraAlladhi) && (ezraHasAlerts ? ezraAlladhi.status !== 'VERIFIED_CLEAN' : ezraAlladhi.status === 'VERIFIED_CLEAN'), ezraAlladhi ? `${ezraAlladhi.status} (alerts=${ezraHasAlerts})` : 'missing');
 
 // Gate E: Every VERIFIED_CLEAN has 0 alerts in strict audit
 let badClean = [];
