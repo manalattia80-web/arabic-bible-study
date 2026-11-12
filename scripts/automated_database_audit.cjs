@@ -2652,6 +2652,55 @@ const expectedHeb61 = [
 ].join('\n');
 assertCondition('Holdout Batch 2 Hebrew Prov 16:9 Alignment & Control Exod 20:13 Untouched', heb61Rows === expectedHeb61, `Found=\n${heb61Rows}`);
 
+// 62. Holdout Batch 3 Aramaic Ezra 4:12 Qere/Peil & Zero strongs_lexicon Provenance
+const aram62Rows = query(`
+  SELECT wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'NULL') || '|' || wm.orig_word_position || '|' || COALESCE(wm.orig_morphology,'NULL') || '|' || COALESCE(wm.morph_stem,'NULL') || '|' || COALESCE(wm.morph_mood,'NULL') || '|' || COALESCE(wm.verified_locator,'NULL')
+  FROM word_mappings wm
+  WHERE wm.verse_id = (SELECT id FROM verses WHERE book_id = 15 AND chapter_num = 4 AND verse_num = 12)
+    AND wm.ar_word_position IN (1, 7, 8, 17, 19, 20)
+  ORDER BY wm.ar_word_position;
+`).replace(/\r/g, '').trim();
+const expectedAram62 = [
+  '1|H3046|1|AVQsmsa|peil|passive_participle|OSHB:B15.C4.V12.w1',
+  '7|H4481|8|AR|NULL|NULL|OSHB:B15.C4.V12.w8',
+  '8|H3890|9|AR/Sp2ms|NULL|NULL|OSHB:B15.C4.V12.w9',
+  '17|H873|16|AC/Aafsd/Td|NULL|NULL|OSHB:B15.C4.V12.w16',
+  '19|H3635|21|AVep3mp|ethpeel|indicative|OSHB:B15.C4.V12.w21',
+  '20|H7792|19|AC/Ncmpd/Td|NULL|NULL|OSHB:B15.C4.V12.w19'
+].join('\n');
+const aramStrongsLexiconCnt = query(`
+  SELECT COUNT(*)
+  FROM word_mappings wm
+  JOIN verses vr ON wm.verse_id = vr.id
+  WHERE ((vr.book_id = 15 AND ((vr.chapter_num = 4 AND vr.verse_num = 12) OR (vr.chapter_num = 6 AND vr.verse_num = 14) OR (vr.chapter_num = 7 AND vr.verse_num = 12)))
+      OR (vr.book_id = 27 AND vr.chapter_num = 2 AND vr.verse_num = 44))
+    AND wm.morph_source = 'strongs_lexicon';
+`).replace(/\r/g, '').trim();
+assertCondition('Holdout Batch 3 Aramaic Ezra 4:12 Qere/Peil & Zero strongs_lexicon Provenance', aram62Rows === expectedAram62 && aramStrongsLexiconCnt === '0', `strongsLexiconCnt=${aramStrongsLexiconCnt}\nFound=\n${aram62Rows}`);
+
+// 63. Holdout Batch 3 Aramaic Ezra 6:14, Ezra 7:12 & Dan 2:44 Alignment Non-Regression
+const aram63Rows = query(`
+  SELECT vr.book_id || ':' || vr.chapter_num || ':' || vr.verse_num || '|' || wm.ar_word_position || '|' || COALESCE(wm.strongs_id,'NULL') || '|' || wm.orig_word_position || '|' || COALESCE(wm.orig_morphology,'NULL') || '|' || COALESCE(wm.morph_stem,'NULL') || '|' || COALESCE(wm.verified_locator,'NULL')
+  FROM word_mappings wm
+  JOIN verses vr ON wm.verse_id = vr.id
+  WHERE (vr.book_id = 15 AND vr.chapter_num = 6 AND vr.verse_num = 14 AND wm.ar_word_position IN (1, 12, 14))
+     OR (vr.book_id = 15 AND vr.chapter_num = 7 AND vr.verse_num = 12 AND wm.ar_word_position IN (6, 12))
+     OR (vr.book_id = 27 AND vr.chapter_num = 2 AND vr.verse_num = 44 AND wm.ar_word_position IN (3, 14, 18, 24))
+  ORDER BY vr.book_id, vr.chapter_num, wm.ar_word_position;
+`).replace(/\r/g, '').trim();
+const expectedAram63 = [
+  '15:6:14|1|NULL|0|NULL|NULL|AR_SYNTACTIC:B15.C6.V14.w1',
+  '15:6:14|12|H5714|11|ANp|NULL|OSHB:B15.C6.V14.w11',
+  '15:6:14|14|H3635|13|AC/Vep3mp|ethpeel|OSHB:B15.C6.V14.w13',
+  '15:7:12|6|H5831|4|AR/Np|NULL|OSHB:B15.C7.V12.w4',
+  '15:7:12|12|H1585|11|AVQsmsa|peil|OSHB:B15.C7.V12.w11',
+  '27:2:44|3|H581|4|APdxmp|NULL|OSHB:B27.C2.V44.w4',
+  '27:2:44|14|H7662|17|AVui3fs|hithpeel|OSHB:B27.C2.V44.w17',
+  '27:2:44|18|H5487|19|AC/Vhi3fs|haphel|OSHB:B27.C2.V44.w19',
+  '27:2:44|24|NULL|0|NULL|NULL|AR_SYNTACTIC:B27.C2.V44.w24'
+].join('\n');
+assertCondition('Holdout Batch 3 Aramaic Ezra 6:14, Ezra 7:12 & Dan 2:44 Alignment Non-Regression', aram63Rows === expectedAram63, `Found=\n${aram63Rows}`);
+
 
 
 

@@ -146,11 +146,14 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Aramaic Header Language Badge & Reproducible Holdout Measurement (v1.0.377)
-          - **Aramaic Language Badge Display Fix (`StrongsModal`)**: Updated [`strongs_modal.dart`](mobile/lib/features/word_study/widgets/strongs_modal.dart) to drive the top language badge from `StrongsModal.resolveMorphologyLanguage(mapping: mapping, entry: entry)` via `StrongsModal.formatLanguageBadge(...)`, rendering **«الآرامية»** for Aramaic records while keeping the `H...` Strong's ID intact and preserving `'Hebrew'` / `'Greek'` for Hebrew/Greek records.
-          - **Widget Tests Updated**: Added `formatLanguageBadge` unit assertions, updated Aramaic `StrongsModal` widget tests (`H1005`, `H3046`, `H69`, `H6634`) to verify `'الآرامية'` (and no `'Hebrew'`) alongside preserved Strong's IDs, plus a Hebrew control test (`H1697`).
-          - **Reproducible Unseen Holdout Suite (`0.00%` Historical Overlap)**: Committed calibrated auditor [`scripts/audit_unseen_holdout_sample.cjs`](scripts/audit_unseen_holdout_sample.cjs), canonical 15-verse manifest with SHA-256 exclusion provenance [`scripts/unseen_holdout_15_verses_manifest.json`](scripts/unseen_holdout_15_verses_manifest.json), Scrivener TR verse slice [`scripts/unseen_holdout_tr_scrivener_slice.json`](scripts/unseen_holdout_tr_scrivener_slice.json), and full 4-axis report [`scripts/unseen_holdout_4axis_v376.json`](scripts/unseen_holdout_4axis_v376.json) (`79/253` clean = `31.23%`, `0` overlap across `2,604` excluded historical verses).
-          - **Database Unchanged (`targetDbVersion = 376`)**: `311 / 311 (100.00%)` canonical benchmark, `56/56` negative gates passing.
+          ## 🚀 Language-Split Holdout Repairs, Scrivener TR Robinson Verification & Gates 57–63 (v1.0.378)
+          - **Preserved Pre-Edit Baseline (`v1.0.376` / `3a0a478`)**: Automated holdout baseline [`scripts/unseen_holdout_4axis_v376.json`](scripts/unseen_holdout_4axis_v376.json) remains strictly untouched (`79/253` clean = `31.23%`, `174` alerts), paired with separate manual adjudication [`scripts/unseen_holdout_manual_adjudication_v376.json`](scripts/unseen_holdout_manual_adjudication_v376.json) (`75/253` clean = `29.64%`, `178` defects including 4 missed repeated-clause errors in Mark 12:30).
+          - **Scrivener TR Robinson & Repeated-Clause Gates**: Added full 8-field + literal Robinson verifier [`scripts/robinson_tr_helper.cjs`](scripts/robinson_tr_helper.cjs) (`1,065/1,065` tags parsed) and primary-locator collision detection across [`scripts/audit_unseen_holdout_sample.cjs`](scripts/audit_unseen_holdout_sample.cjs), validated by `24/24` self-test assertions.
+          - **Sequential Language Batches (`253/253` Repaired/Control Clean)**:
+            - **Batch 1 — Greek (`81/81`)**: `1Thess 5:16` (`1-to-2`), `Mark 12:30` (4 repeated-clause collisions + TR Robinson), `Luke 19:10`, `Rom 12:1`, `Eph 6:11`, `1Pet 2:9` ([`scripts/batch1_greek_comparison.json`](scripts/batch1_greek_comparison.json)).
+            - **Batch 2 — Hebrew (`87/87`)**: `Lev 19:18`, `Deut 8:3`, `Josh 24:15`, `Prov 16:9`, with `Exod 20:13` preserved bitwise untouched as control ([`scripts/batch2_hebrew_comparison.json`](scripts/batch2_hebrew_comparison.json)).
+            - **Batch 3 — Aramaic (`85/85`)**: `Ezra 4:12` (incl. Qere & Peil), `Ezra 6:14`, `Ezra 7:12`, `Dan 2:44`, zero `strongs_lexicon` provenance ([`scripts/batch3_aramaic_comparison.json`](scripts/batch3_aramaic_comparison.json)).
+          - **Verification (`targetDbVersion = 378`)**: `311 / 311 (100.00%)` canonical benchmark, `253 / 253 (100.00%)` post-repair holdout verification, and `63 / 63` negative CI gates passing.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md

@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 376; // v1.0.376: Daniel 4:17 canonical OSHB Dan.4.14 alignment (311/311 = 100.00%), Ketiv/Qere docs, AVqp3ms/Yiqtol note, gates 52-56
+    const targetDbVersion = 378; // v1.0.378: Language-split holdout repairs (Greek 81/81, Hebrew 87/87 w/ Exod 20:13 control untouched, Aramaic 85/85), TR Robinson verifier, gates 57-63
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();

@@ -811,6 +811,30 @@ const testCases = [
       WHERE verse_id = (SELECT id FROM verses WHERE book_id = 20 AND chapter_num = 16 AND verse_num = 9)
         AND ar_word_position = 6;
     `
+  },
+  {
+    gateNum: 62,
+    name: 'ezra_4_12_strongs_lexicon_and_peil_lost',
+    expectedFailTag: '[FAIL] Holdout Batch 3 Aramaic Ezra 4:12 Qere/Peil & Zero strongs_lexicon Provenance',
+    description: 'Reverted Ezra 4:12 pos 1 morph_source to strongs_lexicon & cleared passive_participle',
+    mutationSql: `
+      UPDATE word_mappings
+      SET morph_source = 'strongs_lexicon', morph_mood = NULL
+      WHERE verse_id = (SELECT id FROM verses WHERE book_id = 15 AND chapter_num = 4 AND verse_num = 12)
+        AND ar_word_position = 1;
+    `
+  },
+  {
+    gateNum: 63,
+    name: 'dan_2_44_h7662_regression',
+    expectedFailTag: '[FAIL] Holdout Batch 3 Aramaic Ezra 6:14, Ezra 7:12 & Dan 2:44 Alignment Non-Regression',
+    description: 'Corrupted Dan 2:44 pos 14 (تُتْرَكُ) from H7662@w17 back to wrong H7725@w14',
+    mutationSql: `
+      UPDATE word_mappings
+      SET strongs_id = 'H7725', orig_word_position = 14, verified_locator = 'OSHB:B27.C2.V44.w14'
+      WHERE verse_id = (SELECT id FROM verses WHERE book_id = 27 AND chapter_num = 2 AND verse_num = 44)
+        AND ar_word_position = 14;
+    `
   }
 ];
 
