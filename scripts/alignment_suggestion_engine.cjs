@@ -227,7 +227,7 @@ const outPath = (outIdx !== -1 && process.argv[outIdx + 1])
 const auditArgIdx = process.argv.indexOf('--audit-report');
 const auditSrcPath = (auditArgIdx !== -1 && process.argv[auditArgIdx + 1])
   ? path.resolve(process.cwd(), process.argv[auditArgIdx + 1])
-  : path.join(__dirname, 'unseen_holdout_round2_4axis_batch2a.json');
+  : path.join(__dirname, 'unseen_holdout_round2_4axis_batch2b_eph2_10.json');
 
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const dbSha256 = sha256File(dbPath);

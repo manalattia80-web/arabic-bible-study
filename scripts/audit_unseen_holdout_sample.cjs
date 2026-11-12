@@ -495,7 +495,7 @@ for (const v of holdoutVerses) {
             relationType === 'compound_phrase' &&
             prev.relationType === 'compound_phrase' &&
             prev.strongsId && strongsId === prev.strongsId &&
-            arPos === prev.arPos + 1 &&
+            arPos > prev.arPos && arPos <= prev.arPos + 2 &&
             Boolean(grammarNotes && grammarNotes.trim().length > 0) &&
             Boolean(prev.grammarNotes && prev.grammarNotes.trim().length > 0);
           if (!isDocumentedSharedUnit) {
