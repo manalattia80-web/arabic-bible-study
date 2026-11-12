@@ -394,10 +394,10 @@ console.log(`  Exclusions      : ${historicalExclusions.size} unique verses (SHA
 console.log('========================================================================\n');
 
 const axisStats = {
-  lexical:       { pass: 0, fail: 0 },
-  lemmaSurface:  { pass: 0, fail: 0 },
-  morphology:    { pass: 0, fail: 0 },
-  sourceLocator: { pass: 0, fail: 0 }
+  lexical:       { pass: 0, fail: 0, undecided: 0 },
+  lemmaSurface:  { pass: 0, fail: 0, undecided: 0 },
+  morphology:    { pass: 0, fail: 0, undecided: 0 },
+  sourceLocator: { pass: 0, fail: 0, undecided: 0 }
 };
 const langStats = {
   hebrew:  { total: 0, clean: 0, alerts: 0, axes: { lexical:0, lemmaSurface:0, morphology:0, sourceLocator:0 } },
@@ -450,6 +450,10 @@ for (const v of holdoutVerses) {
       sourceLocator: { status: 'pass', notes: [] }
     };
     const failAxis = (k, msg) => { ax[k].status = 'fail'; ax[k].notes.push(msg); };
+    const undecidedAxis = (k, msg) => {
+      if (ax[k].status === 'pass') ax[k].status = 'undecided';
+      ax[k].notes.push(msg);
+    };
 
     const tokCount = v.lang === 'greek'
       ? ((isTr ? trTokens : sblTokens) ? (isTr ? trTokens : sblTokens).length : 0)
@@ -478,11 +482,12 @@ for (const v of holdoutVerses) {
       if (!strongsId) failAxis('lexical', 'missing strongs_id');
       if (!compDetailed) failAxis('lexical', 'empty word_mapping_strongs');
 
-      const locIdx = locRes.locW || null;
+      const locIdx = locRes.locW || (origPos > 0 ? origPos : null);
       if (!locRes.ok) {
         failAxis('sourceLocator', locRes.error);
-      } else {
-        const edKey = `${locRes.edition}:w${locIdx}`;
+      }
+      if (locRes.locW) {
+        const edKey = `${locRes.edition}:w${locRes.locW}`;
         if (seenPrimaryLocators.has(edKey)) {
           const prev = seenPrimaryLocators.get(edKey);
           const isDocumentedSharedUnit =
@@ -514,6 +519,9 @@ for (const v of holdoutVerses) {
         const tok = (locIdx && tokens) ? tokens.find(t => t.index === locIdx) : null;
         if (!tok) {
           if (locIdx && tokens) failAxis('sourceLocator', `${edition} w${locIdx} exceeds token count (${tokens.length})`);
+          undecidedAxis('lexical', `undecided: source token w${locIdx || '?'} unavailable in ${edition}`);
+          undecidedAxis('lemmaSurface', `undecided: source token w${locIdx || '?'} unavailable in ${edition}`);
+          undecidedAxis('morphology', `undecided: source token w${locIdx || '?'} unavailable in ${edition}`);
         } else if (isTr) {
           if (!origSurface || normGreekWord(origSurface) !== normGreekWord(tok.surface)) {
             failAxis('lemmaSurface', `TR surface '${origSurface}' != '${tok.surface}' @ w${locIdx}`);
@@ -571,6 +579,9 @@ for (const v of holdoutVerses) {
         const tok = (locIdx && oshbTokens) ? oshbTokens.find(t => t.index === locIdx) : null;
         if (!tok) {
           if (locIdx && oshbTokens) failAxis('sourceLocator', `OSHB w${locIdx} exceeds token count (${oshbTokens.length})`);
+          undecidedAxis('lexical', `undecided: OSHB token w${locIdx || '?'} unavailable`);
+          undecidedAxis('lemmaSurface', `undecided: OSHB token w${locIdx || '?'} unavailable`);
+          undecidedAxis('morphology', `undecided: OSHB token w${locIdx || '?'} unavailable`);
         } else {
           const dbC = canonHebSurface(origSurface);
           const rawParts = tok.rawParts || [tok.text];
@@ -623,6 +634,9 @@ for (const v of holdoutVerses) {
         langStats[v.lang].axes[k]++;
         vAxes[k]++;
         unitHasAlert = true;
+      } else if (ax[k].status === 'undecided') {
+        axisStats[k].undecided++;
+        unitHasAlert = true;
       } else {
         axisStats[k].pass++;
       }
@@ -665,8 +679,8 @@ const gAlerts = langStats.hebrew.alerts + langStats.aramaic.alerts + langStats.g
 console.log('\n--- 4-AXIS GLOBAL BREAKDOWN (236+ UNITS ACROSS 15 UNSEEN VERSES) ---');
 for (const k of ['lexical', 'lemmaSurface', 'morphology', 'sourceLocator']) {
   const s = axisStats[k];
-  const tot = s.pass + s.fail;
-  console.log(`  ${k.padEnd(14)}: pass ${s.pass}/${tot} (${((s.pass/tot)*100).toFixed(2)}%) — alerts: ${s.fail}`);
+  const tot = s.pass + s.fail + s.undecided;
+  console.log(`  ${k.padEnd(14)}: pass ${s.pass}/${tot} (${((s.pass/tot)*100).toFixed(2)}%) — alerts: ${s.fail}, undecided: ${s.undecided}`);
 }
 
 console.log('\n--- BY LANGUAGE ---');
