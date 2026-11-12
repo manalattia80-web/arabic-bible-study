@@ -1,0 +1,33 @@
+{
+  "title": "Round 2 Adjudication of 21 Preliminary Alignment Proposals",
+  "counts": {
+    "totalProposals": 21,
+    "approvedBatch2A_applied": 4,
+    "approvedBatch2B_pendingNeighborAlignment": 14,
+    "rejectedFalseProposals": 3,
+    "pendingReviewUntouched": 193
+  },
+  "decisions": [
+    { "verse": "Mic 7:18", "arPos": 2, "arWord": "هُوَ", "verdict": "APPROVED_BATCH2A_APPLIED", "target": "AR_SYNTACTIC:B33.C7.V18.w2", "reason": "Arabic copula inserted between מִי (w1) and אֵל (w2); no H1931 at w2." },
+    { "verse": "1Thess 5:18", "arPos": 7, "arWord": "هِيَ", "verdict": "APPROVED_BATCH2A_APPLIED", "target": "AR_SYNTACTIC:B52.C5.V18.w7", "reason": "Arabic copula pronoun (ضمير فصل) in τοῦτο γὰρ θέλημα θεοῦ; no G3778 at w7." },
+    { "verse": "Dan 6:22", "arPos": 3, "arWord": "مَلاَكَهُ", "verdict": "APPROVED_BATCH2A_APPLIED", "target": "H4398 @ OSHB:B27.C6.V23.w3", "reason": "OSHB Dan.6.23 w3 is מַלְאֲכֵ֗הּ (H4398, ANcmsc/Sp3ms), not H4305." },
+    { "verse": "Rom 5:8", "arPos": 11, "arWord": "الْمَسِيحُ", "verdict": "APPROVED_BATCH2A_APPLIED", "target": "G5547 @ SBLGNT:B45.C5.V8.w15", "reason": "SBLGNT w15 is Χριστὸς (G5547, N- ----NSM-); zero collision." },
+    { "verse": "2Chr 7:14", "arPos": 12, "arWord": "عَنْ", "verdict": "REJECTED_FALSE_PROPOSAL", "proposed": "H4480 @ OSHB:B14.C7.V14.w15", "reason": "w15 מִן belongs to #17 مِنَ; #12 عَنْ comes from proclitic מִ in w11 מִדַּרְכֵיהֶם (m/1870)." },
+    { "verse": "Ezra 4:24", "arPos": 15, "arWord": "مُلْكِ", "verdict": "REJECTED_FALSE_PROPOSAL", "proposed": "H4430 @ OSHB:B15.C4.V24.w15", "reason": "w15 מֶלֶךְ (H4430) belongs to #17 مَلِكِ; #15 مُلْكِ (kingdom/reign) is H4437 in w13 לְמַלְכוּת." },
+    { "verse": "Gal 2:20", "arPos": 2, "arWord": "الْمَسِيحِ", "verdict": "REJECTED_FALSE_PROPOSAL", "proposed": "G5547 @ SBLGNT:B48.C2.V20.w9", "reason": "SBLGNT w9 Χριστὸς belongs to #8 الْمَسِيحُ; 'مَعَ الْمَسِيحِ صُلِبْتُ' is at the end of Gal 2:19 in SBLGNT." },
+    { "verse": "Ruth 2:12", "arPos": 12, "arWord": "الَّذِي", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "H834 @ OSHB:B8.C2.V12.w11", "reason": "Valid H834 @ w11 (אֲשֶׁר), collides with #11 إِسْرَائِيلَ currently at w11." },
+    { "verse": "Mic 7:18", "arPos": 12, "arWord": "لاَ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "H3808 @ OSHB:B33.C7.V18.w11", "reason": "Valid H3808 @ w11 (לֹא), collides with #11 مِيرَاثِهِ currently at w11." },
+    { "verse": "2Chr 7:14", "arPos": 4, "arWord": "الَّذِينَ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "H834 @ OSHB:B14.C7.V14.w3", "reason": "Valid H834 @ w3 (אֲשֶׁר), collides with #3 شَعْبِي currently at w3." },
+    { "verse": "Ezra 5:11", "arPos": 22, "arWord": "مَلِكٌ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "H4430 @ OSHB:B15.C5.V11.w21", "reason": "Valid H4430 @ w21 (וּמֶלֶךְ), collides with #21 بَنَاهُ currently at w21." },
+    { "verse": "Rom 5:8", "arPos": 2, "arWord": "اللهَ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G2316 @ SBLGNT:B45.C5.V8.w9", "reason": "Valid G2316 @ w9 (θεὸς), collides with #9 خُطَاةٌ currently at w9." },
+    { "verse": "Gal 2:20", "arPos": 22, "arWord": "اللهِ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G2316 @ SBLGNT:B48.C2.V20.w23", "reason": "Valid G2316 @ w23 (θεοῦ), collides with #23 الَّذِي currently at w23." },
+    { "verse": "Eph 2:10", "arPos": 5, "arWord": "فِي", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G1722 @ SBLGNT:B49.C2.V10.w6", "reason": "Valid G1722 @ w6 (ἐν), collides with #6 until Eph 2:10 #5..#7 shift together." },
+    { "verse": "Eph 2:10", "arPos": 6, "arWord": "الْمَسِيحِ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G5547 @ SBLGNT:B49.C2.V10.w7", "reason": "Valid G5547 @ w7 (Χριστῷ), collides with #7 يَسُوعَ currently at w7." },
+    { "verse": "Eph 2:10", "arPos": 12, "arWord": "اللهُ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G2316 @ SBLGNT:B49.C2.V10.w15", "reason": "Valid G2316 @ w15 (θεὸς), collides with #15 نَسْلُكَ currently at w15." },
+    { "verse": "Phil 2:5", "arPos": 7, "arWord": "الْمَسِيحِ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G5547 @ SBLGNT:B50.C2.V5.w8", "reason": "Valid G5547 @ w8 (Χριστῷ), collides with #8 يَسُوعَ currently at w8." },
+    { "verse": "1Thess 5:18", "arPos": 3, "arWord": "كُلِّ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G3956 @ SBLGNT:B52.C5.V18.w2", "reason": "Valid G3956 @ w2 (παντὶ), collides with #2 فِي currently at w2." },
+    { "verse": "1Thess 5:18", "arPos": 9, "arWord": "اللهِ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G2316 @ SBLGNT:B52.C5.V18.w7", "reason": "Valid G2316 @ w7 (θεοῦ); #7 هِيَ freed w7 in Batch 2A, safe once aligned." },
+    { "verse": "1Thess 5:18", "arPos": 10, "arWord": "فِي", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G1722 @ SBLGNT:B52.C5.V18.w8", "reason": "Valid G1722 @ w8 (ἐν), collides with #8 مَشِيئَةُ currently at w8." },
+    { "verse": "1Thess 5:18", "arPos": 11, "arWord": "الْمَسِيحِ", "verdict": "APPROVED_BATCH2B_NEEDS_NEIGHBOR_ALIGNMENT", "target": "G5547 @ SBLGNT:B52.C5.V18.w9", "reason": "Valid G5547 @ w9 (Χριστῷ), collides with #9 اللهِ until #8..#12 shift together." }
+  ]
+}

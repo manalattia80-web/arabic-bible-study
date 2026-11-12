@@ -125,13 +125,17 @@ const AR_ANCHORS = {
 function classifyArWord(arRaw) {
   const ar = normAr(arRaw);
   const hasShaddaOnYa = /ي\u0651/.test(arRaw || ''); // distinguishes بَيَّنَ (verb) from بَيْنَ (preposition)
+  const hasDammaOnMeem = /\u0645\u064F/.test(arRaw || ''); // distinguishes مُلْك (kingdom H4437) from مَلِك (king H4430)
   const hasConjPrefix = /^[وف]/.test(ar) && ar.length > 3;
   const hasPrepPrefix = /^[بلك]/.test(ar) && ar.length > 3;
   const hasPronSuffix = /(هم|هما|هن|كم|كما|كن|نا|ها|ه|ي)$/.test(ar) && ar.length > 4;
   const pureSyntacticParticles = new Set(['قد', 'كان', 'كانت', 'يكون', 'هو', 'هي', 'هم', 'انه', 'ليس']);
-  const anchor = (ar === 'بين' && hasShaddaOnYa) ? null : (AR_ANCHORS[ar] || null);
+  let anchor = (ar === 'بين' && hasShaddaOnYa) ? null : (AR_ANCHORS[ar] || null);
+  if (ar === 'ملك' && hasDammaOnMeem) {
+    anchor = { pos: ['noun'], strongs: ['H4437', 'H4438', 'G932'] };
+  }
   return {
-    ar, hasShaddaOnYa, hasConjPrefix, hasPrepPrefix, hasPronSuffix,
+    ar, hasShaddaOnYa, hasDammaOnMeem, hasConjPrefix, hasPrepPrefix, hasPronSuffix,
     isPureSyntacticCandidate: pureSyntacticParticles.has(ar),
     anchor
   };
@@ -223,7 +227,7 @@ const outPath = (outIdx !== -1 && process.argv[outIdx + 1])
 const auditArgIdx = process.argv.indexOf('--audit-report');
 const auditSrcPath = (auditArgIdx !== -1 && process.argv[auditArgIdx + 1])
   ? path.resolve(process.cwd(), process.argv[auditArgIdx + 1])
-  : path.join(__dirname, 'unseen_holdout_round2_4axis_batch1.json');
+  : path.join(__dirname, 'unseen_holdout_round2_4axis_batch2a.json');
 
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const dbSha256 = sha256File(dbPath);

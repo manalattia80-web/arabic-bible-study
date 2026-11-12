@@ -1,18 +1,18 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "f03a9d7520346c93aa5a8ecab1f2a8158a390adf38739c43931e09950852c3f3",
+  "dbSha256": "2b95adf3f189aef218bd39363414275fd6c4be649eb850c9cf44dea432b64af0",
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
-  "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch1.json",
-  "auditReportSha256": "a1ae1e924b6085744352e0f0af712626b1f1d2c4dbbe5e6602aae876b815795e",
+  "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2a.json",
+  "auditReportSha256": "a0424463e9fa0c5e1f55474317f7ef723c5a6b870f966eeedc8879b552bb4369",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,
-    "verifiedClean": 41,
+    "verifiedClean": 45,
     "keepLinkRepairMetadata": 0,
-    "proposedRepair": 21,
-    "pendingReview": 193
+    "proposedRepair": 18,
+    "pendingReview": 192
   },
   "verses": [
     {
@@ -2154,9 +2154,9 @@
       "verse": "Mic 7:18",
       "lang": "hebrew",
       "summary": {
-        "verifiedClean": 1,
+        "verifiedClean": 2,
         "keepLinkRepairMetadata": 0,
-        "proposedRepair": 2,
+        "proposedRepair": 1,
         "pendingReview": 16
       },
       "units": [
@@ -2228,34 +2228,21 @@
           "arPos": 2,
           "arWord": "هُوَ",
           "current": {
-            "strongsId": "H1931",
-            "origPos": 2,
-            "locator": "OSHB:B33.C7.V18.w2",
-            "morphSource": "oshb_wlc",
-            "relationType": null,
-            "components": [
-              "H1931:primary@w2[הֽוּא:HPp3ms:oshb_wlc]"
-            ]
-          },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H1931' != OSHB lemma '410' @ w2",
-              "wms H1931@w2 fails OSHB lemma '410'"
-            ],
-            "lemmaSurface": [
-              "surface 'הֽוּא' != OSHB 'אֵ֣ל' @ w2",
-              "wms H1931@w2 surface 'הֽוּא' != OSHB 'אֵ֣ל'"
-            ],
-            "morphology": [
-              "morph 'HPp3ms' != OSHB 'HNcmsa'"
-            ],
-            "sourceLocator": []
-          },
-          "status": "PROPOSED_REPAIR",
-          "proposalType": "AR_SYNTACTIC",
-          "proposed": {
+            "strongsId": null,
+            "origPos": null,
             "locator": "AR_SYNTACTIC:B33.C7.V18.w2",
-            "strongsId": null
+            "morphSource": "syntactic_ar",
+            "relationType": null,
+            "components": []
+          },
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": null,
+            "strongsId": null,
+            "locator": "AR_SYNTACTIC:B33.C7.V18.w2",
+            "components": []
           },
           "topCandidates": [
             {
@@ -5963,8 +5950,8 @@
       "summary": {
         "verifiedClean": 5,
         "keepLinkRepairMetadata": 0,
-        "proposedRepair": 1,
-        "pendingReview": 12
+        "proposedRepair": 2,
+        "pendingReview": 11
       },
       "units": [
         {
@@ -6942,39 +6929,39 @@
           "status": "PROPOSED_REPAIR",
           "proposalType": "lexical_anchor_realign",
           "proposed": {
-            "w": 15,
-            "strongsId": "H4430",
-            "locator": "OSHB:B15.C4.V24.w15",
+            "w": 13,
+            "strongsId": "H4437",
+            "locator": "OSHB:B15.C4.V24.w13",
             "relationType": null,
-            "score": 9.69,
-            "margin": 5.75
+            "score": 9.94,
+            "margin": 6.25
           },
           "topCandidates": [
-            {
-              "w": 15,
-              "strongsId": "H4430",
-              "tokPos": "noun",
-              "morph": "ANcmsc",
-              "surface": "מֶֽלֶךְ",
-              "hasIndependentLexicalEvidence": true,
-              "score": 9.69,
-              "reasons": [
-                "lexical_anchor=H4430",
-                "anchor_pos=noun",
-                "order=1.69"
-              ]
-            },
             {
               "w": 13,
               "strongsId": "H4437",
               "tokPos": "noun",
               "morph": "AR/Ncfsc",
               "surface": "לְמַלְכ֖וּת",
-              "hasIndependentLexicalEvidence": false,
-              "score": 3.94,
+              "hasIndependentLexicalEvidence": true,
+              "score": 9.94,
               "reasons": [
+                "lexical_anchor=H4437",
                 "anchor_pos=noun",
                 "order=1.94"
+              ]
+            },
+            {
+              "w": 15,
+              "strongsId": "H4430",
+              "tokPos": "noun",
+              "morph": "ANcmsc",
+              "surface": "מֶֽלֶךְ",
+              "hasIndependentLexicalEvidence": false,
+              "score": 3.69,
+              "reasons": [
+                "anchor_pos=noun",
+                "order=1.69"
               ]
             },
             {
@@ -7088,9 +7075,16 @@
               "wms component H4437@w17 missing in OSHB"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
+          "status": "PROPOSED_REPAIR",
+          "proposalType": "lexical_anchor_realign",
+          "proposed": {
+            "w": 15,
+            "strongsId": "H4430",
+            "locator": "OSHB:B15.C4.V24.w15",
+            "relationType": null,
+            "score": 9.98,
+            "margin": 6.38
+          },
           "topCandidates": [
             {
               "w": 15,
@@ -8936,9 +8930,9 @@
       "verse": "Dan 6:22",
       "lang": "aramaic",
       "summary": {
-        "verifiedClean": 1,
+        "verifiedClean": 2,
         "keepLinkRepairMetadata": 0,
-        "proposedRepair": 1,
+        "proposedRepair": 0,
         "pendingReview": 17
       },
       "units": [
@@ -9076,40 +9070,25 @@
           "arPos": 3,
           "arWord": "مَلاَكَهُ",
           "current": {
-            "strongsId": "H4305",
+            "strongsId": "H4398",
             "origPos": 3,
-            "locator": "OSHB:B27.C6.V22.w3",
+            "locator": "OSHB:B27.C6.V23.w3",
             "morphSource": "oshb_wlc",
             "relationType": null,
             "components": [
-              "H4305:primary@w3[מָטַר::oshb_wlc]"
+              "H4398:primary@w3[מַלְאֲכֵ֗הּ:ANcmsc/Sp3ms:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H4305' != OSHB lemma '4398' @ w3",
-              "wms H4305@w3 fails OSHB lemma '4398'"
-            ],
-            "lemmaSurface": [
-              "surface 'מָטַר' != OSHB 'מַלְאֲכֵ֗הּ' @ w3",
-              "wms H4305@w3 surface 'מָטַר' != OSHB 'מַלְאֲכֵ֗הּ'"
-            ],
-            "morphology": [
-              "derived(gender '' vs 'm')"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w3')"
-            ]
-          },
-          "status": "PROPOSED_REPAIR",
-          "proposalType": "lexical_anchor_realign",
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
           "proposed": {
             "w": 3,
             "strongsId": "H4398",
             "locator": "OSHB:B27.C6.V23.w3",
-            "relationType": null,
-            "score": 9.44,
-            "margin": 5.65
+            "components": [
+              "H4398:primary@w3[מַלְאֲכֵ֗הּ:ANcmsc/Sp3ms:oshb_wlc]"
+            ]
           },
           "topCandidates": [
             {
@@ -12349,9 +12328,9 @@
       "verse": "Rom 5:8",
       "lang": "greek",
       "summary": {
-        "verifiedClean": 0,
+        "verifiedClean": 1,
         "keepLinkRepairMetadata": 0,
-        "proposedRepair": 2,
+        "proposedRepair": 1,
         "pendingReview": 10
       },
       "units": [
@@ -13071,38 +13050,24 @@
           "arWord": "الْمَسِيحُ",
           "current": {
             "strongsId": "G5547",
-            "origPos": 11,
-            "locator": "SBLGNT:B45.C5.V8.w11",
+            "origPos": 15,
+            "locator": "SBLGNT:B45.C5.V8.w15",
             "morphSource": "morphgnt_sblgnt",
             "relationType": null,
             "components": [
-              "G5547:primary@w11[Χριστὸς:N- ----NSM-:morphgnt_sblgnt]"
+              "G5547:primary@w15[Χριστὸς:N- ----NSM-:morphgnt_sblgnt]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'ἔτι' @ w11",
-              "wms G5547@w11 != SBLGNT 'ἔτι'"
-            ],
-            "lemmaSurface": [
-              "SBLGNT surface 'Χριστὸς' != 'ἔτι' @ w11",
-              "SBLGNT lemma 'Χριστός' != 'ἔτι' @ w11"
-            ],
-            "morphology": [
-              "morph 'N- ----NSM-' != SBLGNT 'D- --------'",
-              "derived(pos 'proper_noun' vs 'D-')"
-            ],
-            "sourceLocator": []
-          },
-          "status": "PROPOSED_REPAIR",
-          "proposalType": "lexical_anchor_realign",
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
           "proposed": {
             "w": 15,
             "strongsId": "G5547",
             "locator": "SBLGNT:B45.C5.V8.w15",
-            "relationType": null,
-            "score": 9.75,
-            "margin": 7
+            "components": [
+              "G5547:primary@w15[Χριστὸς:N- ----NSM-:morphgnt_sblgnt]"
+            ]
           },
           "topCandidates": [
             {
@@ -16939,9 +16904,9 @@
       "verse": "1Thess 5:18",
       "lang": "greek",
       "summary": {
-        "verifiedClean": 1,
+        "verifiedClean": 2,
         "keepLinkRepairMetadata": 0,
-        "proposedRepair": 5,
+        "proposedRepair": 4,
         "pendingReview": 8
       },
       "units": [
@@ -17378,35 +17343,21 @@
           "arPos": 7,
           "arWord": "هِيَ",
           "current": {
-            "strongsId": "G3778",
-            "origPos": 7,
-            "locator": "SBLGNT:B52.C5.V18.w7",
-            "morphSource": "morphgnt_sblgnt",
-            "relationType": null,
-            "components": [
-              "G3778:primary@w7[τοῦτο:RD ----NSN-:morphgnt_sblgnt]"
-            ]
-          },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'G3778' (οὗτος) != SBLGNT lemma 'θεός' @ w7",
-              "wms G3778@w7 != SBLGNT 'θεός'"
-            ],
-            "lemmaSurface": [
-              "SBLGNT surface 'τοῦτο' != 'θεοῦ' @ w7",
-              "SBLGNT lemma 'οὗτος' != 'θεός' @ w7"
-            ],
-            "morphology": [
-              "morph 'RD ----NSN-' != SBLGNT 'N- ----GSM-'",
-              "derived(pos 'demonstrative' vs 'N-')"
-            ],
-            "sourceLocator": []
-          },
-          "status": "PROPOSED_REPAIR",
-          "proposalType": "AR_SYNTACTIC",
-          "proposed": {
+            "strongsId": null,
+            "origPos": null,
             "locator": "AR_SYNTACTIC:B52.C5.V18.w7",
-            "strongsId": null
+            "morphSource": "syntactic_ar",
+            "relationType": null,
+            "components": []
+          },
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": null,
+            "strongsId": null,
+            "locator": "AR_SYNTACTIC:B52.C5.V18.w7",
+            "components": []
           },
           "topCandidates": [
             {

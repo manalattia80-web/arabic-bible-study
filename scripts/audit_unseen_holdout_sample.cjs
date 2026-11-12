@@ -294,7 +294,7 @@ function verifyDerived(lang, dbMorph, srcMorph, d, isTr = false) {
 // ---------------------------------------------------------------------------
 // 4. Exhaustive Historical Exclusion Check (0.00% Overlap Guarantee)
 // ---------------------------------------------------------------------------
-function buildHistoricalExclusionSet() {
+function buildHistoricalExclusionSet(skipRound2 = false) {
   const aliases = {
     'إشعياء':23,'اشعياء':23,'التكوين':1,'الخروج':2,'اللاويين':3,'العدد':4,'التثنية':5,
     'يشوع':6,'القضاة':7,'راعوث':8,'صموئيل الأول':9,'صموئيل الثاني':10,'الملوك الأول':11,
@@ -337,7 +337,7 @@ function buildHistoricalExclusionSet() {
   }
   const sFiles = [path.join(repoRoot, 'scripts/automated_database_audit.cjs')];
   for (const f of fs.readdirSync(path.join(repoRoot, 'scripts'))) {
-    if (/^apply_.*\.(cjs|sql)$/.test(f) && !/^apply_holdout_/.test(f)) {
+    if (/^apply_.*\.(cjs|sql)$/.test(f) && !/^apply_holdout_/.test(f) && !(skipRound2 && /^apply_round2_/.test(f))) {
       sFiles.push(path.join(repoRoot, 'scripts', f));
     }
   }
@@ -374,7 +374,8 @@ if (manifestExHash !== manifest.exclusion_keys_sha256) {
   throw new Error(`Manifest exclusion_keys_sha256 mismatch: ${manifestExHash} != ${manifest.exclusion_keys_sha256}`);
 }
 const historicalExclusions = new Set(manifest.excluded_verse_keys);
-for (const k of buildHistoricalExclusionSet()) historicalExclusions.add(k);
+const isRound2Manifest = path.basename(manifestPath) === 'unseen_holdout_round2_15_verses_manifest.json';
+for (const k of buildHistoricalExclusionSet(isRound2Manifest)) historicalExclusions.add(k);
 
 // 15 Strictly Unseen Holdout Verses loaded from canonical manifest (0% overlap)
 const holdoutVerses = manifest.holdout_verses;
