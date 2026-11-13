@@ -382,6 +382,21 @@ const holdoutVerses = manifest.holdout_verses;
 
 // Verified required components for fully calibrated holdout units
 const VERIFIED_REQUIRED_COMPONENTS = {
+  '1Thess 5:18': {
+    1:  [{ strongsId: 'G2168', role: 'primary', order: 1, pos: 3, surface: 'εὐχαριστεῖτε', morph: 'V- 2PAD-P--', source: 'morphgnt_sblgnt' }],
+    2:  [{ strongsId: 'G1722', role: 'primary', order: 1, pos: 1, surface: 'ἐν', morph: 'P- --------', source: 'morphgnt_sblgnt' }],
+    3:  [{ strongsId: 'G3956', role: 'primary', order: 1, pos: 2, surface: 'παντὶ', morph: 'A- ----DSN-', source: 'morphgnt_sblgnt' }],
+    4:  [{ strongsId: 'G3956', role: 'primary', order: 1, pos: 2, surface: 'παντὶ', morph: 'A- ----DSN-', source: 'morphgnt_sblgnt' }],
+    5:  [{ strongsId: 'G1063', role: 'primary', order: 1, pos: 5, surface: 'γὰρ', morph: 'C- --------', source: 'morphgnt_sblgnt' }],
+    6:  [{ strongsId: 'G3778', role: 'primary', order: 1, pos: 4, surface: 'τοῦτο', morph: 'RD ----NSN-', source: 'morphgnt_sblgnt' }],
+    8:  [{ strongsId: 'G2307', role: 'primary', order: 1, pos: 6, surface: 'θέλημα', morph: 'N- ----NSN-', source: 'morphgnt_sblgnt' }],
+    9:  [{ strongsId: 'G2316', role: 'primary', order: 1, pos: 7, surface: 'θεοῦ', morph: 'N- ----GSM-', source: 'morphgnt_sblgnt' }],
+    10: [{ strongsId: 'G1722', role: 'primary', order: 1, pos: 8, surface: 'ἐν', morph: 'P- --------', source: 'morphgnt_sblgnt' }],
+    11: [{ strongsId: 'G5547', role: 'primary', order: 1, pos: 9, surface: 'Χριστῷ', morph: 'N- ----DSM-', source: 'morphgnt_sblgnt' }],
+    12: [{ strongsId: 'G2424', role: 'primary', order: 1, pos: 10, surface: 'Ἰησοῦ', morph: 'N- ----DSM-', source: 'morphgnt_sblgnt' }],
+    13: [{ strongsId: 'G1519', role: 'primary', order: 1, pos: 11, surface: 'εἰς', morph: 'P- --------', source: 'morphgnt_sblgnt' }],
+    14: [{ strongsId: 'G4771', role: 'primary', order: 1, pos: 12, surface: 'ὑμᾶς', morph: 'RP ----AP--', source: 'morphgnt_sblgnt' }]
+  },
   'Eph 2:10': {
     3: [
       { strongsId: 'G4161', role: 'primary', order: 1, pos: 4, surface: 'ποίημα', morph: 'N- ----NSN-', source: 'morphgnt_sblgnt' },
