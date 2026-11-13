@@ -5,7 +5,7 @@
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
   "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2b_eph2_10.json",
-  "auditReportSha256": "8b3abd51ef3ed6ba70d4b9e2bae5af23b051b42f4dfa8a84c47c45fdfd524bc1",
+  "auditReportSha256": "8a02c2af9b232000dccb34268356d67b9f9dc631bb962d04100bb8bb4c163480",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,
@@ -305,7 +305,8 @@
             ],
             "lemmaSurface": [],
             "morphology": [
-              "derived(gender '' vs 'f')"
+              "derived(gender '' vs 'f')",
+              "wms H7939@w5 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -504,7 +505,8 @@
               "wms H5973@w8 surface 'מֵעִ֤ם' != OSHB 'יְהוָה֙'"
             ],
             "morphology": [
-              "morph 'HR/R' != OSHB 'HNp'"
+              "morph 'HR/R' != OSHB 'HNp'",
+              "wms H5973@w8 morph 'HR/R' != OSHB 'HNp'"
             ],
             "sourceLocator": []
           },
@@ -573,7 +575,8 @@
               "wms H3068@w9 surface 'יְהוָה֙' != OSHB 'אֱלֹהֵ֣י'"
             ],
             "morphology": [
-              "morph 'HNp' != OSHB 'HNcmpc'"
+              "morph 'HNp' != OSHB 'HNcmpc'",
+              "wms H3068@w9 morph 'HNp' != OSHB 'HNcmpc'"
             ],
             "sourceLocator": []
           },
@@ -647,7 +650,8 @@
               "wms H430@w10 surface 'אֱלֹהֵ֣י' != OSHB 'יִשְׂרָאֵ֔ל'"
             ],
             "morphology": [
-              "morph 'HNcmpc' != OSHB 'HNp'"
+              "morph 'HNcmpc' != OSHB 'HNp'",
+              "wms H430@w10 morph 'HNcmpc' != OSHB 'HNp'"
             ],
             "sourceLocator": []
           },
@@ -716,7 +720,8 @@
               "wms H3478@w11 surface 'יִשְׂרָאֵ֔ל' != OSHB 'אֲשֶׁר'"
             ],
             "morphology": [
-              "morph 'HNp' != OSHB 'HTr'"
+              "morph 'HNp' != OSHB 'HTr'",
+              "wms H3478@w11 morph 'HNp' != OSHB 'HTr'"
             ],
             "sourceLocator": []
           },
@@ -785,7 +790,8 @@
               "wms H834@w12 surface 'אֲשֶׁר' != OSHB 'בָּ֖את'"
             ],
             "morphology": [
-              "morph 'HTr' != OSHB 'HVqp2fs'"
+              "morph 'HTr' != OSHB 'HVqp2fs'",
+              "wms H834@w12 morph 'HTr' != OSHB 'HVqp2fs'"
             ],
             "sourceLocator": []
           },
@@ -863,7 +869,8 @@
               "wms H935@w13 surface 'בָּ֖את' != OSHB 'לַחֲס֥וֹת'"
             ],
             "morphology": [
-              "morph 'HVqp2fs' != OSHB 'HR/Vqc'"
+              "morph 'HVqp2fs' != OSHB 'HR/Vqc'",
+              "wms H935@w13 morph 'HVqp2fs' != OSHB 'HR/Vqc'"
             ],
             "sourceLocator": []
           },
@@ -931,7 +938,9 @@
               "surface 'אֵל' != OSHB 'תַּֽחַת' @ w14",
               "wms H413@w14 surface 'אֵל' != OSHB 'תַּֽחַת'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H413@w14 missing mandatory orig_morphology"
+            ],
             "sourceLocator": []
           },
           "status": "PENDING_REVIEW",
@@ -999,7 +1008,8 @@
               "wms H2620@w15 surface 'לַחֲס֥וֹת' != OSHB 'כְּנָפָֽיו'"
             ],
             "morphology": [
-              "morph 'HR/Vqc' != OSHB 'HNcfpc/Sp3ms'"
+              "morph 'HR/Vqc' != OSHB 'HNcfpc/Sp3ms'",
+              "wms H2620@w15 morph 'HR/Vqc' != OSHB 'HNcfpc/Sp3ms'"
             ],
             "sourceLocator": []
           },
@@ -1483,7 +1493,8 @@
               "wms H408@w5 surface 'אַל' != OSHB 'אָ֔נִי'"
             ],
             "morphology": [
-              "morph 'HTn' != OSHB 'HPp1cs'"
+              "morph 'HTn' != OSHB 'HPp1cs'",
+              "wms H408@w5 morph 'HTn' != OSHB 'HPp1cs'"
             ],
             "sourceLocator": []
           },
@@ -1557,7 +1568,8 @@
               "wms H8159@w6 surface 'תִּשְׁתָּ֖ע' != OSHB 'אַל'"
             ],
             "morphology": [
-              "morph 'HVqj2ms' != OSHB 'HTn'"
+              "morph 'HVqj2ms' != OSHB 'HTn'",
+              "wms H8159@w6 morph 'HVqj2ms' != OSHB 'HTn'"
             ],
             "sourceLocator": []
           },
@@ -1626,7 +1638,8 @@
               "wms H3588@w7 surface 'כִּֽי' != OSHB 'תִּשְׁתָּ֖ע'"
             ],
             "morphology": [
-              "morph 'HC' != OSHB 'HVqj2ms'"
+              "morph 'HC' != OSHB 'HVqj2ms'",
+              "wms H3588@w7 morph 'HC' != OSHB 'HVqj2ms'"
             ],
             "sourceLocator": []
           },
@@ -1697,7 +1710,8 @@
               "wms H430@w8 surface 'אֱלֹהֶ֑יךָ' != OSHB 'כִּֽי'"
             ],
             "morphology": [
-              "morph 'HNcmpc/Sp2ms' != OSHB 'HC'"
+              "morph 'HNcmpc/Sp2ms' != OSHB 'HC'",
+              "wms H430@w8 morph 'HNcmpc/Sp2ms' != OSHB 'HC'"
             ],
             "sourceLocator": []
           },
@@ -1825,7 +1839,8 @@
               "wms H553@w10 surface 'אִמַּצְתִּ֨יךָ֙' != OSHB 'אֱלֹהֶ֑יךָ'"
             ],
             "morphology": [
-              "morph 'HVpp1cs/Sp2ms' != OSHB 'HNcmpc/Sp2ms'"
+              "morph 'HVpp1cs/Sp2ms' != OSHB 'HNcmpc/Sp2ms'",
+              "wms H553@w10 morph 'HVpp1cs/Sp2ms' != OSHB 'HNcmpc/Sp2ms'"
             ],
             "sourceLocator": []
           },
@@ -1894,7 +1909,8 @@
               "wms H5826@w11 surface 'עֲזַרְתִּ֔יךָ' != OSHB 'אִמַּצְתִּ֨יךָ֙'"
             ],
             "morphology": [
-              "morph 'HVqp1cs/Sp2ms' != OSHB 'HVpp1cs/Sp2ms'"
+              "morph 'HVqp1cs/Sp2ms' != OSHB 'HVpp1cs/Sp2ms'",
+              "wms H5826@w11 morph 'HVqp1cs/Sp2ms' != OSHB 'HVpp1cs/Sp2ms'"
             ],
             "sourceLocator": []
           },
@@ -1963,7 +1979,8 @@
               "wms H8551@w12 surface 'תְּמַכְתִּ֖יךָ' != OSHB 'אַף'"
             ],
             "morphology": [
-              "morph 'HVqp1cs/Sp2ms' != OSHB 'HTa'"
+              "morph 'HVqp1cs/Sp2ms' != OSHB 'HTa'",
+              "wms H8551@w12 morph 'HVqp1cs/Sp2ms' != OSHB 'HTa'"
             ],
             "sourceLocator": []
           },
@@ -2032,7 +2049,8 @@
               "wms H3225@w13 surface 'בִּימִ֥ין' != OSHB 'עֲזַרְתִּ֔יךָ'"
             ],
             "morphology": [
-              "morph 'HR/Ncfsc' != OSHB 'HVqp1cs/Sp2ms'"
+              "morph 'HR/Ncfsc' != OSHB 'HVqp1cs/Sp2ms'",
+              "wms H3225@w13 morph 'HR/Ncfsc' != OSHB 'HVqp1cs/Sp2ms'"
             ],
             "sourceLocator": []
           },
@@ -2102,7 +2120,8 @@
               "wms H6664@w14 surface 'צִדְקִֽי' != OSHB 'אַף'"
             ],
             "morphology": [
-              "morph 'HNcmsc/Sp1cs' != OSHB 'HTa'"
+              "morph 'HNcmsc/Sp1cs' != OSHB 'HTa'",
+              "wms H6664@w14 morph 'HNcmsc/Sp1cs' != OSHB 'HTa'"
             ],
             "sourceLocator": []
           },
@@ -2306,7 +2325,8 @@
               "wms H410@w3 surface 'אֵ֣ל' != OSHB 'כָּמ֗וֹךָ'"
             ],
             "morphology": [
-              "morph 'HNcmsa' != OSHB 'HR/Sp2ms'"
+              "morph 'HNcmsa' != OSHB 'HR/Sp2ms'",
+              "wms H410@w3 morph 'HNcmsa' != OSHB 'HR/Sp2ms'"
             ],
             "sourceLocator": []
           },
@@ -2375,7 +2395,8 @@
               "wms H3644@w4 surface 'כָּמ֗וֹךָ' != OSHB 'נֹשֵׂ֤א'"
             ],
             "morphology": [
-              "morph 'HR/Sp2ms' != OSHB 'HVqrmsa'"
+              "morph 'HR/Sp2ms' != OSHB 'HVqrmsa'",
+              "wms H3644@w4 morph 'HR/Sp2ms' != OSHB 'HVqrmsa'"
             ],
             "sourceLocator": []
           },
@@ -2444,7 +2465,8 @@
               "wms H5375@w5 surface 'נֹשֵׂ֤א' != OSHB 'עָוֺן֙'"
             ],
             "morphology": [
-              "morph 'HVqrmsa' != OSHB 'HNcbsa'"
+              "morph 'HVqrmsa' != OSHB 'HNcbsa'",
+              "wms H5375@w5 morph 'HVqrmsa' != OSHB 'HNcbsa'"
             ],
             "sourceLocator": []
           },
@@ -2513,7 +2535,8 @@
               "wms H5771@w6 surface 'עָוֹן' != OSHB 'וְעֹבֵ֣ר'"
             ],
             "morphology": [
-              "morph 'HNcbsa' != OSHB 'HC/Vqrmsa'"
+              "morph 'HNcbsa' != OSHB 'HC/Vqrmsa'",
+              "wms H5771@w6 morph 'HNcbsa' != OSHB 'HC/Vqrmsa'"
             ],
             "sourceLocator": []
           },
@@ -2582,7 +2605,8 @@
               "wms H5674@w7 surface 'וְעֹבֵ֣ר' != OSHB 'עַל'"
             ],
             "morphology": [
-              "morph 'HC/Vqrmsa' != OSHB 'HR'"
+              "morph 'HC/Vqrmsa' != OSHB 'HR'",
+              "wms H5674@w7 morph 'HC/Vqrmsa' != OSHB 'HR'"
             ],
             "sourceLocator": []
           },
@@ -2651,7 +2675,8 @@
               "wms H5921@w8 surface 'עַל' != OSHB 'פֶּ֔שַׁע'"
             ],
             "morphology": [
-              "morph 'HR' != OSHB 'HNcmsa'"
+              "morph 'HR' != OSHB 'HNcmsa'",
+              "wms H5921@w8 morph 'HR' != OSHB 'HNcmsa'"
             ],
             "sourceLocator": []
           },
@@ -2721,7 +2746,8 @@
               "wms H5771@w9 surface 'עָוֹן' != OSHB 'לִשְׁאֵרִ֖ית'"
             ],
             "morphology": [
-              "morph 'HNcbsa' != OSHB 'HR/Ncfsc'"
+              "morph 'HNcbsa' != OSHB 'HR/Ncfsc'",
+              "wms H5771@w9 morph 'HNcbsa' != OSHB 'HR/Ncfsc'"
             ],
             "sourceLocator": []
           },
@@ -2790,7 +2816,8 @@
               "wms H7611@w10 surface 'לִשְׁאֵרִ֖ית' != OSHB 'נַחֲלָת֑וֹ'"
             ],
             "morphology": [
-              "morph 'HR/Ncfsc' != OSHB 'HNcfsc/Sp3ms'"
+              "morph 'HR/Ncfsc' != OSHB 'HNcfsc/Sp3ms'",
+              "wms H7611@w10 morph 'HR/Ncfsc' != OSHB 'HNcfsc/Sp3ms'"
             ],
             "sourceLocator": []
           },
@@ -2863,7 +2890,8 @@
               "wms H5159@w11 surface 'נַחֲלָת֑וֹ' != OSHB 'לֹא'"
             ],
             "morphology": [
-              "morph 'HNcfsc/Sp3ms' != OSHB 'HTn'"
+              "morph 'HNcfsc/Sp3ms' != OSHB 'HTn'",
+              "wms H5159@w11 morph 'HNcfsc/Sp3ms' != OSHB 'HTn'"
             ],
             "sourceLocator": []
           },
@@ -2935,7 +2963,8 @@
               "wms H4480@w12 surface 'מִן' != OSHB 'הֶחֱזִ֤יק'"
             ],
             "morphology": [
-              "derived(pos 'preposition' vs verb 'HVhp3ms')"
+              "derived(pos 'preposition' vs verb 'HVhp3ms')",
+              "wms H4480@w12 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -3014,7 +3043,8 @@
               "wms H5201@w13 surface 'נָטַר' != OSHB 'לָעַד֙'"
             ],
             "morphology": [
-              "derived(gender '' vs 'm')"
+              "derived(gender '' vs 'm')",
+              "wms H5201@w13 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -3083,7 +3113,8 @@
               "wms H5703@w14 surface 'לָעַד֙' != OSHB 'אַפּ֔וֹ'"
             ],
             "morphology": [
-              "morph 'HR/Ncmsa' != OSHB 'HNcmsc/Sp3ms'"
+              "morph 'HR/Ncmsa' != OSHB 'HNcmsc/Sp3ms'",
+              "wms H5703@w14 morph 'HR/Ncmsa' != OSHB 'HNcmsc/Sp3ms'"
             ],
             "sourceLocator": []
           },
@@ -3153,7 +3184,8 @@
               "wms H5703@w15 surface 'לָעַד֙' != OSHB 'כִּֽי'"
             ],
             "morphology": [
-              "morph 'HR/Ncmsa' != OSHB 'HC'"
+              "morph 'HR/Ncmsa' != OSHB 'HC'",
+              "wms H5703@w15 morph 'HR/Ncmsa' != OSHB 'HC'"
             ],
             "sourceLocator": []
           },
@@ -3222,7 +3254,8 @@
               "wms H639@w16 surface 'אַפּ֔וֹ' != OSHB 'חָפֵ֥ץ'"
             ],
             "morphology": [
-              "morph 'HNcmsc/Sp3ms' != OSHB 'HVqp3ms'"
+              "morph 'HNcmsc/Sp3ms' != OSHB 'HVqp3ms'",
+              "wms H639@w16 morph 'HNcmsc/Sp3ms' != OSHB 'HVqp3ms'"
             ],
             "sourceLocator": []
           },
@@ -3291,7 +3324,8 @@
               "wms H1931@w17 surface 'הֽוּא' != OSHB 'חֶ֖סֶד'"
             ],
             "morphology": [
-              "morph 'HPp3ms' != OSHB 'HNcmsa'"
+              "morph 'HPp3ms' != OSHB 'HNcmsa'",
+              "wms H1931@w17 morph 'HPp3ms' != OSHB 'HNcmsa'"
             ],
             "sourceLocator": []
           },
@@ -3360,7 +3394,8 @@
               "wms H2654@w18 surface 'חָפֵ֥ץ' != OSHB 'הֽוּא'"
             ],
             "morphology": [
-              "morph 'HVqp3ms' != OSHB 'HPp3ms'"
+              "morph 'HVqp3ms' != OSHB 'HPp3ms'",
+              "wms H2654@w18 morph 'HVqp3ms' != OSHB 'HPp3ms'"
             ],
             "sourceLocator": []
           },
@@ -3516,7 +3551,8 @@
               "wms H834@w1 surface 'אֲשֶׁר' != OSHB 'וְיִכָּנְע֨וּ'"
             ],
             "morphology": [
-              "morph 'HTr' != OSHB 'HC/VNi3mp'"
+              "morph 'HTr' != OSHB 'HC/VNi3mp'",
+              "wms H834@w1 morph 'HTr' != OSHB 'HC/VNi3mp'"
             ],
             "sourceLocator": []
           },
@@ -3585,7 +3621,8 @@
               "wms H3665@w2 surface 'וְיִכָּנְע֨וּ' != OSHB 'עַמִּ֜י'"
             ],
             "morphology": [
-              "morph 'HC/VNi3mp' != OSHB 'HNcmsc/Sp1cs'"
+              "morph 'HC/VNi3mp' != OSHB 'HNcmsc/Sp1cs'",
+              "wms H3665@w2 morph 'HC/VNi3mp' != OSHB 'HNcmsc/Sp1cs'"
             ],
             "sourceLocator": []
           },
@@ -3654,7 +3691,8 @@
               "wms H5971@w3 surface 'עַמִּ֜י' != OSHB 'אֲשֶׁ֧ר'"
             ],
             "morphology": [
-              "morph 'HNcmsc/Sp1cs' != OSHB 'HTr'"
+              "morph 'HNcmsc/Sp1cs' != OSHB 'HTr'",
+              "wms H5971@w3 morph 'HNcmsc/Sp1cs' != OSHB 'HTr'"
             ],
             "sourceLocator": []
           },
@@ -3723,7 +3761,8 @@
               "wms H834@w4 surface 'אֲשֶׁר' != OSHB 'נִֽקְרָא'"
             ],
             "morphology": [
-              "morph 'HTr' != OSHB 'HVNp3ms'"
+              "morph 'HTr' != OSHB 'HVNp3ms'",
+              "wms H834@w4 morph 'HTr' != OSHB 'HVNp3ms'"
             ],
             "sourceLocator": []
           },
@@ -3803,7 +3842,8 @@
               "wms H7121@w5 surface 'נִֽקְרָא' != OSHB 'שְׁמִ֣י'"
             ],
             "morphology": [
-              "morph 'HVNp3ms' != OSHB 'HNcmsc/Sp1cs'"
+              "morph 'HVNp3ms' != OSHB 'HNcmsc/Sp1cs'",
+              "wms H7121@w5 morph 'HVNp3ms' != OSHB 'HNcmsc/Sp1cs'"
             ],
             "sourceLocator": []
           },
@@ -3872,7 +3912,8 @@
               "wms H8034@w6 surface 'שְׁמִ֣י' != OSHB 'עֲלֵיהֶ֗ם'"
             ],
             "morphology": [
-              "morph 'HNcmsc/Sp1cs' != OSHB 'HR/Sp3mp'"
+              "morph 'HNcmsc/Sp1cs' != OSHB 'HR/Sp3mp'",
+              "wms H8034@w6 morph 'HNcmsc/Sp1cs' != OSHB 'HR/Sp3mp'"
             ],
             "sourceLocator": []
           },
@@ -3941,7 +3982,8 @@
               "wms H5921@w7 surface 'עֲלֵיהֶ֗ם' != OSHB 'וְיִֽתְפַּֽלְלוּ֙'"
             ],
             "morphology": [
-              "morph 'HR/Sp3mp' != OSHB 'HC/Vti3mp'"
+              "morph 'HR/Sp3mp' != OSHB 'HC/Vti3mp'",
+              "wms H5921@w7 morph 'HR/Sp3mp' != OSHB 'HC/Vti3mp'"
             ],
             "sourceLocator": []
           },
@@ -4013,7 +4055,8 @@
               "wms H6419@w8 surface 'וְיִֽתְפַּֽלְלוּ֙' != OSHB 'וִֽיבַקְשׁ֣וּ'"
             ],
             "morphology": [
-              "morph 'HC/Vti3mp' != OSHB 'HC/Vpi3mp'"
+              "morph 'HC/Vti3mp' != OSHB 'HC/Vpi3mp'",
+              "wms H6419@w8 morph 'HC/Vti3mp' != OSHB 'HC/Vpi3mp'"
             ],
             "sourceLocator": []
           },
@@ -4082,7 +4125,8 @@
               "wms H1245@w9 surface 'וִֽיבַקְשׁ֣וּ' != OSHB 'פָנַ֔י'"
             ],
             "morphology": [
-              "morph 'HC/Vpi3mp' != OSHB 'HNcbpc/Sp1cs'"
+              "morph 'HC/Vpi3mp' != OSHB 'HNcbpc/Sp1cs'",
+              "wms H1245@w9 morph 'HC/Vpi3mp' != OSHB 'HNcbpc/Sp1cs'"
             ],
             "sourceLocator": []
           },
@@ -4151,7 +4195,8 @@
               "wms H6440@w10 surface 'פָנַ֔י' != OSHB 'וְיָשֻׁ֖בוּ'"
             ],
             "morphology": [
-              "morph 'HNcbpc/Sp1cs' != OSHB 'HC/Vqi3mp'"
+              "morph 'HNcbpc/Sp1cs' != OSHB 'HC/Vqi3mp'",
+              "wms H6440@w10 morph 'HNcbpc/Sp1cs' != OSHB 'HC/Vqi3mp'"
             ],
             "sourceLocator": []
           },
@@ -4220,7 +4265,8 @@
               "wms H7725@w11 surface 'וְיָשֻׁ֖בוּ' != OSHB 'מִדַּרְכֵיהֶ֣ם'"
             ],
             "morphology": [
-              "morph 'HC/Vqi3mp' != OSHB 'HR/Ncbpc/Sp3mp'"
+              "morph 'HC/Vqi3mp' != OSHB 'HR/Ncbpc/Sp3mp'",
+              "wms H7725@w11 morph 'HC/Vqi3mp' != OSHB 'HR/Ncbpc/Sp3mp'"
             ],
             "sourceLocator": []
           },
@@ -4289,7 +4335,8 @@
               "wms H4480@w12 surface 'מִן' != OSHB 'הָרָעִ֑ים'"
             ],
             "morphology": [
-              "morph 'HR' != OSHB 'HTd/Aampa'"
+              "morph 'HR' != OSHB 'HTd/Aampa'",
+              "wms H4480@w12 morph 'HR' != OSHB 'HTd/Aampa'"
             ],
             "sourceLocator": []
           },
@@ -4367,7 +4414,8 @@
               "wms H1870@w13 surface 'מִדַּרְכֵיהֶ֣ם' != OSHB 'וַאֲנִי֙'"
             ],
             "morphology": [
-              "morph 'HR/Ncbpc/Sp3mp' != OSHB 'HC/Pp1cs'"
+              "morph 'HR/Ncbpc/Sp3mp' != OSHB 'HC/Pp1cs'",
+              "wms H1870@w13 morph 'HR/Ncbpc/Sp3mp' != OSHB 'HC/Pp1cs'"
             ],
             "sourceLocator": []
           },
@@ -4439,7 +4487,8 @@
               "wms H7451@w14 surface 'הָרָעִ֑ים' != OSHB 'אֶשְׁמַ֣ע'"
             ],
             "morphology": [
-              "morph 'HTd/Aampa' != OSHB 'HVqi1cs'"
+              "morph 'HTd/Aampa' != OSHB 'HVqi1cs'",
+              "wms H7451@w14 morph 'HTd/Aampa' != OSHB 'HVqi1cs'"
             ],
             "sourceLocator": []
           },
@@ -4511,7 +4560,8 @@
               "wms H589@w15 surface 'וַאֲנִי֙' != OSHB 'מִן'"
             ],
             "morphology": [
-              "morph 'HC/Pp1cs' != OSHB 'HR'"
+              "morph 'HC/Pp1cs' != OSHB 'HR'",
+              "wms H589@w15 morph 'HC/Pp1cs' != OSHB 'HR'"
             ],
             "sourceLocator": []
           },
@@ -4583,7 +4633,8 @@
               "wms H8085@w16 surface 'אֶשְׁמַ֣ע' != OSHB 'הַשָּׁמַ֔יִם'"
             ],
             "morphology": [
-              "morph 'HVqi1cs' != OSHB 'HTd/Ncmpa'"
+              "morph 'HVqi1cs' != OSHB 'HTd/Ncmpa'",
+              "wms H8085@w16 morph 'HVqi1cs' != OSHB 'HTd/Ncmpa'"
             ],
             "sourceLocator": []
           },
@@ -4652,7 +4703,8 @@
               "wms H4480@w17 surface 'מִן' != OSHB 'וְאֶסְלַח֙'"
             ],
             "morphology": [
-              "morph 'HR' != OSHB 'HC/Vqi1cs'"
+              "morph 'HR' != OSHB 'HC/Vqi1cs'",
+              "wms H4480@w17 morph 'HR' != OSHB 'HC/Vqi1cs'"
             ],
             "sourceLocator": []
           },
@@ -4723,7 +4775,8 @@
               "wms H8064@w18 surface 'הַשָּׁמַ֔יִם' != OSHB 'לְחַטָּאתָ֔ם'"
             ],
             "morphology": [
-              "morph 'HTd/Ncmpa' != OSHB 'HR/Ncfsc/Sp3mp'"
+              "morph 'HTd/Ncmpa' != OSHB 'HR/Ncfsc/Sp3mp'",
+              "wms H8064@w18 morph 'HTd/Ncmpa' != OSHB 'HR/Ncfsc/Sp3mp'"
             ],
             "sourceLocator": []
           },
@@ -4859,7 +4912,8 @@
               "wms H2403@w20 surface 'לְחַטָּאתָ֔ם' != OSHB 'אֶת'"
             ],
             "morphology": [
-              "morph 'HR/Ncfsc/Sp3mp' != OSHB 'HTo'"
+              "morph 'HR/Ncfsc/Sp3mp' != OSHB 'HTo'",
+              "wms H2403@w20 morph 'HR/Ncfsc/Sp3mp' != OSHB 'HTo'"
             ],
             "sourceLocator": []
           },
@@ -4931,7 +4985,8 @@
               "wms H7495@w21 surface 'וְאֶרְפָּ֖א' != OSHB 'אַרְצָֽם'"
             ],
             "morphology": [
-              "morph 'HC/Vqi1cs' != OSHB 'HNcbsc/Sp3mp'"
+              "morph 'HC/Vqi1cs' != OSHB 'HNcbsc/Sp3mp'",
+              "wms H7495@w21 morph 'HC/Vqi1cs' != OSHB 'HNcbsc/Sp3mp'"
             ],
             "sourceLocator": []
           },
@@ -5344,7 +5399,8 @@
               "wms H1961@w5 surface 'הָיָה' != OSHB 'בָאֵ֖שׁ'"
             ],
             "morphology": [
-              "derived(gender '' vs 'b')"
+              "derived(gender '' vs 'b')",
+              "wms H1961@w5 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -5610,7 +5666,8 @@
               "wms H310@w9 surface 'וְאַחַ֣ר' != OSHB 'ק֖וֹל'"
             ],
             "morphology": [
-              "morph 'HC/R' != OSHB 'HNcmsc'"
+              "morph 'HC/R' != OSHB 'HNcmsc'",
+              "wms H310@w9 morph 'HC/R' != OSHB 'HNcmsc'"
             ],
             "sourceLocator": []
           },
@@ -5679,7 +5736,8 @@
               "wms H784@w10 surface 'הָאֵ֔שׁ' != OSHB 'דְּמָמָ֥ה'"
             ],
             "morphology": [
-              "morph 'HTd/Ncbsa' != OSHB 'HNcfsa'"
+              "morph 'HTd/Ncbsa' != OSHB 'HNcfsa'",
+              "wms H784@w10 morph 'HTd/Ncbsa' != OSHB 'HNcfsa'"
             ],
             "sourceLocator": []
           },
@@ -5754,7 +5812,8 @@
               "wms H6963@w11 surface 'ק֖וֹל' != OSHB 'דַקָּֽה'"
             ],
             "morphology": [
-              "morph 'HNcmsc' != OSHB 'HAafsa'"
+              "morph 'HNcmsc' != OSHB 'HAafsa'",
+              "wms H6963@w11 morph 'HNcmsc' != OSHB 'HAafsa'"
             ],
             "sourceLocator": []
           },
@@ -5821,7 +5880,8 @@
               "undecided: OSHB token w12 unavailable"
             ],
             "morphology": [
-              "undecided: OSHB token w12 unavailable"
+              "undecided: OSHB token w12 unavailable",
+              "wms H1877@w12 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "locator w12 exceeds token count (11)",
@@ -5892,7 +5952,8 @@
               "undecided: OSHB token w13 unavailable"
             ],
             "morphology": [
-              "undecided: OSHB token w13 unavailable"
+              "undecided: OSHB token w13 unavailable",
+              "wms H1877@w13 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "locator w13 exceeds token count (11)",
@@ -6103,7 +6164,8 @@
               "wms H5648@w3 surface 'עֲבַד' != OSHB 'עֲבִידַ֣ת'"
             ],
             "morphology": [
-              "derived(gender '' vs 'f')"
+              "derived(gender '' vs 'f')",
+              "wms H5648@w3 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -6366,7 +6428,9 @@
               "surface 'דֵּן' != OSHB 'בִּירוּשְׁלֶ֑ם' @ w7",
               "wms H1836@w7 surface 'דֵּן' != OSHB 'בִּירוּשְׁלֶ֑ם'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H1836@w7 missing mandatory orig_morphology"
+            ],
             "sourceLocator": []
           },
           "status": "PENDING_REVIEW",
@@ -6435,7 +6499,8 @@
               "wms H3390@w8 surface 'בִּירוּשְׁלֶ֑ם' != OSHB 'וַהֲוָת֙'"
             ],
             "morphology": [
-              "morph 'AR/Np' != OSHB 'AC/Vqp3fs'"
+              "morph 'AR/Np' != OSHB 'AC/Vqp3fs'",
+              "wms H3390@w8 morph 'AR/Np' != OSHB 'AC/Vqp3fs'"
             ],
             "sourceLocator": []
           },
@@ -6504,7 +6569,8 @@
               "wms H1934@w9 surface 'וַהֲוָת֙' != OSHB 'בָּֽטְלָ֔א'"
             ],
             "morphology": [
-              "morph 'AC/Vqp3fs' != OSHB 'AVqrfsa'"
+              "morph 'AC/Vqp3fs' != OSHB 'AVqrfsa'",
+              "wms H1934@w9 morph 'AC/Vqp3fs' != OSHB 'AVqrfsa'"
             ],
             "sourceLocator": []
           },
@@ -6573,7 +6639,8 @@
               "wms H989@w10 surface 'בָּֽטְלָ֔א' != OSHB 'עַ֚ד'"
             ],
             "morphology": [
-              "morph 'AVqrfsa' != OSHB 'AR'"
+              "morph 'AVqrfsa' != OSHB 'AR'",
+              "wms H989@w10 morph 'AVqrfsa' != OSHB 'AR'"
             ],
             "sourceLocator": []
           },
@@ -6642,7 +6709,8 @@
               "wms H5705@w11 surface 'עַ֚ד' != OSHB 'שְׁנַ֣ת'"
             ],
             "morphology": [
-              "morph 'AR' != OSHB 'ANcfsc'"
+              "morph 'AR' != OSHB 'ANcfsc'",
+              "wms H5705@w11 morph 'AR' != OSHB 'ANcfsc'"
             ],
             "sourceLocator": []
           },
@@ -6712,10 +6780,12 @@
               "wms H8139@w12 surface 'שְׁנָה' != OSHB 'תַּרְתֵּ֔ין'"
             ],
             "morphology": [
-              "derived(gender '' vs 'c')"
+              "derived(gender '' vs 'c')",
+              "wms H8139@w12 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
-              "OSHB locator carries morph_source='strongs_lexicon'"
+              "OSHB locator carries morph_source='strongs_lexicon'",
+              "wms H8139@w12 carries morph_source='strongs_lexicon' instead of oshb_wlc"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -6783,10 +6853,12 @@
               "wms H8524@w13 surface 'תָּלַל' != OSHB 'לְמַלְכ֖וּת'"
             ],
             "morphology": [
-              "derived(gender '' vs 'f')"
+              "derived(gender '' vs 'f')",
+              "wms H8524@w13 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
-              "OSHB locator carries morph_source='strongs_lexicon'"
+              "OSHB locator carries morph_source='strongs_lexicon'",
+              "wms H8524@w13 carries morph_source='strongs_lexicon' instead of oshb_wlc"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -6853,7 +6925,9 @@
               "surface 'מִן' != OSHB 'דָּרְיָ֥וֶשׁ' @ w14",
               "wms H4481@w14 surface 'מִן' != OSHB 'דָּרְיָ֥וֶשׁ'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H4481@w14 missing mandatory orig_morphology"
+            ],
             "sourceLocator": []
           },
           "status": "PENDING_REVIEW",
@@ -6922,7 +6996,8 @@
               "wms H4437@w15 surface 'לְמַלְכוּת' != OSHB 'מֶֽלֶךְ'"
             ],
             "morphology": [
-              "morph 'AR/Ncfsc' != OSHB 'ANcmsc'"
+              "morph 'AR/Ncfsc' != OSHB 'ANcmsc'",
+              "wms H4437@w15 morph 'AR/Ncfsc' != OSHB 'ANcmsc'"
             ],
             "sourceLocator": []
           },
@@ -7149,7 +7224,8 @@
               "undecided: OSHB token w18 unavailable"
             ],
             "morphology": [
-              "undecided: OSHB token w18 unavailable"
+              "undecided: OSHB token w18 unavailable",
+              "wms H6543@w18 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "locator w18 exceeds token count (16)",
@@ -7294,7 +7370,8 @@
               "wms H1836@w2 surface 'דְּנָה֙' != OSHB 'פִתְגָמָ֖א'"
             ],
             "morphology": [
-              "morph 'APdxms' != OSHB 'ANcmsd/Td'"
+              "morph 'APdxms' != OSHB 'ANcmsd/Td'",
+              "wms H1836@w2 morph 'APdxms' != OSHB 'ANcmsd/Td'"
             ],
             "sourceLocator": []
           },
@@ -7363,7 +7440,8 @@
               "wms H6593@w3 surface 'פִּשְׁתֶּה' != OSHB 'הֲתִיב֣וּנָא'"
             ],
             "morphology": [
-              "derived(pos 'noun' vs verb 'AVhp3mp/Sp1cp')"
+              "derived(pos 'noun' vs verb 'AVhp3mp/Sp1cp')",
+              "wms H6593@w3 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -7432,7 +7510,8 @@
               "wms H8422@w4 surface 'תּוּבַל' != OSHB 'לְמֵמַ֑ר'"
             ],
             "morphology": [
-              "derived(pos 'proper_noun' vs verb 'AR/Vqc')"
+              "derived(pos 'proper_noun' vs verb 'AR/Vqc')",
+              "wms H8422@w4 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -7501,7 +7580,8 @@
               "wms H560@w5 surface 'לְמֵמַ֑ר' != OSHB 'אֲנַ֣חְנָא'"
             ],
             "morphology": [
-              "morph 'AR/Vqc' != OSHB 'APp1cp'"
+              "morph 'AR/Vqc' != OSHB 'APp1cp'",
+              "wms H560@w5 morph 'AR/Vqc' != OSHB 'APp1cp'"
             ],
             "sourceLocator": []
           },
@@ -7570,7 +7650,8 @@
               "wms H586@w6 surface 'אֲנַ֣חְנָא' != OSHB 'הִמּ֡וֹ'"
             ],
             "morphology": [
-              "morph 'APp1cp' != OSHB 'ATa'"
+              "morph 'APp1cp' != OSHB 'ATa'",
+              "wms H586@w6 morph 'APp1cp' != OSHB 'ATa'"
             ],
             "sourceLocator": []
           },
@@ -7639,7 +7720,8 @@
               "wms H5650@w7 surface 'עַבְדֹוהִי' != OSHB 'עַבְדוֹהִי֩'"
             ],
             "morphology": [
-              "derived(gender '' vs 'm')"
+              "derived(gender '' vs 'm')",
+              "wms H5650@w7 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -7708,7 +7790,8 @@
               "wms H426@w8 surface 'אֱלָ֨הּ' != OSHB 'דִֽי'"
             ],
             "morphology": [
-              "morph 'ANcmsc' != OSHB 'ATr'"
+              "morph 'ANcmsc' != OSHB 'ATr'",
+              "wms H426@w8 morph 'ANcmsc' != OSHB 'ATr'"
             ],
             "sourceLocator": []
           },
@@ -7777,7 +7860,8 @@
               "wms H8065@w9 surface 'שְׁמַיָּ֜א' != OSHB 'אֱלָ֨הּ'"
             ],
             "morphology": [
-              "morph 'ANcmpd/Td' != OSHB 'ANcmsc'"
+              "morph 'ANcmpd/Td' != OSHB 'ANcmsc'",
+              "wms H8065@w9 morph 'ANcmpd/Td' != OSHB 'ANcmsc'"
             ],
             "sourceLocator": []
           },
@@ -7846,7 +7930,8 @@
               "wms H772@w10 surface 'וְאַרְעָ֗א' != OSHB 'שְׁמַיָּ֜א'"
             ],
             "morphology": [
-              "morph 'AC/Ncfsd/Td' != OSHB 'ANcmpd/Td'"
+              "morph 'AC/Ncfsd/Td' != OSHB 'ANcmpd/Td'",
+              "wms H772@w10 morph 'AC/Ncfsd/Td' != OSHB 'ANcmpd/Td'"
             ],
             "sourceLocator": []
           },
@@ -7914,7 +7999,9 @@
               "surface 'בָּנָה' != OSHB 'וְאַרְעָ֗א' @ w11",
               "wms H1129@w11 surface 'בָּנָה' != OSHB 'וְאַרְעָ֗א'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H1129@w11 missing mandatory orig_morphology"
+            ],
             "sourceLocator": []
           },
           "status": "PENDING_REVIEW",
@@ -7984,7 +8071,8 @@
               "wms H1836@w12 surface 'דְּנָה֙' != OSHB 'וּבָנַ֤יִן'"
             ],
             "morphology": [
-              "morph 'APdxms' != OSHB 'AC/Vqrmpa'"
+              "morph 'APdxms' != OSHB 'AC/Vqrmpa'",
+              "wms H1836@w12 morph 'APdxms' != OSHB 'AC/Vqrmpa'"
             ],
             "sourceLocator": []
           },
@@ -8184,7 +8272,8 @@
               "wms H1129@w15 surface 'בָּנָה' != OSHB 'הֲוָ֨א'"
             ],
             "morphology": [
-              "derived(stem '' vs 'peal')"
+              "derived(stem '' vs 'peal')",
+              "wms H1129@w15 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -8253,7 +8342,8 @@
               "wms H4481@w16 surface 'מִן' != OSHB 'בְנֵ֜ה'"
             ],
             "morphology": [
-              "derived(pos 'preposition' vs verb 'AVqsmsa')"
+              "derived(pos 'preposition' vs verb 'AVqsmsa')",
+              "wms H4481@w16 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -8322,7 +8412,8 @@
               "wms H479@w17 surface 'אִלֵּךְ' != OSHB 'מִקַּדְמַ֤ת'"
             ],
             "morphology": [
-              "derived(gender '' vs 'f')"
+              "derived(gender '' vs 'f')",
+              "wms H479@w17 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -8390,9 +8481,12 @@
               "surface 'שְׁנָה' != OSHB 'דְּנָה֙' @ w18",
               "wms H8139@w18 surface 'שְׁנָה' != OSHB 'דְּנָה֙'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H8139@w18 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
-              "OSHB locator carries morph_source='strongs_lexicon'"
+              "OSHB locator carries morph_source='strongs_lexicon'",
+              "wms H8139@w18 carries morph_source='strongs_lexicon' instead of oshb_wlc"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -8460,7 +8554,8 @@
               "wms H7227@w19 surface 'רַב' != OSHB 'שְׁנִ֣ין'"
             ],
             "morphology": [
-              "derived(gender '' vs 'f')"
+              "derived(gender '' vs 'f')",
+              "wms H7227@w19 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -8591,7 +8686,8 @@
               "wms H1129@w21 surface 'בָּנָה' != OSHB 'וּמֶ֤לֶךְ'"
             ],
             "morphology": [
-              "derived(gender '' vs 'm')"
+              "derived(gender '' vs 'm')",
+              "wms H1129@w21 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -8662,7 +8758,8 @@
               "wms H4430@w22 surface 'וּמֶ֤לֶךְ' != OSHB 'לְיִשְׂרָאֵל֙'"
             ],
             "morphology": [
-              "morph 'AC/Ncmsa' != OSHB 'AR/Np'"
+              "morph 'AC/Ncmsa' != OSHB 'AR/Np'",
+              "wms H4430@w22 morph 'AC/Ncmsa' != OSHB 'AR/Np'"
             ],
             "sourceLocator": []
           },
@@ -8805,7 +8902,8 @@
               "wms H3479@w24 surface 'לְיִשְׂרָאֵל֙' != OSHB 'בְּנָ֖הִי'"
             ],
             "morphology": [
-              "morph 'AR/Np' != OSHB 'AVqp3ms/Sp3ms'"
+              "morph 'AR/Np' != OSHB 'AVqp3ms/Sp3ms'",
+              "wms H3479@w24 morph 'AR/Np' != OSHB 'AVqp3ms/Sp3ms'"
             ],
             "sourceLocator": []
           },
@@ -8876,7 +8974,8 @@
               "wms H8352@w25 surface 'שֵׁת' != OSHB 'וְשַׁכְלְלֵֽהּ'"
             ],
             "morphology": [
-              "derived(pos 'proper_noun' vs verb 'AC/Vep3ms/Sp3ms')"
+              "derived(pos 'proper_noun' vs verb 'AC/Vep3ms/Sp3ms')",
+              "wms H8352@w25 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -8953,7 +9052,8 @@
             "lexical": [],
             "lemmaSurface": [],
             "morphology": [
-              "derived(gender '' vs 'm')"
+              "derived(gender '' vs 'm')",
+              "wms H426@w1 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w1')"
@@ -9018,7 +9118,8 @@
             "lexical": [],
             "lemmaSurface": [],
             "morphology": [
-              "derived(stem '' vs 'peal')"
+              "derived(stem '' vs 'peal')",
+              "wms H7972@w2 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w2')"
@@ -9150,11 +9251,13 @@
             "lexical": [],
             "lemmaSurface": [],
             "morphology": [
-              "derived(stem '' vs 'peal')"
+              "derived(stem '' vs 'peal')",
+              "wms H5463@w4 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w4')",
-              "OSHB locator carries morph_source='strongs_lexicon'"
+              "OSHB locator carries morph_source='strongs_lexicon'",
+              "wms H5463@w4 carries morph_source='strongs_lexicon' instead of oshb_wlc"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -9222,7 +9325,8 @@
               "wms H6413@w5 surface 'פְּלֵיטָה' != OSHB 'פֻּ֥ם'"
             ],
             "morphology": [
-              "derived(gender '' vs 'm')"
+              "derived(gender '' vs 'm')",
+              "wms H6413@w5 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w5')"
@@ -9292,7 +9396,9 @@
               "surface 'אַרְיֵה' != OSHB 'אַרְיָוָתָ֖א' @ w6",
               "wms H744@w6 surface 'אַרְיֵה' != OSHB 'אַרְיָוָתָ֖א'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H744@w6 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w6')"
             ]
@@ -9355,7 +9461,9 @@
           "existingAlerts": {
             "lexical": [],
             "lemmaSurface": [],
-            "morphology": [],
+            "morphology": [
+              "wms H3809@w7 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w7')"
             ]
@@ -9419,7 +9527,8 @@
             "lexical": [],
             "lemmaSurface": [],
             "morphology": [
-              "derived(stem '' vs 'pael')"
+              "derived(stem '' vs 'pael')",
+              "wms H2255@w8 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w8')"
@@ -9492,7 +9601,9 @@
               "surface 'קֳבֵל' != OSHB 'כָּל' @ w9",
               "wms H6903@w9 surface 'קֳבֵל' != OSHB 'כָּל'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H6903@w9 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w9')"
             ]
@@ -9564,7 +9675,9 @@
               "surface 'שְׁכַח' != OSHB 'קֳבֵ֗ל' @ w10",
               "wms H7912@w10 surface 'שְׁכַח' != OSHB 'קֳבֵ֗ל'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H7912@w10 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w10')"
             ]
@@ -9633,10 +9746,13 @@
               "surface 'זָכוּ' != OSHB 'דִּ֤י' @ w11",
               "wms H2136@w11 surface 'זָכוּ' != OSHB 'דִּ֤י'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H2136@w11 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w11')",
-              "OSHB locator carries morph_source='strongs_lexicon'"
+              "OSHB locator carries morph_source='strongs_lexicon'",
+              "wms H2136@w11 carries morph_source='strongs_lexicon' instead of oshb_wlc"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -9703,7 +9819,9 @@
               "surface 'קֳדָם' != OSHB 'קָֽדָמ֨וֹהִי֙' @ w12",
               "wms H6925@w12 surface 'קֳדָם' != OSHB 'קָֽדָמ֨וֹהִי֙'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H6925@w12 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w12')"
             ]
@@ -9776,7 +9894,8 @@
               "wms H6925@w13 surface 'קֳדָם' != OSHB 'זָכוּ֙'"
             ],
             "morphology": [
-              "derived(gender '' vs 'f')"
+              "derived(gender '' vs 'f')",
+              "wms H6925@w13 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w13')"
@@ -9847,7 +9966,8 @@
               "wms H638@w14 surface 'אַף' != OSHB 'הִשְׁתְּכַ֣חַת'"
             ],
             "morphology": [
-              "derived(pos 'particle' vs verb 'AVup3fs')"
+              "derived(pos 'particle' vs verb 'AVup3fs')",
+              "wms H638@w14 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w14')"
@@ -9976,7 +10096,9 @@
               "surface 'מַלְאֲכֵהּ' != OSHB 'וְאַ֤ף' @ w16",
               "wms H4399@w16 surface 'מַלְאֲכֵהּ' != OSHB 'וְאַ֤ף'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H4399@w16 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w16')"
             ]
@@ -10045,7 +10167,9 @@
               "surface 'לָא' != OSHB 'קדמיך' @ w17",
               "wms H3809@w17 surface 'לָא' != OSHB 'קדמיך'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H3809@w17 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w17')"
             ]
@@ -10117,7 +10241,9 @@
               "surface 'עַבְדֵֽת' != OSHB 'קָֽדָמָךְ֙' @ w18",
               "wms H5648@w18 surface 'עַבְדֵֽת' != OSHB 'קָֽדָמָךְ֙'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H5648@w18 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w18')"
             ]
@@ -10186,10 +10312,13 @@
               "surface 'חֲבַר' != OSHB 'מַלְכָּ֔א' @ w19",
               "wms H2269@w19 surface 'חֲבַר' != OSHB 'מַלְכָּ֔א'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H2269@w19 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
               "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w19')",
-              "OSHB locator carries morph_source='strongs_lexicon'"
+              "OSHB locator carries morph_source='strongs_lexicon'",
+              "wms H2269@w19 carries morph_source='strongs_lexicon' instead of oshb_wlc"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -10269,7 +10398,8 @@
               "wms H607@w1 surface 'אַנְתָּה' != OSHB 'חָזֵ֤ה'"
             ],
             "morphology": [
-              "derived(pos 'pronoun' vs verb 'AVqrmsa')"
+              "derived(pos 'pronoun' vs verb 'AVqrmsa')",
+              "wms H607@w1 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -10338,7 +10468,8 @@
               "wms H2370@w2 surface 'חָזֵ֤ה' != OSHB 'הֲוֵית֙'"
             ],
             "morphology": [
-              "morph 'AVqrmsa' != OSHB 'AVqp1cs'"
+              "morph 'AVqrmsa' != OSHB 'AVqp1cs'",
+              "wms H2370@w2 morph 'AVqrmsa' != OSHB 'AVqp1cs'"
             ],
             "sourceLocator": []
           },
@@ -10468,7 +10599,8 @@
               "wms H2376@w4 surface 'בְּחֶזְוֵ֣י' != OSHB 'לֵֽילְיָ֔א'"
             ],
             "morphology": [
-              "morph 'AR/Ncmpc' != OSHB 'ANcmsd/Td'"
+              "morph 'AR/Ncmpc' != OSHB 'ANcmsd/Td'",
+              "wms H2376@w4 morph 'AR/Ncmpc' != OSHB 'ANcmsd/Td'"
             ],
             "sourceLocator": []
           },
@@ -10537,7 +10669,8 @@
               "wms H3916@w5 surface 'לֵֽילְיָ֔א' != OSHB 'וַאֲרוּ֙'"
             ],
             "morphology": [
-              "morph 'ANcmsd/Td' != OSHB 'AC/Tm'"
+              "morph 'ANcmsd/Td' != OSHB 'AC/Tm'",
+              "wms H3916@w5 morph 'ANcmsd/Td' != OSHB 'AC/Tm'"
             ],
             "sourceLocator": []
           },
@@ -10605,7 +10738,9 @@
               "surface 'אֲשֶׁר' != OSHB 'עִם' @ w6",
               "wms H1768@w6 surface 'דִּי' != OSHB 'עִם'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H1768@w6 missing mandatory orig_morphology"
+            ],
             "sourceLocator": []
           },
           "status": "PENDING_REVIEW",
@@ -10673,7 +10808,8 @@
               "wms H5974@w7 surface 'עִם' != OSHB 'עֲנָנֵ֣י'"
             ],
             "morphology": [
-              "morph 'AR' != OSHB 'ANcmpc'"
+              "morph 'AR' != OSHB 'ANcmpc'",
+              "wms H5974@w7 morph 'AR' != OSHB 'ANcmpc'"
             ],
             "sourceLocator": []
           },
@@ -10743,9 +10879,12 @@
               "surface 'עֲנָנָה' != OSHB 'שְׁמַיָּ֔א' @ w8",
               "wms H6053@w8 surface 'עֲנָנָה' != OSHB 'שְׁמַיָּ֔א'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H6053@w8 missing mandatory orig_morphology"
+            ],
             "sourceLocator": [
-              "OSHB locator carries morph_source='strongs_lexicon'"
+              "OSHB locator carries morph_source='strongs_lexicon'",
+              "wms H6053@w8 carries morph_source='strongs_lexicon' instead of oshb_wlc"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -10813,7 +10952,8 @@
               "wms H8065@w9 surface 'שְׁמַיָּ֔א' != OSHB 'כְּבַ֥ר'"
             ],
             "morphology": [
-              "morph 'ANcmpd/Td' != OSHB 'AR/Ncmsc'"
+              "morph 'ANcmpd/Td' != OSHB 'AR/Ncmsc'",
+              "wms H8065@w9 morph 'ANcmpd/Td' != OSHB 'AR/Ncmsc'"
             ],
             "sourceLocator": []
           },
@@ -10882,7 +11022,8 @@
               "wms H3607@w10 surface 'כָּלָא' != OSHB 'אֱנָ֖שׁ'"
             ],
             "morphology": [
-              "derived(gender '' vs 'm')"
+              "derived(gender '' vs 'm')",
+              "wms H3607@w10 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -10951,10 +11092,12 @@
               "wms H1248@w11 surface 'בַּר' != OSHB 'אָתֵ֣ה'"
             ],
             "morphology": [
-              "derived(pos 'noun' vs verb 'AVqrmsa')"
+              "derived(pos 'noun' vs verb 'AVqrmsa')",
+              "wms H1248@w11 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
-              "OSHB locator carries morph_source='strongs_lexicon'"
+              "OSHB locator carries morph_source='strongs_lexicon'",
+              "wms H1248@w11 carries morph_source='strongs_lexicon' instead of oshb_wlc"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -11022,7 +11165,8 @@
               "wms H606@w12 surface 'אֱנָ֖שׁ' != OSHB 'הֲוָ֑ה'"
             ],
             "morphology": [
-              "morph 'ANcmsa' != OSHB 'AVqp3ms'"
+              "morph 'ANcmsa' != OSHB 'AVqp3ms'",
+              "wms H606@w12 morph 'ANcmsa' != OSHB 'AVqp3ms'"
             ],
             "sourceLocator": []
           },
@@ -11091,7 +11235,8 @@
               "wms H858@w13 surface 'אָתֵה' != OSHB 'וְעַד'"
             ],
             "morphology": [
-              "morph 'AVqrmsa' != OSHB 'AC/R'"
+              "morph 'AVqrmsa' != OSHB 'AC/R'",
+              "wms H858@w13 morph 'AVqrmsa' != OSHB 'AC/R'"
             ],
             "sourceLocator": []
           },
@@ -11160,7 +11305,8 @@
               "wms H858@w14 surface 'אָתֵה' != OSHB 'עַתִּ֤יק'"
             ],
             "morphology": [
-              "morph 'AVqrmsa' != OSHB 'AAamsc'"
+              "morph 'AVqrmsa' != OSHB 'AAamsc'",
+              "wms H858@w14 morph 'AVqrmsa' != OSHB 'AAamsc'"
             ],
             "sourceLocator": []
           },
@@ -11228,7 +11374,9 @@
               "surface 'מִן' != OSHB 'יֽוֹמַיָּא֙' @ w15",
               "wms H4481@w15 surface 'מִן' != OSHB 'יֽוֹמַיָּא֙'"
             ],
-            "morphology": [],
+            "morphology": [
+              "wms H4481@w15 missing mandatory orig_morphology"
+            ],
             "sourceLocator": []
           },
           "status": "PENDING_REVIEW",
@@ -11298,7 +11446,8 @@
               "wms H6268@w16 surface 'עַתִּ֤יק' != OSHB 'מְטָ֔ה'"
             ],
             "morphology": [
-              "morph 'AAamsc' != OSHB 'AVqp3ms'"
+              "morph 'AAamsc' != OSHB 'AVqp3ms'",
+              "wms H6268@w16 morph 'AAamsc' != OSHB 'AVqp3ms'"
             ],
             "sourceLocator": []
           },
@@ -11367,7 +11516,8 @@
               "wms H3118@w17 surface 'יֽוֹמַיָּא֙' != OSHB 'וּקְדָמ֖וֹהִי'"
             ],
             "morphology": [
-              "morph 'ANcmpd/Td' != OSHB 'AC/R/Sp3ms'"
+              "morph 'ANcmpd/Td' != OSHB 'AC/R/Sp3ms'",
+              "wms H3118@w17 morph 'ANcmpd/Td' != OSHB 'AC/R/Sp3ms'"
             ],
             "sourceLocator": []
           },
@@ -11579,7 +11729,8 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'καθὼς' != 'καὶ' @ w1",
-              "SBLGNT lemma 'καθώς' != 'καί' @ w1"
+              "SBLGNT lemma 'καθώς' != 'καί' @ w1",
+              "wms G2531@w1 surface 'καθὼς' != SBLGNT 'καὶ'"
             ],
             "morphology": [],
             "sourceLocator": []
@@ -11646,11 +11797,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'θέλετε' != 'καθὼς' @ w2",
-              "SBLGNT lemma 'θέλω' != 'καθώς' @ w2"
+              "SBLGNT lemma 'θέλω' != 'καθώς' @ w2",
+              "wms G2309@w2 surface 'θέλετε' != SBLGNT 'καθὼς'"
             ],
             "morphology": [
               "morph 'V- 2PAI-P--' != SBLGNT 'C- --------'",
-              "derived(pos 'verb' vs 'C-')"
+              "derived(pos 'verb' vs 'C-')",
+              "wms G2309@w2 morph 'V- 2PAI-P--' != SBLGNT 'C- --------'"
             ],
             "sourceLocator": []
           },
@@ -11716,11 +11869,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἵνα' != 'θέλετε' @ w3",
-              "SBLGNT lemma 'ἵνα' != 'θέλω' @ w3"
+              "SBLGNT lemma 'ἵνα' != 'θέλω' @ w3",
+              "wms G2443@w3 surface 'ἵνα' != SBLGNT 'θέλετε'"
             ],
             "morphology": [
               "morph 'C- --------' != SBLGNT 'V- 2PAI-P--'",
-              "derived(pos 'conjunction' vs 'V-')"
+              "derived(pos 'conjunction' vs 'V-')",
+              "wms G2443@w3 morph 'C- --------' != SBLGNT 'V- 2PAI-P--'"
             ],
             "sourceLocator": []
           },
@@ -11786,11 +11941,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ποιῶσιν' != 'ἵνα' @ w4",
-              "SBLGNT lemma 'ποιέω' != 'ἵνα' @ w4"
+              "SBLGNT lemma 'ποιέω' != 'ἵνα' @ w4",
+              "wms G4160@w4 surface 'ποιῶσιν' != SBLGNT 'ἵνα'"
             ],
             "morphology": [
               "morph 'V- 3PAS-P--' != SBLGNT 'C- --------'",
-              "derived(pos 'verb' vs 'C-')"
+              "derived(pos 'verb' vs 'C-')",
+              "wms G4160@w4 morph 'V- 3PAS-P--' != SBLGNT 'C- --------'"
             ],
             "sourceLocator": []
           },
@@ -11856,11 +12013,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἄνθρωποι' != 'ποιῶσιν' @ w5",
-              "SBLGNT lemma 'ἄνθρωπος' != 'ποιέω' @ w5"
+              "SBLGNT lemma 'ἄνθρωπος' != 'ποιέω' @ w5",
+              "wms G444@w5 surface 'ἄνθρωποι' != SBLGNT 'ποιῶσιν'"
             ],
             "morphology": [
               "morph 'N- ----NPM-' != SBLGNT 'V- 3PAS-P--'",
-              "derived(pos 'noun' vs 'V-')"
+              "derived(pos 'noun' vs 'V-')",
+              "wms G444@w5 morph 'N- ----NPM-' != SBLGNT 'V- 3PAS-P--'"
             ],
             "sourceLocator": []
           },
@@ -11928,11 +12087,13 @@
               "TR lemma 'ὑμῖν' != 'σύ' @ w6"
             ],
             "morphology": [
-              "missing orig_morphology for TR token"
+              "missing orig_morphology for TR token",
+              "wms G5213@w6 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "TR locator disagrees with morph_source='strongs_lexicon'",
-              "TR locator carries morph_source='strongs_lexicon'"
+              "TR locator carries morph_source='strongs_lexicon'",
+              "wms G5213@w6 carries morph_source='strongs_lexicon' instead of morphgnt_tr"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -11997,11 +12158,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ποιεῖτε' != 'οἱ' @ w7",
-              "SBLGNT lemma 'ποιέω' != 'ὁ' @ w7"
+              "SBLGNT lemma 'ποιέω' != 'ὁ' @ w7",
+              "wms G4160@w7 surface 'ποιεῖτε' != SBLGNT 'οἱ'"
             ],
             "morphology": [
               "morph 'V- 2PAD-P--' != SBLGNT 'RA ----NPM-'",
-              "derived(pos 'verb' vs 'RA')"
+              "derived(pos 'verb' vs 'RA')",
+              "wms G4160@w7 morph 'V- 2PAD-P--' != SBLGNT 'RA ----NPM-'"
             ],
             "sourceLocator": []
           },
@@ -12067,11 +12230,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ὑμῖν' != 'ἄνθρωποι' @ w8",
-              "SBLGNT lemma 'σύ' != 'ἄνθρωπος' @ w8"
+              "SBLGNT lemma 'σύ' != 'ἄνθρωπος' @ w8",
+              "wms G4771@w8 surface 'ὑμῖν' != SBLGNT 'ἄνθρωποι'"
             ],
             "morphology": [
               "morph 'RP ----DP--' != SBLGNT 'N- ----NPM-'",
-              "derived(pos 'pronoun' vs 'N-')"
+              "derived(pos 'pronoun' vs 'N-')",
+              "wms G4771@w8 morph 'RP ----DP--' != SBLGNT 'N- ----NPM-'"
             ],
             "sourceLocator": []
           },
@@ -12137,11 +12302,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'καὶ' != 'ποιεῖτε' @ w9",
-              "SBLGNT lemma 'καί' != 'ποιέω' @ w9"
+              "SBLGNT lemma 'καί' != 'ποιέω' @ w9",
+              "wms G2532@w9 surface 'καὶ' != SBLGNT 'ποιεῖτε'"
             ],
             "morphology": [
               "morph 'C- --------' != SBLGNT 'V- 2PAD-P--'",
-              "derived(pos 'conjunction' vs 'V-')"
+              "derived(pos 'conjunction' vs 'V-')",
+              "wms G2532@w9 morph 'C- --------' != SBLGNT 'V- 2PAD-P--'"
             ],
             "sourceLocator": []
           },
@@ -12270,14 +12437,17 @@
             ],
             "lemmaSurface": [
               "TR surface 'οὕτω' != 'ποιεῖτε' @ w11",
-              "TR lemma 'οὕτω' != 'ποιέω' @ w11"
+              "TR lemma 'οὕτω' != 'ποιέω' @ w11",
+              "wms G3779@w11 surface 'οὕτω' != Scrivener TR 'ποιεῖτε'"
             ],
             "morphology": [
-              "missing orig_morphology for TR token"
+              "missing orig_morphology for TR token",
+              "wms G3779@w11 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "TR locator disagrees with morph_source='strongs_lexicon'",
-              "TR locator carries morph_source='strongs_lexicon'"
+              "TR locator carries morph_source='strongs_lexicon'",
+              "wms G3779@w11 carries morph_source='strongs_lexicon' instead of morphgnt_tr"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -12354,11 +12524,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'δὲ' != 'συνίστησιν' @ w1",
-              "SBLGNT lemma 'δέ' != 'συνίστημι' @ w1"
+              "SBLGNT lemma 'δέ' != 'συνίστημι' @ w1",
+              "wms G1161@w1 surface 'δὲ' != SBLGNT 'συνίστησιν'"
             ],
             "morphology": [
               "morph 'C- --------' != SBLGNT 'V- 3PAI-S--'",
-              "derived(pos 'conjunction' vs 'V-')"
+              "derived(pos 'conjunction' vs 'V-')",
+              "wms G1161@w1 morph 'C- --------' != SBLGNT 'V- 3PAI-S--'"
             ],
             "sourceLocator": []
           },
@@ -12424,11 +12596,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'θεὸς' != 'δὲ' @ w2",
-              "SBLGNT lemma 'θεός' != 'δέ' @ w2"
+              "SBLGNT lemma 'θεός' != 'δέ' @ w2",
+              "wms G2316@w2 surface 'θεὸς' != SBLGNT 'δὲ'"
             ],
             "morphology": [
               "morph 'N- ----NSM-' != SBLGNT 'C- --------'",
-              "derived(pos 'noun' vs 'C-')"
+              "derived(pos 'noun' vs 'C-')",
+              "wms G2316@w2 morph 'N- ----NSM-' != SBLGNT 'C- --------'"
             ],
             "sourceLocator": []
           },
@@ -12504,11 +12678,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'εἰς' != 'τὴν' @ w3",
-              "SBLGNT lemma 'εἰς' != 'ὁ' @ w3"
+              "SBLGNT lemma 'εἰς' != 'ὁ' @ w3",
+              "wms G1519@w3 surface 'εἰς' != SBLGNT 'τὴν'"
             ],
             "morphology": [
               "morph 'P- --------' != SBLGNT 'RA ----ASF-'",
-              "derived(pos 'preposition' vs 'RA')"
+              "derived(pos 'preposition' vs 'RA')",
+              "wms G1519@w3 morph 'P- --------' != SBLGNT 'RA ----ASF-'"
             ],
             "sourceLocator": []
           },
@@ -12576,11 +12752,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἀγάπην' != 'ἑαυτοῦ' @ w4",
-              "SBLGNT lemma 'ἀγάπη' != 'ἑαυτοῦ' @ w4"
+              "SBLGNT lemma 'ἀγάπη' != 'ἑαυτοῦ' @ w4",
+              "wms G26@w4 surface 'ἀγάπην' != SBLGNT 'ἑαυτοῦ'"
             ],
             "morphology": [
               "morph 'N- ----ASF-' != SBLGNT 'RP ----GSM-'",
-              "derived(pos 'noun' vs 'RP')"
+              "derived(pos 'noun' vs 'RP')",
+              "wms G26@w4 morph 'N- ----ASF-' != SBLGNT 'RP ----GSM-'"
             ],
             "sourceLocator": []
           },
@@ -12646,11 +12824,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ὄντων' != 'ἀγάπην' @ w5",
-              "SBLGNT lemma 'εἰμί' != 'ἀγάπη' @ w5"
+              "SBLGNT lemma 'εἰμί' != 'ἀγάπη' @ w5",
+              "wms G1510@w5 surface 'ὄντων' != SBLGNT 'ἀγάπην'"
             ],
             "morphology": [
               "morph 'V- -PAPGPM-' != SBLGNT 'N- ----ASF-'",
-              "derived(pos 'verb' vs 'N-')"
+              "derived(pos 'verb' vs 'N-')",
+              "wms G1510@w5 morph 'V- -PAPGPM-' != SBLGNT 'N- ----ASF-'"
             ],
             "sourceLocator": []
           },
@@ -12716,11 +12896,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ὅτι' != 'εἰς' @ w6",
-              "SBLGNT lemma 'ὅτι' != 'εἰς' @ w6"
+              "SBLGNT lemma 'ὅτι' != 'εἰς' @ w6",
+              "wms G3754@w6 surface 'ὅτι' != SBLGNT 'εἰς'"
             ],
             "morphology": [
               "morph 'C- --------' != SBLGNT 'P- --------'",
-              "derived(pos 'conjunction' vs 'P-')"
+              "derived(pos 'conjunction' vs 'P-')",
+              "wms G3754@w6 morph 'C- --------' != SBLGNT 'P- --------'"
             ],
             "sourceLocator": []
           },
@@ -12786,11 +12968,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'δὲ' != 'ἡμᾶς' @ w7",
-              "SBLGNT lemma 'δέ' != 'ἐγώ' @ w7"
+              "SBLGNT lemma 'δέ' != 'ἐγώ' @ w7",
+              "wms G1161@w7 surface 'δὲ' != SBLGNT 'ἡμᾶς'"
             ],
             "morphology": [
               "morph 'C- --------' != SBLGNT 'RP ----AP--'",
-              "derived(pos 'conjunction' vs 'RP')"
+              "derived(pos 'conjunction' vs 'RP')",
+              "wms G1161@w7 morph 'C- --------' != SBLGNT 'RP ----AP--'"
             ],
             "sourceLocator": []
           },
@@ -12856,11 +13040,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἔτι' != 'ὁ' @ w8",
-              "SBLGNT lemma 'ἔτι' != 'ὁ' @ w8"
+              "SBLGNT lemma 'ἔτι' != 'ὁ' @ w8",
+              "wms G2089@w8 surface 'ἔτι' != SBLGNT 'ὁ'"
             ],
             "morphology": [
               "morph 'D- --------' != SBLGNT 'RA ----NSM-'",
-              "derived(pos 'adverb' vs 'RA')"
+              "derived(pos 'adverb' vs 'RA')",
+              "wms G2089@w8 morph 'D- --------' != SBLGNT 'RA ----NSM-'"
             ],
             "sourceLocator": []
           },
@@ -12926,11 +13112,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἁμαρτωλῶν' != 'θεὸς' @ w9",
-              "SBLGNT lemma 'ἁμαρτωλός' != 'θεός' @ w9"
+              "SBLGNT lemma 'ἁμαρτωλός' != 'θεός' @ w9",
+              "wms G268@w9 surface 'ἁμαρτωλῶν' != SBLGNT 'θεὸς'"
             ],
             "morphology": [
               "morph 'A- ----GPM-' != SBLGNT 'N- ----NSM-'",
-              "derived(pos 'adjective' vs 'N-')"
+              "derived(pos 'adjective' vs 'N-')",
+              "wms G268@w9 morph 'A- ----GPM-' != SBLGNT 'N- ----NSM-'"
             ],
             "sourceLocator": []
           },
@@ -12996,10 +13184,12 @@
             ],
             "lemmaSurface": [
               "TR surface 'ἀποθνῄσκω' != 'ὅτι' @ w10",
-              "TR lemma 'ἀποθνῄσκω' != 'ὅτι' @ w10"
+              "TR lemma 'ἀποθνῄσκω' != 'ὅτι' @ w10",
+              "wms G599@w10 surface 'ἀποθνῄσκω' != Scrivener TR 'ὅτι'"
             ],
             "morphology": [
-              "missing orig_morphology for TR token"
+              "missing orig_morphology for TR token",
+              "wms G599@w10 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -13132,11 +13322,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ὑπὲρ' != 'ἁμαρτωλῶν' @ w12",
-              "SBLGNT lemma 'ὑπέρ' != 'ἁμαρτωλός' @ w12"
+              "SBLGNT lemma 'ὑπέρ' != 'ἁμαρτωλός' @ w12",
+              "wms G5228@w12 surface 'ὑπὲρ' != SBLGNT 'ἁμαρτωλῶν'"
             ],
             "morphology": [
               "morph 'P- --------' != SBLGNT 'A- ----GPM-'",
-              "derived(pos 'preposition' vs 'A-')"
+              "derived(pos 'preposition' vs 'A-')",
+              "wms G5228@w12 morph 'P- --------' != SBLGNT 'A- ----GPM-'"
             ],
             "sourceLocator": []
           },
@@ -13214,11 +13406,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'καὶ' != 'ζῶ' @ w1",
-              "SBLGNT lemma 'καί' != 'ζάω' @ w1"
+              "SBLGNT lemma 'καί' != 'ζάω' @ w1",
+              "wms G2532@w1 surface 'καὶ' != SBLGNT 'ζῶ'"
             ],
             "morphology": [
               "morph 'C- --------' != SBLGNT 'V- 1PAI-S--'",
-              "derived(pos 'conjunction' vs 'V-')"
+              "derived(pos 'conjunction' vs 'V-')",
+              "wms G2532@w1 morph 'C- --------' != SBLGNT 'V- 1PAI-S--'"
             ],
             "sourceLocator": []
           },
@@ -13287,11 +13481,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'Χριστός' != 'δὲ' @ w2",
-              "SBLGNT lemma 'Χριστός' != 'δέ' @ w2"
+              "SBLGNT lemma 'Χριστός' != 'δέ' @ w2",
+              "wms G5547@w2 surface 'Χριστός' != SBLGNT 'δὲ'"
             ],
             "morphology": [
               "morph 'N- ----NSM-' != SBLGNT 'C- --------'",
-              "derived(pos 'proper_noun' vs 'C-')"
+              "derived(pos 'proper_noun' vs 'C-')",
+              "wms G5547@w2 morph 'N- ----NSM-' != SBLGNT 'C- --------'"
             ],
             "sourceLocator": []
           },
@@ -13368,14 +13564,17 @@
             ],
             "lemmaSurface": [
               "TR surface 'συσταυρόω' != 'ζῶ' @ w3",
-              "TR lemma 'συσταυρόω' != 'ζάω' @ w3"
+              "TR lemma 'συσταυρόω' != 'ζάω' @ w3",
+              "wms G4957@w3 surface 'συσταυρόω' != Scrivener TR 'ζῶ'"
             ],
             "morphology": [
-              "missing orig_morphology for TR token"
+              "missing orig_morphology for TR token",
+              "wms G4957@w3 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
               "TR locator disagrees with morph_source='strongs_lexicon'",
-              "TR locator carries morph_source='strongs_lexicon'"
+              "TR locator carries morph_source='strongs_lexicon'",
+              "wms G4957@w3 carries morph_source='strongs_lexicon' instead of morphgnt_tr"
             ]
           },
           "status": "PENDING_REVIEW",
@@ -13440,11 +13639,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ζῶ' != 'ἐγώ' @ w4",
-              "SBLGNT lemma 'ζάω' != 'ἐγώ' @ w4"
+              "SBLGNT lemma 'ζάω' != 'ἐγώ' @ w4",
+              "wms G2198@w4 surface 'ζῶ' != SBLGNT 'ἐγώ'"
             ],
             "morphology": [
               "morph 'V- 1PAI-S--' != SBLGNT 'RP ----NS--'",
-              "derived(pos 'verb' vs 'RP')"
+              "derived(pos 'verb' vs 'RP')",
+              "wms G2198@w4 morph 'V- 1PAI-S--' != SBLGNT 'RP ----NS--'"
             ],
             "sourceLocator": []
           },
@@ -13569,10 +13770,12 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἐγώ' != 'δὲ' @ w6",
-              "SBLGNT lemma 'ἐγώ' != 'δέ' @ w6"
+              "SBLGNT lemma 'ἐγώ' != 'δέ' @ w6",
+              "wms G1473@w6 surface 'ἐγώ' != SBLGNT 'δὲ'"
             ],
             "morphology": [
-              "derived(pos 'pronoun' vs 'C-')"
+              "derived(pos 'pronoun' vs 'C-')",
+              "wms G1473@w6 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -13638,11 +13841,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'δέ' != 'ἐν' @ w7",
-              "SBLGNT lemma 'δέ' != 'ἐν' @ w7"
+              "SBLGNT lemma 'δέ' != 'ἐν' @ w7",
+              "wms G1161@w7 surface 'δέ' != SBLGNT 'ἐν'"
             ],
             "morphology": [
               "morph 'C- --------' != SBLGNT 'P- --------'",
-              "derived(pos 'conjunction' vs 'P-')"
+              "derived(pos 'conjunction' vs 'P-')",
+              "wms G1161@w7 morph 'C- --------' != SBLGNT 'P- --------'"
             ],
             "sourceLocator": []
           },
@@ -13708,11 +13913,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'Χριστός' != 'ἐμοὶ' @ w8",
-              "SBLGNT lemma 'Χριστός' != 'ἐγώ' @ w8"
+              "SBLGNT lemma 'Χριστός' != 'ἐγώ' @ w8",
+              "wms G5547@w8 surface 'Χριστός' != SBLGNT 'ἐμοὶ'"
             ],
             "morphology": [
               "morph 'N- ----NSM-' != SBLGNT 'RP ----DS--'",
-              "derived(pos 'proper_noun' vs 'RP')"
+              "derived(pos 'proper_noun' vs 'RP')",
+              "wms G5547@w8 morph 'N- ----NSM-' != SBLGNT 'RP ----DS--'"
             ],
             "sourceLocator": []
           },
@@ -13782,11 +13989,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ζῇ' != 'Χριστός' @ w9",
-              "SBLGNT lemma 'ζάω' != 'Χριστός' @ w9"
+              "SBLGNT lemma 'ζάω' != 'Χριστός' @ w9",
+              "wms G2198@w9 surface 'ζῇ' != SBLGNT 'Χριστός'"
             ],
             "morphology": [
               "morph 'V- 3PAI-S--' != SBLGNT 'N- ----NSM-'",
-              "derived(pos 'verb' vs 'N-')"
+              "derived(pos 'verb' vs 'N-')",
+              "wms G2198@w9 morph 'V- 3PAI-S--' != SBLGNT 'N- ----NSM-'"
             ],
             "sourceLocator": []
           },
@@ -13852,11 +14061,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἐν' != 'ὃ' @ w10",
-              "SBLGNT lemma 'ἐν' != 'ὅς' @ w10"
+              "SBLGNT lemma 'ἐν' != 'ὅς' @ w10",
+              "wms G1722@w10 surface 'ἐν' != SBLGNT 'ὃ'"
             ],
             "morphology": [
               "morph 'P- --------' != SBLGNT 'RR ----ASN-'",
-              "derived(pos 'preposition' vs 'RR')"
+              "derived(pos 'preposition' vs 'RR')",
+              "wms G1722@w10 morph 'P- --------' != SBLGNT 'RR ----ASN-'"
             ],
             "sourceLocator": []
           },
@@ -13928,11 +14139,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ὃ' != 'δὲ' @ w11",
-              "SBLGNT lemma 'ὅς' != 'δέ' @ w11"
+              "SBLGNT lemma 'ὅς' != 'δέ' @ w11",
+              "wms G3739@w11 surface 'ὃ' != SBLGNT 'δὲ'"
             ],
             "morphology": [
               "morph 'RR ----ASN-' != SBLGNT 'C- --------'",
-              "derived(pos 'relative_pronoun' vs 'C-')"
+              "derived(pos 'relative_pronoun' vs 'C-')",
+              "wms G3739@w11 morph 'RR ----ASN-' != SBLGNT 'C- --------'"
             ],
             "sourceLocator": []
           },
@@ -13998,11 +14211,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ζῶ' != 'νῦν' @ w12",
-              "SBLGNT lemma 'ζάω' != 'νῦν' @ w12"
+              "SBLGNT lemma 'ζάω' != 'νῦν' @ w12",
+              "wms G2198@w12 surface 'ζῶ' != SBLGNT 'νῦν'"
             ],
             "morphology": [
               "morph 'V- 1PAI-S--' != SBLGNT 'D- --------'",
-              "derived(pos 'verb' vs 'D-')"
+              "derived(pos 'verb' vs 'D-')",
+              "wms G2198@w12 morph 'V- 1PAI-S--' != SBLGNT 'D- --------'"
             ],
             "sourceLocator": []
           },
@@ -14068,11 +14283,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'νῦν' != 'ζῶ' @ w13",
-              "SBLGNT lemma 'νῦν' != 'ζάω' @ w13"
+              "SBLGNT lemma 'νῦν' != 'ζάω' @ w13",
+              "wms G3568@w13 surface 'νῦν' != SBLGNT 'ζῶ'"
             ],
             "morphology": [
               "morph 'D- --------' != SBLGNT 'V- 1PAI-S--'",
-              "derived(pos 'adverb' vs 'V-')"
+              "derived(pos 'adverb' vs 'V-')",
+              "wms G3568@w13 morph 'D- --------' != SBLGNT 'V- 1PAI-S--'"
             ],
             "sourceLocator": []
           },
@@ -14333,11 +14550,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ζῶ' != 'πίστει' @ w17",
-              "SBLGNT lemma 'ζάω' != 'πίστις' @ w17"
+              "SBLGNT lemma 'ζάω' != 'πίστις' @ w17",
+              "wms G2198@w17 surface 'ζῶ' != SBLGNT 'πίστει'"
             ],
             "morphology": [
               "morph 'V- 1PAI-S--' != SBLGNT 'N- ----DSF-'",
-              "derived(pos 'verb' vs 'N-')"
+              "derived(pos 'verb' vs 'N-')",
+              "wms G2198@w17 morph 'V- 1PAI-S--' != SBLGNT 'N- ----DSF-'"
             ],
             "sourceLocator": []
           },
@@ -14403,11 +14622,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἐν' != 'ζῶ' @ w18",
-              "SBLGNT lemma 'ἐν' != 'ζάω' @ w18"
+              "SBLGNT lemma 'ἐν' != 'ζάω' @ w18",
+              "wms G1722@w18 surface 'ἐν' != SBLGNT 'ζῶ'"
             ],
             "morphology": [
               "morph 'P- --------' != SBLGNT 'V- 1PAI-S--'",
-              "derived(pos 'preposition' vs 'V-')"
+              "derived(pos 'preposition' vs 'V-')",
+              "wms G1722@w18 morph 'P- --------' != SBLGNT 'V- 1PAI-S--'"
             ],
             "sourceLocator": []
           },
@@ -14479,11 +14700,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'πίστει' != 'τῇ' @ w19",
-              "SBLGNT lemma 'πίστις' != 'ὁ' @ w19"
+              "SBLGNT lemma 'πίστις' != 'ὁ' @ w19",
+              "wms G4102@w19 surface 'πίστει' != SBLGNT 'τῇ'"
             ],
             "morphology": [
               "morph 'N- ----DSF-' != SBLGNT 'RA ----DSF-'",
-              "derived(pos 'noun' vs 'RA')"
+              "derived(pos 'noun' vs 'RA')",
+              "wms G4102@w19 morph 'N- ----DSF-' != SBLGNT 'RA ----DSF-'"
             ],
             "sourceLocator": []
           },
@@ -14549,11 +14772,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'πίστει' != 'τοῦ' @ w20",
-              "SBLGNT lemma 'πίστις' != 'ὁ' @ w20"
+              "SBLGNT lemma 'πίστις' != 'ὁ' @ w20",
+              "wms G4102@w20 surface 'πίστει' != SBLGNT 'τοῦ'"
             ],
             "morphology": [
               "morph 'N- ----DSF-' != SBLGNT 'RA ----GSM-'",
-              "derived(pos 'noun' vs 'RA')"
+              "derived(pos 'noun' vs 'RA')",
+              "wms G4102@w20 morph 'N- ----DSF-' != SBLGNT 'RA ----GSM-'"
             ],
             "sourceLocator": []
           },
@@ -14682,11 +14907,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'θεοῦ' != 'τοῦ' @ w22",
-              "SBLGNT lemma 'θεός' != 'ὁ' @ w22"
+              "SBLGNT lemma 'θεός' != 'ὁ' @ w22",
+              "wms G2316@w22 surface 'θεοῦ' != SBLGNT 'τοῦ'"
             ],
             "morphology": [
               "morph 'N- ----GSM-' != SBLGNT 'RA ----GSM-'",
-              "derived(pos 'noun' vs 'RA')"
+              "derived(pos 'noun' vs 'RA')",
+              "wms G2316@w22 morph 'N- ----GSM-' != SBLGNT 'RA ----GSM-'"
             ],
             "sourceLocator": []
           },
@@ -14763,11 +14990,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ὃ' != 'θεοῦ' @ w23",
-              "SBLGNT lemma 'ὅς' != 'θεός' @ w23"
+              "SBLGNT lemma 'ὅς' != 'θεός' @ w23",
+              "wms G3739@w23 surface 'ὃ' != SBLGNT 'θεοῦ'"
             ],
             "morphology": [
               "morph 'RR ----ASN-' != SBLGNT 'N- ----GSM-'",
-              "derived(pos 'relative_pronoun' vs 'N-')"
+              "derived(pos 'relative_pronoun' vs 'N-')",
+              "wms G3739@w23 morph 'RR ----ASN-' != SBLGNT 'N- ----GSM-'"
             ],
             "sourceLocator": []
           },
@@ -14839,11 +15068,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἀγαπήσαντός' != 'τοῦ' @ w24",
-              "SBLGNT lemma 'ἀγαπάω' != 'ὁ' @ w24"
+              "SBLGNT lemma 'ἀγαπάω' != 'ὁ' @ w24",
+              "wms G25@w24 surface 'ἀγαπήσαντός' != SBLGNT 'τοῦ'"
             ],
             "morphology": [
               "morph 'V- -AAPGSM-' != SBLGNT 'RA ----GSM-'",
-              "derived(pos 'verb' vs 'RA')"
+              "derived(pos 'verb' vs 'RA')",
+              "wms G25@w24 morph 'V- -AAPGSM-' != SBLGNT 'RA ----GSM-'"
             ],
             "sourceLocator": []
           },
@@ -14909,7 +15140,8 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'παραδόντος' != 'ἀγαπήσαντός' @ w25",
-              "SBLGNT lemma 'παραδίδωμι' != 'ἀγαπάω' @ w25"
+              "SBLGNT lemma 'παραδίδωμι' != 'ἀγαπάω' @ w25",
+              "wms G3860@w25 surface 'παραδόντος' != SBLGNT 'ἀγαπήσαντός'"
             ],
             "morphology": [],
             "sourceLocator": []
@@ -14976,11 +15208,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἑαυτὸν' != 'με' @ w26",
-              "SBLGNT lemma 'ἑαυτοῦ' != 'ἐγώ' @ w26"
+              "SBLGNT lemma 'ἑαυτοῦ' != 'ἐγώ' @ w26",
+              "wms G1438@w26 surface 'ἑαυτὸν' != SBLGNT 'με'"
             ],
             "morphology": [
               "morph 'RP ----ASM-' != SBLGNT 'RP ----AS--'",
-              "derived(gender 'masculine' vs 'null')"
+              "derived(gender 'masculine' vs 'null')",
+              "wms G1438@w26 morph 'RP ----ASM-' != SBLGNT 'RP ----AS--'"
             ],
             "sourceLocator": []
           },
@@ -15046,11 +15280,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ὑπὲρ' != 'καὶ' @ w27",
-              "SBLGNT lemma 'ὑπέρ' != 'καί' @ w27"
+              "SBLGNT lemma 'ὑπέρ' != 'καί' @ w27",
+              "wms G5228@w27 surface 'ὑπὲρ' != SBLGNT 'καὶ'"
             ],
             "morphology": [
               "morph 'P- --------' != SBLGNT 'C- --------'",
-              "derived(pos 'preposition' vs 'C-')"
+              "derived(pos 'preposition' vs 'C-')",
+              "wms G5228@w27 morph 'P- --------' != SBLGNT 'C- --------'"
             ],
             "sourceLocator": []
           },
@@ -16167,10 +16403,12 @@
             ],
             "lemmaSurface": [
               "TR surface 'εἰμί' != 'τοῦτο' @ w1",
-              "TR lemma 'εἰμί' != 'οὗτος' @ w1"
+              "TR lemma 'εἰμί' != 'οὗτος' @ w1",
+              "wms G1510@w1 surface 'εἰμί' != Scrivener TR 'τοῦτο'"
             ],
             "morphology": [
-              "missing orig_morphology for TR token"
+              "missing orig_morphology for TR token",
+              "wms G1510@w1 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -16236,11 +16474,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἐν' != 'φρονεῖτε' @ w2",
-              "SBLGNT lemma 'ἐν' != 'φρονέω' @ w2"
+              "SBLGNT lemma 'ἐν' != 'φρονέω' @ w2",
+              "wms G1722@w2 surface 'ἐν' != SBLGNT 'φρονεῖτε'"
             ],
             "morphology": [
               "morph 'P- --------' != SBLGNT 'V- 2PAD-P--'",
-              "derived(pos 'preposition' vs 'V-')"
+              "derived(pos 'preposition' vs 'V-')",
+              "wms G1722@w2 morph 'P- --------' != SBLGNT 'V- 2PAD-P--'"
             ],
             "sourceLocator": []
           },
@@ -16306,11 +16546,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'τοῦτο' != 'ἐν' @ w3",
-              "SBLGNT lemma 'οὗτος' != 'ἐν' @ w3"
+              "SBLGNT lemma 'οὗτος' != 'ἐν' @ w3",
+              "wms G3778@w3 surface 'τοῦτο' != SBLGNT 'ἐν'"
             ],
             "morphology": [
               "morph 'RD ----ASN-' != SBLGNT 'P- --------'",
-              "derived(pos 'demonstrative' vs 'P-')"
+              "derived(pos 'demonstrative' vs 'P-')",
+              "wms G3778@w3 morph 'RD ----ASN-' != SBLGNT 'P- --------'"
             ],
             "sourceLocator": []
           },
@@ -16376,10 +16618,12 @@
             ],
             "lemmaSurface": [
               "TR surface 'φρονείσθω' != 'ἐν' @ w4",
-              "TR lemma 'φρονέω' != 'ἐν' @ w4"
+              "TR lemma 'φρονέω' != 'ἐν' @ w4",
+              "wms G5426@w4 surface 'φρονείσθω' != Scrivener TR 'ἐν'"
             ],
             "morphology": [
-              "missing orig_morphology for TR token"
+              "missing orig_morphology for TR token",
+              "wms G5426@w4 missing mandatory orig_morphology"
             ],
             "sourceLocator": []
           },
@@ -16512,11 +16756,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἐν' != 'καὶ' @ w6",
-              "SBLGNT lemma 'ἐν' != 'καί' @ w6"
+              "SBLGNT lemma 'ἐν' != 'καί' @ w6",
+              "wms G1722@w6 surface 'ἐν' != SBLGNT 'καὶ'"
             ],
             "morphology": [
               "morph 'P- --------' != SBLGNT 'D- --------'",
-              "derived(pos 'preposition' vs 'D-')"
+              "derived(pos 'preposition' vs 'D-')",
+              "wms G1722@w6 morph 'P- --------' != SBLGNT 'D- --------'"
             ],
             "sourceLocator": []
           },
@@ -16586,11 +16832,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'Χριστῷ' != 'ἐν' @ w7",
-              "SBLGNT lemma 'Χριστός' != 'ἐν' @ w7"
+              "SBLGNT lemma 'Χριστός' != 'ἐν' @ w7",
+              "wms G5547@w7 surface 'Χριστῷ' != SBLGNT 'ἐν'"
             ],
             "morphology": [
               "morph 'N- ----DSM-' != SBLGNT 'P- --------'",
-              "derived(pos 'proper_noun' vs 'P-')"
+              "derived(pos 'proper_noun' vs 'P-')",
+              "wms G5547@w7 morph 'N- ----DSM-' != SBLGNT 'P- --------'"
             ],
             "sourceLocator": []
           },
@@ -16666,7 +16914,8 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'Ἰησοῦ' != 'Χριστῷ' @ w8",
-              "SBLGNT lemma 'Ἰησοῦς' != 'Χριστός' @ w8"
+              "SBLGNT lemma 'Ἰησοῦς' != 'Χριστός' @ w8",
+              "wms G2424@w8 surface 'Ἰησοῦ' != SBLGNT 'Χριστῷ'"
             ],
             "morphology": [
               "derived(pos 'proper_noun' vs 'N-')"
@@ -16735,11 +16984,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'καὶ' != 'Ἰησοῦ' @ w9",
-              "SBLGNT lemma 'καί' != 'Ἰησοῦς' @ w9"
+              "SBLGNT lemma 'καί' != 'Ἰησοῦς' @ w9",
+              "wms G2532@w9 surface 'καὶ' != SBLGNT 'Ἰησοῦ'"
             ],
             "morphology": [
               "morph 'D- --------' != SBLGNT 'N- ----DSM-'",
-              "derived(pos 'adverb' vs 'N-')"
+              "derived(pos 'adverb' vs 'N-')",
+              "wms G2532@w9 morph 'D- --------' != SBLGNT 'N- ----DSM-'"
             ],
             "sourceLocator": []
           },
@@ -16817,11 +17068,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'εὐχαριστεῖτε' != 'ἐν' @ w1",
-              "SBLGNT lemma 'εὐχαριστέω' != 'ἐν' @ w1"
+              "SBLGNT lemma 'εὐχαριστέω' != 'ἐν' @ w1",
+              "wms G2168@w1 surface 'εὐχαριστεῖτε' != SBLGNT 'ἐν'"
             ],
             "morphology": [
               "morph 'V- 2PAD-P--' != SBLGNT 'P- --------'",
-              "derived(pos 'verb' vs 'P-')"
+              "derived(pos 'verb' vs 'P-')",
+              "wms G2168@w1 morph 'V- 2PAD-P--' != SBLGNT 'P- --------'"
             ],
             "sourceLocator": []
           },
@@ -16887,11 +17140,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἐν' != 'παντὶ' @ w2",
-              "SBLGNT lemma 'ἐν' != 'πᾶς' @ w2"
+              "SBLGNT lemma 'ἐν' != 'πᾶς' @ w2",
+              "wms G1722@w2 surface 'ἐν' != SBLGNT 'παντὶ'"
             ],
             "morphology": [
               "morph 'P- --------' != SBLGNT 'A- ----DSN-'",
-              "derived(pos 'preposition' vs 'A-')"
+              "derived(pos 'preposition' vs 'A-')",
+              "wms G1722@w2 morph 'P- --------' != SBLGNT 'A- ----DSN-'"
             ],
             "sourceLocator": []
           },
@@ -16962,11 +17217,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'παντὶ' != 'εὐχαριστεῖτε' @ w3",
-              "SBLGNT lemma 'πᾶς' != 'εὐχαριστέω' @ w3"
+              "SBLGNT lemma 'πᾶς' != 'εὐχαριστέω' @ w3",
+              "wms G3956@w3 surface 'παντὶ' != SBLGNT 'εὐχαριστεῖτε'"
             ],
             "morphology": [
               "morph 'A- ----DSN-' != SBLGNT 'V- 2PAD-P--'",
-              "derived(pos 'adjective' vs 'V-')"
+              "derived(pos 'adjective' vs 'V-')",
+              "wms G3956@w3 morph 'A- ----DSN-' != SBLGNT 'V- 2PAD-P--'"
             ],
             "sourceLocator": []
           },
@@ -17043,11 +17300,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'παντὶ' != 'τοῦτο' @ w4",
-              "SBLGNT lemma 'πᾶς' != 'οὗτος' @ w4"
+              "SBLGNT lemma 'πᾶς' != 'οὗτος' @ w4",
+              "wms G3956@w4 surface 'παντὶ' != SBLGNT 'τοῦτο'"
             ],
             "morphology": [
               "morph 'A- ----DSN-' != SBLGNT 'RD ----NSN-'",
-              "derived(pos 'adjective' vs 'RD')"
+              "derived(pos 'adjective' vs 'RD')",
+              "wms G3956@w4 morph 'A- ----DSN-' != SBLGNT 'RD ----NSN-'"
             ],
             "sourceLocator": []
           },
@@ -17176,11 +17435,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'τοῦτο' != 'θέλημα' @ w6",
-              "SBLGNT lemma 'οὗτος' != 'θέλημα' @ w6"
+              "SBLGNT lemma 'οὗτος' != 'θέλημα' @ w6",
+              "wms G3778@w6 surface 'τοῦτο' != SBLGNT 'θέλημα'"
             ],
             "morphology": [
               "morph 'RD ----NSN-' != SBLGNT 'N- ----NSN-'",
-              "derived(pos 'demonstrative' vs 'N-')"
+              "derived(pos 'demonstrative' vs 'N-')",
+              "wms G3778@w6 morph 'RD ----NSN-' != SBLGNT 'N- ----NSN-'"
             ],
             "sourceLocator": []
           },
@@ -17305,11 +17566,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'θέλημα' != 'ἐν' @ w8",
-              "SBLGNT lemma 'θέλημα' != 'ἐν' @ w8"
+              "SBLGNT lemma 'θέλημα' != 'ἐν' @ w8",
+              "wms G2307@w8 surface 'θέλημα' != SBLGNT 'ἐν'"
             ],
             "morphology": [
               "morph 'N- ----NSN-' != SBLGNT 'P- --------'",
-              "derived(pos 'noun' vs 'P-')"
+              "derived(pos 'noun' vs 'P-')",
+              "wms G2307@w8 morph 'N- ----NSN-' != SBLGNT 'P- --------'"
             ],
             "sourceLocator": []
           },
@@ -17375,11 +17638,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'θεοῦ' != 'Χριστῷ' @ w9",
-              "SBLGNT lemma 'θεός' != 'Χριστός' @ w9"
+              "SBLGNT lemma 'θεός' != 'Χριστός' @ w9",
+              "wms G2316@w9 surface 'θεοῦ' != SBLGNT 'Χριστῷ'"
             ],
             "morphology": [
               "morph 'N- ----GSM-' != SBLGNT 'N- ----DSM-'",
-              "derived(case 'genitive' vs 'dative')"
+              "derived(case 'genitive' vs 'dative')",
+              "wms G2316@w9 morph 'N- ----GSM-' != SBLGNT 'N- ----DSM-'"
             ],
             "sourceLocator": []
           },
@@ -17456,11 +17721,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'ἐν' != 'Ἰησοῦ' @ w10",
-              "SBLGNT lemma 'ἐν' != 'Ἰησοῦς' @ w10"
+              "SBLGNT lemma 'ἐν' != 'Ἰησοῦς' @ w10",
+              "wms G1722@w10 surface 'ἐν' != SBLGNT 'Ἰησοῦ'"
             ],
             "morphology": [
               "morph 'P- --------' != SBLGNT 'N- ----DSM-'",
-              "derived(pos 'preposition' vs 'N-')"
+              "derived(pos 'preposition' vs 'N-')",
+              "wms G1722@w10 morph 'P- --------' != SBLGNT 'N- ----DSM-'"
             ],
             "sourceLocator": []
           },
@@ -17538,11 +17805,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'Χριστῷ' != 'εἰς' @ w11",
-              "SBLGNT lemma 'Χριστός' != 'εἰς' @ w11"
+              "SBLGNT lemma 'Χριστός' != 'εἰς' @ w11",
+              "wms G5547@w11 surface 'Χριστῷ' != SBLGNT 'εἰς'"
             ],
             "morphology": [
               "morph 'N- ----DSM-' != SBLGNT 'P- --------'",
-              "derived(pos 'proper_noun' vs 'P-')"
+              "derived(pos 'proper_noun' vs 'P-')",
+              "wms G5547@w11 morph 'N- ----DSM-' != SBLGNT 'P- --------'"
             ],
             "sourceLocator": []
           },
@@ -17619,11 +17888,13 @@
             ],
             "lemmaSurface": [
               "SBLGNT surface 'Ἰησοῦ' != 'ὑμᾶς' @ w12",
-              "SBLGNT lemma 'Ἰησοῦς' != 'σύ' @ w12"
+              "SBLGNT lemma 'Ἰησοῦς' != 'σύ' @ w12",
+              "wms G2424@w12 surface 'Ἰησοῦ' != SBLGNT 'ὑμᾶς'"
             ],
             "morphology": [
               "morph 'N- ----DSM-' != SBLGNT 'RP ----AP--'",
-              "derived(pos 'proper_noun' vs 'RP')"
+              "derived(pos 'proper_noun' vs 'RP')",
+              "wms G2424@w12 morph 'N- ----DSM-' != SBLGNT 'RP ----AP--'"
             ],
             "sourceLocator": []
           },

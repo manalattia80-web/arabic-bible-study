@@ -25,9 +25,9 @@
       "undecided": 11
     },
     "morphology": {
-      "pass": 82,
-      "fail": 162,
-      "undecided": 11
+      "pass": 64,
+      "fail": 183,
+      "undecided": 8
     },
     "sourceLocator": {
       "pass": 219,
@@ -43,7 +43,7 @@
       "axes": {
         "lexical": 59,
         "lemmaSurface": 58,
-        "morphology": 57,
+        "morphology": 60,
         "sourceLocator": 6
       }
     },
@@ -54,7 +54,7 @@
       "axes": {
         "lexical": 57,
         "lemmaSurface": 59,
-        "morphology": 46,
+        "morphology": 64,
         "sourceLocator": 25
       }
     },
@@ -81,7 +81,7 @@
       "axisAlerts": {
         "lexical": 9,
         "lemmaSurface": 8,
-        "morphology": 8,
+        "morphology": 9,
         "sourceLocator": 2
       }
     },
@@ -137,7 +137,7 @@
       "axisAlerts": {
         "lexical": 4,
         "lemmaSurface": 4,
-        "morphology": 4,
+        "morphology": 6,
         "sourceLocator": 2
       }
     },
@@ -151,7 +151,7 @@
       "axisAlerts": {
         "lexical": 11,
         "lemmaSurface": 11,
-        "morphology": 8,
+        "morphology": 11,
         "sourceLocator": 4
       }
     },
@@ -165,7 +165,7 @@
       "axisAlerts": {
         "lexical": 20,
         "lemmaSurface": 20,
-        "morphology": 18,
+        "morphology": 20,
         "sourceLocator": 1
       }
     },
@@ -179,7 +179,7 @@
       "axisAlerts": {
         "lexical": 10,
         "lemmaSurface": 12,
-        "morphology": 7,
+        "morphology": 17,
         "sourceLocator": 17
       }
     },
@@ -193,7 +193,7 @@
       "axisAlerts": {
         "lexical": 16,
         "lemmaSurface": 16,
-        "morphology": 13,
+        "morphology": 16,
         "sourceLocator": 3
       }
     },
@@ -298,7 +298,8 @@
         ],
         "lemmaSurface": [],
         "morphology": [
-          "derived(gender '' vs 'f')"
+          "derived(gender '' vs 'f')",
+          "wms H7939@w5 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -464,7 +465,9 @@
           "surface 'אֵל' != OSHB 'תַּֽחַת' @ w14",
           "wms H413@w14 surface 'אֵל' != OSHB 'תַּֽחַת'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H413@w14 missing mandatory orig_morphology"
+        ],
         "sourceLocator": []
       }
     },
@@ -992,7 +995,8 @@
           "wms H4480@w12 surface 'מִן' != OSHB 'הֶחֱזִ֤יק'"
         ],
         "morphology": [
-          "derived(pos 'preposition' vs verb 'HVhp3ms')"
+          "derived(pos 'preposition' vs verb 'HVhp3ms')",
+          "wms H4480@w12 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -1015,7 +1019,8 @@
           "wms H5201@w13 surface 'נָטַר' != OSHB 'לָעַד֙'"
         ],
         "morphology": [
-          "derived(gender '' vs 'm')"
+          "derived(gender '' vs 'm')",
+          "wms H5201@w13 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -1709,7 +1714,8 @@
           "wms H1961@w5 surface 'הָיָה' != OSHB 'בָאֵ֖שׁ'"
         ],
         "morphology": [
-          "derived(gender '' vs 'b')"
+          "derived(gender '' vs 'b')",
+          "wms H1961@w5 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -1802,7 +1808,8 @@
           "undecided: OSHB token w12 unavailable"
         ],
         "morphology": [
-          "undecided: OSHB token w12 unavailable"
+          "undecided: OSHB token w12 unavailable",
+          "wms H1877@w12 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "locator w12 exceeds token count (11)",
@@ -1827,7 +1834,8 @@
           "undecided: OSHB token w13 unavailable"
         ],
         "morphology": [
-          "undecided: OSHB token w13 unavailable"
+          "undecided: OSHB token w13 unavailable",
+          "wms H1877@w13 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "locator w13 exceeds token count (11)",
@@ -1854,7 +1862,8 @@
           "wms H5648@w3 surface 'עֲבַד' != OSHB 'עֲבִידַ֣ת'"
         ],
         "morphology": [
-          "derived(gender '' vs 'f')"
+          "derived(gender '' vs 'f')",
+          "wms H5648@w3 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -1876,7 +1885,9 @@
           "surface 'דֵּן' != OSHB 'בִּירוּשְׁלֶ֑ם' @ w7",
           "wms H1836@w7 surface 'דֵּן' != OSHB 'בִּירוּשְׁלֶ֑ם'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H1836@w7 missing mandatory orig_morphology"
+        ],
         "sourceLocator": []
       }
     },
@@ -1994,7 +2005,8 @@
           "wms H8139@w12 surface 'שְׁנָה' != OSHB 'תַּרְתֵּ֔ין'"
         ],
         "morphology": [
-          "derived(gender '' vs 'c')"
+          "derived(gender '' vs 'c')",
+          "wms H8139@w12 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB locator carries morph_source='strongs_lexicon'",
@@ -2020,7 +2032,8 @@
           "wms H8524@w13 surface 'תָּלַל' != OSHB 'לְמַלְכ֖וּת'"
         ],
         "morphology": [
-          "derived(gender '' vs 'f')"
+          "derived(gender '' vs 'f')",
+          "wms H8524@w13 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB locator carries morph_source='strongs_lexicon'",
@@ -2045,7 +2058,9 @@
           "surface 'מִן' != OSHB 'דָּרְיָ֥וֶשׁ' @ w14",
           "wms H4481@w14 surface 'מִן' != OSHB 'דָּרְיָ֥וֶשׁ'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H4481@w14 missing mandatory orig_morphology"
+        ],
         "sourceLocator": []
       }
     },
@@ -2135,7 +2150,8 @@
           "undecided: OSHB token w18 unavailable"
         ],
         "morphology": [
-          "undecided: OSHB token w18 unavailable"
+          "undecided: OSHB token w18 unavailable",
+          "wms H6543@w18 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "locator w18 exceeds token count (16)",
@@ -2187,7 +2203,8 @@
           "wms H6593@w3 surface 'פִּשְׁתֶּה' != OSHB 'הֲתִיב֣וּנָא'"
         ],
         "morphology": [
-          "derived(pos 'noun' vs verb 'AVhp3mp/Sp1cp')"
+          "derived(pos 'noun' vs verb 'AVhp3mp/Sp1cp')",
+          "wms H6593@w3 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -2210,7 +2227,8 @@
           "wms H8422@w4 surface 'תּוּבַל' != OSHB 'לְמֵמַ֑ר'"
         ],
         "morphology": [
-          "derived(pos 'proper_noun' vs verb 'AR/Vqc')"
+          "derived(pos 'proper_noun' vs verb 'AR/Vqc')",
+          "wms H8422@w4 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -2281,7 +2299,8 @@
           "wms H5650@w7 surface 'עַבְדֹוהִי' != OSHB 'עַבְדוֹהִי֩'"
         ],
         "morphology": [
-          "derived(gender '' vs 'm')"
+          "derived(gender '' vs 'm')",
+          "wms H5650@w7 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -2375,7 +2394,9 @@
           "surface 'בָּנָה' != OSHB 'וְאַרְעָ֗א' @ w11",
           "wms H1129@w11 surface 'בָּנָה' != OSHB 'וְאַרְעָ֗א'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H1129@w11 missing mandatory orig_morphology"
+        ],
         "sourceLocator": []
       }
     },
@@ -2421,7 +2442,8 @@
           "wms H1129@w15 surface 'בָּנָה' != OSHB 'הֲוָ֨א'"
         ],
         "morphology": [
-          "derived(stem '' vs 'peal')"
+          "derived(stem '' vs 'peal')",
+          "wms H1129@w15 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -2444,7 +2466,8 @@
           "wms H4481@w16 surface 'מִן' != OSHB 'בְנֵ֜ה'"
         ],
         "morphology": [
-          "derived(pos 'preposition' vs verb 'AVqsmsa')"
+          "derived(pos 'preposition' vs verb 'AVqsmsa')",
+          "wms H4481@w16 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -2467,7 +2490,8 @@
           "wms H479@w17 surface 'אִלֵּךְ' != OSHB 'מִקַּדְמַ֤ת'"
         ],
         "morphology": [
-          "derived(gender '' vs 'f')"
+          "derived(gender '' vs 'f')",
+          "wms H479@w17 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -2489,7 +2513,9 @@
           "surface 'שְׁנָה' != OSHB 'דְּנָה֙' @ w18",
           "wms H8139@w18 surface 'שְׁנָה' != OSHB 'דְּנָה֙'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H8139@w18 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB locator carries morph_source='strongs_lexicon'",
           "wms H8139@w18 carries morph_source='strongs_lexicon' instead of oshb_wlc"
@@ -2514,7 +2540,8 @@
           "wms H7227@w19 surface 'רַב' != OSHB 'שְׁנִ֣ין'"
         ],
         "morphology": [
-          "derived(gender '' vs 'f')"
+          "derived(gender '' vs 'f')",
+          "wms H7227@w19 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -2537,7 +2564,8 @@
           "wms H1129@w21 surface 'בָּנָה' != OSHB 'וּמֶ֤לֶךְ'"
         ],
         "morphology": [
-          "derived(gender '' vs 'm')"
+          "derived(gender '' vs 'm')",
+          "wms H1129@w21 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -2608,7 +2636,8 @@
           "wms H8352@w25 surface 'שֵׁת' != OSHB 'וְשַׁכְלְלֵֽהּ'"
         ],
         "morphology": [
-          "derived(pos 'proper_noun' vs verb 'AC/Vep3ms/Sp3ms')"
+          "derived(pos 'proper_noun' vs verb 'AC/Vep3ms/Sp3ms')",
+          "wms H8352@w25 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -2625,7 +2654,8 @@
         "lexical": [],
         "lemmaSurface": [],
         "morphology": [
-          "derived(gender '' vs 'm')"
+          "derived(gender '' vs 'm')",
+          "wms H426@w1 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w1')"
@@ -2644,7 +2674,8 @@
         "lexical": [],
         "lemmaSurface": [],
         "morphology": [
-          "derived(stem '' vs 'peal')"
+          "derived(stem '' vs 'peal')",
+          "wms H7972@w2 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w2')"
@@ -2663,7 +2694,8 @@
         "lexical": [],
         "lemmaSurface": [],
         "morphology": [
-          "derived(stem '' vs 'peal')"
+          "derived(stem '' vs 'peal')",
+          "wms H5463@w4 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w4')",
@@ -2690,7 +2722,8 @@
           "wms H6413@w5 surface 'פְּלֵיטָה' != OSHB 'פֻּ֥ם'"
         ],
         "morphology": [
-          "derived(gender '' vs 'm')"
+          "derived(gender '' vs 'm')",
+          "wms H6413@w5 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w5')"
@@ -2711,7 +2744,9 @@
           "surface 'אַרְיֵה' != OSHB 'אַרְיָוָתָ֖א' @ w6",
           "wms H744@w6 surface 'אַרְיֵה' != OSHB 'אַרְיָוָתָ֖א'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H744@w6 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w6')"
         ]
@@ -2728,7 +2763,9 @@
       "axes": {
         "lexical": [],
         "lemmaSurface": [],
-        "morphology": [],
+        "morphology": [
+          "wms H3809@w7 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w7')"
         ]
@@ -2746,7 +2783,8 @@
         "lexical": [],
         "lemmaSurface": [],
         "morphology": [
-          "derived(stem '' vs 'pael')"
+          "derived(stem '' vs 'pael')",
+          "wms H2255@w8 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w8')"
@@ -2770,7 +2808,9 @@
           "surface 'קֳבֵל' != OSHB 'כָּל' @ w9",
           "wms H6903@w9 surface 'קֳבֵל' != OSHB 'כָּל'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H6903@w9 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w9')"
         ]
@@ -2793,7 +2833,9 @@
           "surface 'שְׁכַח' != OSHB 'קֳבֵ֗ל' @ w10",
           "wms H7912@w10 surface 'שְׁכַח' != OSHB 'קֳבֵ֗ל'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H7912@w10 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w10')"
         ]
@@ -2816,7 +2858,9 @@
           "surface 'זָכוּ' != OSHB 'דִּ֤י' @ w11",
           "wms H2136@w11 surface 'זָכוּ' != OSHB 'דִּ֤י'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H2136@w11 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w11')",
           "OSHB locator carries morph_source='strongs_lexicon'",
@@ -2838,7 +2882,9 @@
           "surface 'קֳדָם' != OSHB 'קָֽדָמ֨וֹהִי֙' @ w12",
           "wms H6925@w12 surface 'קֳדָם' != OSHB 'קָֽדָמ֨וֹהִי֙'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H6925@w12 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w12')"
         ]
@@ -2862,7 +2908,8 @@
           "wms H6925@w13 surface 'קֳדָם' != OSHB 'זָכוּ֙'"
         ],
         "morphology": [
-          "derived(gender '' vs 'f')"
+          "derived(gender '' vs 'f')",
+          "wms H6925@w13 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w13')"
@@ -2887,7 +2934,8 @@
           "wms H638@w14 surface 'אַף' != OSHB 'הִשְׁתְּכַ֣חַת'"
         ],
         "morphology": [
-          "derived(pos 'particle' vs verb 'AVup3fs')"
+          "derived(pos 'particle' vs verb 'AVup3fs')",
+          "wms H638@w14 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w14')"
@@ -2911,7 +2959,9 @@
           "surface 'מַלְאֲכֵהּ' != OSHB 'וְאַ֤ף' @ w16",
           "wms H4399@w16 surface 'מַלְאֲכֵהּ' != OSHB 'וְאַ֤ף'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H4399@w16 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w16')"
         ]
@@ -2934,7 +2984,9 @@
           "surface 'לָא' != OSHB 'קדמיך' @ w17",
           "wms H3809@w17 surface 'לָא' != OSHB 'קדמיך'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H3809@w17 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w17')"
         ]
@@ -2957,7 +3009,9 @@
           "surface 'עַבְדֵֽת' != OSHB 'קָֽדָמָךְ֙' @ w18",
           "wms H5648@w18 surface 'עַבְדֵֽת' != OSHB 'קָֽדָמָךְ֙'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H5648@w18 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w18')"
         ]
@@ -2980,7 +3034,9 @@
           "surface 'חֲבַר' != OSHB 'מַלְכָּ֔א' @ w19",
           "wms H2269@w19 surface 'חֲבַר' != OSHB 'מַלְכָּ֔א'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H2269@w19 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w19')",
           "OSHB locator carries morph_source='strongs_lexicon'",
@@ -3006,7 +3062,8 @@
           "wms H607@w1 surface 'אַנְתָּה' != OSHB 'חָזֵ֤ה'"
         ],
         "morphology": [
-          "derived(pos 'pronoun' vs verb 'AVqrmsa')"
+          "derived(pos 'pronoun' vs verb 'AVqrmsa')",
+          "wms H607@w1 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -3100,7 +3157,9 @@
           "surface 'אֲשֶׁר' != OSHB 'עִם' @ w6",
           "wms H1768@w6 surface 'דִּי' != OSHB 'עִם'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H1768@w6 missing mandatory orig_morphology"
+        ],
         "sourceLocator": []
       }
     },
@@ -3145,7 +3204,9 @@
           "surface 'עֲנָנָה' != OSHB 'שְׁמַיָּ֔א' @ w8",
           "wms H6053@w8 surface 'עֲנָנָה' != OSHB 'שְׁמַיָּ֔א'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H6053@w8 missing mandatory orig_morphology"
+        ],
         "sourceLocator": [
           "OSHB locator carries morph_source='strongs_lexicon'",
           "wms H6053@w8 carries morph_source='strongs_lexicon' instead of oshb_wlc"
@@ -3194,7 +3255,8 @@
           "wms H3607@w10 surface 'כָּלָא' != OSHB 'אֱנָ֖שׁ'"
         ],
         "morphology": [
-          "derived(gender '' vs 'm')"
+          "derived(gender '' vs 'm')",
+          "wms H3607@w10 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -3217,7 +3279,8 @@
           "wms H1248@w11 surface 'בַּר' != OSHB 'אָתֵ֣ה'"
         ],
         "morphology": [
-          "derived(pos 'noun' vs verb 'AVqrmsa')"
+          "derived(pos 'noun' vs verb 'AVqrmsa')",
+          "wms H1248@w11 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "OSHB locator carries morph_source='strongs_lexicon'",
@@ -3314,7 +3377,9 @@
           "surface 'מִן' != OSHB 'יֽוֹמַיָּא֙' @ w15",
           "wms H4481@w15 surface 'מִן' != OSHB 'יֽוֹמַיָּא֙'"
         ],
-        "morphology": [],
+        "morphology": [
+          "wms H4481@w15 missing mandatory orig_morphology"
+        ],
         "sourceLocator": []
       }
     },
@@ -3534,7 +3599,8 @@
           "TR lemma 'ὑμῖν' != 'σύ' @ w6"
         ],
         "morphology": [
-          "missing orig_morphology for TR token"
+          "missing orig_morphology for TR token",
+          "wms G5213@w6 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "TR locator disagrees with morph_source='strongs_lexicon'",
@@ -3640,7 +3706,8 @@
           "wms G3779@w11 surface 'οὕτω' != Scrivener TR 'ποιεῖτε'"
         ],
         "morphology": [
-          "missing orig_morphology for TR token"
+          "missing orig_morphology for TR token",
+          "wms G3779@w11 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "TR locator disagrees with morph_source='strongs_lexicon'",
@@ -3902,7 +3969,8 @@
           "wms G599@w10 surface 'ἀποθνῄσκω' != Scrivener TR 'ὅτι'"
         ],
         "morphology": [
-          "missing orig_morphology for TR token"
+          "missing orig_morphology for TR token",
+          "wms G599@w10 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -4004,7 +4072,8 @@
           "wms G4957@w3 surface 'συσταυρόω' != Scrivener TR 'ζῶ'"
         ],
         "morphology": [
-          "missing orig_morphology for TR token"
+          "missing orig_morphology for TR token",
+          "wms G4957@w3 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
           "TR locator disagrees with morph_source='strongs_lexicon'",
@@ -4058,7 +4127,8 @@
           "wms G1473@w6 surface 'ἐγώ' != SBLGNT 'δὲ'"
         ],
         "morphology": [
-          "derived(pos 'pronoun' vs 'C-')"
+          "derived(pos 'pronoun' vs 'C-')",
+          "wms G1473@w6 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -4520,7 +4590,8 @@
           "wms G1510@w1 surface 'εἰμί' != Scrivener TR 'τοῦτο'"
         ],
         "morphology": [
-          "missing orig_morphology for TR token"
+          "missing orig_morphology for TR token",
+          "wms G1510@w1 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }
@@ -4596,7 +4667,8 @@
           "wms G5426@w4 surface 'φρονείσθω' != Scrivener TR 'ἐν'"
         ],
         "morphology": [
-          "missing orig_morphology for TR token"
+          "missing orig_morphology for TR token",
+          "wms G5426@w4 missing mandatory orig_morphology"
         ],
         "sourceLocator": []
       }

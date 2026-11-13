@@ -110,6 +110,16 @@ const regressions = [
     name: 'Negative: deleting pronoun component G846 from #16 ("فِيهَا") is rejected',
     pos: 16,
     sql: `DELETE FROM word_mapping_strongs WHERE mapping_id='3ffa88b1-482f-4361-a476-da3eb656bf24' AND strongs_id='G846';`
+  },
+  {
+    name: 'Negative: swapping pronoun components between #3 ("عَمَلُهُ") and #16 ("فِيهَا") is rejected',
+    pos: 3,
+    sql: `UPDATE word_mapping_strongs SET orig_word_position=18, orig_component='αὐτοῖς', orig_morphology='RP ----DPN-' WHERE mapping_id='6b6ebba2-32b1-487f-9208-9a324466d7ee' AND strongs_id='G846'; UPDATE word_mapping_strongs SET orig_word_position=1, orig_component='αὐτοῦ', orig_morphology='RP ----GSM-' WHERE mapping_id='3ffa88b1-482f-4361-a476-da3eb656bf24' AND strongs_id='G846';`
+  },
+  {
+    name: 'Negative: blanking mandatory fields (surface/morph/source to NULL) on #3 ("عَمَلُهُ") G846 is rejected',
+    pos: 3,
+    sql: `UPDATE word_mapping_strongs SET orig_component=NULL, orig_morphology=NULL, morph_source=NULL WHERE mapping_id='6b6ebba2-32b1-487f-9208-9a324466d7ee' AND strongs_id='G846';`
   }
 ];
 

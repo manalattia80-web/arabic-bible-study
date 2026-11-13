@@ -380,50 +380,65 @@ for (const k of buildHistoricalExclusionSet(isRound2Manifest)) historicalExclusi
 // 15 Strictly Unseen Holdout Verses loaded from canonical manifest (0% overlap)
 const holdoutVerses = manifest.holdout_verses;
 
-// Verified required secondary components for fully calibrated holdout units
+// Verified required components for fully calibrated holdout units
 const VERIFIED_REQUIRED_COMPONENTS = {
   'Eph 2:10': {
-    3:  ['G846'],  // αὐτοῦ (enclitic pronoun suffix in عَمَلُهُ)
-    8:  ['G1909'], // ἐπὶ (preposition in لأَعْمَال)
-    12: ['G3588'], // ὁ (definite article in اللهُ)
-    13: ['G3739'], // οἷς (relative pronoun in compound_phrase فَأَعَدَّهَا)
-    16: ['G846']   // αὐτοῖς (enclitic pronoun suffix in فِيهَا)
+    3: [
+      { strongsId: 'G4161', role: 'primary', order: 1, pos: 4, surface: 'ποίημα', morph: 'N- ----NSN-', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G846', role: 'secondary', order: 2, pos: 1, surface: 'αὐτοῦ', morph: 'RP ----GSM-', source: 'morphgnt_sblgnt' }
+    ],
+    8: [
+      { strongsId: 'G2041', role: 'primary', order: 1, pos: 10, surface: 'ἔργοις', morph: 'N- ----DPN-', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G1909', role: 'secondary', order: 2, pos: 9, surface: 'ἐπὶ', morph: 'P- --------', source: 'morphgnt_sblgnt' }
+    ],
+    12: [
+      { strongsId: 'G2316', role: 'primary', order: 1, pos: 15, surface: 'θεὸς', morph: 'N- ----NSM-', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G3588', role: 'secondary', order: 2, pos: 14, surface: 'ὁ', morph: 'RA ----NSM-', source: 'morphgnt_sblgnt' }
+    ],
+    13: [
+      { strongsId: 'G4282', role: 'primary', order: 1, pos: 13, surface: 'προητοίμασεν', morph: 'V- 3AAI-S--', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G3739', role: 'secondary', order: 2, pos: 12, surface: 'οἷς', morph: 'RR ----DPN-', source: 'morphgnt_sblgnt' }
+    ],
+    16: [
+      { strongsId: 'G1722', role: 'primary', order: 1, pos: 17, surface: 'ἐν', morph: 'P- --------', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G846', role: 'secondary', order: 2, pos: 18, surface: 'αὐτοῖς', morph: 'RP ----DPN-', source: 'morphgnt_sblgnt' }
+    ]
   },
   'Mark 12:30': {
-    1:  ['G2532'], // καὶ
-    3:  ['G4771'], // σου
-    6:  ['G4771'], // σου
-    9:  ['G4771'], // σου
-    12: ['G4771'], // σου
-    15: ['G4771']  // σου
+    1:  [{ strongsId: 'G2532', role: 'secondary', order: 2, pos: 1, surface: 'καὶ', morph: 'C- --------', source: 'morphgnt_sblgnt' }],
+    3:  [{ strongsId: 'G4771', role: 'secondary', order: 2, pos: 6, surface: 'σου', morph: 'RP ----GS--', source: 'morphgnt_sblgnt' }],
+    6:  [{ strongsId: 'G4771', role: 'secondary', order: 2, pos: 11, surface: 'σου', morph: 'RP ----GS--', source: 'morphgnt_sblgnt' }],
+    9:  [{ strongsId: 'G4771', role: 'secondary', order: 2, pos: 17, surface: 'σου', morph: 'RP ----GS--', source: 'morphgnt_sblgnt' }],
+    12: [{ strongsId: 'G4771', role: 'secondary', order: 2, pos: 23, surface: 'σου', morph: 'RP ----GS--', source: 'morphgnt_sblgnt' }],
+    15: [{ strongsId: 'G4771', role: 'secondary', order: 2, pos: 29, surface: 'σου', morph: 'RP ----GS--', source: 'morphgnt_sblgnt' }]
   },
   'Rom 12:1': {
-    5:  ['G1223'], // διὰ
-    9:  ['G4771'], // ὑμῶν
-    16: ['G4771']  // ὑمῶν
+    5:  [{ strongsId: 'G1223', role: 'secondary', order: 2, pos: 5, surface: 'διὰ', morph: 'P- --------', source: 'morphgnt_sblgnt' }],
+    9:  [{ strongsId: 'G4771', role: 'secondary', order: 2, pos: 13, surface: 'ὑμῶν', morph: 'RP ----GP--', source: 'morphgnt_sblgnt' }],
+    16: [{ strongsId: 'G4771', role: 'secondary', order: 2, pos: 23, surface: 'ὑμῶν', morph: 'RP ----GP--', source: 'morphgnt_sblgnt' }]
   },
   '1Pet 2:9': {
-    15: ['G4771'], // ὑμᾶς
-    19: ['G846']   // αὐτοῦ
+    15: [{ strongsId: 'G4771', role: 'secondary', order: 2, pos: 19, surface: 'ὑμᾶς', morph: 'RP ----AP--', source: 'morphgnt_sblgnt' }],
+    19: [{ strongsId: 'G846', role: 'secondary', order: 2, pos: 24, surface: 'αὐτοῦ', morph: 'RP ----GSM-', source: 'morphgnt_sblgnt' }]
   },
   'Deut 8:3': {
-    4:  ['H853'],
-    16: ['H5921'],
-    21: ['H5921']
+    4:  [{ strongsId: 'H853', role: 'secondary', order: 2, pos: 4, surface: 'אֶת', morph: 'HTo', source: 'oshb_wlc' }],
+    16: [{ strongsId: 'H5921', role: 'secondary', order: 2, pos: 16, surface: 'עַל', morph: 'HR', source: 'oshb_wlc' }],
+    21: [{ strongsId: 'H5921', role: 'secondary', order: 2, pos: 22, surface: 'עַל', morph: 'HR', source: 'oshb_wlc' }]
   },
   'Josh 24:15': {
-    7:  ['H853'],
-    36: ['H853']
+    7:  [{ strongsId: 'H853', role: 'secondary', order: 2, pos: 5, surface: 'אֶת', morph: 'HTo', source: 'oshb_wlc' }],
+    36: [{ strongsId: 'H853', role: 'secondary', order: 2, pos: 34, surface: 'אֶת', morph: 'HTo', source: 'oshb_wlc' }]
   },
   'Ezra 4:12': {
-    1:  ['H1934']
+    1:  [{ strongsId: 'H1934', role: 'secondary', order: 2, pos: 2, surface: 'לֶהֱוֵ֣א', morph: 'AVqi3ms', source: 'oshb_wlc' }]
   },
   'Ezra 7:12': {
-    9:  ['H1768']
+    9:  [{ strongsId: 'H1768', role: 'secondary', order: 2, pos: 8, surface: 'דִּֽי', morph: 'ATr', source: 'oshb_wlc' }]
   },
   'Dan 2:44': {
-    2:  ['H1768'],
-    9:  ['H1768']
+    2:  [{ strongsId: 'H1768', role: 'secondary', order: 2, pos: 2, surface: 'דִּ֧י', morph: 'ATr', source: 'oshb_wlc' }],
+    9:  [{ strongsId: 'H1768', role: 'secondary', order: 2, pos: 9, surface: 'דִּ֤י', morph: 'ATr', source: 'oshb_wlc' }]
   }
 };
 
@@ -466,8 +481,8 @@ for (const v of holdoutVerses) {
            wm.morph_stem, wm.morph_mood, wm.orig_word_position, wm.verified_locator,
            wm.morph_tense, wm.morph_voice, wm.morph_case, COALESCE(wm.morph_source,''),
            COALESCE(wm.relation_type,''), COALESCE(wm.grammar_notes,''),
-           (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '@w' || COALESCE(wms.orig_word_position,'') || '[' || COALESCE(wms.orig_component,'') || ':' || COALESCE(wms.orig_morphology,'') || ':' || COALESCE(wms.morph_source,'') || ']', ';')
-            FROM (SELECT strongs_id, link_role, orig_word_position, orig_component, orig_morphology, morph_source FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms)
+           (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '#' || COALESCE(wms.link_order,'') || '@w' || COALESCE(wms.orig_word_position,'') || '[' || COALESCE(wms.orig_component,'') || ':' || COALESCE(wms.orig_morphology,'') || ':' || COALESCE(wms.morph_source,'') || ']', ';')
+            FROM (SELECT strongs_id, link_role, link_order, orig_word_position, orig_component, orig_morphology, morph_source FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms)
     FROM word_mappings wm
     JOIN verses vr ON wm.verse_id = vr.id
     WHERE vr.book_id = ${v.book} AND vr.chapter_num = ${v.ch} AND vr.verse_num = ${v.vs}
@@ -530,19 +545,45 @@ for (const v of holdoutVerses) {
       if (!strongsId) failAxis('lexical', 'missing strongs_id');
       if (!compDetailed) failAxis('lexical', 'empty word_mapping_strongs');
 
-      // Verify that all required secondary components for calibrated units are present
-      if (VERIFIED_REQUIRED_COMPONENTS[v.name] && VERIFIED_REQUIRED_COMPONENTS[v.name][arPos]) {
-        const existingCompStrongs = new Set();
-        if (compDetailed) {
-          for (const cStr of compDetailed.split(';')) {
-            const mC = cStr.match(/^([^:]+):/);
-            if (mC) existingCompStrongs.add(mC[1]);
-          }
+      // Parse all actual components from word_mapping_strongs
+      const actualComponents = [];
+      if (compDetailed) {
+        for (const cStr of compDetailed.split(';')) {
+          const mC = cStr.match(/^([^:]+):([^#]+)#(\d*)@w(\d*)\[([^:]*):([^:]*):([^\]]*)\]$/);
+          if (!mC) continue;
+          const [, cS, cRole, cOrderStr, cPStr, cSurf, cMorph, cSrc] = mC;
+          actualComponents.push({
+            strongsId: cS,
+            role: cRole,
+            order: cOrderStr ? parseInt(cOrderStr, 10) : null,
+            pos: cPStr ? parseInt(cPStr, 10) : null,
+            surface: cSurf || '',
+            morph: cMorph || '',
+            source: cSrc || ''
+          });
         }
-        for (const reqS of VERIFIED_REQUIRED_COMPONENTS[v.name][arPos]) {
-          if (!existingCompStrongs.has(reqS)) {
-            failAxis('lexical', `missing required secondary component '${reqS}' in word_mapping_strongs`);
-            failAxis('sourceLocator', `unit requires secondary component '${reqS}'`);
+      }
+
+      // Verify that all required components for calibrated units are present with exact fields
+      if (VERIFIED_REQUIRED_COMPONENTS[v.name] && VERIFIED_REQUIRED_COMPONENTS[v.name][arPos]) {
+        for (const req of VERIFIED_REQUIRED_COMPONENTS[v.name][arPos]) {
+          const matched = actualComponents.find(c =>
+            c.strongsId === req.strongsId &&
+            c.role === req.role &&
+            c.order === req.order &&
+            c.pos === req.pos &&
+            c.source === req.source
+          );
+          if (!matched) {
+            failAxis('lexical', `missing required component ${req.strongsId}:${req.role}#${req.order}@w${req.pos}`);
+            failAxis('sourceLocator', `unit requires component ${req.strongsId}:${req.role}#${req.order}@w${req.pos}`);
+          } else {
+            if (req.surface && matched.surface !== req.surface) {
+              failAxis('lemmaSurface', `component ${req.strongsId}@w${req.pos} surface '${matched.surface}' != expected '${req.surface}'`);
+            }
+            if (req.morph && matched.morph !== req.morph) {
+              failAxis('morphology', `component ${req.strongsId}@w${req.pos} morph '${matched.morph}' != expected '${req.morph}'`);
+            }
           }
         }
       }
@@ -619,11 +660,21 @@ for (const v of holdoutVerses) {
 
         // Audit every component inside word_mapping_strongs for Greek
         if (compDetailed && tokens) {
-          for (const cStr of compDetailed.split(';')) {
-            const mC = cStr.match(/^([^:]+):([^@]+)@w(\d+)\[([^:]*):([^:]*):([^\]]*)\]$/);
-            if (!mC) continue;
-            const [, cS, cRole, cP, cSurf, cMorph, cSrc] = mC;
-            const cTok = tokens.find(t => t.index === parseInt(cP, 10));
+          for (const comp of actualComponents) {
+            const { strongsId: cS, role: cRole, order: cOrder, pos: cP, surface: cSurf, morph: cMorph, source: cSrc } = comp;
+
+            // Mandatory fields check: absence of mandatory fields is a failure
+            if (!cSurf) failAxis('lemmaSurface', `wms ${cS}@w${cP || '?'} missing mandatory orig_component`);
+            if (!cMorph) failAxis('morphology', `wms ${cS}@w${cP || '?'} missing mandatory orig_morphology`);
+            if (!cSrc) failAxis('sourceLocator', `wms ${cS}@w${cP || '?'} missing mandatory morph_source`);
+            if (!cRole) failAxis('sourceLocator', `wms ${cS}@w${cP || '?'} missing mandatory link_role`);
+            if (!cOrder || isNaN(cOrder)) failAxis('sourceLocator', `wms ${cS}@w${cP || '?'} missing mandatory link_order`);
+            if (!cP || isNaN(cP)) {
+              failAxis('sourceLocator', `wms ${cS} missing mandatory orig_word_position`);
+              continue;
+            }
+
+            const cTok = tokens.find(t => t.index === cP);
             if (!cTok) {
               failAxis('sourceLocator', `wms component ${cS}@w${cP} exceeds ${edition} token count (${tokens.length})`);
             } else {
@@ -700,11 +751,21 @@ for (const v of holdoutVerses) {
 
         // Audit every component inside word_mapping_strongs for Hebrew/Aramaic
         if (compDetailed && oshbTokens) {
-          for (const cStr of compDetailed.split(';')) {
-            const mC = cStr.match(/^([^:]+):([^@]+)@w(\d+)\[([^:]*):([^:]*):([^\]]*)\]$/);
-            if (!mC) continue;
-            const [, cS, cRole, cP, cSurf, cMorph, cSrc] = mC;
-            const cTok = oshbTokens.find(t => t.index === parseInt(cP, 10));
+          for (const comp of actualComponents) {
+            const { strongsId: cS, role: cRole, order: cOrder, pos: cP, surface: cSurf, morph: cMorph, source: cSrc } = comp;
+
+            // Mandatory fields check: absence of mandatory fields is a failure
+            if (!cSurf) failAxis('lemmaSurface', `wms ${cS}@w${cP || '?'} missing mandatory orig_component`);
+            if (!cMorph) failAxis('morphology', `wms ${cS}@w${cP || '?'} missing mandatory orig_morphology`);
+            if (!cSrc) failAxis('sourceLocator', `wms ${cS}@w${cP || '?'} missing mandatory morph_source`);
+            if (!cRole) failAxis('sourceLocator', `wms ${cS}@w${cP || '?'} missing mandatory link_role`);
+            if (!cOrder || isNaN(cOrder)) failAxis('sourceLocator', `wms ${cS}@w${cP || '?'} missing mandatory link_order`);
+            if (!cP || isNaN(cP)) {
+              failAxis('sourceLocator', `wms ${cS} missing mandatory orig_word_position`);
+              continue;
+            }
+
+            const cTok = oshbTokens.find(t => t.index === cP);
             if (!cTok) {
               failAxis('sourceLocator', `wms component ${cS}@w${cP} missing in OSHB`);
             } else {
@@ -716,7 +777,7 @@ for (const v of holdoutVerses) {
               if (cSurf) {
                 const cC = canonHebSurface(cSurf);
                 const cParts = (cTok.rawParts || [cTok.text]).map(canonHebSurface);
-                if (cC !== canonHebSurface(cTok.text) && !cParts.includes(cC) && canonHebSurface((cTok.rawParts || []).slice(1).join('')) !== cC) {
+                if (cC !== canonHebSurface(cTok.text) && !cParts.includes(cC)) {
                   failAxis('lemmaSurface', `wms ${cS}@w${cP} surface '${cSurf}' != OSHB '${cTok.text}'`);
                 }
               }
