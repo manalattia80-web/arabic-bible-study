@@ -216,10 +216,12 @@ function greekStrongsMatchesLemma(strongsId, tokLemma) {
   const eFold = normGreekPolytonicFold(entryWord);
   const tFold = normGreekPolytonicFold(tokLemma);
   if (eFold === tFold) return true;
-  // Common MorphGNT vs Strong's lexical pairs (ἐγώ/μου/με, σύ/σου, τις/τι, ὁ/τοῦ, etc.)
+  // Common MorphGNT vs Strong's lexical pairs (ἐγώ/μου/με/ἡμᾶς, σύ/σου/ὑμᾶς, συνιστάω/συνίστημι, etc.)
   const pairs = [
-    ['εγω', 'μου'], ['εγω', 'με'], ['εγω', 'εμοι'], ['συ', 'σου'], ['συ', 'σε'],
-    ['αυτος', 'αυτου'], ['ουτος', 'αυτη'], ['ος', 'ου'], ['τις', 'τι']
+    ['εγω', 'μου'], ['εγω', 'με'], ['εγω', 'εμοι'], ['εγω', 'ημας'], ['εγω', 'ημων'], ['εγω', 'ημιν'], ['εγω', 'ημεις'],
+    ['συ', 'σου'], ['συ', 'σε'], ['συ', 'υμας'], ['συ', 'υμων'], ['συ', 'υμιν'], ['συ', 'υμεις'],
+    ['αυτος', 'αυτου'], ['ουτος', 'αυτη'], ['ος', 'ου'], ['τις', 'τι'],
+    ['συνισταω', 'συνιστημι'], ['συνιστανω', 'συνιστημι']
   ];
   return pairs.some(([a, b]) => (eFold === a && tFold === b) || (eFold === b && tFold === a));
 }
@@ -382,6 +384,36 @@ const holdoutVerses = manifest.holdout_verses;
 
 // Verified required components for fully calibrated holdout units
 const VERIFIED_REQUIRED_COMPONENTS = {
+  'Rom 5:8': {
+    1:  [{ strongsId: 'G1161', role: 'primary', order: 1, pos: 2, surface: 'δὲ', morph: 'C- --------', source: 'morphgnt_sblgnt' }],
+    2:  [
+      { strongsId: 'G2316', role: 'primary', order: 1, pos: 9, surface: 'θεὸς', morph: 'N- ----NSM-', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G3588', role: 'secondary', order: 2, pos: 8, surface: 'ὁ', morph: 'RA ----NSM-', source: 'morphgnt_sblgnt' }
+    ],
+    3:  [{ strongsId: 'G4921', role: 'primary', order: 1, pos: 1, surface: 'συνίστησιν', morph: 'V- 3PAI-S--', source: 'morphgnt_sblgnt' }],
+    4:  [
+      { strongsId: 'G26', role: 'primary', order: 1, pos: 5, surface: 'ἀγάπην', morph: 'N- ----ASF-', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G1438', role: 'secondary', order: 2, pos: 4, surface: 'ἑαυτοῦ', morph: 'RP ----GSM-', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G3588', role: 'secondary', order: 3, pos: 3, surface: 'τὴν', morph: 'RA ----ASF-', source: 'morphgnt_sblgnt' }
+    ],
+    5:  [
+      { strongsId: 'G1519', role: 'primary', order: 1, pos: 6, surface: 'εἰς', morph: 'P- --------', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G1473', role: 'secondary', order: 2, pos: 7, surface: 'ἡμᾶς', morph: 'RP ----AP--', source: 'morphgnt_sblgnt' }
+    ],
+    6:  [{ strongsId: 'G3754', role: 'primary', order: 1, pos: 10, surface: 'ὅτι', morph: 'C- --------', source: 'morphgnt_sblgnt' }],
+    7:  [
+      { strongsId: 'G1473', role: 'primary', order: 1, pos: 14, surface: 'ἡμῶν', morph: 'RP ----GP--', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G1510', role: 'secondary', order: 2, pos: 13, surface: 'ὄντων', morph: 'V- -PAPGPM-', source: 'morphgnt_sblgnt' }
+    ],
+    8:  [{ strongsId: 'G2089', role: 'primary', order: 1, pos: 11, surface: 'ἔτι', morph: 'D- --------', source: 'morphgnt_sblgnt' }],
+    9:  [{ strongsId: 'G268', role: 'primary', order: 1, pos: 12, surface: 'ἁμαρτωλῶν', morph: 'A- ----GPM-', source: 'morphgnt_sblgnt' }],
+    10: [{ strongsId: 'G599', role: 'primary', order: 1, pos: 18, surface: 'ἀπέθανεν', morph: 'V- 3AAI-S--', source: 'morphgnt_sblgnt' }],
+    11: [{ strongsId: 'G5547', role: 'primary', order: 1, pos: 15, surface: 'Χριστὸς', morph: 'N- ----NSM-', source: 'morphgnt_sblgnt' }],
+    12: [
+      { strongsId: 'G5228', role: 'primary', order: 1, pos: 16, surface: 'ὑπὲρ', morph: 'P- --------', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G1473', role: 'secondary', order: 2, pos: 17, surface: 'ἡμῶν', morph: 'RP ----GP--', source: 'morphgnt_sblgnt' }
+    ]
+  },
   '1Thess 5:18': {
     1:  [{ strongsId: 'G2168', role: 'primary', order: 1, pos: 3, surface: 'εὐχαριστεῖτε', morph: 'V- 2PAD-P--', source: 'morphgnt_sblgnt' }],
     2:  [{ strongsId: 'G1722', role: 'primary', order: 1, pos: 1, surface: 'ἐν', morph: 'P- --------', source: 'morphgnt_sblgnt' }],
