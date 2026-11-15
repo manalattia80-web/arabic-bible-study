@@ -384,6 +384,60 @@ const holdoutVerses = manifest.holdout_verses;
 
 // Verified required components for fully calibrated holdout units
 const VERIFIED_REQUIRED_COMPONENTS = {
+  'Gal 2:20': {
+    2: [{ strongsId: 'G5547', role: 'primary', order: 1, pos: 1, surface: 'Χριστῷ', morph: 'N-DSM', source: 'morphgnt_tr' }],
+    3: [{ strongsId: 'G4957', role: 'primary', order: 1, pos: 2, surface: 'συνεσταύρωμαι', morph: 'V-RPI-1S', source: 'morphgnt_tr' }],
+    4: [
+      { strongsId: 'G2198', role: 'primary', order: 1, pos: 3, surface: 'ζῶ', morph: 'V-PAI-1S', source: 'morphgnt_tr' },
+      { strongsId: 'G1161', role: 'secondary', order: 2, pos: 4, surface: 'δέ', morph: 'CONJ', source: 'morphgnt_tr' }
+    ],
+    5: [{ strongsId: 'G3765', role: 'primary', order: 1, pos: 5, surface: 'οὐκέτι', morph: 'ADV-N', source: 'morphgnt_tr' }],
+    6: [{ strongsId: 'G1473', role: 'primary', order: 1, pos: 6, surface: 'ἐγώ', morph: 'P-1NS', source: 'morphgnt_tr' }],
+    7: [{ strongsId: 'G1161', role: 'primary', order: 1, pos: 8, surface: 'δὲ', morph: 'CONJ', source: 'morphgnt_tr' }],
+    8: [{ strongsId: 'G5547', role: 'primary', order: 1, pos: 11, surface: 'Χριστός', morph: 'N-NSM', source: 'morphgnt_tr' }],
+    9: [{ strongsId: 'G2198', role: 'primary', order: 1, pos: 7, surface: 'ζῇ', morph: 'V-PAI-3S', source: 'morphgnt_tr' }],
+    10: [
+      { strongsId: 'G1722', role: 'primary', order: 1, pos: 9, surface: 'ἐν', morph: 'PREP', source: 'morphgnt_tr' },
+      { strongsId: 'G1473', role: 'secondary', order: 2, pos: 10, surface: 'ἐμοὶ', morph: 'P-1DS', source: 'morphgnt_tr' }
+    ],
+    11: [
+      { strongsId: 'G3739', role: 'primary', order: 1, pos: 12, surface: 'ὃ', morph: 'R-ASN', source: 'morphgnt_tr' },
+      { strongsId: 'G1161', role: 'secondary', order: 2, pos: 13, surface: 'δὲ', morph: 'CONJ', source: 'morphgnt_tr' }
+    ],
+    12: [{ strongsId: 'G2198', role: 'primary', order: 1, pos: 15, surface: 'ζῶ', morph: 'V-PAI-1S', source: 'morphgnt_tr' }],
+    13: [{ strongsId: 'G3568', role: 'primary', order: 1, pos: 14, surface: 'νῦν', morph: 'ADV', source: 'morphgnt_tr' }],
+    14: [{ strongsId: 'G1722', role: 'primary', order: 1, pos: 16, surface: 'ἐν', morph: 'PREP', source: 'morphgnt_tr' }],
+    15: [{ strongsId: 'G4561', role: 'primary', order: 1, pos: 17, surface: 'σαρκί', morph: 'N-DSF', source: 'morphgnt_tr' }],
+    17: [{ strongsId: 'G2198', role: 'primary', order: 1, pos: 20, surface: 'ζῶ', morph: 'V-PAI-1S', source: 'morphgnt_tr' }],
+    18: [{ strongsId: 'G1722', role: 'primary', order: 1, pos: 18, surface: 'ἐν', morph: 'PREP', source: 'morphgnt_tr' }],
+    19: [{ strongsId: 'G4102', role: 'primary', order: 1, pos: 19, surface: 'πίστει', morph: 'N-DSF', source: 'morphgnt_tr' }],
+    20: [
+      { strongsId: 'G4102', role: 'primary', order: 1, pos: 19, surface: 'πίστει', morph: 'N-DSF', source: 'morphgnt_tr' },
+      { strongsId: 'G3588', role: 'secondary', order: 2, pos: 21, surface: 'τῇ', morph: 'T-DSF', source: 'morphgnt_tr' }
+    ],
+    21: [
+      { strongsId: 'G5207', role: 'primary', order: 1, pos: 23, surface: 'υἱοῦ', morph: 'N-GSM', source: 'morphgnt_tr' },
+      { strongsId: 'G3588', role: 'secondary', order: 2, pos: 22, surface: 'τοῦ', morph: 'T-GSM', source: 'morphgnt_tr' }
+    ],
+    22: [
+      { strongsId: 'G2316', role: 'primary', order: 1, pos: 25, surface: 'Θεοῦ', morph: 'N-GSM', source: 'morphgnt_tr' },
+      { strongsId: 'G3588', role: 'secondary', order: 2, pos: 24, surface: 'τοῦ', morph: 'T-GSM', source: 'morphgnt_tr' }
+    ],
+    23: [{ strongsId: 'G3588', role: 'primary', order: 1, pos: 26, surface: 'τοῦ', morph: 'T-GSM', source: 'morphgnt_tr' }],
+    24: [
+      { strongsId: 'G25', role: 'primary', order: 1, pos: 27, surface: 'ἀγαπήσαντός', morph: 'V-AAP-GSM', source: 'morphgnt_tr' },
+      { strongsId: 'G1473', role: 'secondary', order: 2, pos: 28, surface: 'με', morph: 'P-1AS', source: 'morphgnt_tr' }
+    ],
+    25: [
+      { strongsId: 'G3860', role: 'primary', order: 1, pos: 30, surface: 'παραδόντος', morph: 'V-2AAP-GSM', source: 'morphgnt_tr' },
+      { strongsId: 'G2532', role: 'secondary', order: 2, pos: 29, surface: 'καὶ', morph: 'CONJ', source: 'morphgnt_tr' }
+    ],
+    26: [{ strongsId: 'G1438', role: 'primary', order: 1, pos: 31, surface: 'ἑαυτὸν', morph: 'F-3ASM', source: 'morphgnt_tr' }],
+    27: [
+      { strongsId: 'G5228', role: 'primary', order: 1, pos: 32, surface: 'ὑπὲρ', morph: 'PREP', source: 'morphgnt_tr' },
+      { strongsId: 'G1473', role: 'secondary', order: 2, pos: 33, surface: 'ἐμοῦ', morph: 'P-1GS', source: 'morphgnt_tr' }
+    ]
+  },
   'Phil 2:5': {
     2: [
       { strongsId: 'G1722', role: 'primary', order: 1, pos: 3, surface: 'ἐν', morph: 'P- --------', source: 'morphgnt_sblgnt' },
