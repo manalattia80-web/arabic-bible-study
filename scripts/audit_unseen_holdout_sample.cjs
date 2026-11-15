@@ -384,6 +384,23 @@ const holdoutVerses = manifest.holdout_verses;
 
 // Verified required components for fully calibrated holdout units
 const VERIFIED_REQUIRED_COMPONENTS = {
+  '1Kgs 19:12': {
+    1:  [{ strongsId: 'H310', role: 'primary', order: 1, pos: 1, surface: 'וְאַחַ֤ר', morph: 'HC/R', source: 'oshb_wlc' }],
+    2:  [{ strongsId: 'H7494', role: 'primary', order: 1, pos: 2, surface: 'הָרַ֨עַשׁ֙', morph: 'HTd/Ncmsa', source: 'oshb_wlc' }],
+    3:  [{ strongsId: 'H784', role: 'primary', order: 1, pos: 3, surface: 'אֵ֔שׁ', morph: 'HNcbsa', source: 'oshb_wlc' }],
+    4:  [{ strongsId: 'H3808', role: 'primary', order: 1, pos: 4, surface: 'לֹ֥א', morph: 'HTn', source: 'oshb_wlc' }],
+    6:  [{ strongsId: 'H3068', role: 'primary', order: 1, pos: 6, surface: 'יְהוָ֑ה', morph: 'HNp', source: 'oshb_wlc' }],
+    7:  [{ strongsId: 'H9003', role: 'primary', order: 1, pos: 5, surface: 'בָאֵ֖שׁ', morph: 'HRd', source: 'oshb_wlc' }],
+    8:  [
+      { strongsId: 'H784', role: 'primary', order: 1, pos: 5, surface: 'בָאֵ֖שׁ', morph: 'HRd/Ncbsa', source: 'oshb_wlc' },
+      { strongsId: 'H9003', role: 'secondary', order: 2, pos: 5, surface: 'בָ', morph: 'HRd', source: 'oshb_wlc' }
+    ],
+    9:  [{ strongsId: 'H310', role: 'primary', order: 1, pos: 7, surface: 'וְאַחַ֣ר', morph: 'HC/R', source: 'oshb_wlc' }],
+    10: [{ strongsId: 'H784', role: 'primary', order: 1, pos: 8, surface: 'הָאֵ֔שׁ', morph: 'HTd/Ncbsa', source: 'oshb_wlc' }],
+    11: [{ strongsId: 'H6963', role: 'primary', order: 1, pos: 9, surface: 'ק֖וֹל', morph: 'HNcmsc', source: 'oshb_wlc' }],
+    12: [{ strongsId: 'H1827', role: 'primary', order: 1, pos: 10, surface: 'דְּמָמָ֥ה', morph: 'HNcfsa', source: 'oshb_wlc' }],
+    13: [{ strongsId: 'H1851', role: 'primary', order: 1, pos: 11, surface: 'דַקָּֽה', morph: 'HAafsa', source: 'oshb_wlc' }]
+  },
   'Gal 2:20': {
     2: [{ strongsId: 'G5547', role: 'primary', order: 1, pos: 1, surface: 'Χριστῷ', morph: 'N-DSM', source: 'morphgnt_tr' }],
     3: [{ strongsId: 'G4957', role: 'primary', order: 1, pos: 2, surface: 'συνεσταύρωμαι', morph: 'V-RPI-1S', source: 'morphgnt_tr' }],
@@ -734,20 +751,24 @@ for (const v of holdoutVerses) {
         const edKey = `${locRes.edition}:w${locRes.locW}`;
         if (seenPrimaryLocators.has(edKey)) {
           const prev = seenPrimaryLocators.get(edKey);
+          const oshbTok = (locRes.edition === 'OSHB' && locRes.locW && oshbTokens) ? oshbTokens.find(t => t.index === locRes.locW) : null;
           const isDocumentedSharedUnit =
             relationType === 'compound_phrase' &&
             prev.relationType === 'compound_phrase' &&
-            prev.strongsId && strongsId === prev.strongsId &&
             arPos > prev.arPos && arPos <= prev.arPos + 2 &&
             Boolean(grammarNotes && grammarNotes.trim().length > 0) &&
-            Boolean(prev.grammarNotes && prev.grammarNotes.trim().length > 0);
+            Boolean(prev.grammarNotes && prev.grammarNotes.trim().length > 0) &&
+            (
+              (prev.strongsId && strongsId === prev.strongsId) ||
+              (oshbTok && verifyHebrewStrongsAgainstLemma(prev.strongsId, oshbTok.lemma, prev.origMorph) && verifyHebrewStrongsAgainstLemma(strongsId, oshbTok.lemma, origMorph))
+            );
           if (!isDocumentedSharedUnit) {
             failAxis('sourceLocator', `duplicate primary token collision: ${edKey} already claimed by arPos #${prev.arPos}`);
           } else {
-            seenPrimaryLocators.set(edKey, { arPos, strongsId, relationType, grammarNotes });
+            seenPrimaryLocators.set(edKey, { arPos, strongsId, origMorph, relationType, grammarNotes });
           }
         } else {
-          seenPrimaryLocators.set(edKey, { arPos, strongsId, relationType, grammarNotes });
+          seenPrimaryLocators.set(edKey, { arPos, strongsId, origMorph, relationType, grammarNotes });
         }
       }
 

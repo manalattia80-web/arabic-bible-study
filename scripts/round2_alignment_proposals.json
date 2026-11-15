@@ -1,18 +1,18 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "e5d386d8a5e8921e60c86be736a0eb5e0624abfbf33dd016ff83f478eee55775",
+  "dbSha256": "a3029c5ef1dd0145583a24d01244248755cf9f260de2e8d3de7709bcd2d7aa9f",
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
-  "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2g_gal2_20.json",
-  "auditReportSha256": "d03ce230102c00e9be7e1ec31f7236d1956305aa549a38d376c2525839f7933e",
+  "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2h_1kgs19_12.json",
+  "auditReportSha256": "6848b74834b95daa3fb8b0c232685ed4b1023d398e78a41c38a8b4b8bfd9087f",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,
-    "verifiedClean": 123,
+    "verifiedClean": 129,
     "keepLinkRepairMetadata": 0,
     "proposedRepair": 7,
-    "pendingReview": 125
+    "pendingReview": 119
   },
   "verses": [
     {
@@ -5112,10 +5112,10 @@
       "verse": "1Kgs 19:12",
       "lang": "hebrew",
       "summary": {
-        "verifiedClean": 7,
+        "verifiedClean": 13,
         "keepLinkRepairMetadata": 0,
         "proposedRepair": 0,
-        "pendingReview": 6
+        "pendingReview": 0
       },
       "units": [
         {
@@ -5380,33 +5380,22 @@
           "arPos": 5,
           "arWord": "يَكُنِ",
           "current": {
-            "strongsId": "H1961",
-            "origPos": 5,
-            "locator": "OSHB:B11.C19.V12.w5",
-            "morphSource": "oshb_wlc",
-            "relationType": null,
-            "components": [
-              "H1961:primary@w5[הָיָה::oshb_wlc]"
-            ]
+            "strongsId": null,
+            "origPos": 0,
+            "locator": "AR_SYNTACTIC:B11.C19.V12.w5",
+            "morphSource": "syntactic_ar",
+            "relationType": "syntactic_copula",
+            "components": []
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H1961' != OSHB lemma 'b/784' @ w5",
-              "wms H1961@w5 fails OSHB lemma 'b/784'"
-            ],
-            "lemmaSurface": [
-              "surface 'הָיָה' != OSHB 'בָאֵ֖שׁ' @ w5",
-              "wms H1961@w5 surface 'הָיָה' != OSHB 'בָאֵ֖שׁ'"
-            ],
-            "morphology": [
-              "derived(gender '' vs 'b')",
-              "wms H1961@w5 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 0,
+            "strongsId": null,
+            "locator": "AR_SYNTACTIC:B11.C19.V12.w5",
+            "components": []
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 4,
@@ -5517,21 +5506,25 @@
           "arPos": 7,
           "arWord": "فِي",
           "current": {
-            "strongsId": null,
-            "origPos": 7,
-            "locator": "AR_SYNTACTIC:B11.C19.V12.w7",
-            "morphSource": "syntactic_ar",
-            "relationType": "preposition_particle",
-            "components": []
+            "strongsId": "H9003",
+            "origPos": 5,
+            "locator": "OSHB:B11.C19.V12.w5",
+            "morphSource": "oshb_wlc",
+            "relationType": "compound_phrase",
+            "components": [
+              "H9003:primary@w5[בָאֵ֖שׁ:HRd:oshb_wlc]"
+            ]
           },
           "existingAlerts": null,
           "status": "VERIFIED_CLEAN",
           "proposalType": "verified_clean",
           "proposed": {
-            "w": 7,
-            "strongsId": null,
-            "locator": "AR_SYNTACTIC:B11.C19.V12.w7",
-            "components": []
+            "w": 5,
+            "strongsId": "H9003",
+            "locator": "OSHB:B11.C19.V12.w5",
+            "components": [
+              "H9003:primary@w5[בָאֵ֖שׁ:HRd:oshb_wlc]"
+            ]
           },
           "topCandidates": [
             {
@@ -5579,23 +5572,25 @@
           "arWord": "النَّارِ",
           "current": {
             "strongsId": "H784",
-            "origPos": 8,
-            "locator": "OSHB:B11.C19.V12.w8",
+            "origPos": 5,
+            "locator": "OSHB:B11.C19.V12.w5",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "compound_phrase",
             "components": [
-              "H784:primary@w8[הָאֵ֔שׁ:HTd/Ncbsa:oshb_wlc]"
+              "H784:primary@w5[בָאֵ֖שׁ:HRd/Ncbsa:oshb_wlc]",
+              "H9003:secondary@w5[בָ:HRd:oshb_wlc]"
             ]
           },
           "existingAlerts": null,
           "status": "VERIFIED_CLEAN",
           "proposalType": "verified_clean",
           "proposed": {
-            "w": 8,
+            "w": 5,
             "strongsId": "H784",
-            "locator": "OSHB:B11.C19.V12.w8",
+            "locator": "OSHB:B11.C19.V12.w5",
             "components": [
-              "H784:primary@w8[הָאֵ֔שׁ:HTd/Ncbsa:oshb_wlc]"
+              "H784:primary@w5[בָאֵ֖שׁ:HRd/Ncbsa:oshb_wlc]",
+              "H9003:secondary@w5[בָ:HRd:oshb_wlc]"
             ]
           },
           "topCandidates": [
@@ -5648,32 +5643,25 @@
           "arWord": "وَبَعْدَ",
           "current": {
             "strongsId": "H310",
-            "origPos": 9,
-            "locator": "OSHB:B11.C19.V12.w9",
+            "origPos": 7,
+            "locator": "OSHB:B11.C19.V12.w7",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H310:primary@w9[וְאַחַ֣ר:HC/R:oshb_wlc]"
+              "H310:primary@w7[וְאַחַ֣ר:HC/R:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H310' != OSHB lemma '6963 a' @ w9",
-              "wms H310@w9 fails OSHB lemma '6963 a'"
-            ],
-            "lemmaSurface": [
-              "surface 'וְאַחַ֣ר' != OSHB 'ק֖וֹל' @ w9",
-              "wms H310@w9 surface 'וְאַחַ֣ר' != OSHB 'ק֖וֹל'"
-            ],
-            "morphology": [
-              "morph 'HC/R' != OSHB 'HNcmsc'",
-              "wms H310@w9 morph 'HC/R' != OSHB 'HNcmsc'"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 7,
+            "strongsId": "H310",
+            "locator": "OSHB:B11.C19.V12.w7",
+            "components": [
+              "H310:primary@w7[וְאַחַ֣ר:HC/R:oshb_wlc]"
+            ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 8,
@@ -5718,32 +5706,25 @@
           "arWord": "النَّارِ",
           "current": {
             "strongsId": "H784",
-            "origPos": 10,
-            "locator": "OSHB:B11.C19.V12.w10",
+            "origPos": 8,
+            "locator": "OSHB:B11.C19.V12.w8",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H784:primary@w10[הָאֵ֔שׁ:HTd/Ncbsa:oshb_wlc]"
+              "H784:primary@w8[הָאֵ֔שׁ:HTd/Ncbsa:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H784' != OSHB lemma '1827' @ w10",
-              "wms H784@w10 fails OSHB lemma '1827'"
-            ],
-            "lemmaSurface": [
-              "surface 'הָאֵ֔שׁ' != OSHB 'דְּמָמָ֥ה' @ w10",
-              "wms H784@w10 surface 'הָאֵ֔שׁ' != OSHB 'דְּמָמָ֥ה'"
-            ],
-            "morphology": [
-              "morph 'HTd/Ncbsa' != OSHB 'HNcfsa'",
-              "wms H784@w10 morph 'HTd/Ncbsa' != OSHB 'HNcfsa'"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 8,
+            "strongsId": "H784",
+            "locator": "OSHB:B11.C19.V12.w8",
+            "components": [
+              "H784:primary@w8[הָאֵ֔שׁ:HTd/Ncbsa:oshb_wlc]"
+            ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 8,
@@ -5794,32 +5775,25 @@
           "arWord": "صَوْتٌ",
           "current": {
             "strongsId": "H6963",
-            "origPos": 11,
-            "locator": "OSHB:B11.C19.V12.w11",
+            "origPos": 9,
+            "locator": "OSHB:B11.C19.V12.w9",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H6963:primary@w11[ק֖וֹל:HNcmsc:oshb_wlc]"
+              "H6963:primary@w9[ק֖וֹל:HNcmsc:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H6963' != OSHB lemma '1851' @ w11",
-              "wms H6963@w11 fails OSHB lemma '1851'"
-            ],
-            "lemmaSurface": [
-              "surface 'ק֖וֹל' != OSHB 'דַקָּֽה' @ w11",
-              "wms H6963@w11 surface 'ק֖וֹל' != OSHB 'דַקָּֽה'"
-            ],
-            "morphology": [
-              "morph 'HNcmsc' != OSHB 'HAafsa'",
-              "wms H6963@w11 morph 'HNcmsc' != OSHB 'HAafsa'"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 9,
+            "strongsId": "H6963",
+            "locator": "OSHB:B11.C19.V12.w9",
+            "components": [
+              "H6963:primary@w9[ק֖וֹל:HNcmsc:oshb_wlc]"
+            ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 9,
@@ -5863,35 +5837,26 @@
           "arPos": 12,
           "arWord": "مُنْخَفِضٌ",
           "current": {
-            "strongsId": "H1877",
-            "origPos": 12,
-            "locator": "OSHB:B11.C19.V12.w12",
+            "strongsId": "H1827",
+            "origPos": 10,
+            "locator": "OSHB:B11.C19.V12.w10",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H1877:primary@w12[דֶּשֶׁא::oshb_wlc]"
+              "H1827:primary@w10[דְּמָמָ֥ה:HNcfsa:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "undecided: OSHB token w12 unavailable"
-            ],
-            "lemmaSurface": [
-              "undecided: OSHB token w12 unavailable"
-            ],
-            "morphology": [
-              "undecided: OSHB token w12 unavailable",
-              "wms H1877@w12 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "locator w12 exceeds token count (11)",
-              "OSHB w12 exceeds token count (11)",
-              "wms component H1877@w12 missing in OSHB"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 10,
+            "strongsId": "H1827",
+            "locator": "OSHB:B11.C19.V12.w10",
+            "components": [
+              "H1827:primary@w10[דְּמָמָ֥ה:HNcfsa:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 10,
@@ -5935,35 +5900,26 @@
           "arPos": 13,
           "arWord": "خَفِيفٌ",
           "current": {
-            "strongsId": "H1877",
-            "origPos": 13,
-            "locator": "OSHB:B11.C19.V12.w13",
+            "strongsId": "H1851",
+            "origPos": 11,
+            "locator": "OSHB:B11.C19.V12.w11",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H1877:primary@w13[דֶּשֶׁא::oshb_wlc]"
+              "H1851:primary@w11[דַקָּֽה:HAafsa:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "undecided: OSHB token w13 unavailable"
-            ],
-            "lemmaSurface": [
-              "undecided: OSHB token w13 unavailable"
-            ],
-            "morphology": [
-              "undecided: OSHB token w13 unavailable",
-              "wms H1877@w13 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "locator w13 exceeds token count (11)",
-              "OSHB w13 exceeds token count (11)",
-              "wms component H1877@w13 missing in OSHB"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 11,
+            "strongsId": "H1851",
+            "locator": "OSHB:B11.C19.V12.w11",
+            "components": [
+              "H1851:primary@w11[דַקָּֽה:HAafsa:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 11,

@@ -64,11 +64,11 @@ const regressions = [
           UPDATE word_mapping_strongs SET orig_component = 'מִן', orig_morphology = NULL WHERE mapping_id = 'f71adeb5-fd54-41be-926f-49bc65cedfa1' AND link_order = 1;`
   },
   {
-    name: 'Negative: reverting 1Kgs 19:12 #8 to בָאֵ֖שׁ / HRd/Ncbsa is rejected',
+    name: 'Negative: corrupting 1Kgs 19:12 #8 with wrong surface הָאֵ֔שׁ @ w5 is rejected',
     verse: '1Kgs 19:12',
     pos: 8,
-    sql: `UPDATE word_mappings SET orig_surface = 'בָאֵ֖שׁ', orig_morphology = 'HRd/Ncbsa' WHERE id = 'e7d90c86-5a56-4648-9c31-fb73a381a990';
-          UPDATE word_mapping_strongs SET orig_component = 'בָאֵ֖שׁ', orig_morphology = 'HRd/Ncbsa' WHERE mapping_id = 'e7d90c86-5a56-4648-9c31-fb73a381a990' AND link_order = 1;`
+    sql: `UPDATE word_mappings SET orig_surface = 'הָאֵ֔שׁ', orig_morphology = 'HTd/Ncbsa' WHERE id = 'e7d90c86-5a56-4648-9c31-fb73a381a990';
+          UPDATE word_mapping_strongs SET orig_component = 'הָאֵ֔שׁ', orig_morphology = 'HTd/Ncbsa' WHERE mapping_id = 'e7d90c86-5a56-4648-9c31-fb73a381a990' AND link_order = 1;`
   },
   {
     name: 'Negative: reverting Ezra 5:11 #14 to אֲשֶׁר / NULL is rejected',
