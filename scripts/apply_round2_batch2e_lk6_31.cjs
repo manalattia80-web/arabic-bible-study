@@ -112,23 +112,29 @@ DELETE FROM word_mapping_strongs WHERE mapping_id = '7c486f66-5f52-4f4a-b194-b54
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_word_position, orig_component, orig_morphology, morph_source)
 VALUES ('7c486f66-5f52-4f4a-b194-b54438169b0a', 'G4160', 1, 'primary', 9, 'ποιεῖτε', 'V- 2PAD-P--', 'morphgnt_sblgnt');
 
--- #8 أَنْتُمْ -> syntactic_ar
+-- #8 أَنْتُمْ -> G4771 @ TR w10 (ὑμεῖς)
 UPDATE word_mappings
-SET strongs_id = NULL, orig_word_position = 0, orig_word = '—', orig_surface = '—', orig_morphology = NULL,
-    morph_pos = 'syntactic_ar', morph_person = NULL, morph_number = NULL, morph_gender = NULL, morph_case = NULL,
-    morph_tense = NULL, morph_voice = NULL, morph_mood = NULL, morph_stem = NULL,
-    morph_source = 'syntactic_ar', verified_locator = 'AR_SYNTACTIC:B42.C6.V31.w8'
+SET strongs_id = 'G4771', orig_word_position = 10, orig_word = 'σύ', orig_surface = 'ὑμεῖς', orig_morphology = 'P-2NP',
+    morph_pos = 'pronoun', morph_person = '2', morph_number = 'plural', morph_case = 'nominative',
+    morph_gender = NULL, morph_tense = NULL, morph_voice = NULL, morph_mood = NULL, morph_stem = NULL,
+    morph_source = 'morphgnt_tr', verified_locator = 'TR:B42.C6.V31.w10', relation_type = 'direct',
+    grammar_notes = 'اختلاف نصي: الكلمة موجودة في نص ستيفانوس/سكرينفر (Scrivener TR w10: ὑμεῖς / G4771) وغير واردة في SBLGNT.'
 WHERE id = 'cc9446e6-7ab1-4fbf-9001-3a797ad7ba5d';
 DELETE FROM word_mapping_strongs WHERE mapping_id = 'cc9446e6-7ab1-4fbf-9001-3a797ad7ba5d';
+INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_word_position, orig_component, orig_morphology, morph_source)
+VALUES ('cc9446e6-7ab1-4fbf-9001-3a797ad7ba5d', 'G4771', 1, 'primary', 10, 'ὑμεῖς', 'P-2NP', 'morphgnt_tr');
 
--- #9 أَيْضًا -> syntactic_ar
+-- #9 أَيْضًا -> G2532 @ TR w9 (καὶ)
 UPDATE word_mappings
-SET strongs_id = NULL, orig_word_position = 0, orig_word = '—', orig_surface = '—', orig_morphology = NULL,
-    morph_pos = 'syntactic_ar', morph_person = NULL, morph_number = NULL, morph_gender = NULL, morph_case = NULL,
-    morph_tense = NULL, morph_voice = NULL, morph_mood = NULL, morph_stem = NULL,
-    morph_source = 'syntactic_ar', verified_locator = 'AR_SYNTACTIC:B42.C6.V31.w9'
+SET strongs_id = 'G2532', orig_word_position = 9, orig_word = 'καί', orig_surface = 'καὶ', orig_morphology = 'CONJ',
+    morph_pos = 'conjunction', morph_person = NULL, morph_number = NULL, morph_case = NULL,
+    morph_gender = NULL, morph_tense = NULL, morph_voice = NULL, morph_mood = NULL, morph_stem = NULL,
+    morph_source = 'morphgnt_tr', verified_locator = 'TR:B42.C6.V31.w9', relation_type = 'direct',
+    grammar_notes = 'اختلاف نصي: الكلمة موجودة في نص ستيفانوس/سكرينفر (Scrivener TR w9: καὶ / G2532) وغير واردة في SBLGNT.'
 WHERE id = '12dcc33f-43f9-4742-b26a-8051b97ab63e';
 DELETE FROM word_mapping_strongs WHERE mapping_id = '12dcc33f-43f9-4742-b26a-8051b97ab63e';
+INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_word_position, orig_component, orig_morphology, morph_source)
+VALUES ('12dcc33f-43f9-4742-b26a-8051b97ab63e', 'G2532', 1, 'primary', 9, 'καὶ', 'CONJ', 'morphgnt_tr');
 
 -- #10 بِهِمْ -> G846 @ w10 (αὐτοῖς)
 UPDATE word_mappings

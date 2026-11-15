@@ -398,6 +398,8 @@ const VERIFIED_REQUIRED_COMPONENTS = {
     ],
     6: [{ strongsId: 'G4771', role: 'primary', order: 1, pos: 6, surface: 'ὑμῖν', morph: 'RP ----DP--', source: 'morphgnt_sblgnt' }],
     7: [{ strongsId: 'G4160', role: 'primary', order: 1, pos: 9, surface: 'ποιεῖτε', morph: 'V- 2PAD-P--', source: 'morphgnt_sblgnt' }],
+    8: [{ strongsId: 'G4771', role: 'primary', order: 1, pos: 10, surface: 'ὑμεῖς', morph: 'P-2NP', source: 'morphgnt_tr' }],
+    9: [{ strongsId: 'G2532', role: 'primary', order: 1, pos: 9, surface: 'καὶ', morph: 'CONJ', source: 'morphgnt_tr' }],
     10: [{ strongsId: 'G846', role: 'primary', order: 1, pos: 10, surface: 'αὐτοῖς', morph: 'RP ----DPM-', source: 'morphgnt_sblgnt' }],
     11: [{ strongsId: 'G3668', role: 'primary', order: 1, pos: 11, surface: 'ὁμοίως', morph: 'D- --------', source: 'morphgnt_sblgnt' }]
   },
@@ -599,6 +601,54 @@ for (const v of holdoutVerses) {
       tokenCount: tokCount
     });
 
+    // Parse all actual components from word_mapping_strongs
+    const actualComponents = [];
+    if (compDetailed) {
+      for (const cStr of compDetailed.split(';')) {
+        const mC = cStr.match(/^([^:]+):([^#]+)#(\d*)@w(\d*)\[([^:]*):([^:]*):([^\]]*)\]$/);
+        if (!mC) continue;
+        const [, cS, cRole, cOrderStr, cPStr, cSurf, cMorph, cSrc] = mC;
+        actualComponents.push({
+          strongsId: cS,
+          role: cRole,
+          order: cOrderStr ? parseInt(cOrderStr, 10) : null,
+          pos: cPStr ? parseInt(cPStr, 10) : null,
+          surface: cSurf || '',
+          morph: cMorph || '',
+          source: cSrc || ''
+        });
+      }
+    }
+
+    // Verify that all required components for calibrated units are present with exact fields
+    if (VERIFIED_REQUIRED_COMPONENTS[v.name] && VERIFIED_REQUIRED_COMPONENTS[v.name][arPos]) {
+      const reqList = VERIFIED_REQUIRED_COMPONENTS[v.name][arPos];
+      if (isSyntactic && reqList.length > 0) {
+        failAxis('lexical', `calibrated unit arPos #${arPos} cannot be syntactic_ar: requires ${reqList.length} original component(s)`);
+        failAxis('sourceLocator', `calibrated unit arPos #${arPos} cannot use AR_SYNTACTIC: requires original components`);
+      }
+      for (const req of reqList) {
+        const matched = actualComponents.find(c =>
+          c.strongsId === req.strongsId &&
+          c.role === req.role &&
+          c.order === req.order &&
+          c.pos === req.pos &&
+          c.source === req.source
+        );
+        if (!matched) {
+          failAxis('lexical', `missing required component ${req.strongsId}:${req.role}#${req.order}@w${req.pos}`);
+          failAxis('sourceLocator', `unit requires component ${req.strongsId}:${req.role}#${req.order}@w${req.pos}`);
+        } else {
+          if (req.surface && matched.surface !== req.surface) {
+            failAxis('lemmaSurface', `component ${req.strongsId}@w${req.pos} surface '${matched.surface}' != expected '${req.surface}'`);
+          }
+          if (req.morph && matched.morph !== req.morph) {
+            failAxis('morphology', `component ${req.strongsId}@w${req.pos} morph '${matched.morph}' != expected '${req.morph}'`);
+          }
+        }
+      }
+    }
+
     if (isSyntactic) {
       if (!locRes.ok) failAxis('sourceLocator', locRes.error);
       if (strongsId) failAxis('lexical', `syntactic row has strongs_id='${strongsId}'`);
@@ -608,49 +658,6 @@ for (const v of holdoutVerses) {
     } else {
       if (!strongsId) failAxis('lexical', 'missing strongs_id');
       if (!compDetailed) failAxis('lexical', 'empty word_mapping_strongs');
-
-      // Parse all actual components from word_mapping_strongs
-      const actualComponents = [];
-      if (compDetailed) {
-        for (const cStr of compDetailed.split(';')) {
-          const mC = cStr.match(/^([^:]+):([^#]+)#(\d*)@w(\d*)\[([^:]*):([^:]*):([^\]]*)\]$/);
-          if (!mC) continue;
-          const [, cS, cRole, cOrderStr, cPStr, cSurf, cMorph, cSrc] = mC;
-          actualComponents.push({
-            strongsId: cS,
-            role: cRole,
-            order: cOrderStr ? parseInt(cOrderStr, 10) : null,
-            pos: cPStr ? parseInt(cPStr, 10) : null,
-            surface: cSurf || '',
-            morph: cMorph || '',
-            source: cSrc || ''
-          });
-        }
-      }
-
-      // Verify that all required components for calibrated units are present with exact fields
-      if (VERIFIED_REQUIRED_COMPONENTS[v.name] && VERIFIED_REQUIRED_COMPONENTS[v.name][arPos]) {
-        for (const req of VERIFIED_REQUIRED_COMPONENTS[v.name][arPos]) {
-          const matched = actualComponents.find(c =>
-            c.strongsId === req.strongsId &&
-            c.role === req.role &&
-            c.order === req.order &&
-            c.pos === req.pos &&
-            c.source === req.source
-          );
-          if (!matched) {
-            failAxis('lexical', `missing required component ${req.strongsId}:${req.role}#${req.order}@w${req.pos}`);
-            failAxis('sourceLocator', `unit requires component ${req.strongsId}:${req.role}#${req.order}@w${req.pos}`);
-          } else {
-            if (req.surface && matched.surface !== req.surface) {
-              failAxis('lemmaSurface', `component ${req.strongsId}@w${req.pos} surface '${matched.surface}' != expected '${req.surface}'`);
-            }
-            if (req.morph && matched.morph !== req.morph) {
-              failAxis('morphology', `component ${req.strongsId}@w${req.pos} morph '${matched.morph}' != expected '${req.morph}'`);
-            }
-          }
-        }
-      }
 
       const locIdx = locRes.locW || (origPos > 0 ? origPos : null);
       if (!locRes.ok) {

@@ -1,11 +1,11 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "1b42f316744e82a354be064bb085ebb582102b4a3c3d3fc6eeee9c8854366169",
+  "dbSha256": "7f7e75e3605cc2f5fdaccac79e0c668cbafc99ac9b2d2068cbb64eb00c0f8136",
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
   "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2e_lk6_31.json",
-  "auditReportSha256": "62a67f08b920febafe6314bccc3c28929f9ac1777e50b6d1e13c8146ae4d25a7",
+  "auditReportSha256": "0e46625a9c49c349fd8ca8d416ad63959689f0fef0316b2271be281ae29695bb",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,
@@ -12158,57 +12158,61 @@
           "arPos": 8,
           "arWord": "أَنْتُمْ",
           "current": {
-            "strongsId": null,
-            "origPos": 0,
-            "locator": "AR_SYNTACTIC:B42.C6.V31.w8",
-            "morphSource": "syntactic_ar",
-            "relationType": null,
-            "components": []
+            "strongsId": "G4771",
+            "origPos": 10,
+            "locator": "TR:B42.C6.V31.w10",
+            "morphSource": "morphgnt_tr",
+            "relationType": "direct",
+            "components": [
+              "G4771:primary@w10[ὑμεῖς:P-2NP:morphgnt_tr]"
+            ]
           },
           "existingAlerts": null,
           "status": "VERIFIED_CLEAN",
           "proposalType": "verified_clean",
           "proposed": {
-            "w": 0,
-            "strongsId": null,
-            "locator": "AR_SYNTACTIC:B42.C6.V31.w8",
-            "components": []
+            "w": 10,
+            "strongsId": "G4771",
+            "locator": "TR:B42.C6.V31.w10",
+            "components": [
+              "G4771:primary@w10[ὑμεῖς:P-2NP:morphgnt_tr]"
+            ]
           },
           "topCandidates": [
             {
+              "w": 9,
+              "strongsId": "G2532",
+              "tokPos": "particle",
+              "morph": "CONJ",
+              "surface": "καὶ",
+              "hasIndependentLexicalEvidence": false,
+              "score": 1.9,
+              "reasons": [
+                "order=1.90"
+              ]
+            },
+            {
+              "w": 10,
+              "strongsId": "G4771",
+              "tokPos": "particle",
+              "morph": "P-2NP",
+              "surface": "ὑμεῖς",
+              "hasIndependentLexicalEvidence": false,
+              "score": 1.87,
+              "reasons": [
+                "order=1.87"
+              ]
+            },
+            {
               "w": 8,
               "strongsId": "G444",
-              "tokPos": "noun",
-              "morph": "N- ----NPM-",
-              "surface": "ἄνθρωποι",
+              "tokPos": "particle",
+              "morph": "N-NPM",
+              "surface": "ἄνθρωποι,",
               "hasIndependentLexicalEvidence": false,
-              "score": 2,
+              "score": 1.66,
               "reasons": [
-                "order=2.00"
-              ]
-            },
-            {
-              "w": 7,
-              "strongsId": "G3588",
-              "tokPos": "article",
-              "morph": "RA ----NPM-",
-              "surface": "οἱ",
-              "hasIndependentLexicalEvidence": false,
-              "score": 1.73,
-              "reasons": [
-                "order=1.73"
-              ]
-            },
-            {
-              "w": 9,
-              "strongsId": "G4160",
-              "tokPos": "verb",
-              "morph": "V- 2PAD-P--",
-              "surface": "ποιεῖτε",
-              "hasIndependentLexicalEvidence": false,
-              "score": 1.73,
-              "reasons": [
-                "order=1.73"
+                "order=1.66"
               ]
             }
           ]
@@ -12217,57 +12221,61 @@
           "arPos": 9,
           "arWord": "أَيْضًا",
           "current": {
-            "strongsId": null,
-            "origPos": 0,
-            "locator": "AR_SYNTACTIC:B42.C6.V31.w9",
-            "morphSource": "syntactic_ar",
-            "relationType": null,
-            "components": []
+            "strongsId": "G2532",
+            "origPos": 9,
+            "locator": "TR:B42.C6.V31.w9",
+            "morphSource": "morphgnt_tr",
+            "relationType": "direct",
+            "components": [
+              "G2532:primary@w9[καὶ:CONJ:morphgnt_tr]"
+            ]
           },
           "existingAlerts": null,
           "status": "VERIFIED_CLEAN",
           "proposalType": "verified_clean",
           "proposed": {
-            "w": 0,
-            "strongsId": null,
-            "locator": "AR_SYNTACTIC:B42.C6.V31.w9",
-            "components": []
+            "w": 9,
+            "strongsId": "G2532",
+            "locator": "TR:B42.C6.V31.w9",
+            "components": [
+              "G2532:primary@w9[καὶ:CONJ:morphgnt_tr]"
+            ]
           },
           "topCandidates": [
             {
-              "w": 9,
+              "w": 11,
               "strongsId": "G4160",
-              "tokPos": "verb",
-              "morph": "V- 2PAD-P--",
+              "tokPos": "particle",
+              "morph": "V-PAM-2P",
               "surface": "ποιεῖτε",
               "hasIndependentLexicalEvidence": false,
-              "score": 2,
+              "score": 1.92,
               "reasons": [
-                "order=2.00"
-              ]
-            },
-            {
-              "w": 8,
-              "strongsId": "G444",
-              "tokPos": "noun",
-              "morph": "N- ----NPM-",
-              "surface": "ἄνθρωποι",
-              "hasIndependentLexicalEvidence": false,
-              "score": 1.73,
-              "reasons": [
-                "order=1.73"
+                "order=1.92"
               ]
             },
             {
               "w": 10,
+              "strongsId": "G4771",
+              "tokPos": "particle",
+              "morph": "P-2NP",
+              "surface": "ὑμεῖς",
+              "hasIndependentLexicalEvidence": false,
+              "score": 1.85,
+              "reasons": [
+                "order=1.85"
+              ]
+            },
+            {
+              "w": 12,
               "strongsId": "G846",
-              "tokPos": "pronoun",
-              "morph": "RP ----DPM-",
+              "tokPos": "particle",
+              "morph": "P-DPM",
               "surface": "αὐτοῖς",
               "hasIndependentLexicalEvidence": false,
-              "score": 1.73,
+              "score": 1.69,
               "reasons": [
-                "order=1.73"
+                "order=1.69"
               ]
             }
           ]

@@ -1,13 +1,17 @@
 /**
  * test_round2_batch2e_lk6_31_gates.cjs
- * Positive & Negative Regression Gates for Luke 6:31 full-verse calibration (11 Arabic words -> 11 SBLGNT tokens):
+ * Positive & Negative Regression Gates for Luke 6:31 full-verse calibration
+ * (Words 1-7, 10-11 -> SBLGNT; Words 8-9 -> Scrivener TR variant linkages):
  *   1. Positive: ALL 11 words of Luke 6:31 have 0 alerts across all 4 axes.
- *   2. Positive: Source Token Coverage: Exactly 11 unique SBLGNT tokens covered (w1..w11) with zero collisions.
+ *   2. Positive: Source Token Coverage: SBLGNT w1..w11 covered + TR w9, w10 covered with zero collisions.
  *   3. Positive: Word #1 ("وَكَمَا") has primary G2531 @ w2 (καθὼς) + secondary G2532 @ w1 (καὶ).
  *   4. Positive: Word #5 ("النَّاسُ") has primary G444 @ w8 (ἄνθρωποι) + secondary G3588 @ w7 (οἱ).
- *   5. Positive: Words #8 ("أَنْتُمْ") & #9 ("أَيْضًا") verified as syntactic_ar with Strong's NULL, pos 0, locator AR_SYNTACTIC.
- *   6. Positive: Word #11 ("هكَذَا") correctly classified as adverb G3668 @ w11 (ὁμοίως) with cleared verb flags.
- *   7. Negative: Deleting secondary components from #1 or #5, adding artificial Strong's to #8 or #9, token collisions, or NULL mandatory fields MUST be rejected.
+ *   5. Positive: Word #8 ("أَنْتُمْ") verified with authentic Scrivener TR G4771 @ w10 (ὑμεῖς, P-2NP).
+ *   6. Positive: Word #9 ("أَيْضًا") verified with authentic Scrivener TR G2532 @ w9 (καὶ, CONJ).
+ *   7. Positive: Word #11 ("هكَذَا") correctly classified as adverb G3668 @ w11 (ὁμοίως) with cleared verb flags.
+ *   8. Negative: Converting required unit #2 ("تُرِيدُونَ") to syntactic_ar MUST be rejected with alerts (auditor gap test).
+ *   9. Negative: Converting #8 ("أَنْتُمْ") or #9 ("أَيْضًا") to syntactic_ar MUST be rejected.
+ *  10. Negative: Deleting secondary components from #1 or #5, token collisions, or NULL mandatory fields MUST be rejected.
  */
 const fs = require('fs');
 const path = require('path');
@@ -58,29 +62,27 @@ const lkSummary = (prodReport.perVerse || []).find(v => v.verse === 'Luke 6:31')
 // 1. Positive Gate: All 11/11 words pass with 0 alerts across all 4 axes
 check('Positive: Luke 6:31 all 11/11 words pass with 0 alerts', Boolean(lkSummary && lkSummary.clean === 11 && lkSummary.alerts === 0 && lkAlerts.length === 0), JSON.stringify({ lkSummary, lkAlerts }));
 
-// 2. Source Token Coverage Gate: Exactly 11 unique SBLGNT tokens covered (w1..w11)
+// 2. Source Token Coverage Gate: SBLGNT w1..w11 covered
 const lkWordMappings = q(`
-  SELECT wm.ar_word_position,
+  SELECT wm.ar_word_position, wm.verified_locator,
          (SELECT GROUP_CONCAT(COALESCE(wms.orig_word_position, '')) FROM word_mapping_strongs wms WHERE wms.mapping_id = wm.id)
   FROM word_mappings wm
   JOIN verses vr ON wm.verse_id = vr.id
   WHERE vr.book_id = 42 AND vr.chapter_num = 6 AND vr.verse_num = 31;
 `).replace(/\r/g, '').split('\n').filter(Boolean);
 
-const coveredTokenPositions = new Set();
+const coveredSblgnt = new Set();
 for (const row of lkWordMappings) {
-  const [pos, wPosStr] = row.split('|');
-  if (wPosStr) {
+  const [pos, loc, wPosStr] = row.split('|');
+  if (loc && loc.startsWith('SBLGNT:') && wPosStr) {
     for (const p of wPosStr.split(',')) {
       const pNum = parseInt(p, 10);
-      if (pNum > 0) {
-        coveredTokenPositions.add(pNum);
-      }
+      if (pNum > 0) coveredSblgnt.add(pNum);
     }
   }
 }
-const all11Present = Array.from({ length: 11 }, (_, i) => i + 1).every(w => coveredTokenPositions.has(w));
-check('Positive: Luke 6:31 covers all 11 unique SBLGNT tokens (w1..w11)', all11Present && coveredTokenPositions.size === 11, `covered=${coveredTokenPositions.size}`);
+const all11SblPresent = Array.from({ length: 11 }, (_, i) => i + 1).every(w => coveredSblgnt.has(w));
+check('Positive: Luke 6:31 covers all 11 unique SBLGNT tokens (w1..w11)', all11SblPresent && coveredSblgnt.size === 11, `covered=${coveredSblgnt.size}`);
 
 // 3. Positive Gate: Word #1 ("وَكَمَا") has primary G2531 @ w2 + secondary G2532 @ w1
 const w1Comps = q(`
@@ -110,13 +112,21 @@ check('Positive: Luke 6:31 #5 "النَّاسُ" has exact primary G444@w8 and s
   JSON.stringify(w5Comps)
 );
 
-// 5. Positive Gate: Words #8 ("أَنْتُمْ") & #9 ("أَيْضًا") verified as syntactic_ar
-const w8Row = q(`SELECT strongs_id, orig_word_position, orig_word, orig_surface, morph_pos, morph_source, verified_locator FROM word_mappings WHERE id = 'cc9446e6-7ab1-4fbf-9001-3a797ad7ba5d';`).replace(/\r/g, '').trim();
-const w9Row = q(`SELECT strongs_id, orig_word_position, orig_word, orig_surface, morph_pos, morph_source, verified_locator FROM word_mappings WHERE id = '12dcc33f-43f9-4742-b26a-8051b97ab63e';`).replace(/\r/g, '').trim();
-check('Positive: Luke 6:31 #8 "أَنْتُمْ" is pure syntactic_ar', w8Row === '|0|—|—|syntactic_ar|syntactic_ar|AR_SYNTACTIC:B42.C6.V31.w8', w8Row);
-check('Positive: Luke 6:31 #9 "أَيْضًا" is pure syntactic_ar', w9Row === '|0|—|—|syntactic_ar|syntactic_ar|AR_SYNTACTIC:B42.C6.V31.w9', w9Row);
+// 5. Positive Gate: Word #8 ("أَنْتُمْ") verified with authentic Scrivener TR G4771 @ w10
+const w8Row = q(`SELECT strongs_id, orig_word_position, orig_word, orig_surface, orig_morphology, morph_pos, morph_source, verified_locator FROM word_mappings WHERE id = 'cc9446e6-7ab1-4fbf-9001-3a797ad7ba5d';`).replace(/\r/g, '').trim();
+check('Positive: Luke 6:31 #8 "أَنْتُمْ" is Scrivener TR G4771 @ w10 (ὑμεῖς, P-2NP)',
+  w8Row === 'G4771|10|σύ|ὑμεῖς|P-2NP|pronoun|morphgnt_tr|TR:B42.C6.V31.w10',
+  w8Row
+);
 
-// 6. Positive Gate: Word #11 ("هكَذَا") verified as adverb G3668 @ w11 (ὁμοίως) with verb fields cleared
+// 6. Positive Gate: Word #9 ("أَيْضًا") verified with authentic Scrivener TR G2532 @ w9
+const w9Row = q(`SELECT strongs_id, orig_word_position, orig_word, orig_surface, orig_morphology, morph_pos, morph_source, verified_locator FROM word_mappings WHERE id = '12dcc33f-43f9-4742-b26a-8051b97ab63e';`).replace(/\r/g, '').trim();
+check('Positive: Luke 6:31 #9 "أَيْضًا" is Scrivener TR G2532 @ w9 (καὶ, CONJ)',
+  w9Row === 'G2532|9|καί|καὶ|CONJ|conjunction|morphgnt_tr|TR:B42.C6.V31.w9',
+  w9Row
+);
+
+// 7. Positive Gate: Word #11 ("هكَذَا") verified as adverb G3668 @ w11 (ὁμοίως) with verb fields cleared
 const w11Row = q(`SELECT strongs_id, orig_word_position, orig_word, orig_surface, orig_morphology, morph_pos, morph_tense, verified_locator FROM word_mappings WHERE id = '0b38cad7-56fa-44dd-ac5a-23f6115fd0ce';`).replace(/\r/g, '').trim();
 check('Positive: Luke 6:31 #11 "هكَذَا" is adverb G3668 @ w11 (ὁμοίως) with morph_tense NULL', w11Row === 'G3668|11|ὁμοίως|ὁμοίως|D- --------|adverb||SBLGNT:B42.C6.V31.w11', w11Row);
 
@@ -133,14 +143,19 @@ const regressions = [
     sql: `DELETE FROM word_mapping_strongs WHERE mapping_id='0d081881-37cc-4347-a150-ecc1a6a9d2c5' AND strongs_id='G3588';`
   },
   {
-    name: 'Negative: artificially attaching Strongs G5210 to syntactic #8 ("أَنْتُمْ") is rejected',
-    pos: 8,
-    sql: `UPDATE word_mappings SET strongs_id='G5210', orig_word_position=10, orig_word='ὑμεῖς', orig_surface='ὑμεῖς', orig_morphology='RP ----NP--', morph_pos='pronoun', morph_source='morphgnt_tr', verified_locator='TR_SCRIVENER:B42.C6.V31.w10' WHERE id='cc9446e6-7ab1-4fbf-9001-3a797ad7ba5d';`
+    name: 'Negative: converting required unit #2 ("تُرِيدُونَ") to syntactic_ar is rejected (auditor gap test)',
+    pos: 2,
+    sql: `UPDATE word_mappings SET strongs_id=NULL, orig_word_position=0, orig_word='—', orig_surface='—', orig_morphology=NULL, morph_pos='syntactic_ar', morph_source='syntactic_ar', verified_locator='AR_SYNTACTIC:B42.C6.V31.w2' WHERE id='e79ec7c6-c1ee-4077-8bab-4b13015d816f'; DELETE FROM word_mapping_strongs WHERE mapping_id='e79ec7c6-c1ee-4077-8bab-4b13015d816f';`
   },
   {
-    name: 'Negative: artificially attaching Strongs G2532 to syntactic #9 ("أَيْضًا") is rejected',
+    name: 'Negative: converting required TR unit #8 ("أَنْتُمْ") to syntactic_ar is rejected',
+    pos: 8,
+    sql: `UPDATE word_mappings SET strongs_id=NULL, orig_word_position=0, orig_word='—', orig_surface='—', orig_morphology=NULL, morph_pos='syntactic_ar', morph_source='syntactic_ar', verified_locator='AR_SYNTACTIC:B42.C6.V31.w8' WHERE id='cc9446e6-7ab1-4fbf-9001-3a797ad7ba5d'; DELETE FROM word_mapping_strongs WHERE mapping_id='cc9446e6-7ab1-4fbf-9001-3a797ad7ba5d';`
+  },
+  {
+    name: 'Negative: converting required TR unit #9 ("أَيْضًا") to syntactic_ar is rejected',
     pos: 9,
-    sql: `UPDATE word_mappings SET strongs_id='G2532', orig_word_position=9, orig_word='καί', orig_surface='καὶ', orig_morphology='C- --------', morph_pos='conjunction', morph_source='morphgnt_tr', verified_locator='TR_SCRIVENER:B42.C6.V31.w9' WHERE id='12dcc33f-43f9-4742-b26a-8051b97ab63e';`
+    sql: `UPDATE word_mappings SET strongs_id=NULL, orig_word_position=0, orig_word='—', orig_surface='—', orig_morphology=NULL, morph_pos='syntactic_ar', morph_source='syntactic_ar', verified_locator='AR_SYNTACTIC:B42.C6.V31.w9' WHERE id='12dcc33f-43f9-4742-b26a-8051b97ab63e'; DELETE FROM word_mapping_strongs WHERE mapping_id='12dcc33f-43f9-4742-b26a-8051b97ab63e';`
   },
   {
     name: 'Negative: token collision by mapping #2 to w2 (already claimed by #1) is rejected',
@@ -156,6 +171,16 @@ const regressions = [
     name: 'Negative: blanking mandatory component fields on #5 ("النَّاسُ") is rejected',
     pos: 5,
     sql: `UPDATE word_mapping_strongs SET orig_component=NULL, orig_morphology=NULL WHERE mapping_id='0d081881-37cc-4347-a150-ecc1a6a9d2c5' AND strongs_id='G444';`
+  },
+  {
+    name: 'Negative: blanking mandatory component fields on #8 ("أَنْتُمْ") is rejected',
+    pos: 8,
+    sql: `UPDATE word_mapping_strongs SET orig_component=NULL, orig_morphology=NULL WHERE mapping_id='cc9446e6-7ab1-4fbf-9001-3a797ad7ba5d' AND strongs_id='G4771';`
+  },
+  {
+    name: 'Negative: blanking mandatory component fields on #9 ("أَيْضًا") is rejected',
+    pos: 9,
+    sql: `UPDATE word_mapping_strongs SET orig_component=NULL, orig_morphology=NULL WHERE mapping_id='12dcc33f-43f9-4742-b26a-8051b97ab63e' AND strongs_id='G2532';`
   }
 ];
 
