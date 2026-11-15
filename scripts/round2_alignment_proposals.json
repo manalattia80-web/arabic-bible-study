@@ -1,18 +1,18 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "7f7e75e3605cc2f5fdaccac79e0c668cbafc99ac9b2d2068cbb64eb00c0f8136",
+  "dbSha256": "b121f3418255ee09c51bcdbfd56facd5d038673a832991f798f2b060c6c1a487",
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
-  "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2e_lk6_31.json",
-  "auditReportSha256": "0e46625a9c49c349fd8ca8d416ad63959689f0fef0316b2271be281ae29695bb",
+  "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2f_phil2_5.json",
+  "auditReportSha256": "402dbfb02f5bee7927adc806d8ef485ba096027d6bf8fa118de8860cd1f34546",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,
-    "verifiedClean": 93,
+    "verifiedClean": 101,
     "keepLinkRepairMetadata": 0,
-    "proposedRepair": 10,
-    "pendingReview": 152
+    "proposedRepair": 9,
+    "pendingReview": 145
   },
   "verses": [
     {
@@ -16198,79 +16198,67 @@
       "verse": "Phil 2:5",
       "lang": "greek",
       "summary": {
-        "verifiedClean": 1,
+        "verifiedClean": 9,
         "keepLinkRepairMetadata": 0,
-        "proposedRepair": 1,
-        "pendingReview": 7
+        "proposedRepair": 0,
+        "pendingReview": 0
       },
       "units": [
         {
           "arPos": 1,
           "arWord": "فَلْيَكُنْ",
           "current": {
-            "strongsId": "G1510",
-            "origPos": 1,
-            "locator": "TR:B50.C2.V5.w1",
-            "morphSource": "morphgnt_tr",
+            "strongsId": null,
+            "origPos": 0,
+            "locator": "AR_SYNTACTIC:B50.C2.V5.w1",
+            "morphSource": "syntactic_ar",
             "relationType": null,
-            "components": [
-              "G1510:primary@w1[εἰμί::morphgnt_tr]"
-            ]
+            "components": []
           },
-          "existingAlerts": {
-            "lexical": [
-              "TR Strong's 'G1510' != 'G3778' @ w1",
-              "wms G1510@w1 != TR 'G3778'"
-            ],
-            "lemmaSurface": [
-              "TR surface 'εἰμί' != 'τοῦτο' @ w1",
-              "TR lemma 'εἰμί' != 'οὗτος' @ w1",
-              "wms G1510@w1 surface 'εἰμί' != Scrivener TR 'τοῦτο'"
-            ],
-            "morphology": [
-              "missing orig_morphology for TR token",
-              "wms G1510@w1 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 0,
+            "strongsId": null,
+            "locator": "AR_SYNTACTIC:B50.C2.V5.w1",
+            "components": []
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 1,
               "strongsId": "G3778",
-              "tokPos": "particle",
-              "morph": "D-NSN",
+              "tokPos": "pronoun",
+              "morph": "RD ----ASN-",
               "surface": "τοῦτο",
               "hasIndependentLexicalEvidence": false,
-              "score": 1.97,
+              "score": 2,
               "reasons": [
-                "order=1.97"
+                "order=2.00"
               ]
             },
             {
               "w": 2,
-              "strongsId": "G1063",
-              "tokPos": "particle",
-              "morph": "CONJ",
-              "surface": "γὰρ",
+              "strongsId": "G5426",
+              "tokPos": "verb",
+              "morph": "V- 2PAD-P--",
+              "surface": "φρονεῖτε",
               "hasIndependentLexicalEvidence": false,
-              "score": 1.73,
+              "score": 1.67,
               "reasons": [
-                "order=1.73"
+                "order=1.67"
               ]
             },
             {
               "w": 3,
-              "strongsId": "G5426",
-              "tokPos": "particle",
-              "morph": "V-PPM-3S",
-              "surface": "φρονείσθω",
+              "strongsId": "G1722",
+              "tokPos": "preposition",
+              "morph": "P- --------",
+              "surface": "ἐν",
               "hasIndependentLexicalEvidence": false,
-              "score": 1.43,
+              "score": 1.33,
               "reasons": [
-                "order=1.43"
+                "order=1.33"
               ]
             }
           ]
@@ -16280,34 +16268,27 @@
           "arWord": "فِيكُمْ",
           "current": {
             "strongsId": "G1722",
-            "origPos": 2,
-            "locator": "SBLGNT:B50.C2.V5.w2",
+            "origPos": 3,
+            "locator": "SBLGNT:B50.C2.V5.w3",
             "morphSource": "morphgnt_sblgnt",
-            "relationType": null,
+            "relationType": "direct",
             "components": [
-              "G1722:primary@w2[ἐν:P- --------:morphgnt_sblgnt]"
+              "G1722:primary@w3[ἐν:P- --------:morphgnt_sblgnt]",
+              "G4771:secondary@w4[ὑμῖν:RP ----DP--:morphgnt_sblgnt]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'G1722' (ἐν) != SBLGNT lemma 'φρονέω' @ w2",
-              "wms G1722@w2 != SBLGNT 'φρονέω'"
-            ],
-            "lemmaSurface": [
-              "SBLGNT surface 'ἐν' != 'φρονεῖτε' @ w2",
-              "SBLGNT lemma 'ἐν' != 'φρονέω' @ w2",
-              "wms G1722@w2 surface 'ἐν' != SBLGNT 'φρονεῖτε'"
-            ],
-            "morphology": [
-              "morph 'P- --------' != SBLGNT 'V- 2PAD-P--'",
-              "derived(pos 'preposition' vs 'V-')",
-              "wms G1722@w2 morph 'P- --------' != SBLGNT 'V- 2PAD-P--'"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 3,
+            "strongsId": "G1722",
+            "locator": "SBLGNT:B50.C2.V5.w3",
+            "components": [
+              "G1722:primary@w3[ἐν:P- --------:morphgnt_sblgnt]",
+              "G4771:secondary@w4[ὑμῖν:RP ----DP--:morphgnt_sblgnt]"
+            ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 2,
@@ -16352,34 +16333,25 @@
           "arWord": "هذَا",
           "current": {
             "strongsId": "G3778",
-            "origPos": 3,
-            "locator": "SBLGNT:B50.C2.V5.w3",
+            "origPos": 1,
+            "locator": "SBLGNT:B50.C2.V5.w1",
             "morphSource": "morphgnt_sblgnt",
-            "relationType": null,
+            "relationType": "direct",
             "components": [
-              "G3778:primary@w3[τοῦτο:RD ----ASN-:morphgnt_sblgnt]"
+              "G3778:primary@w1[τοῦτο:RD ----ASN-:morphgnt_sblgnt]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'G3778' (οὗτος) != SBLGNT lemma 'ἐν' @ w3",
-              "wms G3778@w3 != SBLGNT 'ἐν'"
-            ],
-            "lemmaSurface": [
-              "SBLGNT surface 'τοῦτο' != 'ἐν' @ w3",
-              "SBLGNT lemma 'οὗτος' != 'ἐν' @ w3",
-              "wms G3778@w3 surface 'τοῦτο' != SBLGNT 'ἐν'"
-            ],
-            "morphology": [
-              "morph 'RD ----ASN-' != SBLGNT 'P- --------'",
-              "derived(pos 'demonstrative' vs 'P-')",
-              "wms G3778@w3 morph 'RD ----ASN-' != SBLGNT 'P- --------'"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 1,
+            "strongsId": "G3778",
+            "locator": "SBLGNT:B50.C2.V5.w1",
+            "components": [
+              "G3778:primary@w1[τοῦτο:RD ----ASN-:morphgnt_sblgnt]"
+            ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 3,
@@ -16424,68 +16396,60 @@
           "arWord": "الْفِكْرُ",
           "current": {
             "strongsId": "G5426",
-            "origPos": 4,
-            "locator": "TR:B50.C2.V5.w4",
-            "morphSource": "morphgnt_tr",
-            "relationType": null,
+            "origPos": 2,
+            "locator": "SBLGNT:B50.C2.V5.w2",
+            "morphSource": "morphgnt_sblgnt",
+            "relationType": "direct",
             "components": [
-              "G5426:primary@w4[φρονείσθω::morphgnt_tr]"
+              "G5426:primary@w2[φρονεῖτε:V- 2PAD-P--:morphgnt_sblgnt]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "TR Strong's 'G5426' != 'G1722' @ w4",
-              "wms G5426@w4 != TR 'G1722'"
-            ],
-            "lemmaSurface": [
-              "TR surface 'φρονείσθω' != 'ἐν' @ w4",
-              "TR lemma 'φρονέω' != 'ἐν' @ w4",
-              "wms G5426@w4 surface 'φρονείσθω' != Scrivener TR 'ἐν'"
-            ],
-            "morphology": [
-              "missing orig_morphology for TR token",
-              "wms G5426@w4 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 2,
+            "strongsId": "G5426",
+            "locator": "SBLGNT:B50.C2.V5.w2",
+            "components": [
+              "G5426:primary@w2[φρονεῖτε:V- 2PAD-P--:morphgnt_sblgnt]"
+            ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 4,
-              "strongsId": "G1722",
-              "tokPos": "particle",
-              "morph": "PREP",
-              "surface": "ἐν",
-              "hasIndependentLexicalEvidence": false,
-              "score": 1.87,
-              "reasons": [
-                "order=1.87"
-              ]
-            },
-            {
-              "w": 5,
               "strongsId": "G4771",
-              "tokPos": "particle",
-              "morph": "P-2DP",
+              "tokPos": "pronoun",
+              "morph": "RP ----DP--",
               "surface": "ὑμῖν",
               "hasIndependentLexicalEvidence": false,
-              "score": 1.83,
+              "score": 2,
               "reasons": [
-                "order=1.83"
+                "order=2.00"
               ]
             },
             {
               "w": 3,
-              "strongsId": "G5426",
-              "tokPos": "particle",
-              "morph": "V-PPM-3S",
-              "surface": "φρονείσθω",
+              "strongsId": "G1722",
+              "tokPos": "preposition",
+              "morph": "P- --------",
+              "surface": "ἐν",
               "hasIndependentLexicalEvidence": false,
-              "score": 1.57,
+              "score": 1.67,
               "reasons": [
-                "order=1.57"
+                "order=1.67"
+              ]
+            },
+            {
+              "w": 5,
+              "strongsId": "G3739",
+              "tokPos": "pronoun",
+              "morph": "RR ----NSN-",
+              "surface": "ὃ",
+              "hasIndependentLexicalEvidence": false,
+              "score": 1.67,
+              "reasons": [
+                "order=1.67"
               ]
             }
           ]
@@ -16498,7 +16462,7 @@
             "origPos": 5,
             "locator": "SBLGNT:B50.C2.V5.w5",
             "morphSource": "morphgnt_sblgnt",
-            "relationType": null,
+            "relationType": "direct",
             "components": [
               "G3739:primary@w5[ὃ:RR ----NSN-:morphgnt_sblgnt]"
             ]
@@ -16562,34 +16526,25 @@
           "arWord": "فِي",
           "current": {
             "strongsId": "G1722",
-            "origPos": 6,
-            "locator": "SBLGNT:B50.C2.V5.w6",
+            "origPos": 7,
+            "locator": "SBLGNT:B50.C2.V5.w7",
             "morphSource": "morphgnt_sblgnt",
-            "relationType": null,
+            "relationType": "direct",
             "components": [
-              "G1722:primary@w6[ἐν:P- --------:morphgnt_sblgnt]"
+              "G1722:primary@w7[ἐν:P- --------:morphgnt_sblgnt]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'G1722' (ἐν) != SBLGNT lemma 'καί' @ w6",
-              "wms G1722@w6 != SBLGNT 'καί'"
-            ],
-            "lemmaSurface": [
-              "SBLGNT surface 'ἐν' != 'καὶ' @ w6",
-              "SBLGNT lemma 'ἐν' != 'καί' @ w6",
-              "wms G1722@w6 surface 'ἐν' != SBLGNT 'καὶ'"
-            ],
-            "morphology": [
-              "morph 'P- --------' != SBLGNT 'D- --------'",
-              "derived(pos 'preposition' vs 'D-')",
-              "wms G1722@w6 morph 'P- --------' != SBLGNT 'D- --------'"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 7,
+            "strongsId": "G1722",
+            "locator": "SBLGNT:B50.C2.V5.w7",
+            "components": [
+              "G1722:primary@w7[ἐν:P- --------:morphgnt_sblgnt]"
+            ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 7,
@@ -16638,40 +16593,24 @@
           "arWord": "الْمَسِيحِ",
           "current": {
             "strongsId": "G5547",
-            "origPos": 7,
-            "locator": "SBLGNT:B50.C2.V5.w7",
+            "origPos": 8,
+            "locator": "SBLGNT:B50.C2.V5.w8",
             "morphSource": "morphgnt_sblgnt",
-            "relationType": null,
+            "relationType": "direct",
             "components": [
-              "G5547:primary@w7[Χριστῷ:N- ----DSM-:morphgnt_sblgnt]"
+              "G5547:primary@w8[Χριστῷ:N- ----DSM-:morphgnt_sblgnt]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'ἐν' @ w7",
-              "wms G5547@w7 != SBLGNT 'ἐν'"
-            ],
-            "lemmaSurface": [
-              "SBLGNT surface 'Χριστῷ' != 'ἐν' @ w7",
-              "SBLGNT lemma 'Χριστός' != 'ἐν' @ w7",
-              "wms G5547@w7 surface 'Χριστῷ' != SBLGNT 'ἐν'"
-            ],
-            "morphology": [
-              "morph 'N- ----DSM-' != SBLGNT 'P- --------'",
-              "derived(pos 'proper_noun' vs 'P-')",
-              "wms G5547@w7 morph 'N- ----DSM-' != SBLGNT 'P- --------'"
-            ],
-            "sourceLocator": []
-          },
-          "status": "PROPOSED_REPAIR",
-          "proposalType": "lexical_anchor_realign",
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
           "proposed": {
             "w": 8,
             "strongsId": "G5547",
             "locator": "SBLGNT:B50.C2.V5.w8",
-            "relationType": null,
-            "score": 9.67,
-            "margin": 6.34
+            "components": [
+              "G5547:primary@w8[Χριστῷ:N- ----DSM-:morphgnt_sblgnt]"
+            ]
           },
           "topCandidates": [
             {
@@ -16720,32 +16659,25 @@
           "arWord": "يَسُوعَ",
           "current": {
             "strongsId": "G2424",
-            "origPos": 8,
-            "locator": "SBLGNT:B50.C2.V5.w8",
+            "origPos": 9,
+            "locator": "SBLGNT:B50.C2.V5.w9",
             "morphSource": "morphgnt_sblgnt",
-            "relationType": null,
+            "relationType": "direct",
             "components": [
-              "G2424:primary@w8[Ἰησοῦ:N- ----DSM-:morphgnt_sblgnt]"
+              "G2424:primary@w9[Ἰησοῦ:N- ----DSM-:morphgnt_sblgnt]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'G2424' (Ἰησοῦς) != SBLGNT lemma 'Χριστός' @ w8",
-              "wms G2424@w8 != SBLGNT 'Χριστός'"
-            ],
-            "lemmaSurface": [
-              "SBLGNT surface 'Ἰησοῦ' != 'Χριστῷ' @ w8",
-              "SBLGNT lemma 'Ἰησοῦς' != 'Χριστός' @ w8",
-              "wms G2424@w8 surface 'Ἰησοῦ' != SBLGNT 'Χριστῷ'"
-            ],
-            "morphology": [
-              "derived(pos 'proper_noun' vs 'N-')"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 9,
+            "strongsId": "G2424",
+            "locator": "SBLGNT:B50.C2.V5.w9",
+            "components": [
+              "G2424:primary@w9[Ἰησοῦ:N- ----DSM-:morphgnt_sblgnt]"
+            ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 8,
@@ -16790,34 +16722,25 @@
           "arWord": "أَيْضًا",
           "current": {
             "strongsId": "G2532",
-            "origPos": 9,
-            "locator": "SBLGNT:B50.C2.V5.w9",
+            "origPos": 6,
+            "locator": "SBLGNT:B50.C2.V5.w6",
             "morphSource": "morphgnt_sblgnt",
-            "relationType": null,
+            "relationType": "direct",
             "components": [
-              "G2532:primary@w9[καὶ:D- --------:morphgnt_sblgnt]"
+              "G2532:primary@w6[καὶ:D- --------:morphgnt_sblgnt]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'G2532' (καί) != SBLGNT lemma 'Ἰησοῦς' @ w9",
-              "wms G2532@w9 != SBLGNT 'Ἰησοῦς'"
-            ],
-            "lemmaSurface": [
-              "SBLGNT surface 'καὶ' != 'Ἰησοῦ' @ w9",
-              "SBLGNT lemma 'καί' != 'Ἰησοῦς' @ w9",
-              "wms G2532@w9 surface 'καὶ' != SBLGNT 'Ἰησοῦ'"
-            ],
-            "morphology": [
-              "morph 'D- --------' != SBLGNT 'N- ----DSM-'",
-              "derived(pos 'adverb' vs 'N-')",
-              "wms G2532@w9 morph 'D- --------' != SBLGNT 'N- ----DSM-'"
-            ],
-            "sourceLocator": []
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 6,
+            "strongsId": "G2532",
+            "locator": "SBLGNT:B50.C2.V5.w6",
+            "components": [
+              "G2532:primary@w6[καὶ:D- --------:morphgnt_sblgnt]"
+            ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 9,

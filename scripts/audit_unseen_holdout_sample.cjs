@@ -384,6 +384,19 @@ const holdoutVerses = manifest.holdout_verses;
 
 // Verified required components for fully calibrated holdout units
 const VERIFIED_REQUIRED_COMPONENTS = {
+  'Phil 2:5': {
+    2: [
+      { strongsId: 'G1722', role: 'primary', order: 1, pos: 3, surface: 'ἐν', morph: 'P- --------', source: 'morphgnt_sblgnt' },
+      { strongsId: 'G4771', role: 'secondary', order: 2, pos: 4, surface: 'ὑμῖν', morph: 'RP ----DP--', source: 'morphgnt_sblgnt' }
+    ],
+    3: [{ strongsId: 'G3778', role: 'primary', order: 1, pos: 1, surface: 'τοῦτο', morph: 'RD ----ASN-', source: 'morphgnt_sblgnt' }],
+    4: [{ strongsId: 'G5426', role: 'primary', order: 1, pos: 2, surface: 'φρονεῖτε', morph: 'V- 2PAD-P--', source: 'morphgnt_sblgnt' }],
+    5: [{ strongsId: 'G3739', role: 'primary', order: 1, pos: 5, surface: 'ὃ', morph: 'RR ----NSN-', source: 'morphgnt_sblgnt' }],
+    6: [{ strongsId: 'G1722', role: 'primary', order: 1, pos: 7, surface: 'ἐν', morph: 'P- --------', source: 'morphgnt_sblgnt' }],
+    7: [{ strongsId: 'G5547', role: 'primary', order: 1, pos: 8, surface: 'Χριστῷ', morph: 'N- ----DSM-', source: 'morphgnt_sblgnt' }],
+    8: [{ strongsId: 'G2424', role: 'primary', order: 1, pos: 9, surface: 'Ἰησοῦ', morph: 'N- ----DSM-', source: 'morphgnt_sblgnt' }],
+    9: [{ strongsId: 'G2532', role: 'primary', order: 1, pos: 6, surface: 'καὶ', morph: 'D- --------', source: 'morphgnt_sblgnt' }]
+  },
   'Luke 6:31': {
     1: [
       { strongsId: 'G2531', role: 'primary', order: 1, pos: 2, surface: 'καθὼς', morph: 'C- --------', source: 'morphgnt_sblgnt' },
