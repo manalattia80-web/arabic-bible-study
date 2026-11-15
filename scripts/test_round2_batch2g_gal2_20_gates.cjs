@@ -29,7 +29,7 @@
  * 21. Blanking mandatory component fields on #10 is rejected.
  * 22. Blanking mandatory component fields on #20 is rejected.
  * 23. Corrupting pronoun on #10 (swapping with #27) is rejected.
- * 24. Token collision by mapping #5 to w4 without compound_phrase is rejected.
+ * 24. Token collision by mapping #5 to w3 without compound_phrase is rejected.
  */
 
 const fs = require('fs');
@@ -204,79 +204,81 @@ check('Positive: Gal 2:20 #27 "لأَجْلِي" has primary G5228@w32 and secon
 );
 
 // Helper for negative testing in isolated scratch DB
-const tempDbDir = path.join(repoRoot, 'scratch');
-if (!fs.existsSync(tempDbDir)) fs.mkdirSync(tempDbDir, { recursive: true });
+const scratchDb = path.join(repoRoot, 'scratch/gal220_test_scratch.db');
+const scratchAuditOut = path.join(repoRoot, 'scratch/gal220_test_audit_out.json');
 
-function runNegativeTest(label, mutatorSql, expectAlertPattern) {
-  const tempDb = path.join(tempDbDir, `gal220_neg_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.db`);
-  try {
-    fs.copyFileSync(dbPath, tempDb);
-    execFileSync(sqlitePath, [tempDb], { input: mutatorSql, encoding: 'utf8' });
-    const env = { ...process.env, AUDIT_DB_PATH: tempDb };
-    const res = execSync(
-      `"${nodePath}" "${auditScript}" --manifest "${manifestPath}"`,
-      { cwd: repoRoot, encoding: 'utf8', env }
-    );
-    const m = res.match(/Gal 2:20\s+\[greek\s*\]:\s*clean\s*(\d+)\/(\d+)/);
-    const cCount = m ? parseInt(m[1], 10) : 27;
-    const passesNeg = cCount < 27;
-    check(label, passesNeg, `clean=${cCount}/27 (expected < 27)`);
-  } catch (err) {
-    const errOut = (err.stdout || '') + (err.stderr || '') + err.message;
-    const matches = !expectAlertPattern || new RegExp(expectAlertPattern).test(errOut);
-    check(label, matches, `caught error matching expectation`);
-  } finally {
-    try { if (fs.existsSync(tempDb)) fs.unlinkSync(tempDb); } catch (_) {}
-  }
+function runHoldoutAudit(dbFile) {
+  execFileSync(process.execPath, [
+    auditScript,
+    '--manifest', manifestPath,
+    '--out', scratchAuditOut
+  ], {
+    env: { ...process.env, AUDIT_DB_PATH: dbFile },
+    stdio: 'ignore'
+  });
+  return JSON.parse(fs.readFileSync(scratchAuditOut, 'utf8'));
 }
 
-// 17. Negative Gate: Dropping secondary G1161 from #4
-runNegativeTest(
-  'Negative: Dropping secondary G1161 from #4 "فَأَحْيَا" is rejected',
-  "DELETE FROM word_mapping_strongs WHERE mapping_id = '779b9793-d3d8-41b3-a9ff-b41ddf9b396b' AND strongs_id = 'G1161';"
-);
+const regressions = [
+  {
+    name: 'Negative: Dropping secondary G1161 from #4 "فَأَحْيَا" is rejected',
+    pos: 4,
+    sql: "DELETE FROM word_mapping_strongs WHERE mapping_id = '779b9793-d3d8-41b3-a9ff-b41ddf9b396b' AND strongs_id = 'G1161';"
+  },
+  {
+    name: 'Negative: Converting required lexical #3 "صُلِبْتُ" to syntactic_ar is rejected',
+    pos: 3,
+    sql: "UPDATE word_mappings SET strongs_id = NULL, orig_word_position = 0, orig_word = '—', orig_surface = '—', orig_morphology = NULL, morph_pos = 'syntactic_ar', morph_source = 'syntactic_ar', verified_locator = 'AR_SYNTACTIC:B48.C2.V20.w3', relation_type = 'syntactic_construction' WHERE id = '2617c9fb-56fc-4e3e-a516-ddbafc4db79e'; DELETE FROM word_mapping_strongs WHERE mapping_id = '2617c9fb-56fc-4e3e-a516-ddbafc4db79e';"
+  },
+  {
+    name: 'Negative: Converting required lexical #4 "فَأَحْيَا" to syntactic_ar is rejected',
+    pos: 4,
+    sql: "UPDATE word_mappings SET strongs_id = NULL, orig_word_position = 0, orig_word = '—', orig_surface = '—', orig_morphology = NULL, morph_pos = 'syntactic_ar', morph_source = 'syntactic_ar', verified_locator = 'AR_SYNTACTIC:B48.C2.V20.w4', relation_type = 'syntactic_construction' WHERE id = '779b9793-d3d8-41b3-a9ff-b41ddf9b396b'; DELETE FROM word_mapping_strongs WHERE mapping_id = '779b9793-d3d8-41b3-a9ff-b41ddf9b396b';"
+  },
+  {
+    name: 'Negative: Dropping secondary G1473 from #10 "فِيَّ" is rejected',
+    pos: 10,
+    sql: "DELETE FROM word_mapping_strongs WHERE mapping_id = 'fef36d59-fd79-4920-9531-c887d27c95e5' AND strongs_id = 'G1473';"
+  },
+  {
+    name: 'Negative: Blanking mandatory component fields on #10 "فِيَّ" is rejected',
+    pos: 10,
+    sql: "UPDATE word_mapping_strongs SET orig_component = NULL WHERE mapping_id = 'fef36d59-fd79-4920-9531-c887d27c95e5' AND strongs_id = 'G1473';"
+  },
+  {
+    name: 'Negative: Blanking mandatory component fields on #20 "إِيمَانِ" is rejected',
+    pos: 20,
+    sql: "UPDATE word_mapping_strongs SET orig_morphology = NULL WHERE mapping_id = '49002695-4ac3-4fa1-b591-305819090536' AND strongs_id = 'G3588';"
+  },
+  {
+    name: 'Negative: Corrupting pronoun on #10 (swapping with #27) is rejected',
+    pos: 10,
+    sql: "UPDATE word_mapping_strongs SET orig_component = 'ἐμοῦ', orig_morphology = 'P-1GS', orig_word_position = 33 WHERE mapping_id = 'fef36d59-fd79-4920-9531-c887d27c95e5' AND strongs_id = 'G1473';"
+  },
+  {
+    name: 'Negative: Token collision by mapping #5 to w3 without compound_phrase is rejected',
+    pos: 5,
+    sql: "UPDATE word_mappings SET orig_word_position = 3, verified_locator = 'TR:B48.C2.V20.w3' WHERE id = '4e09264a-0fa1-4077-93d8-325f123bc7fa';"
+  }
+];
 
-// 18. Negative Gate: Converting required lexical #3 "صُلِبْتُ" to syntactic_ar
-runNegativeTest(
-  'Negative: Converting required lexical #3 "صُلِبْتُ" to syntactic_ar is rejected',
-  "UPDATE word_mappings SET strongs_id = NULL, orig_word_position = 0, orig_word = '—', orig_surface = '—', orig_morphology = NULL, morph_pos = 'syntactic_ar', morph_source = 'syntactic_ar', verified_locator = 'AR_SYNTACTIC:B48.C2.V20.w3', relation_type = 'syntactic_construction' WHERE id = '2617c9fb-56fc-4e3e-a516-ddbafc4db79e'; DELETE FROM word_mapping_strongs WHERE mapping_id = '2617c9fb-56fc-4e3e-a516-ddbafc4db79e';"
-);
-
-// 19. Negative Gate: Converting required lexical #4 "فَأَحْيَا" to syntactic_ar
-runNegativeTest(
-  'Negative: Converting required lexical #4 "فَأَحْيَا" to syntactic_ar is rejected',
-  "UPDATE word_mappings SET strongs_id = NULL, orig_word_position = 0, orig_word = '—', orig_surface = '—', orig_morphology = NULL, morph_pos = 'syntactic_ar', morph_source = 'syntactic_ar', verified_locator = 'AR_SYNTACTIC:B48.C2.V20.w4', relation_type = 'syntactic_construction' WHERE id = '779b9793-d3d8-41b3-a9ff-b41ddf9b396b'; DELETE FROM word_mapping_strongs WHERE mapping_id = '779b9793-d3d8-41b3-a9ff-b41ddf9b396b';"
-);
-
-// 20. Negative Gate: Dropping secondary G1473 from #10 "فِيَّ"
-runNegativeTest(
-  'Negative: Dropping secondary G1473 from #10 "فِيَّ" is rejected',
-  "DELETE FROM word_mapping_strongs WHERE mapping_id = 'fef36d59-fd79-4920-9531-c887d27c95e5' AND strongs_id = 'G1473';"
-);
-
-// 21. Negative Gate: Blanking mandatory component fields on #10 "فِيَّ"
-runNegativeTest(
-  'Negative: Blanking mandatory component fields on #10 "فِيَّ" is rejected',
-  "UPDATE word_mapping_strongs SET orig_component = NULL WHERE mapping_id = 'fef36d59-fd79-4920-9531-c887d27c95e5' AND strongs_id = 'G1473';"
-);
-
-// 22. Negative Gate: Blanking mandatory component fields on #20 "إِيمَانِ"
-runNegativeTest(
-  'Negative: Blanking mandatory component fields on #20 "إِيمَانِ" is rejected',
-  "UPDATE word_mapping_strongs SET orig_morphology = NULL WHERE mapping_id = '49002695-4ac3-4fa1-b591-305819090536' AND strongs_id = 'G3588';"
-);
-
-// 23. Negative Gate: Corrupting pronoun on #10 (swapping with #27)
-runNegativeTest(
-  'Negative: Corrupting pronoun on #10 (swapping with #27) is rejected',
-  "UPDATE word_mapping_strongs SET orig_component = 'ἐμοῦ', orig_morphology = 'P-1GS', orig_word_position = 33 WHERE mapping_id = 'fef36d59-fd79-4920-9531-c887d27c95e5' AND strongs_id = 'G1473';"
-);
-
-// 24. Negative Gate: Token collision by mapping #5 to w4 without compound_phrase
-runNegativeTest(
-  'Negative: Token collision by mapping #5 to w4 without compound_phrase is rejected',
-  "UPDATE word_mappings SET orig_word_position = 4, verified_locator = 'TR:B48.C2.V20.w4' WHERE id = '4e09264a-0fa1-4077-93d8-325f123bc7fa';"
-);
+fs.mkdirSync(path.dirname(scratchDb), { recursive: true });
+try {
+  for (const reg of regressions) {
+    try {
+      fs.copyFileSync(dbPath, scratchDb);
+      execFileSync(sqlitePath, [scratchDb], { input: reg.sql, encoding: 'utf8' });
+      const rep = runHoldoutAudit(scratchDb);
+      const al = (rep.alerts || []).find(a => a.verse === 'Gal 2:20' && a.pos === reg.pos);
+      check(reg.name, Boolean(al), `no alert generated for target record pos ${reg.pos} in audit JSON report`);
+    } catch (err) {
+      check(reg.name, false, `Runner/tool failure: ${err.message}`);
+    }
+  }
+} finally {
+  if (fs.existsSync(scratchDb)) fs.unlinkSync(scratchDb);
+  if (fs.existsSync(scratchAuditOut)) fs.unlinkSync(scratchAuditOut);
+}
 
 console.log('\n========================================================================');
 console.log(`  GATES SUMMARY: ${passCount} PASSED, ${failCount} FAILED (TOTAL ${passCount + failCount})`);
