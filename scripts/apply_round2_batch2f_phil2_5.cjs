@@ -52,7 +52,9 @@ const { execFileSync } = require('child_process');
 
 const repoRoot = path.resolve(__dirname, '..');
 const dbPath = path.join(repoRoot, 'mobile/assets/bible_study.db');
-const sqlitePath = path.join(repoRoot, 'sqlite_dist/sqlite3.exe');
+const sqlitePath = process.platform === 'win32' && fs.existsSync(path.join(repoRoot, 'sqlite_dist/sqlite3.exe'))
+  ? path.join(repoRoot, 'sqlite_dist/sqlite3.exe')
+  : 'sqlite3';
 
 function sha256(filePath) {
   return crypto.createHash('sha256').update(fs.readFileSync(filePath)).digest('hex');

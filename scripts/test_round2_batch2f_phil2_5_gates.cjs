@@ -31,7 +31,9 @@ const { execFileSync, execSync } = require('child_process');
 
 const repoRoot = path.resolve(__dirname, '..');
 const dbPath = path.join(repoRoot, 'mobile/assets/bible_study.db');
-const sqlitePath = path.join(repoRoot, 'sqlite_dist/sqlite3.exe');
+const sqlitePath = process.platform === 'win32' && fs.existsSync(path.join(repoRoot, 'sqlite_dist/sqlite3.exe'))
+  ? path.join(repoRoot, 'sqlite_dist/sqlite3.exe')
+  : 'sqlite3';
 const auditScript = path.join(repoRoot, 'scripts/audit_unseen_holdout_sample.cjs');
 const manifestPath = path.join(repoRoot, 'scripts/unseen_holdout_round2_15_verses_manifest.json');
 
