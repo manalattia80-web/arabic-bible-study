@@ -1,11 +1,11 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "a1f92692a2681e97ef096cbd0fbcd12cff36a8a0f3b4944d9b8bdef264649056",
+  "dbSha256": "27f069fd9fa870d7c180bb32790d9ef4214b00c6dafc1e22c4d18b5acafd92b5",
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
   "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2j_isa41_10.json",
-  "auditReportSha256": "30095022111c8236ad96598b156df468b83bf8153eb13738c0b71da2da449f87",
+  "auditReportSha256": "b1ba11053e40437d530b455b2b69fe7b9fe483b25ae14409c167d22c4598aea6",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,

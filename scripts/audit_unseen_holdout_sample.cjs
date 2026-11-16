@@ -1135,3 +1135,8 @@ fs.mkdirSync(path.dirname(targetOutPath), { recursive: true });
 fs.writeFileSync(targetOutPath, JSON.stringify(report, null, 2) + '\n', 'utf8');
 console.log(`\nWritten calibrated 4-axis holdout report: ${targetOutPath}`);
 console.log(`(Preserved baseline untouched: ${path.join(__dirname, 'unseen_holdout_4axis_v376.json')})`);
+
+if (process.argv.includes('--fail-on-alerts') && gAlerts > 0) {
+  console.error(`\n[STRICT CHECK FAILED] Holdout sample has ${gAlerts} alerts! Aborting.`);
+  process.exit(1);
+}
