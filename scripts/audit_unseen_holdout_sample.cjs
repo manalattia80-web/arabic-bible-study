@@ -419,6 +419,36 @@ const VERIFIED_REQUIRED_COMPONENTS = {
     17: [{ strongsId: 'H4430', role: 'primary', order: 1, pos: 15, surface: 'מֶֽלֶךְ', morph: 'ANcmsc', source: 'oshb_wlc' }],
     18: [{ strongsId: 'H6540', role: 'primary', order: 1, pos: 16, surface: 'פָּרָֽס', morph: 'ANp', source: 'oshb_wlc' }]
   },
+  'Isa 41:10': {
+    1:  [{ strongsId: 'H408', role: 'primary', order: 1, pos: 1, surface: 'אַל', morph: 'HTn', source: 'oshb_wlc' }],
+    2:  [{ strongsId: 'H3372', role: 'primary', order: 1, pos: 2, surface: 'תִּירָא֙', morph: 'HVqj2ms', source: 'oshb_wlc' }],
+    3:  [
+      { strongsId: 'H3588', role: 'primary', order: 1, pos: 3, surface: 'כִּ֣י', morph: 'HC', source: 'oshb_wlc' },
+      { strongsId: 'H589', role: 'secondary', order: 2, pos: 5, surface: 'אָ֔נִי', morph: 'HPp1cs', source: 'oshb_wlc' }
+    ],
+    4:  [{ strongsId: 'H5973', role: 'primary', order: 1, pos: 4, surface: 'עִמְּךָ', morph: 'HR/Sp2ms', source: 'oshb_wlc' }],
+    5:  [{ strongsId: 'H408', role: 'primary', order: 1, pos: 6, surface: 'אַל', morph: 'HTn', source: 'oshb_wlc' }],
+    6:  [{ strongsId: 'H8159', role: 'primary', order: 1, pos: 7, surface: 'תִּשְׁתָּ֖ע', morph: 'HVqj2ms', source: 'oshb_wlc' }],
+    7:  [
+      { strongsId: 'H3588', role: 'primary', order: 1, pos: 8, surface: 'כִּֽי', morph: 'HC', source: 'oshb_wlc' },
+      { strongsId: 'H589', role: 'secondary', order: 2, pos: 9, surface: 'אֲנִ֣י', morph: 'HPp1cs', source: 'oshb_wlc' }
+    ],
+    8:  [{ strongsId: 'H430', role: 'primary', order: 1, pos: 10, surface: 'אֱלֹהֶ֑יךָ', morph: 'HNcmpc/Sp2ms', source: 'oshb_wlc' }],
+    10: [{ strongsId: 'H553', role: 'primary', order: 1, pos: 11, surface: 'אִמַּצְתִּ֨יךָ֙', morph: 'HVpp1cs/Sp2ms', source: 'oshb_wlc' }],
+    11: [
+      { strongsId: 'H5826', role: 'primary', order: 1, pos: 13, surface: 'עֲזַרְתִּ֔יךָ', morph: 'HVqp1cs/Sp2ms', source: 'oshb_wlc' },
+      { strongsId: 'H637', role: 'secondary', order: 2, pos: 12, surface: 'אַף', morph: 'HTa', source: 'oshb_wlc' }
+    ],
+    12: [
+      { strongsId: 'H8551', role: 'primary', order: 1, pos: 15, surface: 'תְּמַכְתִּ֖יךָ', morph: 'HVqp1cs/Sp2ms', source: 'oshb_wlc' },
+      { strongsId: 'H637', role: 'secondary', order: 2, pos: 14, surface: 'אַף', morph: 'HTa', source: 'oshb_wlc' }
+    ],
+    13: [
+      { strongsId: 'H3225', role: 'primary', order: 1, pos: 16, surface: 'בִּימִ֥ין', morph: 'HR/Ncfsc', source: 'oshb_wlc' },
+      { strongsId: 'H9003', role: 'secondary', order: 2, pos: 16, surface: 'בִּ', morph: 'HR', source: 'oshb_wlc' }
+    ],
+    14: [{ strongsId: 'H6664', role: 'primary', order: 1, pos: 17, surface: 'צִדְקִֽי', morph: 'HNcmsc/Sp1cs', source: 'oshb_wlc' }]
+  },
   '1Kgs 19:12': {
     1:  [{ strongsId: 'H310', role: 'primary', order: 1, pos: 1, surface: 'וְאַחַ֤ר', morph: 'HC/R', source: 'oshb_wlc' }],
     2:  [{ strongsId: 'H7494', role: 'primary', order: 1, pos: 2, surface: 'הָרַ֨עַשׁ֙', morph: 'HTd/Ncmsa', source: 'oshb_wlc' }],
@@ -942,8 +972,8 @@ for (const v of holdoutVerses) {
           const dErr = verifyDerived(v.lang, origMorph, tok.morph, { morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase });
           if (dErr) failAxis('morphology', `derived(${dErr})`);
 
-          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24)
-          if (v.name === 'Ezra 4:24') {
+          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24, Isa 41:10)
+          if (v.name === 'Ezra 4:24' || v.name === 'Isa 41:10') {
             const segs = (origMorph || '').split('/');
             let expState = null;
             const sMap = { c:'construct', a:'absolute', d:'determined' };
