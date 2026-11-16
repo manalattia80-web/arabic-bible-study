@@ -147,7 +147,7 @@ q(`
   UPDATE word_mappings SET
     strongs_id = 'H4909',
     orig_surface = 'מַשְׂכֻּרְתֵּ֜ךְ',
-    orig_word = 'מַשְׂכֹּרֶت',
+    orig_word = 'מַשְׂכֹּרֶת',
     orig_word_position = 5,
     orig_morphology = 'HNcfsc/Sp2fs',
     morph_pos = 'noun',
