@@ -285,10 +285,16 @@ function verifyDerived(lang, dbMorph, srcMorph, d, isTr = false) {
     } else if (conj === 'r' || conj === 's') {
       if ((d.morphGender || null) !== (gMap[core[3]] || null)) return `gender '${d.morphGender}' vs '${core[3]}'`;
       if ((d.morphNumber || null) !== (nMap[core[4]] || null)) return `number '${d.morphNumber}' vs '${core[4]}'`;
+      const sMap = { c:'construct', a:'absolute', d:'determined' };
+      const expState = sMap[core[5]] || null;
+      if (expState && d.morphCase && d.morphCase !== expState) return `case '${d.morphCase}' vs '${expState}'`;
     }
   } else if ((core[0] === 'N' || core[0] === 'A') && core[1] !== 'p') {
     if ((d.morphGender || null) !== (gMap[core[2]] || null)) return `gender '${d.morphGender}' vs '${core[2]}'`;
     if ((d.morphNumber || null) !== (nMap[core[3]] || null)) return `number '${d.morphNumber}' vs '${core[3]}'`;
+    const sMap = { c:'construct', a:'absolute', d:'determined' };
+    const expState = sMap[core[4]] || null;
+    if (expState && d.morphCase && d.morphCase !== expState) return `case '${d.morphCase}' vs '${expState}'`;
   }
   return null;
 }
@@ -391,9 +397,9 @@ const VERIFIED_REQUIRED_COMPONENTS = {
     4:  [{ strongsId: 'H1005', role: 'primary', order: 1, pos: 4, surface: 'בֵּית', morph: 'ANcmsc', source: 'oshb_wlc' }],
     5:  [{ strongsId: 'H426', role: 'primary', order: 1, pos: 5, surface: 'אֱלָהָ֔א', morph: 'ANcmsd/Td', source: 'oshb_wlc' }],
     6:  [{ strongsId: 'H1768', role: 'primary', order: 1, pos: 6, surface: 'דִּ֖י', morph: 'ATr', source: 'oshb_wlc' }],
-    7:  [{ strongsId: 'H9003', role: 'primary', order: 1, pos: 7, surface: 'בִּירֽוּשְׁלֶ֑ם', morph: 'AR', source: 'oshb_wlc' }],
+    7:  [{ strongsId: 'H9003', role: 'primary', order: 1, pos: 7, surface: 'בִּירוּשְׁלֶ֑ם', morph: 'AR', source: 'oshb_wlc' }],
     8:  [
-      { strongsId: 'H3390', role: 'primary', order: 1, pos: 7, surface: 'בִּירֽוּשְׁלֶ֑ם', morph: 'AR/Np', source: 'oshb_wlc' },
+      { strongsId: 'H3390', role: 'primary', order: 1, pos: 7, surface: 'בִּירוּשְׁלֶ֑ם', morph: 'AR/Np', source: 'oshb_wlc' },
       { strongsId: 'H9003', role: 'secondary', order: 2, pos: 7, surface: 'בִּ', morph: 'AR', source: 'oshb_wlc' }
     ],
     9:  [
@@ -935,6 +941,21 @@ for (const v of holdoutVerses) {
           }
           const dErr = verifyDerived(v.lang, origMorph, tok.morph, { morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase });
           if (dErr) failAxis('morphology', `derived(${dErr})`);
+
+          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24)
+          if (v.name === 'Ezra 4:24') {
+            const segs = (origMorph || '').split('/');
+            let expState = null;
+            const sMap = { c:'construct', a:'absolute', d:'determined' };
+            for (const s of segs) {
+              const core = s.replace(/^[HA]/, '');
+              if (core[0] === 'V' && (core[2] === 'r' || core[2] === 's')) { expState = sMap[core[5]] || null; break; }
+              if ((core[0] === 'N' || core[0] === 'A') && core[1] !== 'p' && core !== 'Td') { expState = sMap[core[4]] || null; break; }
+            }
+            if (expState && !morphCase) {
+              failAxis('morphology', `missing mandatory morph_case='${expState}' for '${origMorph}'`);
+            }
+          }
         }
 
         // Audit every component inside word_mapping_strongs for Hebrew/Aramaic

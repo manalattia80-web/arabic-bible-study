@@ -120,7 +120,7 @@ UPDATE word_mappings SET
   morph_person = NULL,
   morph_number = 'singular',
   morph_gender = 'feminine',
-  morph_case = NULL,
+  morph_case = 'construct',
   morph_source = 'oshb_wlc',
   relation_type = NULL,
   grammar_notes = 'اسم مؤنث آرامي עֲבִידָה (H5673) في حالة الإضافة (construct)، صحح من الإسناد السابق للفعل H5648.'
@@ -142,7 +142,7 @@ UPDATE word_mappings SET
   morph_person = NULL,
   morph_number = 'singular',
   morph_gender = 'masculine',
-  morph_case = NULL,
+  morph_case = 'construct',
   morph_source = 'oshb_wlc',
   relation_type = NULL,
   grammar_notes = NULL
@@ -164,7 +164,7 @@ UPDATE word_mappings SET
   morph_person = NULL,
   morph_number = 'singular',
   morph_gender = 'masculine',
-  morph_case = NULL,
+  morph_case = 'determined',
   morph_source = 'oshb_wlc',
   relation_type = NULL,
   grammar_notes = NULL
@@ -197,7 +197,7 @@ UPDATE word_mappings SET
   orig_word_position = 7,
   strongs_id = 'H9003',
   orig_word = 'בְּ',
-  orig_surface = 'בִּירֽוּשְׁלֶ֑ם',
+  orig_surface = 'בִּירוּשְׁלֶ֑ם',
   verified_locator = 'OSHB:B15.C4.V24.w7',
   orig_morphology = 'AR',
   morph_pos = 'preposition',
@@ -211,7 +211,7 @@ UPDATE word_mappings SET
   morph_case = NULL,
   morph_source = 'oshb_wlc',
   relation_type = 'compound_phrase',
-  grammar_notes = 'حرف الجر الآرامي المتصل (الباء) في בִּירֽוּשְׁלֶ֑ם (الموضع 7) دال على الظرفية المكانية، بينما الاسم العَلَم יְרוּשָׁלֵם يقابل الكلمة التالية «أُورُشَلِيمَ».'
+  grammar_notes = 'حرف الجر الآرامي المتصل (الباء) في בִּירוּשְׁלֶ֑ם (الموضع 7) دال على الظرفية المكانية، بينما الاسم العَلَم יְרוּשָׁלֵם يقابل الكلمة التالية «أُورُشَلِيمَ».'
 WHERE verse_id = '${verseId}' AND ar_word_position = 7;
 
 -- #8 أُورُشَلِيمَ (w7: בִּ/ירוּשְׁלֶ֑ם - compound_phrase noun H3390 + H9003 - AR/Np)
@@ -219,7 +219,7 @@ UPDATE word_mappings SET
   orig_word_position = 7,
   strongs_id = 'H3390',
   orig_word = 'יְרוּשָׁלֵם',
-  orig_surface = 'בִּירֽוּשְׁלֶ֑ם',
+  orig_surface = 'בִּירוּשְׁלֶ֑ם',
   verified_locator = 'OSHB:B15.C4.V24.w7',
   orig_morphology = 'AR/Np',
   morph_pos = 'proper_noun',
@@ -233,7 +233,7 @@ UPDATE word_mappings SET
   morph_case = NULL,
   morph_source = 'oshb_wlc',
   relation_type = 'compound_phrase',
-  grammar_notes = 'اسم علم آرامي יְרוּשָׁלֵם (H3390) مسبوق بحرف الجر بـ (H9003) في בִּירֽוּשְׁלֶ֑ם (الموضع 7)، يشكل وحدة محاذاة مركبة مع كلمة «فِي» السابقة.'
+  grammar_notes = 'اسم علم آرامي יְרוּשָׁלֵם (H3390) مسبوق بحرف الجر بـ (H9003) في בִּירוּשְׁלֶ֑ם (الموضع 7)، يشكل وحدة محاذاة مركبة مع كلمة «فِي» السابقة.'
 WHERE verse_id = '${verseId}' AND ar_word_position = 8;
 
 -- #9 وَكَانَ (w8: וַ/הֲוָת֙ - H1934 + H9002 - AC/Vqp3fs)
@@ -274,7 +274,7 @@ UPDATE word_mappings SET
   morph_person = NULL,
   morph_number = 'singular',
   morph_gender = 'feminine',
-  morph_case = NULL,
+  morph_case = 'absolute',
   morph_source = 'oshb_wlc',
   relation_type = NULL,
   grammar_notes = 'اسم فاعل آرامي בָּטְלָא من الجذر בְּטֵל (H989) مؤنث مفرد مطلق.'
@@ -318,7 +318,7 @@ UPDATE word_mappings SET
   morph_person = NULL,
   morph_number = 'singular',
   morph_gender = 'feminine',
-  morph_case = NULL,
+  morph_case = 'construct',
   morph_source = 'oshb_wlc',
   relation_type = NULL,
   grammar_notes = 'اسم مؤنث آرامي שְׁנָה (H8140) في حالة الإضافة (construct)، صحح من الإسناد العبري H8139.'
@@ -340,7 +340,7 @@ UPDATE word_mappings SET
   morph_person = NULL,
   morph_number = 'plural',
   morph_gender = 'common',
-  morph_case = NULL,
+  morph_case = 'absolute',
   morph_source = 'oshb_wlc',
   relation_type = NULL,
   grammar_notes = 'عدد ترتيبي / وصفي آرامي תַּרְתֵּין من תְּרֵין (H8648)، صحح من الإسناد الخاطئ H8524 (תָּלַל).'
@@ -384,7 +384,7 @@ UPDATE word_mappings SET
   morph_person = NULL,
   morph_number = 'singular',
   morph_gender = 'feminine',
-  morph_case = NULL,
+  morph_case = 'construct',
   morph_source = 'oshb_wlc',
   relation_type = 'compound_phrase',
   grammar_notes = 'اسم مؤنث آرامي مַלְכוּ (H4437) في حالة الإضافة مسبوق بحرف الجر לְ (H9005) في לְמַלְכ֖וּת (الموضع 13)، يشكل وحدة محاذاة مركبة مع كلمة «مِنْ» السابقة.'
@@ -428,7 +428,7 @@ UPDATE word_mappings SET
   morph_person = NULL,
   morph_number = 'singular',
   morph_gender = 'masculine',
-  morph_case = NULL,
+  morph_case = 'construct',
   morph_source = 'oshb_wlc',
   relation_type = NULL,
   grammar_notes = 'اسم مذكر آرامي מֶלֶךְ (H4430) في حالة الإضافة بالموضع 15 من النص الأصلي، صحح من الإزاحة الخاطئة إلى w17 خارج نطاق الآية.'
@@ -501,11 +501,11 @@ VALUES ('${mapByPos[6].id}', 'H1768', 1, 'primary', 'דִּ֖י', 6, 'ATr', 'osh
 
 -- #7
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
-VALUES ('${mapByPos[7].id}', 'H9003', 1, 'primary', 'בִּירֽוּשְׁלֶ֑ם', 7, 'AR', 'oshb_wlc');
+VALUES ('${mapByPos[7].id}', 'H9003', 1, 'primary', 'בִּירוּשְׁלֶ֑ם', 7, 'AR', 'oshb_wlc');
 
 -- #8 (primary H3390 + secondary H9003)
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
-VALUES ('${mapByPos[8].id}', 'H3390', 1, 'primary', 'בִּירֽוּשְׁלֶ֑ם', 7, 'AR/Np', 'oshb_wlc');
+VALUES ('${mapByPos[8].id}', 'H3390', 1, 'primary', 'בִּירוּשְׁלֶ֑ם', 7, 'AR/Np', 'oshb_wlc');
 INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
 VALUES ('${mapByPos[8].id}', 'H9003', 2, 'secondary', 'בִּ', 7, 'AR', 'oshb_wlc');
 
