@@ -384,6 +384,35 @@ const holdoutVerses = manifest.holdout_verses;
 
 // Verified required components for fully calibrated holdout units
 const VERIFIED_REQUIRED_COMPONENTS = {
+  'Ezra 4:24': {
+    1:  [{ strongsId: 'H116', role: 'primary', order: 1, pos: 1, surface: 'בֵּאדַ֗יִן', morph: 'AR/D', source: 'oshb_wlc' }],
+    2:  [{ strongsId: 'H989', role: 'primary', order: 1, pos: 2, surface: 'בְּטֵלַת֙', morph: 'AVqp3fs', source: 'oshb_wlc' }],
+    3:  [{ strongsId: 'H5673', role: 'primary', order: 1, pos: 3, surface: 'עֲבִידַ֣ת', morph: 'ANcfsc', source: 'oshb_wlc' }],
+    4:  [{ strongsId: 'H1005', role: 'primary', order: 1, pos: 4, surface: 'בֵּית', morph: 'ANcmsc', source: 'oshb_wlc' }],
+    5:  [{ strongsId: 'H426', role: 'primary', order: 1, pos: 5, surface: 'אֱלָהָ֔א', morph: 'ANcmsd/Td', source: 'oshb_wlc' }],
+    6:  [{ strongsId: 'H1768', role: 'primary', order: 1, pos: 6, surface: 'דִּ֖י', morph: 'ATr', source: 'oshb_wlc' }],
+    7:  [{ strongsId: 'H9003', role: 'primary', order: 1, pos: 7, surface: 'בִּירֽוּשְׁלֶ֑ם', morph: 'AR', source: 'oshb_wlc' }],
+    8:  [
+      { strongsId: 'H3390', role: 'primary', order: 1, pos: 7, surface: 'בִּירֽוּשְׁלֶ֑ם', morph: 'AR/Np', source: 'oshb_wlc' },
+      { strongsId: 'H9003', role: 'secondary', order: 2, pos: 7, surface: 'בִּ', morph: 'AR', source: 'oshb_wlc' }
+    ],
+    9:  [
+      { strongsId: 'H1934', role: 'primary', order: 1, pos: 8, surface: 'וַהֲוָת֙', morph: 'AC/Vqp3fs', source: 'oshb_wlc' },
+      { strongsId: 'H9002', role: 'secondary', order: 2, pos: 8, surface: 'וַ', morph: 'AC', source: 'oshb_wlc' }
+    ],
+    10: [{ strongsId: 'H989', role: 'primary', order: 1, pos: 9, surface: 'בָּֽטְלָ֔א', morph: 'AVqrfsa', source: 'oshb_wlc' }],
+    11: [{ strongsId: 'H5705', role: 'primary', order: 1, pos: 10, surface: 'עַ֚ד', morph: 'AR', source: 'oshb_wlc' }],
+    12: [{ strongsId: 'H8140', role: 'primary', order: 1, pos: 11, surface: 'שְׁנַ֣ת', morph: 'ANcfsc', source: 'oshb_wlc' }],
+    13: [{ strongsId: 'H8648', role: 'primary', order: 1, pos: 12, surface: 'תַּרְתֵּ֔ין', morph: 'AAocpa', source: 'oshb_wlc' }],
+    14: [{ strongsId: 'H9005', role: 'primary', order: 1, pos: 13, surface: 'לְמַלְכ֖וּת', morph: 'AR', source: 'oshb_wlc' }],
+    15: [
+      { strongsId: 'H4437', role: 'primary', order: 1, pos: 13, surface: 'לְמַלְכ֖וּת', morph: 'AR/Ncfsc', source: 'oshb_wlc' },
+      { strongsId: 'H9005', role: 'secondary', order: 2, pos: 13, surface: 'לְ', morph: 'AR', source: 'oshb_wlc' }
+    ],
+    16: [{ strongsId: 'H1868', role: 'primary', order: 1, pos: 14, surface: 'דָּרְיָ֥וֶשׁ', morph: 'ANp', source: 'oshb_wlc' }],
+    17: [{ strongsId: 'H4430', role: 'primary', order: 1, pos: 15, surface: 'מֶֽלֶךְ', morph: 'ANcmsc', source: 'oshb_wlc' }],
+    18: [{ strongsId: 'H6540', role: 'primary', order: 1, pos: 16, surface: 'פָּרָֽס', morph: 'ANp', source: 'oshb_wlc' }]
+  },
   '1Kgs 19:12': {
     1:  [{ strongsId: 'H310', role: 'primary', order: 1, pos: 1, surface: 'וְאַחַ֤ר', morph: 'HC/R', source: 'oshb_wlc' }],
     2:  [{ strongsId: 'H7494', role: 'primary', order: 1, pos: 2, surface: 'הָרַ֨עַשׁ֙', morph: 'HTd/Ncmsa', source: 'oshb_wlc' }],
