@@ -1,6 +1,6 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "82aa68a4834a2466e573a9dc580632ab73685416c485ce4e63dd035c59eae1a4",
+  "dbSha256": "a1f92692a2681e97ef096cbd0fbcd12cff36a8a0f3b4944d9b8bdef264649056",
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
@@ -588,6 +588,7 @@
         ],
         "morphology": [
           "morph 'HR/Sp2ms' != OSHB 'HVqrmsa'",
+          "derived(person '' vs '2')",
           "wms H3644@w4 morph 'HR/Sp2ms' != OSHB 'HVqrmsa'"
         ],
         "sourceLocator": []
@@ -1117,6 +1118,7 @@
         ],
         "morphology": [
           "morph 'HR/Sp3mp' != OSHB 'HC/Vti3mp'",
+          "derived(person '' vs '3')",
           "wms H5921@w7 morph 'HR/Sp3mp' != OSHB 'HC/Vti3mp'"
         ],
         "sourceLocator": []
@@ -2202,6 +2204,7 @@
           "wms H6925@w12 surface 'קֳדָם' != OSHB 'קָֽדָמ֨וֹהִי֙'"
         ],
         "morphology": [
+          "derived(person '' vs '3')",
           "wms H6925@w12 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
@@ -2304,6 +2307,7 @@
           "wms H3809@w17 surface 'לָא' != OSHB 'קדמיך'"
         ],
         "morphology": [
+          "derived(pos 'particle' vs preposition)",
           "wms H3809@w17 missing mandatory orig_morphology"
         ],
         "sourceLocator": [
@@ -2329,6 +2333,7 @@
           "wms H5648@w18 surface 'עַבְדֵֽת' != OSHB 'קָֽדָמָךְ֙'"
         ],
         "morphology": [
+          "derived(pos 'verb' vs preposition)",
           "wms H5648@w18 missing mandatory orig_morphology"
         ],
         "sourceLocator": [

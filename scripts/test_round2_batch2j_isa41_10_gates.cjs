@@ -42,6 +42,13 @@
  * 34. Mutating #14 "بِرِّي" from construct to absolute is rejected.
  * 35. Blanking morph_case on #14 "بِرِّي" is rejected.
  * 36. Token collision by mapping #14 to w16 without compound_phrase is rejected.
+ * 37. Mutating #4 "مَعَكَ" to 1st person, feminine, plural is rejected.
+ * 38. Blanking morph_person on #4 "مَعَكَ" is rejected.
+ * 39. Blanking morph_gender on #4 "مَعَكَ" is rejected.
+ * 40. Blanking morph_number on #4 "مَعَكَ" is rejected.
+ * 41. Setting conflicting gender feminine on #4 "مَعَكَ" is rejected.
+ * 42. Setting conflicting person 3 on #4 "مَعَكَ" is rejected.
+ * 43. Setting conflicting number plural on #4 "مَعَكَ" is rejected.
  */
 
 const fs = require('fs');
@@ -135,10 +142,10 @@ check('Positive: Isa 41:10 #3 "لأَنِّي" has primary H3588@w3 and secondar
   `row=${w3Row}, comps=${w3Comps}`
 );
 
-// 6. Positive Gate: #4 "مَعَكَ" is w4 עִמְּךָ (H5973, HR/Sp2ms)
-const w4Row = q(`SELECT strongs_id, orig_word_position, orig_word, orig_surface, orig_morphology, morph_pos, verified_locator FROM word_mappings WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 4;`);
-check('Positive: Isa 41:10 #4 "مَعَكَ" is w4 עִמְּךָ (H5973, HR/Sp2ms)',
-  w4Row === 'H5973|4|עִם|עִמְּךָ|HR/Sp2ms|preposition|OSHB:B23.C41.V10.w4',
+// 6. Positive Gate: #4 "مَعَكَ" is w4 עִמְּךָ (H5973, HR/Sp2ms, 2/masculine/singular)
+const w4Row = q(`SELECT strongs_id, orig_word_position, orig_word, orig_surface, orig_morphology, morph_pos, morph_person, morph_gender, morph_number, verified_locator FROM word_mappings WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 4;`);
+check('Positive: Isa 41:10 #4 "مَعَكَ" is w4 עִמְּךָ (H5973, HR/Sp2ms, 2/masculine/singular)',
+  w4Row === 'H5973|4|עִם|עִמְּךָ|HR/Sp2ms|preposition|2|masculine|singular|OSHB:B23.C41.V10.w4',
   `row=${w4Row}`
 );
 
@@ -323,6 +330,41 @@ const regressions = [
     name: 'Negative: Token collision by mapping #14 to w16 without compound_phrase is rejected',
     pos: 14,
     sql: "UPDATE word_mappings SET orig_word_position = 16, verified_locator = 'OSHB:B23.C41.V10.w16' WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 14;"
+  },
+  {
+    name: 'Negative: Mutating #4 "مَعَكَ" to 1st person, feminine, plural is rejected',
+    pos: 4,
+    sql: "UPDATE word_mappings SET morph_person = '1', morph_gender = 'feminine', morph_number = 'plural' WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 4;"
+  },
+  {
+    name: 'Negative: Blanking morph_person on #4 "مَعَكَ" is rejected',
+    pos: 4,
+    sql: "UPDATE word_mappings SET morph_person = NULL WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 4;"
+  },
+  {
+    name: 'Negative: Blanking morph_gender on #4 "مَعَكَ" is rejected',
+    pos: 4,
+    sql: "UPDATE word_mappings SET morph_gender = NULL WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 4;"
+  },
+  {
+    name: 'Negative: Blanking morph_number on #4 "مَعَكَ" is rejected',
+    pos: 4,
+    sql: "UPDATE word_mappings SET morph_number = NULL WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 4;"
+  },
+  {
+    name: 'Negative: Setting conflicting gender feminine on #4 "مَعَكَ" is rejected',
+    pos: 4,
+    sql: "UPDATE word_mappings SET morph_gender = 'feminine' WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 4;"
+  },
+  {
+    name: 'Negative: Setting conflicting person 3 on #4 "مَعَكَ" is rejected',
+    pos: 4,
+    sql: "UPDATE word_mappings SET morph_person = '3' WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 4;"
+  },
+  {
+    name: 'Negative: Setting conflicting number plural on #4 "مَعَكَ" is rejected',
+    pos: 4,
+    sql: "UPDATE word_mappings SET morph_number = 'plural' WHERE verse_id = '11111111-0000-0000-0023-000000041010' AND ar_word_position = 4;"
   }
 ];
 

@@ -258,12 +258,24 @@ function verifyDerived(lang, dbMorph, srcMorph, d, isTr = false) {
   const tag = (dbMorph || srcMorph || '').trim();
   if (!tag || /^(HR|AR|HC|AC|HT|AT|R|C)$/.test(tag)) return null;
   const segs = tag.split('/');
-  if (segs.length === 2 && /^(HR|AR|R)$/.test(segs[0]) && /^Sp/.test(segs[1])) return null;
-  const coreSeg = (segs.length >= 2 && /^Sp/.test(segs[segs.length - 1])) ? segs[segs.length - 2] : segs[segs.length - 1];
-  const core = coreSeg.replace(/^[HA]/, '');
   const isAr = tag.startsWith('A') || lang === 'aramaic';
   const gMap = { m:'masculine', f:'feminine', b:'common', c:'common' };
   const nMap = { s:'singular', p:'plural', d:'dual' };
+  const pMap = { '1':'1', '2':'2', '3':'3' };
+
+  if (segs.length >= 2 && /^(HR|AR|R)$/.test(segs[segs.length - 2]) && /^Sp/.test(segs[segs.length - 1]) && (segs.length === 2 || /^(HC|AC|C)$/.test(segs[0]))) {
+    const spTag = segs[segs.length - 1];
+    const expPerson = pMap[spTag[2]] || null;
+    const expGender = gMap[spTag[3]] || null;
+    const expNumber = nMap[spTag[4]] || null;
+    if (d.morphPos && d.morphPos !== 'preposition' && d.morphPos !== 'prep') return `pos '${d.morphPos}' vs preposition`;
+    if (expPerson && normPerson(d.morphPerson) !== expPerson) return `person '${d.morphPerson}' vs '${expPerson}'`;
+    if (expGender && (d.morphGender || null) !== expGender) return `gender '${d.morphGender}' vs '${expGender}'`;
+    if (expNumber && (d.morphNumber || null) !== expNumber) return `number '${d.morphNumber}' vs '${expNumber}'`;
+    return null;
+  }
+  const coreSeg = (segs.length >= 2 && /^Sp/.test(segs[segs.length - 1])) ? segs[segs.length - 2] : segs[segs.length - 1];
+  const core = coreSeg.replace(/^[HA]/, '');
   if (core[0] === 'V') {
     if (d.morphPos !== 'verb') return `pos '${d.morphPos}' vs verb '${tag}'`;
     const stemMap = isAr
