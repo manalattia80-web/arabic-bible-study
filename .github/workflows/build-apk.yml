@@ -65,7 +65,7 @@ jobs:
       - name: Run Negative Quality Gate Suite (Forbidden States CI Check)
         run: node scripts/test_negative_rules.cjs
 
-      - name: Run Strict Locator, TR Robinson, Batch 1 & 2A/2B/2C/2D/2E/2F/2G/2H/2I/2J, Round 1 Holdout Zero-Alert Gate, & Live-Regenerated Alignment Engine Gates
+      - name: Run Strict Locator, TR Robinson, Batch 1 & 2A/2B/2C/2D/2E/2F/2G/2H/2I/2J/2K, Round 1 Holdout Zero-Alert Gate, & Live-Regenerated Alignment Engine Gates
         run: |
           node scripts/test_strict_locator_gates.cjs
           node scripts/test_tr_robinson_and_context_gates.cjs
@@ -80,6 +80,7 @@ jobs:
           node scripts/test_round2_batch2h_1kgs19_12_gates.cjs
           node scripts/test_round2_batch2i_ezra4_24_gates.cjs
           node scripts/test_round2_batch2j_isa41_10_gates.cjs
+          node scripts/test_round2_batch2k_ruth2_12_gates.cjs
           node scripts/test_round1_holdout_gate.cjs
           node scripts/audit_unseen_holdout_sample.cjs --manifest scripts/unseen_holdout_15_verses_manifest.json --fail-on-alerts --out /tmp/ci_round1_audit.json
           node scripts/audit_unseen_holdout_sample.cjs --manifest scripts/unseen_holdout_round2_15_verses_manifest.json --out /tmp/ci_round2_audit.json
