@@ -765,6 +765,7 @@ for (const v of holdoutVerses) {
            wm.morph_stem, wm.morph_mood, wm.orig_word_position, wm.verified_locator,
            wm.morph_tense, wm.morph_voice, wm.morph_case, COALESCE(wm.morph_source,''),
            COALESCE(wm.relation_type,''), COALESCE(wm.grammar_notes,''),
+           COALESCE(wm.verified_source,''),
            (SELECT GROUP_CONCAT(wms.strongs_id || ':' || wms.link_role || '#' || COALESCE(wms.link_order,'') || '@w' || COALESCE(wms.orig_word_position,'') || '[' || COALESCE(wms.orig_component,'') || ':' || COALESCE(wms.orig_morphology,'') || ':' || COALESCE(wms.morph_source,'') || ']', ';')
             FROM (SELECT strongs_id, link_role, link_order, orig_word_position, orig_component, orig_morphology, morph_source FROM word_mapping_strongs WHERE mapping_id = wm.id ORDER BY link_order ASC) AS wms)
     FROM word_mappings wm
@@ -782,7 +783,8 @@ for (const v of holdoutVerses) {
     const [
       posStr, arWord, strongsId, origWord, origSurface, morphPos, origMorph,
       morphGender, morphNumber, morphPerson, morphStem, morphMood, origPosStr,
-      locator, morphTense, morphVoice, morphCase, morphSource, relationType, grammarNotes, compDetailed
+      locator, morphTense, morphVoice, morphCase, morphSource, relationType, grammarNotes,
+      verifiedSource, compDetailed
     ] = line.split('|');
 
     const arPos = parseInt(posStr, 10);
@@ -872,6 +874,12 @@ for (const v of holdoutVerses) {
       if (strongsId) failAxis('lexical', `syntactic row has strongs_id='${strongsId}'`);
       if (compDetailed) failAxis('lexical', `syntactic row has word_mapping_strongs '${compDetailed}'`);
       if (origWord && origWord !== '—') failAxis('lemmaSurface', `syntactic row has orig_word='${origWord}'`);
+      if (origSurface && origSurface !== '—') failAxis('lemmaSurface', `syntactic row has orig_surface='${origSurface}'`);
+      if (relationType === 'syntactic_copula' && (!grammarNotes || grammarNotes.trim().length === 0)) {
+        failAxis('morphology', 'syntactic_copula row requires explanatory grammar_notes');
+      }
+      if (morphPos && morphPos !== 'syntactic_ar') failAxis('morphology', `AR_SYNTACTIC carries morph_pos='${morphPos}' instead of syntactic_ar`);
+      if (verifiedSource && verifiedSource !== 'syntactic_ar') failAxis('sourceLocator', `AR_SYNTACTIC carries verified_source='${verifiedSource}' instead of syntactic_ar`);
       if (morphSource && morphSource !== 'syntactic_ar') failAxis('sourceLocator', `AR_SYNTACTIC carries morph_source='${morphSource}'`);
     } else {
       if (!strongsId) failAxis('lexical', 'missing strongs_id');

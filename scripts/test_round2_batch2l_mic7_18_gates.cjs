@@ -158,10 +158,10 @@ check('Positive: Micah 7:18 #1 "مَنْ" is w1 מִי (H4310, HTi)',
   `row=${w1Row}`
 );
 
-// 4. Positive Gate: #2 "هُوَ" is AR_SYNTACTIC:B33.C7.V18.w2
-const w2Row = q(`SELECT strongs_id, orig_surface, morph_pos, relation_type, verified_locator FROM word_mappings WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 2;`);
-check('Positive: Micah 7:18 #2 "هُوَ" is Arabic syntactic copula',
-  w2Row === '|—|pronoun|syntactic_copula|AR_SYNTACTIC:B33.C7.V18.w2',
+// 4. Positive Gate: #2 "هُوَ" is AR_SYNTACTIC:B33.C7.V18.w2 with canonical syntactic_ar fields and grammar note
+const w2Row = q(`SELECT strongs_id, orig_surface, morph_pos, relation_type, verified_locator, verified_source, morph_source, grammar_notes FROM word_mappings WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 2;`);
+check('Positive: Micah 7:18 #2 "هُوَ" is Arabic syntactic copula with canonical fields',
+  w2Row === '|—|syntactic_ar|syntactic_copula|AR_SYNTACTIC:B33.C7.V18.w2|syntactic_ar|syntactic_ar|ضمير فصل نحوي في التركيب العربي الاستفهامي',
   `row=${w2Row}`
 );
 
@@ -289,6 +289,36 @@ check('Positive: Micah 7:18 #19 "بِالرَّأْفَةِ" is w17 חֶ֖סֶד
 
 // Negative Regressions in isolated scratch DB
 const regressions = [
+  {
+    name: "Negative: Mutating #2 'هُوَ' morph_pos to 'verb' is rejected",
+    pos: 2,
+    sql: `UPDATE word_mappings SET morph_pos = 'verb' WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 2;`
+  },
+  {
+    name: "Negative: Mutating #2 'هُوَ' morph_pos to 'pronoun' is rejected",
+    pos: 2,
+    sql: `UPDATE word_mappings SET morph_pos = 'pronoun' WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 2;`
+  },
+  {
+    name: "Negative: Mutating #2 'هُوَ' verified_source to 'morphgnt_sblgnt' is rejected",
+    pos: 2,
+    sql: `UPDATE word_mappings SET verified_source = 'morphgnt_sblgnt' WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 2;`
+  },
+  {
+    name: "Negative: Mutating #2 'هُوَ' verified_source to 'oshb_wlc' is rejected",
+    pos: 2,
+    sql: `UPDATE word_mappings SET verified_source = 'oshb_wlc' WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 2;`
+  },
+  {
+    name: "Negative: Mutating #2 'هُوَ' morph_source away from 'syntactic_ar' is rejected",
+    pos: 2,
+    sql: `UPDATE word_mappings SET morph_source = 'oshb_wlc' WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 2;`
+  },
+  {
+    name: "Negative: Blanking grammar_notes on #2 'هُوَ' is rejected",
+    pos: 2,
+    sql: `UPDATE word_mappings SET grammar_notes = NULL WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 2;`
+  },
   {
     name: 'Negative: Displaced #3 "إِلهٌ" to w3 is rejected',
     pos: 3,

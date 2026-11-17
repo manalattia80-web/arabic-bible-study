@@ -76,7 +76,7 @@ q(`
     orig_word = '—',
     orig_word_position = NULL,
     orig_morphology = NULL,
-    morph_pos = 'pronoun',
+    morph_pos = 'syntactic_ar',
     morph_stem = NULL,
     morph_tense = NULL,
     morph_voice = NULL,
@@ -86,9 +86,10 @@ q(`
     morph_number = NULL,
     morph_case = NULL,
     relation_type = 'syntactic_copula',
-    grammar_notes = NULL,
+    grammar_notes = 'ضمير فصل نحوي في التركيب العربي الاستفهامي',
     verified_locator = 'AR_SYNTACTIC:B33.C7.V18.w2',
-    verified_source = 'oshb_wlc',
+    verified_source = 'syntactic_ar',
+    morph_source = 'syntactic_ar',
     is_verified = 0
   WHERE verse_id = '${vId}' AND ar_word_position = 2;
 
