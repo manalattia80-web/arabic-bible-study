@@ -456,6 +456,38 @@ const VERIFIED_REQUIRED_COMPONENTS = {
     16: [{ strongsId: 'H8478', role: 'primary', order: 1, pos: 14, surface: 'תַּֽחַת', morph: 'HR', source: 'oshb_wlc' }],
     17: [{ strongsId: 'H3671', role: 'primary', order: 1, pos: 15, surface: 'כְּנָפָֽיו', morph: 'HNcfpc/Sp3ms', source: 'oshb_wlc' }]
   },
+  'Mic 7:18': {
+    1:  [{ strongsId: 'H4310', role: 'primary', order: 1, pos: 1, surface: 'מִי', morph: 'HTi', source: 'oshb_wlc' }],
+    3:  [{ strongsId: 'H410', role: 'primary', order: 1, pos: 2, surface: 'אֵ֣ל', morph: 'HNcmsa', source: 'oshb_wlc' }],
+    4:  [{ strongsId: 'H3644', role: 'primary', order: 1, pos: 3, surface: 'כָּמ֗וֹךָ', morph: 'HR/Sp2ms', source: 'oshb_wlc' }],
+    5:  [{ strongsId: 'H5375', role: 'primary', order: 1, pos: 4, surface: 'נֹשֵׂ֤א', morph: 'HVqrmsa', source: 'oshb_wlc' }],
+    6:  [{ strongsId: 'H5771', role: 'primary', order: 1, pos: 5, surface: 'עָוֺן֙', morph: 'HNcbsa', source: 'oshb_wlc' }],
+    7:  [
+      { strongsId: 'H5674', role: 'primary', order: 1, pos: 6, surface: 'וְעֹבֵ֣ר', morph: 'HC/Vqrmsa', source: 'oshb_wlc' },
+      { strongsId: 'H9002', role: 'secondary', order: 2, pos: 6, surface: 'וְ', morph: 'HC', source: 'oshb_wlc' }
+    ],
+    8:  [{ strongsId: 'H5921', role: 'primary', order: 1, pos: 7, surface: 'עַל', morph: 'HR', source: 'oshb_wlc' }],
+    9:  [{ strongsId: 'H6588', role: 'primary', order: 1, pos: 8, surface: 'פֶּ֔שַׁע', morph: 'HNcmsa', source: 'oshb_wlc' }],
+    10: [
+      { strongsId: 'H7611', role: 'primary', order: 1, pos: 9, surface: 'לִשְׁאֵרִ֖ית', morph: 'HR/Ncfsc', source: 'oshb_wlc' },
+      { strongsId: 'H9005', role: 'secondary', order: 2, pos: 9, surface: 'לִ', morph: 'HR', source: 'oshb_wlc' }
+    ],
+    11: [{ strongsId: 'H5159', role: 'primary', order: 1, pos: 10, surface: 'נַחֲלָת֑וֹ', morph: 'HNcfsc/Sp3ms', source: 'oshb_wlc' }],
+    12: [{ strongsId: 'H3808', role: 'primary', order: 1, pos: 11, surface: 'לֹא', morph: 'HTn', source: 'oshb_wlc' }],
+    13: [{ strongsId: 'H2388', role: 'primary', order: 1, pos: 12, surface: 'הֶחֱזִ֤יק', morph: 'HVhp3ms', source: 'oshb_wlc' }],
+    14: [{ strongsId: 'H9005', role: 'primary', order: 1, pos: 13, surface: 'לָעַד֙', morph: 'HR', source: 'oshb_wlc' }],
+    15: [
+      { strongsId: 'H5703', role: 'primary', order: 1, pos: 13, surface: 'לָעַד֙', morph: 'HR/Ncmsa', source: 'oshb_wlc' },
+      { strongsId: 'H9005', role: 'secondary', order: 2, pos: 13, surface: 'לָ', morph: 'HR', source: 'oshb_wlc' }
+    ],
+    16: [{ strongsId: 'H639', role: 'primary', order: 1, pos: 14, surface: 'אַפּ֔וֹ', morph: 'HNcmsc/Sp3ms', source: 'oshb_wlc' }],
+    17: [
+      { strongsId: 'H3588', role: 'primary', order: 1, pos: 15, surface: 'כִּֽי', morph: 'HC', source: 'oshb_wlc' },
+      { strongsId: 'H1931', role: 'secondary', order: 2, pos: 18, surface: 'הֽוּא', morph: 'HPp3ms', source: 'oshb_wlc' }
+    ],
+    18: [{ strongsId: 'H2654', role: 'primary', order: 1, pos: 16, surface: 'חָפֵ֥ץ', morph: 'HVqp3ms', source: 'oshb_wlc' }],
+    19: [{ strongsId: 'H2617', role: 'primary', order: 1, pos: 17, surface: 'חֶ֖סֶד', morph: 'HNcmsa', source: 'oshb_wlc' }]
+  },
   'Isa 41:10': {
     1:  [{ strongsId: 'H408', role: 'primary', order: 1, pos: 1, surface: 'אַל', morph: 'HTn', source: 'oshb_wlc' }],
     2:  [{ strongsId: 'H3372', role: 'primary', order: 1, pos: 2, surface: 'תִּירָא֙', morph: 'HVqj2ms', source: 'oshb_wlc' }],
@@ -1009,8 +1041,8 @@ for (const v of holdoutVerses) {
           const dErr = verifyDerived(v.lang, origMorph, tok.morph, { morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase });
           if (dErr) failAxis('morphology', `derived(${dErr})`);
 
-          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24, Isa 41:10, Ruth 2:12)
-          if (v.name === 'Ezra 4:24' || v.name === 'Isa 41:10' || v.name === 'Ruth 2:12') {
+          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24, Isa 41:10, Ruth 2:12, Mic 7:18)
+          if (v.name === 'Ezra 4:24' || v.name === 'Isa 41:10' || v.name === 'Ruth 2:12' || v.name === 'Mic 7:18') {
             const segs = (origMorph || '').split('/');
             let expState = null;
             const sMap = { c:'construct', a:'absolute', d:'determined' };
