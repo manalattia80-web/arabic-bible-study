@@ -1,18 +1,18 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "992a9eaf8cf5db68ca45619b25a41ef37a13523fb160a211abe0f27d29041506",
+  "dbSha256": "56b00270c0098250a3b215183bd35a69c41ad869367726158af3c7057f11f559",
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
-  "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2n_ezra5_11.json",
-  "auditReportSha256": "0573b03adb4f87f04cdf3561d0678a82445e1abfc7a1bec70ff9873144764699",
+  "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2o_dan6_22.json",
+  "auditReportSha256": "335e43288fd1bf5a26a433dca071aeb9af5a74e0c668c9f8481d025cc40eb09d",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,
-    "verifiedClean": 221,
+    "verifiedClean": 238,
     "keepLinkRepairMetadata": 0,
     "proposedRepair": 0,
-    "pendingReview": 34
+    "pendingReview": 17
   },
   "verses": [
     {
@@ -8361,10 +8361,10 @@
       "verse": "Dan 6:22",
       "lang": "aramaic",
       "summary": {
-        "verifiedClean": 2,
+        "verifiedClean": 19,
         "keepLinkRepairMetadata": 0,
         "proposedRepair": 0,
-        "pendingReview": 17
+        "pendingReview": 0
       },
       "units": [
         {
@@ -8373,27 +8373,24 @@
           "current": {
             "strongsId": "H426",
             "origPos": 1,
-            "locator": "OSHB:B27.C6.V22.w1",
+            "locator": "OSHB:B27.C6.V23.w1",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H426:primary@w1[אֱלָהִי::oshb_wlc]"
+              "H426:primary@w1[אֱלָהִ֞י:ANcmsc/Sp1cs:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [],
-            "morphology": [
-              "derived(gender '' vs 'm')",
-              "wms H426@w1 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w1')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 1,
+            "strongsId": "H426",
+            "locator": "OSHB:B27.C6.V23.w1",
+            "components": [
+              "H426:primary@w1[אֱלָהִ֞י:ANcmsc/Sp1cs:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 1,
@@ -8439,27 +8436,24 @@
           "current": {
             "strongsId": "H7972",
             "origPos": 2,
-            "locator": "OSHB:B27.C6.V22.w2",
+            "locator": "OSHB:B27.C6.V23.w2",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H7972:primary@w2[שְׁלַח::oshb_wlc]"
+              "H7972:primary@w2[שְׁלַ֣ח:AVqp3ms:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [],
-            "morphology": [
-              "derived(stem '' vs 'peal')",
-              "wms H7972@w2 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w2')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 2,
+            "strongsId": "H7972",
+            "locator": "OSHB:B27.C6.V23.w2",
+            "components": [
+              "H7972:primary@w2[שְׁלַ֣ח:AVqp3ms:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 2,
@@ -8507,7 +8501,7 @@
             "origPos": 3,
             "locator": "OSHB:B27.C6.V23.w3",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
               "H4398:primary@w3[מַלְאֲכֵ֗הּ:ANcmsc/Sp3ms:oshb_wlc]"
             ]
@@ -8572,29 +8566,26 @@
           "current": {
             "strongsId": "H5463",
             "origPos": 4,
-            "locator": "OSHB:B27.C6.V22.w4",
-            "morphSource": "strongs_lexicon",
-            "relationType": null,
+            "locator": "OSHB:B27.C6.V23.w4",
+            "morphSource": "oshb_wlc",
+            "relationType": "primary",
             "components": [
-              "H5463:primary@w4[וּֽסֲגַר::strongs_lexicon]"
+              "H5463:primary@w4[וּֽסֲגַ֛ר:AC/Vqp3ms:oshb_wlc]",
+              "H9002:secondary@w4[וּֽ:AC:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [],
-            "morphology": [
-              "derived(stem '' vs 'peal')",
-              "wms H5463@w4 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w4')",
-              "OSHB locator carries morph_source='strongs_lexicon'",
-              "wms H5463@w4 carries morph_source='strongs_lexicon' instead of oshb_wlc"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 4,
+            "strongsId": "H5463",
+            "locator": "OSHB:B27.C6.V23.w4",
+            "components": [
+              "H5463:primary@w4[וּֽסֲגַ֛ר:AC/Vqp3ms:oshb_wlc]",
+              "H9002:secondary@w4[וּֽ:AC:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 5,
@@ -8638,35 +8629,26 @@
           "arPos": 5,
           "arWord": "أَفْوَاهَ",
           "current": {
-            "strongsId": "H6413",
+            "strongsId": "H6433",
             "origPos": 5,
-            "locator": "OSHB:B27.C6.V22.w5",
+            "locator": "OSHB:B27.C6.V23.w5",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H6413:primary@w5[פְּלֵיטָה::oshb_wlc]"
+              "H6433:primary@w5[פֻּ֥ם:ANcmsc:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H6413' != OSHB lemma '6433' @ w5",
-              "wms H6413@w5 fails OSHB lemma '6433'"
-            ],
-            "lemmaSurface": [
-              "surface 'פְּלֵיטָה' != OSHB 'פֻּ֥ם' @ w5",
-              "wms H6413@w5 surface 'פְּלֵיטָה' != OSHB 'פֻּ֥ם'"
-            ],
-            "morphology": [
-              "derived(gender '' vs 'm')",
-              "wms H6413@w5 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w5')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 5,
+            "strongsId": "H6433",
+            "locator": "OSHB:B27.C6.V23.w5",
+            "components": [
+              "H6433:primary@w5[פֻּ֥ם:ANcmsc:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 8,
@@ -8715,29 +8697,24 @@
           "current": {
             "strongsId": "H744",
             "origPos": 6,
-            "locator": "OSHB:B27.C6.V22.w6",
+            "locator": "OSHB:B27.C6.V23.w6",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H744:primary@w6[אַרְיֵה::oshb_wlc]"
+              "H744:primary@w6[אַרְיָוָתָ֖א:ANcmpd/Td:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [
-              "surface 'אַרְיֵה' != OSHB 'אַרְיָוָתָ֖א' @ w6",
-              "wms H744@w6 surface 'אַרְיֵה' != OSHB 'אַרְיָוָתָ֖א'"
-            ],
-            "morphology": [
-              "wms H744@w6 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w6')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 6,
+            "strongsId": "H744",
+            "locator": "OSHB:B27.C6.V23.w6",
+            "components": [
+              "H744:primary@w6[אַרְיָוָתָ֖א:ANcmpd/Td:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 7,
@@ -8783,26 +8760,26 @@
           "current": {
             "strongsId": "H3809",
             "origPos": 7,
-            "locator": "OSHB:B27.C6.V22.w7",
+            "locator": "OSHB:B27.C6.V23.w7",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H3809:primary@w7[לָא::oshb_wlc]"
+              "H3809:primary@w7[וְלָ֣א:AC/Tn:oshb_wlc]",
+              "H9002:secondary@w7[וְ:AC:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [],
-            "morphology": [
-              "wms H3809@w7 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w7')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 7,
+            "strongsId": "H3809",
+            "locator": "OSHB:B27.C6.V23.w7",
+            "components": [
+              "H3809:primary@w7[וְלָ֣א:AC/Tn:oshb_wlc]",
+              "H9002:secondary@w7[וְ:AC:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 8,
@@ -8848,27 +8825,24 @@
           "current": {
             "strongsId": "H2255",
             "origPos": 8,
-            "locator": "OSHB:B27.C6.V22.w8",
+            "locator": "OSHB:B27.C6.V23.w8",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H2255:primary@w8[חַבְּלוּנִי::oshb_wlc]"
+              "H2255:primary@w8[חַבְּל֑וּנִי:AVpp3mp/Sp1cs:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [],
-            "morphology": [
-              "derived(stem '' vs 'pael')",
-              "wms H2255@w8 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w8')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 8,
+            "strongsId": "H2255",
+            "locator": "OSHB:B27.C6.V23.w8",
+            "components": [
+              "H2255:primary@w8[חַבְּל֑וּנִי:AVpp3mp/Sp1cs:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 8,
@@ -8916,33 +8890,29 @@
           "arWord": "لأَنِّي",
           "current": {
             "strongsId": "H6903",
-            "origPos": 9,
-            "locator": "OSHB:B27.C6.V22.w9",
+            "origPos": 10,
+            "locator": "OSHB:B27.C6.V23.w10",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H6903:primary@w9[קֳבֵל::oshb_wlc]"
+              "H6903:primary@w10[קֳבֵ֗ל:AC:oshb_wlc]",
+              "H3606:secondary@w9[כָּל:AC/C:oshb_wlc]",
+              "H1768:secondary@w11[דִּ֤י:AC:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H6903' != OSHB lemma 'k/3606' @ w9",
-              "wms H6903@w9 fails OSHB lemma 'k/3606'"
-            ],
-            "lemmaSurface": [
-              "surface 'קֳבֵל' != OSHB 'כָּל' @ w9",
-              "wms H6903@w9 surface 'קֳבֵל' != OSHB 'כָּל'"
-            ],
-            "morphology": [
-              "wms H6903@w9 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w9')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 10,
+            "strongsId": "H6903",
+            "locator": "OSHB:B27.C6.V23.w10",
+            "components": [
+              "H6903:primary@w10[קֳבֵ֗ל:AC:oshb_wlc]",
+              "H3606:secondary@w9[כָּל:AC/C:oshb_wlc]",
+              "H1768:secondary@w11[דִּ֤י:AC:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 12,
@@ -8990,33 +8960,27 @@
           "arWord": "وُجِدْتُ",
           "current": {
             "strongsId": "H7912",
-            "origPos": 10,
-            "locator": "OSHB:B27.C6.V22.w10",
+            "origPos": 14,
+            "locator": "OSHB:B27.C6.V23.w14",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H7912:primary@w10[שְׁכַח::oshb_wlc]"
+              "H7912:primary@w14[הִשְׁתְּכַ֣חַת:AVup3fs:oshb_wlc]",
+              "H9005:secondary@w15[לִ֔י:AR/Sp1cs:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H7912' != OSHB lemma '6903' @ w10",
-              "wms H7912@w10 fails OSHB lemma '6903'"
-            ],
-            "lemmaSurface": [
-              "surface 'שְׁכַח' != OSHB 'קֳבֵ֗ל' @ w10",
-              "wms H7912@w10 surface 'שְׁכַח' != OSHB 'קֳבֵ֗ל'"
-            ],
-            "morphology": [
-              "wms H7912@w10 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w10')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 14,
+            "strongsId": "H7912",
+            "locator": "OSHB:B27.C6.V23.w14",
+            "components": [
+              "H7912:primary@w14[הִשְׁתְּכַ֣חַת:AVup3fs:oshb_wlc]",
+              "H9005:secondary@w15[לִ֔י:AR/Sp1cs:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 12,
@@ -9061,35 +9025,25 @@
           "arWord": "بَرِيئًا",
           "current": {
             "strongsId": "H2136",
-            "origPos": 11,
-            "locator": "OSHB:B27.C6.V22.w11",
-            "morphSource": "strongs_lexicon",
-            "relationType": null,
+            "origPos": 13,
+            "locator": "OSHB:B27.C6.V23.w13",
+            "morphSource": "oshb_wlc",
+            "relationType": "primary",
             "components": [
-              "H2136:primary@w11[זָכוּ::strongs_lexicon]"
+              "H2136:primary@w13[זָכוּ֙:ANcfsa:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H2136' != OSHB lemma '1768' @ w11",
-              "wms H2136@w11 fails OSHB lemma '1768'"
-            ],
-            "lemmaSurface": [
-              "surface 'זָכוּ' != OSHB 'דִּ֤י' @ w11",
-              "wms H2136@w11 surface 'זָכוּ' != OSHB 'דִּ֤י'"
-            ],
-            "morphology": [
-              "wms H2136@w11 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w11')",
-              "OSHB locator carries morph_source='strongs_lexicon'",
-              "wms H2136@w11 carries morph_source='strongs_lexicon' instead of oshb_wlc"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 13,
+            "strongsId": "H2136",
+            "locator": "OSHB:B27.C6.V23.w13",
+            "components": [
+              "H2136:primary@w13[זָכוּ֙:ANcfsa:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 12,
@@ -9138,30 +9092,24 @@
           "current": {
             "strongsId": "H6925",
             "origPos": 12,
-            "locator": "OSHB:B27.C6.V22.w12",
+            "locator": "OSHB:B27.C6.V23.w12",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H6925:primary@w12[קֳדָם::oshb_wlc]"
+              "H6925:primary@w12[קָֽדָמ֨וֹהִי֙:AR/Sp3ms:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [],
-            "lemmaSurface": [
-              "surface 'קֳדָם' != OSHB 'קָֽדָמ֨וֹהִי֙' @ w12",
-              "wms H6925@w12 surface 'קֳדָם' != OSHB 'קָֽדָמ֨וֹהִי֙'"
-            ],
-            "morphology": [
-              "derived(person '' vs '3')",
-              "wms H6925@w12 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w12')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 12,
+            "strongsId": "H6925",
+            "locator": "OSHB:B27.C6.V23.w12",
+            "components": [
+              "H6925:primary@w12[קָֽדָמ֨וֹהִי֙:AR/Sp3ms:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 15,
@@ -9209,34 +9157,27 @@
           "arWord": "وَقُدَّامَكَ",
           "current": {
             "strongsId": "H6925",
-            "origPos": 13,
-            "locator": "OSHB:B27.C6.V22.w13",
+            "origPos": 18,
+            "locator": "OSHB:B27.C6.V23.w18",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H6925:primary@w13[קֳדָם::oshb_wlc]"
+              "H6925:primary@w18[קָֽדָמָךְ֙:AR/Sp2ms:oshb_wlc]",
+              "H9002:secondary@w16[וְ:AC:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H6925' != OSHB lemma '2136' @ w13",
-              "wms H6925@w13 fails OSHB lemma '2136'"
-            ],
-            "lemmaSurface": [
-              "surface 'קֳדָם' != OSHB 'זָכוּ֙' @ w13",
-              "wms H6925@w13 surface 'קֳדָם' != OSHB 'זָכוּ֙'"
-            ],
-            "morphology": [
-              "derived(gender '' vs 'f')",
-              "wms H6925@w13 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w13')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 18,
+            "strongsId": "H6925",
+            "locator": "OSHB:B27.C6.V23.w18",
+            "components": [
+              "H6925:primary@w18[קָֽדָמָךְ֙:AR/Sp2ms:oshb_wlc]",
+              "H9002:secondary@w16[וְ:AC:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 15,
@@ -9281,34 +9222,25 @@
           "arWord": "أَيْضًا",
           "current": {
             "strongsId": "H638",
-            "origPos": 14,
-            "locator": "OSHB:B27.C6.V22.w14",
+            "origPos": 16,
+            "locator": "OSHB:B27.C6.V23.w16",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H638:primary@w14[אַף::oshb_wlc]"
+              "H638:primary@w16[וְאַ֤ף:AC/Ta:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H638' != OSHB lemma '7912' @ w14",
-              "wms H638@w14 fails OSHB lemma '7912'"
-            ],
-            "lemmaSurface": [
-              "surface 'אַף' != OSHB 'הִשְׁתְּכַ֣חַת' @ w14",
-              "wms H638@w14 surface 'אַף' != OSHB 'הִשְׁתְּכַ֣חַת'"
-            ],
-            "morphology": [
-              "derived(pos 'particle' vs verb 'AVup3fs')",
-              "wms H638@w14 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w14')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 16,
+            "strongsId": "H638",
+            "locator": "OSHB:B27.C6.V23.w16",
+            "components": [
+              "H638:primary@w16[וְאַ֤ף:AC/Ta:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 16,
@@ -9353,7 +9285,7 @@
           "arWord": "أَيُّهَا",
           "current": {
             "strongsId": null,
-            "origPos": 15,
+            "origPos": null,
             "locator": "AR_SYNTACTIC:B27.C6.V22.w15",
             "morphSource": "syntactic_ar",
             "relationType": "vocative_particle",
@@ -9363,7 +9295,7 @@
           "status": "VERIFIED_CLEAN",
           "proposalType": "verified_clean",
           "proposed": {
-            "w": 15,
+            "w": null,
             "strongsId": null,
             "locator": "AR_SYNTACTIC:B27.C6.V22.w15",
             "components": []
@@ -9411,34 +9343,26 @@
           "arPos": 16,
           "arWord": "الْمَلِكُ",
           "current": {
-            "strongsId": "H4399",
-            "origPos": 16,
-            "locator": "OSHB:B27.C6.V22.w16",
+            "strongsId": "H4430",
+            "origPos": 19,
+            "locator": "OSHB:B27.C6.V23.w19",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H4399:primary@w16[מַלְאֲכֵהּ::oshb_wlc]"
+              "H4430:primary@w19[מַלְכָּ֔א:ANcmsd/Td:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H4399' != OSHB lemma 'c/638' @ w16",
-              "wms H4399@w16 fails OSHB lemma 'c/638'"
-            ],
-            "lemmaSurface": [
-              "surface 'מַלְאֲכֵהּ' != OSHB 'וְאַ֤ף' @ w16",
-              "wms H4399@w16 surface 'מַלְאֲכֵהּ' != OSHB 'וְאַ֤ף'"
-            ],
-            "morphology": [
-              "wms H4399@w16 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w16')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 19,
+            "strongsId": "H4430",
+            "locator": "OSHB:B27.C6.V23.w19",
+            "components": [
+              "H4430:primary@w19[מַלְכָּ֔א:ANcmsd/Td:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 19,
@@ -9483,34 +9407,25 @@
           "arWord": "لَمْ",
           "current": {
             "strongsId": "H3809",
-            "origPos": 17,
-            "locator": "OSHB:B27.C6.V22.w17",
+            "origPos": 21,
+            "locator": "OSHB:B27.C6.V23.w21",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H3809:primary@w17[לָא::oshb_wlc]"
+              "H3809:primary@w21[לָ֥א:ATn:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H3809' != OSHB lemma '6925' @ w17",
-              "wms H3809@w17 fails OSHB lemma '6925'"
-            ],
-            "lemmaSurface": [
-              "surface 'לָא' != OSHB 'קדמיך' @ w17",
-              "wms H3809@w17 surface 'לָא' != OSHB 'קדמיך'"
-            ],
-            "morphology": [
-              "derived(pos 'particle' vs preposition)",
-              "wms H3809@w17 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w17')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 21,
+            "strongsId": "H3809",
+            "locator": "OSHB:B27.C6.V23.w21",
+            "components": [
+              "H3809:primary@w21[לָ֥א:ATn:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 19,
@@ -9558,34 +9473,25 @@
           "arWord": "أَفْعَلْ",
           "current": {
             "strongsId": "H5648",
-            "origPos": 18,
-            "locator": "OSHB:B27.C6.V22.w18",
+            "origPos": 22,
+            "locator": "OSHB:B27.C6.V23.w22",
             "morphSource": "oshb_wlc",
-            "relationType": null,
+            "relationType": "primary",
             "components": [
-              "H5648:primary@w18[עַבְדֵֽת::oshb_wlc]"
+              "H5648:primary@w22[עַבְדֵֽת:AVqp1cs:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H5648' != OSHB lemma '6925' @ w18",
-              "wms H5648@w18 fails OSHB lemma '6925'"
-            ],
-            "lemmaSurface": [
-              "surface 'עַבְדֵֽת' != OSHB 'קָֽדָמָךְ֙' @ w18",
-              "wms H5648@w18 surface 'עַבְדֵֽת' != OSHB 'קָֽדָמָךְ֙'"
-            ],
-            "morphology": [
-              "derived(pos 'verb' vs preposition)",
-              "wms H5648@w18 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w18')"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 22,
+            "strongsId": "H5648",
+            "locator": "OSHB:B27.C6.V23.w22",
+            "components": [
+              "H5648:primary@w22[עַבְדֵֽת:AVqp1cs:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 21,
@@ -9629,36 +9535,26 @@
           "arPos": 19,
           "arWord": "ذَنْبًا",
           "current": {
-            "strongsId": "H2269",
-            "origPos": 19,
-            "locator": "OSHB:B27.C6.V22.w19",
-            "morphSource": "strongs_lexicon",
-            "relationType": null,
+            "strongsId": "H2248",
+            "origPos": 20,
+            "locator": "OSHB:B27.C6.V23.w20",
+            "morphSource": "oshb_wlc",
+            "relationType": "primary",
             "components": [
-              "H2269:primary@w19[חֲבַר::strongs_lexicon]"
+              "H2248:primary@w20[חֲבוּלָ֖ה:ANcfsa:oshb_wlc]"
             ]
           },
-          "existingAlerts": {
-            "lexical": [
-              "Strongs 'H2269' != OSHB lemma '4430' @ w19",
-              "wms H2269@w19 fails OSHB lemma '4430'"
-            ],
-            "lemmaSurface": [
-              "surface 'חֲבַר' != OSHB 'מַלְכָּ֔א' @ w19",
-              "wms H2269@w19 surface 'חֲבַר' != OSHB 'מַלְכָּ֔א'"
-            ],
-            "morphology": [
-              "wms H2269@w19 missing mandatory orig_morphology"
-            ],
-            "sourceLocator": [
-              "OSHB versification mismatch: locator C6.V22 != canonical Dan.6.23 ('OSHB:B27.C6.V22.w19')",
-              "OSHB locator carries morph_source='strongs_lexicon'",
-              "wms H2269@w19 carries morph_source='strongs_lexicon' instead of oshb_wlc"
+          "existingAlerts": null,
+          "status": "VERIFIED_CLEAN",
+          "proposalType": "verified_clean",
+          "proposed": {
+            "w": 20,
+            "strongsId": "H2248",
+            "locator": "OSHB:B27.C6.V23.w20",
+            "components": [
+              "H2248:primary@w20[חֲבוּלָ֖ה:ANcfsa:oshb_wlc]"
             ]
           },
-          "status": "PENDING_REVIEW",
-          "proposalType": "ambiguous_needs_review",
-          "proposed": null,
           "topCandidates": [
             {
               "w": 22,

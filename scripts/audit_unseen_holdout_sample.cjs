@@ -1167,6 +1167,42 @@ const VERIFIED_REQUIRED_COMPONENTS = {
       { "strongsId": "H3635", "role": "primary", "order": 1, "pos": 25, "surface": "וְשַׁכְלְלֵֽהּ", "morph": "AC/Vep3ms/Sp3ms", "source": "oshb_wlc" },
       { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 25, "surface": "וְ", "morph": "AC", "source": "oshb_wlc" }
     ]
+  },
+  'Dan 6:22': {
+    "1":  [{ "strongsId": "H426",  "role": "primary", "order": 1, "pos": 1,  "surface": "אֱלָהִ֞י",     "morph": "ANcmsc/Sp1cs", "source": "oshb_wlc" }],
+    "2":  [{ "strongsId": "H7972", "role": "primary", "order": 1, "pos": 2,  "surface": "שְׁלַ֣ח",       "morph": "AVqp3ms",      "source": "oshb_wlc" }],
+    "3":  [{ "strongsId": "H4398", "role": "primary", "order": 1, "pos": 3,  "surface": "מַלְאֲכֵ֗הּ",   "morph": "ANcmsc/Sp3ms", "source": "oshb_wlc" }],
+    "4":  [
+      { "strongsId": "H5463", "role": "primary",   "order": 1, "pos": 4,  "surface": "וּֽסֲגַ֛ר",     "morph": "AC/Vqp3ms",    "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 4,  "surface": "וּֽ",           "morph": "AC",           "source": "oshb_wlc" }
+    ],
+    "5":  [{ "strongsId": "H6433", "role": "primary", "order": 1, "pos": 5,  "surface": "פֻּ֥ם",         "morph": "ANcmsc",       "source": "oshb_wlc" }],
+    "6":  [{ "strongsId": "H744",  "role": "primary", "order": 1, "pos": 6,  "surface": "אַרְיָוָתָ֖א",   "morph": "ANcmpd/Td",    "source": "oshb_wlc" }],
+    "7":  [
+      { "strongsId": "H3809", "role": "primary",   "order": 1, "pos": 7,  "surface": "וְלָ֣א",        "morph": "AC/Tn",        "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 7,  "surface": "וְ",           "morph": "AC",           "source": "oshb_wlc" }
+    ],
+    "8":  [{ "strongsId": "H2255", "role": "primary", "order": 1, "pos": 8,  "surface": "חַבְּל֑וּנִי",   "morph": "AVpp3mp/Sp1cs","source": "oshb_wlc" }],
+    "9":  [
+      { "strongsId": "H6903", "role": "primary",   "order": 1, "pos": 10, "surface": "קֳבֵ֗ל",        "morph": "AC",           "source": "oshb_wlc" },
+      { "strongsId": "H3606", "role": "secondary", "order": 2, "pos": 9,  "surface": "כָּל",          "morph": "AC/C",         "source": "oshb_wlc" },
+      { "strongsId": "H1768", "role": "secondary", "order": 3, "pos": 11, "surface": "דִּ֤י",         "morph": "AC",           "source": "oshb_wlc" }
+    ],
+    "10": [
+      { "strongsId": "H7912", "role": "primary",   "order": 1, "pos": 14, "surface": "הִשְׁתְּכַ֣חַת", "morph": "AVup3fs",      "source": "oshb_wlc" },
+      { "strongsId": "H9005", "role": "secondary", "order": 2, "pos": 15, "surface": "לִ֔י",          "morph": "AR/Sp1cs",     "source": "oshb_wlc" }
+    ],
+    "11": [{ "strongsId": "H2136", "role": "primary", "order": 1, "pos": 13, "surface": "זָכוּ֙",       "morph": "ANcfsa",       "source": "oshb_wlc" }],
+    "12": [{ "strongsId": "H6925", "role": "primary", "order": 1, "pos": 12, "surface": "קָֽדָמ֨וֹהִי֙", "morph": "AR/Sp3ms",     "source": "oshb_wlc" }],
+    "13": [
+      { "strongsId": "H6925", "role": "primary",   "order": 1, "pos": 18, "surface": "קָֽדָמָךְ֙",     "morph": "AR/Sp2ms",     "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 16, "surface": "וְ",           "morph": "AC",           "source": "oshb_wlc" }
+    ],
+    "14": [{ "strongsId": "H638",  "role": "primary", "order": 1, "pos": 16, "surface": "וְאַ֤ף",       "morph": "AC/Ta",        "source": "oshb_wlc" }],
+    "16": [{ "strongsId": "H4430", "role": "primary", "order": 1, "pos": 19, "surface": "מַלְכָּ֔א",     "morph": "ANcmsd/Td",    "source": "oshb_wlc" }],
+    "17": [{ "strongsId": "H3809", "role": "primary", "order": 1, "pos": 21, "surface": "לָ֥א",         "morph": "ATn",          "source": "oshb_wlc" }],
+    "18": [{ "strongsId": "H5648", "role": "primary", "order": 1, "pos": 22, "surface": "עַבְדֵֽת",       "morph": "AVqp1cs",      "source": "oshb_wlc" }],
+    "19": [{ "strongsId": "H2248", "role": "primary", "order": 1, "pos": 20, "surface": "חֲבוּלָ֖ה",     "morph": "ANcfsa",       "source": "oshb_wlc" }]
   }
 };
 
@@ -1418,6 +1454,9 @@ for (const v of holdoutVerses) {
               failAxis('sourceLocator', `wms ${cS} missing mandatory orig_word_position`);
               continue;
             }
+            if (cRole === 'primary' && locIdx && cP && cP !== locIdx) {
+              failAxis('sourceLocator', `primary component pos ${cP} != mapping locator w${locIdx}`);
+            }
 
             const cTok = tokens.find(t => t.index === cP);
             if (!cTok) {
@@ -1513,8 +1552,8 @@ for (const v of holdoutVerses) {
           const dErr = verifyDerived(v.lang, origMorph, tok.morph, { morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase });
           if (dErr) failAxis('morphology', `derived(${dErr})`);
 
-          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24, Isa 41:10, Ruth 2:12, Mic 7:18, 2Chr 7:14, Ezra 5:11)
-          if (v.name === 'Ezra 4:24' || v.name === 'Isa 41:10' || v.name === 'Ruth 2:12' || v.name === 'Mic 7:18' || v.name === '2Chr 7:14' || v.name === 'Ezra 5:11') {
+          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24, Isa 41:10, Ruth 2:12, Mic 7:18, 2Chr 7:14, Ezra 5:11, Dan 6:22)
+          if (v.name === 'Ezra 4:24' || v.name === 'Isa 41:10' || v.name === 'Ruth 2:12' || v.name === 'Mic 7:18' || v.name === '2Chr 7:14' || v.name === 'Ezra 5:11' || v.name === 'Dan 6:22') {
             const segs = (origMorph || '').split('/');
             let expState = null;
             const sMap = { c:'construct', a:'absolute', d:'determined' };
@@ -1543,6 +1582,9 @@ for (const v of holdoutVerses) {
             if (!cP || isNaN(cP)) {
               failAxis('sourceLocator', `wms ${cS} missing mandatory orig_word_position`);
               continue;
+            }
+            if (cRole === 'primary' && locIdx && cP && cP !== locIdx) {
+              failAxis('sourceLocator', `primary component pos ${cP} != mapping locator w${locIdx}`);
             }
 
             const cTok = oshbTokens.find(t => t.index === cP);
