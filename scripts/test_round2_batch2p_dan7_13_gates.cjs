@@ -84,6 +84,8 @@ function runLiveAudit(targetDb) {
     execError = err;
   }
 
+  if (execError) { try { fs.unlinkSync(tmpOut); } catch (_) {} return { error: execError.message }; }
+
   if (!fs.existsSync(tmpOut)) {
     return {
       error: `Audit failed to produce output report file. ${execError ? execError.message : ''}`
