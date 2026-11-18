@@ -1,11 +1,11 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "116ab4a39f586b68acdfc77f78e6b0b2d38d544a0f5486adafaa674378dcfcff",
+  "dbSha256": "992a9eaf8cf5db68ca45619b25a41ef37a13523fb160a211abe0f27d29041506",
   "manifestPath": "scripts/unseen_holdout_round2_15_verses_manifest.json",
   "manifestSha256": "7a51f1403c70375be8c9eb150a9d9c71e6891995645ecdbee40a54ab6ef5603a",
   "exclusionKeysSha256": "47cc6f936df91388c7cae936a303d6333d9b516b2016c9c21ebfa0af1b6478fe",
   "auditReportPath": "scripts/unseen_holdout_round2_4axis_batch2n_ezra5_11.json",
-  "auditReportSha256": "26a35bd46ff9f1d5e67d1bb61b15e60863a593b9c45fefc8df419629eeecabb6",
+  "auditReportSha256": "0573b03adb4f87f04cdf3561d0678a82445e1abfc7a1bec70ff9873144764699",
   "note": "Preliminary alignment proposals; scores are heuristic rankings, NOT calibrated correctness probabilities.",
   "totals": {
     "totalUnits": 255,
@@ -8729,7 +8729,6 @@
               "wms H744@w6 surface 'אַרְיֵה' != OSHB 'אַרְיָוָתָ֖א'"
             ],
             "morphology": [
-              "derived(gender '' vs 'm')",
               "wms H744@w6 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
@@ -9649,7 +9648,6 @@
               "wms H2269@w19 surface 'חֲבַר' != OSHB 'מַלְכָּ֔א'"
             ],
             "morphology": [
-              "derived(gender '' vs 'm')",
               "wms H2269@w19 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
@@ -10217,7 +10215,6 @@
               "wms H6053@w8 surface 'עֲנָנָה' != OSHB 'שְׁמַיָּ֔א'"
             ],
             "morphology": [
-              "derived(gender '' vs 'm')",
               "wms H6053@w8 missing mandatory orig_morphology"
             ],
             "sourceLocator": [
@@ -10713,7 +10710,6 @@
               "wms H4481@w15 surface 'מִן' != OSHB 'יֽוֹמַיָּא֙'"
             ],
             "morphology": [
-              "derived(gender '' vs 'm')",
               "wms H4481@w15 missing mandatory orig_morphology"
             ],
             "sourceLocator": []

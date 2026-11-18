@@ -102,6 +102,10 @@
  *  94. Dropping secondary H9005 from #24 is rejected.
  *  95. Displaced #25 "وَأَكْمَلَهُ." to out-of-bounds w26 is rejected.
  *  96. Dropping secondary H9002 from #25 is rejected.
+ *  97. Mutating #25 "وَأَكْمَلَهُ." orig_word to Greek 'τελέω' is rejected.
+ *  98. Mutating #25 "وَأَكْمَلَهُ." orig_word to mismatched Hebrew root 'קָדַשׁ' is rejected.
+ *  99. Mutating #3 "الْجَوَابِ" orig_word to Greek 'ἀπόκρισις' is rejected.
+ * 100. Mutating #9 "السَّمَاءِ" orig_word to Greek 'οὐρανός' is rejected.
  */
 
 const fs = require('fs');
@@ -213,8 +217,9 @@ check('Gate 4: #2 هذَا -> w1 H3660 compound_phrase',
 
 // #3 «الْجَوَابِ»
 const r3 = rows[2];
-check('Gate 5: #3 الْجَوَابِ -> w2 H6600 determined',
-  r3.strongsId === 'H6600' && r3.locator === 'OSHB:B15.C5.V11.w2' && r3.morphCase === 'determined' && r3.morphPos === 'noun'
+check('Gate 5: #3 الْجَوَابِ -> w2 H6600 determined & lexical parity',
+  r3.strongsId === 'H6600' && r3.locator === 'OSHB:B15.C5.V11.w2' && r3.morphCase === 'determined' && r3.morphPos === 'noun' &&
+  (r3.origWord === 'פִּתְגָּם' || r3.origWord === 'פִּתְגָם')
 );
 
 // #4 «جَاوَبُوا»
@@ -252,8 +257,9 @@ check('Gate 10: #8 إِلهِ -> w9 H426 construct + secondary w8 H1768',
 
 // #9 «السَّمَاءِ»
 const r9 = rows[8];
-check('Gate 11: #9 السَّمَاءِ -> w10 H8065 determined',
-  r9.strongsId === 'H8065' && r9.locator === 'OSHB:B15.C5.V11.w10' && r9.morphCase === 'determined' && r9.number === 'plural'
+check('Gate 11: #9 السَّمَاءِ -> w10 H8065 determined & lexical parity',
+  r9.strongsId === 'H8065' && r9.locator === 'OSHB:B15.C5.V11.w10' && r9.morphCase === 'determined' && r9.number === 'plural' &&
+  (r9.origWord === 'שָׁמַיִן' || r9.origWord === 'שְׁמַיִן')
 );
 
 // #10 «وَالأَرْضِ،»
@@ -354,9 +360,10 @@ check('Gate 26: #24 لإِسْرَائِيلَ -> w22 H3479 proper_noun + second
 
 // #25 «وَأَكْمَلَهُ.»
 const r25 = rows[24];
-check('Gate 27: #25 وَأَكْمَلَهُ -> w25 H3635 shaphel qatal 3ms + secondary H9002',
+check('Gate 27: #25 وَأَكْمَلَهُ -> w25 H3635 shaphel qatal 3ms + secondary H9002 & lexical parity',
   r25.strongsId === 'H3635' && r25.locator === 'OSHB:B15.C5.V11.w25' && r25.stem === 'shaphel' && r25.tense === 'qatal' &&
-  r25.comps.includes('H9002:secondary@w25')
+  r25.comps.includes('H9002:secondary@w25') &&
+  (r25.origWord === 'כְּלַל' || r25.origWord === 'שַׁכְלֵל')
 );
 
 // ---------------------------------------------------------
@@ -732,6 +739,26 @@ testMutation('Gate 95: Displaced #25 وَأَكْمَلَهُ to out-of-bounds w
 // 96. Dropping secondary H9002 from #25
 testMutation('Gate 96: Dropping secondary H9002 from #25 is rejected',
   `DELETE FROM word_mapping_strongs WHERE mapping_id = (SELECT id FROM word_mappings WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 25) AND strongs_id = 'H9002';`
+);
+
+// 97. Mutating #25 orig_word to Greek 'τελέω'
+testMutation('Gate 97: Mutating #25 وَأَكْمَلَهُ orig_word to Greek τελέω is rejected',
+  `UPDATE word_mappings SET orig_word = 'τελέω' WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 25;`
+);
+
+// 98. Mutating #25 orig_word to unrelated Hebrew root 'קָדַשׁ'
+testMutation('Gate 98: Mutating #25 وَأَكْمَلَهُ orig_word to mismatched Hebrew root קָדַשׁ is rejected',
+  `UPDATE word_mappings SET orig_word = 'קָדַשׁ' WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 25;`
+);
+
+// 99. Mutating #3 orig_word to Greek 'ἀπόκρισις'
+testMutation('Gate 99: Mutating #3 الْجَوَابِ orig_word to Greek ἀπόκρισις is rejected',
+  `UPDATE word_mappings SET orig_word = 'ἀπόκρισις' WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 3;`
+);
+
+// 100. Mutating #9 orig_word to Greek 'οὐρανός'
+testMutation('Gate 100: Mutating #9 السَّمَاءِ orig_word to Greek οὐρανός is rejected',
+  `UPDATE word_mappings SET orig_word = 'οὐρανός' WHERE verse_id = '${VERSE_ID}' AND ar_word_position = 9;`
 );
 
 // Clean up scratch db

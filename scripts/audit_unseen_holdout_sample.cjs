@@ -173,6 +173,26 @@ for (const line of query("SELECT strongs_id || '|' || COALESCE(original_word,'')
   strongsGreekMap.set(id, orig);
 }
 
+// Load Hebrew Strong's entries map for cross-checking Strong's ID <-> lemma
+const strongsHebrewMap = new Map();
+for (const line of query("SELECT strongs_id || '|' || COALESCE(original_word,'') FROM strongs_entries WHERE strongs_id LIKE 'H%';").split('\n')) {
+  if (!line) continue;
+  const [id, orig] = line.split('|');
+  strongsHebrewMap.set(id, orig);
+}
+
+const AUTHORIZED_HEBREW_LEMMA_VARIANTS = {
+  'H3635': ['שַׁכְלֵל', 'שכלל', 'כְּלַל', 'כלל'],
+  'H6600': ['פִּתְגָם', 'פִּתְגָּם', 'פתגם'],
+  'H8065': ['שְׁמַיִן', 'שָׁמַיִן', 'שמין'],
+  'H7451': ['רַע', 'רָעַע', 'רעע', 'רع'],
+};
+
+function stripHebrewDiacritics(s) {
+  if (!s) return '';
+  return s.normalize('NFD').replace(/[\u0591-\u05C7\s\u05BE׃\/]/g, '');
+}
+
 // ---------------------------------------------------------------------------
 // 3. Matching Helpers (OSHB, SBLGNT, Scrivener TR)
 // ---------------------------------------------------------------------------
@@ -1464,6 +1484,26 @@ for (const v of holdoutVerses) {
             canonHebSurface(rawParts.slice(1).join('')) === dbC
           );
           if (!surfOk) failAxis('lemmaSurface', `surface '${origSurface}' != OSHB '${tok.text}' @ w${locIdx}`);
+          if (origWord) {
+            if (/[\u0370-\u03FF\u1F00-\u1FFF]/.test(origWord)) {
+              failAxis('lemmaSurface', `Hebrew/Aramaic orig_word '${origWord}' contains Greek characters @ w${locIdx}`);
+            } else if (/[\u0600-\u06FF]/.test(origWord)) {
+              failAxis('lemmaSurface', `Hebrew/Aramaic orig_word '${origWord}' contains Arabic characters @ w${locIdx}`);
+            } else if (/[a-zA-Z]/.test(origWord)) {
+              failAxis('lemmaSurface', `Hebrew/Aramaic orig_word '${origWord}' contains Latin characters @ w${locIdx}`);
+            } else if (strongsId && strongsId.startsWith('H') && !['H9002','H9003','H9004','H9005','H9009'].includes(strongsId)) {
+              const lex = strongsHebrewMap.get(strongsId);
+              if (lex) {
+                const wCons = stripHebrewDiacritics(origWord);
+                const lCons = stripHebrewDiacritics(lex);
+                const auth = AUTHORIZED_HEBREW_LEMMA_VARIANTS[strongsId];
+                const isAuth = auth && (auth.includes(origWord) || auth.some(v => stripHebrewDiacritics(v) === wCons));
+                if (origWord !== lex && wCons !== lCons && !isAuth) {
+                  failAxis('lemmaSurface', `orig_word '${origWord}' != Strong's lexicon '${lex}' for ${strongsId} @ w${locIdx}`);
+                }
+              }
+            }
+          }
           if (origMorph && tok.morph && !morphMatches(origMorph, tok.morph)) {
             failAxis('morphology', `morph '${origMorph}' != OSHB '${tok.morph}'`);
           }
