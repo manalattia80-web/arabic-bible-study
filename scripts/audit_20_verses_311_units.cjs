@@ -169,7 +169,7 @@ function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, morphStr, dbMorph)
     if ((numStr === '1980' && cleanPart === '3212') || (numStr === '3212' && cleanPart === '1980')) {
       return true;
     }
-    if (numStr === '4480' && cleanPart === 'm') {
+    if ((numStr === '4480' || numStr === '4481') && cleanPart === 'm') {
       return true;
     }
   }

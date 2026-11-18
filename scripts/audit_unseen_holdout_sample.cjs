@@ -196,7 +196,7 @@ function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, dbMorph) {
   if (strongsId === 'H9003') return (dbMorph === 'HR' || dbMorph === 'AR' || /^([HA]?R)/.test(dbMorph || '')) && lemmaStr.split('/').includes('b');
   if (strongsId === 'H9004') return (dbMorph === 'HR' || dbMorph === 'AR' || /^([HA]?R)/.test(dbMorph || '')) && lemmaStr.split('/').includes('k');
   if (strongsId === 'H9009') return (dbMorph === 'HTd' || /^HTd|Td/.test(dbMorph || '')) && lemmaStr.split('/').includes('d');
-  const prepAllow = new Set(['H9005','H9003','H9004','H413','H5921','H5922','H4480','H5973','H8478','H996','H310','H854','H5704','H5705','H4616','H3890','H1157','H5668','H5048','H6925','H8460','H3644','H5049']);
+  const prepAllow = new Set(['H9005','H9003','H9004','H413','H5921','H5922','H4480','H4481','H5973','H8478','H996','H310','H854','H5704','H5705','H4616','H3890','H1157','H5668','H5048','H6925','H8460','H3644','H5049']);
   if ((dbMorph === 'HR' || dbMorph === 'AR') && lemmaStr.includes('/') && !prepAllow.has(strongsId)) {
     return false;
   }
@@ -204,7 +204,7 @@ function verifyHebrewStrongsAgainstLemma(strongsId, lemmaStr, dbMorph) {
     const cleanPart = part.replace(/\s+[a-z]$/, '').trim();
     if (cleanPart === numStr) return true;
     if ((numStr === '1980' && cleanPart === '3212') || (numStr === '3212' && cleanPart === '1980')) return true;
-    if (numStr === '4480' && cleanPart === 'm') return true;
+    if ((numStr === '4480' || numStr === '4481') && cleanPart === 'm') return true;
   }
   return false;
 }
@@ -1064,6 +1064,89 @@ const VERIFIED_REQUIRED_COMPONENTS = {
             "source": "oshb_wlc"
         }
     ]
+  },
+  'Ezra 5:11': {
+    "1": [
+      { "strongsId": "H3660", "role": "primary", "order": 1, "pos": 1, "surface": "וּכְנֵ֥מָא", "morph": "AC/D", "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 1, "surface": "וּ", "morph": "AC", "source": "oshb_wlc" }
+    ],
+    "2": [
+      { "strongsId": "H3660", "role": "primary", "order": 1, "pos": 1, "surface": "וּכְנֵ֥מָא", "morph": "AC/D", "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 1, "surface": "וּ", "morph": "AC", "source": "oshb_wlc" }
+    ],
+    "3": [
+      { "strongsId": "H6600", "role": "primary", "order": 1, "pos": 2, "surface": "פִתְגָמָ֖א", "morph": "ANcmsd/Td", "source": "oshb_wlc" }
+    ],
+    "4": [
+      { "strongsId": "H8421", "role": "primary", "order": 1, "pos": 3, "surface": "הֲתִיב֣וּנָא", "morph": "AVhp3mp/Sp1cp", "source": "oshb_wlc" }
+    ],
+    "5": [
+      { "strongsId": "H560", "role": "primary", "order": 1, "pos": 4, "surface": "לְמֵמַ֑ר", "morph": "AR/Vqc", "source": "oshb_wlc" },
+      { "strongsId": "H9005", "role": "secondary", "order": 2, "pos": 4, "surface": "לְ", "morph": "AR", "source": "oshb_wlc" }
+    ],
+    "6": [
+      { "strongsId": "H586", "role": "primary", "order": 1, "pos": 5, "surface": "אֲנַ֣חְנָא", "morph": "APp1cp", "source": "oshb_wlc" },
+      { "strongsId": "H1994", "role": "secondary", "order": 2, "pos": 6, "surface": "הִמּ֡וֹ", "morph": "ATa", "source": "oshb_wlc" }
+    ],
+    "7": [
+      { "strongsId": "H5649", "role": "primary", "order": 1, "pos": 7, "surface": "עַבְדוֹהִי֩", "morph": "ANcmpc/Sp3ms", "source": "oshb_wlc" }
+    ],
+    "8": [
+      { "strongsId": "H426", "role": "primary", "order": 1, "pos": 9, "surface": "אֱלָ֨הּ", "morph": "ANcmsc", "source": "oshb_wlc" },
+      { "strongsId": "H1768", "role": "secondary", "order": 2, "pos": 8, "surface": "דִֽי", "morph": "ATr", "source": "oshb_wlc" }
+    ],
+    "9": [
+      { "strongsId": "H8065", "role": "primary", "order": 1, "pos": 10, "surface": "שְׁמַיָּ֜א", "morph": "ANcmpd/Td", "source": "oshb_wlc" }
+    ],
+    "10": [
+      { "strongsId": "H772", "role": "primary", "order": 1, "pos": 11, "surface": "וְאַרְעָ֗א", "morph": "AC/Ncfsd/Td", "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 11, "surface": "וְ", "morph": "AC", "source": "oshb_wlc" }
+    ],
+    "11": [
+      { "strongsId": "H1124", "role": "primary", "order": 1, "pos": 12, "surface": "וּבָנַ֤יִן", "morph": "AC/Vqrmpa", "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 12, "surface": "וּ", "morph": "AC", "source": "oshb_wlc" }
+    ],
+    "13": [
+      { "strongsId": "H1005", "role": "primary", "order": 1, "pos": 13, "surface": "בַּיְתָא֙", "morph": "ANcmsd/Td", "source": "oshb_wlc" }
+    ],
+    "14": [
+      { "strongsId": "H1768", "role": "primary", "order": 1, "pos": 14, "surface": "דִּֽי", "morph": "ATr", "source": "oshb_wlc" }
+    ],
+    "15": [
+      { "strongsId": "H1124", "role": "primary", "order": 1, "pos": 16, "surface": "בְנֵ֜ה", "morph": "AVqsmsa", "source": "oshb_wlc" },
+      { "strongsId": "H1934", "role": "secondary", "order": 2, "pos": 15, "surface": "הֲוָ֨א", "morph": "AVqp3ms", "source": "oshb_wlc" }
+    ],
+    "16": [
+      { "strongsId": "H6928", "role": "primary", "order": 1, "pos": 17, "surface": "מִקַּדְמַ֤ת", "morph": "AR/Ncfsc", "source": "oshb_wlc" },
+      { "strongsId": "H4481", "role": "secondary", "order": 2, "pos": 17, "surface": "מִ", "morph": "AR", "source": "oshb_wlc" }
+    ],
+    "17": [
+      { "strongsId": "H1836", "role": "primary", "order": 1, "pos": 18, "surface": "דְּנָה֙", "morph": "APdxms", "source": "oshb_wlc" }
+    ],
+    "18": [
+      { "strongsId": "H8140", "role": "primary", "order": 1, "pos": 19, "surface": "שְׁנִ֣ין", "morph": "ANcfpa", "source": "oshb_wlc" }
+    ],
+    "19": [
+      { "strongsId": "H7690", "role": "primary", "order": 1, "pos": 20, "surface": "שַׂגִּיאָ֔ן", "morph": "AAafpa", "source": "oshb_wlc" }
+    ],
+    "21": [
+      { "strongsId": "H1124", "role": "primary", "order": 1, "pos": 24, "surface": "בְּנָ֖הִי", "morph": "AVqp3ms/Sp3ms", "source": "oshb_wlc" }
+    ],
+    "22": [
+      { "strongsId": "H4430", "role": "primary", "order": 1, "pos": 21, "surface": "וּמֶ֤לֶךְ", "morph": "AC/Ncmsa", "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 21, "surface": "וּ", "morph": "AC", "source": "oshb_wlc" }
+    ],
+    "23": [
+      { "strongsId": "H7229", "role": "primary", "order": 1, "pos": 23, "surface": "רַ֔ב", "morph": "AAamsa", "source": "oshb_wlc" }
+    ],
+    "24": [
+      { "strongsId": "H3479", "role": "primary", "order": 1, "pos": 22, "surface": "לְיִשְׂרָאֵל֙", "morph": "AR/Np", "source": "oshb_wlc" },
+      { "strongsId": "H9005", "role": "secondary", "order": 2, "pos": 22, "surface": "לְ", "morph": "AR", "source": "oshb_wlc" }
+    ],
+    "25": [
+      { "strongsId": "H3635", "role": "primary", "order": 1, "pos": 25, "surface": "וְשַׁכְלְלֵֽהּ", "morph": "AC/Vep3ms/Sp3ms", "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 25, "surface": "וְ", "morph": "AC", "source": "oshb_wlc" }
+    ]
   }
 };
 
@@ -1390,8 +1473,8 @@ for (const v of holdoutVerses) {
           const dErr = verifyDerived(v.lang, origMorph, tok.morph, { morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase });
           if (dErr) failAxis('morphology', `derived(${dErr})`);
 
-          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24, Isa 41:10, Ruth 2:12, Mic 7:18, 2Chr 7:14)
-          if (v.name === 'Ezra 4:24' || v.name === 'Isa 41:10' || v.name === 'Ruth 2:12' || v.name === 'Mic 7:18' || v.name === '2Chr 7:14') {
+          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24, Isa 41:10, Ruth 2:12, Mic 7:18, 2Chr 7:14, Ezra 5:11)
+          if (v.name === 'Ezra 4:24' || v.name === 'Isa 41:10' || v.name === 'Ruth 2:12' || v.name === 'Mic 7:18' || v.name === '2Chr 7:14' || v.name === 'Ezra 5:11') {
             const segs = (origMorph || '').split('/');
             let expState = null;
             const sMap = { c:'construct', a:'absolute', d:'determined' };
@@ -1400,8 +1483,8 @@ for (const v of holdoutVerses) {
               if (core[0] === 'V' && (core[2] === 'r' || core[2] === 's')) { expState = sMap[core[5]] || null; break; }
               if ((core[0] === 'N' || core[0] === 'A') && core[1] !== 'p' && core !== 'Td') { expState = sMap[core[4]] || null; break; }
             }
-            if (expState && !morphCase) {
-              failAxis('morphology', `missing mandatory morph_case='${expState}' for '${origMorph}'`);
+            if (expState && (!morphCase || morphCase !== expState)) {
+              failAxis('morphology', `missing or incorrect mandatory morph_case='${expState}' (got '${morphCase || ''}') for '${origMorph}'`);
             }
           }
         }
