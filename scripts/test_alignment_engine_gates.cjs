@@ -19,7 +19,7 @@ const proposalsPath = (pIdx !== -1 && process.argv[pIdx + 1])
 const aIdx = process.argv.indexOf('--audit');
 const auditPath = (aIdx !== -1 && process.argv[aIdx + 1])
   ? path.resolve(process.cwd(), process.argv[aIdx + 1])
-  : path.join(__dirname, 'unseen_holdout_round2_4axis_batch2l_mic7_18.json');
+  : path.join(__dirname, 'unseen_holdout_round2_4axis_batch2m_2chr7_14.json');
 
 const prop = JSON.parse(fs.readFileSync(proposalsPath, 'utf8'));
 const fixedAudit = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
