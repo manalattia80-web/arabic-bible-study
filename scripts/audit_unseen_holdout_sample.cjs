@@ -1203,6 +1203,48 @@ const VERIFIED_REQUIRED_COMPONENTS = {
     "17": [{ "strongsId": "H3809", "role": "primary", "order": 1, "pos": 21, "surface": "לָ֥א",         "morph": "ATn",          "source": "oshb_wlc" }],
     "18": [{ "strongsId": "H5648", "role": "primary", "order": 1, "pos": 22, "surface": "עַבְדֵֽת",       "morph": "AVqp1cs",      "source": "oshb_wlc" }],
     "19": [{ "strongsId": "H2248", "role": "primary", "order": 1, "pos": 20, "surface": "חֲבוּלָ֖ה",     "morph": "ANcfsa",       "source": "oshb_wlc" }]
+  },
+  'Dan 7:13': {
+    "1":  [{ "strongsId": "H1934", "role": "primary", "order": 1, "pos": 2,  "surface": "הֲוֵית֙",     "morph": "AVqp1cs",      "source": "oshb_wlc" }],
+    "2":  [{ "strongsId": "H2370", "role": "primary", "order": 1, "pos": 1,  "surface": "חָזֵ֤ה",       "morph": "AVqrmsa",      "source": "oshb_wlc" }],
+    "3":  [{ "strongsId": "H9003", "role": "primary", "order": 1, "pos": 3,  "surface": "בְּ",         "morph": "AR",           "source": "oshb_wlc" }],
+    "4":  [
+      { "strongsId": "H2376", "role": "primary",   "order": 1, "pos": 3,  "surface": "בְּחֶזְוֵ֣י",   "morph": "AR/Ncmpc",     "source": "oshb_wlc" },
+      { "strongsId": "H9003", "role": "secondary", "order": 2, "pos": 3,  "surface": "בְּ",         "morph": "AR",           "source": "oshb_wlc" }
+    ],
+    "5":  [{ "strongsId": "H3916", "role": "primary", "order": 1, "pos": 4,  "surface": "לֵֽילְיָ֔א",   "morph": "ANcmsd/Td",    "source": "oshb_wlc" }],
+    "6":  [
+      { "strongsId": "H718",  "role": "primary",   "order": 1, "pos": 5,  "surface": "וַאֲרוּ֙",     "morph": "AC/Tm",        "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 5,  "surface": "וַ",         "morph": "AC",           "source": "oshb_wlc" }
+    ],
+    "7":  [{ "strongsId": "H5974", "role": "primary", "order": 1, "pos": 6,  "surface": "עִם",         "morph": "AR",           "source": "oshb_wlc" }],
+    "8":  [{ "strongsId": "H6050", "role": "primary", "order": 1, "pos": 7,  "surface": "עֲנָנֵ֣י",     "morph": "ANcmpc",       "source": "oshb_wlc" }],
+    "9":  [{ "strongsId": "H8065", "role": "primary", "order": 1, "pos": 8,  "surface": "שְׁמַיָּ֔א",   "morph": "ANcmpd/Td",    "source": "oshb_wlc" }],
+    "10": [{ "strongsId": "H9004", "role": "primary", "order": 1, "pos": 9,  "surface": "כְּ",         "morph": "AR",           "source": "oshb_wlc" }],
+    "11": [
+      { "strongsId": "H1247", "role": "primary",   "order": 1, "pos": 9,  "surface": "כְּבַ֥ר",       "morph": "AR/Ncmsc",     "source": "oshb_wlc" },
+      { "strongsId": "H9004", "role": "secondary", "order": 2, "pos": 9,  "surface": "כְּ",         "morph": "AR",           "source": "oshb_wlc" }
+    ],
+    "12": [{ "strongsId": "H606",  "role": "primary", "order": 1, "pos": 10, "surface": "אֱנָ֖שׁ",       "morph": "ANcmsa",       "source": "oshb_wlc" }],
+    "13": [
+      { "strongsId": "H858",  "role": "primary",   "order": 1, "pos": 11, "surface": "אָתֵ֣ה",       "morph": "AVqrmsa",      "source": "oshb_wlc" },
+      { "strongsId": "H1934", "role": "secondary", "order": 2, "pos": 12, "surface": "הֲוָ֑ה",       "morph": "AVqp3ms",      "source": "oshb_wlc" }
+    ],
+    "14": [
+      { "strongsId": "H4291", "role": "primary",   "order": 1, "pos": 16, "surface": "מְטָ֔ה",       "morph": "AVqp3ms",      "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 13, "surface": "וְ",         "morph": "AC",           "source": "oshb_wlc" }
+    ],
+    "15": [
+      { "strongsId": "H5705", "role": "primary",   "order": 1, "pos": 13, "surface": "וְעַד",       "morph": "AC/R",         "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 13, "surface": "וְ",         "morph": "AC",           "source": "oshb_wlc" }
+    ],
+    "16": [{ "strongsId": "H6268", "role": "primary", "order": 1, "pos": 14, "surface": "עַתִּ֤יק",     "morph": "AAamsc",       "source": "oshb_wlc" }],
+    "17": [{ "strongsId": "H3118", "role": "primary", "order": 1, "pos": 15, "surface": "יֽוֹמַיָּא֙",   "morph": "ANcmpd/Td",    "source": "oshb_wlc" }],
+    "18": [{ "strongsId": "H7127", "role": "primary", "order": 1, "pos": 18, "surface": "הַקְרְבֽוּהִי", "morph": "AVhp3mp/Sp3ms","source": "oshb_wlc" }],
+    "19": [
+      { "strongsId": "H6925", "role": "primary",   "order": 1, "pos": 17, "surface": "וּקְדָמ֖וֹהִי", "morph": "AC/R/Sp3ms",   "source": "oshb_wlc" },
+      { "strongsId": "H9002", "role": "secondary", "order": 2, "pos": 17, "surface": "וּ",         "morph": "AC",           "source": "oshb_wlc" }
+    ]
   }
 };
 
@@ -1552,8 +1594,8 @@ for (const v of holdoutVerses) {
           const dErr = verifyDerived(v.lang, origMorph, tok.morph, { morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase });
           if (dErr) failAxis('morphology', `derived(${dErr})`);
 
-          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24, Isa 41:10, Ruth 2:12, Mic 7:18, 2Chr 7:14, Ezra 5:11, Dan 6:22)
-          if (v.name === 'Ezra 4:24' || v.name === 'Isa 41:10' || v.name === 'Ruth 2:12' || v.name === 'Mic 7:18' || v.name === '2Chr 7:14' || v.name === 'Ezra 5:11' || v.name === 'Dan 6:22') {
+          // Enforce mandatory morph_case when required by source morphology (e.g. Ezra 4:24, Isa 41:10, Ruth 2:12, Mic 7:18, 2Chr 7:14, Ezra 5:11, Dan 6:22, Dan 7:13)
+          if (v.name === 'Ezra 4:24' || v.name === 'Isa 41:10' || v.name === 'Ruth 2:12' || v.name === 'Mic 7:18' || v.name === '2Chr 7:14' || v.name === 'Ezra 5:11' || v.name === 'Dan 6:22' || v.name === 'Dan 7:13') {
             const segs = (origMorph || '').split('/');
             let expState = null;
             const sMap = { c:'construct', a:'absolute', d:'determined' };
