@@ -339,19 +339,46 @@ function loadAllSources() {
   }
 
   const trFullPath = path.join(__dirname, 'data/gnt_scrivener.json');
-  const trRaw = JSON.parse(fs.readFileSync(trFullPath, 'utf8'));
   const trByOsis = new Map();
-  for (const row of trRaw) {
-    const key = `${row.book_name_osis}:${row.chapter}:${row.verse}`;
-    const arr = row.words.map((w, i) => ({
-      index: i + 1,
-      surface: w.greek,
-      grammar: w.grammar,
-      strongsId: w.strong ? `G${w.strong}` : null,
-      lemma: w.dictionary_form || ''
-    }));
-    arr.byIndex = new Map(arr.map(t => [t.index, t]));
-    trByOsis.set(key, arr);
+  if (!process.env.USE_TR_SLICE && fs.existsSync(trFullPath)) {
+    const trRaw = JSON.parse(fs.readFileSync(trFullPath, 'utf8'));
+    for (const row of trRaw) {
+      const key = `${row.book_name_osis}:${row.chapter}:${row.verse}`;
+      const arr = row.words.map((w, i) => ({
+        index: i + 1,
+        surface: w.greek,
+        grammar: w.grammar,
+        strongsId: w.strong ? `G${w.strong}` : null,
+        lemma: w.dictionary_form || ''
+      }));
+      arr.byIndex = new Map(arr.map(t => [t.index, t]));
+      trByOsis.set(key, arr);
+    }
+  } else {
+    // Fallback to committed TR slices (R1, R2, R3) when gnt_scrivener.json is not present (e.g. GitHub Actions CI)
+    const sliceFiles = [
+      'unseen_holdout_tr_scrivener_slice.json',
+      'unseen_holdout_round2_tr_scrivener_slice.json',
+      'unseen_holdout_round3_tr_scrivener_slice.json'
+    ];
+    for (const sf of sliceFiles) {
+      const sp = path.join(__dirname, sf);
+      if (!fs.existsSync(sp)) continue;
+      const sData = JSON.parse(fs.readFileSync(sp, 'utf8'));
+      const versesArr = Array.isArray(sData) ? sData : (sData.verses || []);
+      for (const row of versesArr) {
+        const key = `${row.book_name_osis}:${row.chapter}:${row.verse}`;
+        const arr = row.words.map((w, i) => ({
+          index: i + 1,
+          surface: w.greek,
+          grammar: w.grammar,
+          strongsId: w.strong ? `G${w.strong}` : null,
+          lemma: w.dictionary_form || ''
+        }));
+        arr.byIndex = new Map(arr.map(t => [t.index, t]));
+        trByOsis.set(key, arr);
+      }
+    }
   }
 
   return { oshbByBook, sblByBook, trByOsis };

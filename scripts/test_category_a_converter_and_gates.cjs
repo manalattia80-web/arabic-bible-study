@@ -421,14 +421,16 @@ console.log('\n--- Section 5: Complete Diff Log Integrity (100% Record Coverage 
 const summaryPath = path.join(repoRoot, 'scripts/trial_deterministic_repairs_diff_report_v379.json');
 const fullLogPath = path.join(repoRoot, 'scripts/trial_category_a_derived_only_full_diff_v379.jsonl');
 const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf8'));
-const logLines = fs.readFileSync(fullLogPath, 'utf8').split('\n').filter(Boolean);
-const actualLogSha = sha256File(fullLogPath);
+const rawLogNormalized = fs.readFileSync(fullLogPath, 'utf8').replace(/\r\n/g, '\n');
+const logLines = rawLogNormalized.split('\n').filter(Boolean);
+const actualLogSha = crypto.createHash('sha256').update(rawLogNormalized, 'utf8').digest('hex');
 
 assert(
   summary.scope === 'STRICT_CATEGORY_A_DERIVED_MORPHOLOGY_COLUMNS_ONLY' &&
   summary.productionDbUntouched === true &&
   summary.fullDiffLogSha256 === actualLogSha,
-  'Gate 24: Summary report & full diff JSONL SHA-256 match and production DB is untouched'
+  'Gate 24: Summary report & full diff JSONL SHA-256 match and production DB is untouched',
+  `expected=${summary.fullDiffLogSha256}, actual=${actualLogSha}`
 );
 
 assert(
