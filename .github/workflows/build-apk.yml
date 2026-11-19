@@ -87,6 +87,7 @@ jobs:
           node scripts/test_round2_batch2o_dan6_22_gates.cjs
           node scripts/test_round2_batch2p_dan7_13_gates.cjs
           node scripts/test_category_a_converter_and_gates.cjs
+          node scripts/test_round3_batch3a_lev17_5_gates.cjs
           node scripts/test_round1_holdout_gate.cjs
           node scripts/audit_unseen_holdout_sample.cjs --manifest scripts/unseen_holdout_15_verses_manifest.json --fail-on-alerts --out /tmp/ci_round1_audit.json
           node scripts/audit_unseen_holdout_sample.cjs --manifest scripts/unseen_holdout_round2_15_verses_manifest.json --fail-on-alerts --out /tmp/ci_round2_audit.json
