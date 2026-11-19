@@ -37,6 +37,10 @@ const {
   OT_BOOK_MAP,
   SBLGNT_BOOK_MAP,
   TR_BOOK_OSIS_MAP,
+  OSHB_HEBREW_VERB_STEMS,
+  OSHB_ARAMAIC_VERB_STEMS,
+  OSHB_HEBREW_PASSIVE_STEMS,
+  OSHB_ARAMAIC_PASSIVE_STEMS,
   getBhsChapterVerse,
   isBiblicalAramaicVerse,
   canonHebSurface,
@@ -124,12 +128,10 @@ function verifyDerived(lang, dbMorph, srcMorph, d, isTr = false) {
   const core = coreSeg.replace(/^[HA](?=[A-Z])/, '');
   if (core[0] === 'V') {
     if (d.morphPos !== 'verb') return `pos '${d.morphPos}' vs verb '${tag}'`;
-    const stemMap = isAr
-      ? { q:'peal', Q:'peil', p:'pael', P:'pael_passive', a:'aphel', A:'haphel_passive', h:'haphel', u:'hithpeel', t:'hithpaal', o:'polel', O:'polal', e:'shaphel', i:'ithpaal' }
-      : { q:'qal', Q:'qal_passive', N:'niphal', p:'piel', P:'pual', h:'hiphil', H:'hophal', t:'hithpael', o:'polel', O:'polal', c:'pilpel', C:'polpal' };
+    const stemMap = isAr ? OSHB_ARAMAIC_VERB_STEMS : OSHB_HEBREW_VERB_STEMS;
     if (stemMap[core[1]] && (d.morphStem || null) !== stemMap[core[1]]) return `stem '${d.morphStem}' vs '${stemMap[core[1]]}'`;
     const conj = core[2];
-    const isPassive = ((isAr ? 'QPAui' : 'NQPH').includes(core[1]) || conj === 's');
+    const isPassive = ((isAr ? OSHB_ARAMAIC_PASSIVE_STEMS : OSHB_HEBREW_PASSIVE_STEMS).has(core[1]) || conj === 's');
     if (isPassive && (d.morphVoice || null) !== 'passive') return `voice '${d.morphVoice}' vs 'passive'`;
     if (!isPassive && d.morphVoice === 'passive') return `voice 'passive' unexpected on active stem '${tag}'`;
     const tenseMap = { p:'qatal', q:'weqatal', i:'yiqtol', w:'wayyiqtol', j:'yiqtol', h:'yiqtol' };

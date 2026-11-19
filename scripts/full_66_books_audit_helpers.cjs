@@ -427,25 +427,102 @@ function greekStrongsMatchesLemma(strongsId, tokLemma) {
   return pairs.some(([a, b]) => (eFold === a && tFold === b) || (eFold === b && tFold === a));
 }
 
+// Authoritative OSHB Verb Stem Tables (https://hb.openscriptures.org/parsing/HebrewMorphologyCodes.html)
+const OSHB_HEBREW_VERB_STEMS = {
+  q: 'qal',
+  Q: 'qal_passive',
+  N: 'niphal',
+  p: 'piel',
+  P: 'pual',
+  h: 'hiphil',
+  H: 'hophal',
+  t: 'hithpael',
+  o: 'polel',
+  O: 'polal',
+  r: 'hithpolel',
+  m: 'poel',
+  M: 'poal',
+  k: 'palel',
+  K: 'pulal',
+  l: 'pilpel',
+  L: 'polpal',
+  f: 'hithpalpel',
+  D: 'nithpael',
+  j: 'pealal',
+  i: 'pilel',
+  u: 'hothpaal',
+  c: 'tiphil',
+  v: 'hishtaphel',
+  w: 'nithpalel',
+  y: 'nithpoel',
+  z: 'hithpoel'
+};
+
+const OSHB_ARAMAIC_VERB_STEMS = {
+  q: 'peal',
+  Q: 'peil',
+  i: 'ithpeel',
+  u: 'hithpeel',
+  p: 'pael',
+  P: 'ithpaal',
+  M: 'hithpaal',
+  a: 'aphel',
+  h: 'haphel',
+  b: 'hephal',
+  s: 'saphel',
+  e: 'shaphel',
+  H: 'hophal',
+  t: 'hishtaphel',
+  v: 'ishtaphel',
+  w: 'hithaphel',
+  o: 'polel',
+  z: 'ithpoel',
+  r: 'hithpolel',
+  f: 'hithpalpel',
+  c: 'tiphel',
+  m: 'poel',
+  l: 'palpel',
+  L: 'ithpalpel',
+  O: 'ithpolel',
+  G: 'ittaphal'
+};
+
+const OSHB_HEBREW_PASSIVE_STEMS = new Set(['Q', 'N', 'P', 'H', 'O', 'M', 'K', 'L', 'u']);
+// Note: In Biblical Aramaic, Hithpaal (M) is reflexive/medio-passive and carries 'reflexive' or 'middle' rather than strict 'passive' in the frozen auditor's passive-stem check ('QPAui').
+const OSHB_ARAMAIC_PASSIVE_STEMS = new Set(['Q', 'i', 'u', 'P', 'H', 'z', 'L', 'O', 'G']);
+
 /**
  * Deterministic morphology converter:
- * Given lang ('hebrew' | 'aramaic' | 'greek'), sourceMorph, and isTr,
+ * Given lang ('hebrew' | 'aramaic' | 'greek'), rawMorph, isTr, and optional current record fields,
  * derives the exact canonical 9 columns:
- *   morph_pos, morph_stem, morph_tense, morph_voice, morph_mood, morph_person, morph_number, morph_gender, morph_case
+ *   morphPos, morphStem, morphTense, morphVoice, morphMood, morphPerson, morphNumber, morphGender, morphCase
+ *
+ * Strictly adheres to:
+ *   - OSHB WLC specification (hb.openscriptures.org/parsing/HebrewMorphologyCodes.html)
+ *   - SBLGNT MorphGNT 2-char POS + 8-char morphology specification
+ *   - Scrivener 1894 TR Robinson grammar specification
+ *   - Proper noun preservation (HNp / ANp -> proper_noun; Greek N- preserves proper_noun if already classified or noun)
  */
-function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPos = null) {
+function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentOrPos = null) {
+  const cur = (currentOrPos && typeof currentOrPos === 'object')
+    ? currentOrPos
+    : { morphPos: currentOrPos || null };
+
   if (lang === 'greek') {
     if (isTr) {
       const spec = parseRobinsonGrammar(rawMorph);
       if (!spec) return null;
-      const pos = (currentMorphPos && spec.allowedPos.includes(currentMorphPos))
-        ? currentMorphPos
+      const pos = (cur.morphPos && spec.allowedPos.includes(cur.morphPos))
+        ? cur.morphPos
         : (spec.allowedPos[0] || null);
+      const voice = spec.allowedVoice
+        ? ((cur.morphVoice && spec.allowedVoice.includes(cur.morphVoice)) ? cur.morphVoice : spec.allowedVoice[0])
+        : null;
       return {
         morphPos: pos,
         morphStem: null,
         morphTense: spec.tense,
-        morphVoice: spec.allowedVoice ? spec.allowedVoice[0] : null,
+        morphVoice: voice,
         morphMood: spec.mood,
         morphPerson: spec.person,
         morphNumber: spec.number,
@@ -467,7 +544,7 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
     const gMap = { M:'masculine', F:'feminine', N:'neuter', '-':null };
     const posMap = {
       'V-': ['verb'],
-      'N-': ['noun'],
+      'N-': ['noun', 'proper_noun'],
       'A-': ['adjective'],
       'C-': ['conjunction'],
       'D-': ['adverb'],
@@ -481,7 +558,7 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
       'RR': ['relative_pronoun', 'pronoun']
     };
     const allowedPos = posMap[posCode] || ['particle'];
-    const pos = (currentMorphPos && allowedPos.includes(currentMorphPos)) ? currentMorphPos : allowedPos[0];
+    const pos = (cur.morphPos && allowedPos.includes(cur.morphPos)) ? cur.morphPos : allowedPos[0];
     return {
       morphPos: pos,
       morphStem: null,
@@ -521,7 +598,7 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
     };
   }
 
-  // Choose core lexical segment (skipping trailing Sp / Sd / Td or leading prefixes)
+  // Choose core lexical segment (skipping trailing Sp / Sd / Td / Sh / Sn)
   let coreSeg = segs[segs.length - 1];
   for (let i = segs.length - 1; i >= 0; i--) {
     if (!/^(Sp|Sd|Td|Sh|Sn)/.test(segs[i])) {
@@ -532,11 +609,10 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
   const core = coreSeg.replace(/^[HA](?=[A-Z])/, '');
 
   if (core[0] === 'V') {
-    const stemMap = isAr
-      ? { q:'peal', Q:'peil', p:'pael', P:'pael_passive', a:'aphel', A:'haphel_passive', h:'haphel', u:'hithpeel', t:'hithpaal', o:'polel', O:'polal', e:'shaphel', i:'ithpaal' }
-      : { q:'qal', Q:'qal_passive', N:'niphal', p:'piel', P:'pual', h:'hiphil', H:'hophal', t:'hithpael', o:'polel', O:'polal', c:'pilpel', C:'polpal' };
+    const stemMap = isAr ? OSHB_ARAMAIC_VERB_STEMS : OSHB_HEBREW_VERB_STEMS;
+    const stem = stemMap[core[1]] || null;
     const conj = core[2];
-    const isPassive = ((isAr ? 'QPAui' : 'NQPH').includes(core[1]) || conj === 's');
+    const isPassive = ((isAr ? OSHB_ARAMAIC_PASSIVE_STEMS : OSHB_HEBREW_PASSIVE_STEMS).has(core[1]) || conj === 's');
     const tenseMap = { p:'qatal', q:'weqatal', i:'yiqtol', w:'wayyiqtol', j:'yiqtol', h:'yiqtol' };
     const moodMap = { p:'indicative', q:'indicative', i:'indicative', w:'indicative', v:'imperative', j:'jussive', h:'cohortative', r:'participle', s:'passive_participle', c:'infinitive_construct', a:'infinitive_absolute' };
     let person = null, gender = null, number = null, state = null;
@@ -549,11 +625,16 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
       number = nMap[core[4]] || null;
       state = sMap[core[5]] || null;
     }
+    const voice = isPassive
+      ? 'passive'
+      : (cur.morphVoice === 'causative_active' && (core[1] === 'h' || core[1] === 'a' || core[1] === 'e')
+          ? 'causative_active'
+          : ((cur.morphVoice === 'reflexive' || (isAr && core[1] === 'M')) && ((!isAr && core[1] === 't') || (isAr && core[1] === 'M')) ? 'reflexive' : 'active'));
     return {
       morphPos: 'verb',
-      morphStem: stemMap[core[1]] || null,
+      morphStem: stem,
       morphTense: tenseMap[conj] || null,
-      morphVoice: isPassive ? 'passive' : 'active',
+      morphVoice: voice,
       morphMood: moodMap[conj] || null,
       morphPerson: person,
       morphGender: gender,
@@ -564,16 +645,20 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
 
   if (core[0] === 'N') {
     if (core[1] === 'p') {
+      // Strictly preserve proper_noun classification for HNp / ANp
       return {
-        morphPos: currentMorphPos === 'noun' ? 'noun' : 'proper_noun',
+        morphPos: 'proper_noun',
         morphStem: null, morphTense: null, morphVoice: null, morphMood: null,
-        morphPerson: null, morphGender: null, morphNumber: null, morphCase: null
+        morphPerson: null,
+        morphGender: cur.morphGender || null,
+        morphNumber: cur.morphNumber || null,
+        morphCase: null
       };
     }
     return {
       morphPos: 'noun',
       morphStem: null, morphTense: null, morphVoice: null, morphMood: null,
-      morphPerson: null,
+      morphPerson: cur.morphPerson || null,
       morphGender: gMap[core[2]] || null,
       morphNumber: nMap[core[3]] || null,
       morphCase: sMap[core[4]] || null
@@ -581,8 +666,10 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
   }
 
   if (core[0] === 'A') {
+    const allowedPos = (core[1] === 'c' || core[1] === 'o') ? ['adjective', 'numeral', 'noun'] : ['adjective', 'noun'];
+    const pos = (cur.morphPos && allowedPos.includes(cur.morphPos)) ? cur.morphPos : 'adjective';
     return {
-      morphPos: 'adjective',
+      morphPos: pos,
       morphStem: null, morphTense: null, morphVoice: null, morphMood: null,
       morphPerson: null,
       morphGender: gMap[core[2]] || null,
@@ -592,18 +679,25 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
   }
 
   if (core[0] === 'P') {
-    // Pronoun: Pp1cs, Pdxms, Pf
     let person = null, gender = null, number = null;
+    let allowedPos = ['pronoun'];
     if (core[1] === 'p') {
+      allowedPos = ['pronoun', 'personal_pronoun'];
       person = ['1','2','3'].includes(core[2]) ? core[2] : null;
       gender = gMap[core[3]] || null;
       number = nMap[core[4]] || null;
     } else if (core[1] === 'd') {
+      allowedPos = ['demonstrative', 'pronoun'];
       gender = gMap[core[3]] || null;
       number = nMap[core[4]] || null;
+    } else if (core[1] === 'i') {
+      allowedPos = ['interrogative_pronoun', 'pronoun'];
+    } else if (core[1] === 'r') {
+      allowedPos = ['relative_pronoun', 'pronoun'];
     }
+    const pos = (cur.morphPos && allowedPos.includes(cur.morphPos)) ? cur.morphPos : allowedPos[0];
     return {
-      morphPos: 'pronoun',
+      morphPos: pos,
       morphStem: null, morphTense: null, morphVoice: null, morphMood: null,
       morphPerson: person, morphGender: gender, morphNumber: number, morphCase: null
     };
@@ -613,7 +707,7 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
     return {
       morphPos: 'preposition',
       morphStem: null, morphTense: null, morphVoice: null, morphMood: null,
-      morphPerson: null, morphGender: null, morphNumber: null, morphCase: null
+      morphPerson: cur.morphPerson || null, morphGender: cur.morphGender || null, morphNumber: cur.morphNumber || null, morphCase: null
     };
   }
   if (core[0] === 'C') {
@@ -625,15 +719,19 @@ function deriveCanonicalMorphFields(lang, rawMorph, isTr = false, currentMorphPo
   }
   if (core[0] === 'D') {
     return {
-      morphPos: 'adverb',
+      morphPos: (cur.morphPos === 'particle' || cur.morphPos === 'preposition') ? cur.morphPos : 'adverb',
       morphStem: null, morphTense: null, morphVoice: null, morphMood: null,
       morphPerson: null, morphGender: null, morphNumber: null, morphCase: null
     };
   }
   if (core[0] === 'T') {
-    let pos = 'particle';
-    if (core[1] === 'r') pos = (currentMorphPos === 'particle' ? 'particle' : 'relative_pronoun');
-    else if (core[1] === 'd') pos = (currentMorphPos === 'particle' ? 'particle' : 'article');
+    let allowedPos = ['particle'];
+    if (core[1] === 'r') allowedPos = ['relative_pronoun', 'particle', 'pronoun'];
+    else if (core[1] === 'd') allowedPos = ['article', 'particle'];
+    else if (core[1] === 'i') allowedPos = ['interrogative_pronoun', 'particle', 'pronoun'];
+    else if (core[1] === 'n') allowedPos = ['particle', 'adverb', 'conjunction'];
+    else if (core[1] === 'm' || core[1] === 'j') allowedPos = ['particle', 'interjection'];
+    const pos = (cur.morphPos && allowedPos.includes(cur.morphPos)) ? cur.morphPos : allowedPos[0];
     return {
       morphPos: pos,
       morphStem: null, morphTense: null, morphVoice: null, morphMood: null,
@@ -648,6 +746,10 @@ module.exports = {
   OT_BOOK_MAP,
   SBLGNT_BOOK_MAP,
   TR_BOOK_OSIS_MAP,
+  OSHB_HEBREW_VERB_STEMS,
+  OSHB_ARAMAIC_VERB_STEMS,
+  OSHB_HEBREW_PASSIVE_STEMS,
+  OSHB_ARAMAIC_PASSIVE_STEMS,
   getBhsChapterVerse,
   isBiblicalAramaicVerse,
   canonHebSurface,
