@@ -41,8 +41,8 @@ function assert(cond, msg, detail = '') {
 console.log('=== RUNNING ROUND 3 BATCH 3B (PROVERBS 28:9) QUALITY GATES ===\n');
 
 const EXPECTED = [
-  { pos: 1, ar: 'مَنْ',        s: null,    orig: '—',       surf: '—',          w: null, m: null,           mp: 'syntactic_ar', st: null,     tn: null, vc: null,     md: null,                   pr: null, nm: null,       gn: null,        cs: null,        loc: 'AR_SYNTACTIC:B20.C28.V9.w1', vs: 'syntactic_ar', ms: 'syntactic_ar', rel: 'syntactic_ar',    comps: [] },
-  { pos: 2, ar: 'يُحَوِّلُ',    s: 'H5493', orig: 'סוּר',    surf: 'מֵסִ֣יר',     w: 1,    m: 'HVhrmsa',      mp: 'verb',         st: 'hiphil', tn: null, vc: 'active', md: 'participle',           pr: null, nm: 'singular', gn: 'masculine', cs: 'absolute',  loc: 'OSHB:B20.C28.V9.w1',         vs: 'oshb_wlc',     ms: 'oshb_wlc',     rel: null,              comps: ['1:primary:H5493:1:HVhrmsa'] },
+  { pos: 1, ar: 'مَنْ',        s: 'H5493', orig: 'סוּר',    surf: 'מֵסִ֣יר',     w: 1, m: 'HVhrmsa',      mp: 'verb',        st: 'hiphil', tn: null, vc: 'active', md: 'participle',           pr: null, nm: 'singular', gn: 'masculine', cs: 'absolute',  loc: 'OSHB:B20.C28.V9.w1', vs: 'oshb_wlc', ms: 'oshb_wlc', rel: 'compound_phrase', comps: ['1:primary:H5493:1:HVhrmsa'], requireRelativeNote: true },
+  { pos: 2, ar: 'يُحَوِّلُ',    s: 'H5493', orig: 'סוּר',    surf: 'מֵסִ֣יר',     w: 1, m: 'HVhrmsa',      mp: 'verb',        st: 'hiphil', tn: null, vc: 'active', md: 'participle',           pr: null, nm: 'singular', gn: 'masculine', cs: 'absolute',  loc: 'OSHB:B20.C28.V9.w1', vs: 'oshb_wlc', ms: 'oshb_wlc', rel: 'compound_phrase', comps: ['1:primary:H5493:1:HVhrmsa'] },
   { pos: 3, ar: 'أُذْنَهُ',    s: 'H241',  orig: 'אֹזֶן',   surf: 'אָ֭זְנוֹ',    w: 2,    m: 'HNcfsc/Sp3ms', mp: 'noun',         st: null,     tn: null, vc: null,     md: null,                   pr: null, nm: 'singular', gn: 'feminine',  cs: 'construct', loc: 'OSHB:B20.C28.V9.w2',         vs: 'oshb_wlc',     ms: 'oshb_wlc',     rel: null,              comps: ['1:primary:H241:2:HNcfsc/Sp3ms'] },
   { pos: 4, ar: 'عَنْ',        s: 'H4480', orig: 'מִן',     surf: 'מִ',         w: 3,    m: 'HR',           mp: 'preposition',  st: null,     tn: null, vc: null,     md: null,                   pr: null, nm: null,       gn: null,        cs: null,        loc: 'OSHB:B20.C28.V9.w3',         vs: 'oshb_wlc',     ms: 'oshb_wlc',     rel: 'compound_phrase', comps: ['1:primary:H4480:3:HR'] },
   { pos: 5, ar: 'سَمَاعِ',     s: 'H8085', orig: 'שָׁמַע',  surf: 'מִשְּׁמֹ֣עַ', w: 3,    m: 'HR/Vqc',       mp: 'verb',         st: 'qal',    tn: null, vc: 'active', md: 'infinitive_construct', pr: null, nm: null,       gn: null,        cs: null,        loc: 'OSHB:B20.C28.V9.w3',         vs: 'oshb_wlc',     ms: 'oshb_wlc',     rel: 'compound_phrase', comps: ['1:primary:H8085:3:HR/Vqc', '2:secondary:H4480:3:HR'] },
@@ -73,7 +73,8 @@ const rows = q(`
     'loc', wm.verified_locator,
     'vs', wm.verified_source,
     'ms', wm.morph_source,
-    'rel', wm.relation_type
+    'rel', wm.relation_type,
+    'notes', wm.grammar_notes
   )
   FROM word_mappings wm
   JOIN verses vr ON wm.verse_id = vr.id
@@ -105,8 +106,8 @@ for (const c of compRows) {
   if (wNum > maxW) maxW = wNum;
 }
 
-assert(compRows.length === 9, `Prov 28:9 has exactly 9 word_mapping_strongs components (8 primary + 1 secondary, 0 for syntactic_ar #1; got ${compRows.length})`);
-assert(coveredTokens.size === 7 && maxW === 7, `Prov 28:9 covers all 7/7 OSHB tokens w1..w7 with zero out-of-bounds positions (covered=${coveredTokens.size}, maxW=${maxW})`);
+assert(compRows.length === 10, `Prov 28:9 has exactly 10 word_mapping_strongs components (9 primary + 1 secondary across 2 compound_phrase units; got ${compRows.length})`);
+assert(coveredTokens.size === 7 && maxW === 7, `Prov 28:9 counts each source token once: covers all 7/7 unique OSHB tokens w1..w7 with zero out-of-bounds positions (covered=${coveredTokens.size}, maxW=${maxW})`);
 
 for (let i = 0; i < EXPECTED.length; i++) {
   const exp = EXPECTED[i];
@@ -131,13 +132,28 @@ for (let i = 0; i < EXPECTED.length; i++) {
     act.loc === exp.loc &&
     act.vs === exp.vs &&
     act.ms === exp.ms &&
-    act.rel === exp.rel;
-  assert(okRow, `Prov 28:9 #${exp.pos} (${exp.ar}) exact fields -> ${exp.s || 'AR_SYNTACTIC'} @ ${exp.loc}`, JSON.stringify({ act, exp }));
+    act.rel === exp.rel &&
+    (!exp.requireRelativeNote || (typeof act.notes === 'string' && act.notes.includes('اسم موصول عربي')));
+  assert(okRow, `Prov 28:9 #${exp.pos} (${exp.ar}) exact fields -> ${exp.s} @ ${exp.loc}${exp.rel ? ' [' + exp.rel + ']' : ''}`, JSON.stringify({ act, exp }));
 
   const actComps = compsByPos.get(exp.pos) || [];
   const okComps = JSON.stringify(actComps) === JSON.stringify(exp.comps);
   assert(okComps, `Prov 28:9 #${exp.pos} (${exp.ar}) exact components (${exp.comps.length})`, JSON.stringify({ actComps, expected: exp.comps }));
 }
+
+const syntacticCount = rows.filter(r => r.mp === 'syntactic_ar' || r.rel === 'syntactic_ar').length;
+assert(syntacticCount === 0, `Prov 28:9 has 0 unlinked syntactic_ar records (#1 «مَنْ» is linked via compound_phrase to H5493@w1; got ${syntacticCount})`);
+
+const uniqueAlignmentUnits = new Set(rows.map(r => r.w)).size;
+const w1Sharers = rows.filter(r => r.w === 1 && r.rel === 'compound_phrase').map(r => r.pos);
+const w3Sharers = rows.filter(r => r.w === 3 && r.rel === 'compound_phrase').map(r => r.pos);
+assert(
+  uniqueAlignmentUnits === 7 &&
+  JSON.stringify(w1Sharers) === JSON.stringify([1, 2]) &&
+  JSON.stringify(w3Sharers) === JSON.stringify([4, 5]),
+  'Prov 28:9 counts each source token once (7 unique alignment units: #1+#2 share w1, #4+#5 share w3 as compound_phrase)',
+  JSON.stringify({ uniqueAlignmentUnits, w1Sharers, w3Sharers })
+);
 
 // Live frozen auditor verification for Prov 28:9 (never swallow execError!)
 const tmpOut = path.join(repoRoot, 'scratch/tmp_live_batch3b_prov28_9_audit.json');

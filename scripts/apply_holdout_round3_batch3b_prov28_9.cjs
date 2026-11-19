@@ -63,12 +63,15 @@ for (const r of existingRows) {
 
 const SPEC = [
   {
-    arPos: 1, arWord: 'مَنْ', syntactic: true,
-    locator: 'AR_SYNTACTIC:B20.C28.V9.w1',
-    relationType: 'syntactic_ar',
-    grammarNotes: 'اسم موصول عربي يترجم الصيغة الاسمية لاسم الفاعل العبري מֵסִיר (w1).'
+    arPos: 1, arWord: 'مَنْ', strongs: 'H5493', w: 1,
+    relationType: 'compound_phrase',
+    grammarNotes: 'وحدة ربط مشتركة (compound_phrase): «مَنْ» اسم موصول عربي يترجم مع «يُحَوِّلُ» الصيغة الاسمية لاسم الفاعل العبري מֵסִ֣יר (H5493, HVhrmsa) عند w1.'
   },
-  { arPos: 2, arWord: 'يُحَوِّلُ', strongs: 'H5493', w: 1 },
+  {
+    arPos: 2, arWord: 'يُحَوِّلُ', strongs: 'H5493', w: 1,
+    relationType: 'compound_phrase',
+    grammarNotes: 'وحدة ربط مشتركة (compound_phrase): الفعل العربي في صلة «مَنْ يُحَوِّلُ» المقابل لاسم الفاعل العبري מֵסִ֣יר (H5493, HVhrmsa) عند w1.'
+  },
   { arPos: 3, arWord: 'أُذْنَهُ', strongs: 'H241', w: 2 },
   {
     arPos: 4, arWord: 'عَنْ', strongs: 'H4480', w: 3,
@@ -202,7 +205,7 @@ if (integrity !== 'ok') {
 }
 
 const postSha = sha256File(dbPath);
-console.log('Successfully applied Round 3 Batch 3B (Proverbs 28:9 — 9 records, 9 components, 7/7 OSHB tokens):');
+console.log('Successfully applied Round 3 Batch 3B (Proverbs 28:9 — 9 records, 10 components, 7/7 unique OSHB tokens):');
 console.log(`  Pre-Apply DB SHA-256 : ${preSha}`);
 console.log(`  Post-Apply DB SHA-256: ${postSha}`);
 console.log(`  PRAGMA integrity_check: ${integrity}`);
