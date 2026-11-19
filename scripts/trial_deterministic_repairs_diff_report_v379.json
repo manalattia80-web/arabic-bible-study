@@ -1,0 +1,641 @@
+{
+  "productionDbSha256_before": "44ef2d39a84e43b8f638f76348954ca553016c7420e6d04a6cd93cd1b37dd17f",
+  "productionDbSha256_after": "44ef2d39a84e43b8f638f76348954ca553016c7420e6d04a6cd93cd1b37dd17f",
+  "productionDbUntouched": true,
+  "trialDbPath": "scratch/bible_study_trial_rule_repaired.db",
+  "trialDbSha256": "51103c855219c1f11b98a874f1e2d48fd180d3548d9569304f1b0eae8912c585",
+  "totalModifiedWordMappings": 34188,
+  "totalSqlStatementsExecuted": 49499,
+  "fieldDiffCounts": {
+    "verses_text_original_lang": 0,
+    "wm_orig_word_lang": 49,
+    "wm_orig_word": 406,
+    "wm_orig_surface": 9451,
+    "wm_orig_morphology": 12851,
+    "wm_morph_pos": 5399,
+    "wm_morph_stem": 2774,
+    "wm_morph_tense": 2765,
+    "wm_morph_voice": 6419,
+    "wm_morph_mood": 3977,
+    "wm_morph_person": 4604,
+    "wm_morph_number": 21322,
+    "wm_morph_gender": 9727,
+    "wm_morph_case": 6321,
+    "wm_verified_locator": 7276,
+    "wm_morph_source": 772,
+    "wm_verified_source": 516,
+    "wms_inserted_primary": 0,
+    "wms_inserted_inseparable_prefix": 0,
+    "wms_updated_fields": 15311
+  },
+  "sampleFieldByFieldDiffs": [
+    {
+      "ref": "Gen 1:1 #2",
+      "mappingId": "3a97c688-4c06-4b67-b403-e82ff5f3f34b",
+      "arWord": "الْبَدْءِ",
+      "strongsId": "H7225",
+      "before": {
+        "verified_locator": "Gen.1.1#ar2->orig#1 (H7225, HR/Ncfsa)",
+        "morph_source": "manual_review",
+        "orig_word": "בְּרֵאשִׁית"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V1.w1",
+        "morph_source": "oshb_wlc",
+        "orig_word": "רֵאשִׁית"
+      }
+    },
+    {
+      "ref": "Gen 1:1 #3",
+      "mappingId": "7b819536-1be6-4add-ab4e-4ea0a43711c3",
+      "arWord": "خَلَقَ",
+      "strongsId": "H1254",
+      "before": {
+        "verified_locator": "Gen.1.1#ar3->orig#2 (H1254, HVqp3ms)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V1.w2",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:1 #4",
+      "mappingId": "c2d424a5-0e7f-499b-94b4-4055c5856f26",
+      "arWord": "اللهُ",
+      "strongsId": "H430",
+      "before": {
+        "verified_locator": "Gen.1.1#ar4->orig#3 (H430, HNcmpa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V1.w3",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:1 #5",
+      "mappingId": "6c6d44bd-1e55-42ef-b0d4-b0459c23bf0b",
+      "arWord": "السَّمَاوَاتِ",
+      "strongsId": "H8064",
+      "before": {
+        "verified_locator": "Gen.1.1#ar5->orig#5 (H8064, HTd/Ncmpa)",
+        "morph_source": "manual_review",
+        "orig_word": "הַשָּׁמַיִם"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V1.w5",
+        "morph_source": "oshb_wlc",
+        "orig_word": "שָׁמַיִם"
+      }
+    },
+    {
+      "ref": "Gen 1:1 #6",
+      "mappingId": "98ca2303-7585-4c4e-87fe-b4e361a6521e",
+      "arWord": "وَالأَرْضَ",
+      "strongsId": "H776",
+      "before": {
+        "verified_locator": "Gen.1.1#ar6->orig#7 (H776, HTd/Ncbsa)",
+        "morph_source": "manual_review",
+        "orig_word": "הָאָרֶץ"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V1.w7",
+        "morph_source": "oshb_wlc",
+        "orig_word": "אֶרֶץ"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #1",
+      "mappingId": "1a9865cd-ed00-41c0-9d14-8024793fcb91",
+      "arWord": "وَكَانَتِ",
+      "strongsId": "H1961",
+      "before": {
+        "verified_locator": "Gen.1.2#ar1->orig#2 (H1961, HVqp3fs)",
+        "morph_source": "manual_review",
+        "orig_word": "הָיְתָה"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w2",
+        "morph_source": "oshb_wlc",
+        "orig_word": "הָיָה"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #2",
+      "mappingId": "9be094a3-9c5f-46a6-a1c5-c0e11d183a63",
+      "arWord": "الأَرْضُ",
+      "strongsId": "H776",
+      "before": {
+        "verified_locator": "Gen.1.2#ar2->orig#1 (H776, HC/Td/Ncbsa)",
+        "morph_source": "manual_review",
+        "orig_word": "וְהָאָרֶץ"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w1",
+        "morph_source": "oshb_wlc",
+        "orig_word": "אֶרֶץ"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #3",
+      "mappingId": "d2020cfe-be37-4712-b884-e91efc23f414",
+      "arWord": "خَرِبَةً",
+      "strongsId": "H8414",
+      "before": {
+        "verified_locator": "Gen.1.2#ar3->orig#3 (H8414, HNcmsa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w3",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #4",
+      "mappingId": "d9700648-c6b0-4bd1-b582-686dc3a68117",
+      "arWord": "وَخَالِيَةً",
+      "strongsId": "H922",
+      "before": {
+        "verified_locator": "Gen.1.2#ar4->orig#4 (H922, HC/Ncmsa)",
+        "morph_source": "manual_review",
+        "orig_word": "וָבֹהוּ"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w4",
+        "morph_source": "oshb_wlc",
+        "orig_word": "בֹּהוּ"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #5",
+      "mappingId": "99681303-c53e-4079-9a56-72dce608af5d",
+      "arWord": "وَعَلَى",
+      "strongsId": "H5921",
+      "before": {
+        "verified_locator": "Gen.1.2#ar5->orig#6 (H5921, HR)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w6",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #6",
+      "mappingId": "fa887b18-2eab-4270-8fe6-a1446025bcf5",
+      "arWord": "وَجْهِ",
+      "strongsId": "H6440",
+      "before": {
+        "verified_locator": "Gen.1.2#ar6->orig#7 (H6440, HNcbpc)",
+        "morph_source": "manual_review",
+        "orig_word": "פְּנֵי"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w7",
+        "morph_source": "oshb_wlc",
+        "orig_word": "פָּנִים"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #7",
+      "mappingId": "5c814410-e90f-42f3-afcc-f9f56a815aac",
+      "arWord": "الْغَمْرِ",
+      "strongsId": "H8415",
+      "before": {
+        "verified_locator": "Gen.1.2#ar7->orig#8 (H8415, HNcbsa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w8",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #8",
+      "mappingId": "ab831591-e26b-44e5-a2d0-27ea3711f45c",
+      "arWord": "ظُلْمَةٌ",
+      "strongsId": "H2822",
+      "before": {
+        "verified_locator": "Gen.1.2#ar8->orig#5 (H2822, HC/Ncmsa)",
+        "morph_source": "manual_review",
+        "orig_word": "וְחֹשֶׁךְ"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w5",
+        "morph_source": "oshb_wlc",
+        "orig_word": "חֹשֶׁךְ"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #9",
+      "mappingId": "609c876b-b121-4376-94dd-4dca43de335d",
+      "arWord": "وَرُوحُ",
+      "strongsId": "H7307",
+      "before": {
+        "verified_locator": "Gen.1.2#ar9->orig#9 (H7307, HC/Ncbsc)",
+        "morph_source": "manual_review",
+        "orig_word": "וְרוּחַ"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w9",
+        "morph_source": "oshb_wlc",
+        "orig_word": "רוּחַ"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #10",
+      "mappingId": "cd138970-f943-4b37-b835-1b3e32b70454",
+      "arWord": "اللهِ",
+      "strongsId": "H430",
+      "before": {
+        "verified_locator": "Gen.1.2#ar10->orig#10 (H430, HNcmpa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w10",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #11",
+      "mappingId": "859cf464-2f68-40ae-88ff-97d7e216aa61",
+      "arWord": "يَرِفُّ",
+      "strongsId": "H7363",
+      "before": {
+        "verified_locator": "Gen.1.2#ar11->orig#11 (H7363, HVprfsa)",
+        "morph_source": "manual_review",
+        "orig_word": "מְרַחֶפֶת"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w11",
+        "morph_source": "oshb_wlc",
+        "orig_word": "רָחַף"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #12",
+      "mappingId": "5992cc76-a9b0-47fc-9b72-8b5adf659f6d",
+      "arWord": "عَلَى",
+      "strongsId": "H5921",
+      "before": {
+        "verified_locator": "Gen.1.2#ar12->orig#12 (H5921, HR)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w12",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #13",
+      "mappingId": "c86c10fa-532a-4fc0-b78b-2e1007049b97",
+      "arWord": "وَجْهِ",
+      "strongsId": "H6440",
+      "before": {
+        "verified_locator": "Gen.1.2#ar13->orig#13 (H6440, HNcbpc)",
+        "morph_source": "manual_review",
+        "orig_word": "פְּנֵי"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w13",
+        "morph_source": "oshb_wlc",
+        "orig_word": "פָּנִים"
+      }
+    },
+    {
+      "ref": "Gen 1:2 #14",
+      "mappingId": "81eca402-454e-4453-9bf5-73e2d0a44145",
+      "arWord": "الْمِيَاهِ",
+      "strongsId": "H4325",
+      "before": {
+        "verified_locator": "Gen.1.2#ar14->orig#14 (H4325, HTd/Ncmpa)",
+        "morph_source": "manual_review",
+        "orig_word": "הַמָּיִם"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V2.w14",
+        "morph_source": "oshb_wlc",
+        "orig_word": "מַיִם"
+      }
+    },
+    {
+      "ref": "Gen 1:3 #1",
+      "mappingId": "9538a216-a1f2-4637-9b85-b86426c56f98",
+      "arWord": "وَقَالَ",
+      "strongsId": "H559",
+      "before": {
+        "verified_locator": "Gen.1.3#ar1->orig#1 (H559, HC/Vqw3ms)",
+        "morph_source": "manual_review",
+        "orig_word": "וַיֹּאמֶר"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V3.w1",
+        "morph_source": "oshb_wlc",
+        "orig_word": "אָמַר"
+      }
+    },
+    {
+      "ref": "Gen 1:3 #2",
+      "mappingId": "c96c8669-8fbb-46e6-90a8-844c776eaecc",
+      "arWord": "اللهُ",
+      "strongsId": "H430",
+      "before": {
+        "verified_locator": "Gen.1.3#ar2->orig#2 (H430, HNcmpa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V3.w2",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:3 #3",
+      "mappingId": "4f4986c9-d92f-4329-960d-bf800f3f0eba",
+      "arWord": "لِيَكُنْ",
+      "strongsId": "H1961",
+      "before": {
+        "verified_locator": "Gen.1.3#ar3->orig#3 (H1961, HVqj3ms)",
+        "morph_source": "manual_review",
+        "orig_word": "יְהִי"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V3.w3",
+        "morph_source": "oshb_wlc",
+        "orig_word": "הָיָה"
+      }
+    },
+    {
+      "ref": "Gen 1:3 #4",
+      "mappingId": "77b161ec-76c5-40dc-9b0e-9cc78b94cfba",
+      "arWord": "نُورٌ",
+      "strongsId": "H216",
+      "before": {
+        "verified_locator": "Gen.1.3#ar4->orig#4 (H216, HNcbsa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V3.w4",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:3 #5",
+      "mappingId": "fbd847aa-16ca-4a31-afa3-7edfc596f0fc",
+      "arWord": "فَكَانَ",
+      "strongsId": "H1961",
+      "before": {
+        "verified_locator": "Gen.1.3#ar5->orig#5 (H1961, HC/Vqw3ms)",
+        "morph_source": "manual_review",
+        "orig_word": "וַיְהִי"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V3.w5",
+        "morph_source": "oshb_wlc",
+        "orig_word": "הָיָה"
+      }
+    },
+    {
+      "ref": "Gen 1:3 #6",
+      "mappingId": "ba8e30bf-e172-427c-b58d-f1bfab49c539",
+      "arWord": "نُورٌ",
+      "strongsId": "H216",
+      "before": {
+        "verified_locator": "Gen.1.3#ar6->orig#6 (H216, HNcbsa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V3.w6",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #1",
+      "mappingId": "943398fa-d206-43fd-8661-6c5b9be0bb6b",
+      "arWord": "وَرَأَى",
+      "strongsId": "H7200",
+      "before": {
+        "verified_locator": "Gen.1.4#ar1->orig#1 (H7200, HC/Vqw3ms)",
+        "morph_source": "manual_review",
+        "orig_word": "וַיַּרְא"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w1",
+        "morph_source": "oshb_wlc",
+        "orig_word": "רָאָה"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #2",
+      "mappingId": "aee3081c-b109-4bc3-8054-566d5891d622",
+      "arWord": "اللهُ",
+      "strongsId": "H430",
+      "before": {
+        "verified_locator": "Gen.1.4#ar2->orig#2 (H430, HNcmpa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w2",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #3",
+      "mappingId": "3f0558f4-085d-4561-b198-2b0ab3a6e413",
+      "arWord": "النُّورَ",
+      "strongsId": "H216",
+      "before": {
+        "verified_locator": "Gen.1.4#ar3->orig#4 (H216, HTd/Ncbsa)",
+        "morph_source": "manual_review",
+        "orig_word": "הָאוֹר"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w4",
+        "morph_source": "oshb_wlc",
+        "orig_word": "אוֹר"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #4",
+      "mappingId": "51de311c-f56f-420b-8c37-7e3ef154921b",
+      "arWord": "أَنَّهُ",
+      "strongsId": "H3588",
+      "before": {
+        "verified_locator": "Gen.1.4#ar4->orig#5 (H3588, HC)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w5",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #5",
+      "mappingId": "feef9fb7-2dc6-44f7-afee-c97093f6f70c",
+      "arWord": "حَسَنٌ",
+      "strongsId": "H2896",
+      "before": {
+        "verified_locator": "Gen.1.4#ar5->orig#6 (H2896, HAamsa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w6",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #6",
+      "mappingId": "56b02478-77ab-4ade-967c-18dda1d52868",
+      "arWord": "وَفَصَلَ",
+      "strongsId": "H914",
+      "before": {
+        "verified_locator": "Gen.1.4#ar6->orig#7 (H914, HC/Vhw3ms)",
+        "morph_source": "manual_review",
+        "orig_word": "וַיַּבְדֵּל",
+        "morph_voice": "causative_active"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w7",
+        "morph_source": "oshb_wlc",
+        "orig_word": "בָּדַל",
+        "morph_voice": "active"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #7",
+      "mappingId": "8a45eb8d-dc58-42ab-8752-3566cc951135",
+      "arWord": "اللهُ",
+      "strongsId": "H430",
+      "before": {
+        "verified_locator": "Gen.1.4#ar7->orig#8 (H430, HNcmpa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w8",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #8",
+      "mappingId": "6c693d00-d064-4d31-9e81-ecc1e309729f",
+      "arWord": "بَيْنَ",
+      "strongsId": "H996",
+      "before": {
+        "verified_locator": "Gen.1.4#ar8->orig#9 (H996, HR)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w9",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #9",
+      "mappingId": "cadd57a8-ab27-48b5-b44d-c53252ef93ba",
+      "arWord": "النُّورِ",
+      "strongsId": "H216",
+      "before": {
+        "verified_locator": "Gen.1.4#ar9->orig#10 (H216, HTd/Ncbsa)",
+        "morph_source": "manual_review",
+        "orig_word": "הָאוֹר"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w10",
+        "morph_source": "oshb_wlc",
+        "orig_word": "אוֹר"
+      }
+    },
+    {
+      "ref": "Gen 1:4 #10",
+      "mappingId": "d0a3dc75-43a2-46ab-bb5e-41d0a494f196",
+      "arWord": "وَالظُّلْمَةِ",
+      "strongsId": "H2822",
+      "before": {
+        "verified_locator": "Gen.1.4#ar10->orig#12 (H2822, HTd/Ncmsa)",
+        "morph_source": "manual_review",
+        "orig_word": "הַחֹשֶׁךְ"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V4.w12",
+        "morph_source": "oshb_wlc",
+        "orig_word": "חֹשֶׁךְ"
+      }
+    },
+    {
+      "ref": "Gen 1:5 #1",
+      "mappingId": "5764c091-ae32-4a86-a782-77bf9f16d31b",
+      "arWord": "وَدَعَا",
+      "strongsId": "H7121",
+      "before": {
+        "verified_locator": "Gen.1.5#ar1->orig#1 (H7121, HC/Vqw3ms)",
+        "morph_source": "manual_review",
+        "orig_word": "וַיִּקְרָא"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V5.w1",
+        "morph_source": "oshb_wlc",
+        "orig_word": "קָרָא"
+      }
+    },
+    {
+      "ref": "Gen 1:5 #2",
+      "mappingId": "d0b82065-cfec-44aa-82bf-cb5ddff29312",
+      "arWord": "اللهُ",
+      "strongsId": "H430",
+      "before": {
+        "verified_locator": "Gen.1.5#ar2->orig#2 (H430, HNcmpa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V5.w2",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:5 #3",
+      "mappingId": "23105446-3ca9-48e0-a986-687855239b83",
+      "arWord": "النُّورَ",
+      "strongsId": "H216",
+      "before": {
+        "verified_locator": "Gen.1.5#ar3->orig#3 (H216, HRd/Ncbsa)",
+        "morph_source": "manual_review",
+        "orig_word": "לָאוֹר"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V5.w3",
+        "morph_source": "oshb_wlc",
+        "orig_word": "אוֹר"
+      }
+    },
+    {
+      "ref": "Gen 1:5 #4",
+      "mappingId": "8e58878c-32d2-4ffd-9a6c-8b41f56ded3b",
+      "arWord": "نَهَارًا",
+      "strongsId": "H3117",
+      "before": {
+        "verified_locator": "Gen.1.5#ar4->orig#4 (H3117, HNcmsa)",
+        "morph_source": "manual_review"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V5.w4",
+        "morph_source": "oshb_wlc"
+      }
+    },
+    {
+      "ref": "Gen 1:5 #5",
+      "mappingId": "177f07d3-df05-49ed-846a-78bc38eddd1a",
+      "arWord": "وَالظُّلْمَةُ",
+      "strongsId": "H2822",
+      "before": {
+        "verified_locator": "Gen.1.5#ar5->orig#5 (H2822, HC/Rd/Ncmsa)",
+        "morph_source": "manual_review",
+        "orig_word": "וְלַחֹשֶׁךְ"
+      },
+      "after": {
+        "verified_locator": "OSHB:B1.C1.V5.w5",
+        "morph_source": "oshb_wlc",
+        "orig_word": "חֹשֶׁךְ"
+      }
+    }
+  ]
+}

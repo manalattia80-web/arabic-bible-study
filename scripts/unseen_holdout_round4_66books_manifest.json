@@ -1,0 +1,147 @@
+{
+  "schema_version": 4,
+  "round": 4,
+  "note": "Round 4 strictly unseen 66-book generalization sample (0.00% overlap with all 2,649 previously excluded/sampled verses across Rounds 1, 2, 3, and historical targets).",
+  "seed": "arabic-bible-study:round4-66book-generalization-test:exclusions=4ce6e013ccd599821b7c77800531e9b0292c7de894b0ed9289bedd87cf0432ee",
+  "excluded_verse_keys_count": 2649,
+  "exclusion_keys_sha256": "4ce6e013ccd599821b7c77800531e9b0292c7de894b0ed9289bedd87cf0432ee",
+  "pre_draw_candidate_pools": {
+    "hebrew": {
+      "eligible_count": 20499,
+      "ordered_keys_sha256": "57e464b49e5a3d0e9d89c333799f59787c0a6ab79eccb95b40c0c63c699e8c48"
+    },
+    "aramaic": {
+      "eligible_count": 215,
+      "ordered_keys_sha256": "7ce38dc36f5b0a58ba51220e2f831c99192a2698225b9796ded568be7475fa38"
+    },
+    "greek": {
+      "eligible_count": 7712,
+      "ordered_keys_sha256": "7b5da81399eeb8a32b20da3fef3697ba595dc3aa17ac553a23f2817d66580680"
+    }
+  },
+  "holdout_verses": [
+    {
+      "name": "Exod 12:41",
+      "book": 2,
+      "ch": 12,
+      "vs": 41,
+      "lang": "hebrew",
+      "oshbBook": "Exod",
+      "oshbOsis": "Exod.12.41"
+    },
+    {
+      "name": "Job 33:26",
+      "book": 18,
+      "ch": 33,
+      "vs": 26,
+      "lang": "hebrew",
+      "oshbBook": "Job",
+      "oshbOsis": "Job.33.26"
+    },
+    {
+      "name": "Ps 54:4",
+      "book": 19,
+      "ch": 54,
+      "vs": 4,
+      "lang": "hebrew",
+      "oshbBook": "Ps",
+      "oshbOsis": "Ps.54.6"
+    },
+    {
+      "name": "Prov 16:14",
+      "book": 20,
+      "ch": 16,
+      "vs": 14,
+      "lang": "hebrew",
+      "oshbBook": "Prov",
+      "oshbOsis": "Prov.16.14"
+    },
+    {
+      "name": "Ezek 43:14",
+      "book": 26,
+      "ch": 43,
+      "vs": 14,
+      "lang": "hebrew",
+      "oshbBook": "Ezek",
+      "oshbOsis": "Ezek.43.14"
+    },
+    {
+      "name": "Ezra 5:15",
+      "book": 15,
+      "ch": 5,
+      "vs": 15,
+      "lang": "aramaic",
+      "oshbBook": "Ezra",
+      "oshbOsis": "Ezra.5.15"
+    },
+    {
+      "name": "Ezra 7:15",
+      "book": 15,
+      "ch": 7,
+      "vs": 15,
+      "lang": "aramaic",
+      "oshbBook": "Ezra",
+      "oshbOsis": "Ezra.7.15"
+    },
+    {
+      "name": "Dan 5:21",
+      "book": 27,
+      "ch": 5,
+      "vs": 21,
+      "lang": "aramaic",
+      "oshbBook": "Dan",
+      "oshbOsis": "Dan.5.21"
+    },
+    {
+      "name": "Dan 6:6",
+      "book": 27,
+      "ch": 6,
+      "vs": 6,
+      "lang": "aramaic",
+      "oshbBook": "Dan",
+      "oshbOsis": "Dan.6.7"
+    },
+    {
+      "name": "Matt 27:5",
+      "book": 40,
+      "ch": 27,
+      "vs": 5,
+      "lang": "greek"
+    },
+    {
+      "name": "Luke 8:8",
+      "book": 42,
+      "ch": 8,
+      "vs": 8,
+      "lang": "greek"
+    },
+    {
+      "name": "John 17:2",
+      "book": 43,
+      "ch": 17,
+      "vs": 2,
+      "lang": "greek"
+    },
+    {
+      "name": "Rom 7:10",
+      "book": 45,
+      "ch": 7,
+      "vs": 10,
+      "lang": "greek"
+    },
+    {
+      "name": "2Cor 3:6",
+      "book": 47,
+      "ch": 3,
+      "vs": 6,
+      "lang": "greek"
+    },
+    {
+      "name": "Jas 2:7",
+      "book": 59,
+      "ch": 2,
+      "vs": 7,
+      "lang": "greek"
+    }
+  ]
+}

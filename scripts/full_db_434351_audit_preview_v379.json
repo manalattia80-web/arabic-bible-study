@@ -1,0 +1,1661 @@
+{
+  "totalVerses": 31102,
+  "fullyCleanVerses": 581,
+  "totalRecords": 434351,
+  "cleanRecords": 120510,
+  "alertedRecords": 313841,
+  "axes": {
+    "lexical": {
+      "pass": 142777,
+      "fail": 266890,
+      "undecided": 24684
+    },
+    "lemmaSurface": {
+      "pass": 134074,
+      "fail": 275593,
+      "undecided": 24684
+    },
+    "morphology": {
+      "pass": 134136,
+      "fail": 281719,
+      "undecided": 18496
+    },
+    "sourceLocator": {
+      "pass": 378257,
+      "fail": 56094,
+      "undecided": 0
+    }
+  },
+  "byLanguage": {
+    "hebrew": {
+      "verses": 22877,
+      "cleanVerses": 555,
+      "total": 320227,
+      "clean": 100617,
+      "alerts": 219610,
+      "catA": 15217,
+      "catB": 211787,
+      "axes": {
+        "lexical": 178349,
+        "lemmaSurface": 184855,
+        "morphology": 191431,
+        "sourceLocator": 48781
+      }
+    },
+    "aramaic": {
+      "verses": 268,
+      "cleanVerses": 4,
+      "total": 4981,
+      "clean": 914,
+      "alerts": 4067,
+      "catA": 497,
+      "catB": 3751,
+      "axes": {
+        "lexical": 3341,
+        "lemmaSurface": 3453,
+        "morphology": 3870,
+        "sourceLocator": 1600
+      }
+    },
+    "greek": {
+      "verses": 7957,
+      "cleanVerses": 22,
+      "total": 109143,
+      "clean": 18979,
+      "alerts": 90164,
+      "catA": 3444,
+      "catB": 91735,
+      "axes": {
+        "lexical": 85200,
+        "lemmaSurface": 87285,
+        "morphology": 86418,
+        "sourceLocator": 5713
+      }
+    }
+  },
+  "categories": {
+    "alreadyClean": 107920,
+    "categoryA_deterministicRepairable": 19158,
+    "categoryB_contextualAlignmentRequired": 307273
+  },
+  "defectTaxonomy": {
+    "catA_derivedMorphMismatch": 12242,
+    "catA_missingOrWrongMorphCaseState": 4845,
+    "catA_rawMorphPrefixVariant": 1651,
+    "catA_surfaceOrLemmaNormalization": 10439,
+    "catA_wmsMandatoryFieldsOrSync": 288257,
+    "catA_locatorCanonicalFormatOrVersification": 25419,
+    "catA_syntacticMetadataConsistency": 2485,
+    "catA_aramaicLanguageBadgeMismatch": 49,
+    "catB_lexicalMismatchAtLocator": 266728,
+    "catB_locatorOutOfBoundsOrMissing": 24684,
+    "catB_duplicatePrimaryTokenCollision": 3802,
+    "catB_falseSyntacticMaskingSourceTokens": 14140,
+    "catB_secondaryComponentDisplacedOrInvalid": 291523
+  },
+  "samples": {
+    "catA_derivedMorphMismatch": [
+      {
+        "ref": "Gen 1:20 #9",
+        "arWord": "وَلْيَطِرْ",
+        "strongsId": "H5774",
+        "origMorph": "HVoi3ms",
+        "dErr": "stem 'piel' vs 'polel'"
+      },
+      {
+        "ref": "Gen 2:21 #10",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Ncbpc/Sp3ms",
+        "dErr": "gender '' vs 'b'"
+      },
+      {
+        "ref": "Gen 2:21 #13",
+        "arWord": "مَكَانَهَا",
+        "strongsId": "H8478",
+        "origMorph": "HR/Sp3fs",
+        "dErr": "person '' vs '3'"
+      },
+      {
+        "ref": "Gen 2:23 #6",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Ncfpc/Sp1cs",
+        "dErr": "gender '' vs 'f'"
+      },
+      {
+        "ref": "Gen 3:5 #7",
+        "arWord": "مِنْهُ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Sp3ms",
+        "dErr": "person '' vs '3'"
+      },
+      {
+        "ref": "Gen 3:6 #8",
+        "arWord": "بَهِجَةٌ",
+        "strongsId": "H8378",
+        "origMorph": "HNcfsa",
+        "dErr": "gender '' vs 'f'"
+      },
+      {
+        "ref": "Gen 3:6 #13",
+        "arWord": "لِلنَّظَرِ",
+        "strongsId": "H7919",
+        "origMorph": "HR/Vhc",
+        "dErr": "stem 'hifil' vs 'hiphil'"
+      },
+      {
+        "ref": "Gen 3:6 #15",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Ncmsc/Sp3ms",
+        "dErr": "gender '' vs 'm'"
+      },
+      {
+        "ref": "Gen 3:14 #13",
+        "arWord": "وَمِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HC/R/Ncmsc",
+        "dErr": "gender '' vs 'm'"
+      },
+      {
+        "ref": "Gen 3:15 #3",
+        "arWord": "بَيْنَكِ",
+        "strongsId": "H996",
+        "origMorph": "HR/Sp2ms",
+        "dErr": "person '' vs '2'"
+      },
+      {
+        "ref": "Gen 3:15 #4",
+        "arWord": "وَبَيْنَ",
+        "strongsId": "H996",
+        "origMorph": "HR/Sp2ms",
+        "dErr": "person '' vs '2'"
+      },
+      {
+        "ref": "Gen 3:15 #6",
+        "arWord": "وَبَيْنَ",
+        "strongsId": "H996",
+        "origMorph": "HR/Sp2ms",
+        "dErr": "person '' vs '2'"
+      },
+      {
+        "ref": "Gen 3:17 #16",
+        "arWord": "مَلْعُونَةٌ",
+        "strongsId": "H779",
+        "origMorph": "HVqsfsa",
+        "dErr": "mood 'participle' vs 'passive_participle'"
+      },
+      {
+        "ref": "Gen 3:22 #18",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Sp1cp",
+        "dErr": "person '' vs '1'"
+      },
+      {
+        "ref": "Gen 3:23 #4",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Ncbsc",
+        "dErr": "gender '' vs 'b'"
+      }
+    ],
+    "catA_missingOrWrongMorphCaseState": [
+      {
+        "ref": "Gen 2:21 #10",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Ncbpc/Sp3ms",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 2:23 #6",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Ncfpc/Sp1cs",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 3:6 #8",
+        "arWord": "بَهِجَةٌ",
+        "strongsId": "H8378",
+        "origMorph": "HNcfsa",
+        "morphCase": null,
+        "expectedCase": "absolute"
+      },
+      {
+        "ref": "Gen 3:6 #15",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Ncmsc/Sp3ms",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 3:14 #13",
+        "arWord": "وَمِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HC/R/Ncmsc",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 3:23 #4",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Ncbsc",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 4:4 #7",
+        "arWord": "وَمِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HC/R/Ncmpc/Sp3fp",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 4:14 #8",
+        "arWord": "وَمِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HC/R/Ncbpc/Sp2ms",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 4:16 #3",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/R/Ncbpc",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 6:14 #13",
+        "arWord": "وَمِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HC/R/Ncmsa",
+        "morphCase": null,
+        "expectedCase": "absolute"
+      },
+      {
+        "ref": "Gen 6:17 #18",
+        "arWord": "مَا",
+        "strongsId": "H3605",
+        "origMorph": "HNcmsa",
+        "morphCase": null,
+        "expectedCase": "absolute"
+      },
+      {
+        "ref": "Gen 6:19 #1",
+        "arWord": "وَمِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HC/R/Ncmsc",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 6:21 #4",
+        "arWord": "مِنْ",
+        "strongsId": "H4480",
+        "origMorph": "HR/Ncmsc",
+        "morphCase": null,
+        "expectedCase": "construct"
+      },
+      {
+        "ref": "Gen 7:4 #2",
+        "arWord": "بَعْدَ",
+        "strongsId": "H3117",
+        "origMorph": "HR/Ncmpa",
+        "morphCase": null,
+        "expectedCase": "absolute"
+      },
+      {
+        "ref": "Gen 7:4 #10",
+        "arWord": "يَوْمًا",
+        "strongsId": "H3117",
+        "origMorph": "HNcmsa",
+        "morphCase": null,
+        "expectedCase": "absolute"
+      }
+    ],
+    "catA_surfaceOrLemmaNormalization": [
+      {
+        "ref": "Gen 1:1 #2",
+        "arWord": "الْبَدْءِ",
+        "strongsId": "H7225",
+        "origWord": "בְּרֵאשִׁית",
+        "expectedLex": "רֵאשִׁית"
+      },
+      {
+        "ref": "Gen 1:1 #5",
+        "arWord": "السَّمَاوَاتِ",
+        "strongsId": "H8064",
+        "origWord": "הַשָּׁמַיִם",
+        "expectedLex": "שָׁמַיִם"
+      },
+      {
+        "ref": "Gen 1:1 #6",
+        "arWord": "وَالأَرْضَ",
+        "strongsId": "H776",
+        "origWord": "הָאָרֶץ",
+        "expectedLex": "אֶרֶץ"
+      },
+      {
+        "ref": "Gen 1:2 #1",
+        "arWord": "وَكَانَتِ",
+        "strongsId": "H1961",
+        "origWord": "הָיְתָה",
+        "expectedLex": "הָיָה"
+      },
+      {
+        "ref": "Gen 1:2 #2",
+        "arWord": "الأَرْضُ",
+        "strongsId": "H776",
+        "origWord": "וְהָאָרֶץ",
+        "expectedLex": "אֶרֶץ"
+      },
+      {
+        "ref": "Gen 1:2 #4",
+        "arWord": "وَخَالِيَةً",
+        "strongsId": "H922",
+        "origWord": "וָבֹהוּ",
+        "expectedLex": "בֹּהוּ"
+      },
+      {
+        "ref": "Gen 1:2 #6",
+        "arWord": "وَجْهِ",
+        "strongsId": "H6440",
+        "origWord": "פְּנֵי",
+        "expectedLex": "פָּנִים"
+      },
+      {
+        "ref": "Gen 1:2 #8",
+        "arWord": "ظُلْمَةٌ",
+        "strongsId": "H2822",
+        "origWord": "וְחֹשֶׁךְ",
+        "expectedLex": "חֹשֶׁךְ"
+      },
+      {
+        "ref": "Gen 1:2 #9",
+        "arWord": "وَرُوحُ",
+        "strongsId": "H7307",
+        "origWord": "וְרוּחַ",
+        "expectedLex": "רוּחַ"
+      },
+      {
+        "ref": "Gen 1:2 #11",
+        "arWord": "يَرِفُّ",
+        "strongsId": "H7363",
+        "origWord": "מְרַחֶפֶת",
+        "expectedLex": "רָחַף"
+      },
+      {
+        "ref": "Gen 1:2 #13",
+        "arWord": "وَجْهِ",
+        "strongsId": "H6440",
+        "origWord": "פְּנֵי",
+        "expectedLex": "פָּנִים"
+      },
+      {
+        "ref": "Gen 1:2 #14",
+        "arWord": "الْمِيَاهِ",
+        "strongsId": "H4325",
+        "origWord": "הַמָּיִם",
+        "expectedLex": "מַיִם"
+      },
+      {
+        "ref": "Gen 1:3 #1",
+        "arWord": "وَقَالَ",
+        "strongsId": "H559",
+        "origWord": "וַיֹּאמֶר",
+        "expectedLex": "אָמַר"
+      },
+      {
+        "ref": "Gen 1:3 #3",
+        "arWord": "لِيَكُنْ",
+        "strongsId": "H1961",
+        "origWord": "יְהִי",
+        "expectedLex": "הָיָה"
+      },
+      {
+        "ref": "Gen 1:3 #5",
+        "arWord": "فَكَانَ",
+        "strongsId": "H1961",
+        "origWord": "וַיְהִי",
+        "expectedLex": "הָיָה"
+      }
+    ],
+    "catA_wmsMandatoryFieldsOrSync": [],
+    "catA_locatorCanonicalFormatOrVersification": [],
+    "catA_aramaicLanguageBadgeMismatch": [],
+    "catB_lexicalMismatchAtLocator": [
+      {
+        "ref": "Gen 1:6 #6",
+        "arWord": "وَسَطِ",
+        "dbStrongs": "H8432",
+        "oshbLemma": "d/4325",
+        "oshbText": "הַמָּ֑יִם",
+        "locIdx": 6
+      },
+      {
+        "ref": "Gen 1:6 #7",
+        "arWord": "الْمِيَاهِ",
+        "dbStrongs": "H4325",
+        "oshbLemma": "c/1961",
+        "oshbText": "וִיהִ֣י",
+        "locIdx": 7
+      },
+      {
+        "ref": "Gen 1:6 #8",
+        "arWord": "وَلْيَكُنْ",
+        "dbStrongs": "H1961",
+        "oshbLemma": "914",
+        "oshbText": "מַבְדִּ֔יל",
+        "locIdx": 8
+      },
+      {
+        "ref": "Gen 1:6 #9",
+        "arWord": "فَاصِلاً",
+        "dbStrongs": "H914",
+        "oshbLemma": "996",
+        "oshbText": "בֵּ֥ין",
+        "locIdx": 9
+      },
+      {
+        "ref": "Gen 1:6 #10",
+        "arWord": "بَيْنَ",
+        "dbStrongs": "H996",
+        "oshbLemma": "4325",
+        "oshbText": "מַ֖יִם",
+        "locIdx": 10
+      },
+      {
+        "ref": "Gen 1:7 #3",
+        "arWord": "الْجَلَدَ",
+        "dbStrongs": "H7549",
+        "oshbLemma": "853",
+        "oshbText": "אֶת",
+        "locIdx": 3
+      },
+      {
+        "ref": "Gen 1:7 #4",
+        "arWord": "وَفَصَلَ",
+        "dbStrongs": "H914",
+        "oshbLemma": "d/7549",
+        "oshbText": "הָרָקִיעַ֒",
+        "locIdx": 4
+      },
+      {
+        "ref": "Gen 1:7 #5",
+        "arWord": "بَيْنَ",
+        "dbStrongs": "H996",
+        "oshbLemma": "c/914",
+        "oshbText": "וַיַּבְדֵּ֗ל",
+        "locIdx": 5
+      },
+      {
+        "ref": "Gen 1:7 #6",
+        "arWord": "الْمِيَاهِ",
+        "dbStrongs": "H4325",
+        "oshbLemma": "996",
+        "oshbText": "בֵּ֤ין",
+        "locIdx": 6
+      },
+      {
+        "ref": "Gen 1:7 #7",
+        "arWord": "الَّتِي",
+        "dbStrongs": "H834",
+        "oshbLemma": "d/4325",
+        "oshbText": "הַמַּ֨יִם֙",
+        "locIdx": 7
+      },
+      {
+        "ref": "Gen 1:7 #8",
+        "arWord": "تَحْتَ",
+        "dbStrongs": "H8478",
+        "oshbLemma": "834 a",
+        "oshbText": "אֲשֶׁר֙",
+        "locIdx": 8
+      },
+      {
+        "ref": "Gen 1:7 #9",
+        "arWord": "الْجَلَدِ",
+        "dbStrongs": "H7549",
+        "oshbLemma": "m/8478",
+        "oshbText": "מִתַּ֣חַת",
+        "locIdx": 9
+      },
+      {
+        "ref": "Gen 1:7 #10",
+        "arWord": "وَالْمِيَاهِ",
+        "dbStrongs": "H4325",
+        "oshbLemma": "l/7549",
+        "oshbText": "לָרָקִ֔יעַ",
+        "locIdx": 10
+      },
+      {
+        "ref": "Gen 1:7 #11",
+        "arWord": "الَّتِي",
+        "dbStrongs": "H834",
+        "oshbLemma": "c/996",
+        "oshbText": "וּבֵ֣ין",
+        "locIdx": 11
+      },
+      {
+        "ref": "Gen 1:7 #12",
+        "arWord": "فَوْقَ",
+        "dbStrongs": "H5921",
+        "oshbLemma": "d/4325",
+        "oshbText": "הַמַּ֔יִם",
+        "locIdx": 12
+      }
+    ],
+    "catB_locatorOutOfBoundsOrMissing": [
+      {
+        "ref": "Gen 1:6 #12",
+        "arWord": "وَمِيَاهٍ",
+        "strongsId": "H4325",
+        "locator": "OSHB:B1.C1.V6.w12",
+        "origPos": 12,
+        "tokCount": 11
+      },
+      {
+        "ref": "Gen 1:10 #13",
+        "arWord": "حَسَنٌ",
+        "strongsId": "H2896",
+        "locator": "OSHB:B1.C1.V10.w13",
+        "origPos": 13,
+        "tokCount": 12
+      },
+      {
+        "ref": "Gen 1:15 #10",
+        "arWord": "كَذلِكَ",
+        "strongsId": "H3651",
+        "locator": "OSHB:B1.C1.V15.w10",
+        "origPos": 10,
+        "tokCount": 9
+      },
+      {
+        "ref": "Gen 1:18 #13",
+        "arWord": "حَسَنٌ",
+        "strongsId": "H2896",
+        "locator": "OSHB:B1.C1.V18.w13",
+        "origPos": 13,
+        "tokCount": 12
+      },
+      {
+        "ref": "Gen 1:20 #16",
+        "arWord": "السَّمَاءِ",
+        "strongsId": "H8064",
+        "locator": "OSHB:B1.C1.V20.w16",
+        "origPos": 16,
+        "tokCount": 15
+      },
+      {
+        "ref": "Gen 1:21 #24",
+        "arWord": "حَسَنٌ",
+        "strongsId": "H2896",
+        "locator": "OSHB:B1.C1.V21.w24",
+        "origPos": 24,
+        "tokCount": 23
+      },
+      {
+        "ref": "Gen 1:24 #15",
+        "arWord": "كَذلِكَ",
+        "strongsId": "H3651",
+        "locator": "OSHB:B1.C1.V24.w15",
+        "origPos": 15,
+        "tokCount": 14
+      },
+      {
+        "ref": "Gen 1:26 #21",
+        "arWord": "جَمِيعِ",
+        "strongsId": "H3605",
+        "locator": "OSHB:B1.C1.V26.w21",
+        "origPos": 21,
+        "tokCount": 19
+      },
+      {
+        "ref": "Gen 1:26 #22",
+        "arWord": "الدَّبَّابَاتِ",
+        "strongsId": "H7431",
+        "locator": "OSHB:B1.C1.V26.w22",
+        "origPos": 22,
+        "tokCount": 19
+      },
+      {
+        "ref": "Gen 1:26 #24",
+        "arWord": "تَدِبُّ",
+        "strongsId": "H7430",
+        "locator": "OSHB:B1.C1.V26.w24",
+        "origPos": 24,
+        "tokCount": 19
+      },
+      {
+        "ref": "Gen 1:26 #25",
+        "arWord": "عَلَى",
+        "strongsId": "H5921",
+        "locator": "OSHB:B1.C1.V26.w25",
+        "origPos": 25,
+        "tokCount": 19
+      },
+      {
+        "ref": "Gen 1:26 #26",
+        "arWord": "الأَرْضِ",
+        "strongsId": "H776",
+        "locator": "OSHB:B1.C1.V26.w26",
+        "origPos": 26,
+        "tokCount": 19
+      },
+      {
+        "ref": "Gen 2:2 #15",
+        "arWord": "جَمِيعِ",
+        "strongsId": "H3605",
+        "locator": "OSHB:B1.C2.V2.w15",
+        "origPos": 15,
+        "tokCount": 14
+      },
+      {
+        "ref": "Gen 2:2 #16",
+        "arWord": "عَمَلِهِ",
+        "strongsId": "H4399",
+        "locator": "OSHB:B1.C2.V2.w16",
+        "origPos": 16,
+        "tokCount": 14
+      },
+      {
+        "ref": "Gen 2:2 #17",
+        "arWord": "الَّذِي",
+        "strongsId": "H834",
+        "locator": "OSHB:B1.C2.V2.w17",
+        "origPos": 17,
+        "tokCount": 14
+      }
+    ],
+    "catB_duplicatePrimaryTokenCollision": [
+      {
+        "ref": "Gen 2:10 #5",
+        "arWord": "عَدْنٍ",
+        "strongsId": "H5731",
+        "edKey": "OSHB:w3",
+        "prevArPos": 4
+      },
+      {
+        "ref": "Gen 2:10 #9",
+        "arWord": "هُنَاكَ",
+        "strongsId": "H8033",
+        "edKey": "OSHB:w7",
+        "prevArPos": 8
+      },
+      {
+        "ref": "Gen 7:3 #2",
+        "arWord": "طُيُورِ",
+        "strongsId": "H5775",
+        "edKey": "OSHB:w2",
+        "prevArPos": 1
+      },
+      {
+        "ref": "Gen 7:11 #14",
+        "arWord": "عَشَرَ",
+        "strongsId": "H6235",
+        "edKey": "OSHB:w10",
+        "prevArPos": 10
+      },
+      {
+        "ref": "Gen 8:4 #9",
+        "arWord": "عَشَرَ",
+        "strongsId": "H6235",
+        "edKey": "OSHB:w5",
+        "prevArPos": 5
+      },
+      {
+        "ref": "Gen 14:4 #8",
+        "arWord": "عَشَرَةَ",
+        "strongsId": "H6235",
+        "edKey": "OSHB:w2",
+        "prevArPos": 2
+      },
+      {
+        "ref": "Gen 14:5 #4",
+        "arWord": "عَشَرْةَ",
+        "strongsId": "H6235",
+        "edKey": "OSHB:w2",
+        "prevArPos": 2
+      },
+      {
+        "ref": "Gen 22:16 #7",
+        "arWord": "مِنْ",
+        "strongsId": "",
+        "edKey": "OSHB:w6",
+        "prevArPos": 6
+      },
+      {
+        "ref": "Gen 49:28 #7",
+        "arWord": "عَشَرَ",
+        "strongsId": "H6235",
+        "edKey": "OSHB:w5",
+        "prevArPos": 5
+      },
+      {
+        "ref": "Exod 1:16 #13",
+        "arWord": "كَانَ",
+        "strongsId": "H1934",
+        "edKey": "OSHB:w9",
+        "prevArPos": 9
+      },
+      {
+        "ref": "Exod 2:1 #8",
+        "arWord": "لاَوِي،",
+        "strongsId": "H3878",
+        "edKey": "OSHB:w5",
+        "prevArPos": 5
+      },
+      {
+        "ref": "Exod 2:5 #12",
+        "arWord": "النَّهْرِ.",
+        "strongsId": "H2975",
+        "edKey": "OSHB:w5",
+        "prevArPos": 5
+      },
+      {
+        "ref": "Exod 2:11 #19",
+        "arWord": "رَجُلاً",
+        "strongsId": "H376",
+        "edKey": "OSHB:w15",
+        "prevArPos": 16
+      },
+      {
+        "ref": "Exod 2:11 #22",
+        "arWord": "إِخْوَتِهِ،",
+        "strongsId": "H251",
+        "edKey": "OSHB:w11",
+        "prevArPos": 11
+      },
+      {
+        "ref": "Exod 2:15 #10",
+        "arWord": "مُوسَى",
+        "strongsId": "H4872",
+        "edKey": "OSHB:w8",
+        "prevArPos": 8
+      }
+    ],
+    "catB_falseSyntacticMaskingSourceTokens": [
+      {
+        "ref": "Gen 1:1 #1",
+        "arWord": "فِي",
+        "unconsumedSourceCount": 2
+      },
+      {
+        "ref": "Gen 1:25 #14",
+        "arWord": "ذلِكَ",
+        "unconsumedSourceCount": 2
+      },
+      {
+        "ref": "Gen 1:27 #4",
+        "arWord": "عَلَى",
+        "unconsumedSourceCount": 1
+      },
+      {
+        "ref": "Gen 1:27 #6",
+        "arWord": "عَلَى",
+        "unconsumedSourceCount": 1
+      },
+      {
+        "ref": "Gen 1:29 #4",
+        "arWord": "قَدْ",
+        "unconsumedSourceCount": 4
+      },
+      {
+        "ref": "Gen 1:29 #16",
+        "arWord": "فِيهِ",
+        "unconsumedSourceCount": 4
+      },
+      {
+        "ref": "Gen 1:29 #21",
+        "arWord": "لَكُمْ",
+        "unconsumedSourceCount": 4
+      },
+      {
+        "ref": "Gen 1:30 #11",
+        "arWord": "فِيهَا",
+        "unconsumedSourceCount": 1
+      },
+      {
+        "ref": "Gen 1:30 #14",
+        "arWord": "أَعْطَيْتُ",
+        "unconsumedSourceCount": 1
+      },
+      {
+        "ref": "Gen 2:3 #7",
+        "arWord": "فِيهِ",
+        "unconsumedSourceCount": 1
+      },
+      {
+        "ref": "Gen 2:10 #1",
+        "arWord": "وَكَانَ",
+        "unconsumedSourceCount": 1
+      },
+      {
+        "ref": "Gen 2:19 #21",
+        "arWord": "بِهِ",
+        "unconsumedSourceCount": 1
+      },
+      {
+        "ref": "Gen 2:19 #23",
+        "arWord": "ذَاتَ",
+        "unconsumedSourceCount": 1
+      },
+      {
+        "ref": "Gen 3:7 #10",
+        "arWord": "لأَنْفُسِهِمَا",
+        "unconsumedSourceCount": 2
+      },
+      {
+        "ref": "Gen 3:10 #4",
+        "arWord": "فِي",
+        "unconsumedSourceCount": 1
+      }
+    ]
+  },
+  "byBook": [
+    {
+      "bookId": 1,
+      "bookName": "Gen",
+      "verses": 1533,
+      "cleanVerses": 48,
+      "totalRecords": 21248,
+      "cleanRecords": 7482,
+      "alertedRecords": 13766,
+      "cleanPct": 35.21,
+      "catA_deterministic": 782,
+      "catB_contextual": 13585
+    },
+    {
+      "bookId": 2,
+      "bookName": "Exod",
+      "verses": 1213,
+      "cleanVerses": 18,
+      "totalRecords": 17076,
+      "cleanRecords": 5182,
+      "alertedRecords": 11894,
+      "cleanPct": 30.35,
+      "catA_deterministic": 729,
+      "catB_contextual": 11608
+    },
+    {
+      "bookId": 3,
+      "bookName": "Lev",
+      "verses": 859,
+      "cleanVerses": 6,
+      "totalRecords": 12223,
+      "cleanRecords": 3138,
+      "alertedRecords": 9085,
+      "cleanPct": 25.67,
+      "catA_deterministic": 471,
+      "catB_contextual": 8846
+    },
+    {
+      "bookId": 4,
+      "bookName": "Num",
+      "verses": 1288,
+      "cleanVerses": 18,
+      "totalRecords": 17232,
+      "cleanRecords": 5116,
+      "alertedRecords": 12116,
+      "cleanPct": 29.69,
+      "catA_deterministic": 667,
+      "catB_contextual": 11865
+    },
+    {
+      "bookId": 5,
+      "bookName": "Deut",
+      "verses": 959,
+      "cleanVerses": 17,
+      "totalRecords": 14991,
+      "cleanRecords": 4141,
+      "alertedRecords": 10850,
+      "cleanPct": 27.62,
+      "catA_deterministic": 686,
+      "catB_contextual": 10367
+    },
+    {
+      "bookId": 6,
+      "bookName": "Josh",
+      "verses": 658,
+      "cleanVerses": 13,
+      "totalRecords": 10398,
+      "cleanRecords": 3104,
+      "alertedRecords": 7294,
+      "cleanPct": 29.85,
+      "catA_deterministic": 283,
+      "catB_contextual": 7231
+    },
+    {
+      "bookId": 7,
+      "bookName": "Judg",
+      "verses": 618,
+      "cleanVerses": 2,
+      "totalRecords": 10334,
+      "cleanRecords": 3158,
+      "alertedRecords": 7176,
+      "cleanPct": 30.56,
+      "catA_deterministic": 289,
+      "catB_contextual": 7131
+    },
+    {
+      "bookId": 8,
+      "bookName": "Ruth",
+      "verses": 85,
+      "cleanVerses": 1,
+      "totalRecords": 1381,
+      "cleanRecords": 460,
+      "alertedRecords": 921,
+      "cleanPct": 33.31,
+      "catA_deterministic": 61,
+      "catB_contextual": 895
+    },
+    {
+      "bookId": 9,
+      "bookName": "1Sam",
+      "verses": 810,
+      "cleanVerses": 40,
+      "totalRecords": 14059,
+      "cleanRecords": 6838,
+      "alertedRecords": 7221,
+      "cleanPct": 48.64,
+      "catA_deterministic": 956,
+      "catB_contextual": 7407
+    },
+    {
+      "bookId": 10,
+      "bookName": "2Sam",
+      "verses": 695,
+      "cleanVerses": 7,
+      "totalRecords": 11611,
+      "cleanRecords": 3224,
+      "alertedRecords": 8387,
+      "cleanPct": 27.77,
+      "catA_deterministic": 527,
+      "catB_contextual": 8071
+    },
+    {
+      "bookId": 11,
+      "bookName": "1Kgs",
+      "verses": 816,
+      "cleanVerses": 6,
+      "totalRecords": 13784,
+      "cleanRecords": 4076,
+      "alertedRecords": 9708,
+      "cleanPct": 29.57,
+      "catA_deterministic": 590,
+      "catB_contextual": 9310
+    },
+    {
+      "bookId": 12,
+      "bookName": "2Kgs",
+      "verses": 719,
+      "cleanVerses": 4,
+      "totalRecords": 12998,
+      "cleanRecords": 3745,
+      "alertedRecords": 9253,
+      "cleanPct": 28.81,
+      "catA_deterministic": 392,
+      "catB_contextual": 9128
+    },
+    {
+      "bookId": 13,
+      "bookName": "1Chr",
+      "verses": 942,
+      "cleanVerses": 46,
+      "totalRecords": 11169,
+      "cleanRecords": 3847,
+      "alertedRecords": 7322,
+      "cleanPct": 34.44,
+      "catA_deterministic": 707,
+      "catB_contextual": 6766
+    },
+    {
+      "bookId": 14,
+      "bookName": "2Chr",
+      "verses": 822,
+      "cleanVerses": 10,
+      "totalRecords": 14271,
+      "cleanRecords": 3943,
+      "alertedRecords": 10328,
+      "cleanPct": 27.63,
+      "catA_deterministic": 510,
+      "catB_contextual": 10059
+    },
+    {
+      "bookId": 15,
+      "bookName": "Ezra",
+      "verses": 280,
+      "cleanVerses": 10,
+      "totalRecords": 4129,
+      "cleanRecords": 1161,
+      "alertedRecords": 2968,
+      "cleanPct": 28.12,
+      "catA_deterministic": 175,
+      "catB_contextual": 2871
+    },
+    {
+      "bookId": 16,
+      "bookName": "Neh",
+      "verses": 406,
+      "cleanVerses": 11,
+      "totalRecords": 5663,
+      "cleanRecords": 1442,
+      "alertedRecords": 4221,
+      "cleanPct": 25.46,
+      "catA_deterministic": 317,
+      "catB_contextual": 3994
+    },
+    {
+      "bookId": 17,
+      "bookName": "Esth",
+      "verses": 167,
+      "cleanVerses": 0,
+      "totalRecords": 3304,
+      "cleanRecords": 864,
+      "alertedRecords": 2440,
+      "cleanPct": 26.15,
+      "catA_deterministic": 73,
+      "catB_contextual": 2452
+    },
+    {
+      "bookId": 18,
+      "bookName": "Job",
+      "verses": 1070,
+      "cleanVerses": 40,
+      "totalRecords": 9406,
+      "cleanRecords": 3281,
+      "alertedRecords": 6125,
+      "cleanPct": 34.88,
+      "catA_deterministic": 344,
+      "catB_contextual": 5905
+    },
+    {
+      "bookId": 19,
+      "bookName": "Ps",
+      "verses": 2461,
+      "cleanVerses": 125,
+      "totalRecords": 21849,
+      "cleanRecords": 6886,
+      "alertedRecords": 14963,
+      "cleanPct": 31.52,
+      "catA_deterministic": 3159,
+      "catB_contextual": 12361
+    },
+    {
+      "bookId": 20,
+      "bookName": "Prov",
+      "verses": 915,
+      "cleanVerses": 55,
+      "totalRecords": 7829,
+      "cleanRecords": 3090,
+      "alertedRecords": 4739,
+      "cleanPct": 39.47,
+      "catA_deterministic": 193,
+      "catB_contextual": 4610
+    },
+    {
+      "bookId": 21,
+      "bookName": "Eccl",
+      "verses": 222,
+      "cleanVerses": 7,
+      "totalRecords": 3247,
+      "cleanRecords": 860,
+      "alertedRecords": 2387,
+      "cleanPct": 26.49,
+      "catA_deterministic": 130,
+      "catB_contextual": 2289
+    },
+    {
+      "bookId": 22,
+      "bookName": "Song",
+      "verses": 117,
+      "cleanVerses": 4,
+      "totalRecords": 1388,
+      "cleanRecords": 431,
+      "alertedRecords": 957,
+      "cleanPct": 31.05,
+      "catA_deterministic": 65,
+      "catB_contextual": 908
+    },
+    {
+      "bookId": 23,
+      "bookName": "Isa",
+      "verses": 1292,
+      "cleanVerses": 37,
+      "totalRecords": 18684,
+      "cleanRecords": 6584,
+      "alertedRecords": 12100,
+      "cleanPct": 35.24,
+      "catA_deterministic": 582,
+      "catB_contextual": 11903
+    },
+    {
+      "bookId": 24,
+      "bookName": "Jer",
+      "verses": 1364,
+      "cleanVerses": 11,
+      "totalRecords": 23076,
+      "cleanRecords": 7375,
+      "alertedRecords": 15701,
+      "cleanPct": 31.96,
+      "catA_deterministic": 810,
+      "catB_contextual": 15419
+    },
+    {
+      "bookId": 25,
+      "bookName": "Lam",
+      "verses": 154,
+      "cleanVerses": 3,
+      "totalRecords": 1802,
+      "cleanRecords": 592,
+      "alertedRecords": 1210,
+      "cleanPct": 32.85,
+      "catA_deterministic": 63,
+      "catB_contextual": 1192
+    },
+    {
+      "bookId": 26,
+      "bookName": "Ezek",
+      "verses": 1273,
+      "cleanVerses": 3,
+      "totalRecords": 20217,
+      "cleanRecords": 5782,
+      "alertedRecords": 14435,
+      "cleanPct": 28.6,
+      "catA_deterministic": 805,
+      "catB_contextual": 14254
+    },
+    {
+      "bookId": 27,
+      "bookName": "Dan",
+      "verses": 357,
+      "cleanVerses": 3,
+      "totalRecords": 6203,
+      "cleanRecords": 1225,
+      "alertedRecords": 4978,
+      "cleanPct": 19.75,
+      "catA_deterministic": 472,
+      "catB_contextual": 4656
+    },
+    {
+      "bookId": 28,
+      "bookName": "Hos",
+      "verses": 197,
+      "cleanVerses": 1,
+      "totalRecords": 2617,
+      "cleanRecords": 636,
+      "alertedRecords": 1981,
+      "cleanPct": 24.3,
+      "catA_deterministic": 217,
+      "catB_contextual": 1798
+    },
+    {
+      "bookId": 29,
+      "bookName": "Joel",
+      "verses": 73,
+      "cleanVerses": 0,
+      "totalRecords": 1044,
+      "cleanRecords": 276,
+      "alertedRecords": 768,
+      "cleanPct": 26.44,
+      "catA_deterministic": 109,
+      "catB_contextual": 666
+    },
+    {
+      "bookId": 30,
+      "bookName": "Amos",
+      "verses": 146,
+      "cleanVerses": 5,
+      "totalRecords": 2237,
+      "cleanRecords": 707,
+      "alertedRecords": 1530,
+      "cleanPct": 31.6,
+      "catA_deterministic": 43,
+      "catB_contextual": 1512
+    },
+    {
+      "bookId": 31,
+      "bookName": "Obad",
+      "verses": 21,
+      "cleanVerses": 0,
+      "totalRecords": 321,
+      "cleanRecords": 101,
+      "alertedRecords": 220,
+      "cleanPct": 31.46,
+      "catA_deterministic": 7,
+      "catB_contextual": 221
+    },
+    {
+      "bookId": 32,
+      "bookName": "Jonah",
+      "verses": 48,
+      "cleanVerses": 0,
+      "totalRecords": 746,
+      "cleanRecords": 237,
+      "alertedRecords": 509,
+      "cleanPct": 31.77,
+      "catA_deterministic": 60,
+      "catB_contextual": 458
+    },
+    {
+      "bookId": 33,
+      "bookName": "Mic",
+      "verses": 105,
+      "cleanVerses": 1,
+      "totalRecords": 1575,
+      "cleanRecords": 442,
+      "alertedRecords": 1133,
+      "cleanPct": 28.06,
+      "catA_deterministic": 103,
+      "catB_contextual": 1049
+    },
+    {
+      "bookId": 34,
+      "bookName": "Nah",
+      "verses": 47,
+      "cleanVerses": 1,
+      "totalRecords": 628,
+      "cleanRecords": 159,
+      "alertedRecords": 469,
+      "cleanPct": 25.32,
+      "catA_deterministic": 70,
+      "catB_contextual": 399
+    },
+    {
+      "bookId": 35,
+      "bookName": "Hab",
+      "verses": 56,
+      "cleanVerses": 2,
+      "totalRecords": 750,
+      "cleanRecords": 227,
+      "alertedRecords": 523,
+      "cleanPct": 30.27,
+      "catA_deterministic": 18,
+      "catB_contextual": 508
+    },
+    {
+      "bookId": 36,
+      "bookName": "Zeph",
+      "verses": 53,
+      "cleanVerses": 1,
+      "totalRecords": 822,
+      "cleanRecords": 314,
+      "alertedRecords": 508,
+      "cleanPct": 38.2,
+      "catA_deterministic": 18,
+      "catB_contextual": 496
+    },
+    {
+      "bookId": 37,
+      "bookName": "Hag",
+      "verses": 38,
+      "cleanVerses": 2,
+      "totalRecords": 638,
+      "cleanRecords": 214,
+      "alertedRecords": 424,
+      "cleanPct": 33.54,
+      "catA_deterministic": 10,
+      "catB_contextual": 422
+    },
+    {
+      "bookId": 38,
+      "bookName": "Zech",
+      "verses": 211,
+      "cleanVerses": 1,
+      "totalRecords": 3345,
+      "cleanRecords": 966,
+      "alertedRecords": 2379,
+      "cleanPct": 28.88,
+      "catA_deterministic": 164,
+      "catB_contextual": 2285
+    },
+    {
+      "bookId": 39,
+      "bookName": "Mal",
+      "verses": 55,
+      "cleanVerses": 0,
+      "totalRecords": 913,
+      "cleanRecords": 225,
+      "alertedRecords": 688,
+      "cleanPct": 24.64,
+      "catA_deterministic": 57,
+      "catB_contextual": 641
+    },
+    {
+      "bookId": 40,
+      "bookName": "Matt",
+      "verses": 1071,
+      "cleanVerses": 0,
+      "totalRecords": 13819,
+      "cleanRecords": 2352,
+      "alertedRecords": 11467,
+      "cleanPct": 17.02,
+      "catA_deterministic": 441,
+      "catB_contextual": 11694
+    },
+    {
+      "bookId": 41,
+      "bookName": "Mark",
+      "verses": 678,
+      "cleanVerses": 2,
+      "totalRecords": 8624,
+      "cleanRecords": 1452,
+      "alertedRecords": 7172,
+      "cleanPct": 16.84,
+      "catA_deterministic": 247,
+      "catB_contextual": 7477
+    },
+    {
+      "bookId": 42,
+      "bookName": "Luke",
+      "verses": 1151,
+      "cleanVerses": 4,
+      "totalRecords": 14813,
+      "cleanRecords": 2686,
+      "alertedRecords": 12127,
+      "cleanPct": 18.13,
+      "catA_deterministic": 490,
+      "catB_contextual": 12551
+    },
+    {
+      "bookId": 43,
+      "bookName": "John",
+      "verses": 879,
+      "cleanVerses": 3,
+      "totalRecords": 12090,
+      "cleanRecords": 2358,
+      "alertedRecords": 9732,
+      "cleanPct": 19.5,
+      "catA_deterministic": 391,
+      "catB_contextual": 10084
+    },
+    {
+      "bookId": 44,
+      "bookName": "Acts",
+      "verses": 1007,
+      "cleanVerses": 0,
+      "totalRecords": 15003,
+      "cleanRecords": 2243,
+      "alertedRecords": 12760,
+      "cleanPct": 14.95,
+      "catA_deterministic": 408,
+      "catB_contextual": 13140
+    },
+    {
+      "bookId": 45,
+      "bookName": "Rom",
+      "verses": 433,
+      "cleanVerses": 3,
+      "totalRecords": 5872,
+      "cleanRecords": 1108,
+      "alertedRecords": 4764,
+      "cleanPct": 18.87,
+      "catA_deterministic": 177,
+      "catB_contextual": 4809
+    },
+    {
+      "bookId": 46,
+      "bookName": "1Cor",
+      "verses": 437,
+      "cleanVerses": 2,
+      "totalRecords": 5884,
+      "cleanRecords": 1182,
+      "alertedRecords": 4702,
+      "cleanPct": 20.09,
+      "catA_deterministic": 190,
+      "catB_contextual": 4662
+    },
+    {
+      "bookId": 47,
+      "bookName": "2Cor",
+      "verses": 257,
+      "cleanVerses": 0,
+      "totalRecords": 3837,
+      "cleanRecords": 619,
+      "alertedRecords": 3218,
+      "cleanPct": 16.13,
+      "catA_deterministic": 114,
+      "catB_contextual": 3199
+    },
+    {
+      "bookId": 48,
+      "bookName": "Gal",
+      "verses": 149,
+      "cleanVerses": 2,
+      "totalRecords": 1949,
+      "cleanRecords": 375,
+      "alertedRecords": 1574,
+      "cleanPct": 19.24,
+      "catA_deterministic": 65,
+      "catB_contextual": 1556
+    },
+    {
+      "bookId": 49,
+      "bookName": "Eph",
+      "verses": 155,
+      "cleanVerses": 2,
+      "totalRecords": 1839,
+      "cleanRecords": 346,
+      "alertedRecords": 1493,
+      "cleanPct": 18.81,
+      "catA_deterministic": 66,
+      "catB_contextual": 1467
+    },
+    {
+      "bookId": 50,
+      "bookName": "Phil",
+      "verses": 104,
+      "cleanVerses": 1,
+      "totalRecords": 1439,
+      "cleanRecords": 250,
+      "alertedRecords": 1189,
+      "cleanPct": 17.37,
+      "catA_deterministic": 65,
+      "catB_contextual": 1145
+    },
+    {
+      "bookId": 51,
+      "bookName": "Col",
+      "verses": 95,
+      "cleanVerses": 0,
+      "totalRecords": 1234,
+      "cleanRecords": 193,
+      "alertedRecords": 1041,
+      "cleanPct": 15.64,
+      "catA_deterministic": 64,
+      "catB_contextual": 992
+    },
+    {
+      "bookId": 52,
+      "bookName": "1Thess",
+      "verses": 89,
+      "cleanVerses": 2,
+      "totalRecords": 1200,
+      "cleanRecords": 261,
+      "alertedRecords": 939,
+      "cleanPct": 21.75,
+      "catA_deterministic": 53,
+      "catB_contextual": 920
+    },
+    {
+      "bookId": 53,
+      "bookName": "2Thess",
+      "verses": 47,
+      "cleanVerses": 0,
+      "totalRecords": 630,
+      "cleanRecords": 90,
+      "alertedRecords": 540,
+      "cleanPct": 14.29,
+      "catA_deterministic": 14,
+      "catB_contextual": 537
+    },
+    {
+      "bookId": 54,
+      "bookName": "1Tim",
+      "verses": 113,
+      "cleanVerses": 0,
+      "totalRecords": 1519,
+      "cleanRecords": 315,
+      "alertedRecords": 1204,
+      "cleanPct": 20.74,
+      "catA_deterministic": 44,
+      "catB_contextual": 1219
+    },
+    {
+      "bookId": 55,
+      "bookName": "2Tim",
+      "verses": 83,
+      "cleanVerses": 0,
+      "totalRecords": 1049,
+      "cleanRecords": 159,
+      "alertedRecords": 890,
+      "cleanPct": 15.16,
+      "catA_deterministic": 32,
+      "catB_contextual": 886
+    },
+    {
+      "bookId": 56,
+      "bookName": "Titus",
+      "verses": 46,
+      "cleanVerses": 0,
+      "totalRecords": 616,
+      "cleanRecords": 142,
+      "alertedRecords": 474,
+      "cleanPct": 23.05,
+      "catA_deterministic": 17,
+      "catB_contextual": 469
+    },
+    {
+      "bookId": 57,
+      "bookName": "Phlm",
+      "verses": 25,
+      "cleanVerses": 0,
+      "totalRecords": 292,
+      "cleanRecords": 43,
+      "alertedRecords": 249,
+      "cleanPct": 14.73,
+      "catA_deterministic": 11,
+      "catB_contextual": 245
+    },
+    {
+      "bookId": 58,
+      "bookName": "Heb",
+      "verses": 303,
+      "cleanVerses": 0,
+      "totalRecords": 4238,
+      "cleanRecords": 803,
+      "alertedRecords": 3435,
+      "cleanPct": 18.95,
+      "catA_deterministic": 145,
+      "catB_contextual": 3480
+    },
+    {
+      "bookId": 59,
+      "bookName": "Jas",
+      "verses": 108,
+      "cleanVerses": 0,
+      "totalRecords": 1421,
+      "cleanRecords": 306,
+      "alertedRecords": 1115,
+      "cleanPct": 21.53,
+      "catA_deterministic": 47,
+      "catB_contextual": 1119
+    },
+    {
+      "bookId": 60,
+      "bookName": "1Pet",
+      "verses": 105,
+      "cleanVerses": 1,
+      "totalRecords": 1552,
+      "cleanRecords": 325,
+      "alertedRecords": 1227,
+      "cleanPct": 20.94,
+      "catA_deterministic": 44,
+      "catB_contextual": 1232
+    },
+    {
+      "bookId": 61,
+      "bookName": "2Pet",
+      "verses": 61,
+      "cleanVerses": 0,
+      "totalRecords": 969,
+      "cleanRecords": 167,
+      "alertedRecords": 802,
+      "cleanPct": 17.23,
+      "catA_deterministic": 22,
+      "catB_contextual": 816
+    },
+    {
+      "bookId": 62,
+      "bookName": "1John",
+      "verses": 105,
+      "cleanVerses": 0,
+      "totalRecords": 1629,
+      "cleanRecords": 253,
+      "alertedRecords": 1376,
+      "cleanPct": 15.53,
+      "catA_deterministic": 54,
+      "catB_contextual": 1353
+    },
+    {
+      "bookId": 63,
+      "bookName": "2John",
+      "verses": 13,
+      "cleanVerses": 0,
+      "totalRecords": 204,
+      "cleanRecords": 35,
+      "alertedRecords": 169,
+      "cleanPct": 17.16,
+      "catA_deterministic": 8,
+      "catB_contextual": 163
+    },
+    {
+      "bookId": 64,
+      "bookName": "3John",
+      "verses": 14,
+      "cleanVerses": 0,
+      "totalRecords": 205,
+      "cleanRecords": 36,
+      "alertedRecords": 169,
+      "cleanPct": 17.56,
+      "catA_deterministic": 8,
+      "catB_contextual": 168
+    },
+    {
+      "bookId": 65,
+      "bookName": "Jude",
+      "verses": 25,
+      "cleanVerses": 0,
+      "totalRecords": 386,
+      "cleanRecords": 55,
+      "alertedRecords": 331,
+      "cleanPct": 14.25,
+      "catA_deterministic": 27,
+      "catB_contextual": 317
+    },
+    {
+      "bookId": 66,
+      "bookName": "Rev",
+      "verses": 404,
+      "cleanVerses": 0,
+      "totalRecords": 6830,
+      "cleanRecords": 825,
+      "alertedRecords": 6005,
+      "cleanPct": 12.08,
+      "catA_deterministic": 200,
+      "catB_contextual": 6035
+    }
+  ],
+  "dbSha256": "44ef2d39a84e43b8f638f76348954ca553016c7420e6d04a6cd93cd1b37dd17f",
+  "cleanPct": 27.74
+}
