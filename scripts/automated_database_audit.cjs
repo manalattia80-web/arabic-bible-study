@@ -198,6 +198,7 @@ const gen36 = JSON.parse(query(`
     'pos', morph_pos,
     'stem', morph_stem,
     'tense', morph_tense,
+    'mood', morph_mood,
     'person', morph_person,
     'gender', morph_gender,
     'number', morph_number,
@@ -210,14 +211,15 @@ const gen36Ok = gen36.strongs_id === 'H7919' &&
                 gen36.orig_surface === 'לְהַשְׂכִּיל' &&
                 gen36.orig_pos === 13 &&
                 gen36.pos === 'verb' &&
-                gen36.stem === 'hifil' &&
-                gen36.tense === 'infinitive_construct' &&
+                gen36.stem === 'hiphil' &&
+                gen36.tense === null &&
+                gen36.mood === 'infinitive_construct' &&
                 gen36.person === null &&
                 gen36.gender === null &&
                 gen36.number === null &&
                 gen36.orig_morphology === 'HR/Vhc' &&
                 gen36.locator === 'OSHB:B1.C3.V6.w13';
-assertCondition("gen36_morphology_and_locator_exact: Gen 3:6 للنظر exact Hifil Inf Const, null person/gender/num, HR/Vhc, OSHB w13", gen36Ok, JSON.stringify(gen36));
+assertCondition("gen36_morphology_and_locator_exact: Gen 3:6 للنظر exact Hiphil Inf Const (stem=hiphil, tense=null, mood=infinitive_construct), null person/gender/num, HR/Vhc, OSHB w13", gen36Ok, JSON.stringify(gen36));
 
 const matt1720 = JSON.parse(query(`
   SELECT json_object(
@@ -508,19 +510,19 @@ assertCondition("prov156_treasure: Prov 15:6 كنز has H2633 חֹסֶן token 3
   prov156w4.number === 'singular' && prov156w4.case === 'absolute' && prov156w4.stem === null && prov156w4.tense === null, 
   JSON.stringify(prov156w4));
 
-const prov156w9 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos, 'stem', morph_stem, 'tense', morph_tense, 'gender', morph_gender, 'number', morph_number) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=20 AND chapter_num=15 AND verse_num=6) AND ar_word_position=9;`));
-assertCondition("prov156_trouble: Prov 15:6 كدر has H5916 עָכַר token 7, exact OSHB HVNrfsa, participle niphal fs absolute", 
+const prov156w9 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos, 'stem', morph_stem, 'tense', morph_tense, 'mood', morph_mood, 'gender', morph_gender, 'number', morph_number) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=20 AND chapter_num=15 AND verse_num=6) AND ar_word_position=9;`));
+assertCondition("prov156_trouble: Prov 15:6 كدر has H5916 עָכַר token 7, exact OSHB HVNrfsa, verb niphal participle fs (pos=verb, tense=null, mood=participle)", 
   prov156w9.strongs === 'H5916' && prov156w9.surface === 'נֶעְכָּֽרֶת׃' && prov156w9.pos === 7 && prov156w9.morphology === 'HVNrfsa' && 
-  prov156w9.locator === 'OSHB:B20.C15.V6.w7' && prov156w9.morph_pos === 'participle' && prov156w9.stem === 'niphal' && 
-  prov156w9.tense === 'participle' && prov156w9.gender === 'feminine' && prov156w9.number === 'singular', 
+  prov156w9.locator === 'OSHB:B20.C15.V6.w7' && prov156w9.morph_pos === 'verb' && prov156w9.stem === 'niphal' && 
+  prov156w9.tense === null && prov156w9.mood === 'participle' && prov156w9.gender === 'feminine' && prov156w9.number === 'singular', 
   JSON.stringify(prov156w9));
 
-// Dan 3:30 قدّم (H6744 צְלַח AVhp3ms w3, verb hafel perfect 3ms) & وعبدنغو (H5665 AC/Np w6-w7)
-const dan330w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos, 'stem', morph_stem, 'tense', morph_tense, 'person', morph_person, 'gender', morph_gender, 'number', morph_number) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word_position=2;`));
-assertCondition("dan330_promoted: Dan 3:30 قدم has H6744 צְלַח token 3, AVhp3ms, verb hafel perfect 3ms", 
+// Dan 3:30 قدّم (H6744 צְלַח AVhp3ms w3, verb haphel qatal indicative 3ms) & وعبدنغو (H5665 AC/Np w6-w7)
+const dan330w2 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos, 'stem', morph_stem, 'tense', morph_tense, 'mood', morph_mood, 'person', morph_person, 'gender', morph_gender, 'number', morph_number) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word_position=2;`));
+assertCondition("dan330_promoted: Dan 3:30 قدم has H6744 צְלַח token 3, AVhp3ms, verb haphel qatal indicative 3ms", 
   dan330w2.strongs === 'H6744' && dan330w2.surface === 'הַצְלַ֛ח' && dan330w2.pos === 3 && dan330w2.morphology === 'AVhp3ms' && 
-  dan330w2.locator === 'OSHB:B27.C3.V30.w3' && dan330w2.morph_pos === 'verb' && dan330w2.stem === 'hafel' && 
-  dan330w2.tense === 'perfect' && dan330w2.person === '3' && dan330w2.gender === 'masculine' && dan330w2.number === 'singular', 
+  dan330w2.locator === 'OSHB:B27.C3.V30.w3' && dan330w2.morph_pos === 'verb' && dan330w2.stem === 'haphel' && 
+  dan330w2.tense === 'qatal' && dan330w2.mood === 'indicative' && dan330w2.person === '3' && dan330w2.gender === 'masculine' && dan330w2.number === 'singular', 
   JSON.stringify(dan330w2));
 
 const dan330w6 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word_position=6;`));
@@ -586,7 +588,7 @@ assertCondition("jas117_shadow: James 1:17 ظل has G644 ἀποσκίασμα t
 
 // Gen 7:3 w1 & w4 (OSHB WLC alignment)
 const gen73w4 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=1 AND chapter_num=7 AND verse_num=3) AND ar_word_position=4;`));
-assertCondition("gen73_also: Gen 7:3 أيضا has H1571 גַּם token 1, HTa, OSHB:B1.C7.V3.w1", gen73w4.strongs === 'H1571' && gen73w4.surface === 'גַּ֣ם' && gen73w4.pos === 1 && gen73w4.morphology === 'HTa' && gen73w4.locator === 'OSHB:B1.C7.V3.w1' && gen73w4.morph_pos === 'adverb', JSON.stringify(gen73w4));
+assertCondition("gen73_also: Gen 7:3 أيضا has H1571 גַּם token 1, HTa, OSHB:B1.C7.V3.w1, pos=particle", gen73w4.strongs === 'H1571' && gen73w4.surface === 'גַּ֣ם' && gen73w4.pos === 1 && gen73w4.morphology === 'HTa' && gen73w4.locator === 'OSHB:B1.C7.V3.w1' && gen73w4.morph_pos === 'particle', JSON.stringify(gen73w4));
 
 // Amos 1:4 w1 (OSHB WLC alignment)
 const amos14w1 = JSON.parse(query(`SELECT json_object('strongs', strongs_id, 'surface', orig_surface, 'pos', orig_word_position, 'morphology', orig_morphology, 'locator', verified_locator, 'morph_pos', morph_pos) FROM word_mappings WHERE verse_id IN (SELECT id FROM verses WHERE book_id=30 AND chapter_num=1 AND verse_num=4) AND ar_word_position=1;`));

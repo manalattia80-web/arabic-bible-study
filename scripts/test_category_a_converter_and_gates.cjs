@@ -455,6 +455,80 @@ for (const line of logLines) {
 assert(invalidColCount === 0, 'Gate 26: Zero forbidden/non-derived columns touched across all logged diffs');
 assert(missingRuleCount === 0, 'Gate 27: Every single logged record carries an explicit RULE_A* eligibilityRule');
 
+// ---------------------------------------------------------------------------
+// 6. Negative Reversion-Rejection Gates for the 4 Updated Assertions in
+//    automated_database_audit.cjs (Gen 3:6, Prov 15:6, Dan 3:30, Gen 7:3)
+// ---------------------------------------------------------------------------
+console.log('\n--- Section 6: Negative Reversion-Rejection Tests (Legacy Morphology Rejection) ---');
+
+const scratchNegDb = path.join(repoRoot, 'scratch/test_legacy_reversion_rejection.db');
+fs.mkdirSync(path.dirname(scratchNegDb), { recursive: true });
+fs.copyFileSync(prodDbPath, scratchNegDb);
+
+const reversionCases = [
+  {
+    gate: 'Gate 28',
+    checkName: 'gen36_morphology_and_locator_exact',
+    label: 'Gen 3:6 «للنظر» reverted to legacy (stem=hifil, tense=infinitive_construct, mood=NULL)',
+    revertSql: "UPDATE word_mappings SET morph_stem='hifil', morph_tense='infinitive_construct', morph_mood=NULL WHERE id='48efac3f-9748-4c10-9508-f6da552bf563';",
+    restoreSql: "UPDATE word_mappings SET morph_stem='hiphil', morph_tense=NULL, morph_mood='infinitive_construct' WHERE id='48efac3f-9748-4c10-9508-f6da552bf563';"
+  },
+  {
+    gate: 'Gate 29',
+    checkName: 'prov156_trouble',
+    label: 'Prov 15:6 «كدر» reverted to legacy (pos=participle, tense=participle, mood=NULL)',
+    revertSql: "UPDATE word_mappings SET morph_pos='participle', morph_tense='participle', morph_mood=NULL WHERE verse_id IN (SELECT id FROM verses WHERE book_id=20 AND chapter_num=15 AND verse_num=6) AND ar_word_position=9;",
+    restoreSql: "UPDATE word_mappings SET morph_pos='verb', morph_tense=NULL, morph_mood='participle' WHERE verse_id IN (SELECT id FROM verses WHERE book_id=20 AND chapter_num=15 AND verse_num=6) AND ar_word_position=9;"
+  },
+  {
+    gate: 'Gate 30',
+    checkName: 'dan330_promoted',
+    label: 'Dan 3:30 «قدّم» reverted to legacy (stem=hafel, tense=perfect, mood=NULL)',
+    revertSql: "UPDATE word_mappings SET morph_stem='hafel', morph_tense='perfect', morph_mood=NULL WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word_position=2;",
+    restoreSql: "UPDATE word_mappings SET morph_stem='haphel', morph_tense='qatal', morph_mood='indicative' WHERE verse_id IN (SELECT id FROM verses WHERE book_id=27 AND chapter_num=3 AND verse_num=30) AND ar_word_position=2;"
+  },
+  {
+    gate: 'Gate 31',
+    checkName: 'gen73_also',
+    label: 'Gen 7:3 «أيضًا» reverted to legacy (pos=adverb)',
+    revertSql: "UPDATE word_mappings SET morph_pos='adverb' WHERE verse_id IN (SELECT id FROM verses WHERE book_id=1 AND chapter_num=7 AND verse_num=3) AND ar_word_position=4;",
+    restoreSql: "UPDATE word_mappings SET morph_pos='particle' WHERE verse_id IN (SELECT id FROM verses WHERE book_id=1 AND chapter_num=7 AND verse_num=3) AND ar_word_position=4;"
+  }
+];
+
+try {
+  for (const tc of reversionCases) {
+    q(tc.revertSql, scratchNegDb);
+    let rejectedWithExpectedFailure = false;
+    let detail = '';
+    try {
+      execFileSync(process.execPath, [path.join(repoRoot, 'scripts/automated_database_audit.cjs')], {
+        cwd: repoRoot,
+        env: { ...process.env, AUDIT_DB_PATH: scratchNegDb },
+        stdio: 'pipe',
+        maxBuffer: 50 * 1024 * 1024
+      });
+      detail = 'automated_database_audit.cjs unexpectedly exited 0';
+    } catch (err) {
+      const stderrText = (err.stderr ? err.stderr.toString('utf8') : '') + '\n' + (err.stdout ? err.stdout.toString('utf8') : '');
+      const hasTargetFail = stderrText.includes(`[FAIL] ${tc.checkName}`);
+      rejectedWithExpectedFailure = err.status !== 0 && hasTargetFail;
+      if (!rejectedWithExpectedFailure) {
+        detail = `exit=${err.status}, targetFailFound=${hasTargetFail}`;
+      }
+    } finally {
+      q(tc.restoreSql, scratchNegDb);
+    }
+    assert(
+      rejectedWithExpectedFailure,
+      `${tc.gate}: automated_database_audit.cjs rejects ${tc.label} with exit!=0 and [FAIL] ${tc.checkName}`,
+      detail
+    );
+  }
+} finally {
+  try { fs.unlinkSync(scratchNegDb); } catch (_) {}
+}
+
 console.log('\n================================================================================');
 console.log(`  CATEGORY A CONVERTER & GATES SUMMARY: ${passed} PASSED, ${failed} FAILED (TOTAL ${passed + failed})`);
 console.log('================================================================================');
