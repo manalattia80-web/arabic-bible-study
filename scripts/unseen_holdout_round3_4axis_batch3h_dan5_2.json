@@ -1,6 +1,6 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "cfb3a7197bad03e55232b2b548f7113bf240acf197b2cbe673e82b449578c493",
+  "dbSha256": "48e6b2928ddaee5d69d4fa02363f83c2430a0017a5c265865fbce05476104e47",
   "manifestPath": "scripts/unseen_holdout_round3_15_verses_manifest.json",
   "manifestSha256": "891cba81c46507a127fc06667594da10ff71dc0cb8129eb7010931e2a94ec1a5",
   "exclusionKeysSha256": "8c427b9d46ac72a2b447dddd184089823e439209b0d91d2b9bb6c4e08ae5c2df",
@@ -9,9 +9,9 @@
   "overlapCount": 0,
   "summary": {
     "totalUnits": 234,
-    "cleanUnits": 153,
-    "alertedUnits": 81,
-    "cleanPct": 65.38
+    "cleanUnits": 152,
+    "alertedUnits": 82,
+    "cleanPct": 64.96
   },
   "axisBreakdown": {
     "lexical": {
@@ -30,8 +30,8 @@
       "undecided": 0
     },
     "sourceLocator": {
-      "pass": 228,
-      "fail": 6,
+      "pass": 227,
+      "fail": 7,
       "undecided": 0
     }
   },
@@ -49,13 +49,13 @@
     },
     "aramaic": {
       "total": 54,
-      "clean": 45,
-      "alerts": 9,
+      "clean": 44,
+      "alerts": 10,
       "axes": {
         "lexical": 8,
         "lemmaSurface": 8,
         "morphology": 9,
-        "sourceLocator": 6
+        "sourceLocator": 7
       }
     },
     "greek": {
@@ -173,14 +173,14 @@
       "verse": "Dan 5:2",
       "lang": "aramaic",
       "total": 25,
-      "clean": 25,
-      "alerts": 0,
-      "pctClean": 100,
+      "clean": 24,
+      "alerts": 1,
+      "pctClean": 96,
       "axisAlerts": {
         "lexical": 0,
         "lemmaSurface": 0,
         "morphology": 0,
-        "sourceLocator": 0
+        "sourceLocator": 1
       }
     },
     {
@@ -283,6 +283,23 @@
     }
   ],
   "alerts": [
+    {
+      "verse": "Dan 5:2",
+      "lang": "aramaic",
+      "pos": 4,
+      "arWord": "يَذُوقُ",
+      "strongsId": "H2939",
+      "locator": "OSHB:B27.C5.V2.w3",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "duplicate primary token collision: OSHB:w3 already claimed by arPos #1"
+        ]
+      }
+    },
     {
       "verse": "Dan 7:26",
       "lang": "aramaic",

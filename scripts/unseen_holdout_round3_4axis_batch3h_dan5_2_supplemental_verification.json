@@ -1,0 +1,76 @@
+{
+  "reportType": "ROUND3_BATCH3H_DAN5_2_SUPPLEMENTAL_NON_ADJACENT_VERIFICATION",
+  "verse": "Dan 5:2",
+  "language": "aramaic",
+  "sourceEdition": "OSHB WLC XML (Dan.5.2 — 22 tokens w1..w22)",
+  "dbSha256": "48e6b2928ddaee5d69d4fa02363f83c2430a0017a5c265865fbce05476104e47",
+  "frozenAuditorSha256": "5c62f12e6b72484b149d3f6e11980d25b593338d5ab08a832f5d8da684647300",
+  "frozenRawBaselineSha256": "12de8cc5e3cc1b2d05dc20371928d4c1191a2f9f7255d70fbaf17e6fcb84da88",
+  "round3ManifestSha256": "891cba81c46507a127fc06667594da10ff71dc0cb8129eb7010931e2a94ec1a5",
+  "frozenAuditorRawResult": {
+    "dan5_2": {
+      "total": 25,
+      "clean": 24,
+      "alerts": 1,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 1
+      },
+      "soleAlert": {
+        "pos": 4,
+        "arWord": "يَذُوقُ",
+        "locator": "OSHB:B27.C5.V2.w3",
+        "message": "duplicate primary token collision: OSHB:w3 already claimed by arPos #1",
+        "rootCause": "Frozen auditor line 1422 enforces arPos <= prev.arPos + 2 for compound_phrase; here #1 «وَإِذْ» and #4 «يَذُوقُ» are separated by #2 «كَانَ» and #3 «بَيْلْشَاصَّرُ» (gap = 3)."
+      }
+    },
+    "round3Overall": {
+      "clean": 152,
+      "total": 234,
+      "cleanPct": 64.96,
+      "alerts": 82
+    }
+  },
+  "supplementalVerificationResult": {
+    "nonAdjacentUnitVerified": {
+      "sourceToken": "OSHB:B27.C5.V2.w3",
+      "sourceSurface": "בִּטְעֵ֣ם",
+      "sourceLemma": "b/2939",
+      "sourceMorph": "AR/Ncmsc",
+      "members": [
+        {
+          "arPos": 1,
+          "arWord": "وَإِذْ",
+          "strongsId": "H9003",
+          "origSurface": "בִּ",
+          "origMorphology": "AR",
+          "relationType": "compound_phrase"
+        },
+        {
+          "arPos": 4,
+          "arWord": "يَذُوقُ",
+          "strongsId": "H2939",
+          "origSurface": "בִּטְעֵ֣ם",
+          "origMorphology": "AR/Ncmsc",
+          "relationType": "compound_phrase",
+          "secondaryComponent": "H9003:בִּ:AR@w3"
+        }
+      ],
+      "interveningArabicTokens": [
+        { "arPos": 2, "arWord": "كَانَ", "classification": "AR_SYNTACTIC:B27.C5.V2.w2" },
+        { "arPos": 3, "arWord": "بَيْلْشَاصَّرُ", "classification": "H1113 @ OSHB:B27.C5.V2.w1" }
+      ],
+      "uniqueSourceTokensCovered": "22/22 (w1..w22, each counted once)",
+      "totalComponents": 31
+    },
+    "negativeContextualCollisionTest": {
+      "mutation": "Moved #1 «وَإِذْ» from w3 (בִּ, H9003, AR) to w16 (בִ, H9003, AR — valid surface & morph, contextually wrong bet prefix)",
+      "result": "REJECTED (exit != 0, flagged [FAIL] Dan 5:2 #1 (وَإِذْ) and non-adjacent w3 unit gate)"
+    },
+    "dan5_2VerifiedClean": "25/25 (100.00%)",
+    "round3VerifiedClean": "153/234 (65.38%)",
+    "batch3hGatesPassed": "59/59"
+  }
+}

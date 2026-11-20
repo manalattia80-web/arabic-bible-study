@@ -58,10 +58,9 @@ const LEMMA_BY_STRONGS = {
 
 const SPEC = [
   {
-    arPos: 1, arWord: 'وَإِذْ', syntactic: true,
-    locator: 'AR_SYNTACTIC:B27.C5.V2.w1',
-    relationType: 'syntactic_ar',
-    grammarNotes: 'أداة ظرفية عربية لافتتاح الجملة الحالية «وإذ كان بيلشاصر يذوق الخمر»؛ وتُثبَت الباء الظرفية الآرامية בִּ (H9003, AR) كمكوّن ثانوي داخل #4 «يَذُوقُ» (בִּטְעֵ֣ם عند w3).'
+    arPos: 1, arWord: 'وَإِذْ', strongs: 'H9003', w: 3,
+    overrideSurface: 'בִּ', overrideMorph: 'AR', relationType: 'compound_phrase',
+    grammarNotes: 'وحدة ربط غير متجاورة (compound_phrase): الباء الظرفية בִּ (H9003, AR) الملتصقة بـ בִּטְעֵ֣ם عند w3، مرتبطة سياقيًا مع #4 «يَذُوقُ» (بفاصل #2 «كَانَ» و#3 «بَيْلْشَاصَّرُ»).'
   },
   {
     arPos: 2, arWord: 'كَانَ', syntactic: true,
@@ -72,7 +71,8 @@ const SPEC = [
   { arPos: 3, arWord: 'بَيْلْشَاصَّرُ', strongs: 'H1113', w: 1, preserveSingular: true },
   {
     arPos: 4, arWord: 'يَذُوقُ', strongs: 'H2939', w: 3,
-    grammarNotes: 'الاسم المضاف בִּטְעֵ֣ם (H2939, AR/Ncmsc) المسبوق بالباء الظرفية בִּ (H9003, AR) عند w3؛ ويؤدي مع «وَإِذْ كَانَ» الجملة الظرفية العربية.',
+    relationType: 'compound_phrase',
+    grammarNotes: 'وحدة ربط غير متجاورة (compound_phrase): الاسم المضاف בִּטְעֵ֣ם (H2939, AR/Ncmsc) المسبوق بالباء الظرفية בִּ (H9003, AR) عند w3، مرتبط سياقيًا مع #1 «وَإِذْ».',
     secondary: [{ strongs: 'H9003', w: 3, comp: 'בִּ', morph: 'AR' }]
   },
   { arPos: 5, arWord: 'الْخَمْرَ', strongs: 'H2562', w: 4 },
@@ -255,7 +255,7 @@ if (integrity !== 'ok') {
 }
 
 const postSha = sha256File(dbPath);
-console.log('Successfully applied Round 3 Batch 3H (Daniel 5:2 — 25 records, 30 components, 22/22 unique Aramaic OSHB tokens):');
+console.log('Successfully applied Round 3 Batch 3H (Daniel 5:2 — 25 records, 31 components, 22/22 unique Aramaic OSHB tokens):');
 console.log(`  Pre-Apply DB SHA-256 : ${preSha}`);
 console.log(`  Post-Apply DB SHA-256: ${postSha}`);
 console.log(`  PRAGMA integrity_check: ${integrity}`);
