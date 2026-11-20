@@ -1,0 +1,2145 @@
+{
+  "version": "v1.0.379",
+  "dbSha256": "86c2c16265599dd0e39d183baad7731fb94068daeac273088d3863cb0c37344b",
+  "manifestPath": "scripts/unseen_holdout_round3_15_verses_manifest.json",
+  "manifestSha256": "891cba81c46507a127fc06667594da10ff71dc0cb8129eb7010931e2a94ec1a5",
+  "exclusionKeysSha256": "8c427b9d46ac72a2b447dddd184089823e439209b0d91d2b9bb6c4e08ae5c2df",
+  "trSourceMode": "scripts/unseen_holdout_round3_tr_scrivener_slice.json",
+  "historicalExclusionsCount": 2635,
+  "overlapCount": 0,
+  "summary": {
+    "totalUnits": 234,
+    "cleanUnits": 161,
+    "alertedUnits": 73,
+    "cleanPct": 68.8
+  },
+  "axisBreakdown": {
+    "lexical": {
+      "pass": 163,
+      "fail": 71,
+      "undecided": 0
+    },
+    "lemmaSurface": {
+      "pass": 163,
+      "fail": 71,
+      "undecided": 0
+    },
+    "morphology": {
+      "pass": 165,
+      "fail": 69,
+      "undecided": 0
+    },
+    "sourceLocator": {
+      "pass": 233,
+      "fail": 1,
+      "undecided": 0
+    }
+  },
+  "byLanguage": {
+    "hebrew": {
+      "total": 88,
+      "clean": 88,
+      "alerts": 0,
+      "axes": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    "aramaic": {
+      "total": 54,
+      "clean": 53,
+      "alerts": 1,
+      "axes": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 1
+      }
+    },
+    "greek": {
+      "total": 92,
+      "clean": 20,
+      "alerts": 72,
+      "axes": {
+        "lexical": 71,
+        "lemmaSurface": 71,
+        "morphology": 69,
+        "sourceLocator": 0
+      }
+    }
+  },
+  "perVerse": [
+    {
+      "verse": "Lev 17:5",
+      "lang": "hebrew",
+      "total": 22,
+      "clean": 22,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Prov 28:9",
+      "lang": "hebrew",
+      "total": 9,
+      "clean": 9,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Isa 62:5",
+      "lang": "hebrew",
+      "total": 13,
+      "clean": 13,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Dan 10:13",
+      "lang": "hebrew",
+      "total": 22,
+      "clean": 22,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Zech 12:12",
+      "lang": "hebrew",
+      "total": 22,
+      "clean": 22,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Ezra 5:10",
+      "lang": "aramaic",
+      "total": 9,
+      "clean": 9,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Ezra 6:10",
+      "lang": "aramaic",
+      "total": 11,
+      "clean": 11,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Dan 5:2",
+      "lang": "aramaic",
+      "total": 25,
+      "clean": 24,
+      "alerts": 1,
+      "pctClean": 96,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 1
+      }
+    },
+    {
+      "verse": "Dan 7:26",
+      "lang": "aramaic",
+      "total": 9,
+      "clean": 9,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "total": 12,
+      "clean": 2,
+      "alerts": 10,
+      "pctClean": 16.67,
+      "axisAlerts": {
+        "lexical": 10,
+        "lemmaSurface": 10,
+        "morphology": 10,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Luke 18:42",
+      "lang": "greek",
+      "total": 7,
+      "clean": 2,
+      "alerts": 5,
+      "pctClean": 28.57,
+      "axisAlerts": {
+        "lexical": 4,
+        "lemmaSurface": 4,
+        "morphology": 5,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Rom 16:16",
+      "lang": "greek",
+      "total": 10,
+      "clean": 3,
+      "alerts": 7,
+      "pctClean": 30,
+      "axisAlerts": {
+        "lexical": 7,
+        "lemmaSurface": 7,
+        "morphology": 7,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "total": 14,
+      "clean": 4,
+      "alerts": 10,
+      "pctClean": 28.57,
+      "axisAlerts": {
+        "lexical": 10,
+        "lemmaSurface": 10,
+        "morphology": 8,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "total": 18,
+      "clean": 3,
+      "alerts": 15,
+      "pctClean": 16.67,
+      "axisAlerts": {
+        "lexical": 15,
+        "lemmaSurface": 15,
+        "morphology": 14,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "total": 31,
+      "clean": 6,
+      "alerts": 25,
+      "pctClean": 19.35,
+      "axisAlerts": {
+        "lexical": 25,
+        "lemmaSurface": 25,
+        "morphology": 25,
+        "sourceLocator": 0
+      }
+    }
+  ],
+  "alerts": [
+    {
+      "verse": "Dan 5:2",
+      "lang": "aramaic",
+      "pos": 4,
+      "arWord": "يَذُوقُ",
+      "strongsId": "H2939",
+      "locator": "OSHB:B27.C5.V2.w3",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "duplicate primary token collision: OSHB:w3 already claimed by arPos #1"
+        ]
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 1,
+      "arWord": "وَالأَرْوَاحُ",
+      "strongsId": "G4151",
+      "locator": "SBLGNT:B41.C3.V11.w1",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4151' (πνεῦμα) != SBLGNT lemma 'καί' @ w1",
+          "wms G4151@w1 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'πνεύματα' != 'καὶ' @ w1",
+          "SBLGNT lemma 'πνεῦμα' != 'καί' @ w1",
+          "wms G4151@w1 surface 'πνεύματα' != SBLGNT 'καὶ'"
+        ],
+        "morphology": [
+          "morph 'N- ----NPN-' != SBLGNT 'C- --------'",
+          "derived(pos 'noun' vs 'C-')",
+          "wms G4151@w1 morph 'N- ----NPN-' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "النَّجِسَةُ",
+      "strongsId": "G169",
+      "locator": "SBLGNT:B41.C3.V11.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G169' (ἀκάθαρτος) != SBLGNT lemma 'ὁ' @ w2",
+          "wms G169@w2 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἀκάθαρτα' != 'τὰ' @ w2",
+          "SBLGNT lemma 'ἀκάθαρτος' != 'ὁ' @ w2",
+          "wms G169@w2 surface 'ἀκάθαρτα' != SBLGNT 'τὰ'"
+        ],
+        "morphology": [
+          "morph 'A- ----NPN-' != SBLGNT 'RA ----NPN-'",
+          "derived(pos 'adjective' vs 'RA')",
+          "wms G169@w2 morph 'A- ----NPN-' != SBLGNT 'RA ----NPN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 3,
+      "arWord": "حِينَمَا",
+      "strongsId": "G3752",
+      "locator": "SBLGNT:B41.C3.V11.w3",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3752' (ὅταν) != SBLGNT lemma 'πνεῦμα' @ w3",
+          "wms G3752@w3 != SBLGNT 'πνεῦμα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὅταν' != 'πνεύματα' @ w3",
+          "SBLGNT lemma 'ὅταν' != 'πνεῦμα' @ w3",
+          "wms G3752@w3 surface 'ὅταν' != SBLGNT 'πνεύματα'"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'N- ----NPN-'",
+          "derived(pos 'conjunction' vs 'N-')",
+          "wms G3752@w3 morph 'C- --------' != SBLGNT 'N- ----NPN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "نَظَرَتْهُ",
+      "strongsId": "G2300",
+      "locator": "TR:B41.C3.V11.w4",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G2300' != 'G3588' @ w4",
+          "wms G2300@w4 != TR 'G3588'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'θεάομαι' != 'τὰ' @ w4",
+          "TR lemma 'θεάομαι' != 'ὁ' @ w4",
+          "wms G2300@w4 surface 'θεάομαι' != Scrivener TR 'τὰ'"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token",
+          "wms G2300@w4 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 5,
+      "arWord": "خَرَّتْ",
+      "strongsId": "G4363",
+      "locator": "TR:B41.C3.V11.w5",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G4363' != 'G169' @ w5",
+          "wms G4363@w5 != TR 'G169'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'προσπίπτω' != 'ἀκάθαρτα,' @ w5",
+          "TR lemma 'προσπίπτω' != 'ἀκάθαρτος' @ w5",
+          "wms G4363@w5 surface 'προσπίπτω' != Scrivener TR 'ἀκάθαρτα,'"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token",
+          "wms G4363@w5 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "لَهُ",
+      "strongsId": "G1510",
+      "locator": "SBLGNT:B41.C3.V11.w6",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1510' (εἰμί) != SBLGNT lemma 'ὅταν' @ w6",
+          "wms G1510@w6 != SBLGNT 'ὅταν'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'εἶ' != 'ὅταν' @ w6",
+          "SBLGNT lemma 'εἰμί' != 'ὅταν' @ w6",
+          "wms G1510@w6 surface 'εἶ' != SBLGNT 'ὅταν'"
+        ],
+        "morphology": [
+          "morph 'V- 2PAI-S--' != SBLGNT 'C- --------'",
+          "derived(pos 'verb' vs 'C-')",
+          "wms G1510@w6 morph 'V- 2PAI-S--' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "وَصَرَخَتْ",
+      "strongsId": "G2896",
+      "locator": "TR:B41.C3.V11.w7",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G2896' != 'G846' @ w7",
+          "wms G2896@w7 != TR 'G846'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'κράζω' != 'αὐτὸν' @ w7",
+          "TR lemma 'κράζω' != 'αὐτός' @ w7",
+          "wms G2896@w7 surface 'κράζω' != Scrivener TR 'αὐτὸν'"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token",
+          "wms G2896@w7 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 10,
+      "arWord": "أَنْتَ",
+      "strongsId": "G4771",
+      "locator": "SBLGNT:B41.C3.V11.w10",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4771' (σύ) != SBLGNT lemma 'αὐτός' @ w10",
+          "wms G4771@w10 != SBLGNT 'αὐτός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Σὺ' != 'αὐτῷ' @ w10",
+          "SBLGNT lemma 'σύ' != 'αὐτός' @ w10",
+          "wms G4771@w10 surface 'Σὺ' != SBLGNT 'αὐτῷ'"
+        ],
+        "morphology": [
+          "morph 'RP ----NS--' != SBLGNT 'RP ----DSM-'",
+          "derived(case 'nominative' vs 'dative')",
+          "wms G4771@w10 morph 'RP ----NS--' != SBLGNT 'RP ----DSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 11,
+      "arWord": "ابْنُ",
+      "strongsId": "G5207",
+      "locator": "SBLGNT:B41.C3.V11.w11",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5207' (υἱός) != SBLGNT lemma 'καί' @ w11",
+          "wms G5207@w11 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'υἱὸς' != 'καὶ' @ w11",
+          "SBLGNT lemma 'υἱός' != 'καί' @ w11",
+          "wms G5207@w11 surface 'υἱὸς' != SBLGNT 'καὶ'"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'C- --------'",
+          "derived(pos 'noun' vs 'C-')",
+          "wms G5207@w11 morph 'N- ----NSM-' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "pos": 12,
+      "arWord": "اللهِ!».",
+      "strongsId": "G2316",
+      "locator": "SBLGNT:B41.C3.V11.w12",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2316' (θεός) != SBLGNT lemma 'κράζω' @ w12",
+          "wms G2316@w12 != SBLGNT 'κράζω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θεοῦ' != 'ἔκραζον' @ w12",
+          "SBLGNT lemma 'θεός' != 'κράζω' @ w12",
+          "wms G2316@w12 surface 'θεοῦ' != SBLGNT 'ἔκραζον'"
+        ],
+        "morphology": [
+          "morph 'N- ----GSM-' != SBLGNT 'V- 3IAI-P--'",
+          "derived(pos 'noun' vs 'V-')",
+          "wms G2316@w12 morph 'N- ----GSM-' != SBLGNT 'V- 3IAI-P--'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 18:42",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "لَهُ",
+      "strongsId": "G846",
+      "locator": "SBLGNT:B42.C18.V42.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G846' (αὐτός) != SBLGNT lemma 'ὁ' @ w2",
+          "wms G846@w2 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'αὐτῷ' != 'ὁ' @ w2",
+          "SBLGNT lemma 'αὐτός' != 'ὁ' @ w2",
+          "wms G846@w2 surface 'αὐτῷ' != SBLGNT 'ὁ'"
+        ],
+        "morphology": [
+          "morph 'RP ----DSM-' != SBLGNT 'RA ----NSM-'",
+          "derived(case 'dative' vs 'nominative')",
+          "wms G846@w2 morph 'RP ----DSM-' != SBLGNT 'RA ----NSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 18:42",
+      "lang": "greek",
+      "pos": 3,
+      "arWord": "يَسُوعُ",
+      "strongsId": "G2424",
+      "locator": "SBLGNT:B42.C18.V42.w3",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [
+          "derived(pos 'proper_noun' vs 'N-')"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 18:42",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "أَبْصِرْ",
+      "strongsId": "G308",
+      "locator": "SBLGNT:B42.C18.V42.w4",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G308' (ἀναβλέπω) != SBLGNT lemma 'λέγω' @ w4",
+          "wms G308@w4 != SBLGNT 'λέγω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Ἀνάβλεψον' != 'εἶπεν' @ w4",
+          "SBLGNT lemma 'ἀναβλέπω' != 'λέγω' @ w4",
+          "wms G308@w4 surface 'Ἀνάβλεψον' != SBLGNT 'εἶπεν'"
+        ],
+        "morphology": [
+          "morph 'V- 2AAD-S--' != SBLGNT 'V- 3AAI-S--'",
+          "derived(person '2' vs '3')",
+          "wms G308@w4 morph 'V- 2AAD-S--' != SBLGNT 'V- 3AAI-S--'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 18:42",
+      "lang": "greek",
+      "pos": 5,
+      "arWord": "إِيمَانُكَ",
+      "strongsId": "G4102",
+      "locator": "SBLGNT:B42.C18.V42.w5",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4102' (πίστις) != SBLGNT lemma 'αὐτός' @ w5",
+          "wms G4102@w5 != SBLGNT 'αὐτός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'πίστις' != 'αὐτῷ' @ w5",
+          "SBLGNT lemma 'πίστις' != 'αὐτός' @ w5",
+          "wms G4102@w5 surface 'πίστις' != SBLGNT 'αὐτῷ'"
+        ],
+        "morphology": [
+          "morph 'N- ----NSF-' != SBLGNT 'RP ----DSM-'",
+          "derived(pos 'noun' vs 'RP')",
+          "wms G4102@w5 morph 'N- ----NSF-' != SBLGNT 'RP ----DSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Luke 18:42",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "شَفَاكَ",
+      "strongsId": "G4982",
+      "locator": "TR:B42.C18.V42.w7",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G4982' != 'G3588' @ w7",
+          "wms G4982@w7 != TR 'G3588'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'σῴζω' != 'ἡ' @ w7",
+          "TR lemma 'σῴζω' != 'ὁ' @ w7",
+          "wms G4982@w7 surface 'σῴζω' != Scrivener TR 'ἡ'"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token",
+          "wms G4982@w7 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 16:16",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "بَعْضٍ",
+      "strongsId": "G240",
+      "locator": "SBLGNT:B45.C16.V16.w4",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G240' (ἀλλήλων) != SBLGNT lemma 'φίλημα' @ w4",
+          "wms G240@w4 != SBLGNT 'φίλημα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἀλλήλους' != 'φιλήματι' @ w4",
+          "SBLGNT lemma 'ἀλλήλων' != 'φίλημα' @ w4",
+          "wms G240@w4 surface 'ἀλλήλους' != SBLGNT 'φιλήματι'"
+        ],
+        "morphology": [
+          "morph 'RP ----APM-' != SBLGNT 'N- ----DSN-'",
+          "derived(pos 'pronoun' vs 'N-')",
+          "wms G240@w4 morph 'RP ----APM-' != SBLGNT 'N- ----DSN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 16:16",
+      "lang": "greek",
+      "pos": 5,
+      "arWord": "بِقُبْلَةٍ",
+      "strongsId": "G5370",
+      "locator": "SBLGNT:B45.C16.V16.w5",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5370' (φίλημα) != SBLGNT lemma 'ἅγιος' @ w5",
+          "wms G5370@w5 != SBLGNT 'ἅγιος'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'φιλήματι' != 'ἁγίῳ' @ w5",
+          "SBLGNT lemma 'φίλημα' != 'ἅγιος' @ w5",
+          "wms G5370@w5 surface 'φιλήματι' != SBLGNT 'ἁγίῳ'"
+        ],
+        "morphology": [
+          "morph 'N- ----DSN-' != SBLGNT 'A- ----DSN-'",
+          "derived(pos 'noun' vs 'A-')",
+          "wms G5370@w5 morph 'N- ----DSN-' != SBLGNT 'A- ----DSN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 16:16",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "مُقَدَّسَةٍ",
+      "strongsId": "G40",
+      "locator": "SBLGNT:B45.C16.V16.w6",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G40' (ἅγιος) != SBLGNT lemma 'ἀσπάζομαι' @ w6",
+          "wms G40@w6 != SBLGNT 'ἀσπάζομαι'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἁγίῳ' != 'Ἀσπάζονται' @ w6",
+          "SBLGNT lemma 'ἅγιος' != 'ἀσπάζομαι' @ w6",
+          "wms G40@w6 surface 'ἁγίῳ' != SBLGNT 'Ἀσπάζονται'"
+        ],
+        "morphology": [
+          "morph 'A- ----DSN-' != SBLGNT 'V- 3PMI-P--'",
+          "derived(pos 'adjective' vs 'V-')",
+          "wms G40@w6 morph 'A- ----DSN-' != SBLGNT 'V- 3PMI-P--'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 16:16",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "كَنَائِسُ",
+      "strongsId": "G1577",
+      "locator": "SBLGNT:B45.C16.V16.w7",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1577' (ἐκκλησία) != SBLGNT lemma 'σύ' @ w7",
+          "wms G1577@w7 != SBLGNT 'σύ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐκκλησίαι' != 'ὑμᾶς' @ w7",
+          "SBLGNT lemma 'ἐκκλησία' != 'σύ' @ w7",
+          "wms G1577@w7 surface 'ἐκκλησίαι' != SBLGNT 'ὑμᾶς'"
+        ],
+        "morphology": [
+          "morph 'N- ----NPF-' != SBLGNT 'RP ----AP--'",
+          "derived(pos 'noun' vs 'RP')",
+          "wms G1577@w7 morph 'N- ----NPF-' != SBLGNT 'RP ----AP--'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 16:16",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "الْمَسِيحِ",
+      "strongsId": "G5547",
+      "locator": "SBLGNT:B45.C16.V16.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'ὁ' @ w8",
+          "wms G5547@w8 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Χριστοῦ' != 'αἱ' @ w8",
+          "SBLGNT lemma 'Χριστός' != 'ὁ' @ w8",
+          "wms G5547@w8 surface 'Χριστοῦ' != SBLGNT 'αἱ'"
+        ],
+        "morphology": [
+          "morph 'N- ----GSM-' != SBLGNT 'RA ----NPF-'",
+          "derived(pos 'proper_noun' vs 'RA')",
+          "wms G5547@w8 morph 'N- ----GSM-' != SBLGNT 'RA ----NPF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 16:16",
+      "lang": "greek",
+      "pos": 9,
+      "arWord": "تُسَلِّمُ",
+      "strongsId": "G782",
+      "locator": "SBLGNT:B45.C16.V16.w9",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G782' (ἀσπάζομαι) != SBLGNT lemma 'ἐκκλησία' @ w9",
+          "wms G782@w9 != SBLGNT 'ἐκκλησία'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Ἀσπάζονται' != 'ἐκκλησίαι' @ w9",
+          "SBLGNT lemma 'ἀσπάζομαι' != 'ἐκκλησία' @ w9",
+          "wms G782@w9 surface 'Ἀσπάζονται' != SBLGNT 'ἐκκλησίαι'"
+        ],
+        "morphology": [
+          "morph 'V- 3PMI-P--' != SBLGNT 'N- ----NPF-'",
+          "derived(pos 'verb' vs 'N-')",
+          "wms G782@w9 morph 'V- 3PMI-P--' != SBLGNT 'N- ----NPF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Rom 16:16",
+      "lang": "greek",
+      "pos": 10,
+      "arWord": "عَلَيْكُمْ",
+      "strongsId": "G4771",
+      "locator": "SBLGNT:B45.C16.V16.w10",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4771' (σύ) != SBLGNT lemma 'πᾶς' @ w10",
+          "wms G4771@w10 != SBLGNT 'πᾶς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὑμᾶς' != 'πᾶσαι' @ w10",
+          "SBLGNT lemma 'σύ' != 'πᾶς' @ w10",
+          "wms G4771@w10 surface 'ὑμᾶς' != SBLGNT 'πᾶσαι'"
+        ],
+        "morphology": [
+          "morph 'RP ----AP--' != SBLGNT 'A- ----NPF-'",
+          "derived(pos 'pronoun' vs 'A-')",
+          "wms G4771@w10 morph 'RP ----AP--' != SBLGNT 'A- ----NPF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 1,
+      "arWord": "ثُمَّ",
+      "strongsId": "G1161",
+      "locator": "SBLGNT:B48.C4.V6.w1",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1161' (δέ) != SBLGNT lemma 'ὅτι' @ w1",
+          "wms G1161@w1 != SBLGNT 'ὅτι'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'δέ' != 'ὅτι' @ w1",
+          "SBLGNT lemma 'δέ' != 'ὅτι' @ w1",
+          "wms G1161@w1 surface 'δέ' != SBLGNT 'ὅτι'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "بِمَا",
+      "strongsId": "G3754",
+      "locator": "SBLGNT:B48.C4.V6.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3754' (ὅτι) != SBLGNT lemma 'δέ' @ w2",
+          "wms G3754@w2 != SBLGNT 'δέ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὅτι' != 'δέ' @ w2",
+          "SBLGNT lemma 'ὅτι' != 'δέ' @ w2",
+          "wms G3754@w2 surface 'ὅτι' != SBLGNT 'δέ'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 3,
+      "arWord": "أَنَّكُمْ",
+      "strongsId": "G3588",
+      "locator": "SBLGNT:B48.C4.V6.w3",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3588' (ὁ) != SBLGNT lemma 'εἰμί' @ w3",
+          "wms G3588@w3 != SBLGNT 'εἰμί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὁ' != 'ἐστε' @ w3",
+          "SBLGNT lemma 'ὁ' != 'εἰμί' @ w3",
+          "wms G3588@w3 surface 'ὁ' != SBLGNT 'ἐστε'"
+        ],
+        "morphology": [
+          "derived(pos 'article' vs 'V-')",
+          "wms G3588@w3 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "اللهُ",
+      "strongsId": "G2316",
+      "locator": "SBLGNT:B48.C4.V6.w6",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2316' (θεός) != SBLGNT lemma 'ὁ' @ w6",
+          "wms G2316@w6 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θεὸς' != 'ὁ' @ w6",
+          "SBLGNT lemma 'θεός' != 'ὁ' @ w6",
+          "wms G2316@w6 surface 'θεὸς' != SBLGNT 'ὁ'"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'RA ----NSM-'",
+          "derived(pos 'noun' vs 'RA')",
+          "wms G2316@w6 morph 'N- ----NSM-' != SBLGNT 'RA ----NSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "رُوحَ",
+      "strongsId": "G4151",
+      "locator": "SBLGNT:B48.C4.V6.w7",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G4151' (πνεῦμα) != SBLGNT lemma 'θεός' @ w7",
+          "wms G4151@w7 != SBLGNT 'θεός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'πνεῦμα' != 'θεὸς' @ w7",
+          "SBLGNT lemma 'πνεῦμα' != 'θεός' @ w7",
+          "wms G4151@w7 surface 'πνεῦμα' != SBLGNT 'θεὸς'"
+        ],
+        "morphology": [
+          "morph 'N- ----ASN-' != SBLGNT 'N- ----NSM-'",
+          "derived(case 'accusative' vs 'nominative')",
+          "wms G4151@w7 morph 'N- ----ASN-' != SBLGNT 'N- ----NSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "ابْنِهِ",
+      "strongsId": "G5207",
+      "locator": "SBLGNT:B48.C4.V6.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5207' (υἱός) != SBLGNT lemma 'ὁ' @ w8",
+          "wms G5207@w8 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'υἱοῦ' != 'τὸ' @ w8",
+          "SBLGNT lemma 'υἱός' != 'ὁ' @ w8",
+          "wms G5207@w8 surface 'υἱοῦ' != SBLGNT 'τὸ'"
+        ],
+        "morphology": [
+          "morph 'N- ----GSM-' != SBLGNT 'RA ----ASN-'",
+          "derived(pos 'noun' vs 'RA')",
+          "wms G5207@w8 morph 'N- ----GSM-' != SBLGNT 'RA ----ASN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 9,
+      "arWord": "إِلَى",
+      "strongsId": "G1519",
+      "locator": "SBLGNT:B48.C4.V6.w9",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1519' (εἰς) != SBLGNT lemma 'πνεῦμα' @ w9",
+          "wms G1519@w9 != SBLGNT 'πνεῦμα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'εἰς' != 'πνεῦμα' @ w9",
+          "SBLGNT lemma 'εἰς' != 'πνεῦμα' @ w9",
+          "wms G1519@w9 surface 'εἰς' != SBLGNT 'πνεῦμα'"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'N- ----ASN-'",
+          "derived(pos 'preposition' vs 'N-')",
+          "wms G1519@w9 morph 'P- --------' != SBLGNT 'N- ----ASN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 10,
+      "arWord": "قُلُوبِكُمْ",
+      "strongsId": "G2588",
+      "locator": "SBLGNT:B48.C4.V6.w10",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2588' (καρδία) != SBLGNT lemma 'ὁ' @ w10",
+          "wms G2588@w10 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'καρδίας' != 'τοῦ' @ w10",
+          "SBLGNT lemma 'καρδία' != 'ὁ' @ w10",
+          "wms G2588@w10 surface 'καρδίας' != SBLGNT 'τοῦ'"
+        ],
+        "morphology": [
+          "morph 'N- ----APF-' != SBLGNT 'RA ----GSM-'",
+          "derived(pos 'noun' vs 'RA')",
+          "wms G2588@w10 morph 'N- ----APF-' != SBLGNT 'RA ----GSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 13,
+      "arWord": "أَبَا",
+      "strongsId": "G3962",
+      "locator": "SBLGNT:B48.C4.V6.w13",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3962' (πατήρ) != SBLGNT lemma 'εἰς' @ w13",
+          "wms G3962@w13 != SBLGNT 'εἰς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'πατήρ' != 'εἰς' @ w13",
+          "SBLGNT lemma 'πατήρ' != 'εἰς' @ w13",
+          "wms G3962@w13 surface 'πατήρ' != SBLGNT 'εἰς'"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'P- --------'",
+          "derived(pos 'noun' vs 'P-')",
+          "wms G3962@w13 morph 'N- ----NSM-' != SBLGNT 'P- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "pos": 14,
+      "arWord": "الآبُ».",
+      "strongsId": "G3962",
+      "locator": "SBLGNT:B48.C4.V6.w14",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3962' (πατήρ) != SBLGNT lemma 'ὁ' @ w14",
+          "wms G3962@w14 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'πατήρ' != 'τὰς' @ w14",
+          "SBLGNT lemma 'πατήρ' != 'ὁ' @ w14",
+          "wms G3962@w14 surface 'πατήρ' != SBLGNT 'τὰς'"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'RA ----APF-'",
+          "derived(pos 'noun' vs 'RA')",
+          "wms G3962@w14 morph 'N- ----NSM-' != SBLGNT 'RA ----APF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 1,
+      "arWord": "فَوْقَ",
+      "strongsId": "G3588",
+      "locator": "SBLGNT:B49.C1.V21.w1",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3588' (ὁ) != SBLGNT lemma 'ὑπεράνω' @ w1",
+          "wms G3588@w1 != SBLGNT 'ὑπεράνω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὁ' != 'ὑπεράνω' @ w1",
+          "SBLGNT lemma 'ὁ' != 'ὑπεράνω' @ w1",
+          "wms G3588@w1 surface 'ὁ' != SBLGNT 'ὑπεράνω'"
+        ],
+        "morphology": [
+          "morph 'RA ----DSM-' != SBLGNT 'P- --------'",
+          "derived(pos 'article' vs 'P-')",
+          "wms G3588@w1 morph 'RA ----DSM-' != SBLGNT 'P- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "وَسُلْطَانٍ",
+      "strongsId": "G1849",
+      "locator": "SBLGNT:B49.C1.V21.w4",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1849' (ἐξουσία) != SBLGNT lemma 'καί' @ w4",
+          "wms G1849@w4 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐξουσίας' != 'καὶ' @ w4",
+          "SBLGNT lemma 'ἐξουσία' != 'καί' @ w4",
+          "wms G1849@w4 surface 'ἐξουσίας' != SBLGNT 'καὶ'"
+        ],
+        "morphology": [
+          "morph 'N- ----GSF-' != SBLGNT 'C- --------'",
+          "derived(pos 'noun' vs 'C-')",
+          "wms G1849@w4 morph 'N- ----GSF-' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 5,
+      "arWord": "وَقُوَّةٍ",
+      "strongsId": "G1411",
+      "locator": "SBLGNT:B49.C1.V21.w5",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1411' (δύναμις) != SBLGNT lemma 'ἐξουσία' @ w5",
+          "wms G1411@w5 != SBLGNT 'ἐξουσία'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'δυνάμεως' != 'ἐξουσίας' @ w5",
+          "SBLGNT lemma 'δύναμις' != 'ἐξουσία' @ w5",
+          "wms G1411@w5 surface 'δυνάμεως' != SBLGNT 'ἐξουσίας'"
+        ],
+        "morphology": [],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 6,
+      "arWord": "وَسِيَادَةٍ",
+      "strongsId": "G2963",
+      "locator": "SBLGNT:B49.C1.V21.w6",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2963' (κυριότης) != SBLGNT lemma 'καί' @ w6",
+          "wms G2963@w6 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'κυριότητος' != 'καὶ' @ w6",
+          "SBLGNT lemma 'κυριότης' != 'καί' @ w6",
+          "wms G2963@w6 surface 'κυριότητος' != SBLGNT 'καὶ'"
+        ],
+        "morphology": [
+          "morph 'N- ----GSF-' != SBLGNT 'C- --------'",
+          "derived(pos 'noun' vs 'C-')",
+          "wms G2963@w6 morph 'N- ----GSF-' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 7,
+      "arWord": "وَكُلِّ",
+      "strongsId": "G3956",
+      "locator": "SBLGNT:B49.C1.V21.w7",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3956' (πᾶς) != SBLGNT lemma 'δύναμις' @ w7",
+          "wms G3956@w7 != SBLGNT 'δύναμις'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'παντὸς' != 'δυνάμεως' @ w7",
+          "SBLGNT lemma 'πᾶς' != 'δύναμις' @ w7",
+          "wms G3956@w7 surface 'παντὸς' != SBLGNT 'δυνάμεως'"
+        ],
+        "morphology": [
+          "morph 'A- ----GSN-' != SBLGNT 'N- ----GSF-'",
+          "derived(pos 'adjective' vs 'N-')",
+          "wms G3956@w7 morph 'A- ----GSN-' != SBLGNT 'N- ----GSF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "اسْمٍ",
+      "strongsId": "G3686",
+      "locator": "SBLGNT:B49.C1.V21.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3686' (ὄνομα) != SBLGNT lemma 'καί' @ w8",
+          "wms G3686@w8 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὀνόματος' != 'καὶ' @ w8",
+          "SBLGNT lemma 'ὄνομα' != 'καί' @ w8",
+          "wms G3686@w8 surface 'ὀνόματος' != SBLGNT 'καὶ'"
+        ],
+        "morphology": [
+          "morph 'N- ----GSN-' != SBLGNT 'C- --------'",
+          "derived(pos 'noun' vs 'C-')",
+          "wms G3686@w8 morph 'N- ----GSN-' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 9,
+      "arWord": "يُسَمَّى",
+      "strongsId": "G3687",
+      "locator": "SBLGNT:B49.C1.V21.w9",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3687' (ὀνομάζω) != SBLGNT lemma 'κυριότης' @ w9",
+          "wms G3687@w9 != SBLGNT 'κυριότης'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὀνομαζομένου' != 'κυριότητος' @ w9",
+          "SBLGNT lemma 'ὀνομάζω' != 'κυριότης' @ w9",
+          "wms G3687@w9 surface 'ὀνομαζομένου' != SBLGNT 'κυριότητος'"
+        ],
+        "morphology": [
+          "morph 'V- -PPPGSN-' != SBLGNT 'N- ----GSF-'",
+          "derived(pos 'verb' vs 'N-')",
+          "wms G3687@w9 morph 'V- -PPPGSN-' != SBLGNT 'N- ----GSF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 10,
+      "arWord": "لَيْسَ",
+      "strongsId": "G3756",
+      "locator": "SBLGNT:B49.C1.V21.w10",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3756' (οὐ) != SBLGNT lemma 'καί' @ w10",
+          "wms G3756@w10 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'οὐ' != 'καὶ' @ w10",
+          "SBLGNT lemma 'οὐ' != 'καί' @ w10",
+          "wms G3756@w10 surface 'οὐ' != SBLGNT 'καὶ'"
+        ],
+        "morphology": [
+          "morph 'D- --------' != SBLGNT 'C- --------'",
+          "derived(pos 'adverb' vs 'C-')",
+          "wms G3756@w10 morph 'D- --------' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 11,
+      "arWord": "فِي",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B49.C1.V21.w11",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'πᾶς' @ w11",
+          "wms G1722@w11 != SBLGNT 'πᾶς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'παντὸς' @ w11",
+          "SBLGNT lemma 'ἐν' != 'πᾶς' @ w11",
+          "wms G1722@w11 surface 'ἐν' != SBLGNT 'παντὸς'"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'A- ----GSN-'",
+          "derived(pos 'preposition' vs 'A-')",
+          "wms G1722@w11 morph 'P- --------' != SBLGNT 'A- ----GSN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 12,
+      "arWord": "هذَا",
+      "strongsId": "G3778",
+      "locator": "SBLGNT:B49.C1.V21.w12",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3778' (οὗτος) != SBLGNT lemma 'ὄνομα' @ w12",
+          "wms G3778@w12 != SBLGNT 'ὄνομα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'τούτῳ' != 'ὀνόματος' @ w12",
+          "SBLGNT lemma 'οὗτος' != 'ὄνομα' @ w12",
+          "wms G3778@w12 surface 'τούτῳ' != SBLGNT 'ὀνόματος'"
+        ],
+        "morphology": [
+          "morph 'RD ----DSM-' != SBLGNT 'N- ----GSN-'",
+          "derived(pos 'demonstrative' vs 'N-')",
+          "wms G3778@w12 morph 'RD ----DSM-' != SBLGNT 'N- ----GSN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 13,
+      "arWord": "الدَّهْرِ",
+      "strongsId": "G165",
+      "locator": "SBLGNT:B49.C1.V21.w13",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G165' (αἰών) != SBLGNT lemma 'ὀνομάζω' @ w13",
+          "wms G165@w13 != SBLGNT 'ὀνομάζω'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'αἰῶνι' != 'ὀνομαζομένου' @ w13",
+          "SBLGNT lemma 'αἰών' != 'ὀνομάζω' @ w13",
+          "wms G165@w13 surface 'αἰῶνι' != SBLGNT 'ὀνομαζομένου'"
+        ],
+        "morphology": [
+          "morph 'N- ----DSM-' != SBLGNT 'V- -PPPGSN-'",
+          "derived(pos 'noun' vs 'V-')",
+          "wms G165@w13 morph 'N- ----DSM-' != SBLGNT 'V- -PPPGSN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 14,
+      "arWord": "فَقَطْ",
+      "strongsId": "G3440",
+      "locator": "TR:B49.C1.V21.w14",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G3440' != 'G3756' @ w14",
+          "wms G3440@w14 != TR 'G3756'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'μόνον' != 'οὐ' @ w14",
+          "TR lemma 'μόνον' != 'οὐ' @ w14",
+          "wms G3440@w14 surface 'μόνον' != Scrivener TR 'οὐ'"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token",
+          "wms G3440@w14 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 15,
+      "arWord": "بَلْ",
+      "strongsId": "G235",
+      "locator": "SBLGNT:B49.C1.V21.w15",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G235' (ἀλλά) != SBLGNT lemma 'μόνος' @ w15",
+          "wms G235@w15 != SBLGNT 'μόνος'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἀλλὰ' != 'μόνον' @ w15",
+          "SBLGNT lemma 'ἀλλά' != 'μόνος' @ w15",
+          "wms G235@w15 surface 'ἀλλὰ' != SBLGNT 'μόνον'"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'A- ----ASN-'",
+          "derived(pos 'conjunction' vs 'A-')",
+          "wms G235@w15 morph 'C- --------' != SBLGNT 'A- ----ASN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 17,
+      "arWord": "الْمُسْتَقْبَلِ",
+      "strongsId": "G3195",
+      "locator": "SBLGNT:B49.C1.V21.w17",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3195' (μέλλω) != SBLGNT lemma 'ὁ' @ w17",
+          "wms G3195@w17 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'μέλλοντι' != 'τῷ' @ w17",
+          "SBLGNT lemma 'μέλλω' != 'ὁ' @ w17",
+          "wms G3195@w17 surface 'μέλλοντι' != SBLGNT 'τῷ'"
+        ],
+        "morphology": [
+          "morph 'V- -PAPDSM-' != SBLGNT 'RA ----DSM-'",
+          "derived(pos 'verb' vs 'RA')",
+          "wms G3195@w17 morph 'V- -PAPDSM-' != SBLGNT 'RA ----DSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "pos": 18,
+      "arWord": "أَيْضًا",
+      "strongsId": "G2532",
+      "locator": "TR:B49.C1.V21.w18",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G2532' != 'G165' @ w18",
+          "wms G2532@w18 != TR 'G165'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'καί' != 'αἰῶνι' @ w18",
+          "TR lemma 'καί' != 'αἰών' @ w18",
+          "wms G2532@w18 surface 'καί' != Scrivener TR 'αἰῶνι'"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token",
+          "wms G2532@w18 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 2,
+      "arWord": "كَانَ",
+      "strongsId": "G1510",
+      "locator": "SBLGNT:B60.C4.V11.w2",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1510' (εἰμί) != SBLGNT lemma 'τις' @ w2",
+          "wms G1510@w2 != SBLGNT 'τις'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐστιν' != 'τις' @ w2",
+          "SBLGNT lemma 'εἰμί' != 'τις' @ w2",
+          "wms G1510@w2 surface 'ἐστιν' != SBLGNT 'τις'"
+        ],
+        "morphology": [
+          "morph 'V- 3PAI-S--' != SBLGNT 'RI ----NSM-'",
+          "derived(pos 'verb' vs 'RI')",
+          "wms G1510@w2 morph 'V- 3PAI-S--' != SBLGNT 'RI ----NSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 4,
+      "arWord": "أَحَدٌ",
+      "strongsId": "G5100",
+      "locator": "SBLGNT:B60.C4.V11.w4",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5100' (τὶς) != SBLGNT lemma 'ὡς' @ w4",
+          "wms G5100@w4 != SBLGNT 'ὡς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'τις' != 'ὡς' @ w4",
+          "SBLGNT lemma 'τις' != 'ὡς' @ w4",
+          "wms G5100@w4 surface 'τις' != SBLGNT 'ὡς'"
+        ],
+        "morphology": [
+          "morph 'RI ----NSM-' != SBLGNT 'C- --------'",
+          "derived(pos 'pronoun' vs 'C-')",
+          "wms G5100@w4 morph 'RI ----NSM-' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 5,
+      "arWord": "فَكَأَقْوَالِ",
+      "strongsId": "G5613",
+      "locator": "SBLGNT:B60.C4.V11.w5",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5613' (ὡς) != SBLGNT lemma 'λόγιον' @ w5",
+          "wms G5613@w5 != SBLGNT 'λόγιον'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὡς' != 'λόγια' @ w5",
+          "SBLGNT lemma 'ὡς' != 'λόγιον' @ w5",
+          "wms G5613@w5 surface 'ὡς' != SBLGNT 'λόγια'"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'N- ----APN-'",
+          "derived(pos 'conjunction' vs 'N-')",
+          "wms G5613@w5 morph 'C- --------' != SBLGNT 'N- ----APN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 8,
+      "arWord": "كَانَ",
+      "strongsId": "G1510",
+      "locator": "SBLGNT:B60.C4.V11.w8",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1510' (εἰμί) != SBLGNT lemma 'τις' @ w8",
+          "wms G1510@w8 != SBLGNT 'τις'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐστιν' != 'τις' @ w8",
+          "SBLGNT lemma 'εἰμί' != 'τις' @ w8",
+          "wms G1510@w8 surface 'ἐστιν' != SBLGNT 'τις'"
+        ],
+        "morphology": [
+          "morph 'V- 3PAI-S--' != SBLGNT 'RI ----NSM-'",
+          "derived(pos 'verb' vs 'RI')",
+          "wms G1510@w8 morph 'V- 3PAI-S--' != SBLGNT 'RI ----NSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 10,
+      "arWord": "أَحَدٌ",
+      "strongsId": "G5100",
+      "locator": "SBLGNT:B60.C4.V11.w10",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5100' (τὶς) != SBLGNT lemma 'ὡς' @ w10",
+          "wms G5100@w10 != SBLGNT 'ὡς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'τις' != 'ὡς' @ w10",
+          "SBLGNT lemma 'τις' != 'ὡς' @ w10",
+          "wms G5100@w10 surface 'τις' != SBLGNT 'ὡς'"
+        ],
+        "morphology": [
+          "morph 'RI ----NSM-' != SBLGNT 'C- --------'",
+          "derived(pos 'pronoun' vs 'C-')",
+          "wms G5100@w10 morph 'RI ----NSM-' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 11,
+      "arWord": "فَكَأَنَّهُ",
+      "strongsId": "G5613",
+      "locator": "SBLGNT:B60.C4.V11.w11",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5613' (ὡς) != SBLGNT lemma 'ἐκ' @ w11",
+          "wms G5613@w11 != SBLGNT 'ἐκ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὡς' != 'ἐξ' @ w11",
+          "SBLGNT lemma 'ὡς' != 'ἐκ' @ w11",
+          "wms G5613@w11 surface 'ὡς' != SBLGNT 'ἐξ'"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'P- --------'",
+          "derived(pos 'conjunction' vs 'P-')",
+          "wms G5613@w11 morph 'C- --------' != SBLGNT 'P- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 12,
+      "arWord": "مِنْ",
+      "strongsId": "G1537",
+      "locator": "SBLGNT:B60.C4.V11.w12",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1537' (ἐκ) != SBLGNT lemma 'ἰσχύς' @ w12",
+          "wms G1537@w12 != SBLGNT 'ἰσχύς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐξ' != 'ἰσχύος' @ w12",
+          "SBLGNT lemma 'ἐκ' != 'ἰσχύς' @ w12",
+          "wms G1537@w12 surface 'ἐξ' != SBLGNT 'ἰσχύος'"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'N- ----GSF-'",
+          "derived(pos 'preposition' vs 'N-')",
+          "wms G1537@w12 morph 'P- --------' != SBLGNT 'N- ----GSF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 13,
+      "arWord": "قُوَّةٍ",
+      "strongsId": "G2479",
+      "locator": "SBLGNT:B60.C4.V11.w13",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2479' (ἰσχύς) != SBLGNT lemma 'ὅς' @ w13",
+          "wms G2479@w13 != SBLGNT 'ὅς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἰσχύος' != 'ἧς' @ w13",
+          "SBLGNT lemma 'ἰσχύς' != 'ὅς' @ w13",
+          "wms G2479@w13 surface 'ἰσχύος' != SBLGNT 'ἧς'"
+        ],
+        "morphology": [
+          "morph 'N- ----GSF-' != SBLGNT 'RR ----GSF-'",
+          "derived(pos 'noun' vs 'RR')",
+          "wms G2479@w13 morph 'N- ----GSF-' != SBLGNT 'RR ----GSF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 15,
+      "arWord": "اللهُ",
+      "strongsId": "G2316",
+      "locator": "SBLGNT:B60.C4.V11.w15",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2316' (θεός) != SBLGNT lemma 'ὁ' @ w15",
+          "wms G2316@w15 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θεός' != 'ὁ' @ w15",
+          "SBLGNT lemma 'θεός' != 'ὁ' @ w15",
+          "wms G2316@w15 surface 'θεός' != SBLGNT 'ὁ'"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'RA ----NSM-'",
+          "derived(pos 'noun' vs 'RA')",
+          "wms G2316@w15 morph 'N- ----NSM-' != SBLGNT 'RA ----NSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 16,
+      "arWord": "لِكَيْ",
+      "strongsId": "G2443",
+      "locator": "SBLGNT:B60.C4.V11.w16",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2443' (ἵνα) != SBLGNT lemma 'θεός' @ w16",
+          "wms G2443@w16 != SBLGNT 'θεός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἵνα' != 'θεός' @ w16",
+          "SBLGNT lemma 'ἵνα' != 'θεός' @ w16",
+          "wms G2443@w16 surface 'ἵνα' != SBLGNT 'θεός'"
+        ],
+        "morphology": [
+          "morph 'C- --------' != SBLGNT 'N- ----NSM-'",
+          "derived(pos 'conjunction' vs 'N-')",
+          "wms G2443@w16 morph 'C- --------' != SBLGNT 'N- ----NSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 17,
+      "arWord": "يَتَمَجَّدَ",
+      "strongsId": "G1392",
+      "locator": "SBLGNT:B60.C4.V11.w17",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1392' (δοξάζω) != SBLGNT lemma 'ἵνα' @ w17",
+          "wms G1392@w17 != SBLGNT 'ἵνα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'δοξάζηται' != 'ἵνα' @ w17",
+          "SBLGNT lemma 'δοξάζω' != 'ἵνα' @ w17",
+          "wms G1392@w17 surface 'δοξάζηται' != SBLGNT 'ἵνα'"
+        ],
+        "morphology": [
+          "morph 'V- 3PPS-S--' != SBLGNT 'C- --------'",
+          "derived(pos 'verb' vs 'C-')",
+          "wms G1392@w17 morph 'V- 3PPS-S--' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 18,
+      "arWord": "اللهُ",
+      "strongsId": "G2316",
+      "locator": "SBLGNT:B60.C4.V11.w18",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2316' (θεός) != SBLGNT lemma 'ἐν' @ w18",
+          "wms G2316@w18 != SBLGNT 'ἐν'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'θεὸς' != 'ἐν' @ w18",
+          "SBLGNT lemma 'θεός' != 'ἐν' @ w18",
+          "wms G2316@w18 surface 'θεὸς' != SBLGNT 'ἐν'"
+        ],
+        "morphology": [
+          "morph 'N- ----NSM-' != SBLGNT 'P- --------'",
+          "derived(pos 'noun' vs 'P-')",
+          "wms G2316@w18 morph 'N- ----NSM-' != SBLGNT 'P- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 19,
+      "arWord": "فِي",
+      "strongsId": "G1722",
+      "locator": "SBLGNT:B60.C4.V11.w19",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1722' (ἐν) != SBLGNT lemma 'πᾶς' @ w19",
+          "wms G1722@w19 != SBLGNT 'πᾶς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐν' != 'πᾶσιν' @ w19",
+          "SBLGNT lemma 'ἐν' != 'πᾶς' @ w19",
+          "wms G1722@w19 surface 'ἐν' != SBLGNT 'πᾶσιν'"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'A- ----DPN-'",
+          "derived(pos 'preposition' vs 'A-')",
+          "wms G1722@w19 morph 'P- --------' != SBLGNT 'A- ----DPN-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 20,
+      "arWord": "كُلِّ",
+      "strongsId": "G3956",
+      "locator": "TR:B60.C4.V11.w20",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G3956' != 'G1392' @ w20",
+          "wms G3956@w20 != TR 'G1392'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'πᾶς' != 'δοξάζηται' @ w20",
+          "TR lemma 'πᾶς' != 'δοξάζω' @ w20",
+          "wms G3956@w20 surface 'πᾶς' != Scrivener TR 'δοξάζηται'"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token",
+          "wms G3956@w20 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 21,
+      "arWord": "شَيْءٍ",
+      "strongsId": "G3956",
+      "locator": "TR:B60.C4.V11.w21",
+      "morphSource": "morphgnt_tr",
+      "axes": {
+        "lexical": [
+          "TR Strong's 'G3956' != 'G3588' @ w21",
+          "wms G3956@w21 != TR 'G3588'"
+        ],
+        "lemmaSurface": [
+          "TR surface 'πᾶς' != 'ὁ' @ w21",
+          "TR lemma 'πᾶς' != 'ὁ' @ w21",
+          "wms G3956@w21 surface 'πᾶς' != Scrivener TR 'ὁ'"
+        ],
+        "morphology": [
+          "missing orig_morphology for TR token",
+          "wms G3956@w21 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 22,
+      "arWord": "بِيَسُوعَ",
+      "strongsId": "G2424",
+      "locator": "SBLGNT:B60.C4.V11.w22",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2424' (Ἰησοῦς) != SBLGNT lemma 'θεός' @ w22",
+          "wms G2424@w22 != SBLGNT 'θεός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Ἰησοῦ' != 'θεὸς' @ w22",
+          "SBLGNT lemma 'Ἰησοῦς' != 'θεός' @ w22",
+          "wms G2424@w22 surface 'Ἰησοῦ' != SBLGNT 'θεὸς'"
+        ],
+        "morphology": [
+          "morph 'N- ----GSM-' != SBLGNT 'N- ----NSM-'",
+          "derived(pos 'proper_noun' vs 'N-')",
+          "wms G2424@w22 morph 'N- ----GSM-' != SBLGNT 'N- ----NSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 23,
+      "arWord": "الْمَسِيحِ",
+      "strongsId": "G5547",
+      "locator": "SBLGNT:B60.C4.V11.w23",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G5547' (Χριστός) != SBLGNT lemma 'διά' @ w23",
+          "wms G5547@w23 != SBLGNT 'διά'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'Χριστοῦ' != 'διὰ' @ w23",
+          "SBLGNT lemma 'Χριστός' != 'διά' @ w23",
+          "wms G5547@w23 surface 'Χριστοῦ' != SBLGNT 'διὰ'"
+        ],
+        "morphology": [
+          "morph 'N- ----GSM-' != SBLGNT 'P- --------'",
+          "derived(pos 'proper_noun' vs 'P-')",
+          "wms G5547@w23 morph 'N- ----GSM-' != SBLGNT 'P- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 24,
+      "arWord": "الَّذِي",
+      "strongsId": "G3739",
+      "locator": "SBLGNT:B60.C4.V11.w24",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G3739' (ὅς) != SBLGNT lemma 'Ἰησοῦς' @ w24",
+          "wms G3739@w24 != SBLGNT 'Ἰησοῦς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ὅς' != 'Ἰησοῦ' @ w24",
+          "SBLGNT lemma 'ὅς' != 'Ἰησοῦς' @ w24",
+          "wms G3739@w24 surface 'ὅς' != SBLGNT 'Ἰησοῦ'"
+        ],
+        "morphology": [
+          "derived(pos 'relative_pronoun' vs 'N-')",
+          "wms G3739@w24 missing mandatory orig_morphology"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 25,
+      "arWord": "لَهُ",
+      "strongsId": "G1510",
+      "locator": "SBLGNT:B60.C4.V11.w25",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1510' (εἰμί) != SBLGNT lemma 'Χριστός' @ w25",
+          "wms G1510@w25 != SBLGNT 'Χριστός'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἐστιν' != 'Χριστοῦ' @ w25",
+          "SBLGNT lemma 'εἰμί' != 'Χριστός' @ w25",
+          "wms G1510@w25 surface 'ἐστιν' != SBLGNT 'Χριστοῦ'"
+        ],
+        "morphology": [
+          "morph 'V- 3PAI-S--' != SBLGNT 'N- ----GSM-'",
+          "derived(pos 'verb' vs 'N-')",
+          "wms G1510@w25 morph 'V- 3PAI-S--' != SBLGNT 'N- ----GSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 26,
+      "arWord": "الْمَجْدُ",
+      "strongsId": "G1391",
+      "locator": "SBLGNT:B60.C4.V11.w26",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1391' (δόξα) != SBLGNT lemma 'ὅς' @ w26",
+          "wms G1391@w26 != SBLGNT 'ὅς'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'δόξα' != 'ᾧ' @ w26",
+          "SBLGNT lemma 'δόξα' != 'ὅς' @ w26",
+          "wms G1391@w26 surface 'δόξα' != SBLGNT 'ᾧ'"
+        ],
+        "morphology": [
+          "morph 'N- ----NSF-' != SBLGNT 'RR ----DSM-'",
+          "derived(pos 'noun' vs 'RR')",
+          "wms G1391@w26 morph 'N- ----NSF-' != SBLGNT 'RR ----DSM-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 27,
+      "arWord": "وَالسُّلْطَانُ",
+      "strongsId": "G2904",
+      "locator": "SBLGNT:B60.C4.V11.w27",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G2904' (κράτος) != SBLGNT lemma 'εἰμί' @ w27",
+          "wms G2904@w27 != SBLGNT 'εἰμί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'κράτος' != 'ἐστιν' @ w27",
+          "SBLGNT lemma 'κράτος' != 'εἰμί' @ w27",
+          "wms G2904@w27 surface 'κράτος' != SBLGNT 'ἐστιν'"
+        ],
+        "morphology": [
+          "morph 'N- ----NSN-' != SBLGNT 'V- 3PAI-S--'",
+          "derived(pos 'noun' vs 'V-')",
+          "wms G2904@w27 morph 'N- ----NSN-' != SBLGNT 'V- 3PAI-S--'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 28,
+      "arWord": "إِلَى",
+      "strongsId": "G1519",
+      "locator": "SBLGNT:B60.C4.V11.w28",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G1519' (εἰς) != SBLGNT lemma 'ὁ' @ w28",
+          "wms G1519@w28 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'εἰς' != 'ἡ' @ w28",
+          "SBLGNT lemma 'εἰς' != 'ὁ' @ w28",
+          "wms G1519@w28 surface 'εἰς' != SBLGNT 'ἡ'"
+        ],
+        "morphology": [
+          "morph 'P- --------' != SBLGNT 'RA ----NSF-'",
+          "derived(pos 'preposition' vs 'RA')",
+          "wms G1519@w28 morph 'P- --------' != SBLGNT 'RA ----NSF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 29,
+      "arWord": "أَبَدِ",
+      "strongsId": "G165",
+      "locator": "SBLGNT:B60.C4.V11.w29",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G165' (αἰών) != SBLGNT lemma 'δόξα' @ w29",
+          "wms G165@w29 != SBLGNT 'δόξα'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'αἰῶνας' != 'δόξα' @ w29",
+          "SBLGNT lemma 'αἰών' != 'δόξα' @ w29",
+          "wms G165@w29 surface 'αἰῶνας' != SBLGNT 'δόξα'"
+        ],
+        "morphology": [
+          "morph 'N- ----APM-' != SBLGNT 'N- ----NSF-'",
+          "derived(case 'accusative' vs 'nominative')",
+          "wms G165@w29 morph 'N- ----APM-' != SBLGNT 'N- ----NSF-'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 30,
+      "arWord": "الآبِدِينَ",
+      "strongsId": "G165",
+      "locator": "SBLGNT:B60.C4.V11.w30",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G165' (αἰών) != SBLGNT lemma 'καί' @ w30",
+          "wms G165@w30 != SBLGNT 'καί'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'αἰώνων' != 'καὶ' @ w30",
+          "SBLGNT lemma 'αἰών' != 'καί' @ w30",
+          "wms G165@w30 surface 'αἰώνων' != SBLGNT 'καὶ'"
+        ],
+        "morphology": [
+          "morph 'N- ----GPM-' != SBLGNT 'C- --------'",
+          "derived(pos 'noun' vs 'C-')",
+          "wms G165@w30 morph 'N- ----GPM-' != SBLGNT 'C- --------'"
+        ],
+        "sourceLocator": []
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "pos": 31,
+      "arWord": "آمِينَ",
+      "strongsId": "G281",
+      "locator": "SBLGNT:B60.C4.V11.w31",
+      "morphSource": "morphgnt_sblgnt",
+      "axes": {
+        "lexical": [
+          "Strongs 'G281' (ἀμήν) != SBLGNT lemma 'ὁ' @ w31",
+          "wms G281@w31 != SBLGNT 'ὁ'"
+        ],
+        "lemmaSurface": [
+          "SBLGNT surface 'ἀμήν' != 'τὸ' @ w31",
+          "SBLGNT lemma 'ἀμήν' != 'ὁ' @ w31",
+          "wms G281@w31 surface 'ἀμήν' != SBLGNT 'τὸ'"
+        ],
+        "morphology": [
+          "morph 'X- --------' != SBLGNT 'RA ----NSN-'",
+          "derived(pos 'particle' vs 'RA')",
+          "wms G281@w31 morph 'X- --------' != SBLGNT 'RA ----NSN-'"
+        ],
+        "sourceLocator": []
+      }
+    }
+  ]
+}
