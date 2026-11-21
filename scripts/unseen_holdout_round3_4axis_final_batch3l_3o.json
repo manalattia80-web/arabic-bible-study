@@ -1,0 +1,304 @@
+{
+  "version": "v1.0.379",
+  "dbSha256": "78f7ac1f062aeab01d6e4baa6e759228bbe81dc2129ea83d5bcc14a0cbbb555b",
+  "manifestPath": "scripts/unseen_holdout_round3_15_verses_manifest.json",
+  "manifestSha256": "891cba81c46507a127fc06667594da10ff71dc0cb8129eb7010931e2a94ec1a5",
+  "exclusionKeysSha256": "8c427b9d46ac72a2b447dddd184089823e439209b0d91d2b9bb6c4e08ae5c2df",
+  "trSourceMode": "scripts/unseen_holdout_round3_tr_scrivener_slice.json",
+  "historicalExclusionsCount": 2635,
+  "overlapCount": 0,
+  "summary": {
+    "totalUnits": 234,
+    "cleanUnits": 233,
+    "alertedUnits": 1,
+    "cleanPct": 99.57
+  },
+  "axisBreakdown": {
+    "lexical": {
+      "pass": 234,
+      "fail": 0,
+      "undecided": 0
+    },
+    "lemmaSurface": {
+      "pass": 234,
+      "fail": 0,
+      "undecided": 0
+    },
+    "morphology": {
+      "pass": 234,
+      "fail": 0,
+      "undecided": 0
+    },
+    "sourceLocator": {
+      "pass": 233,
+      "fail": 1,
+      "undecided": 0
+    }
+  },
+  "byLanguage": {
+    "hebrew": {
+      "total": 88,
+      "clean": 88,
+      "alerts": 0,
+      "axes": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    "aramaic": {
+      "total": 54,
+      "clean": 53,
+      "alerts": 1,
+      "axes": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 1
+      }
+    },
+    "greek": {
+      "total": 92,
+      "clean": 92,
+      "alerts": 0,
+      "axes": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    }
+  },
+  "perVerse": [
+    {
+      "verse": "Lev 17:5",
+      "lang": "hebrew",
+      "total": 22,
+      "clean": 22,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Prov 28:9",
+      "lang": "hebrew",
+      "total": 9,
+      "clean": 9,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Isa 62:5",
+      "lang": "hebrew",
+      "total": 13,
+      "clean": 13,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Dan 10:13",
+      "lang": "hebrew",
+      "total": 22,
+      "clean": 22,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Zech 12:12",
+      "lang": "hebrew",
+      "total": 22,
+      "clean": 22,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Ezra 5:10",
+      "lang": "aramaic",
+      "total": 9,
+      "clean": 9,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Ezra 6:10",
+      "lang": "aramaic",
+      "total": 11,
+      "clean": 11,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Dan 5:2",
+      "lang": "aramaic",
+      "total": 25,
+      "clean": 24,
+      "alerts": 1,
+      "pctClean": 96,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 1
+      }
+    },
+    {
+      "verse": "Dan 7:26",
+      "lang": "aramaic",
+      "total": 9,
+      "clean": 9,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Mark 3:11",
+      "lang": "greek",
+      "total": 12,
+      "clean": 12,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Luke 18:42",
+      "lang": "greek",
+      "total": 7,
+      "clean": 7,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Rom 16:16",
+      "lang": "greek",
+      "total": 10,
+      "clean": 10,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Gal 4:6",
+      "lang": "greek",
+      "total": 14,
+      "clean": 14,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "Eph 1:21",
+      "lang": "greek",
+      "total": 18,
+      "clean": 18,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    },
+    {
+      "verse": "1Pet 4:11",
+      "lang": "greek",
+      "total": 31,
+      "clean": 31,
+      "alerts": 0,
+      "pctClean": 100,
+      "axisAlerts": {
+        "lexical": 0,
+        "lemmaSurface": 0,
+        "morphology": 0,
+        "sourceLocator": 0
+      }
+    }
+  ],
+  "alerts": [
+    {
+      "verse": "Dan 5:2",
+      "lang": "aramaic",
+      "pos": 4,
+      "arWord": "يَذُوقُ",
+      "strongsId": "H2939",
+      "locator": "OSHB:B27.C5.V2.w3",
+      "morphSource": "oshb_wlc",
+      "axes": {
+        "lexical": [],
+        "lemmaSurface": [],
+        "morphology": [],
+        "sourceLocator": [
+          "duplicate primary token collision: OSHB:w3 already claimed by arPos #1"
+        ]
+      }
+    }
+  ]
+}

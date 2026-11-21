@@ -62,7 +62,7 @@ class DatabaseService {
 
       try {
         final sink = tmpFile.openWrite();
-        const totalParts = 70;
+        const totalParts = 71;
         for (int i = 0; i < totalParts; i++) {
           final partIndexStr = i.toString().padLeft(2, '0');
           final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');
