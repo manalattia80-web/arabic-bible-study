@@ -356,14 +356,14 @@ assert(
   JSON.stringify(zechEval)
 );
 
-// Eph 1:21 pos #15 «فِي» (G1722 ἐν @ w15 where ἐν occurs 2 times in Eph 1:21!)
+// Eph 1:21 pos #16 «فِي» (G1722 ἐν @ w22 where ἐν occurs 2 times in Eph 1:21: w16 & w22!)
 const ephRow = q(`
   SELECT wm.ar_word_position, wm.ar_word, COALESCE(wm.strongs_id,''), COALESCE(wm.orig_surface,''),
          COALESCE(wm.orig_morphology,''), COALESCE(wm.morph_pos,''), COALESCE(wm.orig_word_position,''),
          COALESCE(wm.verified_locator,''), COALESCE(wm.morph_source,''), COALESCE(wm.relation_type,'')
   FROM word_mappings wm
   JOIN verses vr ON wm.verse_id = vr.id
-  WHERE vr.book_id = 49 AND vr.chapter_num = 1 AND vr.verse_num = 21 AND wm.ar_word_position = 15;
+  WHERE vr.book_id = 49 AND vr.chapter_num = 1 AND vr.verse_num = 21 AND wm.ar_word_position = 16;
 `).split('|');
 
 const ephEval = evaluateStrictCategoryAEligibility({
@@ -384,8 +384,8 @@ const ephEval = evaluateStrictCategoryAEligibility({
 });
 
 assert(
-  !ephEval.eligible && (ephEval.reason === 'REJECT_DUPLICATE_OCCURRENCE_IN_VERSE' || ephEval.reason === 'REJECT_LEXICAL_MISMATCH_AT_WN'),
-  'Gate 22: Eph 1:21 pos #15 («فِي», G1722 ἐν @ w15) is strictly REJECTED (duplicate occurrence / wrong occurrence guard)',
+  !ephEval.eligible && ephEval.reason === 'REJECT_DUPLICATE_OCCURRENCE_IN_VERSE',
+  'Gate 22: Eph 1:21 pos #16 («فِي», G1722 ἐν @ w22) is strictly REJECTED as duplicate occurrence in verse',
   JSON.stringify(ephEval)
 );
 
