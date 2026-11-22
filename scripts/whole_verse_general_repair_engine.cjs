@@ -1,26 +1,26 @@
 /**
  * scripts/whole_verse_general_repair_engine.cjs
  *
- * Whole-Verse General Alignment & Morphology Suggestion/Repair Engine (v1.1)
+ * Whole-Verse General Alignment & Morphology Suggestion/Repair Engine (v1.2)
  *
  * Rules derived STRICTLY from the 65 already-adjudicated verses (B20 + R1 + R2 + R3 = 1,053 records).
  * Zero rules or exceptions tailored to Round 4B or any unseen holdout sample.
  *
- * Architectural Guarantees (v1.1 Hardened):
- *   1. Read-only first (--mode propose); --mode apply requires --out-db (isolated copy, never mutates production DB).
- *   2. Independent Strong's & Lexicon Verification BEFORE granting AUTO_PROPOSED_HIGH_CONFIDENCE:
- *        - Loads `strongs_entries` independently from SQLite.
- *        - Greek: rejects stored strongs_id if its lexicon lemma contradicts SBLGNT tok.lemma (e.g. G1 != ὑπεράνω).
- *        - Hebrew/Aramaic: derives orig_word strictly from strongs_entries for OSHB strongsId, AND rejects to
- *          PENDING_REVIEW if stored orig_word has a conflicting consonantal root (e.g. בַּיִת vs הָיָה).
- *   3. Never re-derives morphology before locking a unique, lexically verified source token link.
- *   4. Strict Duplicate-Occurrence Guard: any token whose surface or lemma/Strong's occurs >1 time in the verse is
- *      STRICTLY demoted to PENDING_REVIEW with all competing occurrences listed in `alternatives`.
- *   5. Whole-Verse Reserved-Token & Bijectivity Guard:
- *        - Pre-registers ALL tokens reserved by preserved `compound_phrase` rows, preserved `morphgnt_tr` rows,
- *          and ALL secondary `word_mapping_strongs` components (`link_order > 1`) across the verse.
- *        - Any proposal targeting a reserved token or colliding with another proposal is STRICTLY demoted to PENDING_REVIEW.
- *   6. Outputs complete before/after diff JSONL when applying to an isolated DB copy.
+ * Architectural Guarantees (v1.2):
+ *   1. Complete Denominator (434,351 exact): NEVER drops missing-source verses; classifies every record as
+ *      PENDING_EDITION_TR_ONLY_NOT_IN_SBLGNT / PENDING_VERSIFICATION_MISMATCH / PENDING_NO_SOURCE_DATA.
+ *   2. Explicit Adjudicated Registry + Structural Protection:
+ *        - Protects all verses in the explicit Protected Adjudicated Registry (B20 + R1–R3 + audit-guarded verses)
+ *          with cryptographic SHA-256 fingerprint verification.
+ *        - Across all 66 books, preserves range locators (wA-wB), non-empty grammar_notes, compound_phrase,
+ *          syntactic_ar, verified morphgnt_tr, and existing Sp* pronominal suffix fields.
+ *   3. Independent Strong's & Lexicon Verification BEFORE granting AUTO_PROPOSED_HIGH_CONFIDENCE.
+ *   4. Atomic Component Reorganization: NEVER deletes distinct primary components (demotes to PENDING_REVIEW if
+ *      multiple distinct primaries exist); rewrites single primary at link_order=1 and preserves all secondary components.
+ *   5. Whole-Verse Fixed-Point Anti-Collision Guard (including untouched PENDING_REVIEW neighbors!):
+ *        - Accounts for ALL old & new claims across the verse (preserved, secondary, peer auto-proposed, AND
+ *          untouched PENDING_REVIEW neighbors still sitting on their existing orig_word_position).
+ *        - Iterates to a fixed point so ZERO new sourceLocator collisions can ever be introduced!
  */
 const fs = require('fs');
 const path = require('path');
@@ -33,6 +33,7 @@ const {
   OT_BOOK_MAP,
   TR_BOOK_OSIS_MAP
 } = require('./full_66_books_audit_helpers.cjs');
+const { loadProtectedAdjudicatedVerses } = require('./protected_adjudicated_registry.cjs');
 
 const repoRoot = path.resolve(__dirname, '..');
 const isWin = process.platform === 'win32';
@@ -91,9 +92,57 @@ function loadStrongsLexicon(dbPath) {
   return map;
 }
 
-function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
+function buildCurrentSnapshot(r) {
+  return {
+    arPos: r.arPos,
+    arWord: r.arWord,
+    strongsId: r.strongsId || null,
+    origWord: r.origWord || null,
+    origSurface: r.origSurface || null,
+    origPos: r.origPos,
+    origMorph: r.origMorph || null,
+    morphPos: r.morphPos || null,
+    morphStem: r.morphStem || null,
+    morphTense: r.morphTense || null,
+    morphVoice: r.morphVoice || null,
+    morphMood: r.morphMood || null,
+    morphPerson: r.morphPerson || null,
+    morphNumber: r.morphNumber || null,
+    morphGender: r.morphGender || null,
+    morphCase: r.morphCase || null,
+    verifiedLocator: r.verifiedLocator || null,
+    verifiedSource: r.verifiedSource || null,
+    morphSource: r.morphSource || null,
+    relationType: r.relationType || null,
+    grammarNotes: r.grammarNotes || null
+  };
+}
+
+function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, options = {}) {
   const { book, ch, vs, lang, name } = verseInfo;
   const isGreek = lang === 'greek';
+  const protectedVerseKeys = options.protectedVerseKeys || null;
+  const verseKey = `${book}:${ch}:${vs}`;
+
+  // 0. Explicit Protected Adjudicated Registry check (zero mutation on adjudicated verses!)
+  if (protectedVerseKeys && protectedVerseKeys.has(verseKey)) {
+    return {
+      verse: name, book, ch, vs, lang,
+      edition: isGreek ? 'SBLGNT/TR' : 'OSHB',
+      tokenCount: 0,
+      proposals: dbRows.map(r => ({
+        id: r.id,
+        arPos: r.arPos,
+        arWord: r.arWord,
+        status: 'PRESERVED_ADJUDICATED_REGISTRY',
+        ruleId: 'SKIP_PROTECTED_ADJUDICATED_VERSE',
+        current: buildCurrentSnapshot(r),
+        proposed: null,
+        evidence: { note: 'Verse protected by explicit adjudicated registry & SHA-256 fingerprint.' },
+        alternatives: []
+      }))
+    };
+  }
 
   let tokens = [];
   let edition = '';
@@ -105,7 +154,26 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
     const trOsis = TR_BOOK_OSIS_MAP[book];
     const tr = trOsis && sources.trByOsis ? sources.trByOsis.get(`${trOsis}:${ch}:${vs}`) : null;
     if (!sbl || !sbl.length) {
-      return { verse: name, book, ch, vs, lang, skipped: 'NO_SBLGNT_SOURCE', proposals: [] };
+      const adjSbl = Boolean(sources.sblByBook[book] && (sources.sblByBook[book].get(`${ch}:${vs - 1}`) || sources.sblByBook[book].get(`${ch}:${vs + 1}`)));
+      const missReason = (tr && tr.length)
+        ? 'PENDING_EDITION_TR_ONLY_NOT_IN_SBLGNT'
+        : (adjSbl ? 'PENDING_VERSIFICATION_MISMATCH' : 'PENDING_NO_SOURCE_DATA');
+      return {
+        verse: name, book, ch, vs, lang,
+        edition: (tr && tr.length) ? 'TR_ONLY' : 'MISSING',
+        tokenCount: 0,
+        proposals: dbRows.map(r => ({
+          id: r.id,
+          arPos: r.arPos,
+          arWord: r.arWord,
+          status: 'PENDING_REVIEW',
+          ruleId: missReason,
+          current: buildCurrentSnapshot(r),
+          proposed: null,
+          evidence: { reason: missReason, inTr: Boolean(tr && tr.length), adjacentSbl: adjSbl },
+          alternatives: []
+        }))
+      };
     }
     tokens = sbl.map(t => ({
       index: t.index,
@@ -140,7 +208,23 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
     const osis = `${bName}.${bhsCh}.${bhsVs}`;
     const oshb = sources.oshbByBook[book] ? sources.oshbByBook[book].get(osis) : null;
     if (!oshb || !oshb.length) {
-      return { verse: name, book, ch, vs, lang, skipped: `NO_OSHB_SOURCE:${osis}`, proposals: [] };
+      const missReason = 'PENDING_NO_SOURCE_DATA';
+      return {
+        verse: name, book, ch, vs, lang,
+        edition: 'MISSING',
+        tokenCount: 0,
+        proposals: dbRows.map(r => ({
+          id: r.id,
+          arPos: r.arPos,
+          arWord: r.arWord,
+          status: 'PENDING_REVIEW',
+          ruleId: missReason,
+          current: buildCurrentSnapshot(r),
+          proposed: null,
+          evidence: { reason: missReason, osis },
+          alternatives: []
+        }))
+      };
     }
     tokens = oshb.map(t => {
       const rootSid = extractOshbRootStrongs(t);
@@ -161,7 +245,7 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
     locPrefix = `OSHB:B${book}.C${bhsCh}.V${bhsVs}`;
   }
 
-  // Occurrence frequency tables across the ENTIRE verse (strict anti-collision guard)
+  // Occurrence frequency tables across the ENTIRE verse
   const surfFreq = new Map();
   const lexFreq = new Map();
   for (const t of tokens) {
@@ -169,78 +253,91 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
     if (t.lemmaCanon) lexFreq.set(t.lemmaCanon, (lexFreq.get(t.lemmaCanon) || 0) + 1);
   }
 
-  // Pre-register ALL tokens reserved by preserved special rows (compound_phrase, morphgnt_tr)
-  // AND all secondary word_mapping_strongs components (link_order > 1) across the verse!
-  const reservedPrimaryByToken = new Map();   // tokenIndex -> array of arPos
-  const reservedSecondaryByToken = new Map(); // tokenIndex -> array of arPos
+  // Pre-register secondary components (link_order > 1) and split-prefix tokens across the verse
+  const reservedSecondaryByToken = new Map();
+  const splitPrefixTokens = new Set();
   for (const r of dbRows) {
-    const isCompound = r.relationType === 'compound_phrase';
-    const isVerifiedTr = r.morphSource === 'morphgnt_tr' && r.verifiedLocator && r.verifiedLocator.startsWith('TR:') && r.origMorph;
-    if ((isCompound || isVerifiedTr) && r.origPos !== null && r.origPos !== undefined) {
-      if (!reservedPrimaryByToken.has(r.origPos)) reservedPrimaryByToken.set(r.origPos, []);
-      reservedPrimaryByToken.get(r.origPos).push(r.arPos);
-    }
     for (const secPos of (r.secondaryPositions || [])) {
       if (secPos !== null && secPos !== undefined) {
         if (!reservedSecondaryByToken.has(secPos)) reservedSecondaryByToken.set(secPos, []);
         reservedSecondaryByToken.get(secPos).push(r.arPos);
       }
     }
+    if (r.strongsId && /^H900\d$/.test(r.strongsId) && r.origPos !== null && r.origPos !== undefined) {
+      splitPrefixTokens.add(r.origPos);
+    }
   }
 
   const rawProposals = [];
-  const targetClaims = new Map(); // tokenIndex -> array of arPos
 
   for (const r of dbRows) {
-    const current = {
-      arPos: r.arPos,
-      arWord: r.arWord,
-      strongsId: r.strongsId || null,
-      origWord: r.origWord || null,
-      origSurface: r.origSurface || null,
-      origPos: r.origPos,
-      origMorph: r.origMorph || null,
-      morphPos: r.morphPos || null,
-      morphStem: r.morphStem || null,
-      morphTense: r.morphTense || null,
-      morphVoice: r.morphVoice || null,
-      morphMood: r.morphMood || null,
-      morphPerson: r.morphPerson || null,
-      morphNumber: r.morphNumber || null,
-      morphGender: r.morphGender || null,
-      morphCase: r.morphCase || null,
-      verifiedLocator: r.verifiedLocator || null,
-      verifiedSource: r.verifiedSource || null,
-      morphSource: r.morphSource || null,
-      relationType: r.relationType || null
-    };
+    const current = buildCurrentSnapshot(r);
 
+    // Structural protections (range locators, special relations, verified TR, explicit scholarly grammar_notes)
     if (r.verifiedSource === 'syntactic_ar' || r.relationType === 'syntactic_ar' || r.relationType === 'compound_phrase') {
       rawProposals.push({
-        id: r.id,
-        arPos: r.arPos,
-        arWord: r.arWord,
+        id: r.id, arPos: r.arPos, arWord: r.arWord,
         status: 'PRESERVED_SPECIAL_RELATION',
         ruleId: r.relationType === 'compound_phrase' ? 'SKIP_COMPOUND_PHRASE' : 'SKIP_SYNTACTIC_AR',
-        current,
-        proposed: null,
-        evidence: { note: 'Preserved special relation_type / syntactic_ar untouched; token reserved in conflict map.' },
-        alternatives: []
+        current, proposed: null,
+        evidence: { note: 'Preserved special relation_type / syntactic_ar; token reserved in whole-verse map.' },
+        alternatives: [],
+        existingWms: r.existingWms || []
       });
       continue;
     }
 
     if (r.morphSource === 'morphgnt_tr' && r.verifiedLocator && r.verifiedLocator.startsWith('TR:') && r.origMorph) {
       rawProposals.push({
-        id: r.id,
-        arPos: r.arPos,
-        arWord: r.arWord,
+        id: r.id, arPos: r.arPos, arWord: r.arWord,
         status: 'PRESERVED_VERIFIED_TR',
         ruleId: 'SKIP_VERIFIED_TR',
-        current,
-        proposed: null,
-        evidence: { note: 'Preserved verified morphgnt_tr row untouched; token reserved in conflict map.' },
-        alternatives: []
+        current, proposed: null,
+        evidence: { note: 'Preserved verified morphgnt_tr row; token reserved in whole-verse map.' },
+        alternatives: [],
+        existingWms: r.existingWms || []
+      });
+      continue;
+    }
+
+    if (r.verifiedLocator && /w\d+-w\d+$/.test(r.verifiedLocator)) {
+      rawProposals.push({
+        id: r.id, arPos: r.arPos, arWord: r.arWord,
+        status: 'PRESERVED_RANGE_LOCATOR',
+        ruleId: 'SKIP_MULTI_TOKEN_RANGE',
+        current, proposed: null,
+        evidence: { note: 'Preserved multi-token span locator (wA-wB) untouched.' },
+        alternatives: [],
+        existingWms: r.existingWms || []
+      });
+      continue;
+    }
+
+    if (r.grammarNotes && String(r.grammarNotes).trim().length > 0) {
+      rawProposals.push({
+        id: r.id, arPos: r.arPos, arWord: r.arWord,
+        status: 'PRESERVED_GRAMMAR_NOTES',
+        ruleId: 'SKIP_EXPLICIT_GRAMMAR_NOTES',
+        current, proposed: null,
+        evidence: { note: 'Preserved row carrying explicit scholarly grammar_notes.' },
+        alternatives: [],
+        existingWms: r.existingWms || []
+      });
+      continue;
+    }
+
+    // Multiple distinct existing primary components guard: NEVER auto-delete distinct primary links!
+    const existingPrimaries = (r.existingWms || []).filter(w => w.role === 'primary');
+    const distinctPrimaryKeys = new Set(existingPrimaries.map(w => `${w.sid}@${w.pos}`));
+    if (distinctPrimaryKeys.size > 1) {
+      rawProposals.push({
+        id: r.id, arPos: r.arPos, arWord: r.arWord,
+        status: 'PENDING_REVIEW',
+        ruleId: `CONFLICT_MULTIPLE_EXISTING_PRIMARIES(count=${distinctPrimaryKeys.size})`,
+        current, proposed: null,
+        evidence: { note: 'Multiple distinct primary components exist in word_mapping_strongs; refused auto-deletion.', primaries: existingPrimaries },
+        alternatives: [],
+        existingWms: r.existingWms || []
       });
       continue;
     }
@@ -304,20 +401,32 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
 
     if (!chosen) {
       rawProposals.push({
-        id: r.id,
-        arPos: r.arPos,
-        arWord: r.arWord,
+        id: r.id, arPos: r.arPos, arWord: r.arWord,
         status: 'PENDING_REVIEW',
         ruleId: rejectReason,
-        current,
-        proposed: null,
+        current, proposed: null,
         evidence: { edition, tokenCount: tokens.length, reason: rejectReason },
-        alternatives
+        alternatives,
+        existingWms: r.existingWms || []
       });
       continue;
     }
 
-    // INDEPENDENT LEXICAL VERIFICATION OF BOTH strongs_id AND orig_word BEFORE HIGH-CONFIDENCE!
+    // Protect split-prefix isolation (if another row holds H900x on this same token wN)
+    if (!isGreek && splitPrefixTokens.has(chosen.index)) {
+      rawProposals.push({
+        id: r.id, arPos: r.arPos, arWord: r.arWord,
+        status: 'PENDING_REVIEW',
+        ruleId: `CONFLICT_SPLIT_PREFIX_ISOLATION(w${chosen.index})`,
+        current, proposed: null,
+        evidence: { edition, tokenIndex: chosen.index, reason: 'Token has split H900x prefix row in verse.' },
+        alternatives,
+        existingWms: r.existingWms || []
+      });
+      continue;
+    }
+
+    // Independent Strong's & Lexicon Verification BEFORE high-confidence!
     let targetStrongs = null;
     let targetOrigWord = null;
     let lexReject = null;
@@ -352,7 +461,6 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
         const lexLemma = strongsLexicon.get(targetStrongs);
         const storedCons = canonSemiticConsonants(r.origWord);
         const lexCons = canonSemiticConsonants(lexLemma);
-        // Reject if stored orig_word has an explicitly conflicting consonantal root (e.g. בַּיִת vs הָיָה)
         if (storedCons.length >= 2 && lexCons.length >= 2 && storedCons !== lexCons) {
           lexReject = `REJECT_STORED_LEMMA_CONFLICTS_WITH_LEXICON(stored=${r.origWord},lexicon=${lexLemma},strongs=${targetStrongs})`;
         } else {
@@ -363,27 +471,16 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
 
     if (lexReject) {
       rawProposals.push({
-        id: r.id,
-        arPos: r.arPos,
-        arWord: r.arWord,
+        id: r.id, arPos: r.arPos, arWord: r.arWord,
         status: 'PENDING_REVIEW',
         ruleId: lexReject,
-        current,
-        proposed: null,
-        evidence: {
-          edition,
-          tokenIndex: chosen.index,
-          tokenSurface: chosen.surface,
-          tokenLemma: chosen.lemma,
-          reason: lexReject
-        },
-        alternatives
+        current, proposed: null,
+        evidence: { edition, tokenIndex: chosen.index, tokenSurface: chosen.surface, tokenLemma: chosen.lemma, reason: lexReject },
+        alternatives,
+        existingWms: r.existingWms || []
       });
       continue;
     }
-
-    if (!targetClaims.has(chosen.index)) targetClaims.set(chosen.index, []);
-    targetClaims.get(chosen.index).push(r.arPos);
 
     const d = deriveCanonicalMorphFields(lang, chosen.morph, false, {
       morphPos: r.morphPos,
@@ -393,12 +490,24 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
     if (isGreek && chosen.morph.startsWith('RI') && (r.morphPos === 'pronoun' || targetStrongs === 'G5100')) {
       finalMorphPos = 'pronoun';
     }
+
+    // Preserve pronominal suffix person/gender/number when OSHB morph has /Sp* and fields were already set
+    const hasSpSuffix = !isGreek && /\/Sp\d/.test(chosen.morph);
+    const finalPerson = (hasSpSuffix && !d.morphPerson && r.morphPerson) ? r.morphPerson : d.morphPerson;
+    const finalGender = (hasSpSuffix && !d.morphGender && r.morphGender) ? r.morphGender : d.morphGender;
+    const finalNumber = (hasSpSuffix && !d.morphNumber && r.morphNumber) ? r.morphNumber : d.morphNumber;
+
+    // Preserve literal maqaf if already present on exact matching OSHB surface
+    const finalSurface = (!isGreek && r.origSurface && r.origSurface.endsWith('־') && canonSemiticConsonants(r.origSurface) === chosen.surfaceCanon)
+      ? r.origSurface
+      : chosen.surface;
+
     const targetLocator = `${locPrefix}.w${chosen.index}`;
 
     const proposed = {
       strongsId: targetStrongs,
       origWord: targetOrigWord,
-      origSurface: chosen.surface,
+      origSurface: finalSurface,
       origPos: chosen.index,
       origMorph: chosen.morph,
       morphPos: finalMorphPos,
@@ -406,9 +515,9 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
       morphTense: d.morphTense,
       morphVoice: d.morphVoice,
       morphMood: d.morphMood,
-      morphPerson: d.morphPerson,
-      morphNumber: d.morphNumber,
-      morphGender: d.morphGender,
+      morphPerson: finalPerson,
+      morphNumber: finalNumber,
+      morphGender: finalGender,
       morphCase: d.morphCase,
       verifiedLocator: targetLocator,
       verifiedSource: morphSource,
@@ -436,54 +545,87 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null) {
       r.hasCleanPrimaryWms;
 
     rawProposals.push({
-      id: r.id,
-      arPos: r.arPos,
-      arWord: r.arWord,
+      id: r.id, arPos: r.arPos, arWord: r.arWord,
       status: isAlreadyCanonical ? 'ALREADY_CANONICAL' : 'AUTO_PROPOSED_HIGH_CONFIDENCE',
       ruleId: isAlreadyCanonical ? 'NO_CHANGE_ALREADY_CANONICAL' : ruleId,
       targetTokenIndex: chosen.index,
-      current,
-      proposed,
+      current, proposed,
       evidence: {
         edition,
         tokenIndex: chosen.index,
-        tokenSurface: chosen.surface,
+        tokenSurface: finalSurface,
         tokenLemma: chosen.lemma,
         tokenMorph: chosen.morph,
         verifiedLexiconLemma: strongsLexicon.get(targetStrongs),
         surfOccurrencesInVerse: surfFreq.get(chosen.surfaceCanon) || 0,
         lexOccurrencesInVerse: lexFreq.get(chosen.lemmaCanon) || 0
       },
-      alternatives
+      alternatives,
+      existingWms: r.existingWms || []
     });
   }
 
-  // Whole-verse reserved-token & bijectivity pass:
-  // Demote ANY proposal colliding with reserved compound_phrase/TR primary tokens, secondary components, or peer claims!
-  for (const p of rawProposals) {
-    if (p.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || p.status === 'ALREADY_CANONICAL') {
-      const reservedPrim = reservedPrimaryByToken.get(p.targetTokenIndex) || [];
-      if (reservedPrim.length > 0) {
-        p.status = 'PENDING_REVIEW';
-        p.ruleId = `CONFLICT_RESERVED_PRIMARY_TOKEN(w${p.targetTokenIndex},reservedBy=${reservedPrim.join(',')})`;
-        p.proposed = null;
-        p.evidence.reservedByPrimary = reservedPrim;
-        continue;
+  // WHOLE-VERSE FIXED-POINT ANTI-COLLISION PASS:
+  // Accounts for ALL old & new claims: preserved special/TR/range/notes rows, secondary components,
+  // peer auto-proposed rows, ALREADY_CANONICAL rows, AND untouched PENDING_REVIEW neighbors!
+  let changed = true;
+  while (changed) {
+    changed = false;
+
+    const postClaimsByToken = new Map(); // tokenIndex -> array of { arPos, kind }
+    const addClaim = (tokIdx, arPos, kind) => {
+      if (tokIdx === null || tokIdx === undefined) return;
+      if (!postClaimsByToken.has(tokIdx)) postClaimsByToken.set(tokIdx, []);
+      postClaimsByToken.get(tokIdx).push({ arPos, kind });
+    };
+
+    for (const p of rawProposals) {
+      if (p.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && p.proposed) {
+        addClaim(p.targetTokenIndex, p.arPos, 'AUTO_PROPOSED');
+      } else if (p.status === 'ALREADY_CANONICAL') {
+        addClaim(p.current.origPos, p.arPos, 'ALREADY_CANONICAL');
+      } else if (p.status.startsWith('PRESERVED_')) {
+        addClaim(p.current.origPos, p.arPos, p.status);
+      } else {
+        // PENDING_REVIEW stays at its existing origPos!
+        addClaim(p.current.origPos, p.arPos, 'PENDING_NEIGHBOR');
       }
-      const reservedSec = (reservedSecondaryByToken.get(p.targetTokenIndex) || []).filter(ap => ap !== p.arPos);
+    }
+
+    for (const p of rawProposals) {
+      if (p.status !== 'AUTO_PROPOSED_HIGH_CONFIDENCE') continue;
+      const wTarget = p.targetTokenIndex;
+
+      // 1. Secondary component reservation check
+      const reservedSec = (reservedSecondaryByToken.get(wTarget) || []).filter(ap => ap !== p.arPos);
       if (reservedSec.length > 0) {
         p.status = 'PENDING_REVIEW';
-        p.ruleId = `CONFLICT_RESERVED_SECONDARY_TOKEN(w${p.targetTokenIndex},reservedBy=${reservedSec.join(',')})`;
+        p.ruleId = `CONFLICT_RESERVED_SECONDARY_TOKEN(w${wTarget},reservedBy=${reservedSec.join(',')})`;
         p.proposed = null;
         p.evidence.reservedBySecondary = reservedSec;
+        changed = true;
         continue;
       }
-      const claimers = targetClaims.get(p.targetTokenIndex) || [];
-      if (claimers.length > 1) {
+
+      // 2. Post-state primary collision check against ALL other rows (preserved, peer auto-proposed, OR untouched pending neighbors!)
+      const otherClaims = (postClaimsByToken.get(wTarget) || []).filter(c => c.arPos !== p.arPos);
+      if (otherClaims.length > 0) {
+        const hasReserved = otherClaims.some(c => c.kind.startsWith('PRESERVED_'));
+        const hasPendingNeighbor = otherClaims.some(c => c.kind === 'PENDING_NEIGHBOR');
+        // Allow in-place metadata refresh ONLY if row wasn't moving AND isn't colliding with reserved/peer
+        if (wTarget === p.current.origPos && !hasReserved && otherClaims.every(c => c.kind === 'PENDING_NEIGHBOR')) {
+          continue;
+        }
+        const conflictTag = hasReserved
+          ? `CONFLICT_RESERVED_PRIMARY_TOKEN(w${wTarget},reservedBy=${otherClaims.map(c => c.arPos).join(',')})`
+          : (hasPendingNeighbor
+              ? `CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR(w${wTarget},occupiedBy=${otherClaims.map(c => c.arPos).join(',')})`
+              : `CONFLICT_SHARED_TARGET_TOKEN(w${wTarget},claimers=${[p.arPos, ...otherClaims.map(c => c.arPos)].sort((a, b) => a - b).join(',')})`);
         p.status = 'PENDING_REVIEW';
-        p.ruleId = `CONFLICT_SHARED_TARGET_TOKEN(w${p.targetTokenIndex},claimers=${claimers.join(',')})`;
+        p.ruleId = conflictTag;
         p.proposed = null;
-        p.evidence.conflictClaimers = claimers;
+        p.evidence.postStateConflict = otherClaims;
+        changed = true;
       }
     }
   }
@@ -516,18 +658,21 @@ function loadVerseRows(dbPath, book, ch, vs) {
         'verifiedSource', wm.verified_source,
         'morphSource', wm.morph_source,
         'relationType', wm.relation_type,
-        'wmsCount', (SELECT COUNT(*) FROM word_mapping_strongs wms WHERE wms.mapping_id = wm.id),
-        'secondaryPositions', COALESCE((
-          SELECT json_group_array(wms.orig_word_position)
+        'grammarNotes', wm.grammar_notes,
+        'existingWms', COALESCE((
+          SELECT json_group_array(json_object(
+            'order', wms.link_order,
+            'role', wms.link_role,
+            'sid', wms.strongs_id,
+            'comp', wms.orig_component,
+            'pos', wms.orig_word_position,
+            'morph', wms.orig_morphology,
+            'msrc', wms.morph_source
+          ))
           FROM word_mapping_strongs wms
-          WHERE wms.mapping_id = wm.id AND wms.link_order > 1 AND wms.orig_word_position IS NOT NULL
-        ), '[]'),
-        'hasCleanPrimaryWms', (
-          SELECT COUNT(*) FROM word_mapping_strongs wms
-          WHERE wms.mapping_id = wm.id AND wms.link_order = 1 AND wms.link_role = 'primary'
-            AND wms.strongs_id = wm.strongs_id AND wms.orig_word_position = wm.orig_word_position
-            AND wms.orig_morphology = wm.orig_morphology AND wms.morph_source = wm.morph_source
-        )
+          WHERE wms.mapping_id = wm.id
+          ORDER BY wms.link_order ASC
+        ), '[]')
       )
       FROM word_mappings wm
       JOIN verses vr ON wm.verse_id = vr.id
@@ -540,12 +685,33 @@ function loadVerseRows(dbPath, book, ch, vs) {
   if (!raw) return [];
   return raw.split('\n').filter(Boolean).map(l => {
     const obj = JSON.parse(l);
-    obj.hasCleanPrimaryWms = obj.hasCleanPrimaryWms > 0;
-    obj.secondaryPositions = typeof obj.secondaryPositions === 'string'
-      ? JSON.parse(obj.secondaryPositions)
-      : (obj.secondaryPositions || []);
+    const wms = typeof obj.existingWms === 'string' ? JSON.parse(obj.existingWms) : (obj.existingWms || []);
+    wms.sort((a, b) => (a.order || 0) - (b.order || 0));
+    obj.existingWms = wms;
+    obj.secondaryPositions = wms.filter(w => w.order > 1 && w.pos !== null && w.pos !== undefined).map(w => w.pos);
+    const prims = wms.filter(w => w.role === 'primary');
+    obj.hasCleanPrimaryWms = prims.length === 1 && prims[0].order === 1 &&
+      prims[0].sid === obj.strongsId && prims[0].pos === obj.origPos &&
+      prims[0].morph === obj.origMorph && prims[0].msrc === obj.morphSource;
     return obj;
   });
+}
+
+function buildAtomicWmsSql(mappingId, pr, existingWms) {
+  const stmts = [`DELETE FROM word_mapping_strongs WHERE mapping_id = ${sqlVal(mappingId)};`];
+  stmts.push(
+    `INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source) VALUES (${sqlVal(mappingId)}, ${sqlVal(pr.strongsId)}, 1, 'primary', ${sqlVal(pr.origSurface)}, ${pr.origPos}, ${sqlVal(pr.origMorph)}, ${sqlVal(pr.morphSource)});`
+  );
+  // Preserve ALL non-primary (secondary) components atomically, renumbered sequentially 2..N
+  const secondaries = (existingWms || []).filter(w => w.role !== 'primary');
+  let order = 2;
+  for (const sec of secondaries) {
+    stmts.push(
+      `INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source) VALUES (${sqlVal(mappingId)}, ${sqlVal(sec.sid)}, ${order}, ${sqlVal(sec.role || 'secondary')}, ${sqlVal(sec.comp)}, ${sec.pos === null || sec.pos === undefined ? 'NULL' : sec.pos}, ${sqlVal(sec.morph)}, ${sqlVal(sec.msrc)});`
+    );
+    order++;
+  }
+  return stmts;
 }
 
 function applyProposalsToIsolatedDb(srcDbPath, outDbPath, verseResults, diffOutPath) {
@@ -584,11 +750,7 @@ function applyProposalsToIsolatedDb(srcDbPath, outDbPath, verseResults, diffOutP
         WHERE id = ${sqlVal(p.id)};
       `.trim());
 
-      sql.push(`DELETE FROM word_mapping_strongs WHERE mapping_id = ${sqlVal(p.id)} AND link_order = 1;`);
-      sql.push(`
-        INSERT INTO word_mapping_strongs (mapping_id, strongs_id, link_order, link_role, orig_component, orig_word_position, orig_morphology, morph_source)
-        VALUES (${sqlVal(p.id)}, ${sqlVal(pr.strongsId)}, 1, 'primary', ${sqlVal(pr.origSurface)}, ${pr.origPos}, ${sqlVal(pr.origMorph)}, ${sqlVal(pr.morphSource)});
-      `.trim());
+      sql.push(...buildAtomicWmsSql(p.id, pr, p.existingWms));
 
       diffLines.push(JSON.stringify({
         verse: vr.verse,
@@ -620,89 +782,11 @@ function applyProposalsToIsolatedDb(srcDbPath, outDbPath, verseResults, diffOutP
   return { modifiedCount: diffLines.length, outDbSha256: sha256File(outDbPath) };
 }
 
-function main() {
-  const args = process.argv.slice(2);
-  const getArg = (flag, def = null) => {
-    const idx = args.indexOf(flag);
-    return (idx >= 0 && idx + 1 < args.length) ? args[idx + 1] : def;
-  };
-
-  const mode = getArg('--mode', 'propose');
-  const dbPath = path.resolve(repoRoot, getArg('--db', 'mobile/assets/bible_study.db'));
-  const manifestArg = getArg('--manifest');
-  const outProposals = getArg('--out-proposals');
-  const outDb = getArg('--out-db');
-  const outDiff = getArg('--out-diff');
-
-  if (!manifestArg) {
-    console.error('Usage: node scripts/whole_verse_general_repair_engine.cjs --mode <propose|apply> --manifest <manifest.json> [--out-proposals <out.json>] [--out-db <isolated.db>] [--out-diff <diff.jsonl>]');
-    process.exit(1);
-  }
-
-  const manifestPath = path.resolve(repoRoot, manifestArg);
-  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-  const verses = (manifest.holdout_verses || manifest.verses || []).map(v => ({
-    book: v.book, ch: v.ch, vs: v.vs, lang: v.lang, name: v.name
-  }));
-
-  const sources = loadAllSources();
-  const strongsLexicon = loadStrongsLexicon(dbPath);
-  const verseResults = [];
-  const counts = {
-    totalRecords: 0,
-    ALREADY_CANONICAL: 0,
-    AUTO_PROPOSED_HIGH_CONFIDENCE: 0,
-    PENDING_REVIEW: 0,
-    PRESERVED_SPECIAL_RELATION: 0,
-    PRESERVED_VERIFIED_TR: 0
-  };
-  const ruleCounts = {};
-
-  for (const v of verses) {
-    const rows = loadVerseRows(dbPath, v.book, v.ch, v.vs);
-    const res = evaluateVerse(v, rows, sources, strongsLexicon);
-    verseResults.push(res);
-    for (const p of res.proposals) {
-      counts.totalRecords++;
-      counts[p.status] = (counts[p.status] || 0) + 1;
-      ruleCounts[p.ruleId] = (ruleCounts[p.ruleId] || 0) + 1;
-    }
-  }
-
-  const report = {
-    engineVersion: 'whole_verse_general_repair_engine_v1.1',
-    mode,
-    sourceDbPath: path.relative(repoRoot, dbPath).replace(/\\/g, '/'),
-    sourceDbSha256: sha256File(dbPath),
-    manifestPath: path.relative(repoRoot, manifestPath).replace(/\\/g, '/'),
-    manifestSha256: sha256File(manifestPath),
-    summary: counts,
-    ruleBreakdown: ruleCounts,
-    verses: verseResults
-  };
-
-  if (mode === 'apply') {
-    if (!outDb) throw new Error('--mode apply requires --out-db <isolated_db_path>');
-    const outDbAbs = path.resolve(repoRoot, outDb);
-    const diffAbs = outDiff ? path.resolve(repoRoot, outDiff) : null;
-    const applyRes = applyProposalsToIsolatedDb(dbPath, outDbAbs, verseResults, diffAbs);
-    report.applyResult = applyRes;
-    console.log(`Applied ${applyRes.modifiedCount} high-confidence proposals to isolated DB: ${outDbAbs}`);
-    console.log(`  Isolated DB SHA-256: ${applyRes.outDbSha256}`);
-  }
-
-  if (outProposals) {
-    const outAbs = path.resolve(repoRoot, outProposals);
-    fs.mkdirSync(path.dirname(outAbs), { recursive: true });
-    fs.writeFileSync(outAbs, JSON.stringify(report, null, 2) + '\n', 'utf8');
-  }
-
-  console.log('=== WHOLE-VERSE GENERAL REPAIR ENGINE SUMMARY ===');
-  console.log(JSON.stringify({ summary: counts, ruleBreakdown: ruleCounts }, null, 2));
-}
-
-if (require.main === module) {
-  main();
-}
-
-module.exports = { evaluateVerse, loadVerseRows, loadStrongsLexicon, applyProposalsToIsolatedDb };
+module.exports = {
+  evaluateVerse,
+  loadVerseRows,
+  loadStrongsLexicon,
+  buildAtomicWmsSql,
+  applyProposalsToIsolatedDb,
+  loadProtectedAdjudicatedVerses
+};
