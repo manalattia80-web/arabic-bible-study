@@ -1,0 +1,44 @@
+{
+  "totalVerses": 65,
+  "totalRecords": 1053,
+  "byLang": {
+    "hebrew": {
+      "verses": 25,
+      "records": 410,
+      "displacedPos": 244,
+      "multiComponent": 68,
+      "compoundPhrase": 31,
+      "syntacticAr": 5,
+      "trEdition": 0,
+      "versificationOffset": 0
+    },
+    "aramaic": {
+      "verses": 14,
+      "records": 272,
+      "displacedPos": 217,
+      "multiComponent": 56,
+      "compoundPhrase": 18,
+      "syntacticAr": 6,
+      "trEdition": 0,
+      "versificationOffset": 40
+    },
+    "greek": {
+      "verses": 26,
+      "records": 371,
+      "displacedPos": 316,
+      "multiComponent": 72,
+      "compoundPhrase": 12,
+      "syntacticAr": 6,
+      "trEdition": 35,
+      "versificationOffset": 0
+    }
+  },
+  "totals": {
+    "displacedPos": 777,
+    "multiComponent": 196,
+    "compoundPhrase": 61,
+    "syntacticAr": 17,
+    "trEdition": 35,
+    "versificationOffset": 40
+  }
+}
