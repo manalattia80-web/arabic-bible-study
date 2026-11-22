@@ -148,6 +148,15 @@ jobs:
       - name: Verify Built APK Chunks and Asset Integrity (Post-Build Gate)
         run: node scripts/verify_apk_asset_integrity.cjs arabic-bible-study-app.apk
 
+      - name: Verify APK Signature (apksigner), Alignment (zipalign), and Badging (aapt2)
+        run: |
+          BT_DIR=$(ls -d "${ANDROID_SDK_ROOT:-$ANDROID_HOME}"/build-tools/* | sort -V | tail -n 1)
+          echo "Using Android build-tools: $BT_DIR"
+          "$BT_DIR/apksigner" verify --verbose --print-certs arabic-bible-study-app.apk
+          "$BT_DIR/zipalign" -c 4 arabic-bible-study-app.apk
+          echo "zipalign 4-byte check: OK"
+          "$BT_DIR/aapt2" dump badging arabic-bible-study-app.apk | head -n 25
+
       - name: Build App Bundle (AAB for Google Play Store)
         working-directory: ./mobile
         run: |
@@ -190,8 +199,8 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🧪 Experimental Candidate: Whole-Verse General Repair Engine v1.3 (`v1.0.380` / `targetDbVersion = 380`)
-          > **Pre-Release / Experimental Candidate Notice**: This build is an experimental candidate intended for on-device clean-install and upgrade testing (`v379 → v380`). It demonstrates verified automated generalization improvements with zero detected regressions, and **does not represent a certification of complete linguistic accuracy across all 434,351 records**.
+          ## 🧪 Experimental Candidate: Whole-Verse General Repair Engine v1.3 (`${{ env.APP_RELEASE_TAG }}` / `targetDbVersion = ${{ env.APP_VER_CODE }}`)
+          > **Pre-Release / Experimental Candidate Notice**: This build is an experimental candidate intended for on-device clean-install and upgrade testing (`v352/v379 → v${{ env.APP_VER_CODE }}`). Database is vacuumed to 70 parts (~365 MB) and cryptographically verified via `apksigner verify` + `zipalign -c 4`. It demonstrates verified automated generalization improvements with zero detected regressions, and **does not represent a certification of complete linguistic accuracy across all 434,351 records**.
 
           - **General Repair Engine `v1.3` Promotion**: Applied `122,961` verified high-confidence alignment & morphology repairs across all 66 books (`434,351` exact denominator; `278,828` conservatively held in `PENDING_REVIEW`; `32,562` preserved).
           - **Contextual & Structural Safety Guards**: Independent Strong's/lexicon verification, Arabic-to-Source contextual POS compatibility (`1,797` mismatches blocked), fixed-point whole-verse anti-collision including untouched pending neighbors (`0` `sourceLocator` regressions), atomic component reorganization (`0` `multiple_primary_components`), and bitwise-immutable Protected Adjudicated Registry (`92` verses / `1,477` rows / `1,622` components).
