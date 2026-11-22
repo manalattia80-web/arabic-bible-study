@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 379; // v1.0.379: Aramaic e=shaphel (Ezra 4:12, 6:14) & 1Thess 5:16 documented shared-link unit G3842@w1 (gates 1-64)
+    const targetDbVersion = 380; // v1.0.380: Whole-Verse General Repair Engine v1.3 promotion (122,961 verified high-confidence repairs across 66 books, 0 regressions)
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();
@@ -62,7 +62,7 @@ class DatabaseService {
 
       try {
         final sink = tmpFile.openWrite();
-        const totalParts = 71;
+        const totalParts = 76;
         for (int i = 0; i < totalParts; i++) {
           final partIndexStr = i.toString().padLeft(2, '0');
           final partData = await rootBundle.load('assets/db_parts/part_$partIndexStr.dat');

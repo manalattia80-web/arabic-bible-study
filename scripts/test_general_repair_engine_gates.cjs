@@ -219,7 +219,7 @@ const judg194Rows = loadVerseRows(prodDb, 7, 19, 4);
 const judg194Res = evaluateVerse({ book: 7, ch: 19, vs: 4, lang: 'hebrew', name: 'Judg 19:4' }, judg194Rows, sources, strongsLexicon);
 const judg12 = judg194Res.proposals.find(p => p.arPos === 12);
 assert(
-  Boolean(judg12 && judg12.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && judg12.proposed && judg12.proposed.strongsId === 'H8033' && judg12.proposed.origPos === 13),
+  Boolean(judg12 && (judg12.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || judg12.status === 'ALREADY_CANONICAL') && judg12.proposed && judg12.proposed.strongsId === 'H8033' && judg12.proposed.origPos === 13),
   'Positive Gate 14: Valid RULE_G1 relocation Judg 19:4 #12 («هُنَاكَ» -> H8033@w13 adverb) is ACCEPTED',
   JSON.stringify(judg12 && { status: judg12.status, ruleId: judg12.ruleId, pos: judg12.proposed && judg12.proposed.origPos })
 );
@@ -229,7 +229,7 @@ const tim618Rows = loadVerseRows(prodDb, 54, 6, 18);
 const tim618Res = evaluateVerse({ book: 54, ch: 6, vs: 18, lang: 'greek', name: '1Tim 6:18' }, tim618Rows, sources, strongsLexicon);
 const tim9 = tim618Res.proposals.find(p => p.arPos === 9);
 assert(
-  Boolean(tim9 && tim9.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && tim9.proposed && tim9.proposed.strongsId === 'G2570' && tim9.proposed.origWord === 'καλός' && tim9.proposed.origPos === 5),
+  Boolean(tim9 && (tim9.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || tim9.status === 'ALREADY_CANONICAL') && tim9.proposed && tim9.proposed.strongsId === 'G2570' && tim9.proposed.origWord === 'καλός' && tim9.proposed.origPos === 5),
   'Positive Gate 15: Valid RULE_G2 same-POS repair 1Tim 6:18 #9 («صَالِحَةٍ» -> G2570 καλός@w5 adjective) is ACCEPTED',
   JSON.stringify(tim9 && { status: tim9.status, ruleId: tim9.ruleId, orig: tim9.proposed && tim9.proposed.origWord })
 );
