@@ -1,0 +1,90 @@
+{
+  "engineVersion": "whole_verse_general_repair_engine_v1.3",
+  "trSourceMode": "TR_SLICE_CI_MODE (USE_TR_SLICE=1)",
+  "scope": "ALL_66_BOOKS_ISOLATED",
+  "productionDbSha256Untouched": "dbc5d16e07de1ca2dff5d6deddfc1dc470d7926e1285c11ea5aec4a53874da44",
+  "isolatedDbPath": "scratch/isolated_full_66books_engine_v1_3.db",
+  "isolatedDbSha256": "939dd5fcca4ec96521eee73152a6c4ec7177805a3cdd299154c6df6e23ec454b",
+  "diffLogPath": "scratch/full_66books_engine_v1_3_diff.jsonl",
+  "diffLogSha256": "2fa414827bfed051e0851de8a330decf390f98eb61bd30dccdad0bcb8bd906c8",
+  "denominatorExact": 434351,
+  "modifiedRecords": 122961,
+  "coveragePct": 28.31,
+  "multiplePrimaryComponentsCount": 0,
+  "protectedRegistryVerified": {
+    "bitwiseIdentical": true,
+    "protectedVerseCount": 92,
+    "protectedRowCount": 1477,
+    "protectedComponentCount": 1622,
+    "wordMappingsSha256": "6094611ca006423a8cf729087f3d2eecdfea84b0e7aada8a0c91137a1667e8d4",
+    "wordMappingStrongsSha256": "d0e789d1321fac83da71be513a978ae4a7b4924127618a18fb6da4d5d20b4627"
+  },
+  "counts": {
+    "totalVerses": 31102,
+    "totalRecords": 434351,
+    "ALREADY_CANONICAL": 0,
+    "AUTO_PROPOSED_HIGH_CONFIDENCE": 122961,
+    "PENDING_REVIEW": 278828,
+    "PRESERVED_ADJUDICATED_REGISTRY": 1477,
+    "PRESERVED_SPECIAL_RELATION": 53,
+    "PRESERVED_VERIFIED_TR": 31,
+    "PRESERVED_RANGE_LOCATOR": 0,
+    "PRESERVED_GRAMMAR_NOTES": 31001
+  },
+  "byLang": {
+    "hebrew": {
+      "verses": 22877,
+      "records": 320227,
+      "AUTO_PROPOSED_HIGH_CONFIDENCE": 83487,
+      "PENDING_REVIEW": 209982,
+      "PRESERVED": 26758,
+      "ALREADY_CANONICAL": 0
+    },
+    "aramaic": {
+      "verses": 268,
+      "records": 4981,
+      "AUTO_PROPOSED_HIGH_CONFIDENCE": 847,
+      "PENDING_REVIEW": 3496,
+      "PRESERVED": 638,
+      "ALREADY_CANONICAL": 0
+    },
+    "greek": {
+      "verses": 7957,
+      "records": 109143,
+      "AUTO_PROPOSED_HIGH_CONFIDENCE": 38627,
+      "PENDING_REVIEW": 65350,
+      "PRESERVED": 5166,
+      "ALREADY_CANONICAL": 0
+    }
+  },
+  "ruleBreakdown": {
+    "SKIP_EXPLICIT_GRAMMAR_NOTES": 31001,
+    "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH": 76243,
+    "REJECT_STORED_LEMMA_CONFLICTS_WITH_LEXICON": 2489,
+    "REJECT_MULTIPLE_BOTH_MATCHES": 33513,
+    "REJECT_DUPLICATE_OCCURRENCE_IN_VERSE": 30988,
+    "CONFLICT_RESERVED_PRIMARY_TOKEN": 11323,
+    "CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR": 108687,
+    "RULE_G1_UNIQUE_BIJECTIVE_RELOC": 45172,
+    "PENDING_NO_UNAMBIGUOUS_MATCH": 58791,
+    "CONFLICT_SHARED_TARGET_TOKEN": 29259,
+    "SKIP_PROTECTED_ADJUDICATED_VERSE": 1477,
+    "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK": 1076,
+    "REJECT_ARABIC_COPULA_NON_VERB_SOURCE": 860,
+    "REJECT_ARABIC_CONJ_SOURCE_MISMATCH": 53,
+    "REJECT_ARABIC_PREP_SOURCE_MISMATCH": 166,
+    "REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH": 491,
+    "REJECT_ARABIC_DEM_SOURCE_MISMATCH": 63,
+    "REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH": 88,
+    "REJECT_G2_CROSS_POS_FAMILY_SWITCH": 76,
+    "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC": 470,
+    "CONFLICT_RESERVED_SECONDARY_TOKEN": 2,
+    "SKIP_COMPOUND_PHRASE": 53,
+    "CONFLICT_SPLIT_PREFIX_ISOLATION": 2,
+    "REJECT_STORED_STRONGS_LEXICON_MISMATCH": 1607,
+    "PENDING_VERSIFICATION_MISMATCH": 208,
+    "SKIP_VERIFIED_TR": 31,
+    "PENDING_NO_SOURCE_DATA": 162
+  },
+  "elapsedSeconds": 106.8
+}

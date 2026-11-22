@@ -27,7 +27,10 @@
         "loc": "OSHB:B7.C19.V4.w13",
         "gloss": "a primitive particle (rather from the relative pronoun, H834 (אֲשֶׁר));"
       },
-      "stratumPoolSize": 16765
+      "stratumPoolSize": 16765,
+      "source_witness": "OSHB:B7.C19.V4.w13 | H8033 (שָׁם / שָֽׁם / HD)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «هُنَاكَ» واللفظ المصدري שָׁם (H8033 @ w13، HD)."
     },
     {
       "lang": "hebrew",
@@ -54,7 +57,10 @@
         "loc": "OSHB:B14.C36.V13.w2",
         "gloss": "from H4427 (מָלַךְ);"
       },
-      "stratumPoolSize": 16765
+      "stratumPoolSize": 16765,
+      "source_witness": "OSHB:B14.C36.V13.w2 | H4428 (מֶלֶךְ / בַּמֶּ֤לֶךְ / HRd/Ncmsa)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «الْمَلِكِ» واللفظ المصدري מֶלֶךְ (H4428 @ w2، HRd/Ncmsa)."
     },
     {
       "lang": "hebrew",
@@ -81,7 +87,10 @@
         "loc": "OSHB:B10.C18.V26.w17",
         "gloss": "by contraction from an unused root meaning to gather;"
       },
-      "stratumPoolSize": 16765
+      "stratumPoolSize": 16765,
+      "source_witness": "OSHB:B10.C18.V26.w17 | H1571 (גַּם / גַּם / HTa)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «أَيْضًا» واللفظ المصدري גַּם (H1571 @ w17، HTa)."
     },
     {
       "lang": "hebrew",
@@ -108,7 +117,10 @@
         "loc": "OSHB:B34.C1.V5.w6",
         "gloss": "or נָסָה; (Psalm 4:6 (H7 (אֲבַד))), a primitive root;"
       },
-      "stratumPoolSize": 16765
+      "stratumPoolSize": 16765,
+      "source_witness": "OSHB:B34.C1.V5.w6 | H5375 (נָשָׂא / וַתִּשָּׂ֤א / HC/Vqw3fs)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «تُرْفَعُ» واللفظ المصدري נָשָׂא (H5375 @ w6، HC/Vqw3fs)."
     },
     {
       "lang": "hebrew",
@@ -135,7 +147,10 @@
         "loc": "OSHB:B19.C18.V40.w6",
         "gloss": "from the same as H8430 (תּוֹחַ);"
       },
-      "stratumPoolSize": 440
+      "stratumPoolSize": 440,
+      "source_witness": "OSHB:B19.C18.V40.w6 | H8478 (תַּחַת / תַּחְתָּֽי / HR/Sp1cs)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «تَحْتِي» واللفظ المصدري תַּחַת (H8478 @ w6، HR/Sp1cs)."
     },
     {
       "lang": "hebrew",
@@ -162,7 +177,10 @@
         "loc": "OSHB:B21.C5.V19.w11",
         "gloss": "from H8056 (שָׂמֵחַ);"
       },
-      "stratumPoolSize": 440
+      "stratumPoolSize": 440,
+      "source_witness": "OSHB:B21.C5.V19.w11 | H8057 (שִׂמְחָה / בְּשִׂמְחַ֥ת / HR/Ncfsc)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «بِفَرَحِ» واللفظ المصدري שִׂמְחָה (H8057 @ w11، HR/Ncfsc)."
     },
     {
       "lang": "hebrew",
@@ -189,7 +207,10 @@
         "loc": "OSHB:B24.C9.V17.w8",
         "gloss": "from H5774 (עוּף);"
       },
-      "stratumPoolSize": 440
+      "stratumPoolSize": 440,
+      "source_witness": "OSHB:B24.C9.V17.w8 | H6079 (עַפְעַף / וְעַפְעַפֵּ֖ינוּ / HC/Ncmdc/Sp1cp)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «أَجْفَانُنَا» واللفظ المصدري עַפְעַף (H6079 @ w8، HC/Ncmdc/Sp1cp)."
     },
     {
       "lang": "hebrew",
@@ -216,7 +237,10 @@
         "loc": "OSHB:B22.C7.V8.w2",
         "gloss": "from H6965 (קוּם);"
       },
-      "stratumPoolSize": 440
+      "stratumPoolSize": 440,
+      "source_witness": "OSHB:B22.C7.V8.w2 | H6967 (קוֹמָה / קֽוֹמָתֵךְ֙ / HNcfsc/Sp2fs)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «قَامَتُكِ» واللفظ المصدري קוֹמָה (H6967 @ w2، HNcfsc/Sp2fs)."
     },
     {
       "lang": "hebrew",
@@ -243,7 +267,10 @@
         "loc": "OSHB:B26.C18.V3.w5",
         "gloss": "a variation of H3068 (יְהֹוָה) (used after H136 (אֲדֹנָי), and pronounced by Jew"
       },
-      "stratumPoolSize": 882
+      "stratumPoolSize": 882,
+      "source_witness": "OSHB:B26.C18.V3.w5 | H3069 (יְהֹוִה / יְהוִ֑ה / HNp)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «الرَّبُّ» واللفظ المصدري יְהֹוִה (H3069 @ w5، HNp)."
     },
     {
       "lang": "hebrew",
@@ -270,7 +297,10 @@
         "loc": "OSHB:B1.C24.V15.w2",
         "gloss": "of which the feminine (beyond the Pentateuch) is הִיא; a primitive word, the thi"
       },
-      "stratumPoolSize": 882
+      "stratumPoolSize": 882,
+      "source_witness": "OSHB:B1.C24.V15.w2 | H1931 (הוּא / ה֗וּא / HPp3ms)",
+      "verdict": "incorrect",
+      "rationale_ar": "خطأ سياقي موروث: رُبط الفعل الناسخ العربي «كَانَ» بضمير الغائب العبري הוּא (H1931، HPp3ms) بدل الفعل وَيَهِي (H1961)؛ وأصبح مرفوضًا تلقائيًا في v1.3 بقاعدة REJECT_ARABIC_COPULA_NON_VERB_SOURCE."
     },
     {
       "lang": "hebrew",
@@ -297,7 +327,10 @@
         "loc": "OSHB:B16.C10.V7.w1",
         "gloss": "in Ezekiel it is; דָּנִאֵל; from H1835 (דָּן) and H410 (אֵל); judge of God;"
       },
-      "stratumPoolSize": 882
+      "stratumPoolSize": 882,
+      "source_witness": "OSHB:B16.C10.V7.w1 | H1840 (דָנִיֵּאל / דָּנִיֵּ֥אל / HNp)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «وَدَانِيآلُ» واللفظ المصدري דָנִיֵּאל (H1840 @ w1، HNp)."
     },
     {
       "lang": "hebrew",
@@ -324,7 +357,10 @@
         "loc": "OSHB:B10.C24.V10.w26",
         "gloss": "for H3688 (כָּסַל);"
       },
-      "stratumPoolSize": 882
+      "stratumPoolSize": 882,
+      "source_witness": "OSHB:B10.C24.V10.w26 | H5528 (סָכַל / נִסְכַּ֖לְתִּי / HVNp1cs)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «انْحَمَقْتُ» واللفظ المصدري סָכַל (H5528 @ w26، HVNp1cs)."
     },
     {
       "lang": "hebrew",
@@ -351,7 +387,10 @@
         "loc": "OSHB:B18.C21.V10.w2",
         "gloss": "a primitive root;"
       },
-      "stratumPoolSize": 65110
+      "stratumPoolSize": 65110,
+      "source_witness": "OSHB:B18.C21.V10.w2 | H5674 (עָבַר / עִ֭בַּר / HVpp3ms)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «يُلْقِحُ» واللفظ المصدري עָבַר (H5674 @ w2، HVpp3ms)."
     },
     {
       "lang": "hebrew",
@@ -378,7 +417,10 @@
         "loc": "OSHB:B13.C12.V29.w4",
         "gloss": "from H2342 (חוּל);"
       },
-      "stratumPoolSize": 65110
+      "stratumPoolSize": 65110,
+      "source_witness": "OSHB:B13.C12.V29.w4 | H2428 (חַיִל / חָ֑יִל / HNcmsa)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «بَأْسٍ» واللفظ المصدري חַיִל (H2428 @ w4، HNcmsa)."
     },
     {
       "lang": "hebrew",
@@ -405,7 +447,10 @@
         "loc": "OSHB:B39.C1.V13.w12",
         "gloss": "from H6452 (פָּסַח);"
       },
-      "stratumPoolSize": 65110
+      "stratumPoolSize": 65110,
+      "source_witness": "OSHB:B39.C1.V13.w12 | H6455 (פִּסֵּחַ / הַפִּסֵּ֨חַ֙ / HTd/Aamsa)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «وَالأَعْرَجِ» واللفظ المصدري פִּסֵּחַ (H6455 @ w12، HTd/Aamsa)."
     },
     {
       "lang": "aramaic",
@@ -432,7 +477,10 @@
         "loc": "OSHB:B27.C5.V22.w12",
         "gloss": "(Aramaic) an orthographical variation of H1791 (דֵּךְ);"
       },
-      "stratumPoolSize": 214
+      "stratumPoolSize": 214,
+      "source_witness": "OSHB:B27.C5.V22.w12 | H1836 (דֵּן / דְּנָ֖ה / APdxms)",
+      "verdict": "incorrect",
+      "rationale_ar": "خطأ سياقي موروث: رُبطت «أَنَّكَ» باسم الإشارة الآرامي דְּנָה (H1836، APdxms = هذا) المقابل لـ«هذَا» لاحقًا في الآية؛ وأصبح مرفوضًا تلقائيًا في v1.3 بقاعدة REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH."
     },
     {
       "lang": "aramaic",
@@ -459,7 +507,10 @@
         "loc": "OSHB:B27.C3.V18.w17",
         "gloss": "(Aramaic) corresponding to H6965 (קוּם)"
       },
-      "stratumPoolSize": 214
+      "stratumPoolSize": 214,
+      "source_witness": "OSHB:B27.C3.V18.w17 | H6966 (קוּם / הֲקֵ֖ימְתָּ / AVhp2ms)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «نَصَبْتَهُ» واللفظ المصدري קוּם (H6966 @ w17، AVhp2ms)."
     },
     {
       "lang": "aramaic",
@@ -486,7 +537,10 @@
         "loc": "OSHB:B27.C3.V5.w21",
         "gloss": "(Aramaic) corresponding to H5019 (נְבוּכַדְנֶאצַּר)"
       },
-      "stratumPoolSize": 214
+      "stratumPoolSize": 214,
+      "source_witness": "OSHB:B27.C3.V5.w21 | H5020 (נְבוּכַדְנֶצַּר / נְבוּכַדְנֶצַּ֥ר / ANp)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «نَبُوخَذْنَصَّرُ» واللفظ المصدري נְבוּכַדְנֶצַּר (H5020 @ w21، ANp)."
     },
     {
       "lang": "aramaic",
@@ -513,7 +567,10 @@
         "loc": "OSHB:B27.C6.V7.w6",
         "gloss": "(Aramaic) corresponding to H5921 (עַל)"
       },
-      "stratumPoolSize": 31
+      "stratumPoolSize": 31,
+      "source_witness": "OSHB:B27.C6.V7.w6 | H5922 (עַל / עַל / AR)",
+      "verdict": "incorrect",
+      "rationale_ar": "خطأ سياقي موروث: رُبطت أداة النداء العربية «أَيُّهَا» بحرف الجر الآرامي עַל (H5922، AR)؛ وأصبح مرفوضًا تلقائيًا في v1.3 بقاعدة REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH."
     },
     {
       "lang": "aramaic",
@@ -540,7 +597,10 @@
         "loc": "OSHB:B27.C4.V3.w12",
         "gloss": "(Aramaic) corresponding to H3045 (יָדַע)"
       },
-      "stratumPoolSize": 31
+      "stratumPoolSize": 31,
+      "source_witness": "OSHB:B27.C4.V3.w12 | H3046 (יְדַע / יְהֽוֹדְעֻנַּֽנִי / AVhi3mp/Sp1cs)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «لِيُعَرِّفُونِي» واللفظ المصدري יְדַע (H3046 @ w12، AVhi3mp/Sp1cs)."
     },
     {
       "lang": "aramaic",
@@ -567,7 +627,10 @@
         "loc": "OSHB:B27.C2.V5.w1",
         "gloss": "(Aramaic) corresponding to H6030 (עָנָה)"
       },
-      "stratumPoolSize": 47
+      "stratumPoolSize": 47,
+      "source_witness": "OSHB:B27.C2.V5.w1 | H6032 (עֲנָה / עָנֵ֤ה / AVqrmsa)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «فَأَجَابَ» واللفظ المصدري עֲנָה (H6032 @ w1، AVqrmsa)."
     },
     {
       "lang": "aramaic",
@@ -594,7 +657,10 @@
         "loc": "OSHB:B27.C3.V20.w8",
         "gloss": "(Aramaic) the same as H7714 (שַׁדְרַךְ)"
       },
-      "stratumPoolSize": 47
+      "stratumPoolSize": 47,
+      "source_witness": "OSHB:B27.C3.V20.w8 | H7715 (שַׁדְרַךְ / לְשַׁדְרַ֥ךְ / ATo/Np)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «شَدْرَخَ» واللفظ المصدري שַׁדְרַךְ (H7715 @ w8، ATo/Np)."
     },
     {
       "lang": "aramaic",
@@ -621,7 +687,10 @@
         "loc": "OSHB:B27.C7.V16.w10",
         "gloss": "(Aramaic) corresponding to H3605 (כֹּל)"
       },
-      "stratumPoolSize": 559
+      "stratumPoolSize": 559,
+      "source_witness": "OSHB:B27.C7.V16.w10 | H3606 (כֹּל / כָּל / ANcmsc)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «كُلِّ» واللفظ المصدري כֹּל (H3606 @ w10، ANcmsc)."
     },
     {
       "lang": "aramaic",
@@ -648,7 +717,10 @@
         "loc": "OSHB:B27.C2.V7.w1",
         "gloss": "(Aramaic) corresponding to H6030 (עָנָה)"
       },
-      "stratumPoolSize": 559
+      "stratumPoolSize": 559,
+      "source_witness": "OSHB:B27.C2.V7.w1 | H6032 (עֲנָה / עֲנ֥וֹ / AVqp3mp)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «فَأَجَابُوا» واللفظ المصدري עֲנָה (H6032 @ w1، AVqp3mp)."
     },
     {
       "lang": "greek",
@@ -675,7 +747,10 @@
         "loc": "SBLGNT:B43.C6.V39.w19",
         "gloss": "from G303 (ἀνά) and G2476 (ἵστημι);"
       },
-      "stratumPoolSize": 28179
+      "stratumPoolSize": 28179,
+      "source_witness": "SBLGNT:B43.C6.V39.w19 | G450 (ἀνίστημι / ἀναστήσω / V- 1AAS-S--)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «أُقِيمُهُ» واللفظ المصدري ἀνίστημι (G450 @ w19، V- 1AAS-S--)."
     },
     {
       "lang": "greek",
@@ -702,7 +777,10 @@
         "loc": "SBLGNT:B42.C12.V42.w19",
         "gloss": "from G2323 (θεραπεύω);"
       },
-      "stratumPoolSize": 28179
+      "stratumPoolSize": 28179,
+      "source_witness": "SBLGNT:B42.C12.V42.w19 | G2322 (θεραπεία / θεραπείας / N- ----GSF-)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «خَدَمِهِ» واللفظ المصدري θεραπεία (G2322 @ w19، N- ----GSF-)."
     },
     {
       "lang": "greek",
@@ -729,7 +807,10 @@
         "loc": "SBLGNT:B41.C4.V16.w14",
         "gloss": "from G3004 (λέγω);"
       },
-      "stratumPoolSize": 28179
+      "stratumPoolSize": 28179,
+      "source_witness": "SBLGNT:B41.C4.V16.w14 | G3056 (λόγος / λόγον / N- ----ASM-)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «الْكَلِمَةَ» واللفظ المصدري λόγος (G3056 @ w14، N- ----ASM-)."
     },
     {
       "lang": "greek",
@@ -756,7 +837,10 @@
         "loc": "SBLGNT:B66.C20.V5.w16",
         "gloss": "contracted superlative of G4253 (πρό);"
       },
-      "stratumPoolSize": 28179
+      "stratumPoolSize": 28179,
+      "source_witness": "SBLGNT:B66.C20.V5.w16 | G4413 (πρῶτος / πρώτη / A- ----NSF-)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «الأُولَى» واللفظ المصدري πρῶτος (G4413 @ w16، A- ----NSF-)."
     },
     {
       "lang": "greek",
@@ -783,7 +867,10 @@
         "loc": "SBLGNT:B54.C2.V7.w2",
         "gloss": "probably a primary word (or perhaps a form of the article G3588 (ὁ));"
       },
-      "stratumPoolSize": 28179
+      "stratumPoolSize": 28179,
+      "source_witness": "SBLGNT:B54.C2.V7.w2 | G3739 (ὅς / ὃ / RR ----ASN-)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «الَّتِي» واللفظ المصدري ὅς (G3739 @ w2، RR ----ASN-)."
     },
     {
       "lang": "greek",
@@ -810,7 +897,10 @@
         "loc": "SBLGNT:B54.C6.V18.w5",
         "gloss": "of uncertain affinity; properly, beautiful, but chiefly (figuratively) good (lit"
       },
-      "stratumPoolSize": 155
+      "stratumPoolSize": 155,
+      "source_witness": "SBLGNT:B54.C6.V18.w5 | G2570 (καλός / καλοῖς / A- ----DPN-)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «صَالِحَةٍ» واللفظ المصدري καλός (G2570 @ w5، A- ----DPN-)."
     },
     {
       "lang": "greek",
@@ -837,7 +927,10 @@
         "loc": "SBLGNT:B45.C15.V23.w4",
         "gloss": "apparently a primary word;"
       },
-      "stratumPoolSize": 155
+      "stratumPoolSize": 155,
+      "source_witness": "SBLGNT:B45.C15.V23.w4 | G5117 (τόπος / τόπον / N- ----ASM-)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «مَكَانٌ» واللفظ المصدري τόπος (G5117 @ w4، N- ----ASM-)."
     },
     {
       "lang": "greek",
@@ -864,7 +957,10 @@
         "loc": "SBLGNT:B42.C21.V5.w9",
         "gloss": "of uncertain affinity; properly, beautiful, but chiefly (figuratively) good (lit"
       },
-      "stratumPoolSize": 155
+      "stratumPoolSize": 155,
+      "source_witness": "SBLGNT:B42.C21.V5.w9 | G2570 (καλός / καλοῖς / A- ----DPM-)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «حَسَنَةٍ» واللفظ المصدري καλός (G2570 @ w9، A- ----DPM-)."
     },
     {
       "lang": "greek",
@@ -891,7 +987,10 @@
         "loc": "SBLGNT:B40.C13.V37.w8",
         "gloss": "of uncertain affinity; properly, beautiful, but chiefly (figuratively) good (lit"
       },
-      "stratumPoolSize": 155
+      "stratumPoolSize": 155,
+      "source_witness": "SBLGNT:B40.C13.V37.w8 | G2570 (καλός / καλὸν / A- ----ASN-)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «الْجَيِّدَ» واللفظ المصدري καλός (G2570 @ w8، A- ----ASN-)."
     },
     {
       "lang": "greek",
@@ -918,7 +1017,10 @@
         "loc": "SBLGNT:B49.C3.V19.w1",
         "gloss": "a prolonged form of a primary verb;"
       },
-      "stratumPoolSize": 10361
+      "stratumPoolSize": 10361,
+      "source_witness": "SBLGNT:B49.C3.V19.w1 | G1097 (γινώσκω / γνῶναί / V- -AAN----)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «وَتَعْرِفُوا» واللفظ المصدري γινώσκω (G1097 @ w1، V- -AAN----)."
     },
     {
       "lang": "greek",
@@ -945,7 +1047,10 @@
         "loc": "SBLGNT:B42.C21.V32.w2",
         "gloss": "a primary verb;"
       },
-      "stratumPoolSize": 10361
+      "stratumPoolSize": 10361,
+      "source_witness": "SBLGNT:B42.C21.V32.w2 | G3004 (λέγω / λέγω / V- 1PAI-S--)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «أَقُولُ» واللفظ المصدري λέγω (G3004 @ w2، V- 1PAI-S--)."
     },
     {
       "lang": "greek",
@@ -972,7 +1077,27 @@
         "loc": "SBLGNT:B41.C14.V45.w6",
         "gloss": "a primary verb;"
       },
-      "stratumPoolSize": 10361
+      "stratumPoolSize": 10361,
+      "source_witness": "SBLGNT:B41.C14.V45.w6 | G3004 (λέγω / λέγει / V- 3PAI-S--)",
+      "verdict": "correct",
+      "rationale_ar": "مقابلة مصدرية وسياقية صحيحة بين «قَائِلاً:» واللفظ المصدري λέγω (G3004 @ w6، V- 3PAI-S--)."
     }
-  ]
+  ],
+  "adjudicationSummary": {
+    "total": 36,
+    "correct": 33,
+    "incorrect": 3,
+    "undecided": 0,
+    "precisionPct": 91.67,
+    "defectiveKeys": [
+      "Gen 24:15#2",
+      "Dan 6:6#11",
+      "Dan 5:22#9"
+    ],
+    "overlapDisclosure": {
+      "overlappingVerse": "Dan 2:5",
+      "explanation": "Dan 2:5 appeared in both the v1.2 stratified sample (arPos #1 فَأَجَابَ) and Round 5 (drawn independently on 2026-11-22 from distinct deterministic seeds after v1.2 was frozen at e50ebe6). Now that v1.3 modifies the engine, Round 5 is explicitly reclassified as a known validation set, NOT a fresh blind holdout."
+    },
+    "trSourceModeNote": "Isolated v1.2/v1.3 full-DB runs and CI gates use TR_SLICE_CI_MODE (USE_TR_SLICE=1); production promotion requires explicitly pinned TR source mode."
+  }
 }

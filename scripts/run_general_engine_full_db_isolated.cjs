@@ -37,15 +37,17 @@ const sqlitePath = isWin && fs.existsSync(path.join(repoRoot, 'sqlite_dist/sqlit
   : 'sqlite3';
 
 const prodDb = path.join(repoRoot, 'mobile/assets/bible_study.db');
-const outDb = path.join(repoRoot, 'scratch/isolated_full_66books_engine_v1_2.db');
-const diffPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_2_diff.jsonl');
-const summaryPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_2_summary.json');
-const tmpSqlPath = path.join(repoRoot, 'scratch/tmp_full_66books_engine_v1_2.sql');
+const outDb = path.join(repoRoot, 'scratch/isolated_full_66books_engine_v1_3.db');
+const diffPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_3_diff.jsonl');
+const summaryPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_3_summary.json');
+const tmpSqlPath = path.join(repoRoot, 'scratch/tmp_full_66books_engine_v1_3.sql');
+const trSourceMode = process.env.USE_TR_SLICE ? 'TR_SLICE_CI_MODE (USE_TR_SLICE=1)' : 'FULL_SCRIVENER_TR_JSON (scripts/data/gnt_scrivener.json)';
 
 const sha256File = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 const sqlVal = v => (v === null || v === undefined || v === '') ? 'NULL' : `'${String(v).replace(/'/g, "''")}'`;
 
-console.log('=== FULL 66-BOOK ISOLATED EXPERIMENT: GENERAL REPAIR ENGINE v1.2 ===\n');
+console.log('=== FULL 66-BOOK ISOLATED EXPERIMENT: GENERAL REPAIR ENGINE v1.3 ===\n');
+console.log(`TR Source Mode: ${trSourceMode}`);
 const t0 = Date.now();
 const preDbSha = sha256File(prodDb);
 console.log(`Production DB SHA-256 (UNTOUCHED): ${preDbSha}`);
@@ -230,7 +232,10 @@ if (counts.totalRecords !== totalRowsLoaded) {
 }
 console.log(`   Evaluated EXACT denominator ${counts.totalRecords}/${totalRowsLoaded} records in ${((Date.now() - t0) / 1000).toFixed(1)}s; high-confidence proposals = ${modifiedCount}`);
 
-setTimeout(() => {
+Promise.all([
+  new Promise(res => sqlStream.on('finish', res)),
+  new Promise(res => diffStream.on('finish', res))
+]).then(() => {
   console.log('5. Copying production DB to isolated scratch DB and applying atomic transaction...');
   fs.copyFileSync(prodDb, outDb);
   execFileSync(sqlitePath, [outDb], {
@@ -264,7 +269,8 @@ setTimeout(() => {
   try { fs.unlinkSync(tmpSqlPath); } catch (_) {}
 
   const summary = {
-    engineVersion: 'whole_verse_general_repair_engine_v1.2',
+    engineVersion: 'whole_verse_general_repair_engine_v1.3',
+    trSourceMode,
     scope: 'ALL_66_BOOKS_ISOLATED',
     productionDbSha256Untouched: preDbSha,
     isolatedDbPath: path.relative(repoRoot, outDb).replace(/\\/g, '/'),
@@ -285,6 +291,6 @@ setTimeout(() => {
     elapsedSeconds: +((Date.now() - t0) / 1000).toFixed(1)
   };
   fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2) + '\n', 'utf8');
-  console.log('\n=== FULL 66-BOOK ISOLATED APPLY (v1.2) COMPLETE ===');
+  console.log('\n=== FULL 66-BOOK ISOLATED APPLY (v1.3) COMPLETE ===');
   console.log(JSON.stringify(summary, null, 2));
-}, 500);
+});

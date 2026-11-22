@@ -44,6 +44,67 @@ const sqlitePath = isWin && fs.existsSync(path.join(repoRoot, 'sqlite_dist/sqlit
 const sha256File = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 const sqlVal = v => (v === null || v === undefined || v === '') ? 'NULL' : `'${String(v).replace(/'/g, "''")}'`;
 
+function canonArabicWord(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+    .replace(/[.,،؛:«»"'\-!?؟()\[\]]/g, '')
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .trim();
+}
+
+const AR_VOCATIVE_WORDS = new Set(['يا', 'ايها', 'ايتها', 'ايا', 'ياايها']);
+const AR_COPULA_VERBS = new Set([
+  'كان', 'كانت', 'كانوا', 'كانتا', 'كنت', 'كنتم', 'كنا', 'يكون', 'تكون', 'يكونوا', 'اكون', 'نكون',
+  'وكان', 'وكانت', 'وكانوا', 'فكان', 'فكانت', 'فكانوا', 'فكانتا', 'ويكون', 'وتكون', 'فيكون', 'فتكون',
+  'ليكون', 'لتكون', 'يكونون', 'تكونون', 'تكونوا'
+]);
+const AR_COMPLEMENTIZERS = new Set([
+  'ان', 'انك', 'انه', 'انها', 'انهم', 'انكم', 'اننا', 'اني', 'انني', 'انهما',
+  'بان', 'لان', 'لانه', 'لانك', 'لانهم', 'لانكم', 'لاننا', 'لاني', 'لانها',
+  'فان', 'وان', 'فانه', 'وانه', 'فانك', 'وانك', 'فانهم', 'وانهم', 'فانكم', 'وانكم', 'فاني', 'واني'
+]);
+const AR_PURE_PREPS = new Set(['في', 'من', 'علي', 'الي', 'عن', 'مع', 'عند', 'بين', 'حتي', 'منذ']);
+const AR_PURE_DEMONSTRATIVES = new Set(['هذا', 'هذه', 'هؤلاء', 'ذلك', 'تلك', 'اولئك']);
+const AR_PURE_CONJUNCTIONS = new Set(['او', 'ام', 'بل', 'لكن', 'ثم', 'لكي', 'كي', 'اذ', 'اذا', 'بينما', 'لما']);
+
+/**
+ * General Arabic-to-Source contextual compatibility guard (zero verse-specific exceptions).
+ * Rejects structurally incompatible Arabic-to-Source pairings even when source fields are internally consistent.
+ */
+function checkArabicSourceContextualCompatibility(arWord, proposedMorphPos, ruleId, beforeMorphPos) {
+  const arClean = canonArabicWord(arWord);
+  if (!arClean) return null;
+
+  if (AR_VOCATIVE_WORDS.has(arClean) && proposedMorphPos !== 'interjection') {
+    return `REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
+  }
+  if (AR_COPULA_VERBS.has(arClean) && proposedMorphPos !== 'verb') {
+    return `REJECT_ARABIC_COPULA_NON_VERB_SOURCE(ar=${arClean},pos=${proposedMorphPos})`;
+  }
+  if (AR_COMPLEMENTIZERS.has(arClean) && ['demonstrative', 'noun', 'proper_noun', 'adjective'].includes(proposedMorphPos)) {
+    return `REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
+  }
+  if (AR_PURE_PREPS.has(arClean) && ['verb', 'proper_noun', 'demonstrative'].includes(proposedMorphPos)) {
+    return `REJECT_ARABIC_PREP_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
+  }
+  if (AR_PURE_DEMONSTRATIVES.has(arClean) && ['verb', 'preposition'].includes(proposedMorphPos)) {
+    return `REJECT_ARABIC_DEM_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
+  }
+  if (AR_PURE_CONJUNCTIONS.has(arClean) && ['proper_noun', 'noun', 'demonstrative'].includes(proposedMorphPos)) {
+    return `REJECT_ARABIC_CONJ_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
+  }
+  if (ruleId === 'RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK' && beforeMorphPos && proposedMorphPos) {
+    const isVerbBefore = beforeMorphPos === 'verb';
+    const isVerbAfter = proposedMorphPos === 'verb';
+    if (isVerbBefore !== isVerbAfter && ['pronoun', 'personal_pronoun', 'demonstrative', 'preposition'].includes(proposedMorphPos)) {
+      return `REJECT_G2_CROSS_POS_FAMILY_SWITCH(before=${beforeMorphPos},after=${proposedMorphPos})`;
+    }
+  }
+  return null;
+}
+
 function canonGreek(s) {
   if (!s) return '';
   return String(s)
@@ -489,6 +550,29 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
     let finalMorphPos = (isGreek && chosen.morph.startsWith('N-')) ? 'noun' : d.morphPos;
     if (isGreek && chosen.morph.startsWith('RI') && (r.morphPos === 'pronoun' || targetStrongs === 'G5100')) {
       finalMorphPos = 'pronoun';
+    }
+
+    // General Arabic-to-Source contextual compatibility guard across ALL rules (G1, G1B, G2, G3)
+    const arCtxReject = checkArabicSourceContextualCompatibility(r.arWord, finalMorphPos, ruleId, r.morphPos);
+    if (arCtxReject) {
+      rawProposals.push({
+        id: r.id, arPos: r.arPos, arWord: r.arWord,
+        status: 'PENDING_REVIEW',
+        ruleId: arCtxReject,
+        current, proposed: null,
+        evidence: {
+          edition,
+          tokenIndex: chosen.index,
+          tokenSurface: chosen.surface,
+          tokenLemma: chosen.lemma,
+          tokenMorph: chosen.morph,
+          proposedMorphPos: finalMorphPos,
+          reason: arCtxReject
+        },
+        alternatives,
+        existingWms: r.existingWms || []
+      });
+      continue;
     }
 
     // Preserve pronominal suffix person/gender/number when OSHB morph has /Sp* and fields were already set

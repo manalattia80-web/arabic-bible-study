@@ -1,0 +1,445 @@
+{
+  "seed": "v1.3-fresh-accepted-source-audit:2026-11-22",
+  "total": 18,
+  "records": [
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Judg 3:2",
+      "arPos": 2,
+      "arWord": "لِمَعْرِفَةِ",
+      "before": {
+        "sid": "H1847",
+        "orig": "דַּעַת",
+        "pos": 2
+      },
+      "after": {
+        "sid": "H1847",
+        "orig": "דַּעַת",
+        "surf": "דַּ֚עַת",
+        "pos": 3,
+        "morph": "HVqc",
+        "mpos": "verb",
+        "loc": "OSHB:B7.C3.V2.w3"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B7.C3.V2.w3 | H1847 (דַּעַת / דַּ֚עַת / HVqc)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «لِمَعْرِفَةِ» وדַּעַת (H1847 @ w3، HVqc)."
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Num 16:20",
+      "arPos": 3,
+      "arWord": "مُوسَى",
+      "before": {
+        "sid": "H4872",
+        "orig": "מֹשֶׁה",
+        "pos": 3
+      },
+      "after": {
+        "sid": "H4872",
+        "orig": "מֹשֶׁה",
+        "surf": "מֹשֶׁ֥ה",
+        "pos": 4,
+        "morph": "HNp",
+        "mpos": "proper_noun",
+        "loc": "OSHB:B4.C16.V20.w4"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B4.C16.V20.w4 | H4872 (מֹשֶׁה / מֹשֶׁ֥ה / HNp)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «مُوسَى» وמֹשֶׁה (H4872 @ w4، HNp)."
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "verse": "Ps 92:13",
+      "arPos": 7,
+      "arWord": "إِلهِنَا",
+      "before": {
+        "sid": "H430",
+        "orig": "אֱלֹהִים",
+        "pos": 7
+      },
+      "after": {
+        "sid": "H430",
+        "orig": "אֱלֹהִים",
+        "surf": "אֱלֹהֵ֣ינוּ",
+        "pos": 5,
+        "morph": "HNcmpc/Sp1cp",
+        "mpos": "noun",
+        "loc": "OSHB:B19.C92.V14.w5"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B19.C92.V14.w5 | H430 (אֱלֹהִים / אֱלֹהֵ֣ינוּ / HNcmpc/Sp1cp)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «إِلهِنَا» وאֱלֹהִים (H430 @ w5، HNcmpc/Sp1cp)."
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "verse": "Ps 55:1",
+      "arPos": 1,
+      "arWord": "اِصْغَ",
+      "before": {
+        "sid": "H238",
+        "orig": "אָזַן",
+        "pos": 8
+      },
+      "after": {
+        "sid": "H238",
+        "orig": "אָזַן",
+        "surf": "הַאֲזִ֣ינָה",
+        "pos": 1,
+        "morph": "HVhv2ms/Sh",
+        "mpos": "verb",
+        "loc": "OSHB:B19.C55.V2.w1"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B19.C55.V2.w1 | H238 (אָזַן / הַאֲזִ֣ינָה / HVhv2ms/Sh)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «اِصْغَ» وאָזַן (H238 @ w1، HVhv2ms/Sh)."
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Zech 1:19",
+      "arPos": 16,
+      "arWord": "وَأُورُشَلِيمَ",
+      "before": {
+        "sid": "H3390",
+        "orig": "יְרוּשָׁלֵם",
+        "pos": 16
+      },
+      "after": {
+        "sid": "H3389",
+        "orig": "יְרוּשָׁלַ͏ִם",
+        "surf": "וִירוּשָׁלָֽם",
+        "pos": 18,
+        "morph": "HC/Np",
+        "mpos": "proper_noun",
+        "loc": "OSHB:B38.C2.V2.w18"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B38.C2.V2.w18 | H3389 (יְרוּשָׁלַ͏ִם / וִירוּשָׁלָֽם / HC/Np)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «وَأُورُشَلِيمَ» وיְרוּשָׁלַ͏ִם (H3389 @ w18، HC/Np)."
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Num 18:32",
+      "arPos": 4,
+      "arWord": "خَطِيَّةً",
+      "before": {
+        "sid": "H2398",
+        "orig": "חָטָא",
+        "pos": 4
+      },
+      "after": {
+        "sid": "H2399",
+        "orig": "חֵטְא",
+        "surf": "חֵ֔טְא",
+        "pos": 4,
+        "morph": "HNcmsa",
+        "mpos": "noun",
+        "loc": "OSHB:B4.C18.V32.w4"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B4.C18.V32.w4 | H2399 (חֵטְא / חֵ֔טְא / HNcmsa)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «خَطِيَّةً» وחֵטְא (H2399 @ w4، HNcmsa)."
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "1Kgs 18:29",
+      "arPos": 4,
+      "arWord": "وَتَنَبَّأُوا",
+      "before": {
+        "sid": "H5012",
+        "orig": "נָבָא",
+        "pos": 4
+      },
+      "after": {
+        "sid": "H5012",
+        "orig": "נָבָא",
+        "surf": "וַיִּֽתְנַבְּא֔וּ",
+        "pos": 4,
+        "morph": "HC/Vtw3mp",
+        "mpos": "verb",
+        "loc": "OSHB:B11.C18.V29.w4"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B11.C18.V29.w4 | H5012 (נָבָא / וַיִּֽתְנַבְּא֔וּ / HC/Vtw3mp)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «وَتَنَبَّأُوا» وנָבָא (H5012 @ w4، HC/Vtw3mp)."
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Dan 2:13",
+      "arPos": 1,
+      "arWord": "فَخَرَجَ",
+      "before": {
+        "sid": "H5312",
+        "orig": "נְפַק",
+        "pos": 1
+      },
+      "after": {
+        "sid": "H5312",
+        "orig": "נְפַק",
+        "surf": "נֶפְקַ֔ת",
+        "pos": 2,
+        "morph": "AVqp3fs",
+        "mpos": "verb",
+        "loc": "OSHB:B27.C2.V13.w2"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B27.C2.V13.w2 | H5312 (נְפַק / נֶפְקַ֔ת / AVqp3fs)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «فَخَرَجَ» وנְפַק (H5312 @ w2، AVqp3fs)."
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Dan 5:31",
+      "arPos": 1,
+      "arWord": "فَأَخَذَ",
+      "before": {
+        "sid": "H6902",
+        "orig": "קְבַל",
+        "pos": 1
+      },
+      "after": {
+        "sid": "H6902",
+        "orig": "קְבַל",
+        "surf": "קַבֵּ֖ל",
+        "pos": 3,
+        "morph": "AVpp3ms",
+        "mpos": "verb",
+        "loc": "OSHB:B27.C6.V1.w3"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B27.C6.V1.w3 | H6902 (קְבַל / קַבֵּ֖ל / AVpp3ms)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «فَأَخَذَ» وקְבַל (H6902 @ w3، AVpp3ms)."
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "verse": "Dan 6:11",
+      "arPos": 6,
+      "arWord": "دَانِيآلَ",
+      "before": {
+        "sid": "H1841",
+        "orig": "דָּנִיֵּאל",
+        "pos": 7
+      },
+      "after": {
+        "sid": "H1841",
+        "orig": "דָּנִיֵּאל",
+        "surf": "לְדָנִיֵּ֑אל",
+        "pos": 6,
+        "morph": "ATo/Np",
+        "mpos": "proper_noun",
+        "loc": "OSHB:B27.C6.V12.w6"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B27.C6.V12.w6 | H1841 (דָּנִיֵּאל / לְדָנִיֵּ֑אל / ATo/Np)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «دَانِيآلَ» وדָּנִיֵּאל (H1841 @ w6، ATo/Np)."
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Dan 2:30",
+      "arPos": 18,
+      "arWord": "بِالتَّعْبِيرِ",
+      "before": {
+        "sid": "H6590",
+        "orig": "פְּשַׁר",
+        "pos": 18
+      },
+      "after": {
+        "sid": "H6591",
+        "orig": "פְּשַׁר",
+        "surf": "פִשְׁרָא֙",
+        "pos": 18,
+        "morph": "ANcmsd/Td",
+        "mpos": "noun",
+        "loc": "OSHB:B27.C2.V30.w18"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B27.C2.V30.w18 | H6591 (פְּשַׁר / פִשְׁרָא֙ / ANcmsd/Td)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «بِالتَّعْبِيرِ» وפְּשַׁר (H6591 @ w18، ANcmsd/Td)."
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "Dan 7:24",
+      "arPos": 1,
+      "arWord": "وَالْقُرُونُ",
+      "before": {
+        "sid": "H7162",
+        "orig": "קֶרֶן",
+        "pos": 1
+      },
+      "after": {
+        "sid": "H7162",
+        "orig": "קֶרֶן",
+        "surf": "וְקַרְנַיָּ֣א",
+        "pos": 1,
+        "morph": "AC/Ncfpd/Td",
+        "mpos": "noun",
+        "loc": "OSHB:B27.C7.V24.w1"
+      },
+      "verdict": "correct",
+      "source_witness": "OSHB:B27.C7.V24.w1 | H7162 (קֶרֶן / וְקַרְנַיָּ֣א / AC/Ncfpd/Td)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «وَالْقُرُونُ» وקֶרֶן (H7162 @ w1، AC/Ncfpd/Td)."
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Luke 4:22",
+      "arPos": 16,
+      "arWord": "يُوسُفَ",
+      "before": {
+        "sid": "G2501",
+        "orig": "Ἰωσήφ",
+        "pos": 16
+      },
+      "after": {
+        "sid": "G2501",
+        "orig": "Ἰωσήφ",
+        "surf": "Ἰωσὴφ",
+        "pos": 23,
+        "morph": "N- ----GSM-",
+        "mpos": "noun",
+        "loc": "SBLGNT:B42.C4.V22.w23"
+      },
+      "verdict": "correct",
+      "source_witness": "SBLGNT:B42.C4.V22.w23 | G2501 (Ἰωσήφ / Ἰωσὴφ / N- ----GSM-)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «يُوسُفَ» وἸωσήφ (G2501 @ w23، N- ----GSM-)."
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Luke 21:35",
+      "arPos": 10,
+      "arWord": "الأَرْضِ",
+      "before": {
+        "sid": "G1093",
+        "orig": "γῆ",
+        "pos": 10
+      },
+      "after": {
+        "sid": "G1093",
+        "orig": "γῆ",
+        "surf": "γῆς",
+        "pos": 13,
+        "morph": "N- ----GSF-",
+        "mpos": "noun",
+        "loc": "SBLGNT:B42.C21.V35.w13"
+      },
+      "verdict": "correct",
+      "source_witness": "SBLGNT:B42.C21.V35.w13 | G1093 (γῆ / γῆς / N- ----GSF-)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «الأَرْضِ» وγῆ (G1093 @ w13، N- ----GSF-)."
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "2Cor 7:15",
+      "arPos": 1,
+      "arWord": "وَأَحْشَاؤُهُ",
+      "before": {
+        "sid": "G4698",
+        "orig": "σπλάγχνα",
+        "pos": 1
+      },
+      "after": {
+        "sid": "G4698",
+        "orig": "σπλάγχνον",
+        "surf": "σπλάγχνα",
+        "pos": 3,
+        "morph": "N- ----NPN-",
+        "mpos": "noun",
+        "loc": "SBLGNT:B47.C7.V15.w3"
+      },
+      "verdict": "correct",
+      "source_witness": "SBLGNT:B47.C7.V15.w3 | G4698 (σπλάγχνον / σπλάγχνα / N- ----NPN-)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «وَأَحْشَاؤُهُ» وσπλάγχνον (G4698 @ w3، N- ----NPN-)."
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Rom 15:23",
+      "arPos": 9,
+      "arWord": "هذِهِ",
+      "before": {
+        "sid": "G3778",
+        "orig": "τούτοις",
+        "pos": 9
+      },
+      "after": {
+        "sid": "G3778",
+        "orig": "οὗτος",
+        "surf": "τούτοις",
+        "pos": 9,
+        "morph": "RD ----DPN-",
+        "mpos": "demonstrative",
+        "loc": "SBLGNT:B45.C15.V23.w9"
+      },
+      "verdict": "correct",
+      "source_witness": "SBLGNT:B45.C15.V23.w9 | G3778 (οὗτος / τούτοις / RD ----DPN-)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «هذِهِ» وοὗτος (G3778 @ w9، RD ----DPN-)."
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "2Thess 1:2",
+      "arPos": 1,
+      "arWord": "نِعْمَةٌ",
+      "before": {
+        "sid": "G5485",
+        "orig": "χάρις",
+        "pos": 1
+      },
+      "after": {
+        "sid": "G5485",
+        "orig": "χάρις",
+        "surf": "χάρις",
+        "pos": 1,
+        "morph": "N- ----NSF-",
+        "mpos": "noun",
+        "loc": "SBLGNT:B53.C1.V2.w1"
+      },
+      "verdict": "correct",
+      "source_witness": "SBLGNT:B53.C1.V2.w1 | G5485 (χάρις / χάρις / N- ----NSF-)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «نِعْمَةٌ» وχάρις (G5485 @ w1، N- ----NSF-)."
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "John 16:2",
+      "arPos": 5,
+      "arWord": "تَأْتِي",
+      "before": {
+        "sid": "G2064",
+        "orig": "ἔρχομαι",
+        "pos": 5
+      },
+      "after": {
+        "sid": "G2064",
+        "orig": "ἔρχομαι",
+        "surf": "ἔρχεται",
+        "pos": 5,
+        "morph": "V- 3PMI-S--",
+        "mpos": "verb",
+        "loc": "SBLGNT:B43.C16.V2.w5"
+      },
+      "verdict": "correct",
+      "source_witness": "SBLGNT:B43.C16.V2.w5 | G2064 (ἔρχομαι / ἔρχεται / V- 3PMI-S--)",
+      "rationale_ar": "مقابلة مصدرية وسياقية مطابقة تمامًا بين «تَأْتِي» وἔρχομαι (G2064 @ w5، V- 3PMI-S--)."
+    }
+  ],
+  "adjudicationSummary": {
+    "total": 18,
+    "correct": 18,
+    "incorrect": 0,
+    "undecided": 0,
+    "precisionPct": 100
+  }
+}

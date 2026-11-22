@@ -174,6 +174,66 @@ assert(
   JSON.stringify(mp1 && { status: mp1.status, ruleId: mp1.ruleId })
 );
 
+// 10. Negative Gate (Contextual Guard — Gen 24:15 #2 «كَانَ» -> H1931 הוּא HPp3ms pronoun): MUST REJECT!
+const gen2415Rows = loadVerseRows(prodDb, 1, 24, 15);
+const gen2415Res = evaluateVerse({ book: 1, ch: 24, vs: 15, lang: 'hebrew', name: 'Gen 24:15' }, gen2415Rows, sources, strongsLexicon);
+const gen2415_2 = gen2415Res.proposals.find(p => p.arPos === 2);
+assert(
+  Boolean(gen2415_2 && gen2415_2.status === 'PENDING_REVIEW' && gen2415_2.ruleId.includes('REJECT_ARABIC_COPULA_NON_VERB_SOURCE') && gen2415_2.proposed === null),
+  'Negative Gate 10: Gen 24:15 #2 («كَانَ» -> H1931 הוּא HPp3ms pronoun) is strictly REJECTED despite valid source surface & morph',
+  JSON.stringify(gen2415_2 && { status: gen2415_2.status, ruleId: gen2415_2.ruleId })
+);
+
+// 11. Negative Gate (Contextual Guard — Dan 6:6 #11 «أَيُّهَا» -> H5922 עַל AR preposition): MUST REJECT!
+const dan66Rows = loadVerseRows(prodDb, 27, 6, 6);
+const dan66Res = evaluateVerse({ book: 27, ch: 6, vs: 6, lang: 'aramaic', name: 'Dan 6:6' }, dan66Rows, sources, strongsLexicon);
+const dan66_11 = dan66Res.proposals.find(p => p.arPos === 11);
+assert(
+  Boolean(dan66_11 && dan66_11.status === 'PENDING_REVIEW' && dan66_11.ruleId.includes('REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH') && dan66_11.proposed === null),
+  'Negative Gate 11: Dan 6:6 #11 («أَيُّهَا» -> H5922 עַל AR preposition) is strictly REJECTED despite valid source surface & morph',
+  JSON.stringify(dan66_11 && { status: dan66_11.status, ruleId: dan66_11.ruleId })
+);
+
+// 12. Negative Gate (Contextual Guard — Dan 5:22 #9 «أَنَّكَ» -> H1836 דְּנָ֖ה APdxms demonstrative): MUST REJECT!
+const dan522Rows = loadVerseRows(prodDb, 27, 5, 22);
+const dan522Res = evaluateVerse({ book: 27, ch: 5, vs: 22, lang: 'aramaic', name: 'Dan 5:22' }, dan522Rows, sources, strongsLexicon);
+const dan522_9 = dan522Res.proposals.find(p => p.arPos === 9);
+assert(
+  Boolean(dan522_9 && dan522_9.status === 'PENDING_REVIEW' && dan522_9.ruleId.includes('REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH') && dan522_9.proposed === null),
+  'Negative Gate 12: Dan 5:22 #9 («أَنَّكَ» -> H1836 דְּנָ֖ה APdxms demonstrative) is strictly REJECTED despite valid source surface & morph',
+  JSON.stringify(dan522_9 && { status: dan522_9.status, ruleId: dan522_9.ruleId })
+);
+
+// 13. Positive Gate: Valid Arabic copula verb («فَكَانَتَا» -> H1961 וַתִּהְיֶ֛יןָ HC/Vqw3fp verb in 1Sam 25:43) is ACCEPTED!
+const sam2543Rows = loadVerseRows(prodDb, 9, 25, 43).map(r => ({ ...r, grammarNotes: null }));
+const sam2543Res = evaluateVerse({ book: 9, ch: 25, vs: 43, lang: 'hebrew', name: '1Sam 25:43' }, sam2543Rows, sources, strongsLexicon);
+const samWere = sam2543Res.proposals.find(p => p.arWord && p.arWord.includes('فَكَانَتَا'));
+assert(
+  Boolean(samWere && (samWere.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || samWere.status === 'ALREADY_CANONICAL') && samWere.proposed && samWere.proposed.strongsId === 'H1961' && samWere.proposed.morphPos === 'verb'),
+  'Positive Gate 13: Valid Arabic copula verb 1Sam 25:43 («فَكَانَتَا» -> H1961 verb) is ACCEPTED',
+  JSON.stringify(samWere && { status: samWere.status, ruleId: samWere.ruleId, sid: samWere.proposed && samWere.proposed.strongsId })
+);
+
+// 14. Positive Gate: Valid RULE_G1 relocation (Judg 19:4 #12 «هُنَاكَ» -> H8033 שָֽׁם @ w13 adverb) is ACCEPTED!
+const judg194Rows = loadVerseRows(prodDb, 7, 19, 4);
+const judg194Res = evaluateVerse({ book: 7, ch: 19, vs: 4, lang: 'hebrew', name: 'Judg 19:4' }, judg194Rows, sources, strongsLexicon);
+const judg12 = judg194Res.proposals.find(p => p.arPos === 12);
+assert(
+  Boolean(judg12 && judg12.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && judg12.proposed && judg12.proposed.strongsId === 'H8033' && judg12.proposed.origPos === 13),
+  'Positive Gate 14: Valid RULE_G1 relocation Judg 19:4 #12 («هُنَاكَ» -> H8033@w13 adverb) is ACCEPTED',
+  JSON.stringify(judg12 && { status: judg12.status, ruleId: judg12.ruleId, pos: judg12.proposed && judg12.proposed.origPos })
+);
+
+// 15. Positive Gate: Valid RULE_G2 same-POS lexical repair (1Tim 6:18 #9 «صَالِحَةٍ» -> G2570 καλός @ w5 adjective) is ACCEPTED!
+const tim618Rows = loadVerseRows(prodDb, 54, 6, 18);
+const tim618Res = evaluateVerse({ book: 54, ch: 6, vs: 18, lang: 'greek', name: '1Tim 6:18' }, tim618Rows, sources, strongsLexicon);
+const tim9 = tim618Res.proposals.find(p => p.arPos === 9);
+assert(
+  Boolean(tim9 && tim9.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && tim9.proposed && tim9.proposed.strongsId === 'G2570' && tim9.proposed.origWord === 'καλός' && tim9.proposed.origPos === 5),
+  'Positive Gate 15: Valid RULE_G2 same-POS repair 1Tim 6:18 #9 («صَالِحَةٍ» -> G2570 καλός@w5 adjective) is ACCEPTED',
+  JSON.stringify(tim9 && { status: tim9.status, ruleId: tim9.ruleId, orig: tim9.proposed && tim9.proposed.origWord })
+);
+
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)
 const preProtFp = computeProtectedRegistryFingerprint(prodDb, protectedVerseKeys);
 const testVerses = [];
