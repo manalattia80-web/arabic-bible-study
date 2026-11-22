@@ -1,6 +1,6 @@
 {
   "version": "v1.0.379",
-  "dbSha256": "78f7ac1f062aeab01d6e4baa6e759228bbe81dc2129ea83d5bcc14a0cbbb555b",
+  "dbSha256": "dbc5d16e07de1ca2dff5d6deddfc1dc470d7926e1285c11ea5aec4a53874da44",
   "manifestPath": "scripts/unseen_holdout_round3_15_verses_manifest.json",
   "manifestSha256": "891cba81c46507a127fc06667594da10ff71dc0cb8129eb7010931e2a94ec1a5",
   "exclusionKeysSha256": "8c427b9d46ac72a2b447dddd184089823e439209b0d91d2b9bb6c4e08ae5c2df",

@@ -43,7 +43,7 @@ const SPEC = [
     grammarNotes: 'فعل ناقص عربي لإسناد الشرط «إِنْ كَانَ يَتَكَلَّمُ» مقابل εἴ τις λαλεῖ (w1–w3) دون فعل εἰμί في المصدر هنا.'
   },
   { arPos: 3,  arWord: 'يَتَكَلَّمُ',     strongs: 'G2980', w: 3 },
-  { arPos: 4,  arWord: 'أَحَدٌ',         strongs: 'G5100', w: 2 },
+  { arPos: 4,  arWord: 'أَحَدٌ',         strongs: 'G5100', w: 2, morphPosOverride: 'pronoun', grammarNotes: 'ضمير نكرة غير معيّن (indefinite τις، G5100 عند w2) في سياق الشرط «إِنْ كَانَ يَتَكَلَّمُ أَحَدٌ» مع حفظ الرمز المصدري RI ----NSM-.' },
   { arPos: 5,  arWord: 'فَكَأَقْوَالِ',  strongs: 'G3051', w: 5,  secondary: [{ strongs: 'G5613', w: 4 }] },
   { arPos: 6,  arWord: 'اللهِ',          strongs: 'G2316', w: 6 },
   { arPos: 7,  arWord: 'وَإِنْ',         strongs: 'G1487', w: 7 },
@@ -54,7 +54,7 @@ const SPEC = [
     grammarNotes: 'فعل ناقص عربي لإسناد الشرط «وَإِنْ كَانَ يَخْدِمُ» مقابل εἴ τις διακονεῖ (w7–w9) دون فعل εἰμί في المصدر هنا.'
   },
   { arPos: 9,  arWord: 'يَخْدِمُ',       strongs: 'G1247', w: 9 },
-  { arPos: 10, arWord: 'أَحَدٌ',         strongs: 'G5100', w: 8 },
+  { arPos: 10, arWord: 'أَحَدٌ',         strongs: 'G5100', w: 8, morphPosOverride: 'pronoun', grammarNotes: 'ضمير نكرة غير معيّن (indefinite τις، G5100 عند w8) في سياق الشرط «وَإِنْ كَانَ يَخْدِمُ أَحَدٌ» مع حفظ الرمز المصدري RI ----NSM-.' },
   { arPos: 11, arWord: 'فَكَأَنَّهُ',     strongs: 'G5613', w: 10 },
   { arPos: 12, arWord: 'مِنْ',           strongs: 'G1537', w: 11 },
   { arPos: 13, arWord: 'قُوَّةٍ',        strongs: 'G2479', w: 12 },
@@ -77,7 +77,11 @@ const SPEC = [
   { arPos: 22, arWord: 'بِيَسُوعَ',      strongs: 'G2424', w: 24, secondary: [{ strongs: 'G1223', w: 23 }] },
   { arPos: 23, arWord: 'الْمَسِيحِ',      strongs: 'G5547', w: 25 },
   { arPos: 24, arWord: 'الَّذِي',         strongs: 'G3739', w: 26 },
-  { arPos: 25, arWord: 'لَهُ',           strongs: 'G1510', w: 27 },
+  {
+    arPos: 25, arWord: 'لَهُ',           strongs: 'G1510', w: 27,
+    secondary: [{ strongs: 'G3739', w: 26 }],
+    grammarNotes: 'استكمال تمثيل وحدة «الَّذِي لَهُ»: الرابطة الفعلية ἐστιν (G1510 عند w27) مع المكوّن الثانوي ᾧ (G3739 عند w26) الحامل لدلالة الداتيف (لَهُ).'
+  },
   { arPos: 26, arWord: 'الْمَجْدُ',       strongs: 'G1391', w: 29, secondary: [{ strongs: 'G3588', w: 28 }] },
   { arPos: 27, arWord: 'وَالسُّلْطَانُ',  strongs: 'G2904', w: 32, secondary: [{ strongs: 'G2532', w: 30 }, { strongs: 'G3588', w: 31 }] },
   { arPos: 28, arWord: 'إِلَى',          strongs: 'G1519', w: 33 },
@@ -154,6 +158,7 @@ for (const item of SPEC) {
   if (!tok) throw new Error(`Missing SBLGNT token w${item.w}`);
 
   const d = deriveCanonicalMorphFields('greek', tok.morph, false, {});
+  const morphPos = item.morphPosOverride || d.morphPos;
   const locator = `SBLGNT:B60.C4.V11.w${item.w}`;
 
   sql.push(`
@@ -163,7 +168,7 @@ for (const item of SPEC) {
         orig_surface = ${sqlVal(tok.surfaceClean)},
         orig_word_position = ${item.w},
         orig_morphology = ${sqlVal(tok.morph)},
-        morph_pos = ${sqlVal(d.morphPos)},
+        morph_pos = ${sqlVal(morphPos)},
         morph_stem = ${sqlVal(d.morphStem)},
         morph_tense = ${sqlVal(d.morphTense)},
         morph_voice = ${sqlVal(d.morphVoice)},
@@ -211,7 +216,7 @@ if (integrity !== 'ok') {
 }
 
 const postSha = sha256File(dbPath);
-console.log('Successfully applied Round 3 Batch 3O (1 Peter 4:11 — 31 records, 39 components, 38/38 unique Greek SBLGNT tokens):');
+console.log('Successfully applied Round 3 Batch 3O (1 Peter 4:11 — 31 records, 40 components, 38/38 unique Greek SBLGNT tokens):');
 console.log(`  Pre-Apply DB SHA-256 : ${preSha}`);
 console.log(`  Post-Apply DB SHA-256: ${postSha}`);
 console.log(`  PRAGMA integrity_check: ${integrity}`);
