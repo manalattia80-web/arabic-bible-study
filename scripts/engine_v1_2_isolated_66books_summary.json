@@ -1,0 +1,82 @@
+{
+  "engineVersion": "whole_verse_general_repair_engine_v1.2",
+  "scope": "ALL_66_BOOKS_ISOLATED",
+  "productionDbSha256Untouched": "dbc5d16e07de1ca2dff5d6deddfc1dc470d7926e1285c11ea5aec4a53874da44",
+  "isolatedDbPath": "scratch/isolated_full_66books_engine_v1_2.db",
+  "isolatedDbSha256": "e451234e703d2c430cfe42606926de3c29a4cd19dcef4294b5ddd99f3e0ede4a",
+  "diffLogPath": "scratch/full_66books_engine_v1_2_diff.jsonl",
+  "diffLogSha256": "97a345163f81d393967d60a8244de9e787e2e5bb1b8199632c395ef133136358",
+  "denominatorExact": 434351,
+  "modifiedRecords": 122743,
+  "coveragePct": 28.26,
+  "multiplePrimaryComponentsCount": 0,
+  "protectedRegistryVerified": {
+    "bitwiseIdentical": true,
+    "protectedVerseCount": 92,
+    "protectedRowCount": 1477,
+    "protectedComponentCount": 1622,
+    "wordMappingsSha256": "6094611ca006423a8cf729087f3d2eecdfea84b0e7aada8a0c91137a1667e8d4",
+    "wordMappingStrongsSha256": "d0e789d1321fac83da71be513a978ae4a7b4924127618a18fb6da4d5d20b4627"
+  },
+  "counts": {
+    "totalVerses": 31102,
+    "totalRecords": 434351,
+    "ALREADY_CANONICAL": 0,
+    "AUTO_PROPOSED_HIGH_CONFIDENCE": 122743,
+    "PENDING_REVIEW": 279046,
+    "PRESERVED_ADJUDICATED_REGISTRY": 1477,
+    "PRESERVED_SPECIAL_RELATION": 53,
+    "PRESERVED_VERIFIED_TR": 31,
+    "PRESERVED_RANGE_LOCATOR": 0,
+    "PRESERVED_GRAMMAR_NOTES": 31001
+  },
+  "byLang": {
+    "hebrew": {
+      "verses": 22877,
+      "records": 320227,
+      "AUTO_PROPOSED_HIGH_CONFIDENCE": 83197,
+      "PENDING_REVIEW": 210272,
+      "PRESERVED": 26758,
+      "ALREADY_CANONICAL": 0
+    },
+    "aramaic": {
+      "verses": 268,
+      "records": 4981,
+      "AUTO_PROPOSED_HIGH_CONFIDENCE": 851,
+      "PENDING_REVIEW": 3492,
+      "PRESERVED": 638,
+      "ALREADY_CANONICAL": 0
+    },
+    "greek": {
+      "verses": 7957,
+      "records": 109143,
+      "AUTO_PROPOSED_HIGH_CONFIDENCE": 38695,
+      "PENDING_REVIEW": 65282,
+      "PRESERVED": 5166,
+      "ALREADY_CANONICAL": 0
+    }
+  },
+  "ruleBreakdown": {
+    "SKIP_EXPLICIT_GRAMMAR_NOTES": 31001,
+    "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH": 76030,
+    "REJECT_STORED_LEMMA_CONFLICTS_WITH_LEXICON": 2489,
+    "REJECT_MULTIPLE_BOTH_MATCHES": 33513,
+    "REJECT_DUPLICATE_OCCURRENCE_IN_VERSE": 30988,
+    "CONFLICT_RESERVED_PRIMARY_TOKEN": 11379,
+    "CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR": 108418,
+    "RULE_G1_UNIQUE_BIJECTIVE_RELOC": 45158,
+    "PENDING_NO_UNAMBIGUOUS_MATCH": 58791,
+    "CONFLICT_SHARED_TARGET_TOKEN": 31487,
+    "SKIP_PROTECTED_ADJUDICATED_VERSE": 1477,
+    "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK": 1084,
+    "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC": 471,
+    "CONFLICT_RESERVED_SECONDARY_TOKEN": 2,
+    "SKIP_COMPOUND_PHRASE": 53,
+    "CONFLICT_SPLIT_PREFIX_ISOLATION": 2,
+    "REJECT_STORED_STRONGS_LEXICON_MISMATCH": 1607,
+    "PENDING_VERSIFICATION_MISMATCH": 208,
+    "SKIP_VERIFIED_TR": 31,
+    "PENDING_NO_SOURCE_DATA": 162
+  },
+  "elapsedSeconds": 87.6
+}

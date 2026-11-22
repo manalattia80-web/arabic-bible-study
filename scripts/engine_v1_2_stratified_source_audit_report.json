@@ -1,0 +1,978 @@
+{
+  "seed": "v1.2-stratified-source-audit:e50ebe605f9d84f8d68cbd12cdb1d9ab9be419cb",
+  "totalSampled": 36,
+  "records": [
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Judg 19:4",
+      "arPos": 12,
+      "arWord": "هُنَاكَ",
+      "before": {
+        "sid": "H8033",
+        "orig": "שָׁם",
+        "surf": "שָֽׁם",
+        "pos": 12,
+        "morph": "HD",
+        "mpos": "adverb",
+        "gloss": "a primitive particle (rather from the relative pronoun, H834 (אֲשֶׁר));"
+      },
+      "after": {
+        "sid": "H8033",
+        "orig": "שָׁם",
+        "surf": "שָֽׁם",
+        "pos": 13,
+        "morph": "HD",
+        "mpos": "adverb",
+        "loc": "OSHB:B7.C19.V4.w13",
+        "gloss": "a primitive particle (rather from the relative pronoun, H834 (אֲשֶׁר));"
+      },
+      "stratumPoolSize": 16765
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "2Chr 36:13",
+      "arPos": 4,
+      "arWord": "الْمَلِكِ",
+      "before": {
+        "sid": "H4428",
+        "orig": "מֶלֶךְ",
+        "surf": "בַּמֶּ֤לֶךְ",
+        "pos": 4,
+        "morph": "HRd/Ncmsa",
+        "mpos": "noun",
+        "gloss": "from H4427 (מָלַךְ);"
+      },
+      "after": {
+        "sid": "H4428",
+        "orig": "מֶלֶךְ",
+        "surf": "בַּמֶּ֤לֶךְ",
+        "pos": 2,
+        "morph": "HRd/Ncmsa",
+        "mpos": "noun",
+        "loc": "OSHB:B14.C36.V13.w2",
+        "gloss": "from H4427 (מָלַךְ);"
+      },
+      "stratumPoolSize": 16765
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "2Sam 18:26",
+      "arPos": 18,
+      "arWord": "أَيْضًا",
+      "before": {
+        "sid": "H1571",
+        "orig": "גַּם",
+        "surf": "גַּם",
+        "pos": 18,
+        "morph": "HTa",
+        "mpos": "particle",
+        "gloss": "by contraction from an unused root meaning to gather;"
+      },
+      "after": {
+        "sid": "H1571",
+        "orig": "גַּם",
+        "surf": "גַּם",
+        "pos": 17,
+        "morph": "HTa",
+        "mpos": "particle",
+        "loc": "OSHB:B10.C18.V26.w17",
+        "gloss": "by contraction from an unused root meaning to gather;"
+      },
+      "stratumPoolSize": 16765
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Nah 1:5",
+      "arPos": 7,
+      "arWord": "تُرْفَعُ",
+      "before": {
+        "sid": "H5375",
+        "orig": "נָשָׂא",
+        "surf": "וַתִּשָּׂ֤א",
+        "pos": 7,
+        "morph": "HC/Vqw3fs",
+        "mpos": "verb",
+        "gloss": "or נָסָה; (Psalm 4:6 (H7 (אֲבַד))), a primitive root;"
+      },
+      "after": {
+        "sid": "H5375",
+        "orig": "נָשָׂא",
+        "surf": "וַתִּשָּׂ֤א",
+        "pos": 6,
+        "morph": "HC/Vqw3fs",
+        "mpos": "verb",
+        "loc": "OSHB:B34.C1.V5.w6",
+        "gloss": "or נָסָה; (Psalm 4:6 (H7 (אֲבַד))), a primitive root;"
+      },
+      "stratumPoolSize": 16765
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "verse": "Ps 18:39",
+      "arPos": 5,
+      "arWord": "تَحْتِي",
+      "before": {
+        "sid": "H8478",
+        "orig": "תַּחַת",
+        "surf": "תַּ֣חַת",
+        "pos": 5,
+        "morph": "HR",
+        "mpos": "preposition",
+        "gloss": "from the same as H8430 (תּוֹחַ);"
+      },
+      "after": {
+        "sid": "H8478",
+        "orig": "תַּחַת",
+        "surf": "תַּחְתָּֽי",
+        "pos": 6,
+        "morph": "HR/Sp1cs",
+        "mpos": "preposition",
+        "loc": "OSHB:B19.C18.V40.w6",
+        "gloss": "from the same as H8430 (תּוֹחַ);"
+      },
+      "stratumPoolSize": 440
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "verse": "Eccl 5:20",
+      "arPos": 10,
+      "arWord": "بِفَرَحِ",
+      "before": {
+        "sid": "H8057",
+        "orig": "שִׂמְחָה",
+        "surf": "שִׂמְחָה",
+        "pos": 10,
+        "morph": null,
+        "mpos": "noun",
+        "gloss": "from H8056 (שָׂמֵחַ);"
+      },
+      "after": {
+        "sid": "H8057",
+        "orig": "שִׂמְחָה",
+        "surf": "בְּשִׂמְחַ֥ת",
+        "pos": 11,
+        "morph": "HR/Ncfsc",
+        "mpos": "noun",
+        "loc": "OSHB:B21.C5.V19.w11",
+        "gloss": "from H8056 (שָׂמֵחַ);"
+      },
+      "stratumPoolSize": 440
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "verse": "Jer 9:18",
+      "arPos": 9,
+      "arWord": "أَجْفَانُنَا",
+      "before": {
+        "sid": "H6079",
+        "orig": "עַפְעַף",
+        "surf": "עַפְעַף",
+        "pos": 9,
+        "morph": null,
+        "mpos": "noun",
+        "gloss": "from H5774 (עוּף);"
+      },
+      "after": {
+        "sid": "H6079",
+        "orig": "עַפְעַף",
+        "surf": "וְעַפְעַפֵּ֖ינוּ",
+        "pos": 8,
+        "morph": "HC/Ncmdc/Sp1cp",
+        "mpos": "noun",
+        "loc": "OSHB:B24.C9.V17.w8",
+        "gloss": "from H5774 (עוּף);"
+      },
+      "stratumPoolSize": 440
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "verse": "Song 7:7",
+      "arPos": 1,
+      "arWord": "قَامَتُكِ",
+      "before": {
+        "sid": "H6967",
+        "orig": "קוֹמָה",
+        "surf": "קוֹמָה",
+        "pos": 1,
+        "morph": null,
+        "mpos": "noun",
+        "gloss": "from H6965 (קוּם);"
+      },
+      "after": {
+        "sid": "H6967",
+        "orig": "קוֹמָה",
+        "surf": "קֽוֹמָתֵךְ֙",
+        "pos": 2,
+        "morph": "HNcfsc/Sp2fs",
+        "mpos": "noun",
+        "loc": "OSHB:B22.C7.V8.w2",
+        "gloss": "from H6965 (קוּם);"
+      },
+      "stratumPoolSize": 440
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Ezek 18:3",
+      "arPos": 5,
+      "arWord": "الرَّبُّ",
+      "before": {
+        "sid": "H3068",
+        "orig": "יְהֹוָה",
+        "surf": "יְהוִה",
+        "pos": 5,
+        "morph": null,
+        "mpos": "proper_noun",
+        "gloss": "from H1961 (הָיָה); (the) self-Existent or Eternal;"
+      },
+      "after": {
+        "sid": "H3069",
+        "orig": "יְהֹוִה",
+        "surf": "יְהוִ֑ה",
+        "pos": 5,
+        "morph": "HNp",
+        "mpos": "proper_noun",
+        "loc": "OSHB:B26.C18.V3.w5",
+        "gloss": "a variation of H3068 (יְהֹוָה) (used after H136 (אֲדֹנָי), and pronounced by Jew"
+      },
+      "stratumPoolSize": 882
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Gen 24:15",
+      "arPos": 2,
+      "arWord": "كَانَ",
+      "before": {
+        "sid": "H1934",
+        "orig": "הָוָא",
+        "surf": "הוּא",
+        "pos": 2,
+        "morph": null,
+        "mpos": "verb",
+        "gloss": "(Aramaic) or הָוָה; (Aramaic), corresponding to H1933 (הָוָא);"
+      },
+      "after": {
+        "sid": "H1931",
+        "orig": "הוּא",
+        "surf": "ה֗וּא",
+        "pos": 2,
+        "morph": "HPp3ms",
+        "mpos": "pronoun",
+        "loc": "OSHB:B1.C24.V15.w2",
+        "gloss": "of which the feminine (beyond the Pentateuch) is הִיא; a primitive word, the thi"
+      },
+      "stratumPoolSize": 882
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Neh 10:6",
+      "arPos": 1,
+      "arWord": "وَدَانِيآلُ",
+      "before": {
+        "sid": "H1841",
+        "orig": "דָּנִיֵּאל",
+        "surf": "דָּנִיֵּאל",
+        "pos": 1,
+        "morph": null,
+        "mpos": "proper_noun",
+        "gloss": "(Aramaic) corresponding to H1840 (דָנִיֵּאל);"
+      },
+      "after": {
+        "sid": "H1840",
+        "orig": "דָנִיֵּאל",
+        "surf": "דָּנִיֵּ֥אל",
+        "pos": 1,
+        "morph": "HNp",
+        "mpos": "proper_noun",
+        "loc": "OSHB:B16.C10.V7.w1",
+        "gloss": "in Ezekiel it is; דָּנִאֵל; from H1835 (דָּן) and H410 (אֵל); judge of God;"
+      },
+      "stratumPoolSize": 882
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "2Sam 24:10",
+      "arPos": 23,
+      "arWord": "انْحَمَقْتُ",
+      "before": {
+        "sid": "H5530",
+        "orig": "סָכָל",
+        "surf": "נִסְכַּלְתִּי",
+        "pos": 23,
+        "morph": null,
+        "mpos": "noun",
+        "gloss": "from H5528 (סָכַל);"
+      },
+      "after": {
+        "sid": "H5528",
+        "orig": "סָכַל",
+        "surf": "נִסְכַּ֖לְתִּי",
+        "pos": 26,
+        "morph": "HVNp1cs",
+        "mpos": "verb",
+        "loc": "OSHB:B10.C24.V10.w26",
+        "gloss": "for H3688 (כָּסַל);"
+      },
+      "stratumPoolSize": 882
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "Job 21:10",
+      "arPos": 2,
+      "arWord": "يُلْقِحُ",
+      "before": {
+        "sid": "H5674",
+        "orig": "עָבַר",
+        "surf": "עִ֭בַּר",
+        "pos": 2,
+        "morph": "HVpp3ms",
+        "mpos": "verb",
+        "gloss": "a primitive root;"
+      },
+      "after": {
+        "sid": "H5674",
+        "orig": "עָבַר",
+        "surf": "עִ֭בַּר",
+        "pos": 2,
+        "morph": "HVpp3ms",
+        "mpos": "verb",
+        "loc": "OSHB:B18.C21.V10.w2",
+        "gloss": "a primitive root;"
+      },
+      "stratumPoolSize": 65110
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "1Chr 12:28",
+      "arPos": 4,
+      "arWord": "بَأْسٍ",
+      "before": {
+        "sid": "H2428",
+        "orig": "חַיִל",
+        "surf": "חָיִל",
+        "pos": 4,
+        "morph": null,
+        "mpos": "noun",
+        "gloss": "from H2342 (חוּל);"
+      },
+      "after": {
+        "sid": "H2428",
+        "orig": "חַיִל",
+        "surf": "חָ֑יִל",
+        "pos": 4,
+        "morph": "HNcmsa",
+        "mpos": "noun",
+        "loc": "OSHB:B13.C12.V29.w4",
+        "gloss": "from H2342 (חוּל);"
+      },
+      "stratumPoolSize": 65110
+    },
+    {
+      "lang": "hebrew",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "Mal 1:13",
+      "arPos": 12,
+      "arWord": "وَالأَعْرَجِ",
+      "before": {
+        "sid": "H6455",
+        "orig": "פִּסֵּחַ",
+        "surf": "הַפִּסֵּ֨חַ֙",
+        "pos": 12,
+        "morph": "HTd/Aamsa",
+        "mpos": "adjective",
+        "gloss": "from H6452 (פָּסַח);"
+      },
+      "after": {
+        "sid": "H6455",
+        "orig": "פִּסֵּחַ",
+        "surf": "הַפִּסֵּ֨חַ֙",
+        "pos": 12,
+        "morph": "HTd/Aamsa",
+        "mpos": "adjective",
+        "loc": "OSHB:B39.C1.V13.w12",
+        "gloss": "from H6452 (פָּסַח);"
+      },
+      "stratumPoolSize": 65110
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Dan 5:22",
+      "arPos": 9,
+      "arWord": "أَنَّكَ",
+      "before": {
+        "sid": "H1836",
+        "orig": "דֵּן",
+        "surf": "דְּנָ֖ה",
+        "pos": 9,
+        "morph": "APdxms",
+        "mpos": "demonstrative",
+        "gloss": "(Aramaic) an orthographical variation of H1791 (דֵּךְ);"
+      },
+      "after": {
+        "sid": "H1836",
+        "orig": "דֵּן",
+        "surf": "דְּנָ֖ה",
+        "pos": 12,
+        "morph": "APdxms",
+        "mpos": "demonstrative",
+        "loc": "OSHB:B27.C5.V22.w12",
+        "gloss": "(Aramaic) an orthographical variation of H1791 (דֵּךְ);"
+      },
+      "stratumPoolSize": 214
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Dan 3:18",
+      "arPos": 16,
+      "arWord": "نَصَبْتَهُ",
+      "before": {
+        "sid": "H6966",
+        "orig": "קוּם",
+        "surf": "הֲקֵ֖ימְתָּ",
+        "pos": 16,
+        "morph": "AVhp2ms",
+        "mpos": "verb",
+        "gloss": "(Aramaic) corresponding to H6965 (קוּם)"
+      },
+      "after": {
+        "sid": "H6966",
+        "orig": "קוּם",
+        "surf": "הֲקֵ֖ימְתָּ",
+        "pos": 17,
+        "morph": "AVhp2ms",
+        "mpos": "verb",
+        "loc": "OSHB:B27.C3.V18.w17",
+        "gloss": "(Aramaic) corresponding to H6965 (קוּם)"
+      },
+      "stratumPoolSize": 214
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Dan 3:5",
+      "arPos": 20,
+      "arWord": "نَبُوخَذْنَصَّرُ",
+      "before": {
+        "sid": "H5020",
+        "orig": "נְבוּכַדְנֶצַּר",
+        "surf": "נְבוּכַדְנֶצַּ֥ר",
+        "pos": 20,
+        "morph": "ANp",
+        "mpos": "proper_noun",
+        "gloss": "(Aramaic) corresponding to H5019 (נְבוּכַדְנֶאצַּר)"
+      },
+      "after": {
+        "sid": "H5020",
+        "orig": "נְבוּכַדְנֶצַּר",
+        "surf": "נְבוּכַדְנֶצַּ֥ר",
+        "pos": 21,
+        "morph": "ANp",
+        "mpos": "proper_noun",
+        "loc": "OSHB:B27.C3.V5.w21",
+        "gloss": "(Aramaic) corresponding to H5019 (נְבוּכַדְנֶאצַּר)"
+      },
+      "stratumPoolSize": 214
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "verse": "Dan 6:6",
+      "arPos": 11,
+      "arWord": "أَيُّهَا",
+      "before": {
+        "sid": "H5922",
+        "orig": "עַל",
+        "surf": "עֲל֖וֹהִי",
+        "pos": 11,
+        "morph": "AR/Sp3ms",
+        "mpos": "preposition",
+        "gloss": "(Aramaic) corresponding to H5921 (עַל)"
+      },
+      "after": {
+        "sid": "H5922",
+        "orig": "עַל",
+        "surf": "עַל",
+        "pos": 6,
+        "morph": "AR",
+        "mpos": "preposition",
+        "loc": "OSHB:B27.C6.V7.w6",
+        "gloss": "(Aramaic) corresponding to H5921 (עַל)"
+      },
+      "stratumPoolSize": 31
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "verse": "Dan 4:6",
+      "arPos": 9,
+      "arWord": "لِيُعَرِّفُونِي",
+      "before": {
+        "sid": "H3046",
+        "orig": "יְדַע",
+        "surf": "יִדְעֵ֗ת",
+        "pos": 9,
+        "morph": "AVqp1cs",
+        "mpos": "verb",
+        "gloss": "(Aramaic) corresponding to H3045 (יָדַע)"
+      },
+      "after": {
+        "sid": "H3046",
+        "orig": "יְדַע",
+        "surf": "יְהֽוֹדְעֻנַּֽנִי",
+        "pos": 12,
+        "morph": "AVhi3mp/Sp1cs",
+        "mpos": "verb",
+        "loc": "OSHB:B27.C4.V3.w12",
+        "gloss": "(Aramaic) corresponding to H3045 (יָדַע)"
+      },
+      "stratumPoolSize": 31
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Dan 2:5",
+      "arPos": 1,
+      "arWord": "فَأَجَابَ",
+      "before": {
+        "sid": "H6033",
+        "orig": "עֲנָה",
+        "surf": "עָנֵה",
+        "pos": 1,
+        "morph": null,
+        "mpos": "verb",
+        "gloss": "(Aramaic) corresponding to H6031 (עָנָה)"
+      },
+      "after": {
+        "sid": "H6032",
+        "orig": "עֲנָה",
+        "surf": "עָנֵ֤ה",
+        "pos": 1,
+        "morph": "AVqrmsa",
+        "mpos": "verb",
+        "loc": "OSHB:B27.C2.V5.w1",
+        "gloss": "(Aramaic) corresponding to H6030 (עָנָה)"
+      },
+      "stratumPoolSize": 47
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Dan 3:20",
+      "arPos": 8,
+      "arWord": "شَدْرَخَ",
+      "before": {
+        "sid": "H7714",
+        "orig": "שַׁדְרַךְ",
+        "surf": "לְשַׁדְרַךְ",
+        "pos": 8,
+        "morph": null,
+        "mpos": "proper_noun",
+        "gloss": "probably of foreign origin;"
+      },
+      "after": {
+        "sid": "H7715",
+        "orig": "שַׁדְרַךְ",
+        "surf": "לְשַׁדְרַ֥ךְ",
+        "pos": 8,
+        "morph": "ATo/Np",
+        "mpos": "proper_noun",
+        "loc": "OSHB:B27.C3.V20.w8",
+        "gloss": "(Aramaic) the same as H7714 (שַׁדְרַךְ)"
+      },
+      "stratumPoolSize": 47
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "Dan 7:16",
+      "arPos": 10,
+      "arWord": "كُلِّ",
+      "before": {
+        "sid": "H3606",
+        "orig": "כֹּל",
+        "surf": "כָּל",
+        "pos": 10,
+        "morph": "ANcmsc",
+        "mpos": "noun",
+        "gloss": "(Aramaic) corresponding to H3605 (כֹּל)"
+      },
+      "after": {
+        "sid": "H3606",
+        "orig": "כֹּל",
+        "surf": "כָּל",
+        "pos": 10,
+        "morph": "ANcmsc",
+        "mpos": "noun",
+        "loc": "OSHB:B27.C7.V16.w10",
+        "gloss": "(Aramaic) corresponding to H3605 (כֹּל)"
+      },
+      "stratumPoolSize": 559
+    },
+    {
+      "lang": "aramaic",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "Dan 2:7",
+      "arPos": 1,
+      "arWord": "فَأَجَابُوا",
+      "before": {
+        "sid": "H6032",
+        "orig": "עֲנָה",
+        "surf": "עֲנ֥וֹ",
+        "pos": 1,
+        "morph": "AVqp3mp",
+        "mpos": "verb",
+        "gloss": "(Aramaic) corresponding to H6030 (עָנָה)"
+      },
+      "after": {
+        "sid": "H6032",
+        "orig": "עֲנָה",
+        "surf": "עֲנ֥וֹ",
+        "pos": 1,
+        "morph": "AVqp3mp",
+        "mpos": "verb",
+        "loc": "OSHB:B27.C2.V7.w1",
+        "gloss": "(Aramaic) corresponding to H6030 (עָנָה)"
+      },
+      "stratumPoolSize": 559
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "John 6:39",
+      "arPos": 15,
+      "arWord": "أُقِيمُهُ",
+      "before": {
+        "sid": "G450",
+        "orig": "ἀνίστημι",
+        "surf": "ἀναστήσω",
+        "pos": 15,
+        "morph": "V- 1AAS-S--",
+        "mpos": "verb",
+        "gloss": "from G303 (ἀνά) and G2476 (ἵστημι);"
+      },
+      "after": {
+        "sid": "G450",
+        "orig": "ἀνίστημι",
+        "surf": "ἀναστήσω",
+        "pos": 19,
+        "morph": "V- 1AAS-S--",
+        "mpos": "verb",
+        "loc": "SBLGNT:B43.C6.V39.w19",
+        "gloss": "from G303 (ἀνά) and G2476 (ἵστημι);"
+      },
+      "stratumPoolSize": 28179
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Luke 12:42",
+      "arPos": 12,
+      "arWord": "خَدَمِهِ",
+      "before": {
+        "sid": "G2322",
+        "orig": "θεραπεία",
+        "surf": "θεραπείας",
+        "pos": 12,
+        "morph": "N- ----GSF-",
+        "mpos": "noun",
+        "gloss": "from G2323 (θεραπεύω);"
+      },
+      "after": {
+        "sid": "G2322",
+        "orig": "θεραπεία",
+        "surf": "θεραπείας",
+        "pos": 19,
+        "morph": "N- ----GSF-",
+        "mpos": "noun",
+        "loc": "SBLGNT:B42.C12.V42.w19",
+        "gloss": "from G2323 (θεραπεύω);"
+      },
+      "stratumPoolSize": 28179
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Mark 4:16",
+      "arPos": 12,
+      "arWord": "الْكَلِمَةَ",
+      "before": {
+        "sid": "G3056",
+        "orig": "λόγος",
+        "surf": "λόγον",
+        "pos": 11,
+        "morph": "N- ----ASM-",
+        "mpos": "noun",
+        "gloss": "from G3004 (λέγω);"
+      },
+      "after": {
+        "sid": "G3056",
+        "orig": "λόγος",
+        "surf": "λόγον",
+        "pos": 14,
+        "morph": "N- ----ASM-",
+        "mpos": "noun",
+        "loc": "SBLGNT:B41.C4.V16.w14",
+        "gloss": "from G3004 (λέγω);"
+      },
+      "stratumPoolSize": 28179
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "Rev 20:5",
+      "arPos": 13,
+      "arWord": "الأُولَى",
+      "before": {
+        "sid": "G4413",
+        "orig": "πρῶτος",
+        "surf": "πρώτη",
+        "pos": 13,
+        "morph": "A- ----NSF-",
+        "mpos": "adjective",
+        "gloss": "contracted superlative of G4253 (πρό);"
+      },
+      "after": {
+        "sid": "G4413",
+        "orig": "πρῶτος",
+        "surf": "πρώτη",
+        "pos": 16,
+        "morph": "A- ----NSF-",
+        "mpos": "adjective",
+        "loc": "SBLGNT:B66.C20.V5.w16",
+        "gloss": "contracted superlative of G4253 (πρό);"
+      },
+      "stratumPoolSize": 28179
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "verse": "1Tim 2:7",
+      "arPos": 1,
+      "arWord": "الَّتِي",
+      "before": {
+        "sid": "G3739",
+        "orig": "ὅς",
+        "surf": "ὃ",
+        "pos": 1,
+        "morph": "RR ----ASN-",
+        "mpos": "relative_pronoun",
+        "gloss": "probably a primary word (or perhaps a form of the article G3588 (ὁ));"
+      },
+      "after": {
+        "sid": "G3739",
+        "orig": "ὅς",
+        "surf": "ὃ",
+        "pos": 2,
+        "morph": "RR ----ASN-",
+        "mpos": "relative_pronoun",
+        "loc": "SBLGNT:B54.C2.V7.w2",
+        "gloss": "probably a primary word (or perhaps a form of the article G3588 (ὁ));"
+      },
+      "stratumPoolSize": 28179
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "1Tim 6:18",
+      "arPos": 9,
+      "arWord": "صَالِحَةٍ",
+      "before": {
+        "sid": "G2570",
+        "orig": "καλοῖς",
+        "surf": "καλοῖς",
+        "pos": 5,
+        "morph": "A- ----DPN-",
+        "mpos": "adjective",
+        "gloss": "of uncertain affinity; properly, beautiful, but chiefly (figuratively) good (lit"
+      },
+      "after": {
+        "sid": "G2570",
+        "orig": "καλός",
+        "surf": "καλοῖς",
+        "pos": 5,
+        "morph": "A- ----DPN-",
+        "mpos": "adjective",
+        "loc": "SBLGNT:B54.C6.V18.w5",
+        "gloss": "of uncertain affinity; properly, beautiful, but chiefly (figuratively) good (lit"
+      },
+      "stratumPoolSize": 155
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Rom 15:23",
+      "arPos": 6,
+      "arWord": "مَكَانٌ",
+      "before": {
+        "sid": "G5117",
+        "orig": "τόπον",
+        "surf": "τόπον",
+        "pos": 4,
+        "morph": null,
+        "mpos": "noun",
+        "gloss": "apparently a primary word;"
+      },
+      "after": {
+        "sid": "G5117",
+        "orig": "τόπος",
+        "surf": "τόπον",
+        "pos": 4,
+        "morph": "N- ----ASM-",
+        "mpos": "noun",
+        "loc": "SBLGNT:B45.C15.V23.w4",
+        "gloss": "apparently a primary word;"
+      },
+      "stratumPoolSize": 155
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Luke 21:5",
+      "arPos": 10,
+      "arWord": "حَسَنَةٍ",
+      "before": {
+        "sid": "G2570",
+        "orig": "καλοῖς",
+        "surf": "καλοῖς",
+        "pos": 9,
+        "morph": "A- ----DPM-",
+        "mpos": "adjective",
+        "gloss": "of uncertain affinity; properly, beautiful, but chiefly (figuratively) good (lit"
+      },
+      "after": {
+        "sid": "G2570",
+        "orig": "καλός",
+        "surf": "καλοῖς",
+        "pos": 9,
+        "morph": "A- ----DPM-",
+        "mpos": "adjective",
+        "loc": "SBLGNT:B42.C21.V5.w9",
+        "gloss": "of uncertain affinity; properly, beautiful, but chiefly (figuratively) good (lit"
+      },
+      "stratumPoolSize": 155
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK",
+      "verse": "Matt 13:37",
+      "arPos": 6,
+      "arWord": "الْجَيِّدَ",
+      "before": {
+        "sid": "G2570",
+        "orig": "καλὸν",
+        "surf": "καλὸν",
+        "pos": 9,
+        "morph": "A- ----ASN-",
+        "mpos": "adjective",
+        "gloss": "of uncertain affinity; properly, beautiful, but chiefly (figuratively) good (lit"
+      },
+      "after": {
+        "sid": "G2570",
+        "orig": "καλός",
+        "surf": "καλὸν",
+        "pos": 8,
+        "morph": "A- ----ASN-",
+        "mpos": "adjective",
+        "loc": "SBLGNT:B40.C13.V37.w8",
+        "gloss": "of uncertain affinity; properly, beautiful, but chiefly (figuratively) good (lit"
+      },
+      "stratumPoolSize": 155
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "Eph 3:19",
+      "arPos": 1,
+      "arWord": "وَتَعْرِفُوا",
+      "before": {
+        "sid": "G1097",
+        "orig": "γινώσκω",
+        "surf": "γνῶναί",
+        "pos": 1,
+        "morph": "V- -AAN----",
+        "mpos": "verb",
+        "gloss": "a prolonged form of a primary verb;"
+      },
+      "after": {
+        "sid": "G1097",
+        "orig": "γινώσκω",
+        "surf": "γνῶναί",
+        "pos": 1,
+        "morph": "V- -AAN----",
+        "mpos": "verb",
+        "loc": "SBLGNT:B49.C3.V19.w1",
+        "gloss": "a prolonged form of a primary verb;"
+      },
+      "stratumPoolSize": 10361
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "Luke 21:32",
+      "arPos": 2,
+      "arWord": "أَقُولُ",
+      "before": {
+        "sid": "G3004",
+        "orig": "λέγω",
+        "surf": "λέγω",
+        "pos": 2,
+        "morph": "V- 1PAI-S--",
+        "mpos": "verb",
+        "gloss": "a primary verb;"
+      },
+      "after": {
+        "sid": "G3004",
+        "orig": "λέγω",
+        "surf": "λέγω",
+        "pos": 2,
+        "morph": "V- 1PAI-S--",
+        "mpos": "verb",
+        "loc": "SBLGNT:B42.C21.V32.w2",
+        "gloss": "a primary verb;"
+      },
+      "stratumPoolSize": 10361
+    },
+    {
+      "lang": "greek",
+      "rule": "RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH",
+      "verse": "Mark 14:45",
+      "arPos": 5,
+      "arWord": "قَائِلاً:",
+      "before": {
+        "sid": "G3004",
+        "orig": "λέγω",
+        "surf": "λέγει",
+        "pos": 6,
+        "morph": "V- 3PAI-S--",
+        "mpos": "verb",
+        "gloss": "a primary verb;"
+      },
+      "after": {
+        "sid": "G3004",
+        "orig": "λέγω",
+        "surf": "λέγει",
+        "pos": 6,
+        "morph": "V- 3PAI-S--",
+        "mpos": "verb",
+        "loc": "SBLGNT:B41.C14.V45.w6",
+        "gloss": "a primary verb;"
+      },
+      "stratumPoolSize": 10361
+    }
+  ]
+}
