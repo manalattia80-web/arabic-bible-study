@@ -190,11 +190,15 @@ jobs:
           - **APK SHA-256**: `__APK_HASH__`
           - **SQLite DB SHA-256**: `__DB_HASH__`
 
-          ## 🚀 Aramaic Shaphel Stem Fix & Shared-Link Unit Validation (v1.0.379)
-          - **OSHB Aramaic `e` = `shaphel` Correction**: Fixed OSHB Aramaic stem mapping across auditor and repair scripts (`e` -> `shaphel` active with `morph_voice = NULL`, not `ethpeel` passive) and updated `Ezra 4:12 #19` (`AVep3mp`) and `Ezra 6:14 #14` (`AC/Vep3mp`), plus Arabic stem label `'shaphel'` in [`morphology_service.dart`](mobile/lib/core/services/morphology_service.dart).
-          - **Documented Shared-Link Unit (`1Thess 5:16` «كُلَّ حِينٍ» → `πάντοτε / G3842 @ w1`)**: Refined primary-locator collision detection to allow contiguous, documented `compound_phrase` shared links while keeping Mark 12:30 backward repeated-clause collisions strictly rejected; added positive acceptance test in [`test_tr_robinson_and_context_gates.cjs`](scripts/test_tr_robinson_and_context_gates.cjs).
-          - **Preserved Pre-Edit Baseline (`v1.0.376`)**: [`scripts/unseen_holdout_4axis_v376.json`](scripts/unseen_holdout_4axis_v376.json) remains strictly untouched (`79/253` clean = `31.23%`, `174` alerts).
-          - **Verification (`targetDbVersion = 379`)**: `311 / 311 (100.00%)` canonical benchmark, `253 / 253` repaired/control holdout verification, and `64 / 64` negative CI gates passing.
+          ## 🧪 Experimental Candidate: Whole-Verse General Repair Engine v1.3 (`v1.0.380` / `targetDbVersion = 380`)
+          > **Pre-Release / Experimental Candidate Notice**: This build is an experimental candidate intended for on-device clean-install and upgrade testing (`v379 → v380`). It demonstrates verified automated generalization improvements with zero detected regressions, and **does not represent a certification of complete linguistic accuracy across all 434,351 records**.
+
+          - **General Repair Engine `v1.3` Promotion**: Applied `122,961` verified high-confidence alignment & morphology repairs across all 66 books (`434,351` exact denominator; `278,828` conservatively held in `PENDING_REVIEW`; `32,562` preserved).
+          - **Contextual & Structural Safety Guards**: Independent Strong's/lexicon verification, Arabic-to-Source contextual POS compatibility (`1,797` mismatches blocked), fixed-point whole-verse anti-collision including untouched pending neighbors (`0` `sourceLocator` regressions), atomic component reorganization (`0` `multiple_primary_components`), and bitwise-immutable Protected Adjudicated Registry (`92` verses / `1,477` rows / `1,622` components).
+          - **Verification & Non-Regression (`targetDbVersion = 380`, `76` chunks)**:
+            - `B20`: `311 / 311 (100.00%)` | `automated_database_audit.cjs`: `0` failures | `test_general_repair_engine_gates.cjs`: `20 / 20` passing.
+            - `R1`: `253 / 253 (100.00%)` | `R2`: `255 / 255 (100.00%)` | `R3`: `233 / 234` (`234 / 234` with documented Dan 5:2 non-adjacent unit).
+            - Out-of-sample validation (`0` regressions on all 4 axes): `Round 4B` `61/197 → 79/197 (+9.14%)`, `Round 5` `33/247 → 77/247 (+17.81%)`.
           EOF
           
           sed -i "s/__APK_HASH__/$APK_HASH/g" release_notes.md
@@ -236,8 +240,8 @@ jobs:
             apk_sha256.txt
             db_sha256.txt
           draft: false
-          prerelease: false
-          make_latest: true
+          prerelease: ${{ github.ref != 'refs/heads/main' }}
+          make_latest: ${{ github.ref == 'refs/heads/main' }}
           token: ${{ secrets.GITHUB_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
