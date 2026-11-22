@@ -107,6 +107,7 @@ jobs:
           node scripts/audit_unseen_holdout_sample.cjs --manifest scripts/unseen_holdout_round2_15_verses_manifest.json --fail-on-alerts --out /tmp/ci_round2_audit.json
           node scripts/alignment_suggestion_engine.cjs --manifest scripts/unseen_holdout_round2_15_verses_manifest.json --audit-report /tmp/ci_round2_audit.json --out /tmp/ci_round2_proposals.json
           node scripts/test_alignment_engine_gates.cjs --proposals /tmp/ci_round2_proposals.json --audit /tmp/ci_round2_audit.json
+          node scripts/test_general_repair_engine_gates.cjs
 
       - name: Analyze Dart Code (Fail on Fatal Errors)
         working-directory: ./mobile
