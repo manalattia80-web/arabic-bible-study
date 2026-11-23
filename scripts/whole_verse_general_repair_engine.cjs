@@ -468,7 +468,10 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
         current, proposed: null,
         evidence: { edition, tokenCount: tokens.length, reason: rejectReason },
         alternatives,
-        existingWms: r.existingWms || []
+        existingWms: r.existingWms || [],
+        _dupCandidates: (bothMatches.length > 1) ? bothMatches : null,
+        _dupKey: (bothMatches.length > 1) ? `${rSurfCanon}|${rLexCanon}` : null,
+        _rawRow: r
       });
       continue;
     }
@@ -647,6 +650,140 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       alternatives,
       existingWms: r.existingWms || []
     });
+  }
+
+  // v1.4 PASS: RULE_G4_BRACKETED_DUPLICATE_BIJECTION
+  // Resolves duplicate-occurrence groups (M >= 2) ONLY when:
+  //   (1) Exact cardinality: M Arabic rows match the exact same M source tokens by BOTH surface & lemma/Strong's,
+  //   (2) Strict bracket separation: EVERY adjacent pair (i, i+1) is strictly separated in BOTH Arabic and Source
+  //       order by at least one locked unique anchor (ar_i < anchorAr < ar_{i+1} AND w_i < anchorW < w_{i+1}),
+  //   (3) Every row passes independent strongs_entries lexicon verification & Arabic-to-Source contextual compatibility,
+  //   (4) Still subject to the full fixed-point anti-collision pass immediately below (0 sourceLocator regressions).
+  const lockedUniqueAnchors = rawProposals
+    .filter(p => (p.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || p.status === 'ALREADY_CANONICAL') && p.targetTokenIndex)
+    .map(p => ({ arPos: p.arPos, w: p.targetTokenIndex }));
+
+  const dupGroups = new Map(); // dupKey -> array of rawProposal refs
+  for (const p of rawProposals) {
+    if (p.status === 'PENDING_REVIEW' && p._dupCandidates && p._dupKey) {
+      if (!dupGroups.has(p._dupKey)) dupGroups.set(p._dupKey, []);
+      dupGroups.get(p._dupKey).push(p);
+    }
+  }
+
+  for (const [dupKey, grp] of dupGroups.entries()) {
+    const cands = grp[0]._dupCandidates;
+    const M = cands.length;
+    if (M < 2 || grp.length !== M) continue;
+
+    // Sort Arabic rows ascending by arPos, and candidate tokens ascending by index
+    const sortedGrp = [...grp].sort((a, b) => a.arPos - b.arPos);
+    const sortedToks = [...cands].sort((a, b) => a.index - b.index);
+
+    // Verify all rows in group share the exact same candidate token set
+    const tokSetKey = sortedToks.map(t => t.index).join(',');
+    if (!sortedGrp.every(p => p._dupCandidates.map(t => t.index).sort((a, b) => a - b).join(',') === tokSetKey)) continue;
+
+    // Condition 2: Every adjacent pair (i, i+1) must be strictly bracketed by at least one locked unique anchor!
+    let allBracketed = true;
+    const bracketWitnesses = [];
+    for (let i = 0; i < M - 1; i++) {
+      const arLo = sortedGrp[i].arPos, arHi = sortedGrp[i + 1].arPos;
+      const wLo = sortedToks[i].index, wHi = sortedToks[i + 1].index;
+      const sep = lockedUniqueAnchors.find(a => a.arPos > arLo && a.arPos < arHi && a.w > wLo && a.w < wHi);
+      if (!sep) {
+        allBracketed = false;
+        break;
+      }
+      bracketWitnesses.push({ betweenAr: [arLo, arHi], betweenW: [wLo, wHi], anchor: sep });
+    }
+    if (!allBracketed) continue;
+
+    // Validate EVERY row in the group independently before accepting the collective bijection
+    const builtProps = [];
+    let groupValid = true;
+    for (let i = 0; i < M; i++) {
+      const p = sortedGrp[i];
+      const r = p._rawRow;
+      const chosen = sortedToks[i];
+      if (!isGreek && splitPrefixTokens.has(chosen.index)) { groupValid = false; break; }
+
+      let targetStrongs = null, targetOrigWord = null;
+      if (isGreek) {
+        targetOrigWord = chosen.lemma;
+        const candidateSid = r.strongsId || chosen.trCrossStrongsId;
+        const lexWord = candidateSid && strongsLexicon ? strongsLexicon.get(candidateSid) : null;
+        if (!lexWord || canonGreek(lexWord) !== chosen.lemmaCanon) { groupValid = false; break; }
+        targetStrongs = candidateSid;
+      } else {
+        targetStrongs = chosen.strongsId;
+        const lexLemma = targetStrongs && strongsLexicon ? strongsLexicon.get(targetStrongs) : null;
+        if (!lexLemma) { groupValid = false; break; }
+        const storedCons = canonSemiticConsonants(r.origWord);
+        const lexCons = canonSemiticConsonants(lexLemma);
+        if (storedCons.length >= 2 && lexCons.length >= 2 && storedCons !== lexCons) { groupValid = false; break; }
+        targetOrigWord = lexLemma;
+      }
+
+      const d = deriveCanonicalMorphFields(lang, chosen.morph, false, { morphPos: r.morphPos, morphNumber: r.morphNumber });
+      let finalMorphPos = (isGreek && chosen.morph.startsWith('N-')) ? 'noun' : d.morphPos;
+      if (isGreek && chosen.morph.startsWith('RI') && (r.morphPos === 'pronoun' || targetStrongs === 'G5100')) finalMorphPos = 'pronoun';
+
+      if (checkArabicSourceContextualCompatibility(r.arWord, finalMorphPos, 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION', r.morphPos)) {
+        groupValid = false;
+        break;
+      }
+
+      const hasSpSuffix = !isGreek && /\/Sp\d/.test(chosen.morph);
+      const finalPerson = (hasSpSuffix && !d.morphPerson && r.morphPerson) ? r.morphPerson : d.morphPerson;
+      const finalGender = (hasSpSuffix && !d.morphGender && r.morphGender) ? r.morphGender : d.morphGender;
+      const finalNumber = (hasSpSuffix && !d.morphNumber && r.morphNumber) ? r.morphNumber : d.morphNumber;
+      const finalSurface = (!isGreek && r.origSurface && r.origSurface.endsWith('־') && canonSemiticConsonants(r.origSurface) === chosen.surfaceCanon)
+        ? r.origSurface : chosen.surface;
+
+      const proposed = {
+        strongsId: targetStrongs, origWord: targetOrigWord, origSurface: finalSurface,
+        origPos: chosen.index, origMorph: chosen.morph, morphPos: finalMorphPos,
+        morphStem: d.morphStem, morphTense: d.morphTense, morphVoice: d.morphVoice, morphMood: d.morphMood,
+        morphPerson: finalPerson, morphNumber: finalNumber, morphGender: finalGender, morphCase: d.morphCase,
+        verifiedLocator: `${locPrefix}.w${chosen.index}`, verifiedSource: morphSource, morphSource
+      };
+
+      const isAlreadyCanonical =
+        p.current.strongsId === proposed.strongsId && p.current.origWord === proposed.origWord &&
+        p.current.origSurface === proposed.origSurface && p.current.origPos === proposed.origPos &&
+        p.current.origMorph === proposed.origMorph && p.current.morphPos === proposed.morphPos &&
+        p.current.morphStem === proposed.morphStem && p.current.morphTense === proposed.morphTense &&
+        p.current.morphVoice === proposed.morphVoice && p.current.morphMood === proposed.morphMood &&
+        p.current.morphPerson === proposed.morphPerson && p.current.morphNumber === proposed.morphNumber &&
+        p.current.morphGender === proposed.morphGender && p.current.morphCase === proposed.morphCase &&
+        p.current.verifiedLocator === proposed.verifiedLocator && p.current.verifiedSource === proposed.verifiedSource &&
+        p.current.morphSource === proposed.morphSource && r.hasCleanPrimaryWms;
+
+      builtProps.push({ p, chosen, proposed, isAlreadyCanonical });
+    }
+
+    if (groupValid && builtProps.length === M) {
+      for (const { p, chosen, proposed, isAlreadyCanonical } of builtProps) {
+        p.status = isAlreadyCanonical ? 'ALREADY_CANONICAL' : 'AUTO_PROPOSED_HIGH_CONFIDENCE';
+        p.ruleId = isAlreadyCanonical ? 'NO_CHANGE_ALREADY_CANONICAL' : 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION';
+        p.targetTokenIndex = chosen.index;
+        p.proposed = proposed;
+        p.evidence = {
+          edition, tokenIndex: chosen.index, tokenSurface: proposed.origSurface,
+          tokenLemma: chosen.lemma, tokenMorph: chosen.morph,
+          verifiedLexiconLemma: strongsLexicon.get(proposed.strongsId),
+          duplicateGroupSize: M,
+          bracketWitnesses
+        };
+      }
+    }
+  }
+
+  for (const p of rawProposals) {
+    delete p._dupCandidates;
+    delete p._dupKey;
+    delete p._rawRow;
   }
 
   // WHOLE-VERSE FIXED-POINT ANTI-COLLISION PASS:

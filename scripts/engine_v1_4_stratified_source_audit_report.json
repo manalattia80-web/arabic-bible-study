@@ -1,0 +1,1018 @@
+{
+  "schema_version": 2,
+  "engineVersion": "whole_verse_general_repair_engine_v1.4",
+  "engineSha256": "7e2ced154095cc94e33ddbc24da01178ea7a7c82bfdb44ee34176f2e77eeb74b",
+  "diffLogSha256": "89a3fcaf619593123b589c81f2f0df42260ff76cb692fb18d6d50a713b6c11fc",
+  "productionDbSha256Untouched": "51320cedde4a1bd801b7c108b5566d8879e88cf10998d11b42a75975323c7496",
+  "isolatedDbSha256": "1ffdec9aedf00a038b7305ed70178c19a9010dce124e0aca511ac2ab31df6182",
+  "samplingProtocol": "Deterministic SHA-256 stratified sample (30 records: 10 Hebrew, 10 Aramaic, 10 Greek; 7 RULE_G4 + 3 newly unlocked RULE_G1/G1B per language) from scratch/full_66books_engine_v1_4_diff.jsonl.",
+  "recommendation": "DO_NOT_PROMOTE_V1_4_AS_IS — Tighten RULE_G4 in v1.5 to block: (1) prefixed Arabic content words mapped solely to bare prepositions (P-/HR/AR) as primary (e.g. Matt 21:9 #14), and (2) bare Greek preposition RULE_G4 relocations prone to dative/prepositional mismatch (e.g. Gal 2:8 #4).",
+  "adjudicationSummary": {
+    "total": 30,
+    "correct": 28,
+    "incorrect": 2,
+    "undecided": 0,
+    "accuracyPct": 93.33,
+    "byLang": {
+      "hebrew": {
+        "correct": 10,
+        "incorrect": 0
+      },
+      "aramaic": {
+        "correct": 10,
+        "incorrect": 0
+      },
+      "greek": {
+        "correct": 8,
+        "incorrect": 2
+      }
+    },
+    "byRule": {
+      "RULE_G4_BRACKETED_DUPLICATE_BIJECTION": {
+        "correct": 19,
+        "incorrect": 2
+      },
+      "RULE_G1_UNIQUE_BIJECTIVE_RELOC": {
+        "correct": 8,
+        "incorrect": 0
+      },
+      "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC": {
+        "correct": 1,
+        "incorrect": 0
+      }
+    }
+  },
+  "records": [
+    {
+      "index": 1,
+      "verse": "Deut 9:7",
+      "book": 5,
+      "ch": 9,
+      "vs": 7,
+      "lang": "hebrew",
+      "arPos": 25,
+      "arWord": "الرَّبَّ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B5.C9.V7.w25",
+      "afterLocator": "OSHB:B5.C9.V7.w25",
+      "strongsId": "H3068",
+      "origSurface": "יְהוָֽה",
+      "origMorph": "HNp",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            6,
+            25
+          ],
+          "betweenW": [
+            8,
+            25
+          ],
+          "anchor": {
+            "arPos": 7,
+            "w": 9
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثاني لاسم الجلالة «الرَّبَّ» (יְהוָה w25) مفصول بمرساة مقفلة (#7 إِلهَكَ -> w9) عن الموضع الأول (#6 -> w8).",
+      "source_witness": "OSHB Deut 9:7 w25 יְהוָֽה (H3068, HNp)"
+    },
+    {
+      "index": 2,
+      "verse": "Ezek 48:16",
+      "book": 26,
+      "ch": 48,
+      "vs": 16,
+      "lang": "hebrew",
+      "arPos": 6,
+      "arWord": "آلاَفٍ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B26.C48.V16.w6",
+      "afterLocator": "OSHB:B26.C48.V16.w8",
+      "strongsId": "H505",
+      "origSurface": "אֲלָפִ֔ים",
+      "origMorph": "HAcbpa",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            6,
+            12
+          ],
+          "betweenW": [
+            8,
+            15
+          ],
+          "anchor": {
+            "arPos": 10,
+            "w": 10
+          }
+        },
+        {
+          "betweenAr": [
+            12,
+            18
+          ],
+          "betweenW": [
+            15,
+            21
+          ],
+          "anchor": {
+            "arPos": 16,
+            "w": 17
+          }
+        },
+        {
+          "betweenAr": [
+            18,
+            24
+          ],
+          "betweenW": [
+            21,
+            27
+          ],
+          "anchor": {
+            "arPos": 22,
+            "w": 23
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الأول للعدد «آلاَفٍ» (אֲלָפִים w8) من أربعة مواضع مفصولة بجهات الشمال والجنوب والشرق والغرب (#10->w10، #16->w17، #22->w23).",
+      "source_witness": "OSHB Ezek 48:16 w8 אֲלָפִ֔ים (H505, HAcbpa)"
+    },
+    {
+      "index": 3,
+      "verse": "Mal 3:16",
+      "book": 39,
+      "ch": 3,
+      "vs": 16,
+      "lang": "hebrew",
+      "arPos": 4,
+      "arWord": "الرَّبِّ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B39.C3.V16.w4",
+      "afterLocator": "OSHB:B39.C3.V16.w4",
+      "strongsId": "H3068",
+      "origSurface": "יְהוָ֖ה",
+      "origMorph": "HNp",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            4,
+            8
+          ],
+          "betweenW": [
+            4,
+            9
+          ],
+          "anchor": {
+            "arPos": 5,
+            "w": 5
+          }
+        },
+        {
+          "betweenAr": [
+            8,
+            17
+          ],
+          "betweenW": [
+            9,
+            16
+          ],
+          "anchor": {
+            "arPos": 10,
+            "w": 10
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الأول لاسم الجلالة «الرَّبِّ» (יְהוָה w4) من ثلاثة مواضع مفصولة بمراسٍ مقفلة (#5->w5، #10->w10).",
+      "source_witness": "OSHB Mal 3:16 w4 יְהוָ֖ה (H3068, HNp)"
+    },
+    {
+      "index": 4,
+      "verse": "Ezek 45:10",
+      "book": 26,
+      "ch": 45,
+      "vs": 10,
+      "lang": "hebrew",
+      "arPos": 6,
+      "arWord": "حَقّ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B26.C45.V10.w6",
+      "afterLocator": "OSHB:B26.C45.V10.w6",
+      "strongsId": "H6664",
+      "origSurface": "צֶ֖דֶק",
+      "origMorph": "HNcmsa",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            2,
+            4
+          ],
+          "betweenW": [
+            2,
+            4
+          ],
+          "anchor": {
+            "arPos": 3,
+            "w": 3
+          }
+        },
+        {
+          "betweenAr": [
+            4,
+            6
+          ],
+          "betweenW": [
+            4,
+            6
+          ],
+          "anchor": {
+            "arPos": 5,
+            "w": 5
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثالث لكلمة «حَقّ» (צֶדֶק w6) في «وَبَثُّ حَقّ» مفصول بمرساتين مقفلتين (#3->w3، #5->w5).",
+      "source_witness": "OSHB Ezek 45:10 w6 צֶ֖דֶק (H6664, HNcmsa)"
+    },
+    {
+      "index": 5,
+      "verse": "Esth 2:8",
+      "book": 17,
+      "ch": 2,
+      "vs": 8,
+      "lang": "hebrew",
+      "arPos": 22,
+      "arWord": "هَيْجَايَ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B17.C2.V8.w22",
+      "afterLocator": "OSHB:B17.C2.V8.w22",
+      "strongsId": "H1896",
+      "origSurface": "הֵגַ֖י",
+      "origMorph": "HNp",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            14,
+            22
+          ],
+          "betweenW": [
+            14,
+            22
+          ],
+          "anchor": {
+            "arPos": 15,
+            "w": 15
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثاني للعلم «هَيْجَايَ» (הֵגַי w22) مفصول بمرساة مقفلة (#15->w15) عن الموضع الأول (#14->w14).",
+      "source_witness": "OSHB Esth 2:8 w22 הֵגַ֖י (H1896, HNp)"
+    },
+    {
+      "index": 6,
+      "verse": "Zech 13:7",
+      "book": 38,
+      "ch": 13,
+      "vs": 7,
+      "lang": "hebrew",
+      "arPos": 18,
+      "arWord": "عَلَى",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B38.C13.V7.w18",
+      "afterLocator": "OSHB:B38.C13.V7.w18",
+      "strongsId": "H5921",
+      "origSurface": "עַל",
+      "origMorph": "HR",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            4,
+            18
+          ],
+          "betweenW": [
+            3,
+            18
+          ],
+          "anchor": {
+            "arPos": 5,
+            "w": 13
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثاني لحرف الجر المستقل «عَلَى» (עַל w18) في «عَلَى الصِّغَارِ» مفصول بمرساة مقفلة (#5->w13).",
+      "source_witness": "OSHB Zech 13:7 w18 עַל (H5921, HR)"
+    },
+    {
+      "index": 7,
+      "verse": "1Sam 25:28",
+      "book": 9,
+      "ch": 25,
+      "vs": 28,
+      "lang": "hebrew",
+      "arPos": 11,
+      "arWord": "لأَنَّ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B9.C25.V28.w12",
+      "afterLocator": "OSHB:B9.C25.V28.w12",
+      "strongsId": "H3588",
+      "origSurface": "כִּי",
+      "origMorph": "HC",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            5,
+            11
+          ],
+          "betweenW": [
+            5,
+            12
+          ],
+          "anchor": {
+            "arPos": 9,
+            "w": 10
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثاني لأداة التعليل «لأَنَّ» (כִּי w12) مفصول بمرساة مقفلة (#9->w10) عن الموضع الأول (#5->w5).",
+      "source_witness": "OSHB 1Sam 25:28 w12 כִּי (H3588, HC)"
+    },
+    {
+      "index": 8,
+      "verse": "Ezek 18:6",
+      "book": 26,
+      "ch": 18,
+      "vs": 6,
+      "lang": "hebrew",
+      "arPos": 13,
+      "arWord": "يُنَجِّسِ",
+      "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "beforeLocator": "OSHB:B26.C18.V6.w13",
+      "afterLocator": "OSHB:B26.C18.V6.w16",
+      "strongsId": "H2930",
+      "origSurface": "טִמֵּ֔א",
+      "origMorph": "HVpp3ms",
+      "bracketWitnesses": null,
+      "verdict": "correct",
+      "rationale_ar": "نقل فريد محرّر بـ RULE_G1 للفعل «يُنَجِّسِ» (טִמֵּא w16) بمعنى ينجّس؛ تطابق معجمي وصرفي وسياقي تام.",
+      "source_witness": "OSHB Ezek 18:6 w16 טִמֵּ֔א (H2930, HVpp3ms)"
+    },
+    {
+      "index": 9,
+      "verse": "1Kgs 16:13",
+      "book": 11,
+      "ch": 16,
+      "vs": 13,
+      "lang": "hebrew",
+      "arPos": 16,
+      "arWord": "إِلهِ",
+      "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "beforeLocator": "OSHB:B11.C16.V13.w16",
+      "afterLocator": "OSHB:B11.C16.V13.w17",
+      "strongsId": "H430",
+      "origSurface": "אֱלֹהֵ֥י",
+      "origMorph": "HNcmpc",
+      "bracketWitnesses": null,
+      "verdict": "correct",
+      "rationale_ar": "نقل فريد محرّر بـ RULE_G1 لاسم «إِلهِ» (אֱלֹהֵי w17) في تركيب «الرَّبِّ إِلهِ إِسْرَائِيلَ».",
+      "source_witness": "OSHB 1Kgs 16:13 w17 אֱלֹהֵ֥י (H430, HNcmpc)"
+    },
+    {
+      "index": 10,
+      "verse": "2Chr 5:1",
+      "book": 14,
+      "ch": 5,
+      "vs": 1,
+      "lang": "hebrew",
+      "arPos": 13,
+      "arWord": "أَبِيهِ",
+      "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "beforeLocator": "OSHB:B14.C5.V1.w13",
+      "afterLocator": "OSHB:B14.C5.V1.w14",
+      "strongsId": "H1",
+      "origSurface": "אָבִ֗יו",
+      "origMorph": "HNcmsc/Sp3ms",
+      "bracketWitnesses": null,
+      "verdict": "correct",
+      "rationale_ar": "نقل فريد محرّر بـ RULE_G1 لاسم «أَبِيهِ» (אָבִיו w14) في «دَاوُدَ أَبِيهِ» مع ضمير الغائب المتصل.",
+      "source_witness": "OSHB 2Chr 5:1 w14 אָבִ֗יו (H1, HNcmsc/Sp3ms)"
+    },
+    {
+      "index": 11,
+      "verse": "Jer 10:11",
+      "book": 24,
+      "ch": 10,
+      "vs": 11,
+      "lang": "aramaic",
+      "arPos": 8,
+      "arWord": "السَّمَاوَاتِ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B24.C10.V11.w8",
+      "afterLocator": "OSHB:B24.C10.V11.w6",
+      "strongsId": "H8065",
+      "origSurface": "שְׁמַיָּ֥א",
+      "origMorph": "ANcmpd/Td",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            8,
+            16
+          ],
+          "betweenW": [
+            6,
+            14
+          ],
+          "anchor": {
+            "arPos": 9,
+            "w": 11
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الأول للاسم الآرامي «السَّمَاوَاتِ» (שְׁמַיָּא w6) مفصول بمرساة مقفلة (#9->w11) عن الموضع الثاني (#16->w14).",
+      "source_witness": "OSHB Jer 10:11 w6 שְׁמַיָּ֥א (H8065, ANcmpd/Td)"
+    },
+    {
+      "index": 12,
+      "verse": "Dan 2:27",
+      "book": 27,
+      "ch": 2,
+      "vs": 27,
+      "lang": "aramaic",
+      "arPos": 4,
+      "arWord": "الْمَلِكِ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B27.C2.V27.w4",
+      "afterLocator": "OSHB:B27.C2.V27.w4",
+      "strongsId": "H4430",
+      "origSurface": "מַלְכָּ֖א",
+      "origMorph": "ANcmsd/Td",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            4,
+            9
+          ],
+          "betweenW": [
+            4,
+            8
+          ],
+          "anchor": {
+            "arPos": 5,
+            "w": 5
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الأول لـ«الْمَلِكِ» (מַלְכָּא w4) في «قُدَّامَ الْمَلِكِ» مفصول بمرساة مقفلة (#5->w5) عن الموضع الثاني (#9->w8).",
+      "source_witness": "OSHB Dan 2:27 w4 מַלְכָּ֖א (H4430, ANcmsd/Td)"
+    },
+    {
+      "index": 13,
+      "verse": "Dan 4:14",
+      "book": 27,
+      "ch": 4,
+      "vs": 14,
+      "lang": "aramaic",
+      "arPos": 18,
+      "arWord": "مِنْ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B27.C4.V14.w18",
+      "afterLocator": "OSHB:B27.C4.V11.w18",
+      "strongsId": "H4481",
+      "origSurface": "מִן",
+      "origMorph": "AR",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            15,
+            18
+          ],
+          "betweenW": [
+            15,
+            18
+          ],
+          "anchor": {
+            "arPos": 17,
+            "w": 17
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثاني لحرف الجر الآرامي «مِنْ» (מִן w18) في «وَالطُّيُورُ مِنْ أَغْصَانِهَا» مع ترقيم BHS الدقيق (Dan 4:11).",
+      "source_witness": "OSHB Dan 4:11 (VD 4:14) w18 מִן (H4481, AR)"
+    },
+    {
+      "index": 14,
+      "verse": "Dan 2:24",
+      "book": 27,
+      "ch": 2,
+      "vs": 24,
+      "lang": "aramaic",
+      "arPos": 10,
+      "arWord": "الْمَلِكُ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B27.C2.V24.w10",
+      "afterLocator": "OSHB:B27.C2.V24.w10",
+      "strongsId": "H4430",
+      "origSurface": "מַלְכָּ֔א",
+      "origMorph": "ANcmsd/Td",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            10,
+            25
+          ],
+          "betweenW": [
+            10,
+            24
+          ],
+          "anchor": {
+            "arPos": 14,
+            "w": 14
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الأول لـ«الْمَلِكُ» (מַלְכָּא w10) في «عَيَّنَهُ الْمَلِكُ» مفصول بمرساة مقفلة (#14->w14) عن الموضع الثاني (#25->w24).",
+      "source_witness": "OSHB Dan 2:24 w10 מַלְכָּ֔א (H4430, ANcmsd/Td)"
+    },
+    {
+      "index": 15,
+      "verse": "Dan 2:49",
+      "book": 27,
+      "ch": 2,
+      "vs": 49,
+      "lang": "aramaic",
+      "arPos": 2,
+      "arWord": "دَانِيآلُ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B27.C2.V49.w2",
+      "afterLocator": "OSHB:B27.C2.V49.w1",
+      "strongsId": "H1841",
+      "origSurface": "וְדָנִיֵּאל֙",
+      "origMorph": "AC/Np",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            2,
+            14
+          ],
+          "betweenW": [
+            1,
+            15
+          ],
+          "anchor": {
+            "arPos": 3,
+            "w": 3
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الأول للعلم «دَانِيآلُ» (וְדָנִיֵּאל w1) مفصول بمرساة مقفلة (#3->w3) عن الموضع الثاني (#14->w15).",
+      "source_witness": "OSHB Dan 2:49 w1 וְדָנִיֵּאל֙ (H1841, AC/Np)"
+    },
+    {
+      "index": 16,
+      "verse": "Dan 3:26",
+      "book": 27,
+      "ch": 3,
+      "vs": 26,
+      "lang": "aramaic",
+      "arPos": 23,
+      "arWord": "وَمِيشَخُ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B27.C3.V26.w24",
+      "afterLocator": "OSHB:B27.C3.V26.w24",
+      "strongsId": "H4336",
+      "origSurface": "מֵישַׁ֛ךְ",
+      "origMorph": "ANp",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            13,
+            23
+          ],
+          "betweenW": [
+            11,
+            24
+          ],
+          "anchor": {
+            "arPos": 16,
+            "w": 14
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثاني للعلم «وَمِيشَخُ» (מֵישַׁךְ w24) مفصول بمرساة مقفلة (#16->w14) عن الموضع الأول (#13->w11).",
+      "source_witness": "OSHB Dan 3:26 w24 מֵישַׁ֛ךְ (H4336, ANp)"
+    },
+    {
+      "index": 17,
+      "verse": "Dan 2:49",
+      "book": 27,
+      "ch": 2,
+      "vs": 49,
+      "lang": "aramaic",
+      "arPos": 4,
+      "arWord": "الْمَلِكِ،",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "OSHB:B27.C2.V49.w4",
+      "afterLocator": "OSHB:B27.C2.V49.w4",
+      "strongsId": "H4430",
+      "origSurface": "מַלְכָּ֔א",
+      "origMorph": "ANcmsd/Td",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            4,
+            18
+          ],
+          "betweenW": [
+            4,
+            17
+          ],
+          "anchor": {
+            "arPos": 6,
+            "w": 11
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الأول لـ«الْمَلِكِ» (מַלְכָּא w4) في «فَطَلَبَ دَانِيآلُ مِنَ الْمَلِكِ» مفصول بمرساة مقفلة (#6->w11) عن الموضع الثاني (#18->w17).",
+      "source_witness": "OSHB Dan 2:49 w4 מַלְכָּ֔א (H4430, ANcmsd/Td)"
+    },
+    {
+      "index": 18,
+      "verse": "Dan 2:27",
+      "book": 27,
+      "ch": 2,
+      "vs": 27,
+      "lang": "aramaic",
+      "arPos": 8,
+      "arWord": "طَلَبَهُ",
+      "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "beforeLocator": "OSHB:B27.C2.V27.w8",
+      "afterLocator": "OSHB:B27.C2.V27.w9",
+      "strongsId": "H7593",
+      "origSurface": "שָׁאֵ֔ל",
+      "origMorph": "AVqrmsa",
+      "bracketWitnesses": null,
+      "verdict": "correct",
+      "rationale_ar": "نقل فريد محرّر بـ RULE_G1 لاسم الفاعل/الفعل الآرامي «طَلَبَهُ» (שָׁאֵל w9) في «الَّذِي طَلَبَهُ الْمَلِكُ».",
+      "source_witness": "OSHB Dan 2:27 w9 שָׁאֵ֔ל (H7593, AVqrmsa)"
+    },
+    {
+      "index": 19,
+      "verse": "Dan 4:19",
+      "book": 27,
+      "ch": 4,
+      "vs": 19,
+      "lang": "aramaic",
+      "arPos": 5,
+      "arWord": "اسْمُهُ",
+      "ruleId": "RULE_G1B_UNIQUE_OSHB_ROOT_RELOC",
+      "beforeLocator": "OSHB:B27.C4.V19.w5",
+      "afterLocator": "OSHB:B27.C4.V16.w4",
+      "strongsId": "H8036",
+      "origSurface": "שְׁמֵ֣הּ",
+      "origMorph": "ANcmsc/Sp3ms",
+      "bracketWitnesses": null,
+      "verdict": "correct",
+      "rationale_ar": "نقل فريد بالجذر الآرامي محرّر بـ RULE_G1B لـ«اسْمُهُ» (שְׁמֵהּ w4) مع ترقيم BHS الدقيق (Dan 4:16).",
+      "source_witness": "OSHB Dan 4:16 (VD 4:19) w4 שְׁמֵ֣הּ (H8036, ANcmsc/Sp3ms)"
+    },
+    {
+      "index": 20,
+      "verse": "Dan 4:19",
+      "book": 27,
+      "ch": 4,
+      "vs": 19,
+      "lang": "aramaic",
+      "arPos": 4,
+      "arWord": "الَّذِي",
+      "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "beforeLocator": "OSHB:B27.C4.V19.w4",
+      "afterLocator": "OSHB:B27.C4.V16.w3",
+      "strongsId": "H1768",
+      "origSurface": "דִּֽי",
+      "origMorph": "ATr",
+      "bracketWitnesses": null,
+      "verdict": "correct",
+      "rationale_ar": "نقل فريد محرّر بـ RULE_G1 للاسم الموصول الآرامي «الَّذِي» (דִּי w3) في «الَّذِي اسْمُهُ بَلْطَشَاصَّرُ» (Dan 4:16).",
+      "source_witness": "OSHB Dan 4:16 (VD 4:19) w3 דִּֽי (H1768, ATr)"
+    },
+    {
+      "index": 21,
+      "verse": "Luke 24:32",
+      "book": 42,
+      "ch": 24,
+      "vs": 32,
+      "lang": "greek",
+      "arPos": 12,
+      "arWord": "فِي",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "SBLGNT:B42.C24.V32.w11",
+      "afterLocator": "SBLGNT:B42.C24.V32.w16",
+      "strongsId": "G1722",
+      "origSurface": "ἐν",
+      "origMorph": "P- --------",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            8,
+            12
+          ],
+          "betweenW": [
+            11,
+            16
+          ],
+          "anchor": {
+            "arPos": 11,
+            "w": 14
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثاني لحرف الجر «فِي» (ἐν w16) في «فِي الطَّرِيقِ» (ἐν τῇ ὁδῷ) مفصول بمرساة مقفلة (#11->w14) عن «فِينَا» (#8->w11).",
+      "source_witness": "SBLGNT Luke 24:32 w16 ἐν (G1722, P-)"
+    },
+    {
+      "index": 22,
+      "verse": "Rom 11:36",
+      "book": 45,
+      "ch": 11,
+      "vs": 36,
+      "lang": "greek",
+      "arPos": 9,
+      "arWord": "إِلَى",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "SBLGNT:B45.C11.V36.w9",
+      "afterLocator": "SBLGNT:B45.C11.V36.w15",
+      "strongsId": "G1519",
+      "origSurface": "εἰς",
+      "origMorph": "P- --------",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            4,
+            9
+          ],
+          "betweenW": [
+            8,
+            15
+          ],
+          "anchor": {
+            "arPos": 5,
+            "w": 11
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثاني لحرف الجر «إِلَى» (εἰς w15) في «إِلَى الأَبَدِ» (εἰς τοὺς αἰῶνας) مفصول بمرساة مقفلة (#5->w11).",
+      "source_witness": "SBLGNT Rom 11:36 w15 εἰς (G1519, P-)"
+    },
+    {
+      "index": 23,
+      "verse": "John 18:19",
+      "book": 43,
+      "ch": 18,
+      "vs": 19,
+      "lang": "greek",
+      "arPos": 5,
+      "arWord": "عَنْ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "SBLGNT:B43.C18.V19.w5",
+      "afterLocator": "SBLGNT:B43.C18.V19.w7",
+      "strongsId": "G4012",
+      "origSurface": "περὶ",
+      "origMorph": "P- --------",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            5,
+            7
+          ],
+          "betweenW": [
+            7,
+            12
+          ],
+          "anchor": {
+            "arPos": 6,
+            "w": 9
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الأول لحرف الجر «عَنْ» (περὶ w7) في «عَنْ تَلاَمِيذِهِ» مفصول بمرساة مقفلة (#6->w9) عن «وَعَنْ» (#7->w12).",
+      "source_witness": "SBLGNT John 18:19 w7 περὶ (G4012, P-)"
+    },
+    {
+      "index": 24,
+      "verse": "John 16:7",
+      "book": 43,
+      "ch": 16,
+      "vs": 7,
+      "lang": "greek",
+      "arPos": 18,
+      "arWord": "إِنْ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "SBLGNT:B43.C16.V7.w18",
+      "afterLocator": "SBLGNT:B43.C16.V7.w23",
+      "strongsId": "G1437",
+      "origSurface": "ἐὰν",
+      "origMorph": "C- --------",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            11,
+            18
+          ],
+          "betweenW": [
+            12,
+            23
+          ],
+          "anchor": {
+            "arPos": 14,
+            "w": 18
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الثاني لأداة الشرط «إِنْ» (ἐὰν w23) في «وَلكِنْ إِنْ ذَهَبْتُ» مفصول بمرساة مقفلة (#14->w18) عن الموضع الأول (#11->w12).",
+      "source_witness": "SBLGNT John 16:7 w23 ἐὰν (G1437, C-)"
+    },
+    {
+      "index": 25,
+      "verse": "Gal 2:8",
+      "book": 48,
+      "ch": 2,
+      "vs": 8,
+      "lang": "greek",
+      "arPos": 4,
+      "arWord": "فِي",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "SBLGNT:B48.C2.V8.w4",
+      "afterLocator": "SBLGNT:B48.C2.V8.w5",
+      "strongsId": "G1519",
+      "origSurface": "εἰς",
+      "origMorph": "P- --------",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            4,
+            9
+          ],
+          "betweenW": [
+            5,
+            12
+          ],
+          "anchor": {
+            "arPos": 6,
+            "w": 6
+          }
+        }
+      ],
+      "verdict": "incorrect",
+      "rationale_ar": "خطأ مقابلة سياقية موروث عزّزه RULE_G4 على حرف الجر: «فِي» في «فِي بُطْرُسَ» يترجم حالة الجر/المفعول لأجله في Πέτρῳ (w4)، بينما حرف الجر εἰς (w5) يقابل اللام في «لِرِسَالَةِ» (εἰς ἀποστολὴν).",
+      "source_witness": "SBLGNT Gal 2:8 w4 Πέτρῳ (dative) vs w5 εἰς ἀποστολὴν (G1519)"
+    },
+    {
+      "index": 26,
+      "verse": "John 12:34",
+      "book": 43,
+      "ch": 12,
+      "vs": 34,
+      "lang": "greek",
+      "arPos": 20,
+      "arWord": "الإِنْسَانِ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "SBLGNT:B43.C12.V34.w20",
+      "afterLocator": "SBLGNT:B43.C12.V34.w28",
+      "strongsId": "G444",
+      "origSurface": "ἀνθρώπου",
+      "origMorph": "N- ----GSM-",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            20,
+            25
+          ],
+          "betweenW": [
+            28,
+            35
+          ],
+          "anchor": {
+            "arPos": 21,
+            "w": 29
+          }
+        }
+      ],
+      "verdict": "correct",
+      "rationale_ar": "الموضع الأول للاسم «الإِنْسَانِ» (ἀνθρώπου w28) في «ابْنُ الإِنْسَانِ» مفصول بمرساة مقفلة (#21->w29) عن الموضع الثاني (#25->w35).",
+      "source_witness": "SBLGNT John 12:34 w28 ἀνθρώπου (G444, N- ----GSM-)"
+    },
+    {
+      "index": 27,
+      "verse": "Matt 21:9",
+      "book": 40,
+      "ch": 21,
+      "vs": 9,
+      "lang": "greek",
+      "arPos": 14,
+      "arWord": "بِاسْمِ",
+      "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+      "beforeLocator": "SBLGNT:B40.C21.V9.w14",
+      "afterLocator": "SBLGNT:B40.C21.V9.w19",
+      "strongsId": "G1722",
+      "origSurface": "ἐν",
+      "origMorph": "P- --------",
+      "bracketWitnesses": [
+        {
+          "betweenAr": [
+            14,
+            17
+          ],
+          "betweenW": [
+            19,
+            23
+          ],
+          "anchor": {
+            "arPos": 15,
+            "w": 21
+          }
+        }
+      ],
+      "verdict": "incorrect",
+      "rationale_ar": "خطأ مكوّن رئيسي موروث عزّزه RULE_G4: الكلمة العربية «بِاسْمِ» مركّبة من حرف الجر الباء والاسم المعجمي «اسْمِ» (ἐν ὀνόματι = w19+w20)، فإسنادها كمكوّن رئيسي وحيد لحرف الجر G1722 (ἐν w19) يُسقط الاسم الرئيسي G3686 (ὀνόματι w20).",
+      "source_witness": "SBLGNT Matt 21:9 w19 ἐν (G1722) + w20 ὀνόματι (G3686)"
+    },
+    {
+      "index": 28,
+      "verse": "Rev 4:10",
+      "book": 66,
+      "ch": 4,
+      "vs": 10,
+      "lang": "greek",
+      "arPos": 6,
+      "arWord": "الْجَالِسِ",
+      "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "beforeLocator": "SBLGNT:B66.C4.V10.w6",
+      "afterLocator": "SBLGNT:B66.C4.V10.w8",
+      "strongsId": "G2521",
+      "origSurface": "καθημένου",
+      "origMorph": "V- -PMPGSM-",
+      "bracketWitnesses": null,
+      "verdict": "correct",
+      "rationale_ar": "نقل فريد محرّر بـ RULE_G1 لاسم الفاعل «الْجَالِسِ» (καθημένου w8) في «قُدَّامَ الْجَالِسِ عَلَى الْعَرْشِ».",
+      "source_witness": "SBLGNT Rev 4:10 w8 καθημένου (G2521, V- -PMPGSM-)"
+    },
+    {
+      "index": 29,
+      "verse": "Luke 1:35",
+      "book": 42,
+      "ch": 1,
+      "vs": 35,
+      "lang": "greek",
+      "arPos": 4,
+      "arWord": "لَها",
+      "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "beforeLocator": "SBLGNT:B42.C1.V35.w4",
+      "afterLocator": "SBLGNT:B42.C1.V35.w6",
+      "strongsId": "G846",
+      "origSurface": "αὐτῇ",
+      "origMorph": "RP ----DSF-",
+      "bracketWitnesses": null,
+      "verdict": "correct",
+      "rationale_ar": "نقل فريد محرّر بـ RULE_G1 للضمير «لَها» (αὐτῇ w6) في «وَقَالَ لَها».",
+      "source_witness": "SBLGNT Luke 1:35 w6 αὐτῇ (G846, RP ----DSF-)"
+    },
+    {
+      "index": 30,
+      "verse": "Acts 22:6",
+      "book": 44,
+      "ch": 22,
+      "vs": 6,
+      "lang": "greek",
+      "arPos": 17,
+      "arWord": "نُورٌ",
+      "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+      "beforeLocator": "SBLGNT:B44.C22.V6.w17",
+      "afterLocator": "SBLGNT:B44.C22.V6.w16",
+      "strongsId": "G5457",
+      "origSurface": "φῶς",
+      "origMorph": "N- ----ASN-",
+      "bracketWitnesses": null,
+      "verdict": "correct",
+      "rationale_ar": "نقل فريد محرّر بـ RULE_G1 للاسم «نُورٌ» (φῶς w16) في «نُورٌ عَظِيمٌ».",
+      "source_witness": "SBLGNT Acts 22:6 w16 φῶς (G5457, N- ----ASN-)"
+    }
+  ]
+}

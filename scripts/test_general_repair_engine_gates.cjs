@@ -69,15 +69,30 @@ assert(
   JSON.stringify(zech11 && { status: zech11.status, ruleId: zech11.ruleId, alts: zech11.alternatives.length })
 );
 
-// 2. Negative Gate: Eph 1:21 duplicate occurrence (ἐν x2: w16 & w22)
+// 2A. Negative Gate: Unbracketed Eph 1:21 duplicate occurrence (ἐν x2: w16 & w22 with NO separating anchors) -> strictly PENDING_REVIEW
 const ephRows = loadVerseRows(prodDb, 49, 1, 21).map(r => ({ ...r, grammarNotes: null }));
-const ephRes = evaluateVerse({ book: 49, ch: 1, vs: 21, lang: 'greek', name: 'Eph 1:21' }, ephRows, sources, strongsLexicon);
-const eph11 = ephRes.proposals.find(p => p.arPos === 11);
-const eph16 = ephRes.proposals.find(p => p.arPos === 16);
+const ephUnbracketedRows = ephRows.filter(r => r.arPos === 11 || r.arPos === 16);
+const ephUnbRes = evaluateVerse({ book: 49, ch: 1, vs: 21, lang: 'greek', name: 'Eph 1:21 (unbracketed)' }, ephUnbracketedRows, sources, strongsLexicon);
+const eph11Unb = ephUnbRes.proposals.find(p => p.arPos === 11);
+const eph16Unb = ephUnbRes.proposals.find(p => p.arPos === 16);
 assert(
-  Boolean(eph11 && eph11.status === 'PENDING_REVIEW' && eph16 && eph16.status === 'PENDING_REVIEW' && eph16.alternatives.length === 2),
-  'Negative Gate 2: Eph 1:21 #11 & #16 («فِي», ἐν @ w16/w22) strictly demoted to PENDING_REVIEW with 2 competing alternatives',
-  JSON.stringify({ eph11: eph11 && eph11.ruleId, eph16: eph16 && eph16.ruleId })
+  Boolean(eph11Unb && eph11Unb.status === 'PENDING_REVIEW' && eph16Unb && eph16Unb.status === 'PENDING_REVIEW' && eph16Unb.alternatives.length === 2),
+  'Negative Gate 2A: Unbracketed Eph 1:21 #11 & #16 («فِي», ἐν @ w16/w22 without separating anchors) strictly demoted to PENDING_REVIEW',
+  JSON.stringify({ eph11Unb: eph11Unb && eph11Unb.ruleId, eph16Unb: eph16Unb && eph16Unb.ruleId })
+);
+
+// 2B. Positive Gate (v1.4 RULE_G4): Strictly bracketed Eph 1:21 #11 & #16 (separated by locked anchors #12/#13/#15) -> #11->w16, #16->w22!
+const ephDisplaced16 = ephRows.map(r => r.arPos === 16 ? { ...r, origPos: 16, verifiedLocator: 'SBLGNT:B49.C1.V21.w16', hasCleanPrimaryWms: false } : r);
+const ephBrackRes = evaluateVerse({ book: 49, ch: 1, vs: 21, lang: 'greek', name: 'Eph 1:21 (bracketed G4)' }, ephDisplaced16, sources, strongsLexicon);
+const eph11Br = ephBrackRes.proposals.find(p => p.arPos === 11);
+const eph16Br = ephBrackRes.proposals.find(p => p.arPos === 16);
+assert(
+  Boolean(
+    eph11Br && eph11Br.proposed && eph11Br.proposed.origPos === 16 &&
+    eph16Br && eph16Br.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && eph16Br.ruleId === 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION' && eph16Br.proposed && eph16Br.proposed.origPos === 22
+  ),
+  'Positive Gate 2B (v1.4 G4): Bracketed Eph 1:21 #11/#16 strictly resolves #11->w16 and #16->w22 via separating locked anchors',
+  JSON.stringify({ eph11Br: eph11Br && eph11Br.proposed && eph11Br.proposed.origPos, eph16Br: eph16Br && { status: eph16Br.status, ruleId: eph16Br.ruleId, pos: eph16Br.proposed && eph16Br.proposed.origPos } })
 );
 
 // 3. Negative Gate: Peer competing claims on the same unique token

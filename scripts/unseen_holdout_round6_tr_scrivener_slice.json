@@ -1,0 +1,873 @@
+{
+  "source": "scripts/data/gnt_scrivener.json",
+  "round": 6,
+  "verses": [
+    {
+      "book_greek": "Κατἀ Μάρκον",
+      "book_name": "Mark",
+      "book_name_osis": "Mark",
+      "book_name_short": "MRK",
+      "chapter": 15,
+      "verse": 4,
+      "greek_text": "ὁ δὲ Πιλάτος πάλιν ἐπηρώτησεν αὐτόν, λέγων, Οὐκ ἀποκρίνῃ οὐδέν; ἴδε, πόσα σου καταμαρτυροῦσιν.",
+      "words": [
+        {
+          "greek": "ὁ",
+          "transliteration": "o",
+          "grammar": "T-NSM",
+          "grammar_human": "Nominative Singular Masculine",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "δὲ",
+          "transliteration": "de",
+          "grammar": "CONJ",
+          "grammar_human": "Conjunction",
+          "strong": 1161,
+          "dictionary_form": "δέ",
+          "definition": "but, on the other hand, and"
+        },
+        {
+          "greek": "Πιλάτος",
+          "transliteration": "pilatov",
+          "grammar": "N-NSM",
+          "grammar_human": "Noun Nominative Singular Masculine",
+          "strong": 4091,
+          "dictionary_form": "Πιλᾶτος",
+          "definition": "Pilate"
+        },
+        {
+          "greek": "πάλιν",
+          "transliteration": "palin",
+          "grammar": "ADV",
+          "grammar_human": "Adverb",
+          "strong": 3825,
+          "dictionary_form": "πάλιν",
+          "definition": "again, further, on the other hand"
+        },
+        {
+          "greek": "ἐπηρώτησεν",
+          "transliteration": "ephrwthsen",
+          "grammar": "V-AAI-3S",
+          "grammar_human": "Verb Third Person Singular Aorist Active Indicative",
+          "strong": 1905,
+          "dictionary_form": "ἐπερωτάω",
+          "definition": "I interrogate, question, demand of"
+        },
+        {
+          "greek": "αὐτόν,",
+          "transliteration": "auton",
+          "grammar": "P-ASM",
+          "grammar_human": "Accusative Singular Masculine",
+          "strong": 846,
+          "dictionary_form": "αὐτός",
+          "definition": "he, she, it, they, them, same"
+        },
+        {
+          "greek": "λέγων,",
+          "transliteration": "legwn",
+          "grammar": "V-PAP-NSM",
+          "grammar_human": "Verb Present Active Participle Nominative Singular Masculine",
+          "strong": 3004,
+          "dictionary_form": "λέγω",
+          "definition": "I say, speak"
+        },
+        {
+          "greek": "Οὐκ",
+          "transliteration": "ouk",
+          "grammar": "PRT-N",
+          "grammar_human": "Participle",
+          "strong": 3756,
+          "dictionary_form": "οὐ",
+          "definition": "no, not"
+        },
+        {
+          "greek": "ἀποκρίνῃ",
+          "transliteration": "apokrinh",
+          "grammar": "V-PNI-2S",
+          "grammar_human": "Verb Second Person Singular Present Middle or Passive Deponent Indicative",
+          "strong": 611,
+          "dictionary_form": "ἀποκρίνομαι",
+          "definition": "I answer, reply"
+        },
+        {
+          "greek": "οὐδέν;",
+          "transliteration": "ouden",
+          "grammar": "A-ASN-N",
+          "grammar_human": "Adjective Accusative Singular Neuter",
+          "strong": 3762,
+          "dictionary_form": "οὐδείς",
+          "definition": "no one, none, nothing"
+        },
+        {
+          "greek": "ἴδε,",
+          "transliteration": "ide",
+          "grammar": "V-2AAM-2S",
+          "grammar_human": "Verb Second Person Singular Second Aorist Active Imperative",
+          "strong": 3708,
+          "dictionary_form": "ὁράω",
+          "definition": "I see, look upon, experience"
+        },
+        {
+          "greek": "πόσα",
+          "transliteration": "posa",
+          "grammar": "Q-APN",
+          "grammar_human": "Accusative Plural Neuter",
+          "strong": 4214,
+          "dictionary_form": "πόσος",
+          "definition": "how much, how great, how many"
+        },
+        {
+          "greek": "σου",
+          "transliteration": "sou",
+          "grammar": "P-2GS",
+          "grammar_human": "",
+          "strong": 4771,
+          "dictionary_form": "σύ",
+          "definition": "you"
+        },
+        {
+          "greek": "καταμαρτυροῦσιν.",
+          "transliteration": "katamarturousin",
+          "grammar": "V-PAI-3P",
+          "grammar_human": "Verb Third Person Plural Present Active Indicative",
+          "strong": 2649,
+          "dictionary_form": "καταμαρτυρέω",
+          "definition": "I give evidence against"
+        }
+      ]
+    },
+    {
+      "book_greek": "Κατἀ Λουκᾶν",
+      "book_name": "Luke",
+      "book_name_osis": "Luke",
+      "book_name_short": "LUK",
+      "chapter": 24,
+      "verse": 30,
+      "greek_text": "καὶ ἐγένετο ἐν τῷ κατακλιθῆναι αὐτὸν μετ᾽ αὐτῶν, λαβὼν τὸν ἄρτον εὐλόγησε, καὶ κλάσας ἐπεδίδου αὐτοῖς.",
+      "words": [
+        {
+          "greek": "καὶ",
+          "transliteration": "kai",
+          "grammar": "CONJ",
+          "grammar_human": "Conjunction",
+          "strong": 2532,
+          "dictionary_form": "καί",
+          "definition": "and, even, also, namely"
+        },
+        {
+          "greek": "ἐγένετο",
+          "transliteration": "egeneto",
+          "grammar": "V-2ADI-3S",
+          "grammar_human": "Verb Third Person Singular Second Aorist Middle Deponent Indicative",
+          "strong": 1096,
+          "dictionary_form": "γίνομαι",
+          "definition": "I come into being, am born"
+        },
+        {
+          "greek": "ἐν",
+          "transliteration": "en",
+          "grammar": "PREP",
+          "grammar_human": "Preposition",
+          "strong": 1722,
+          "dictionary_form": "ἐν",
+          "definition": "in, on, among"
+        },
+        {
+          "greek": "τῷ",
+          "transliteration": "tw",
+          "grammar": "T-DSN",
+          "grammar_human": "Dative Singular Neuter",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "κατακλιθῆναι",
+          "transliteration": "katakliqhnai",
+          "grammar": "V-APN",
+          "grammar_human": "Verb Aorist Passive Infinitive",
+          "strong": 2625,
+          "dictionary_form": "κατακλίνω",
+          "definition": "I recline, cause to recline"
+        },
+        {
+          "greek": "αὐτὸν",
+          "transliteration": "auton",
+          "grammar": "P-ASM",
+          "grammar_human": "Accusative Singular Masculine",
+          "strong": 846,
+          "dictionary_form": "αὐτός",
+          "definition": "he, she, it, they, them, same"
+        },
+        {
+          "greek": "μετ᾽",
+          "transliteration": "met",
+          "grammar": "PREP",
+          "grammar_human": "Preposition",
+          "strong": 3326,
+          "dictionary_form": "μετά",
+          "definition": "with, after"
+        },
+        {
+          "greek": "αὐτῶν,",
+          "transliteration": "autwn",
+          "grammar": "P-GPM",
+          "grammar_human": "Genitive Plural Masculine",
+          "strong": 846,
+          "dictionary_form": "αὐτός",
+          "definition": "he, she, it, they, them, same"
+        },
+        {
+          "greek": "λαβὼν",
+          "transliteration": "labwn",
+          "grammar": "V-2AAP-NSM",
+          "grammar_human": "Verb Second Aorist Active Participle Nominative Singular Masculine",
+          "strong": 2983,
+          "dictionary_form": "λαμβάνω",
+          "definition": "I receive, take"
+        },
+        {
+          "greek": "τὸν",
+          "transliteration": "ton",
+          "grammar": "T-ASM",
+          "grammar_human": "Accusative Singular Masculine",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "ἄρτον",
+          "transliteration": "arton",
+          "grammar": "N-ASM",
+          "grammar_human": "Noun Accusative Singular Masculine",
+          "strong": 740,
+          "dictionary_form": "ἄρτος",
+          "definition": "bread, a loaf, food"
+        },
+        {
+          "greek": "εὐλόγησε,",
+          "transliteration": "euloghsen",
+          "grammar": "V-AAI-3S",
+          "grammar_human": "Verb Third Person Singular Aorist Active Indicative",
+          "strong": 2127,
+          "dictionary_form": "εὐλογέω",
+          "definition": "I bless"
+        },
+        {
+          "greek": "καὶ",
+          "transliteration": "kai",
+          "grammar": "CONJ",
+          "grammar_human": "Conjunction",
+          "strong": 2532,
+          "dictionary_form": "καί",
+          "definition": "and, even, also, namely"
+        },
+        {
+          "greek": "κλάσας",
+          "transliteration": "klasav",
+          "grammar": "V-AAP-NSM",
+          "grammar_human": "Verb Aorist Active Participle Nominative Singular Masculine",
+          "strong": 2806,
+          "dictionary_form": "κλάω",
+          "definition": "I break"
+        },
+        {
+          "greek": "ἐπεδίδου",
+          "transliteration": "epedidou",
+          "grammar": "V-IAI-3S",
+          "grammar_human": "Verb Third Person Singular Imperfect Active Indicative",
+          "strong": 1929,
+          "dictionary_form": "ἐπιδίδωμι",
+          "definition": "I hand in, give up, give way"
+        },
+        {
+          "greek": "αὐτοῖς.",
+          "transliteration": "autoiv",
+          "grammar": "P-DPM",
+          "grammar_human": "Dative Plural Masculine",
+          "strong": 846,
+          "dictionary_form": "αὐτός",
+          "definition": "he, she, it, they, them, same"
+        }
+      ]
+    },
+    {
+      "book_greek": "Πρὸς Ῥωμαίους",
+      "book_name": "Romans",
+      "book_name_osis": "Rom",
+      "book_name_short": "ROM",
+      "chapter": 8,
+      "verse": 35,
+      "greek_text": "τίς ἡμᾶς χωρίσει ἀπὸ τῆς ἀγάπης τοῦ Χριστοῦ; θλίψις, ἢ στενοχωρία, ἢ διωγμός, ἢ λιμός, ἢ γυμνότης, ἢ κίνδυνος, ἢ μάχαιρα;",
+      "words": [
+        {
+          "greek": "τίς",
+          "transliteration": "tiv",
+          "grammar": "I-NSM",
+          "grammar_human": "Nominative Singular Masculine",
+          "strong": 5101,
+          "dictionary_form": "τίς",
+          "definition": "who, which, what"
+        },
+        {
+          "greek": "ἡμᾶς",
+          "transliteration": "hmav",
+          "grammar": "P-1AP",
+          "grammar_human": "",
+          "strong": 1473,
+          "dictionary_form": "ἐγώ",
+          "definition": "I"
+        },
+        {
+          "greek": "χωρίσει",
+          "transliteration": "cwrisei",
+          "grammar": "V-FAI-3S",
+          "grammar_human": "Verb Third Person Singular Future Active Indicative",
+          "strong": 5563,
+          "dictionary_form": "χωρίζω",
+          "definition": "I separate, depart"
+        },
+        {
+          "greek": "ἀπὸ",
+          "transliteration": "apo",
+          "grammar": "PREP",
+          "grammar_human": "Preposition",
+          "strong": 575,
+          "dictionary_form": "ἀπό",
+          "definition": "from, away from"
+        },
+        {
+          "greek": "τῆς",
+          "transliteration": "thv",
+          "grammar": "T-GSF",
+          "grammar_human": "Genitive Singular Feminine",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "ἀγάπης",
+          "transliteration": "agaphv",
+          "grammar": "N-GSF",
+          "grammar_human": "Noun Genitive Singular Feminine",
+          "strong": 26,
+          "dictionary_form": "ἀγάπη",
+          "definition": "love"
+        },
+        {
+          "greek": "τοῦ",
+          "transliteration": "tou",
+          "grammar": "T-GSM",
+          "grammar_human": "Genitive Singular Masculine",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "Χριστοῦ;",
+          "transliteration": "cristou",
+          "grammar": "N-GSM",
+          "grammar_human": "Noun Genitive Singular Masculine",
+          "strong": 5547,
+          "dictionary_form": "Χριστός",
+          "definition": "anointed, the Messiah, the Christ"
+        },
+        {
+          "greek": "θλίψις,",
+          "transliteration": "qliyiv",
+          "grammar": "N-NSF",
+          "grammar_human": "Noun Nominative Singular Feminine",
+          "strong": 2347,
+          "dictionary_form": "θλῖψις",
+          "definition": "persecution, affliction, distress"
+        },
+        {
+          "greek": "ἢ",
+          "transliteration": "h",
+          "grammar": "PRT",
+          "grammar_human": "Participle",
+          "strong": 2228,
+          "dictionary_form": "ἤ",
+          "definition": "or, than"
+        },
+        {
+          "greek": "στενοχωρία,",
+          "transliteration": "stenocwria",
+          "grammar": "N-NSF",
+          "grammar_human": "Noun Nominative Singular Feminine",
+          "strong": 4730,
+          "dictionary_form": "στενοχωρία",
+          "definition": "a narrow space, great distress"
+        },
+        {
+          "greek": "ἢ",
+          "transliteration": "h",
+          "grammar": "PRT",
+          "grammar_human": "Participle",
+          "strong": 2228,
+          "dictionary_form": "ἤ",
+          "definition": "or, than"
+        },
+        {
+          "greek": "διωγμός,",
+          "transliteration": "diwgmov",
+          "grammar": "N-NSM",
+          "grammar_human": "Noun Nominative Singular Masculine",
+          "strong": 1375,
+          "dictionary_form": "διωγμός",
+          "definition": "persecution"
+        },
+        {
+          "greek": "ἢ",
+          "transliteration": "h",
+          "grammar": "PRT",
+          "grammar_human": "Participle",
+          "strong": 2228,
+          "dictionary_form": "ἤ",
+          "definition": "or, than"
+        },
+        {
+          "greek": "λιμός,",
+          "transliteration": "limov",
+          "grammar": "N-NSM",
+          "grammar_human": "Noun Nominative Singular Masculine",
+          "strong": 3042,
+          "dictionary_form": "λιμός",
+          "definition": "a famine, hunger"
+        },
+        {
+          "greek": "ἢ",
+          "transliteration": "h",
+          "grammar": "PRT",
+          "grammar_human": "Participle",
+          "strong": 2228,
+          "dictionary_form": "ἤ",
+          "definition": "or, than"
+        },
+        {
+          "greek": "γυμνότης,",
+          "transliteration": "gumnothv",
+          "grammar": "N-NSF",
+          "grammar_human": "Noun Nominative Singular Feminine",
+          "strong": 1132,
+          "dictionary_form": "γυμνότης",
+          "definition": "nakedness"
+        },
+        {
+          "greek": "ἢ",
+          "transliteration": "h",
+          "grammar": "PRT",
+          "grammar_human": "Participle",
+          "strong": 2228,
+          "dictionary_form": "ἤ",
+          "definition": "or, than"
+        },
+        {
+          "greek": "κίνδυνος,",
+          "transliteration": "kindunov",
+          "grammar": "N-NSM",
+          "grammar_human": "Noun Nominative Singular Masculine",
+          "strong": 2794,
+          "dictionary_form": "κίνδυνος",
+          "definition": "danger, peril, risk"
+        },
+        {
+          "greek": "ἢ",
+          "transliteration": "h",
+          "grammar": "PRT",
+          "grammar_human": "Participle",
+          "strong": 2228,
+          "dictionary_form": "ἤ",
+          "definition": "or, than"
+        },
+        {
+          "greek": "μάχαιρα;",
+          "transliteration": "macaira",
+          "grammar": "N-NSF",
+          "grammar_human": "Noun Nominative Singular Feminine",
+          "strong": 3162,
+          "dictionary_form": "μάχαιρα",
+          "definition": "a sword"
+        }
+      ]
+    },
+    {
+      "book_greek": "Πρὸς Γαλάτας",
+      "book_name": "Galatians",
+      "book_name_osis": "Gal",
+      "book_name_short": "GAL",
+      "chapter": 6,
+      "verse": 2,
+      "greek_text": "ἀλλήλων τὰ βάρη βαστάζετε, καὶ οὕτως ἀναπληρώσατε τὸν νόμον τοῦ Χριστοῦ.",
+      "words": [
+        {
+          "greek": "ἀλλήλων",
+          "transliteration": "allhlwn",
+          "grammar": "C-GPM",
+          "grammar_human": "Genitive Plural Masculine",
+          "strong": 240,
+          "dictionary_form": "ἀλλήλων",
+          "definition": "one another"
+        },
+        {
+          "greek": "τὰ",
+          "transliteration": "ta",
+          "grammar": "T-APN",
+          "grammar_human": "Accusative Plural Neuter",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "βάρη",
+          "transliteration": "barh",
+          "grammar": "N-APN",
+          "grammar_human": "Noun Accusative Plural Neuter",
+          "strong": 922,
+          "dictionary_form": "βάρος",
+          "definition": "a weight, burden"
+        },
+        {
+          "greek": "βαστάζετε,",
+          "transliteration": "bastazete",
+          "grammar": "V-PAM-2P",
+          "grammar_human": "Verb Second Person Plural Present Active Imperative",
+          "strong": 941,
+          "dictionary_form": "βαστάζω",
+          "definition": "I carry, carry away, bear"
+        },
+        {
+          "greek": "καὶ",
+          "transliteration": "kai",
+          "grammar": "CONJ",
+          "grammar_human": "Conjunction",
+          "strong": 2532,
+          "dictionary_form": "καί",
+          "definition": "and, even, also, namely"
+        },
+        {
+          "greek": "οὕτως",
+          "transliteration": "outwv",
+          "grammar": "ADV",
+          "grammar_human": "Adverb",
+          "strong": 3779,
+          "dictionary_form": "οὕτως",
+          "definition": "thus, so, in this manner"
+        },
+        {
+          "greek": "ἀναπληρώσατε",
+          "transliteration": "anaplhrwsate",
+          "grammar": "V-AAM-2P",
+          "grammar_human": "Verb Second Person Plural Aorist Active Imperative",
+          "strong": 378,
+          "dictionary_form": "ἀναπληρόω",
+          "definition": "I fill up, make up, fulfill"
+        },
+        {
+          "greek": "τὸν",
+          "transliteration": "ton",
+          "grammar": "T-ASM",
+          "grammar_human": "Accusative Singular Masculine",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "νόμον",
+          "transliteration": "nomon",
+          "grammar": "N-ASM",
+          "grammar_human": "Noun Accusative Singular Masculine",
+          "strong": 3551,
+          "dictionary_form": "νόμος",
+          "definition": "a law, the Mosaic Law"
+        },
+        {
+          "greek": "τοῦ",
+          "transliteration": "tou",
+          "grammar": "T-GSM",
+          "grammar_human": "Genitive Singular Masculine",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "Χριστοῦ.",
+          "transliteration": "cristou",
+          "grammar": "N-GSM",
+          "grammar_human": "Noun Genitive Singular Masculine",
+          "strong": 5547,
+          "dictionary_form": "Χριστός",
+          "definition": "anointed, the Messiah, the Christ"
+        }
+      ]
+    },
+    {
+      "book_greek": "Πρὸς Ἐφεσίους",
+      "book_name": "Ephesians",
+      "book_name_osis": "Eph",
+      "book_name_short": "EPH",
+      "chapter": 3,
+      "verse": 1,
+      "greek_text": "Τούτου χάριν ἐγὼ Παῦλος ὁ δέσμιος τοῦ Χριστοῦ Ἰησοῦ ὑπὲρ ὑμῶν τῶν ἐθνῶν,-",
+      "words": [
+        {
+          "greek": "Τούτου",
+          "transliteration": "toutou",
+          "grammar": "D-GSN",
+          "grammar_human": "Genitive Singular Neuter",
+          "strong": 3778,
+          "dictionary_form": "οὗτος",
+          "definition": "this, he, she, it"
+        },
+        {
+          "greek": "χάριν",
+          "transliteration": "carin",
+          "grammar": "PREP",
+          "grammar_human": "Preposition",
+          "strong": 5484,
+          "dictionary_form": "χάριν",
+          "definition": "on account of"
+        },
+        {
+          "greek": "ἐγὼ",
+          "transliteration": "egw",
+          "grammar": "P-1NS",
+          "grammar_human": "",
+          "strong": 1473,
+          "dictionary_form": "ἐγώ",
+          "definition": "I"
+        },
+        {
+          "greek": "Παῦλος",
+          "transliteration": "paulov",
+          "grammar": "N-NSM",
+          "grammar_human": "Noun Nominative Singular Masculine",
+          "strong": 3972,
+          "dictionary_form": "Παῦλος",
+          "definition": "Paul"
+        },
+        {
+          "greek": "ὁ",
+          "transliteration": "o",
+          "grammar": "T-NSM",
+          "grammar_human": "Nominative Singular Masculine",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "δέσμιος",
+          "transliteration": "desmiov",
+          "grammar": "N-NSM",
+          "grammar_human": "Noun Nominative Singular Masculine",
+          "strong": 1198,
+          "dictionary_form": "δέσμιος",
+          "definition": "one bound, a prisoner"
+        },
+        {
+          "greek": "τοῦ",
+          "transliteration": "tou",
+          "grammar": "T-GSM",
+          "grammar_human": "Genitive Singular Masculine",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "Χριστοῦ",
+          "transliteration": "cristou",
+          "grammar": "N-GSM",
+          "grammar_human": "Noun Genitive Singular Masculine",
+          "strong": 5547,
+          "dictionary_form": "Χριστός",
+          "definition": "anointed, the Messiah, the Christ"
+        },
+        {
+          "greek": "Ἰησοῦ",
+          "transliteration": "ihsou",
+          "grammar": "N-GSM",
+          "grammar_human": "Noun Genitive Singular Masculine",
+          "strong": 2424,
+          "dictionary_form": "Ἰησοῦς",
+          "definition": "Jesus"
+        },
+        {
+          "greek": "ὑπὲρ",
+          "transliteration": "uper",
+          "grammar": "PREP",
+          "grammar_human": "Preposition",
+          "strong": 5228,
+          "dictionary_form": "ὑπέρ",
+          "definition": "in behalf of, above"
+        },
+        {
+          "greek": "ὑμῶν",
+          "transliteration": "umwn",
+          "grammar": "P-2GP",
+          "grammar_human": "",
+          "strong": 4771,
+          "dictionary_form": "σύ",
+          "definition": "you"
+        },
+        {
+          "greek": "τῶν",
+          "transliteration": "twn",
+          "grammar": "T-GPN",
+          "grammar_human": "Genitive Plural Neuter",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "ἐθνῶν,-",
+          "transliteration": "eqnwn",
+          "grammar": "N-GPN",
+          "grammar_human": "Noun Genitive Plural Neuter",
+          "strong": 1484,
+          "dictionary_form": "ἔθνος",
+          "definition": "a race, people, the Gentiles"
+        }
+      ]
+    },
+    {
+      "book_greek": "Πέτρου α᾽",
+      "book_name": "1 Peter",
+      "book_name_osis": "1Pet",
+      "book_name_short": "1PE",
+      "chapter": 5,
+      "verse": 8,
+      "greek_text": "νήψατε, γρηγορήσατε, ὅτι ὁ ἀντίδικος ὑμῶν διάβολος, ὡς λέων ὠρυόμενος, περιπατεῖ ζητῶν τίνα καταπίῃ·",
+      "words": [
+        {
+          "greek": "νήψατε,",
+          "transliteration": "nhyate",
+          "grammar": "V-AAM-2P",
+          "grammar_human": "Verb Second Person Plural Aorist Active Imperative",
+          "strong": 3525,
+          "dictionary_form": "νήφω",
+          "definition": "I am calm, vigilant, sober"
+        },
+        {
+          "greek": "γρηγορήσατε,",
+          "transliteration": "grhgorhsate",
+          "grammar": "V-AAM-2P",
+          "grammar_human": "Verb Second Person Plural Aorist Active Imperative",
+          "strong": 1127,
+          "dictionary_form": "γρηγορέω",
+          "definition": "I am awake, am vigilant, watch"
+        },
+        {
+          "greek": "ὅτι",
+          "transliteration": "oti",
+          "grammar": "CONJ",
+          "grammar_human": "Conjunction",
+          "strong": 3754,
+          "dictionary_form": "ὅτι",
+          "definition": "that, since, because"
+        },
+        {
+          "greek": "ὁ",
+          "transliteration": "o",
+          "grammar": "T-NSM",
+          "grammar_human": "Nominative Singular Masculine",
+          "strong": 3588,
+          "dictionary_form": "ὁ",
+          "definition": "the"
+        },
+        {
+          "greek": "ἀντίδικος",
+          "transliteration": "antidikov",
+          "grammar": "N-NSM",
+          "grammar_human": "Noun Nominative Singular Masculine",
+          "strong": 476,
+          "dictionary_form": "ἀντίδικος",
+          "definition": "an opponent, adversary"
+        },
+        {
+          "greek": "ὑμῶν",
+          "transliteration": "umwn",
+          "grammar": "P-2GP",
+          "grammar_human": "",
+          "strong": 4771,
+          "dictionary_form": "σύ",
+          "definition": "you"
+        },
+        {
+          "greek": "διάβολος,",
+          "transliteration": "diabolov",
+          "grammar": "A-NSM",
+          "grammar_human": "Adjective Nominative Singular Masculine",
+          "strong": 1228,
+          "dictionary_form": "διάβολος",
+          "definition": "slanderous, the Slanderer, the Devil"
+        },
+        {
+          "greek": "ὡς",
+          "transliteration": "wv",
+          "grammar": "ADV",
+          "grammar_human": "Adverb",
+          "strong": 5613,
+          "dictionary_form": "ὡς",
+          "definition": "as, like as, how, while, so that"
+        },
+        {
+          "greek": "λέων",
+          "transliteration": "lewn",
+          "grammar": "N-NSM",
+          "grammar_human": "Noun Nominative Singular Masculine",
+          "strong": 3023,
+          "dictionary_form": "λέων",
+          "definition": "a lion"
+        },
+        {
+          "greek": "ὠρυόμενος,",
+          "transliteration": "wruomenov",
+          "grammar": "V-PNP-NSM",
+          "grammar_human": "Verb Present Middle or Passive Deponent Participle Nominative Singular Masculine",
+          "strong": 5612,
+          "dictionary_form": "ὠρύομαι",
+          "definition": "I roar, howl"
+        },
+        {
+          "greek": "περιπατεῖ",
+          "transliteration": "peripatei",
+          "grammar": "V-PAI-3S",
+          "grammar_human": "Verb Third Person Singular Present Active Indicative",
+          "strong": 4043,
+          "dictionary_form": "περιπατέω",
+          "definition": "I walk, conduct my life"
+        },
+        {
+          "greek": "ζητῶν",
+          "transliteration": "zhtwn",
+          "grammar": "V-PAP-NSM",
+          "grammar_human": "Verb Present Active Participle Nominative Singular Masculine",
+          "strong": 2212,
+          "dictionary_form": "ζητέω",
+          "definition": "I seek, search for, desire"
+        },
+        {
+          "greek": "τίνα",
+          "transliteration": "tina",
+          "grammar": "I-ASM",
+          "grammar_human": "Accusative Singular Masculine",
+          "strong": 5101,
+          "dictionary_form": "τίς",
+          "definition": "who, which, what"
+        },
+        {
+          "greek": "καταπίῃ·",
+          "transliteration": "katapih",
+          "grammar": "V-2AAS-3S",
+          "grammar_human": "Verb Third Person Singular Second Aorist Active Subjunctive",
+          "strong": 2666,
+          "dictionary_form": "καταπίνω",
+          "definition": "I swallow, devour, destroy"
+        }
+      ]
+    }
+  ]
+}

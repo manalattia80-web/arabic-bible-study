@@ -204,7 +204,7 @@ jobs:
 
           - **General Repair Engine `v1.3` Promotion**: Applied `122,961` verified high-confidence alignment & morphology repairs across all 66 books (`434,351` exact denominator; `278,828` conservatively held in `PENDING_REVIEW`; `32,562` preserved).
           - **Contextual & Structural Safety Guards**: Independent Strong's/lexicon verification, Arabic-to-Source contextual POS compatibility (`1,797` mismatches blocked), fixed-point whole-verse anti-collision including untouched pending neighbors (`0` `sourceLocator` regressions), atomic component reorganization (`0` `multiple_primary_components`), and bitwise-immutable Protected Adjudicated Registry (`92` verses / `1,477` rows / `1,622` components).
-          - **Verification & Non-Regression (`targetDbVersion = 380`, `76` chunks)**:
+          - **Verification & Non-Regression (`targetDbVersion = ${{ env.APP_VER_CODE }}`, `70` chunks)**:
             - `B20`: `311 / 311 (100.00%)` | `automated_database_audit.cjs`: `0` failures | `test_general_repair_engine_gates.cjs`: `20 / 20` passing.
             - `R1`: `253 / 253 (100.00%)` | `R2`: `255 / 255 (100.00%)` | `R3`: `233 / 234` (`234 / 234` with documented Dan 5:2 non-adjacent unit).
             - Out-of-sample validation (`0` regressions on all 4 axes): `Round 4B` `61/197 → 79/197 (+9.14%)`, `Round 5` `33/247 → 77/247 (+17.81%)`.
