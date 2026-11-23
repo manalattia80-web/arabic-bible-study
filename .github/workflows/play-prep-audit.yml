@@ -10,10 +10,73 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  actions: read
 
 jobs:
+  publish-v383-prerelease:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Verified Artifact 14825252251 (Run 45189145505 / Commit 1b10ce5)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            -o artifact.zip \
+            "https://api.github.com/repos/manalattia80-web/arabic-bible-study/actions/artifacts/14825252251/zip"
+          unzip -q artifact.zip
+          mv arabic-bible-study-v383.apk arabic-bible-study-app.apk
+          mv play-store-bundle-v383.aab play-store-bundle.aab
+          ls -lh arabic-bible-study-app.apk play-store-bundle.aab
+
+          APK_HASH=$(sha256sum arabic-bible-study-app.apk | awk '{print $1}')
+          AAB_HASH=$(sha256sum play-store-bundle.aab | awk '{print $1}')
+          DB_HASH="b91b4c188be54ad8746593158ea48a8bef8cf37c8ccec349108111274c00266e"
+          echo "$APK_HASH" > apk_sha256.txt
+          echo "$AAB_HASH" > aab_sha256.txt
+          echo "$DB_HASH" > db_sha256.txt
+
+          cat << EOF > release_notes.md
+          # Arabic Bible Study v1.0.383 (Google Play Internal Testing Candidate)
+
+          ## 🛡️ Build & Cryptographic Verification
+          - **Release Tag**: \`v1.0.383\` (Pre-release)
+          - **Version**: \`1.0.383\` (Build \`383\`) | **Target DB Version**: \`382\` (frozen)
+          - **Verified Build Commit**: \`1b10ce5\` (Run [\`45189145505\`](https://github.com/manalattia80-web/arabic-bible-study/actions/runs/45189145505))
+          - **APK SHA-256**: \`$APK_HASH\`
+          - **AAB SHA-256**: \`$AAB_HASH\`
+          - **SQLite DB SHA-256**: \`$DB_HASH\` (bitwise identical to \`v1.0.382\`)
+          - **Signing Cert SHA-256**: \`cf01f6cbfb94a557317e7e39916a5c8b325d399c740f3ea4f3e2c112b2815615\` (identical to \`v1.0.382\`)
+
+          ## 📦 Google Play Readiness Highlights (\`v1.0.382 → v1.0.383\`)
+          > **Pre-Release / Internal Testing Candidate**: Prepared for Google Play Internal Testing and direct on-device upgrade testing over \`v1.0.382\`. Database content is unchanged from \`v382\` (Engine \`v1.5\`); content accuracy assessment remains separate.
+
+          - **Target SDK / Toolchain**: Upgraded to **Android 16 (\`API 36\`)**, Flutter \`3.50.1\`, AGP \`9.1.1\`, Gradle \`9.3.1\`, Kotlin \`2.2.10\`, NDK \`28.0.12433566\`.
+          - **Minimum Android Version**: Raised from \`API 21\` (Android 5.0) to **\`API 24\` (Android 7.0)** per Flutter \`3.50.1\`.
+          - **16 KB Memory Page-Size Compliance**: Verified **100%** via \`zipalign -c -P 16\` and \`readelf -lW\` (\`LOAD Align >= 0x4000\` on all 12 native \`.so\` libraries across \`arm64-v8a\`, \`x86_64\`, \`armeabi-v7a\`).
+          - **Compressed DB Chunks & Size Reduction**: Removed \`noCompress 'dat'\` — AAB shrunk **\`~425 MB → 167 MB\`** (\`-60.7%\`), APK shrunk **\`~392 MB → 167 MB\`** (\`-57.4%\`), \`base-master.apk\` shrunk **\`352 MB → 116 MB\`** (\`-67.0%\`).
+          - **Actual Play Download Size (\`bundletool 1.18.3\`)**: **\`126.7–126.9 MB\`** (\`arm64-v8a\`), well below Google Play's \`500 MB\` compressed base-module limit (Play Asset Delivery not required).
+          - **Play Policy Permissions**: Removed \`REQUEST_INSTALL_PACKAGES\`, \`READ_MEDIA_*\`, and \`READ_EXTERNAL_STORAGE\` (\`INTERNET\` + \`ACCESS_NETWORK_STATE\` only).
+          EOF
+
+      - name: Publish v1.0.383 Pre-release on GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.383
+          target_commitish: 1b10ce5
+          name: "Arabic Bible Study v1.0.383 (Play Internal Testing Candidate)"
+          body_path: release_notes.md
+          prerelease: true
+          files: |
+            arabic-bible-study-app.apk
+            play-store-bundle.aab
+            apk_sha256.txt
+            aab_sha256.txt
+            db_sha256.txt
+
   build-and-verify-play-v383:
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
