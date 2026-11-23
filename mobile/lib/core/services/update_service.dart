@@ -135,6 +135,10 @@ class UpdateService {
     String? url,
     required void Function(double progress) onProgress,
   }) async {
+    if (disableAutoUpdate) {
+      debugPrint('External APK download/install blocked via DISABLE_AUTO_UPDATE=true (Google Play policy).');
+      return false;
+    }
     final downloadUri = Uri.parse(url ?? defaultDownloadUrl);
 
     try {
@@ -206,6 +210,10 @@ class UpdateService {
   }
 
   Future<bool> openDownloadedApk([String? url]) async {
+    if (disableAutoUpdate) {
+      debugPrint('External APK open blocked via DISABLE_AUTO_UPDATE=true (Google Play policy).');
+      return false;
+    }
     try {
       final dir = await getExternalStorageDirectory() ?? await getTemporaryDirectory();
       final filePath = p.join(dir.path, 'arabic-bible-study-update.apk');
@@ -229,6 +237,10 @@ class UpdateService {
   }
 
   Future<bool> launchDownloadUrl([String? url]) async {
+    if (disableAutoUpdate) {
+      debugPrint('External APK download URL blocked via DISABLE_AUTO_UPDATE=true (Google Play policy).');
+      return false;
+    }
     final targetUrl = Uri.parse(url ?? defaultDownloadUrl);
     try {
       return await launchUrl(targetUrl, mode: LaunchMode.externalApplication);

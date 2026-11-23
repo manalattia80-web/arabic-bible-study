@@ -4,6 +4,10 @@ node_modules/
 build/
 .dart_tool/
 *.apk
+*.aab
+*.jks
+*.keystore
+mobile/android/key.properties
 *.db
 scripts/data/*.json
 scripts/*.sql

@@ -5,6 +5,24 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+import java.util.Properties
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+def resolvedStoreFile = System.getenv("ANDROID_KEYSTORE_PATH") ?: keystoreProperties.getProperty("storeFile")
+def resolvedStorePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: keystoreProperties.getProperty("storePassword")
+def resolvedKeyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: keystoreProperties.getProperty("keyAlias")
+def resolvedKeyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: keystoreProperties.getProperty("keyPassword")
+def hasReleaseSigning = resolvedStoreFile != null && resolvedStorePassword != null && resolvedKeyAlias != null && resolvedKeyPassword != null
+
+if (System.getenv("REQUIRE_RELEASE_SIGNING") == "true" && !hasReleaseSigning) {
+    throw new GradleException("REQUIRE_RELEASE_SIGNING=true but ANDROID_KEYSTORE_PATH / passwords / key.properties are not configured.")
+}
+
 android {
     namespace = "com.arabicbible.study"
     compileSdk = 36
@@ -28,11 +46,13 @@ android {
     }
 
     signingConfigs {
-        release {
-            storeFile file("upload-keystore.jks")
-            storePassword "bible_study_2026"
-            keyAlias "arabic_bible_study"
-            keyPassword "bible_study_2026"
+        if (hasReleaseSigning) {
+            release {
+                storeFile file(resolvedStoreFile)
+                storePassword resolvedStorePassword
+                keyAlias resolvedKeyAlias
+                keyPassword resolvedKeyPassword
+            }
         }
     }
 
@@ -44,7 +64,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.release
+            signingConfig = hasReleaseSigning ? signingConfigs.release : signingConfigs.debug
         }
     }
 }

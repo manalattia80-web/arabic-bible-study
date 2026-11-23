@@ -85,6 +85,7 @@ class UpdateProvider extends ChangeNotifier {
   }
 
   Future<bool> startDirectUpdate() async {
+    if (UpdateService.disableAutoUpdate) return false;
     if (_isDownloading) return false;
     _isDownloading = true;
     _downloadProgress = 0.0;
@@ -110,6 +111,7 @@ class UpdateProvider extends ChangeNotifier {
   }
 
   Future<bool> installDownloadedApk() async {
+    if (UpdateService.disableAutoUpdate) return false;
     final success = await UpdateService.instance.openDownloadedApk(_updateInfo?.downloadUrl);
     if (!success) {
       return await startDownload();
@@ -118,6 +120,7 @@ class UpdateProvider extends ChangeNotifier {
   }
 
   Future<bool> startDownload() async {
+    if (UpdateService.disableAutoUpdate) return false;
     return await UpdateService.instance.launchDownloadUrl(_updateInfo?.downloadUrl);
   }
 }

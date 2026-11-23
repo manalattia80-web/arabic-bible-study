@@ -4,83 +4,16 @@ on:
   push:
     branches: [ "release/**" ]
     paths:
+      - '.github/workflows/play-prep-audit.yml'
       - 'mobile/**'
       - 'scripts/patch_gradle.cjs'
   workflow_dispatch:
 
 permissions:
-  contents: write
-  actions: read
+  contents: read
 
 jobs:
-  publish-v383-prerelease:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Verified Artifact 14825252251 (Run 45189145505 / Commit 1b10ce5)
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl -sSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
-            -o artifact.zip \
-            "https://api.github.com/repos/manalattia80-web/arabic-bible-study/actions/artifacts/14825252251/zip"
-          unzip -q artifact.zip
-          mv arabic-bible-study-v383.apk arabic-bible-study-app.apk
-          mv play-store-bundle-v383.aab play-store-bundle.aab
-          ls -lh arabic-bible-study-app.apk play-store-bundle.aab
-
-          APK_HASH=$(sha256sum arabic-bible-study-app.apk | awk '{print $1}')
-          AAB_HASH=$(sha256sum play-store-bundle.aab | awk '{print $1}')
-          DB_HASH="b91b4c188be54ad8746593158ea48a8bef8cf37c8ccec349108111274c00266e"
-          echo "$APK_HASH" > apk_sha256.txt
-          echo "$AAB_HASH" > aab_sha256.txt
-          echo "$DB_HASH" > db_sha256.txt
-
-          cat << EOF > release_notes.md
-          # Arabic Bible Study v1.0.383 (Google Play Internal Testing Candidate)
-
-          ## 🛡️ Build & Cryptographic Verification
-          - **Release Tag**: \`v1.0.383\` (Pre-release)
-          - **Version**: \`1.0.383\` (Build \`383\`) | **Target DB Version**: \`382\` (frozen)
-          - **Verified Build Commit**: \`1b10ce5\` (Run [\`45189145505\`](https://github.com/manalattia80-web/arabic-bible-study/actions/runs/45189145505))
-          - **APK SHA-256**: \`$APK_HASH\`
-          - **AAB SHA-256**: \`$AAB_HASH\`
-          - **SQLite DB SHA-256**: \`$DB_HASH\` (bitwise identical to \`v1.0.382\`)
-          - **Signing Cert SHA-256**: \`cf01f6cbfb94a557317e7e39916a5c8b325d399c740f3ea4f3e2c112b2815615\` (identical to \`v1.0.382\`)
-
-          ## 📦 Google Play Readiness Highlights (\`v1.0.382 → v1.0.383\`)
-          > **Pre-Release / Internal Testing Candidate**: Prepared for Google Play Internal Testing and direct on-device upgrade testing over \`v1.0.382\`. Database content is unchanged from \`v382\` (Engine \`v1.5\`); content accuracy assessment remains separate.
-
-          - **Target SDK / Toolchain**: Upgraded to **Android 16 (\`API 36\`)**, Flutter \`3.50.1\`, AGP \`9.1.1\`, Gradle \`9.3.1\`, Kotlin \`2.2.10\`, NDK \`28.0.12433566\`.
-          - **Minimum Android Version**: Raised from \`API 21\` (Android 5.0) to **\`API 24\` (Android 7.0)** per Flutter \`3.50.1\`.
-          - **16 KB Memory Page-Size Compliance**: Verified **100%** via \`zipalign -c -P 16\` and \`readelf -lW\` (\`LOAD Align >= 0x4000\` on all 12 native \`.so\` libraries across \`arm64-v8a\`, \`x86_64\`, \`armeabi-v7a\`).
-          - **Compressed DB Chunks & Size Reduction**: Removed \`noCompress 'dat'\` — AAB shrunk **\`~425 MB → 167 MB\`** (\`-60.7%\`), APK shrunk **\`~392 MB → 167 MB\`** (\`-57.4%\`), \`base-master.apk\` shrunk **\`352 MB → 116 MB\`** (\`-67.0%\`).
-          - **Actual Play Download Size (\`bundletool 1.18.3\`)**: **\`126.7–126.9 MB\`** (\`arm64-v8a\`), well below Google Play's \`500 MB\` compressed base-module limit (Play Asset Delivery not required).
-          - **Play Policy Permissions**: Removed \`REQUEST_INSTALL_PACKAGES\`, \`READ_MEDIA_*\`, and \`READ_EXTERNAL_STORAGE\` (\`INTERNET\` + \`ACCESS_NETWORK_STATE\` only).
-          EOF
-
-      - name: Publish v1.0.383 Pre-release on GitHub
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: v1.0.383
-          target_commitish: 1b10ce5dff45b3c9410f0de537510e527492f092
-          name: "Arabic Bible Study v1.0.383 (Play Internal Testing Candidate)"
-          body_path: release_notes.md
-          draft: false
-          prerelease: true
-          make_latest: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-          files: |
-            arabic-bible-study-app.apk
-            play-store-bundle.aab
-            apk_sha256.txt
-            aab_sha256.txt
-            db_sha256.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  build-and-verify-play-v383:
-    if: github.event_name != 'workflow_dispatch'
+  build-and-verify-play-v384:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -106,8 +39,36 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Print Flutter & Dart Versions
-        run: flutter --version
+      - name: Configure Signing Keystore from Secrets (or Ephemeral CI Keystore)
+        env:
+          PLAY_UPLOAD_KEYSTORE_BASE64: ${{ secrets.PLAY_UPLOAD_KEYSTORE_BASE64 }}
+          PLAY_KEYSTORE_PASSWORD: ${{ secrets.PLAY_KEYSTORE_PASSWORD }}
+          PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
+          PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
+        run: |
+          if [ -n "$PLAY_UPLOAD_KEYSTORE_BASE64" ] && [ -n "$PLAY_KEYSTORE_PASSWORD" ] && [ -n "$PLAY_KEY_ALIAS" ] && [ -n "$PLAY_KEY_PASSWORD" ]; then
+            echo "Using production Play Upload Keystore from GitHub Secrets."
+            echo "$PLAY_UPLOAD_KEYSTORE_BASE64" | base64 -d > /tmp/play_upload.jks
+            echo "ANDROID_KEYSTORE_PATH=/tmp/play_upload.jks" >> "$GITHUB_ENV"
+            echo "ANDROID_KEYSTORE_PASSWORD=$PLAY_KEYSTORE_PASSWORD" >> "$GITHUB_ENV"
+            echo "ANDROID_KEY_ALIAS=$PLAY_KEY_ALIAS" >> "$GITHUB_ENV"
+            echo "ANDROID_KEY_PASSWORD=$PLAY_KEY_PASSWORD" >> "$GITHUB_ENV"
+            echo "SIGNING_MODE=PLAY_SECRETS" >> "$GITHUB_ENV"
+          else
+            echo "Play Secrets not yet configured — generating fresh ephemeral CI-only keystore in /tmp (zero secrets in repo)."
+            EPHEM_PASS=$(openssl rand -hex 16)
+            keytool -genkeypair -v -keystore /tmp/ci_ephemeral.jks \
+              -storepass "$EPHEM_PASS" -keypass "$EPHEM_PASS" \
+              -alias ci_ephemeral -keyalg RSA -keysize 2048 -validity 30 \
+              -dname "CN=CI Ephemeral Verification,O=ArabicBibleStudy,C=EG" >/dev/null 2>&1
+            echo "::add-mask::$EPHEM_PASS"
+            echo "ANDROID_KEYSTORE_PATH=/tmp/ci_ephemeral.jks" >> "$GITHUB_ENV"
+            echo "ANDROID_KEYSTORE_PASSWORD=$EPHEM_PASS" >> "$GITHUB_ENV"
+            echo "ANDROID_KEY_ALIAS=ci_ephemeral" >> "$GITHUB_ENV"
+            echo "ANDROID_KEY_PASSWORD=$EPHEM_PASS" >> "$GITHUB_ENV"
+            echo "SIGNING_MODE=CI_EPHEMERAL_TEST_ONLY" >> "$GITHUB_ENV"
+          fi
+          echo "REQUIRE_RELEASE_SIGNING=true" >> "$GITHUB_ENV"
 
       - name: Verify Untouched v382 DB Chunks (SHA-256 b91b4c18...)
         run: |
@@ -128,67 +89,63 @@ jobs:
           flutter pub upgrade
           dart run flutter_launcher_icons
 
-      - name: Analyze & Unit Test
+      - name: Analyze & Unit Test (Including DISABLE_AUTO_UPDATE=true Play Policy Test)
         working-directory: ./mobile
         run: |
           flutter analyze --no-fatal-warnings --no-fatal-infos
-          flutter test
+          flutter test --dart-define=DISABLE_AUTO_UPDATE=true
 
-      - name: Build Play-Ready AAB & APK (v1.0.383+383, API 36, Compressed .dat)
+      - name: Build Play-Ready AAB & APK (v1.0.384+384, API 36, DISABLE_AUTO_UPDATE=true)
         working-directory: ./mobile
         run: |
-          flutter build appbundle --release --no-tree-shake-icons --build-name=1.0.383 --build-number=383 --dart-define=APP_BUILD_NUMBER=383
-          flutter build apk --release --no-tree-shake-icons --build-name=1.0.383 --build-number=383 --dart-define=APP_BUILD_NUMBER=383
-          cp build/app/outputs/bundle/release/app-release.aab ../play-store-bundle-v383.aab
-          cp build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-v383.apk
-          ls -lh ../play-store-bundle-v383.aab ../arabic-bible-study-v383.apk
-          sha256sum ../play-store-bundle-v383.aab ../arabic-bible-study-v383.apk
+          flutter build appbundle --release --no-tree-shake-icons \
+            --build-name=1.0.384 --build-number=384 \
+            --dart-define=APP_BUILD_NUMBER=384 \
+            --dart-define=DISABLE_AUTO_UPDATE=true
+          flutter build apk --release --no-tree-shake-icons \
+            --build-name=1.0.384 --build-number=384 \
+            --dart-define=APP_BUILD_NUMBER=384 \
+            --dart-define=DISABLE_AUTO_UPDATE=true
+          cp build/app/outputs/bundle/release/app-release.aab ../play-store-bundle-v384.aab
+          cp build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-v384.apk
+          ls -lh ../play-store-bundle-v384.aab ../arabic-bible-study-v384.apk
+          sha256sum ../play-store-bundle-v384.aab ../arabic-bible-study-v384.apk
 
       - name: Verify Compressed APK Chunks Reassemble Bitwise to v382 DB
-        run: node scripts/verify_apk_asset_integrity.cjs arabic-bible-study-v383.apk
+        run: node scripts/verify_apk_asset_integrity.cjs arabic-bible-study-v384.apk
 
-      - name: Full Play Store Readiness Verification (bundletool 1.18.3, API 36, 16KB ELF & ZIP, Signature Match vs v382)
+      - name: Full Play Store Readiness Verification (bundletool 1.18.3, API 36, 16KB ELF & ZIP)
         run: |
           curl -sSL -o bundletool.jar https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar
-          curl -sSL -o v382.apk https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.382/arabic-bible-study-app.apk
 
-          echo "=== PLAY PREP v383 REPORT ==="
-          echo "--- 1. AAB & APK File Sizes ---"
-          ls -lh play-store-bundle-v383.aab arabic-bible-study-v383.apk
-          stat -c "v383_aab_bytes=%s" play-store-bundle-v383.aab
-          stat -c "v383_apk_bytes=%s" arabic-bible-study-v383.apk
+          echo "=== PLAY PREP v384 REPORT (SIGNING_MODE=$SIGNING_MODE) ==="
+          stat -c "v384_aab_bytes=%s" play-store-bundle-v384.aab
+          stat -c "v384_apk_bytes=%s" arabic-bible-study-v384.apk
 
-          echo "--- 2. bundletool validate ---"
-          java -jar bundletool.jar validate --bundle=play-store-bundle-v383.aab | tail -n 15
-
-          echo "--- 3. bundletool build-apks & get-size total ---"
+          java -jar bundletool.jar validate --bundle=play-store-bundle-v384.aab | tail -n 10
           java -jar bundletool.jar build-apks \
-            --bundle=play-store-bundle-v383.aab \
-            --output=v383_splits.apks \
-            --ks=mobile/android/app/upload-keystore.jks \
-            --ks-pass=pass:bible_study_2026 \
-            --ks-key-alias=arabic_bible_study \
-            --key-pass=pass:bible_study_2026
-          java -jar bundletool.jar get-size total --apks=v383_splits.apks
-          java -jar bundletool.jar get-size total --apks=v383_splits.apks --dimensions=ABI
+            --bundle=play-store-bundle-v384.aab \
+            --output=v384_splits.apks \
+            --ks="$ANDROID_KEYSTORE_PATH" \
+            --ks-pass="pass:$ANDROID_KEYSTORE_PASSWORD" \
+            --ks-key-alias="$ANDROID_KEY_ALIAS" \
+            --key-pass="pass:$ANDROID_KEY_PASSWORD"
+          java -jar bundletool.jar get-size total --apks=v384_splits.apks
+          java -jar bundletool.jar get-size total --apks=v384_splits.apks --dimensions=ABI
 
-          mkdir -p extracted_v383
-          unzip -q v383_splits.apks -d extracted_v383
-          ls -lh extracted_v383/splits/base-master*.apk extracted_v383/splits/base-arm64*.apk
-
+          mkdir -p extracted_v384
+          unzip -q v384_splits.apks -d extracted_v384
           BT_DIR="${ANDROID_SDK_ROOT:-$ANDROID_HOME}/build-tools/36.0.0"
-          echo "--- 4. aapt2 dump badging (API 36, minSdk, Permissions) ---"
-          "$BT_DIR/aapt2" dump badging extracted_v383/splits/base-master.apk | head -n 30
 
-          echo "--- 5. 16KB ZIP Alignment (-P 16) on arm64-v8a split & full APK ---"
-          "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_v383/splits/base-arm64_v8a.apk
-          "$BT_DIR/zipalign" -c -P 16 -v 4 arabic-bible-study-v383.apk
+          "$BT_DIR/aapt2" dump badging extracted_v384/splits/base-master.apk | head -n 25
+          "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_v384/splits/base-arm64_v8a.apk
+          "$BT_DIR/zipalign" -c -P 16 -v 4 arabic-bible-study-v384.apk
+          "$BT_DIR/apksigner" verify --verbose --print-certs arabic-bible-study-v384.apk | head -n 10
 
-          echo "--- 6. 16KB ELF LOAD Segment Alignment (readelf -lW, must be >= 0x4000 for 64-bit) ---"
-          mkdir -p v383_libs
-          unzip -q play-store-bundle-v383.aab "base/lib/*" -d v383_libs
+          mkdir -p v384_libs
+          unzip -q play-store-bundle-v384.aab "base/lib/*" -d v384_libs
           FAIL_16K=0
-          for so in $(find v383_libs -name "*.so" | sort); do
+          for so in $(find v384_libs -name "*.so" | sort); do
             aligns=$(readelf -lW "$so" | awk '$1=="LOAD" {print $NF}' | sort -u | tr '\n' ' ')
             echo "  $so -> LOAD Align: $aligns"
             if echo "$so" | grep -qE "arm64-v8a|x86_64"; then
@@ -201,31 +158,152 @@ jobs:
               done
             fi
           done
-          if [ "$FAIL_16K" -ne 0 ]; then
-            echo "FATAL: One or more 64-bit native libraries failed 16KB ELF alignment!"
-            exit 1
-          fi
+          if [ "$FAIL_16K" -ne 0 ]; then exit 1; fi
           echo "ALL 64-bit native libraries verified 16KB ELF aligned!"
 
-          echo "--- 7. Verify DB Part Compression Inside AAB & base-master.apk ---"
-          unzip -lv play-store-bundle-v383.aab | grep -E "part_00\.dat|part_69\.dat"
-          unzip -lv extracted_v383/splits/base-master.apk | grep -E "part_00\.dat|part_69\.dat"
-
-          echo "--- 8. Signature Compatibility Check (v383 vs v382) ---"
-          CERT_382=$("$BT_DIR/apksigner" verify --print-certs v382.apk | grep "certificate SHA-256 digest" | head -n 1)
-          CERT_383=$("$BT_DIR/apksigner" verify --print-certs arabic-bible-study-v383.apk | grep "certificate SHA-256 digest" | head -n 1)
-          echo "v382 cert: $CERT_382"
-          echo "v383 cert: $CERT_383"
-          if [ "$CERT_382" != "$CERT_383" ]; then
-            echo "FATAL: Signing certificate mismatch between v382 and v383!"
-            exit 1
-          fi
-          echo "Signing certificate matches v382 identically!"
-
-      - name: Upload Play-Ready v383 AAB & APK Artifacts
+      - name: Upload Play-Ready v384 AAB & APK Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: play-internal-prep-v1.0.383
+          name: play-internal-prep-v1.0.384
           path: |
-            play-store-bundle-v383.aab
-            arabic-bible-study-v383.apk
+            play-store-bundle-v384.aab
+            arabic-bible-study-v384.apk
+
+  emulator-runtime-clean-and-upgrade:
+    needs: build-and-verify-play-v384
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: play-internal-prep-v1.0.384
+          path: artifacts
+
+      - name: Enable KVM for Android Emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run Real Emulator Offline Clean-Install & Upgrade-Over-v382 Verification
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disk-size: 6G
+          ram-size: 4096M
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          disable-animations: true
+          script: |
+            set -e
+            sudo apt-get update -qq && sudo apt-get install -y -qq sqlite3
+            BT_DIR=$(ls -d "${ANDROID_SDK_ROOT:-$ANDROID_HOME}"/build-tools/* | sort -V | tail -n 1)
+            PKG="com.arabicbible.study"
+            DB_FILE="/data/data/$PKG/databases/bible_study_v382.db"
+            PREFS_FILE="/data/data/$PKG/shared_prefs/FlutterSharedPreferences.xml"
+
+            echo "=== TEST A: CLEAN INSTALL OFFLINE (v1.0.384 Compressed .dat Assembly) ==="
+            adb shell svc wifi disable
+            adb shell svc data disable
+            adb logcat -c
+            adb install artifacts/arabic-bible-study-v384.apk
+            adb shell am start -n "$PKG/.MainActivity"
+
+            READY=0
+            for i in $(seq 1 60); do
+              SZ=$(adb shell "su 0 stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
+              if [ "$SZ" = "365416448" ]; then
+                echo "Clean install assembled bible_study_v382.db ($SZ bytes) in $((i*2))s while OFFLINE!"
+                READY=1
+                break
+              fi
+              sleep 2
+            done
+            if [ "$READY" -ne 1 ]; then
+              echo "FATAL: DB did not reach 365416448 bytes (last size: $SZ)"
+              adb logcat -d | tail -n 60
+              exit 1
+            fi
+
+            sleep 3
+            adb shell "su 0 cp $DB_FILE /sdcard/clean_v384.db"
+            adb pull /sdcard/clean_v384.db /tmp/clean_v384.db >/dev/null
+            IC=$(sqlite3 /tmp/clean_v384.db "PRAGMA integrity_check;")
+            CNT=$(sqlite3 /tmp/clean_v384.db "SELECT COUNT(*) FROM word_mappings;")
+            CLEAN_SHA=$(sha256sum /tmp/clean_v384.db | awk '{print $1}')
+            echo "Clean Install DB -> integrity=$IC | word_mappings=$CNT | sha256=$CLEAN_SHA"
+            [ "$IC" = "ok" ]
+            [ "$CNT" = "434351" ]
+            if adb logcat -d | grep -q "FATAL EXCEPTION"; then
+              echo "FATAL EXCEPTION detected during clean install!"
+              adb logcat -d | grep -A 25 "FATAL EXCEPTION"
+              exit 1
+            fi
+            echo "TEST A (Clean Install Offline): PASSED!"
+
+            echo "=== TEST B: IN-PLACE UPGRADE OVER v382 WITH DATA PRESERVATION (OFFLINE) ==="
+            adb uninstall "$PKG"
+            rm -f /tmp/clean_v384.db
+            curl -sSL -o /tmp/v382.apk https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.382/arabic-bible-study-app.apk
+
+            # Re-sign both v382 and v384 with a shared ephemeral test keystore to simulate Play-signed in-place upgrade
+            keytool -genkeypair -v -keystore /tmp/upg_test.jks -storepass testpass123 -keypass testpass123 \
+              -alias upgtest -keyalg RSA -keysize 2048 -validity 1 \
+              -dname "CN=Emulator Upgrade Test" >/dev/null 2>&1
+            "$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v382_resigned.apk /tmp/v382.apk
+            "$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v384_resigned.apk artifacts/arabic-bible-study-v384.apk
+
+            adb install /tmp/v382_resigned.apk
+            adb shell am start -n "$PKG/.MainActivity"
+            READY_382=0
+            for i in $(seq 1 60); do
+              SZ=$(adb shell "su 0 stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
+              if [ "$SZ" = "365416448" ]; then
+                echo "v382 baseline assembled bible_study_v382.db ($SZ bytes) in $((i*2))s."
+                READY_382=1
+                break
+              fi
+              sleep 2
+            done
+            [ "$READY_382" -eq 1 ]
+            sleep 3
+            adb shell am force-stop "$PKG"
+
+            # Seed realistic user settings & search history into FlutterSharedPreferences.xml before upgrade
+            adb shell "su 0 sh -c 'cat <<\"XML\" > $PREFS_FILE
+            <?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>
+            <map>
+                <long name=\"flutter.db_version\" value=\"382\" />
+                <string name=\"flutter.search_history\">VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu[\"المحبة\",\"الإيمان\"]</string>
+                <double name=\"flutter.font_size\" value=\"22.0\" />
+            </map>
+            XML
+            chown \$(stat -c %u:%g /data/data/$PKG) $PREFS_FILE'"
+
+            echo "Upgrading in-place v382 -> v384 while OFFLINE..."
+            adb logcat -c
+            adb install -r /tmp/v384_resigned.apk
+            VER_CODE=$(adb shell dumpsys package "$PKG" | grep "versionCode=" | head -n 1 | tr -d '\r')
+            echo "Post-upgrade package: $VER_CODE"
+            echo "$VER_CODE" | grep -q "versionCode=384"
+
+            adb shell am start -n "$PKG/.MainActivity"
+            sleep 8
+
+            PREFS_AFTER=$(adb shell "su 0 cat $PREFS_FILE" | tr -d '\r')
+            echo "Post-upgrade SharedPreferences:"
+            echo "$PREFS_AFTER"
+            echo "$PREFS_AFTER" | grep -q "search_history"
+            echo "$PREFS_AFTER" | grep -q "font_size"
+
+            SZ_AFTER=$(adb shell "su 0 stat -c %s $DB_FILE" | tr -d '\r\n')
+            echo "Post-upgrade DB size: $SZ_AFTER bytes"
+            [ "$SZ_AFTER" = "365416448" ]
+
+            if adb logcat -d | grep -q "FATAL EXCEPTION"; then
+              echo "FATAL EXCEPTION detected during upgrade!"
+              adb logcat -d | grep -A 25 "FATAL EXCEPTION"
+              exit 1
+            fi
+            echo "TEST B (Upgrade Over v382 Offline With Data Preservation): PASSED!"
