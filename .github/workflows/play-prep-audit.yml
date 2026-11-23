@@ -4,7 +4,6 @@ on:
   push:
     branches: [ "release/**" ]
     paths:
-      - '.github/workflows/play-prep-audit.yml'
       - 'mobile/**'
       - 'scripts/patch_gradle.cjs'
   workflow_dispatch:
@@ -64,16 +63,21 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.383
-          target_commitish: 1b10ce5
+          target_commitish: 1b10ce5dff45b3c9410f0de537510e527492f092
           name: "Arabic Bible Study v1.0.383 (Play Internal Testing Candidate)"
           body_path: release_notes.md
+          draft: false
           prerelease: true
+          make_latest: false
+          token: ${{ secrets.GITHUB_TOKEN }}
           files: |
             arabic-bible-study-app.apk
             play-store-bundle.aab
             apk_sha256.txt
             aab_sha256.txt
             db_sha256.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-and-verify-play-v383:
     if: github.event_name != 'workflow_dispatch'
