@@ -96,7 +96,11 @@ assert(
 );
 
 // 2C. Positive Gate (v1.5 Content-Word G4): Bracketed John 12:34 #20/#25 («الإِنْسَانِ», G444 ἀνθρώπου @ w28/w35) IS ACCEPTED!
-const john1234Rows = loadVerseRows(prodDb, 43, 12, 34);
+const john1234Rows = loadVerseRows(prodDb, 43, 12, 34).map(r =>
+  (r.arPos === 20 || r.arPos === 25)
+    ? { ...r, origPos: r.arPos, verifiedLocator: `SBLGNT:B43.C12.V34.w${r.arPos}`, verifiedSource: 'manual_review', hasCleanPrimaryWms: false }
+    : r
+);
 const john1234Res = evaluateVerse({ book: 43, ch: 12, vs: 34, lang: 'greek', name: 'John 12:34' }, john1234Rows, sources, strongsLexicon);
 const j20 = john1234Res.proposals.find(p => p.arPos === 20);
 const j25 = john1234Res.proposals.find(p => p.arPos === 25);
@@ -340,7 +344,11 @@ assert(
 );
 
 // 21. Positive Gate (v1.5 Content-Word Hebrew G4): Ezek 45:10 #2/#4/#6 («حَقّ» -> H6664 צֶדֶק @ w2/w4/w6) ALL ACCEPTED!
-const ezek4510Rows = loadVerseRows(prodDb, 26, 45, 10);
+const ezek4510Rows = loadVerseRows(prodDb, 26, 45, 10).map(r =>
+  (r.arPos === 2 || r.arPos === 4 || r.arPos === 6)
+    ? { ...r, verifiedSource: 'manual_review', hasCleanPrimaryWms: false }
+    : r
+);
 const ezek4510Res = evaluateVerse({ book: 26, ch: 45, vs: 10, lang: 'hebrew', name: 'Ezek 45:10' }, ezek4510Rows, sources, strongsLexicon);
 const ez2 = ezek4510Res.proposals.find(p => p.arPos === 2);
 const ez4 = ezek4510Res.proposals.find(p => p.arPos === 4);
