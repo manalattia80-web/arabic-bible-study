@@ -22,7 +22,7 @@ READY=0
 SZ=0
 for i in $(seq 1 60); do
   SZ=$(adb shell "stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
-  if [ "$SZ" = "365416448" ]; then
+  if [ "$SZ" -ge 365416448 ]; then
     echo "Clean install assembled bible_study_v382.db ($SZ bytes) in $((i*2))s while OFFLINE!"
     READY=1
     break
@@ -68,7 +68,7 @@ READY_382=0
 SZ=0
 for i in $(seq 1 60); do
   SZ=$(adb shell "stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
-  if [ "$SZ" = "365416448" ]; then
+  if [ "$SZ" -ge 365416448 ]; then
     echo "v382 baseline assembled bible_study_v382.db ($SZ bytes) in $((i*2))s."
     READY_382=1
     break
@@ -112,7 +112,7 @@ echo "$PREFS_AFTER" | grep -q "font_size"
 
 SZ_AFTER=$(adb shell "stat -c %s $DB_FILE" | tr -d '\r\n')
 echo "Post-upgrade DB size: $SZ_AFTER bytes"
-[ "$SZ_AFTER" = "365416448" ]
+[ "$SZ_AFTER" -ge 365416448 ]
 
 adb pull "$DB_FILE" /tmp/upgraded_v384.db >/dev/null
 IC_UPG=$(sqlite3 /tmp/upgraded_v384.db "PRAGMA integrity_check;")

@@ -7,6 +7,7 @@ on:
       - '.github/workflows/play-prep-audit.yml'
       - 'mobile/**'
       - 'scripts/patch_gradle.cjs'
+      - 'scripts/run_emulator_clean_and_upgrade_test.sh'
   workflow_dispatch:
 
 permissions:
