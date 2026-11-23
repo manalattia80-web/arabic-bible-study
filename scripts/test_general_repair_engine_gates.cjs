@@ -81,18 +81,32 @@ assert(
   JSON.stringify({ eph11Unb: eph11Unb && eph11Unb.ruleId, eph16Unb: eph16Unb && eph16Unb.ruleId })
 );
 
-// 2B. Positive Gate (v1.4 RULE_G4): Strictly bracketed Eph 1:21 #11 & #16 (separated by locked anchors #12/#13/#15) -> #11->w16, #16->w22!
+// 2B. Negative Gate (v1.5 Greek Prep Excluded from G4): Even when bracketed, Eph 1:21 #11/#16 (G1722 ἐν, P-) is excluded from G4
 const ephDisplaced16 = ephRows.map(r => r.arPos === 16 ? { ...r, origPos: 16, verifiedLocator: 'SBLGNT:B49.C1.V21.w16', hasCleanPrimaryWms: false } : r);
-const ephBrackRes = evaluateVerse({ book: 49, ch: 1, vs: 21, lang: 'greek', name: 'Eph 1:21 (bracketed G4)' }, ephDisplaced16, sources, strongsLexicon);
+const ephBrackRes = evaluateVerse({ book: 49, ch: 1, vs: 21, lang: 'greek', name: 'Eph 1:21 (bracketed G4 Greek prep)' }, ephDisplaced16, sources, strongsLexicon);
 const eph11Br = ephBrackRes.proposals.find(p => p.arPos === 11);
 const eph16Br = ephBrackRes.proposals.find(p => p.arPos === 16);
 assert(
   Boolean(
-    eph11Br && eph11Br.proposed && eph11Br.proposed.origPos === 16 &&
-    eph16Br && eph16Br.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && eph16Br.ruleId === 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION' && eph16Br.proposed && eph16Br.proposed.origPos === 22
+    eph11Br && eph11Br.status === 'PENDING_REVIEW' && eph11Br.ruleId.includes('REJECT_G4_GREEK_PREP_EXCLUDED') &&
+    eph16Br && eph16Br.status === 'PENDING_REVIEW' && eph16Br.ruleId.includes('REJECT_G4_GREEK_PREP_EXCLUDED')
   ),
-  'Positive Gate 2B (v1.4 G4): Bracketed Eph 1:21 #11/#16 strictly resolves #11->w16 and #16->w22 via separating locked anchors',
-  JSON.stringify({ eph11Br: eph11Br && eph11Br.proposed && eph11Br.proposed.origPos, eph16Br: eph16Br && { status: eph16Br.status, ruleId: eph16Br.ruleId, pos: eph16Br.proposed && eph16Br.proposed.origPos } })
+  'Negative Gate 2B (v1.5): Standalone Greek preposition Eph 1:21 #11/#16 (G1722 ἐν) is strictly excluded from RULE_G4',
+  JSON.stringify({ eph11Br: eph11Br && { status: eph11Br.status, ruleId: eph11Br.ruleId }, eph16Br: eph16Br && { status: eph16Br.status, ruleId: eph16Br.ruleId } })
+);
+
+// 2C. Positive Gate (v1.5 Content-Word G4): Bracketed John 12:34 #20/#25 («الإِنْسَانِ», G444 ἀνθρώπου @ w28/w35) IS ACCEPTED!
+const john1234Rows = loadVerseRows(prodDb, 43, 12, 34);
+const john1234Res = evaluateVerse({ book: 43, ch: 12, vs: 34, lang: 'greek', name: 'John 12:34' }, john1234Rows, sources, strongsLexicon);
+const j20 = john1234Res.proposals.find(p => p.arPos === 20);
+const j25 = john1234Res.proposals.find(p => p.arPos === 25);
+assert(
+  Boolean(
+    j20 && j20.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && j20.ruleId === 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION' && j20.proposed && j20.proposed.origPos === 28 &&
+    j25 && j25.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && j25.ruleId === 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION' && j25.proposed && j25.proposed.origPos === 35
+  ),
+  'Positive Gate 2C (v1.5 G4): Bracketed content-word John 12:34 #20/#25 («الإِنْسَانِ» -> G444@w28,w35) is ACCEPTED',
+  JSON.stringify({ j20: j20 && { status: j20.status, ruleId: j20.ruleId, pos: j20.proposed && j20.proposed.origPos }, j25: j25 && { status: j25.status, ruleId: j25.ruleId, pos: j25.proposed && j25.proposed.origPos } })
 );
 
 // 3. Negative Gate: Peer competing claims on the same unique token
@@ -247,6 +261,108 @@ assert(
   Boolean(tim9 && (tim9.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || tim9.status === 'ALREADY_CANONICAL') && tim9.proposed && tim9.proposed.strongsId === 'G2570' && tim9.proposed.origWord === 'καλός' && tim9.proposed.origPos === 5),
   'Positive Gate 15: Valid RULE_G2 same-POS repair 1Tim 6:18 #9 («صَالِحَةٍ» -> G2570 καλός@w5 adjective) is ACCEPTED',
   JSON.stringify(tim9 && { status: tim9.status, ruleId: tim9.ruleId, orig: tim9.proposed && tim9.proposed.origWord })
+);
+
+// 16. Negative Gate (v1.5 Compound Prep): Matt 21:9 #14 («بِاسْمِ» -> G1722 ἐν alone, missing G3686 ὀνόματι) is REJECTED!
+const matt219Rows = loadVerseRows(prodDb, 40, 21, 9);
+const matt219Res = evaluateVerse({ book: 40, ch: 21, vs: 9, lang: 'greek', name: 'Matt 21:9' }, matt219Rows, sources, strongsLexicon);
+const matt14 = matt219Res.proposals.find(p => p.arPos === 14);
+assert(
+  Boolean(matt14 && matt14.status === 'PENDING_REVIEW' && matt14.ruleId.includes('REJECT_COMPOUND_PREP_MISSING_LEXICAL_HEAD') && matt14.proposed === null),
+  'Negative Gate 16 (v1.5): Compound word Matt 21:9 #14 («بِاسْمِ» -> G1722 ἐν without G3686 ὀνόματι) is strictly REJECTED',
+  JSON.stringify(matt14 && { status: matt14.status, ruleId: matt14.ruleId })
+);
+
+// 17. Negative Gate (v1.5 Greek Prep in G4): Gal 2:8 #4 («فِي» -> G1519 εἰς) is REJECTED!
+const gal28Rows = loadVerseRows(prodDb, 48, 2, 8);
+const gal28Res = evaluateVerse({ book: 48, ch: 2, vs: 8, lang: 'greek', name: 'Gal 2:8' }, gal28Rows, sources, strongsLexicon);
+const gal4 = gal28Res.proposals.find(p => p.arPos === 4);
+assert(
+  Boolean(gal4 && gal4.status === 'PENDING_REVIEW' && gal4.ruleId.includes('REJECT_G4_GREEK_PREP_EXCLUDED') && gal4.proposed === null),
+  'Negative Gate 17 (v1.5): Standalone Greek prep Gal 2:8 #4 («فِي» -> G1519 εἰς) is strictly REJECTED from RULE_G4',
+  JSON.stringify(gal4 && { status: gal4.status, ruleId: gal4.ruleId })
+);
+
+// 18. Negative Gate (v1.5 Partial Group Acceptance): Reserving w35 by secondary component demotes BOTH #25 AND #20 in John 12:34!
+const johnPartialRows = john1234Rows.map(r => r.arPos === 1 ? { ...r, secondaryPositions: [...(r.secondaryPositions || []), 35] } : r);
+const johnPartialRes = evaluateVerse({ book: 43, ch: 12, vs: 34, lang: 'greek', name: 'John 12:34 (partial G4)' }, johnPartialRows, sources, strongsLexicon);
+const jp20 = johnPartialRes.proposals.find(p => p.arPos === 20);
+const jp25 = johnPartialRes.proposals.find(p => p.arPos === 25);
+assert(
+  Boolean(
+    jp25 && jp25.status === 'PENDING_REVIEW' && jp25.ruleId.includes('CONFLICT_RESERVED_SECONDARY_TOKEN(w35') && jp25.proposed === null &&
+    jp20 && jp20.status === 'PENDING_REVIEW' && jp20.ruleId === 'REJECT_G4_PARTIAL_GROUP_INVALIDATED' && jp20.proposed === null
+  ),
+  'Negative Gate 18 (v1.5): Partial G4 group acceptance prevented — reserving w35 demotes BOTH #25 and peer #20',
+  JSON.stringify({ jp20: jp20 && { status: jp20.status, ruleId: jp20.ruleId }, jp25: jp25 && { status: jp25.status, ruleId: jp25.ruleId } })
+);
+
+// 19. Negative Gate (v1.5 Anchor Demotion): When sole separating anchor #21 (->w29) falls to neighbor conflict, BOTH #20 and #25 demote!
+const johnAnchorRows = [
+  ...john1234Rows.filter(r => r.arPos === 20 || r.arPos === 21 || r.arPos === 25).map(r =>
+    r.arPos === 21 ? { ...r, origPos: 99, verifiedLocator: 'SBLGNT:B43.C12.V34.w99', hasCleanPrimaryWms: false } : r
+  ),
+  {
+    id: 'syn_blocker_w29', arPos: 99, arWord: 'جار', strongsId: 'G9999', origWord: 'unknown', origSurface: 'unknown',
+    origPos: 29, origMorph: null, morphPos: null, verifiedLocator: 'SBLGNT:B43.C12.V34.w29',
+    verifiedSource: 'morphgnt_sblgnt', morphSource: 'morphgnt_sblgnt', relationType: null, grammarNotes: null,
+    existingWms: [], secondaryPositions: [], hasCleanPrimaryWms: false
+  }
+];
+const johnAnchorRes = evaluateVerse({ book: 43, ch: 12, vs: 34, lang: 'greek', name: 'John 12:34 (anchor demoted)' }, johnAnchorRows, sources, strongsLexicon);
+const ja20 = johnAnchorRes.proposals.find(p => p.arPos === 20);
+const ja21 = johnAnchorRes.proposals.find(p => p.arPos === 21);
+const ja25 = johnAnchorRes.proposals.find(p => p.arPos === 25);
+assert(
+  Boolean(
+    ja21 && ja21.status === 'PENDING_REVIEW' && ja21.ruleId.includes('CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR(w29') &&
+    ja20 && ja20.status === 'PENDING_REVIEW' && ja20.ruleId === 'REJECT_G4_ANCHOR_INVALIDATED' && ja20.proposed === null &&
+    ja25 && ja25.status === 'PENDING_REVIEW' && ja25.ruleId === 'REJECT_G4_ANCHOR_INVALIDATED' && ja25.proposed === null
+  ),
+  'Negative Gate 19 (v1.5): Demoted anchor #21 (w29) invalidates entire dependent G4 group (#20 & #25)',
+  JSON.stringify({ ja21: ja21 && ja21.ruleId, ja20: ja20 && ja20.ruleId, ja25: ja25 && ja25.ruleId })
+);
+
+// 20. Positive Gate (v1.5 Non-compound words starting with ب/ل NOT falsely blocked): 1Sam 25:28 #9 «بَيْتًا» & Luke 1:35 #4 «لَها»
+const sam2528Rows = loadVerseRows(prodDb, 9, 25, 28);
+const sam2528Res = evaluateVerse({ book: 9, ch: 25, vs: 28, lang: 'hebrew', name: '1Sam 25:28' }, sam2528Rows, sources, strongsLexicon);
+const samBayt = sam2528Res.proposals.find(p => p.arPos === 9);
+const luke135Rows = loadVerseRows(prodDb, 42, 1, 35);
+const luke135Res = evaluateVerse({ book: 42, ch: 1, vs: 35, lang: 'greek', name: 'Luke 1:35' }, luke135Rows, sources, strongsLexicon);
+const lukeLaha = luke135Res.proposals.find(p => p.arPos === 4);
+assert(
+  Boolean(
+    samBayt && (samBayt.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || samBayt.status === 'ALREADY_CANONICAL') && samBayt.proposed && samBayt.proposed.strongsId === 'H1004' &&
+    lukeLaha && (lukeLaha.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || lukeLaha.status === 'ALREADY_CANONICAL') && lukeLaha.proposed && lukeLaha.proposed.strongsId === 'G846'
+  ),
+  'Positive Gate 20 (v1.5): Non-compound words starting with ب/ل (1Sam 25:28 #9 «بَيْتًا» H1004 & Luke 1:35 #4 «لَها» G846) are ACCEPTED',
+  JSON.stringify({ samBayt: samBayt && { status: samBayt.status, ruleId: samBayt.ruleId }, lukeLaha: lukeLaha && { status: lukeLaha.status, ruleId: lukeLaha.ruleId } })
+);
+
+// 21. Positive Gate (v1.5 Content-Word Hebrew G4): Ezek 45:10 #2/#4/#6 («حَقّ» -> H6664 צֶדֶק @ w2/w4/w6) ALL ACCEPTED!
+const ezek4510Rows = loadVerseRows(prodDb, 26, 45, 10);
+const ezek4510Res = evaluateVerse({ book: 26, ch: 45, vs: 10, lang: 'hebrew', name: 'Ezek 45:10' }, ezek4510Rows, sources, strongsLexicon);
+const ez2 = ezek4510Res.proposals.find(p => p.arPos === 2);
+const ez4 = ezek4510Res.proposals.find(p => p.arPos === 4);
+const ez6 = ezek4510Res.proposals.find(p => p.arPos === 6);
+assert(
+  Boolean(
+    ez2 && ez2.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && ez2.ruleId === 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION' && ez2.proposed.origPos === 2 &&
+    ez4 && ez4.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && ez4.ruleId === 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION' && ez4.proposed.origPos === 4 &&
+    ez6 && ez6.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && ez6.ruleId === 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION' && ez6.proposed.origPos === 6
+  ),
+  'Positive Gate 21 (v1.5 G4): Intact content-word Hebrew group Ezek 45:10 #2/#4/#6 («حَقّ» -> H6664@w2,w4,w6) is ACCEPTED',
+  JSON.stringify({ ez2: ez2 && ez2.ruleId, ez4: ez4 && ez4.ruleId, ez6: ez6 && ez6.ruleId })
+);
+
+// 22. Negative Gate (v1.5 Greek Article Excluded from G4): Heb 12:14 #10 («أَحَدٌ» -> G3588 τὸν RA) is REJECTED!
+const heb1214Rows = loadVerseRows(prodDb, 58, 12, 14);
+const heb1214Res = evaluateVerse({ book: 58, ch: 12, vs: 14, lang: 'greek', name: 'Heb 12:14' }, heb1214Rows, sources, strongsLexicon);
+const heb10 = heb1214Res.proposals.find(p => p.arPos === 10);
+assert(
+  Boolean(heb10 && heb10.status === 'PENDING_REVIEW' && heb10.ruleId.includes('REJECT_G4_ARTICLE_EXCLUDED') && heb10.proposed === null),
+  'Negative Gate 22 (v1.5): Greek definite article Heb 12:14 #10 («أَحَدٌ» -> G3588 τὸν RA) is strictly REJECTED from RULE_G4',
+  JSON.stringify(heb10 && { status: heb10.status, ruleId: heb10.ruleId })
 );
 
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)

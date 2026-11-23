@@ -37,10 +37,10 @@ const sqlitePath = isWin && fs.existsSync(path.join(repoRoot, 'sqlite_dist/sqlit
   : 'sqlite3';
 
 const prodDb = path.join(repoRoot, 'mobile/assets/bible_study.db');
-const outDb = path.join(repoRoot, 'scratch/isolated_full_66books_engine_v1_4.db');
-const diffPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_4_diff.jsonl');
-const summaryPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_4_summary.json');
-const tmpSqlPath = path.join(repoRoot, 'scratch/tmp_full_66books_engine_v1_4.sql');
+const outDb = path.join(repoRoot, 'scratch/isolated_full_66books_engine_v1_5.db');
+const diffPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_5_diff.jsonl');
+const summaryPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_5_summary.json');
+const tmpSqlPath = path.join(repoRoot, 'scratch/tmp_full_66books_engine_v1_5.sql');
 const trSourceMode = process.env.USE_TR_SLICE ? 'TR_SLICE_CI_MODE (USE_TR_SLICE=1)' : 'FULL_SCRIVENER_TR_JSON (scripts/data/gnt_scrivener.json)';
 
 const sha256File = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
@@ -269,7 +269,7 @@ Promise.all([
   try { fs.unlinkSync(tmpSqlPath); } catch (_) {}
 
   const summary = {
-    engineVersion: 'whole_verse_general_repair_engine_v1.4',
+    engineVersion: 'whole_verse_general_repair_engine_v1.5',
     trSourceMode,
     scope: 'ALL_66_BOOKS_ISOLATED',
     productionDbSha256Untouched: preDbSha,

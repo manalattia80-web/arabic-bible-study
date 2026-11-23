@@ -66,8 +66,98 @@ const AR_COMPLEMENTIZERS = new Set([
   'فان', 'وان', 'فانه', 'وانه', 'فانك', 'وانك', 'فانهم', 'وانهم', 'فانكم', 'وانكم', 'فاني', 'واني'
 ]);
 const AR_PURE_PREPS = new Set(['في', 'من', 'علي', 'الي', 'عن', 'مع', 'عند', 'بين', 'حتي', 'منذ']);
+const AR_PREP_WITH_PRONOUN = new Set([
+  'به', 'بها', 'بهم', 'بهن', 'بهما', 'بك', 'بكم', 'بكن', 'بكما', 'بي', 'بنا',
+  'له', 'لها', 'لهم', 'لهن', 'لهما', 'لك', 'لكم', 'لكن', 'لكما', 'لي', 'لنا',
+  'فيه', 'فيها', 'فيهم', 'فيهن', 'فيهما', 'فيك', 'فيكم', 'فيكن', 'فيكما', 'فيي', 'فينا',
+  'منه', 'منها', 'منهم', 'منهن', 'منهما', 'منك', 'منكم', 'منكن', 'منكما', 'مني', 'منا',
+  'عليه', 'عليها', 'عليهم', 'عليهن', 'عليهما', 'عليك', 'عليكم', 'عليكن', 'عليكما', 'علي', 'علينا',
+  'اليه', 'اليها', 'اليهم', 'اليهن', 'اليهما', 'اليك', 'اليكم', 'اليكن', 'اليكما', 'الي', 'الينا',
+  'عنه', 'عنها', 'عنهم', 'عنهن', 'عنهما', 'عنك', 'عنكم', 'عنكن', 'عنكما', 'عني', 'عنا',
+  'معه', 'معها', 'معهم', 'معهن', 'معهما', 'معك', 'معكم', 'معكن', 'معكما', 'معي', 'معنا',
+  'وبها', 'وبه', 'وبهم', 'وبك', 'وبي', 'وبنا', 'وله', 'ولها', 'ولهم', 'ولك', 'ولي', 'ولنا',
+  'فبه', 'فبها', 'فله', 'فلها', 'فلكم', 'فلي', 'فلنا', 'وكله', 'لكي', 'لكيلا', 'لئلا'
+]);
 const AR_PURE_DEMONSTRATIVES = new Set(['هذا', 'هذه', 'هؤلاء', 'ذلك', 'تلك', 'اولئك']);
 const AR_PURE_CONJUNCTIONS = new Set(['او', 'ام', 'بل', 'لكن', 'ثم', 'لكي', 'كي', 'اذ', 'اذا', 'بينما', 'لما']);
+
+/**
+ * Verified compound-preposition decomposition guard (v1.5):
+ * Prevents reducing a compound Arabic word (preposition prefix + lexical head, e.g. «بِاسْمِ» = ἐν ὀνόματι)
+ * to a bare source preposition alone (P- / HR / AR).
+ * Requires BOTH:
+ *   (a) Arabic morphological decomposition (optional conj و/ف + prep prefix ب/ل/ك + non-pronominal stem), AND
+ *   (b) Source-side witness: immediately following source token (w+1, or w+2 skipping Greek article RA)
+ *       is a lexical content head NOT claimed by the next Arabic word (arPos + 1).
+ * Simple words starting with ب/ل (e.g. بيت، ليل) are NEVER affected because their source token is a noun, not a bare prep.
+ */
+function checkCompoundPrepMissingLexicalHead(arWord, arPos, chosen, isGreek, tokens, dbRows) {
+  const isBarePrep = isGreek
+    ? (chosen.morph && chosen.morph.startsWith('P-'))
+    : (chosen.morph && /^(H|A)R$/.test(chosen.morph));
+  if (!isBarePrep) return null;
+
+  const arClean = canonArabicWord(arWord);
+  if (!arClean || AR_PURE_PREPS.has(arClean) || AR_PREP_WITH_PRONOUN.has(arClean)) return null;
+
+  // Strip optional leading conjunction و / ف only if followed by ب / ل / ك
+  let core = arClean;
+  if ((core.startsWith('وب') || core.startsWith('ول') || core.startsWith('وك') ||
+       core.startsWith('فب') || core.startsWith('فل') || core.startsWith('فك')) && core.length >= 5) {
+    core = core.slice(1);
+  }
+  if (!/^[بلك]/.test(core)) return null;
+  const stem = core.slice(1);
+  // Require verified non-pronominal stem (either definite ال/ل or length >= 3 not a pronoun suffix)
+  const PRON_SUFFIXES = new Set(['ه', 'ها', 'هم', 'هن', 'هما', 'ك', 'كم', 'كن', 'كما', 'ي', 'نا', 'همو']);
+  if (PRON_SUFFIXES.has(stem)) return null;
+  const hasDefinite = stem.startsWith('ال') || (core.startsWith('لل') && stem.length >= 3);
+  if (!hasDefinite && stem.length < 3) return null;
+
+  // Source-side witness: look for immediately following lexical content head (skipping Greek article RA)
+  const tokByIndex = new Map(tokens.map(t => [t.index, t]));
+  let headTok = tokByIndex.get(chosen.index + 1) || null;
+  if (isGreek && headTok && headTok.morph && headTok.morph.startsWith('RA')) {
+    headTok = tokByIndex.get(chosen.index + 2) || null;
+  }
+  if (!headTok || !headTok.morph) return null;
+
+  const isLexicalHead = isGreek
+    ? /^(N-|A-|V-)/.test(headTok.morph)
+    : /^[HA](N|A|V)/.test(headTok.morph);
+  if (!isLexicalHead) return null;
+
+  // Check whether the next Arabic word (arPos + 1) already claims this lexical head
+  const nextRow = dbRows.find(x => x.arPos === arPos + 1);
+  if (nextRow) {
+    const nextSurfCanon = isGreek ? canonGreek(nextRow.origSurface || nextRow.origWord) : canonSemiticConsonants(nextRow.origSurface || nextRow.origWord);
+    const nextLexCanon = isGreek ? canonGreek(nextRow.origWord) : (nextRow.strongsId || '');
+    const nextClaimsHead =
+      (nextRow.origPos === headTok.index) ||
+      (nextSurfCanon && nextSurfCanon === headTok.surfaceCanon) ||
+      (nextLexCanon && nextLexCanon === headTok.lemmaCanon);
+    if (nextClaimsHead) return null;
+  }
+
+  return `REJECT_COMPOUND_PREP_MISSING_LEXICAL_HEAD(ar=${arClean},prep=w${chosen.index},unclaimedHead=w${headTok.index}:${headTok.lemma})`;
+}
+
+const G4_PRONOUN_POS = new Set(['pronoun', 'personal_pronoun', 'demonstrative', 'relative_pronoun', 'interrogative_pronoun']);
+
+function checkG4PosEligibility(isGreek, chosen, finalMorphPos) {
+  if (isGreek && chosen.morph && chosen.morph.startsWith('P-')) {
+    return `REJECT_G4_GREEK_PREP_EXCLUDED(w${chosen.index}:${chosen.lemma})`;
+  }
+  if ((isGreek && chosen.morph && chosen.morph.startsWith('RA')) || finalMorphPos === 'article') {
+    return `REJECT_G4_ARTICLE_EXCLUDED(w${chosen.index}:${chosen.lemma})`;
+  }
+  const isGreekPron = isGreek && chosen.morph && /^(RP|RD|RR|RI)/.test(chosen.morph);
+  const isSemiticPron = !isGreek && chosen.morph && /^[HA]P/.test(chosen.morph);
+  if (isGreekPron || isSemiticPron || G4_PRONOUN_POS.has(finalMorphPos)) {
+    return `REJECT_G4_PRONOUN_EXCLUDED(w${chosen.index}:${chosen.lemma},pos=${finalMorphPos})`;
+  }
+  return null;
+}
 
 /**
  * General Arabic-to-Source contextual compatibility guard (zero verse-specific exceptions).
@@ -556,7 +646,8 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
     }
 
     // General Arabic-to-Source contextual compatibility guard across ALL rules (G1, G1B, G2, G3)
-    const arCtxReject = checkArabicSourceContextualCompatibility(r.arWord, finalMorphPos, ruleId, r.morphPos);
+    const arCtxReject = checkArabicSourceContextualCompatibility(r.arWord, finalMorphPos, ruleId, r.morphPos)
+      || checkCompoundPrepMissingLexicalHead(r.arWord, r.arPos, chosen, isGreek, tokens, dbRows);
     if (arCtxReject) {
       rawProposals.push({
         id: r.id, arPos: r.arPos, arWord: r.arWord,
@@ -652,13 +743,19 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
     });
   }
 
-  // v1.4 PASS: RULE_G4_BRACKETED_DUPLICATE_BIJECTION
+  // v1.5 PASS: RULE_G4_BRACKETED_DUPLICATE_BIJECTION
   // Resolves duplicate-occurrence groups (M >= 2) ONLY when:
   //   (1) Exact cardinality: M Arabic rows match the exact same M source tokens by BOTH surface & lemma/Strong's,
   //   (2) Strict bracket separation: EVERY adjacent pair (i, i+1) is strictly separated in BOTH Arabic and Source
-  //       order by at least one locked unique anchor (ar_i < anchorAr < ar_{i+1} AND w_i < anchorW < w_{i+1}),
-  //   (3) Every row passes independent strongs_entries lexicon verification & Arabic-to-Source contextual compatibility,
-  //   (4) Still subject to the full fixed-point anti-collision pass immediately below (0 sourceLocator regressions).
+  //       order by at least one locked unique non-G4 anchor (ar_i < anchorAr < ar_{i+1} AND w_i < anchorW < w_{i+1}),
+  //   (3) POS & Compound Safety (v1.5):
+  //       - Excludes standalone Greek prepositions (P-) from G4 auto-acceptance temporarily,
+  //       - Excludes bare pronouns (RP/RD/RR/RI/HP*/AP*) from G4 auto-acceptance,
+  //       - Rejects compound Arabic words (e.g. «بِاسْمِ») reduced to a bare preposition alone via verified decomposition,
+  //   (4) Independent strongs_entries lexicon verification & Arabic-to-Source contextual compatibility,
+  //   (5) End-to-End Fixed-Point Soundness (v1.5): inside the fixed-point anti-collision loop below,
+  //       if ANY member of a G4 group is demoted OR any required separating anchor is demoted,
+  //       the ENTIRE G4 group is invalidated to PENDING_REVIEW (zero partial acceptance, zero dead anchors).
   const lockedUniqueAnchors = rawProposals
     .filter(p => (p.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || p.status === 'ALREADY_CANONICAL') && p.targetTokenIndex)
     .map(p => ({ arPos: p.arPos, w: p.targetTokenIndex }));
@@ -670,6 +767,8 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       dupGroups.get(p._dupKey).push(p);
     }
   }
+
+  const g4Groups = [];
 
   for (const [dupKey, grp] of dupGroups.entries()) {
     const cands = grp[0]._dupCandidates;
@@ -702,6 +801,7 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
     // Validate EVERY row in the group independently before accepting the collective bijection
     const builtProps = [];
     let groupValid = true;
+    let groupRejectTag = null;
     for (let i = 0; i < M; i++) {
       const p = sortedGrp[i];
       const r = p._rawRow;
@@ -729,8 +829,26 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       let finalMorphPos = (isGreek && chosen.morph.startsWith('N-')) ? 'noun' : d.morphPos;
       if (isGreek && chosen.morph.startsWith('RI') && (r.morphPos === 'pronoun' || targetStrongs === 'G5100')) finalMorphPos = 'pronoun';
 
-      if (checkArabicSourceContextualCompatibility(r.arWord, finalMorphPos, 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION', r.morphPos)) {
+      // v1.5 Compound-prep decomposition guard FIRST (explicit diagnostic for «بِاسْمِ» etc.)
+      const compReject = checkCompoundPrepMissingLexicalHead(r.arWord, r.arPos, chosen, isGreek, tokens, dbRows);
+      if (compReject) {
         groupValid = false;
+        groupRejectTag = compReject;
+        break;
+      }
+
+      // v1.5 G4 POS eligibility guard (excludes standalone Greek prepositions P- and bare pronouns)
+      const g4PosReject = checkG4PosEligibility(isGreek, chosen, finalMorphPos);
+      if (g4PosReject) {
+        groupValid = false;
+        groupRejectTag = g4PosReject;
+        break;
+      }
+
+      const ctxReject = checkArabicSourceContextualCompatibility(r.arWord, finalMorphPos, 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION', r.morphPos);
+      if (ctxReject) {
+        groupValid = false;
+        groupRejectTag = ctxReject;
         break;
       }
 
@@ -763,12 +881,21 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       builtProps.push({ p, chosen, proposed, isAlreadyCanonical });
     }
 
+    if (!groupValid && groupRejectTag) {
+      for (const p of sortedGrp) {
+        p.ruleId = groupRejectTag;
+        if (p.evidence) p.evidence.reason = groupRejectTag;
+      }
+      continue;
+    }
+
     if (groupValid && builtProps.length === M) {
       for (const { p, chosen, proposed, isAlreadyCanonical } of builtProps) {
         p.status = isAlreadyCanonical ? 'ALREADY_CANONICAL' : 'AUTO_PROPOSED_HIGH_CONFIDENCE';
         p.ruleId = isAlreadyCanonical ? 'NO_CHANGE_ALREADY_CANONICAL' : 'RULE_G4_BRACKETED_DUPLICATE_BIJECTION';
         p.targetTokenIndex = chosen.index;
         p.proposed = proposed;
+        p._isG4 = true;
         p.evidence = {
           edition, tokenIndex: chosen.index, tokenSurface: proposed.origSurface,
           tokenLemma: chosen.lemma, tokenMorph: chosen.morph,
@@ -777,6 +904,12 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
           bracketWitnesses
         };
       }
+      g4Groups.push({
+        dupKey,
+        members: builtProps.map(x => x.p),
+        targetTokens: builtProps.map(x => x.chosen.index),
+        active: true
+      });
     }
   }
 
@@ -786,9 +919,10 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
     delete p._rawRow;
   }
 
-  // WHOLE-VERSE FIXED-POINT ANTI-COLLISION PASS:
+  // WHOLE-VERSE FIXED-POINT ANTI-COLLISION & G4 GROUP/ANCHOR SOUNDNESS PASS (v1.5):
   // Accounts for ALL old & new claims: preserved special/TR/range/notes rows, secondary components,
-  // peer auto-proposed rows, ALREADY_CANONICAL rows, AND untouched PENDING_REVIEW neighbors!
+  // peer auto-proposed rows, ALREADY_CANONICAL rows, untouched PENDING_REVIEW neighbors,
+  // AND enforces atomic G4 group integrity + anchor survival all the way to the final fixed point!
   let changed = true;
   while (changed) {
     changed = false;
@@ -849,6 +983,66 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
         changed = true;
       }
     }
+
+    // 3. v1.5 G4 Atomic Group Integrity Check: ZERO partial group acceptance!
+    for (const g of g4Groups) {
+      if (!g.active) continue;
+      const allAlive = g.members.every(m => m.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || m.status === 'ALREADY_CANONICAL');
+      if (!allAlive) {
+        g.active = false;
+        for (const m of g.members) {
+          if (m.status !== 'PENDING_REVIEW') {
+            m.status = 'PENDING_REVIEW';
+            m.ruleId = 'REJECT_G4_PARTIAL_GROUP_INVALIDATED';
+            m.proposed = null;
+            m.targetTokenIndex = null;
+            changed = true;
+          }
+        }
+      }
+    }
+
+    // 4. v1.5 G4 Anchor Survival Check: Every adjacent pair must STILL be separated by a surviving non-G4 anchor!
+    const survivingAnchors = rawProposals
+      .filter(p => !p._isG4 && (p.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' || p.status === 'ALREADY_CANONICAL') && (p.targetTokenIndex || p.current.origPos))
+      .map(p => ({ arPos: p.arPos, w: p.targetTokenIndex || p.current.origPos }));
+
+    for (const g of g4Groups) {
+      if (!g.active) continue;
+      const M = g.members.length;
+      const freshWitnesses = [];
+      let anchorsIntact = true;
+      for (let i = 0; i < M - 1; i++) {
+        const arLo = g.members[i].arPos, arHi = g.members[i + 1].arPos;
+        const wLo = g.targetTokens[i], wHi = g.targetTokens[i + 1];
+        const sep = survivingAnchors.find(a => a.arPos > arLo && a.arPos < arHi && a.w > wLo && a.w < wHi);
+        if (!sep) {
+          anchorsIntact = false;
+          break;
+        }
+        freshWitnesses.push({ betweenAr: [arLo, arHi], betweenW: [wLo, wHi], anchor: sep });
+      }
+      if (!anchorsIntact) {
+        g.active = false;
+        for (const m of g.members) {
+          if (m.status !== 'PENDING_REVIEW') {
+            m.status = 'PENDING_REVIEW';
+            m.ruleId = 'REJECT_G4_ANCHOR_INVALIDATED';
+            m.proposed = null;
+            m.targetTokenIndex = null;
+            changed = true;
+          }
+        }
+      } else {
+        for (const m of g.members) {
+          if (m.evidence) m.evidence.bracketWitnesses = freshWitnesses;
+        }
+      }
+    }
+  }
+
+  for (const p of rawProposals) {
+    delete p._isG4;
   }
 
   return { verse: name, book, ch, vs, lang, edition, tokenCount: tokens.length, proposals: rawProposals };
