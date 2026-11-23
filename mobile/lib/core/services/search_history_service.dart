@@ -9,9 +9,12 @@ class SearchHistoryService {
   static Future<List<String>> getRecentQueries() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final list = prefs.getStringList(_key);
-      if (list != null) return list;
-      // Fallback if stored as JSON string
+      try {
+        final list = prefs.getStringList(_key);
+        if (list != null) return list;
+      } catch (_) {
+        // Fall through to plain JSON string fallback if stored as raw String
+      }
       final raw = prefs.getString(_key);
       if (raw != null) {
         final decoded = jsonDecode(raw) as List;

@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 jobs:
-  build-and-verify-play-v384:
+  build-and-verify-play-v385:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -96,57 +96,57 @@ jobs:
           flutter analyze --no-fatal-warnings --no-fatal-infos
           flutter test --dart-define=DISABLE_AUTO_UPDATE=true
 
-      - name: Build Play-Ready AAB & APK (v1.0.384+384, API 36, DISABLE_AUTO_UPDATE=true)
+      - name: Build Play-Ready AAB & APK (v1.0.385+385, API 36, DISABLE_AUTO_UPDATE=true)
         working-directory: ./mobile
         run: |
           flutter build appbundle --release --no-tree-shake-icons \
-            --build-name=1.0.384 --build-number=384 \
-            --dart-define=APP_BUILD_NUMBER=384 \
+            --build-name=1.0.385 --build-number=385 \
+            --dart-define=APP_BUILD_NUMBER=385 \
             --dart-define=DISABLE_AUTO_UPDATE=true
           flutter build apk --release --no-tree-shake-icons \
-            --build-name=1.0.384 --build-number=384 \
-            --dart-define=APP_BUILD_NUMBER=384 \
+            --build-name=1.0.385 --build-number=385 \
+            --dart-define=APP_BUILD_NUMBER=385 \
             --dart-define=DISABLE_AUTO_UPDATE=true
-          cp build/app/outputs/bundle/release/app-release.aab ../play-store-bundle-v384.aab
-          cp build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-v384.apk
-          ls -lh ../play-store-bundle-v384.aab ../arabic-bible-study-v384.apk
-          sha256sum ../play-store-bundle-v384.aab ../arabic-bible-study-v384.apk
+          cp build/app/outputs/bundle/release/app-release.aab ../play-store-bundle-v385.aab
+          cp build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-v385.apk
+          ls -lh ../play-store-bundle-v385.aab ../arabic-bible-study-v385.apk
+          sha256sum ../play-store-bundle-v385.aab ../arabic-bible-study-v385.apk
 
       - name: Verify Compressed APK Chunks Reassemble Bitwise to v382 DB
-        run: node scripts/verify_apk_asset_integrity.cjs arabic-bible-study-v384.apk
+        run: node scripts/verify_apk_asset_integrity.cjs arabic-bible-study-v385.apk
 
       - name: Full Play Store Readiness Verification (bundletool 1.18.3, API 36, 16KB ELF & ZIP)
         run: |
           curl -sSL -o bundletool.jar https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar
 
-          echo "=== PLAY PREP v384 REPORT (SIGNING_MODE=$SIGNING_MODE) ==="
-          stat -c "v384_aab_bytes=%s" play-store-bundle-v384.aab
-          stat -c "v384_apk_bytes=%s" arabic-bible-study-v384.apk
+          echo "=== PLAY PREP v385 REPORT (SIGNING_MODE=$SIGNING_MODE) ==="
+          stat -c "v385_aab_bytes=%s" play-store-bundle-v385.aab
+          stat -c "v385_apk_bytes=%s" arabic-bible-study-v385.apk
 
-          java -jar bundletool.jar validate --bundle=play-store-bundle-v384.aab | tail -n 10
+          java -jar bundletool.jar validate --bundle=play-store-bundle-v385.aab | tail -n 10
           java -jar bundletool.jar build-apks \
-            --bundle=play-store-bundle-v384.aab \
-            --output=v384_splits.apks \
+            --bundle=play-store-bundle-v385.aab \
+            --output=v385_splits.apks \
             --ks="$ANDROID_KEYSTORE_PATH" \
             --ks-pass="pass:$ANDROID_KEYSTORE_PASSWORD" \
             --ks-key-alias="$ANDROID_KEY_ALIAS" \
             --key-pass="pass:$ANDROID_KEY_PASSWORD"
-          java -jar bundletool.jar get-size total --apks=v384_splits.apks
-          java -jar bundletool.jar get-size total --apks=v384_splits.apks --dimensions=ABI
+          java -jar bundletool.jar get-size total --apks=v385_splits.apks
+          java -jar bundletool.jar get-size total --apks=v385_splits.apks --dimensions=ABI
 
-          mkdir -p extracted_v384
-          unzip -q v384_splits.apks -d extracted_v384
+          mkdir -p extracted_v385
+          unzip -q v385_splits.apks -d extracted_v385
           BT_DIR="${ANDROID_SDK_ROOT:-$ANDROID_HOME}/build-tools/36.0.0"
 
-          "$BT_DIR/aapt2" dump badging extracted_v384/splits/base-master.apk | head -n 25
-          "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_v384/splits/base-arm64_v8a.apk
-          "$BT_DIR/zipalign" -c -P 16 -v 4 arabic-bible-study-v384.apk
-          "$BT_DIR/apksigner" verify --verbose --print-certs arabic-bible-study-v384.apk | head -n 10
+          "$BT_DIR/aapt2" dump badging extracted_v385/splits/base-master.apk | head -n 25
+          "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_v385/splits/base-arm64_v8a.apk
+          "$BT_DIR/zipalign" -c -P 16 -v 4 arabic-bible-study-v385.apk
+          "$BT_DIR/apksigner" verify --verbose --print-certs arabic-bible-study-v385.apk | head -n 10
 
-          mkdir -p v384_libs
-          unzip -q play-store-bundle-v384.aab "base/lib/*" -d v384_libs
+          mkdir -p v385_libs
+          unzip -q play-store-bundle-v385.aab "base/lib/*" -d v385_libs
           FAIL_16K=0
-          for so in $(find v384_libs -name "*.so" | sort); do
+          for so in $(find v385_libs -name "*.so" | sort); do
             aligns=$(readelf -lW "$so" | awk '$1=="LOAD" {print $NF}' | sort -u | tr '\n' ' ')
             echo "  $so -> LOAD Align: $aligns"
             if echo "$so" | grep -qE "arm64-v8a|x86_64"; then
@@ -162,16 +162,16 @@ jobs:
           if [ "$FAIL_16K" -ne 0 ]; then exit 1; fi
           echo "ALL 64-bit native libraries verified 16KB ELF aligned!"
 
-      - name: Upload Play-Ready v384 AAB & APK Artifacts
+      - name: Upload Play-Ready v385 AAB & APK Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: play-internal-prep-v1.0.384
+          name: play-internal-prep-v1.0.385
           path: |
-            play-store-bundle-v384.aab
-            arabic-bible-study-v384.apk
+            play-store-bundle-v385.aab
+            arabic-bible-study-v385.apk
 
   emulator-runtime-clean-and-upgrade:
-    needs: build-and-verify-play-v384
+    needs: build-and-verify-play-v385
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -180,7 +180,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: play-internal-prep-v1.0.384
+          name: play-internal-prep-v1.0.385
           path: artifacts
 
       - name: Enable KVM for Android Emulator

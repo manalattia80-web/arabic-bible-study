@@ -4,15 +4,18 @@
 // Arabic title, gold gradient header, search FAB.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/search_history_service.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../providers/navigation_provider.dart';
 import '../../../providers/theme_provider.dart';
 import '../../../providers/update_provider.dart';
 import '../../../models/testament.dart';
+import '../widgets/backup_restore_modal.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,10 +25,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<void> _logLoadedPreferences() async {
+    try {
+      final themeProvider = context.read<ThemeProvider>();
+      await themeProvider.reloadFromPrefs();
+      final queries = await SearchHistoryService.getRecentQueries();
+      debugPrint(
+        'APP_PREFS_LOADED: is_dark_mode=${themeProvider.isDark} | recent_search_queries=${jsonEncode(queries)}',
+      );
+    } catch (_) {}
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _logLoadedPreferences();
       context.read<NavigationProvider>().loadTestaments();
       context.read<UpdateProvider>().checkForUpdates(
         onUpdateStarting: (version) {
@@ -111,6 +126,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(theme.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
                   tooltip: theme.isDark ? 'الوضع النهاري' : 'الوضع الليلي',
                 ),
+              ),
+              IconButton(
+                key: const Key('home_backup_restore_btn'),
+                onPressed: () => showBackupRestoreModal(context),
+                icon: const Icon(Icons.settings_backup_restore_rounded),
+                tooltip: 'النسخ الاحتياطي والاستعادة',
               ),
               IconButton(
                 key: const Key('home_search_btn'),

@@ -19,6 +19,10 @@ class ThemeProvider extends ChangeNotifier {
   }
 
   Future<void> _loadFromPrefs() async {
+    await reloadFromPrefs();
+  }
+
+  Future<void> reloadFromPrefs() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final savedDark = prefs.getBool(_prefKey);

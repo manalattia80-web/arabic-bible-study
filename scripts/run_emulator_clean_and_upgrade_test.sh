@@ -11,11 +11,11 @@ echo "Enabling adb root on google_apis emulator..."
 adb root
 adb wait-for-device
 
-echo "=== TEST A: CLEAN INSTALL OFFLINE (v1.0.384 Compressed .dat Assembly) ==="
+echo "=== TEST A: CLEAN INSTALL OFFLINE (v1.0.385 Compressed .dat Assembly) ==="
 adb shell svc wifi disable
 adb shell svc data disable
 adb logcat -c
-adb install artifacts/arabic-bible-study-v384.apk
+adb install artifacts/arabic-bible-study-v385.apk
 adb shell am start -n "$PKG/.MainActivity"
 
 READY=0
@@ -36,10 +36,10 @@ if [ "$READY" -ne 1 ]; then
 fi
 
 sleep 4
-adb pull "$DB_FILE" /tmp/clean_v384.db >/dev/null
-IC=$(sqlite3 /tmp/clean_v384.db "PRAGMA integrity_check;")
-CNT=$(sqlite3 /tmp/clean_v384.db "SELECT COUNT(*) FROM word_mappings;")
-CLEAN_SHA=$(sha256sum /tmp/clean_v384.db | awk '{print $1}')
+adb pull "$DB_FILE" /tmp/clean_v385.db >/dev/null
+IC=$(sqlite3 /tmp/clean_v385.db "PRAGMA integrity_check;")
+CNT=$(sqlite3 /tmp/clean_v385.db "SELECT COUNT(*) FROM word_mappings;")
+CLEAN_SHA=$(sha256sum /tmp/clean_v385.db | awk '{print $1}')
 echo "Clean Install DB -> integrity=$IC | word_mappings=$CNT | sha256=$CLEAN_SHA"
 [ "$IC" = "ok" ]
 [ "$CNT" = "434351" ]
@@ -50,17 +50,17 @@ if adb logcat -d | grep -q "FATAL EXCEPTION"; then
 fi
 echo "TEST A (Clean Install Offline): PASSED!"
 
-echo "=== TEST B: IN-PLACE UPGRADE OVER v382 WITH DATA PRESERVATION (OFFLINE) ==="
+echo "=== TEST B: IN-PLACE UPGRADE OVER v382 WITH REAL PREFERENCE READ VERIFICATION (OFFLINE) ==="
 adb uninstall "$PKG"
-rm -f /tmp/clean_v384.db
+rm -f /tmp/clean_v385.db
 curl -sSL -o /tmp/v382.apk https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.382/arabic-bible-study-app.apk
 
-# Re-sign both v382 and v384 with a shared ephemeral test keystore to simulate Play-signed in-place upgrade
+# Re-sign both v382 and v385 with a shared ephemeral test keystore to simulate Play-signed in-place upgrade
 keytool -genkeypair -v -keystore /tmp/upg_test.jks -storepass testpass123 -keypass testpass123 \
   -alias upgtest -keyalg RSA -keysize 2048 -validity 1 \
   -dname "CN=Emulator Upgrade Test" >/dev/null 2>&1
 "$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v382_resigned.apk /tmp/v382.apk
-"$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v384_resigned.apk artifacts/arabic-bible-study-v384.apk
+"$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v385_resigned.apk artifacts/arabic-bible-study-v385.apk
 
 adb install /tmp/v382_resigned.apk
 adb shell am start -n "$PKG/.MainActivity"
@@ -79,13 +79,14 @@ done
 sleep 3
 adb shell am force-stop "$PKG"
 
-# Seed realistic user settings & search history into FlutterSharedPreferences.xml before upgrade
+# Seed the ACTUAL app preference keys (is_dark_mode + recent_search_queries + db_version)
+# Note: shared_preferences_android uses JSON_LIST_PREFIX (ending with '!') for List<String>.
 cat <<'XML' > /tmp/FlutterSharedPreferences.xml
 <?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 <map>
     <long name="flutter.db_version" value="382" />
-    <string name="flutter.search_history">VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu["المحبة","الإيمان"]</string>
-    <double name="flutter.font_size" value="22.0" />
+    <boolean name="flutter.is_dark_mode" value="true" />
+    <string name="flutter.recent_search_queries">VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu!["المحبة","الإيمان"]</string>
 </map>
 XML
 
@@ -94,29 +95,52 @@ adb shell "mkdir -p /data/data/$PKG/shared_prefs"
 adb push /tmp/FlutterSharedPreferences.xml "$PREFS_FILE" >/dev/null
 adb shell "chown $OWNER $PREFS_FILE && chmod 660 $PREFS_FILE"
 
-echo "Upgrading in-place v382 -> v384 while OFFLINE..."
+echo "Upgrading in-place v382 -> v385 while OFFLINE..."
 adb logcat -c
-adb install -r /tmp/v384_resigned.apk
+adb install -r /tmp/v385_resigned.apk
 VER_CODE=$(adb shell dumpsys package "$PKG" | grep "versionCode=" | head -n 1 | tr -d '\r')
 echo "Post-upgrade package: $VER_CODE"
-echo "$VER_CODE" | grep -q "versionCode=384"
+echo "$VER_CODE" | grep -q "versionCode=385"
 
 adb shell am start -n "$PKG/.MainActivity"
-sleep 8
+
+# Wait for the running Flutter app to actually read and log its loaded preferences
+PREFS_LOG=""
+for i in $(seq 1 15); do
+  PREFS_LOG=$(adb logcat -d | grep "APP_PREFS_LOADED:" | tail -n 1 || true)
+  if [ -n "$PREFS_LOG" ]; then
+    break
+  fi
+  sleep 2
+done
+
+if [ -z "$PREFS_LOG" ]; then
+  echo "FATAL: Running app did not emit APP_PREFS_LOADED diagnostic line!"
+  adb logcat -d | tail -n 80
+  exit 1
+fi
+echo "Runtime Flutter preference read proof:"
+echo "  $PREFS_LOG"
+echo "$PREFS_LOG" | grep -q 'is_dark_mode=true'
+echo "$PREFS_LOG" | grep -q 'المحبة'
+echo "$PREFS_LOG" | grep -q 'الإيمان'
 
 PREFS_AFTER=$(adb shell "cat $PREFS_FILE" | tr -d '\r')
-echo "Post-upgrade SharedPreferences:"
+echo "Post-upgrade FlutterSharedPreferences.xml:"
 echo "$PREFS_AFTER"
-echo "$PREFS_AFTER" | grep -q "search_history"
-echo "$PREFS_AFTER" | grep -q "font_size"
+echo "$PREFS_AFTER" | grep -q 'name="flutter.db_version" value="382"'
+echo "$PREFS_AFTER" | grep -q 'name="flutter.is_dark_mode" value="true"'
+echo "$PREFS_AFTER" | grep -q 'name="flutter.recent_search_queries"'
+echo "$PREFS_AFTER" | grep -q 'المحبة'
+echo "$PREFS_AFTER" | grep -q 'الإيمان'
 
 SZ_AFTER=$(adb shell "stat -c %s $DB_FILE" | tr -d '\r\n')
 echo "Post-upgrade DB size: $SZ_AFTER bytes"
 [ "$SZ_AFTER" -ge 365416448 ]
 
-adb pull "$DB_FILE" /tmp/upgraded_v384.db >/dev/null
-IC_UPG=$(sqlite3 /tmp/upgraded_v384.db "PRAGMA integrity_check;")
-CNT_UPG=$(sqlite3 /tmp/upgraded_v384.db "SELECT COUNT(*) FROM word_mappings;")
+adb pull "$DB_FILE" /tmp/upgraded_v385.db >/dev/null
+IC_UPG=$(sqlite3 /tmp/upgraded_v385.db "PRAGMA integrity_check;")
+CNT_UPG=$(sqlite3 /tmp/upgraded_v385.db "SELECT COUNT(*) FROM word_mappings;")
 echo "Post-upgrade DB -> integrity=$IC_UPG | word_mappings=$CNT_UPG"
 [ "$IC_UPG" = "ok" ]
 [ "$CNT_UPG" = "434351" ]
@@ -126,4 +150,4 @@ if adb logcat -d | grep -q "FATAL EXCEPTION"; then
   adb logcat -d | grep -A 25 "FATAL EXCEPTION"
   exit 1
 fi
-echo "TEST B (Upgrade Over v382 Offline With Data Preservation): PASSED!"
+echo "TEST B (Upgrade Over v382 Offline With Exact Preference-Value & Runtime-Read Verification): PASSED!"
