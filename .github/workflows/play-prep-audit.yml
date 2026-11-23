@@ -1,0 +1,76 @@
+name: Play Store Prep & Bundletool Audit
+
+on:
+  push:
+    branches: [ "release/**" ]
+    paths:
+      - '.github/workflows/play-prep-audit.yml'
+      - 'mobile/**'
+      - 'scripts/patch_gradle.cjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  measure-v382-baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Download bundletool 1.18.3 and v1.0.382 AAB
+        run: |
+          curl -sSL -o bundletool.jar https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar
+          curl -sSL -o v382.aab https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.382/play-store-bundle.aab
+          ls -lh v382.aab
+          sha256sum v382.aab
+
+      - name: Validate v382 AAB and Measure Device Download Sizes (bundletool)
+        run: |
+          echo "=== 1. bundletool validate ==="
+          java -jar bundletool.jar validate --bundle=v382.aab
+
+          echo "=== 2. bundletool build-apks (split APKs) ==="
+          java -jar bundletool.jar build-apks \
+            --bundle=v382.aab \
+            --output=v382_splits.apks \
+            --ks=mobile/android/app/upload-keystore.jks \
+            --ks-pass=pass:bible_study_2026 \
+            --ks-key-alias=arabic_bible_study \
+            --key-pass=pass:bible_study_2026
+
+          echo "=== 3. bundletool get-size total (compressed download size) ==="
+          java -jar bundletool.jar get-size total --apks=v382_splits.apks
+          java -jar bundletool.jar get-size total --apks=v382_splits.apks --dimensions=ABI
+
+          echo "=== 4. Inspect arm64-v8a device APK badging & 16KB page alignment ==="
+          mkdir -p extracted_splits
+          unzip -q v382_splits.apks -d extracted_splits
+          ls -lh extracted_splits/splits/
+
+          BT_DIR=$(ls -d "${ANDROID_SDK_ROOT:-$ANDROID_HOME}"/build-tools/* | sort -V | tail -n 1)
+          echo "Build-tools: $BT_DIR"
+          "$BT_DIR/aapt2" dump badging extracted_splits/splits/base-master.apk | head -n 30
+
+          echo "=== 5. Check 16KB ZIP alignment (-P 16) on arm64-v8a split ==="
+          "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_splits/splits/base-arm64_v8a.apk || echo "FAIL: base-arm64_v8a.apk is NOT 16KB zip-aligned"
+
+          echo "=== 6. Check ELF LOAD segment p_align (16KB = 0x4000) for all .so in v382.aab ==="
+          mkdir -p aab_libs
+          unzip -q v382.aab "base/lib/*" -d aab_libs || true
+          for so in $(find aab_libs -name "*.so" | sort); do
+            aligns=$(readelf -l "$so" | awk '/LOAD/ {print $NF}' | sort -u | tr '\n' ' ')
+            echo "  $so -> LOAD p_align: $aligns"
+          done
+
+          echo "=== 7. Check compression of assets/db_parts inside v382.aab & base-master.apk ==="
+          unzip -l v382.aab | grep -E "part_00\.dat|part_69\.dat" | head -n 5
+          unzip -l extracted_splits/splits/base-master.apk | grep -E "part_00\.dat|part_69\.dat" | head -n 5
