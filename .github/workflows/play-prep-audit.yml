@@ -9,6 +9,12 @@ on:
       - 'scripts/patch_gradle.cjs'
       - 'scripts/run_emulator_clean_and_upgrade_test.sh'
   workflow_dispatch:
+    inputs:
+      require_play_secrets:
+        description: 'Fail immediately if PLAY_* GitHub Secrets are missing (default true for Play uploads)'
+        required: false
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -40,12 +46,14 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Configure Signing Keystore from Secrets (or Ephemeral CI Keystore)
+      - name: Configure Signing Keystore from Secrets (Strict on workflow_dispatch)
         env:
           PLAY_UPLOAD_KEYSTORE_BASE64: ${{ secrets.PLAY_UPLOAD_KEYSTORE_BASE64 }}
           PLAY_KEYSTORE_PASSWORD: ${{ secrets.PLAY_KEYSTORE_PASSWORD }}
           PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
           PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
+          EVENT_NAME: ${{ github.event_name }}
+          REQUIRE_PLAY_SECRETS: ${{ inputs.require_play_secrets }}
         run: |
           if [ -n "$PLAY_UPLOAD_KEYSTORE_BASE64" ] && [ -n "$PLAY_KEYSTORE_PASSWORD" ] && [ -n "$PLAY_KEY_ALIAS" ] && [ -n "$PLAY_KEY_PASSWORD" ]; then
             echo "Using production Play Upload Keystore from GitHub Secrets."
@@ -55,8 +63,11 @@ jobs:
             echo "ANDROID_KEY_ALIAS=$PLAY_KEY_ALIAS" >> "$GITHUB_ENV"
             echo "ANDROID_KEY_PASSWORD=$PLAY_KEY_PASSWORD" >> "$GITHUB_ENV"
             echo "SIGNING_MODE=PLAY_SECRETS" >> "$GITHUB_ENV"
+          elif [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$REQUIRE_PLAY_SECRETS" != "false" ]; then
+            echo "::error::Missing required Play Upload Keystore Secrets! Configure PLAY_UPLOAD_KEYSTORE_BASE64, PLAY_KEYSTORE_PASSWORD, PLAY_KEY_ALIAS, and PLAY_KEY_PASSWORD before running a Play release build."
+            exit 1
           else
-            echo "Play Secrets not yet configured — generating fresh ephemeral CI-only keystore in /tmp (zero secrets in repo)."
+            echo "::warning::SIGNING_MODE=CI_EPHEMERAL_TEST_ONLY — NOT suitable for Google Play upload or upgrading an existing device install."
             EPHEM_PASS=$(openssl rand -hex 16)
             keytool -genkeypair -v -keystore /tmp/ci_ephemeral.jks \
               -storepass "$EPHEM_PASS" -keypass "$EPHEM_PASS" \
@@ -142,6 +153,13 @@ jobs:
           "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_v385/splits/base-arm64_v8a.apk
           "$BT_DIR/zipalign" -c -P 16 -v 4 arabic-bible-study-v385.apk
           "$BT_DIR/apksigner" verify --verbose --print-certs arabic-bible-study-v385.apk | head -n 10
+          if [ "$SIGNING_MODE" = "PLAY_SECRETS" ]; then
+            if "$BT_DIR/apksigner" verify --print-certs arabic-bible-study-v385.apk | grep -q "CI Ephemeral Verification"; then
+              echo "FATAL: PLAY_SECRETS build must NEVER be signed with CI Ephemeral Verification!"
+              exit 1
+            fi
+            echo "Confirmed: Signed with private Play Upload Keystore (non-ephemeral)."
+          fi
 
           mkdir -p v385_libs
           unzip -q play-store-bundle-v385.aab "base/lib/*" -d v385_libs

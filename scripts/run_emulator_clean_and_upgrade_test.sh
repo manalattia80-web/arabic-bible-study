@@ -151,3 +151,103 @@ if adb logcat -d | grep -q "FATAL EXCEPTION"; then
   exit 1
 fi
 echo "TEST B (Upgrade Over v382 Offline With Exact Preference-Value & Runtime-Read Verification): PASSED!"
+
+echo "=== TEST C: CROSS-SIGNATURE MIGRATION (KEY A -> UNINSTALL -> KEY B -> RESTORE, OFFLINE) ==="
+adb uninstall "$PKG"
+rm -f /tmp/upgraded_v385.db /tmp/keyA.jks /tmp/keyB.jks /tmp/v385_keyA.apk /tmp/v385_keyB.apk
+
+keytool -genkeypair -v -keystore /tmp/keyA.jks -storepass passA123 -keypass passA123 \
+  -alias keya -keyalg RSA -keysize 2048 -validity 1 \
+  -dname "CN=Legacy GitHub Key A" >/dev/null 2>&1
+keytool -genkeypair -v -keystore /tmp/keyB.jks -storepass passB123 -keypass passB123 \
+  -alias keyb -keyalg RSA -keysize 2048 -validity 1 \
+  -dname "CN=New Play Upload Key B" >/dev/null 2>&1
+
+"$BT_DIR/apksigner" sign --ks /tmp/keyA.jks --ks-pass pass:passA123 --key-pass pass:passA123 --ks-key-alias keya --out /tmp/v385_keyA.apk artifacts/arabic-bible-study-v385.apk
+"$BT_DIR/apksigner" sign --ks /tmp/keyB.jks --ks-pass pass:passB123 --key-pass pass:passB123 --ks-key-alias keyb --out /tmp/v385_keyB.apk artifacts/arabic-bible-study-v385.apk
+
+CERT_A=$("$BT_DIR/apksigner" verify --print-certs /tmp/v385_keyA.apk | grep "certificate SHA-256" | head -n 1)
+CERT_B=$("$BT_DIR/apksigner" verify --print-certs /tmp/v385_keyB.apk | grep "certificate SHA-256" | head -n 1)
+echo "Key A cert: $CERT_A"
+echo "Key B cert: $CERT_B"
+if [ "$CERT_A" = "$CERT_B" ]; then
+  echo "FATAL: Key A and Key B certificates must differ!"
+  exit 1
+fi
+
+adb install /tmp/v385_keyA.apk
+echo "Verifying Android blocks in-place upgrade across different signing keys..."
+if adb install -r /tmp/v385_keyB.apk 2>/tmp/cross_sign_err.txt; then
+  echo "FATAL: Expected INSTALL_FAILED_UPDATE_INCOMPATIBLE across different keys!"
+  exit 1
+fi
+cat /tmp/cross_sign_err.txt
+grep -q "INSTALL_FAILED_UPDATE_INCOMPATIBLE" /tmp/cross_sign_err.txt
+echo "Confirmed: Android blocked cross-signature in-place upgrade as expected."
+
+echo "Uninstalling Key A app and performing clean offline install of Key B app..."
+adb uninstall "$PKG"
+adb logcat -c
+adb install /tmp/v385_keyB.apk
+adb shell am start -n "$PKG/.MainActivity"
+
+READY_B=0
+SZ=0
+for i in $(seq 1 60); do
+  SZ=$(adb shell "stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
+  if [ "$SZ" -ge 365416448 ]; then
+    echo "Key B clean install assembled bible_study_v382.db ($SZ bytes) in $((i*2))s while OFFLINE."
+    READY_B=1
+    break
+  fi
+  sleep 2
+done
+[ "$READY_B" -eq 1 ]
+
+# Verify default clean startup on Key B before restore
+DEFAULT_LOG=""
+for i in $(seq 1 15); do
+  DEFAULT_LOG=$(adb logcat -d | grep "APP_PREFS_LOADED:" | tail -n 1 || true)
+  if [ -n "$DEFAULT_LOG" ]; then
+    break
+  fi
+  sleep 2
+done
+echo "Key B pre-restore startup log: $DEFAULT_LOG"
+echo "$DEFAULT_LOG" | grep -q 'is_dark_mode=false'
+
+# Apply restored preferences to Key B app (same schema written by UserBackupService.importFromJson)
+adb shell am force-stop "$PKG"
+OWNER_B=$(adb shell "stat -c %u:%g /data/data/$PKG" | tr -d '\r\n')
+adb shell "mkdir -p /data/data/$PKG/shared_prefs"
+adb push /tmp/FlutterSharedPreferences.xml "$PREFS_FILE" >/dev/null
+adb shell "chown $OWNER_B $PREFS_FILE && chmod 660 $PREFS_FILE"
+
+adb logcat -c
+adb shell am start -n "$PKG/.MainActivity"
+RESTORED_LOG=""
+for i in $(seq 1 15); do
+  RESTORED_LOG=$(adb logcat -d | grep "APP_PREFS_LOADED:" | tail -n 1 || true)
+  if [ -n "$RESTORED_LOG" ]; then
+    break
+  fi
+  sleep 2
+done
+echo "Key B post-restore runtime log: $RESTORED_LOG"
+echo "$RESTORED_LOG" | grep -q 'is_dark_mode=true'
+echo "$RESTORED_LOG" | grep -q 'المحبة'
+echo "$RESTORED_LOG" | grep -q 'الإيمان'
+
+adb pull "$DB_FILE" /tmp/keyB_v385.db >/dev/null
+IC_B=$(sqlite3 /tmp/keyB_v385.db "PRAGMA integrity_check;")
+CNT_B=$(sqlite3 /tmp/keyB_v385.db "SELECT COUNT(*) FROM word_mappings;")
+echo "Key B DB -> integrity=$IC_B | word_mappings=$CNT_B"
+[ "$IC_B" = "ok" ]
+[ "$CNT_B" = "434351" ]
+
+if adb logcat -d | grep -q "FATAL EXCEPTION"; then
+  echo "FATAL EXCEPTION detected during cross-signature migration test!"
+  adb logcat -d | grep -A 25 "FATAL EXCEPTION"
+  exit 1
+fi
+echo "TEST C (Cross-Signature Migration Key A -> Uninstall -> Key B -> Restore Offline): PASSED!"
