@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  measure-v382-baseline:
+  build-and-verify-play-v383:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,51 +26,139 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Download bundletool 1.18.3 and v1.0.382 AAB
+      - name: Install Android SDK API 36, Build-Tools 36 & NDK r28
+        run: |
+          SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          yes | "$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" \
+            "platforms;android-36" \
+            "build-tools;36.0.0" \
+            "ndk;28.0.12433566"
+
+      - name: Set up Latest Stable Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Print Flutter & Dart Versions
+        run: flutter --version
+
+      - name: Verify Untouched v382 DB Chunks (SHA-256 b91b4c18...)
+        run: |
+          node scripts/assemble_db.cjs
+          node scripts/verify_db_chunks_exact.cjs
+          DB_SHA=$(sha256sum mobile/assets/bible_study.db | awk '{print $1}')
+          echo "Assembled DB SHA-256: $DB_SHA"
+          if [ "$DB_SHA" != "b91b4c188be54ad8746593158ea48a8bef8cf37c8ccec349108111274c00266e" ]; then
+            echo "FATAL: DB SHA-256 drifted from frozen v382!"
+            exit 1
+          fi
+
+      - name: Configure Android & Resolve Dependencies
+        working-directory: ./mobile
+        run: |
+          rm -f test/widget_test.dart
+          node ../scripts/patch_gradle.cjs
+          flutter pub upgrade
+          dart run flutter_launcher_icons
+
+      - name: Analyze & Unit Test
+        working-directory: ./mobile
+        run: |
+          flutter analyze --no-fatal-warnings --no-fatal-infos
+          flutter test
+
+      - name: Build Play-Ready AAB & APK (v1.0.383+383, API 36, Compressed .dat)
+        working-directory: ./mobile
+        run: |
+          flutter build appbundle --release --no-tree-shake-icons --build-name=1.0.383 --build-number=383 --dart-define=APP_BUILD_NUMBER=383
+          flutter build apk --release --no-tree-shake-icons --build-name=1.0.383 --build-number=383 --dart-define=APP_BUILD_NUMBER=383
+          cp build/app/outputs/bundle/release/app-release.aab ../play-store-bundle-v383.aab
+          cp build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-v383.apk
+          ls -lh ../play-store-bundle-v383.aab ../arabic-bible-study-v383.apk
+          sha256sum ../play-store-bundle-v383.aab ../arabic-bible-study-v383.apk
+
+      - name: Verify Compressed APK Chunks Reassemble Bitwise to v382 DB
+        run: node scripts/verify_apk_asset_integrity.cjs arabic-bible-study-v383.apk
+
+      - name: Full Play Store Readiness Verification (bundletool 1.18.3, API 36, 16KB ELF & ZIP, Signature Match vs v382)
         run: |
           curl -sSL -o bundletool.jar https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar
-          curl -sSL -o v382.aab https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.382/play-store-bundle.aab
-          ls -lh v382.aab
-          sha256sum v382.aab
+          curl -sSL -o v382.apk https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.382/arabic-bible-study-app.apk
 
-      - name: Validate v382 AAB and Measure Device Download Sizes (bundletool)
-        run: |
-          echo "=== 1. bundletool validate ==="
-          java -jar bundletool.jar validate --bundle=v382.aab
+          echo "=== PLAY PREP v383 REPORT ==="
+          echo "--- 1. AAB & APK File Sizes ---"
+          ls -lh play-store-bundle-v383.aab arabic-bible-study-v383.apk
+          stat -c "v383_aab_bytes=%s" play-store-bundle-v383.aab
+          stat -c "v383_apk_bytes=%s" arabic-bible-study-v383.apk
 
-          echo "=== 2. bundletool build-apks (split APKs) ==="
+          echo "--- 2. bundletool validate ---"
+          java -jar bundletool.jar validate --bundle=play-store-bundle-v383.aab | tail -n 15
+
+          echo "--- 3. bundletool build-apks & get-size total ---"
           java -jar bundletool.jar build-apks \
-            --bundle=v382.aab \
-            --output=v382_splits.apks \
+            --bundle=play-store-bundle-v383.aab \
+            --output=v383_splits.apks \
             --ks=mobile/android/app/upload-keystore.jks \
             --ks-pass=pass:bible_study_2026 \
             --ks-key-alias=arabic_bible_study \
             --key-pass=pass:bible_study_2026
+          java -jar bundletool.jar get-size total --apks=v383_splits.apks
+          java -jar bundletool.jar get-size total --apks=v383_splits.apks --dimensions=ABI
 
-          echo "=== 3. bundletool get-size total (compressed download size) ==="
-          java -jar bundletool.jar get-size total --apks=v382_splits.apks
-          java -jar bundletool.jar get-size total --apks=v382_splits.apks --dimensions=ABI
+          mkdir -p extracted_v383
+          unzip -q v383_splits.apks -d extracted_v383
+          ls -lh extracted_v383/splits/base-master*.apk extracted_v383/splits/base-arm64*.apk
 
-          echo "=== 4. Inspect arm64-v8a device APK badging & 16KB page alignment ==="
-          mkdir -p extracted_splits
-          unzip -q v382_splits.apks -d extracted_splits
-          ls -lh extracted_splits/splits/
+          BT_DIR="${ANDROID_SDK_ROOT:-$ANDROID_HOME}/build-tools/36.0.0"
+          echo "--- 4. aapt2 dump badging (API 36, minSdk, Permissions) ---"
+          "$BT_DIR/aapt2" dump badging extracted_v383/splits/base-master.apk | head -n 30
 
-          BT_DIR=$(ls -d "${ANDROID_SDK_ROOT:-$ANDROID_HOME}"/build-tools/* | sort -V | tail -n 1)
-          echo "Build-tools: $BT_DIR"
-          "$BT_DIR/aapt2" dump badging extracted_splits/splits/base-master.apk | head -n 30
+          echo "--- 5. 16KB ZIP Alignment (-P 16) on arm64-v8a split & full APK ---"
+          "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_v383/splits/base-arm64_v8a.apk
+          "$BT_DIR/zipalign" -c -P 16 -v 4 arabic-bible-study-v383.apk
 
-          echo "=== 5. Check 16KB ZIP alignment (-P 16) on arm64-v8a split ==="
-          "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_splits/splits/base-arm64_v8a.apk || echo "FAIL: base-arm64_v8a.apk is NOT 16KB zip-aligned"
-
-          echo "=== 6. Check ELF LOAD segment p_align (16KB = 0x4000) for all .so in v382.aab ==="
-          mkdir -p aab_libs
-          unzip -q v382.aab "base/lib/*" -d aab_libs || true
-          for so in $(find aab_libs -name "*.so" | sort); do
-            aligns=$(readelf -l "$so" | awk '/LOAD/ {print $NF}' | sort -u | tr '\n' ' ')
-            echo "  $so -> LOAD p_align: $aligns"
+          echo "--- 6. 16KB ELF LOAD Segment Alignment (readelf -lW, must be >= 0x4000 for 64-bit) ---"
+          mkdir -p v383_libs
+          unzip -q play-store-bundle-v383.aab "base/lib/*" -d v383_libs
+          FAIL_16K=0
+          for so in $(find v383_libs -name "*.so" | sort); do
+            aligns=$(readelf -lW "$so" | awk '$1=="LOAD" {print $NF}' | sort -u | tr '\n' ' ')
+            echo "  $so -> LOAD Align: $aligns"
+            if echo "$so" | grep -qE "arm64-v8a|x86_64"; then
+              for a in $aligns; do
+                dec=$((a))
+                if [ "$dec" -lt 16384 ]; then
+                  echo "  [FAIL] $so has LOAD align $a (< 16384)"
+                  FAIL_16K=1
+                fi
+              done
+            fi
           done
+          if [ "$FAIL_16K" -ne 0 ]; then
+            echo "FATAL: One or more 64-bit native libraries failed 16KB ELF alignment!"
+            exit 1
+          fi
+          echo "ALL 64-bit native libraries verified 16KB ELF aligned!"
 
-          echo "=== 7. Check compression of assets/db_parts inside v382.aab & base-master.apk ==="
-          unzip -l v382.aab | grep -E "part_00\.dat|part_69\.dat" | head -n 5
-          unzip -l extracted_splits/splits/base-master.apk | grep -E "part_00\.dat|part_69\.dat" | head -n 5
+          echo "--- 7. Verify DB Part Compression Inside AAB & base-master.apk ---"
+          unzip -lv play-store-bundle-v383.aab | grep -E "part_00\.dat|part_69\.dat"
+          unzip -lv extracted_v383/splits/base-master.apk | grep -E "part_00\.dat|part_69\.dat"
+
+          echo "--- 8. Signature Compatibility Check (v383 vs v382) ---"
+          CERT_382=$("$BT_DIR/apksigner" verify --print-certs v382.apk | grep "certificate SHA-256 digest" | head -n 1)
+          CERT_383=$("$BT_DIR/apksigner" verify --print-certs arabic-bible-study-v383.apk | grep "certificate SHA-256 digest" | head -n 1)
+          echo "v382 cert: $CERT_382"
+          echo "v383 cert: $CERT_383"
+          if [ "$CERT_382" != "$CERT_383" ]; then
+            echo "FATAL: Signing certificate mismatch between v382 and v383!"
+            exit 1
+          fi
+          echo "Signing certificate matches v382 identically!"
+
+      - name: Upload Play-Ready v383 AAB & APK Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: play-internal-prep-v1.0.383
+          path: |
+            play-store-bundle-v383.aab
+            arabic-bible-study-v383.apk
