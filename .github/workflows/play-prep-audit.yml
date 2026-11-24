@@ -219,3 +219,11 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
           script: bash scripts/run_emulator_clean_and_upgrade_test.sh
+
+      - name: Upload Emulator Evidence (logcat, screenshot, ui.xml)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: emulator-runtime-evidence-v1.0.385
+          if-no-files-found: warn
+          path: emulator_evidence/

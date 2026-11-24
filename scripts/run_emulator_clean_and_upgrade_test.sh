@@ -6,10 +6,28 @@ BT_DIR=$(ls -d "${ANDROID_SDK_ROOT:-$ANDROID_HOME}"/build-tools/* | sort -V | ta
 PKG="com.arabicbible.study"
 DB_FILE="/data/data/$PKG/databases/bible_study_v382.db"
 PREFS_FILE="/data/data/$PKG/shared_prefs/FlutterSharedPreferences.xml"
+EVIDENCE_DIR="emulator_evidence"
+mkdir -p "$EVIDENCE_DIR"
+
+capture_evidence() {
+  local rc=$?
+  echo "Capturing emulator evidence (exit_code=$rc) into $EVIDENCE_DIR/ ..."
+  adb logcat -d > "$EVIDENCE_DIR/logcat.txt" 2>&1 || true
+  adb exec-out screencap -p > "$EVIDENCE_DIR/screen.png" 2>/dev/null || true
+  adb shell uiautomator dump /sdcard/ui_final.xml >/dev/null 2>&1 || true
+  adb pull /sdcard/ui_final.xml "$EVIDENCE_DIR/ui.xml" >/dev/null 2>&1 || cp /tmp/ui.xml "$EVIDENCE_DIR/ui.xml" 2>/dev/null || true
+  adb shell "cat $PREFS_FILE" > "$EVIDENCE_DIR/FlutterSharedPreferences.xml" 2>/dev/null || true
+  ls -lh "$EVIDENCE_DIR" || true
+  return "$rc"
+}
+trap capture_evidence EXIT
 
 echo "Enabling adb root on google_apis emulator..."
 adb root
 adb wait-for-device
+# Prevent background system ANR dialogs (e.g., Pixel Launcher isn't responding) from covering the app window on CI emulators
+adb shell settings put global hide_error_dialogs 1 || true
+adb shell settings put secure anr_show_background 0 || true
 
 echo "=== TEST A: CLEAN INSTALL OFFLINE (v1.0.385 Compressed .dat Assembly) ==="
 adb shell svc wifi disable
@@ -156,9 +174,34 @@ echo "TEST C: CROSS-SIGNATURE REAL JSON EXPORT & IMPORT (KEY A -> UNINSTALL -> K
 tap_ui_label() {
   local label="$1"
   local attempt coords x y
-  for attempt in $(seq 1 10); do
+  for attempt in $(seq 1 12); do
     adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1 || true
     adb pull /sdcard/ui.xml /tmp/ui.xml >/dev/null 2>&1 || true
+    # Auto-dismiss system ANR dialog (e.g., Pixel Launcher isn't responding) if present
+    local aerr_coords
+    aerr_coords=$(python3 - <<'PY'
+import re, sys, xml.etree.ElementTree as ET
+try:
+    root = ET.parse('/tmp/ui.xml').getroot()
+except Exception:
+    sys.exit(0)
+for node in root.iter('node'):
+    if node.attrib.get('resource-id') == 'android:id/aerr_close':
+        m = re.match(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]', node.attrib.get('bounds', ''))
+        if m:
+            x1, y1, x2, y2 = map(int, m.groups())
+            print(f"{(x1+x2)//2} {(y1+y2)//2}")
+            sys.exit(0)
+PY
+)
+    if [ -n "$aerr_coords" ]; then
+      x=$(echo "$aerr_coords" | awk '{print $1}')
+      y=$(echo "$aerr_coords" | awk '{print $2}')
+      echo "Dismissing system ANR dialog at ($x, $y)..."
+      adb shell input tap "$x" "$y"
+      sleep 2
+      continue
+    fi
     coords=$(python3 - "$label" <<'PY'
 import re, sys, xml.etree.ElementTree as ET
 target = sys.argv[1]
