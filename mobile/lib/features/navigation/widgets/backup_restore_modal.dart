@@ -5,6 +5,7 @@
 // clipboard when migrating from GitHub builds to Google Play builds.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +62,7 @@ class _BackupRestoreDialogState extends State<_BackupRestoreDialog> {
     try {
       final jsonStr = await UserBackupService.exportToJson();
       await Clipboard.setData(ClipboardData(text: jsonStr));
+      debugPrint('APP_BACKUP_EXPORTED: ${jsonEncode(jsonDecode(jsonStr))}');
       await _loadSummary();
       if (mounted) {
         setState(() {
@@ -102,6 +104,9 @@ class _BackupRestoreDialogState extends State<_BackupRestoreDialog> {
       if (mounted) {
         await context.read<ThemeProvider>().reloadFromPrefs();
       }
+      debugPrint(
+        'APP_BACKUP_RESTORED: is_dark_mode=${result.isDarkMode} | recent_search_queries=${jsonEncode(result.recentSearchQueries)}',
+      );
       await _loadSummary();
       if (mounted) {
         final modeLabel = result.isDarkMode ? 'الوضع الليلي' : 'الوضع النهاري';

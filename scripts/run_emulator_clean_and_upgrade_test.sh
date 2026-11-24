@@ -93,7 +93,7 @@ XML
 OWNER=$(adb shell "stat -c %u:%g /data/data/$PKG" | tr -d '\r\n')
 adb shell "mkdir -p /data/data/$PKG/shared_prefs"
 adb push /tmp/FlutterSharedPreferences.xml "$PREFS_FILE" >/dev/null
-adb shell "chown $OWNER $PREFS_FILE && chmod 660 $PREFS_FILE"
+adb shell "chown $OWNER $PREFS_FILE && chmod 660 $PREFS_FILE && restorecon $PREFS_FILE"
 
 echo "Upgrading in-place v382 -> v385 while OFFLINE..."
 adb logcat -c
@@ -152,9 +152,48 @@ if adb logcat -d | grep -q "FATAL EXCEPTION"; then
 fi
 echo "TEST B (Upgrade Over v382 Offline With Exact Preference-Value & Runtime-Read Verification): PASSED!"
 
-echo "=== TEST C: CROSS-SIGNATURE MIGRATION (KEY A -> UNINSTALL -> KEY B -> RESTORE, OFFLINE) ==="
+echo "TEST C: CROSS-SIGNATURE REAL JSON EXPORT & IMPORT (KEY A -> UNINSTALL -> KEY B -> UI RESTORE -> COLD RESTART, OFFLINE)"
+tap_ui_label() {
+  local label="$1"
+  local attempt coords x y
+  for attempt in $(seq 1 10); do
+    adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1 || true
+    adb pull /sdcard/ui.xml /tmp/ui.xml >/dev/null 2>&1 || true
+    coords=$(python3 - "$label" <<'PY'
+import re, sys, xml.etree.ElementTree as ET
+target = sys.argv[1]
+try:
+    root = ET.parse('/tmp/ui.xml').getroot()
+except Exception:
+    sys.exit(0)
+for node in root.iter('node'):
+    text = node.attrib.get('text', '')
+    desc = node.attrib.get('content-desc', '')
+    if target in text or target in desc:
+        m = re.match(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]', node.attrib.get('bounds', ''))
+        if m:
+            x1, y1, x2, y2 = map(int, m.groups())
+            print(f"{(x1+x2)//2} {(y1+y2)//2}")
+            sys.exit(0)
+PY
+)
+    if [ -n "$coords" ]; then
+      x=$(echo "$coords" | awk '{print $1}')
+      y=$(echo "$coords" | awk '{print $2}')
+      echo "Tapping UI element '$label' at ($x, $y)..."
+      adb shell input tap "$x" "$y"
+      sleep 2
+      return 0
+    fi
+    sleep 2
+  done
+  echo "FATAL: Could not find UI element containing '$label' in uiautomator dump!"
+  cat /tmp/ui.xml | head -c 4000 || true
+  return 1
+}
+
 adb uninstall "$PKG"
-rm -f /tmp/upgraded_v385.db /tmp/keyA.jks /tmp/keyB.jks /tmp/v385_keyA.apk /tmp/v385_keyB.apk
+rm -f /tmp/upgraded_v385.db /tmp/keyA.jks /tmp/keyB.jks /tmp/v385_keyA.apk /tmp/v385_keyB.apk /tmp/ui.xml
 
 keytool -genkeypair -v -keystore /tmp/keyA.jks -storepass passA123 -keypass passA123 \
   -alias keya -keyalg RSA -keysize 2048 -validity 1 \
@@ -166,18 +205,63 @@ keytool -genkeypair -v -keystore /tmp/keyB.jks -storepass passB123 -keypass pass
 "$BT_DIR/apksigner" sign --ks /tmp/keyA.jks --ks-pass pass:passA123 --key-pass pass:passA123 --ks-key-alias keya --out /tmp/v385_keyA.apk artifacts/arabic-bible-study-v385.apk
 "$BT_DIR/apksigner" sign --ks /tmp/keyB.jks --ks-pass pass:passB123 --key-pass pass:passB123 --ks-key-alias keyb --out /tmp/v385_keyB.apk artifacts/arabic-bible-study-v385.apk
 
-CERT_A=$("$BT_DIR/apksigner" verify --print-certs /tmp/v385_keyA.apk | grep "certificate SHA-256" | head -n 1)
-CERT_B=$("$BT_DIR/apksigner" verify --print-certs /tmp/v385_keyB.apk | grep "certificate SHA-256" | head -n 1)
+CERT_A=$("$BT_DIR/apksigner" verify --print-certs /tmp/v385_keyA.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
+CERT_B=$("$BT_DIR/apksigner" verify --print-certs /tmp/v385_keyB.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
 echo "Key A cert: $CERT_A"
 echo "Key B cert: $CERT_B"
-if [ "$CERT_A" = "$CERT_B" ]; then
-  echo "FATAL: Key A and Key B certificates must differ!"
+if [ -z "$CERT_A" ] || [ -z "$CERT_B" ] || [ "$CERT_A" = "$CERT_B" ]; then
+  echo "FATAL: Key A and Key B certificates must both exist and differ!"
   exit 1
 fi
 
+echo "Installing Key A app and assembling DB offline..."
 adb install /tmp/v385_keyA.apk
+adb shell am start -n "$PKG/.MainActivity"
+READY_A=0
+SZ=0
+for i in $(seq 1 60); do
+  SZ=$(adb shell "stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
+  if [ "$SZ" -ge 365416448 ]; then
+    echo "Key A assembled bible_study_v382.db ($SZ bytes) in $((i*2))s."
+    READY_A=1
+    break
+  fi
+  sleep 2
+done
+[ "$READY_A" -eq 1 ]
+sleep 3
+
+# Seed Key A with real user preferences (dark mode + ordered Arabic search queries) and verify Key A reads them
+adb shell am force-stop "$PKG"
+OWNER_A=$(adb shell "stat -c %u:%g /data/data/$PKG" | tr -d '\r\n')
+adb shell "mkdir -p /data/data/$PKG/shared_prefs"
+adb push /tmp/FlutterSharedPreferences.xml "$PREFS_FILE" >/dev/null
+adb shell "chown $OWNER_A $PREFS_FILE && chmod 660 $PREFS_FILE && restorecon $PREFS_FILE"
+
+adb logcat -c
+adb shell am start -n "$PKG/.MainActivity"
+KEYA_LOG=""
+for i in $(seq 1 15); do
+  KEYA_LOG=$(adb logcat -d | grep "APP_PREFS_LOADED:" | tail -n 1 || true)
+  if [ -n "$KEYA_LOG" ]; then
+    break
+  fi
+  sleep 2
+done
+echo "Key A loaded prefs before export: $KEYA_LOG"
+echo "$KEYA_LOG" | grep -qF 'is_dark_mode=true | recent_search_queries=["المحبة","الإيمان"]'
+
+# Step 1: Execute REAL in-app JSON export via BackupRestoreModal UI on Key A -> Android system clipboard
+tap_ui_label "النسخ الاحتياطي والاستعادة"
+tap_ui_label "نسخ النسخة الاحتياطية (JSON)"
+EXPORT_LOG=$(adb logcat -d | grep "APP_BACKUP_EXPORTED:" | tail -n 1 || true)
+echo "Key A real JSON export log: $EXPORT_LOG"
+echo "$EXPORT_LOG" | grep -qF '"is_dark_mode":true'
+echo "$EXPORT_LOG" | grep -qF '"recent_search_queries":["المحبة","الإيمان"]'
+
+# Step 2: Confirm Android blocks in-place upgrade from Key A -> Key B
 echo "Verifying Android blocks in-place upgrade across different signing keys..."
-if adb install -r /tmp/v385_keyB.apk 2>/tmp/cross_sign_err.txt; then
+if adb install -r /tmp/v385_keyB.apk >/tmp/cross_sign_err.txt 2>&1; then
   echo "FATAL: Expected INSTALL_FAILED_UPDATE_INCOMPATIBLE across different keys!"
   exit 1
 fi
@@ -185,6 +269,7 @@ cat /tmp/cross_sign_err.txt
 grep -q "INSTALL_FAILED_UPDATE_INCOMPATIBLE" /tmp/cross_sign_err.txt
 echo "Confirmed: Android blocked cross-signature in-place upgrade as expected."
 
+# Step 3: Uninstall Key A completely and clean-install Key B offline
 echo "Uninstalling Key A app and performing clean offline install of Key B app..."
 adb uninstall "$PKG"
 adb logcat -c
@@ -204,7 +289,6 @@ for i in $(seq 1 60); do
 done
 [ "$READY_B" -eq 1 ]
 
-# Verify default clean startup on Key B before restore
 DEFAULT_LOG=""
 for i in $(seq 1 15); do
   DEFAULT_LOG=$(adb logcat -d | grep "APP_PREFS_LOADED:" | tail -n 1 || true)
@@ -214,15 +298,18 @@ for i in $(seq 1 15); do
   sleep 2
 done
 echo "Key B pre-restore startup log: $DEFAULT_LOG"
-echo "$DEFAULT_LOG" | grep -q 'is_dark_mode=false'
+echo "$DEFAULT_LOG" | grep -qF 'is_dark_mode=false | recent_search_queries=[]'
 
-# Apply restored preferences to Key B app (same schema written by UserBackupService.importFromJson)
+# Step 4: Execute REAL in-app JSON paste & restore via BackupRestoreModal UI on Key B (ZERO XML injection!)
+tap_ui_label "النسخ الاحتياطي والاستعادة"
+tap_ui_label "لصق"
+tap_ui_label "استعادة التفضيلات"
+RESTORE_ACTION_LOG=$(adb logcat -d | grep "APP_BACKUP_RESTORED:" | tail -n 1 || true)
+echo "Key B real JSON restore log: $RESTORE_ACTION_LOG"
+echo "$RESTORE_ACTION_LOG" | grep -qF 'is_dark_mode=true | recent_search_queries=["المحبة","الإيمان"]'
+
+# Step 5: Cold-restart Key B offline and verify exact values AND search order persist
 adb shell am force-stop "$PKG"
-OWNER_B=$(adb shell "stat -c %u:%g /data/data/$PKG" | tr -d '\r\n')
-adb shell "mkdir -p /data/data/$PKG/shared_prefs"
-adb push /tmp/FlutterSharedPreferences.xml "$PREFS_FILE" >/dev/null
-adb shell "chown $OWNER_B $PREFS_FILE && chmod 660 $PREFS_FILE"
-
 adb logcat -c
 adb shell am start -n "$PKG/.MainActivity"
 RESTORED_LOG=""
@@ -233,10 +320,15 @@ for i in $(seq 1 15); do
   fi
   sleep 2
 done
-echo "Key B post-restore runtime log: $RESTORED_LOG"
-echo "$RESTORED_LOG" | grep -q 'is_dark_mode=true'
-echo "$RESTORED_LOG" | grep -q 'المحبة'
-echo "$RESTORED_LOG" | grep -q 'الإيمان'
+echo "Key B post-cold-restart runtime log: $RESTORED_LOG"
+echo "$RESTORED_LOG" | grep -qF 'is_dark_mode=true | recent_search_queries=["المحبة","الإيمان"]'
+
+PREFS_B=$(adb shell "cat $PREFS_FILE" | tr -d '\r')
+echo "Key B FlutterSharedPreferences.xml after cold restart:"
+echo "$PREFS_B"
+echo "$PREFS_B" | grep -q 'name="flutter.db_version" value="382"'
+echo "$PREFS_B" | grep -q 'name="flutter.is_dark_mode" value="true"'
+echo "$PREFS_B" | grep -qF '["المحبة","الإيمان"]'
 
 adb pull "$DB_FILE" /tmp/keyB_v385.db >/dev/null
 IC_B=$(sqlite3 /tmp/keyB_v385.db "PRAGMA integrity_check;")
@@ -250,4 +342,4 @@ if adb logcat -d | grep -q "FATAL EXCEPTION"; then
   adb logcat -d | grep -A 25 "FATAL EXCEPTION"
   exit 1
 fi
-echo "TEST C (Cross-Signature Migration Key A -> Uninstall -> Key B -> Restore Offline): PASSED!"
+echo "TEST C (Real Cross-Signature JSON Export/Restore Key A -> Uninstall -> Key B -> Cold Restart Offline): PASSED!"
