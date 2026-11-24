@@ -371,7 +371,7 @@ echo "Key B FlutterSharedPreferences.xml after cold restart:"
 echo "$PREFS_B"
 echo "$PREFS_B" | grep -q 'name="flutter.db_version" value="382"'
 echo "$PREFS_B" | grep -q 'name="flutter.is_dark_mode" value="true"'
-echo "$PREFS_B" | grep -qF '["المحبة","الإيمان"]'
+echo "$PREFS_B" | grep -qF '[&quot;المحبة&quot;,&quot;الإيمان&quot;]'
 
 adb pull "$DB_FILE" /tmp/keyB_v385.db >/dev/null
 IC_B=$(sqlite3 /tmp/keyB_v385.db "PRAGMA integrity_check;")
