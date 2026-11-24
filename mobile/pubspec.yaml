@@ -1,7 +1,7 @@
 name: arabic_bible_study
 description: Arabic Van Dyck Bible Study — Flutter Mobile App
 publish_to: 'none'
-version: 1.0.385+385
+version: 1.0.386+386
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
@@ -56,6 +56,11 @@ flutter:
 
   assets:
     - assets/db_parts/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Variable.ttf
 
   # Uncomment if adding local font files later (e.g. SBL Hebrew/Greek)
   # fonts:

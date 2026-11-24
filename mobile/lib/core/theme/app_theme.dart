@@ -6,7 +6,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 
 class AppTheme {
@@ -40,7 +39,8 @@ class AppTheme {
         scrolledUnderElevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         centerTitle:      true,
-        titleTextStyle: GoogleFonts.inter(
+        titleTextStyle: const TextStyle(
+          fontFamily: 'Inter',
           fontSize:   17,
           fontWeight: FontWeight.w600,
           color:      AppColors.lightTextPrimary,
@@ -86,7 +86,7 @@ class AppTheme {
         border:           _inputBorder(AppColors.lightBorder),
         enabledBorder:    _inputBorder(AppColors.lightBorder),
         focusedBorder:    _inputBorder(AppColors.lightPrimary),
-        hintStyle: GoogleFonts.inter(color: AppColors.lightTextMuted, fontSize: 14),
+        hintStyle: const TextStyle(fontFamily: 'Inter', color: AppColors.lightTextMuted, fontSize: 14),
         contentPadding:   const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
 
@@ -99,7 +99,8 @@ class AppTheme {
       ),
 
       // Text
-      textTheme: GoogleFonts.interTextTheme(base.textTheme).apply(
+      textTheme: base.textTheme.apply(
+        fontFamily:   'Inter',
         bodyColor:    AppColors.lightTextPrimary,
         displayColor: AppColors.lightTextPrimary,
       ),
@@ -134,7 +135,8 @@ class AppTheme {
         scrolledUnderElevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle.light,
         centerTitle:      true,
-        titleTextStyle: GoogleFonts.inter(
+        titleTextStyle: const TextStyle(
+          fontFamily: 'Inter',
           fontSize:   17,
           fontWeight: FontWeight.w600,
           color:      AppColors.darkTextPrimary,
@@ -180,7 +182,7 @@ class AppTheme {
         border:           _inputBorder(AppColors.darkBorder),
         enabledBorder:    _inputBorder(AppColors.darkBorder),
         focusedBorder:    _inputBorder(AppColors.darkPrimary),
-        hintStyle: GoogleFonts.inter(color: AppColors.darkTextMuted, fontSize: 14),
+        hintStyle: const TextStyle(fontFamily: 'Inter', color: AppColors.darkTextMuted, fontSize: 14),
         contentPadding:   const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
 
@@ -193,7 +195,8 @@ class AppTheme {
       ),
 
       // Text
-      textTheme: GoogleFonts.interTextTheme(base.textTheme).apply(
+      textTheme: base.textTheme.apply(
+        fontFamily:   'Inter',
         bodyColor:    AppColors.darkTextPrimary,
         displayColor: AppColors.darkTextPrimary,
       ),

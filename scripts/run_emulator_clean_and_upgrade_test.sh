@@ -22,6 +22,18 @@ capture_evidence() {
 }
 trap capture_evidence EXIT
 
+assert_no_offline_font_errors() {
+  local phase="$1"
+  local flutter_logs
+  flutter_logs=$(adb logcat -d -s flutter || true)
+  if echo "$flutter_logs" | grep -qiE "Failed to load font|Unable to load font|google_fonts|fonts\.gstatic\.com|Unhandled Exception"; then
+    echo "FATAL: Unhandled Flutter/font exception detected during $phase!"
+    echo "$flutter_logs" | grep -iE -C 5 "Failed to load font|Unable to load font|google_fonts|fonts\.gstatic\.com|Unhandled Exception"
+    exit 1
+  fi
+  echo "Verified: ZERO offline font or unhandled Flutter exceptions during $phase."
+}
+
 echo "Enabling adb root on google_apis emulator..."
 adb root
 adb wait-for-device
@@ -29,11 +41,11 @@ adb wait-for-device
 adb shell settings put global hide_error_dialogs 1 || true
 adb shell settings put secure anr_show_background 0 || true
 
-echo "=== TEST A: CLEAN INSTALL OFFLINE (v1.0.385 Compressed .dat Assembly) ==="
+echo "=== TEST A: CLEAN INSTALL OFFLINE (v1.0.386 Compressed .dat Assembly) ==="
 adb shell svc wifi disable
 adb shell svc data disable
 adb logcat -c
-adb install artifacts/arabic-bible-study-v385.apk
+adb install artifacts/arabic-bible-study-v386.apk
 adb shell am start -n "$PKG/.MainActivity"
 
 READY=0
@@ -66,6 +78,7 @@ if adb logcat -d | grep -q "FATAL EXCEPTION"; then
   adb logcat -d | grep -A 25 "FATAL EXCEPTION"
   exit 1
 fi
+assert_no_offline_font_errors "TEST A (clean install)"
 echo "TEST A (Clean Install Offline): PASSED!"
 
 echo "=== TEST B: IN-PLACE UPGRADE OVER v382 WITH REAL PREFERENCE READ VERIFICATION (OFFLINE) ==="
@@ -78,7 +91,7 @@ keytool -genkeypair -v -keystore /tmp/upg_test.jks -storepass testpass123 -keypa
   -alias upgtest -keyalg RSA -keysize 2048 -validity 1 \
   -dname "CN=Emulator Upgrade Test" >/dev/null 2>&1
 "$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v382_resigned.apk /tmp/v382.apk
-"$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v385_resigned.apk artifacts/arabic-bible-study-v385.apk
+"$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v386_resigned.apk artifacts/arabic-bible-study-v386.apk
 
 adb install /tmp/v382_resigned.apk
 adb shell am start -n "$PKG/.MainActivity"
@@ -113,12 +126,12 @@ adb shell "mkdir -p /data/data/$PKG/shared_prefs"
 adb push /tmp/FlutterSharedPreferences.xml "$PREFS_FILE" >/dev/null
 adb shell "chown $OWNER $PREFS_FILE && chmod 660 $PREFS_FILE && restorecon $PREFS_FILE"
 
-echo "Upgrading in-place v382 -> v385 while OFFLINE..."
+echo "Upgrading in-place v382 -> v386 while OFFLINE..."
 adb logcat -c
-adb install -r /tmp/v385_resigned.apk
+adb install -r /tmp/v386_resigned.apk
 VER_CODE=$(adb shell dumpsys package "$PKG" | grep "versionCode=" | head -n 1 | tr -d '\r')
 echo "Post-upgrade package: $VER_CODE"
-echo "$VER_CODE" | grep -q "versionCode=385"
+echo "$VER_CODE" | grep -q "versionCode=386"
 
 adb shell am start -n "$PKG/.MainActivity"
 
@@ -168,6 +181,7 @@ if adb logcat -d | grep -q "FATAL EXCEPTION"; then
   adb logcat -d | grep -A 25 "FATAL EXCEPTION"
   exit 1
 fi
+assert_no_offline_font_errors "TEST B (upgrade)"
 echo "TEST B (Upgrade Over v382 Offline With Exact Preference-Value & Runtime-Read Verification): PASSED!"
 
 echo "TEST C: CROSS-SIGNATURE REAL JSON EXPORT & IMPORT (KEY A -> UNINSTALL -> KEY B -> UI RESTORE -> COLD RESTART, OFFLINE)"
@@ -245,11 +259,11 @@ keytool -genkeypair -v -keystore /tmp/keyB.jks -storepass passB123 -keypass pass
   -alias keyb -keyalg RSA -keysize 2048 -validity 1 \
   -dname "CN=New Play Upload Key B" >/dev/null 2>&1
 
-"$BT_DIR/apksigner" sign --ks /tmp/keyA.jks --ks-pass pass:passA123 --key-pass pass:passA123 --ks-key-alias keya --out /tmp/v385_keyA.apk artifacts/arabic-bible-study-v385.apk
-"$BT_DIR/apksigner" sign --ks /tmp/keyB.jks --ks-pass pass:passB123 --key-pass pass:passB123 --ks-key-alias keyb --out /tmp/v385_keyB.apk artifacts/arabic-bible-study-v385.apk
+"$BT_DIR/apksigner" sign --ks /tmp/keyA.jks --ks-pass pass:passA123 --key-pass pass:passA123 --ks-key-alias keya --out /tmp/v386_keyA.apk artifacts/arabic-bible-study-v386.apk
+"$BT_DIR/apksigner" sign --ks /tmp/keyB.jks --ks-pass pass:passB123 --key-pass pass:passB123 --ks-key-alias keyb --out /tmp/v386_keyB.apk artifacts/arabic-bible-study-v386.apk
 
-CERT_A=$("$BT_DIR/apksigner" verify --print-certs /tmp/v385_keyA.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
-CERT_B=$("$BT_DIR/apksigner" verify --print-certs /tmp/v385_keyB.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
+CERT_A=$("$BT_DIR/apksigner" verify --print-certs /tmp/v386_keyA.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
+CERT_B=$("$BT_DIR/apksigner" verify --print-certs /tmp/v386_keyB.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
 echo "Key A cert: $CERT_A"
 echo "Key B cert: $CERT_B"
 if [ -z "$CERT_A" ] || [ -z "$CERT_B" ] || [ "$CERT_A" = "$CERT_B" ]; then
@@ -258,7 +272,7 @@ if [ -z "$CERT_A" ] || [ -z "$CERT_B" ] || [ "$CERT_A" = "$CERT_B" ]; then
 fi
 
 echo "Installing Key A app and assembling DB offline..."
-adb install /tmp/v385_keyA.apk
+adb install /tmp/v386_keyA.apk
 adb shell am start -n "$PKG/.MainActivity"
 READY_A=0
 SZ=0
@@ -304,7 +318,7 @@ echo "$EXPORT_LOG" | grep -qF '"recent_search_queries":["المحبة","الإي
 
 # Step 2: Confirm Android blocks in-place upgrade from Key A -> Key B
 echo "Verifying Android blocks in-place upgrade across different signing keys..."
-if adb install -r /tmp/v385_keyB.apk >/tmp/cross_sign_err.txt 2>&1; then
+if adb install -r /tmp/v386_keyB.apk >/tmp/cross_sign_err.txt 2>&1; then
   echo "FATAL: Expected INSTALL_FAILED_UPDATE_INCOMPATIBLE across different keys!"
   exit 1
 fi
@@ -316,7 +330,7 @@ echo "Confirmed: Android blocked cross-signature in-place upgrade as expected."
 echo "Uninstalling Key A app and performing clean offline install of Key B app..."
 adb uninstall "$PKG"
 adb logcat -c
-adb install /tmp/v385_keyB.apk
+adb install /tmp/v386_keyB.apk
 adb shell am start -n "$PKG/.MainActivity"
 
 READY_B=0
@@ -385,4 +399,5 @@ if adb logcat -d | grep -q "FATAL EXCEPTION"; then
   adb logcat -d | grep -A 25 "FATAL EXCEPTION"
   exit 1
 fi
+assert_no_offline_font_errors "TEST C (cross-signature restore)"
 echo "TEST C (Real Cross-Signature JSON Export/Restore Key A -> Uninstall -> Key B -> Cold Restart Offline): PASSED!"

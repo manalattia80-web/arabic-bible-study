@@ -1,6 +1,7 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'providers/theme_provider.dart';
 import 'providers/navigation_provider.dart';
@@ -12,6 +13,9 @@ import 'app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Strictly forbid runtime font HTTP downloads — all UI fonts are bundled locally.
+  GoogleFonts.config.allowRuntimeFetching = false;
 
   // Guarantee offline SQLite database is ready before UI renders
   try {
