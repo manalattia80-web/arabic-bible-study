@@ -5,7 +5,7 @@ sudo apt-get update -qq && sudo apt-get install -y -qq sqlite3
 BT_DIR=$(ls -d "${ANDROID_SDK_ROOT:-$ANDROID_HOME}"/build-tools/* | sort -V | tail -n 1)
 PKG="com.arabicbible.study"
 OLD_DB_FILE="/data/data/$PKG/databases/bible_study_v382.db"
-DB_FILE="/data/data/$PKG/databases/bible_study_v387.db"
+DB_FILE="/data/data/$PKG/databases/bible_study_v388.db"
 PREFS_FILE="/data/data/$PKG/shared_prefs/FlutterSharedPreferences.xml"
 EVIDENCE_DIR="emulator_evidence"
 mkdir -p "$EVIDENCE_DIR"
@@ -42,40 +42,44 @@ adb wait-for-device
 adb shell settings put global hide_error_dialogs 1 || true
 adb shell settings put secure anr_show_background 0 || true
 
-echo "=== TEST A: CLEAN INSTALL OFFLINE (v1.0.387 Compressed .dat Assembly) ==="
+echo "=== TEST A: CLEAN INSTALL OFFLINE (v1.0.388 Compressed .dat Assembly) ==="
 adb shell svc wifi disable
 adb shell svc data disable
 adb logcat -c
-adb install artifacts/arabic-bible-study-v387.apk
+adb install artifacts/arabic-bible-study-v388.apk
 adb shell am start -n "$PKG/.MainActivity"
 
 READY=0
 SZ=0
 for i in $(seq 1 60); do
   SZ=$(adb shell "stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
-  if [ "$SZ" -ge 365453312 ]; then
-    echo "Clean install assembled bible_study_v387.db ($SZ bytes) in $((i*2))s while OFFLINE!"
+  if [ "$SZ" -ge 365547520 ]; then
+    echo "Clean install assembled bible_study_v388.db ($SZ bytes) in $((i*2))s while OFFLINE!"
     READY=1
     break
   fi
   sleep 2
 done
 if [ "$READY" -ne 1 ]; then
-  echo "FATAL: DB did not reach 365453312 bytes (last size: $SZ)"
+  echo "FATAL: DB did not reach 365547520 bytes (last size: $SZ)"
   adb logcat -d | tail -n 80
   exit 1
 fi
 
 sleep 4
-adb pull "$DB_FILE" /tmp/clean_v387.db >/dev/null
-IC=$(sqlite3 /tmp/clean_v387.db "PRAGMA integrity_check;")
-CNT=$(sqlite3 /tmp/clean_v387.db "SELECT COUNT(*) FROM word_mappings;")
-V16_CHECK=$(sqlite3 /tmp/clean_v387.db "SELECT wm.orig_morphology || '|' || wm.morph_pos FROM word_mappings wm JOIN verses vr ON vr.id=wm.verse_id WHERE vr.book_id=40 AND vr.chapter_num=5 AND vr.verse_num=22 AND wm.ar_word_position=8;")
-CLEAN_SHA=$(sha256sum /tmp/clean_v387.db | awk '{print $1}')
-echo "Clean Install DB -> integrity=$IC | word_mappings=$CNT | v1.6_check(Matt5:22#8)=$V16_CHECK | sha256=$CLEAN_SHA"
+adb pull "$DB_FILE" /tmp/clean_v388.db >/dev/null
+IC=$(sqlite3 /tmp/clean_v388.db "PRAGMA integrity_check;")
+CNT=$(sqlite3 /tmp/clean_v388.db "SELECT COUNT(*) FROM word_mappings;")
+V16_CHECK=$(sqlite3 /tmp/clean_v388.db "SELECT wm.orig_morphology || '|' || wm.morph_pos FROM word_mappings wm JOIN verses vr ON vr.id=wm.verse_id WHERE vr.book_id=40 AND vr.chapter_num=5 AND vr.verse_num=22 AND wm.ar_word_position=8;")
+V172_MATT=$(sqlite3 /tmp/clean_v388.db "SELECT wm.orig_surface || '|' || wm.orig_morphology FROM word_mappings wm JOIN verses vr ON vr.id=wm.verse_id WHERE vr.book_id=40 AND vr.chapter_num=1 AND vr.verse_num=25 AND wm.ar_word_position=4;")
+V172_ROM=$(sqlite3 /tmp/clean_v388.db "SELECT wm.orig_surface || '|' || wm.orig_morphology FROM word_mappings wm JOIN verses vr ON vr.id=wm.verse_id WHERE vr.book_id=45 AND vr.chapter_num=1 AND vr.verse_num=32 AND wm.ar_word_position=18;")
+CLEAN_SHA=$(sha256sum /tmp/clean_v388.db | awk '{print $1}')
+echo "Clean Install DB -> integrity=$IC | word_mappings=$CNT | v1.6(Matt5:22#8)=$V16_CHECK | v1.7.2(Matt1:25#4)=$V172_MATT | v1.7.2(Rom1:32#18)=$V172_ROM | sha256=$CLEAN_SHA"
 [ "$IC" = "ok" ]
 [ "$CNT" = "434351" ]
 [ "$V16_CHECK" = "V- -PMPNSM-|verb" ]
+[ "$V172_MATT" = "ἔτεκεν|V- 3AAI-S--" ]
+[ "$V172_ROM" = "συνευδοκοῦσιν|V- 3PAI-P--" ]
 if adb logcat -d | grep -q "FATAL EXCEPTION"; then
   echo "FATAL EXCEPTION detected during clean install!"
   adb logcat -d | grep -A 25 "FATAL EXCEPTION"
@@ -84,17 +88,17 @@ fi
 assert_no_offline_font_errors "TEST A (clean install)"
 echo "TEST A (Clean Install Offline): PASSED!"
 
-echo "=== TEST B: IN-PLACE UPGRADE OVER v382 WITH DB MIGRATION (382 -> 387) & PREFERENCE PRESERVATION (OFFLINE) ==="
+echo "=== TEST B: IN-PLACE UPGRADE OVER v382 WITH DB MIGRATION (382 -> 388) & PREFERENCE PRESERVATION (OFFLINE) ==="
 adb uninstall "$PKG"
-rm -f /tmp/clean_v387.db
+rm -f /tmp/clean_v388.db
 curl -sSL -o /tmp/v382.apk https://github.com/manalattia80-web/arabic-bible-study/releases/download/v1.0.382/arabic-bible-study-app.apk
 
-# Re-sign both v382 and v387 with a shared ephemeral test keystore to simulate Play-signed in-place upgrade
+# Re-sign both v382 and v388 with a shared ephemeral test keystore to simulate Play-signed in-place upgrade
 keytool -genkeypair -v -keystore /tmp/upg_test.jks -storepass testpass123 -keypass testpass123 \
   -alias upgtest -keyalg RSA -keysize 2048 -validity 1 \
   -dname "CN=Emulator Upgrade Test" >/dev/null 2>&1
 "$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v382_resigned.apk /tmp/v382.apk
-"$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v387_resigned.apk artifacts/arabic-bible-study-v387.apk
+"$BT_DIR/apksigner" sign --ks /tmp/upg_test.jks --ks-pass pass:testpass123 --key-pass pass:testpass123 --ks-key-alias upgtest --out /tmp/v388_resigned.apk artifacts/arabic-bible-study-v388.apk
 
 adb install /tmp/v382_resigned.apk
 adb shell am start -n "$PKG/.MainActivity"
@@ -128,22 +132,22 @@ adb shell "mkdir -p /data/data/$PKG/shared_prefs"
 adb push /tmp/FlutterSharedPreferences.xml "$PREFS_FILE" >/dev/null
 adb shell "chown $OWNER $PREFS_FILE && chmod 660 $PREFS_FILE && restorecon $PREFS_FILE"
 
-echo "Upgrading in-place v382 -> v387 while OFFLINE (expecting DB migration 382 -> 387)..."
+echo "Upgrading in-place v382 -> v388 while OFFLINE (expecting DB migration 382 -> 388)..."
 adb logcat -c
-adb install -r /tmp/v387_resigned.apk
+adb install -r /tmp/v388_resigned.apk
 VER_CODE=$(adb shell dumpsys package "$PKG" | grep "versionCode=" | head -n 1 | tr -d '\r')
 echo "Post-upgrade package: $VER_CODE"
-echo "$VER_CODE" | grep -q "versionCode=387"
+echo "$VER_CODE" | grep -q "versionCode=388"
 
 adb shell am start -n "$PKG/.MainActivity"
 
-# Wait for bible_study_v387.db to be assembled automatically during upgrade
+# Wait for bible_study_v388.db to be assembled automatically during upgrade
 READY_UPG=0
 SZ_AFTER=0
 for i in $(seq 1 60); do
   SZ_AFTER=$(adb shell "stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
-  if [ "$SZ_AFTER" -ge 365453312 ]; then
-    echo "Upgrade v382 -> v387 assembled bible_study_v387.db ($SZ_AFTER bytes) in $((i*2))s while OFFLINE!"
+  if [ "$SZ_AFTER" -ge 365547520 ]; then
+    echo "Upgrade v382 -> v388 assembled bible_study_v388.db ($SZ_AFTER bytes) in $((i*2))s while OFFLINE!"
     READY_UPG=1
     break
   fi
@@ -176,16 +180,16 @@ echo "$PREFS_LOG" | grep -q 'الإيمان'
 PREFS_AFTER=$(adb shell "cat $PREFS_FILE" | tr -d '\r')
 echo "Post-upgrade FlutterSharedPreferences.xml:"
 echo "$PREFS_AFTER"
-echo "$PREFS_AFTER" | grep -q 'name="flutter.db_version" value="387"'
+echo "$PREFS_AFTER" | grep -q 'name="flutter.db_version" value="388"'
 echo "$PREFS_AFTER" | grep -q 'name="flutter.is_dark_mode" value="true"'
 echo "$PREFS_AFTER" | grep -q 'name="flutter.recent_search_queries"'
 echo "$PREFS_AFTER" | grep -q 'المحبة'
 echo "$PREFS_AFTER" | grep -q 'الإيمان'
 
-adb pull "$DB_FILE" /tmp/upgraded_v387.db >/dev/null
-IC_UPG=$(sqlite3 /tmp/upgraded_v387.db "PRAGMA integrity_check;")
-CNT_UPG=$(sqlite3 /tmp/upgraded_v387.db "SELECT COUNT(*) FROM word_mappings;")
-V16_UPG=$(sqlite3 /tmp/upgraded_v387.db "SELECT wm.orig_morphology || '|' || wm.morph_pos FROM word_mappings wm JOIN verses vr ON vr.id=wm.verse_id WHERE vr.book_id=40 AND vr.chapter_num=5 AND vr.verse_num=22 AND wm.ar_word_position=8;")
+adb pull "$DB_FILE" /tmp/upgraded_v388.db >/dev/null
+IC_UPG=$(sqlite3 /tmp/upgraded_v388.db "PRAGMA integrity_check;")
+CNT_UPG=$(sqlite3 /tmp/upgraded_v388.db "SELECT COUNT(*) FROM word_mappings;")
+V16_UPG=$(sqlite3 /tmp/upgraded_v388.db "SELECT wm.orig_morphology || '|' || wm.morph_pos FROM word_mappings wm JOIN verses vr ON vr.id=wm.verse_id WHERE vr.book_id=40 AND vr.chapter_num=5 AND vr.verse_num=22 AND wm.ar_word_position=8;")
 echo "Post-upgrade DB -> integrity=$IC_UPG | word_mappings=$CNT_UPG | v1.6_check(Matt5:22#8)=$V16_UPG"
 [ "$IC_UPG" = "ok" ]
 [ "$CNT_UPG" = "434351" ]
@@ -197,7 +201,7 @@ if adb logcat -d | grep -q "FATAL EXCEPTION"; then
   exit 1
 fi
 assert_no_offline_font_errors "TEST B (upgrade)"
-echo "TEST B (Upgrade Over v382 Offline With DB Migration 382->387 & Preference Preservation): PASSED!"
+echo "TEST B (Upgrade Over v382 Offline With DB Migration 382->388 & Preference Preservation): PASSED!"
 
 echo "TEST C: CROSS-SIGNATURE REAL JSON EXPORT & IMPORT (KEY A -> UNINSTALL -> KEY B -> UI RESTORE -> COLD RESTART, OFFLINE)"
 tap_ui_label() {
@@ -265,7 +269,7 @@ PY
 }
 
 adb uninstall "$PKG"
-rm -f /tmp/upgraded_v387.db /tmp/keyA.jks /tmp/keyB.jks /tmp/v387_keyA.apk /tmp/v387_keyB.apk /tmp/ui.xml
+rm -f /tmp/upgraded_v388.db /tmp/keyA.jks /tmp/keyB.jks /tmp/v388_keyA.apk /tmp/v388_keyB.apk /tmp/ui.xml
 
 keytool -genkeypair -v -keystore /tmp/keyA.jks -storepass passA123 -keypass passA123 \
   -alias keya -keyalg RSA -keysize 2048 -validity 1 \
@@ -274,11 +278,11 @@ keytool -genkeypair -v -keystore /tmp/keyB.jks -storepass passB123 -keypass pass
   -alias keyb -keyalg RSA -keysize 2048 -validity 1 \
   -dname "CN=New Play Upload Key B" >/dev/null 2>&1
 
-"$BT_DIR/apksigner" sign --ks /tmp/keyA.jks --ks-pass pass:passA123 --key-pass pass:passA123 --ks-key-alias keya --out /tmp/v387_keyA.apk artifacts/arabic-bible-study-v387.apk
-"$BT_DIR/apksigner" sign --ks /tmp/keyB.jks --ks-pass pass:passB123 --key-pass pass:passB123 --ks-key-alias keyb --out /tmp/v387_keyB.apk artifacts/arabic-bible-study-v387.apk
+"$BT_DIR/apksigner" sign --ks /tmp/keyA.jks --ks-pass pass:passA123 --key-pass pass:passA123 --ks-key-alias keya --out /tmp/v388_keyA.apk artifacts/arabic-bible-study-v388.apk
+"$BT_DIR/apksigner" sign --ks /tmp/keyB.jks --ks-pass pass:passB123 --key-pass pass:passB123 --ks-key-alias keyb --out /tmp/v388_keyB.apk artifacts/arabic-bible-study-v388.apk
 
-CERT_A=$("$BT_DIR/apksigner" verify --print-certs /tmp/v387_keyA.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
-CERT_B=$("$BT_DIR/apksigner" verify --print-certs /tmp/v387_keyB.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
+CERT_A=$("$BT_DIR/apksigner" verify --print-certs /tmp/v388_keyA.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
+CERT_B=$("$BT_DIR/apksigner" verify --print-certs /tmp/v388_keyB.apk | awk '/certificate SHA-256/ && !done {print; done=1}')
 echo "Key A cert: $CERT_A"
 echo "Key B cert: $CERT_B"
 if [ -z "$CERT_A" ] || [ -z "$CERT_B" ] || [ "$CERT_A" = "$CERT_B" ]; then
@@ -287,14 +291,14 @@ if [ -z "$CERT_A" ] || [ -z "$CERT_B" ] || [ "$CERT_A" = "$CERT_B" ]; then
 fi
 
 echo "Installing Key A app and assembling DB offline..."
-adb install /tmp/v387_keyA.apk
+adb install /tmp/v388_keyA.apk
 adb shell am start -n "$PKG/.MainActivity"
 READY_A=0
 SZ=0
 for i in $(seq 1 60); do
   SZ=$(adb shell "stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
-  if [ "$SZ" -ge 365453312 ]; then
-    echo "Key A assembled bible_study_v387.db ($SZ bytes) in $((i*2))s."
+  if [ "$SZ" -ge 365547520 ]; then
+    echo "Key A assembled bible_study_v388.db ($SZ bytes) in $((i*2))s."
     READY_A=1
     break
   fi
@@ -303,11 +307,11 @@ done
 [ "$READY_A" -eq 1 ]
 sleep 3
 
-# Seed Key A with real user preferences (dark mode + ordered Arabic search queries + db_version=387) and verify Key A reads them
-cat <<'XML' > /tmp/FlutterSharedPreferences_v387.xml
+# Seed Key A with real user preferences (dark mode + ordered Arabic search queries + db_version=388) and verify Key A reads them
+cat <<'XML' > /tmp/FlutterSharedPreferences_v388.xml
 <?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 <map>
-    <long name="flutter.db_version" value="387" />
+    <long name="flutter.db_version" value="388" />
     <boolean name="flutter.is_dark_mode" value="true" />
     <string name="flutter.recent_search_queries">VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu!["المحبة","الإيمان"]</string>
 </map>
@@ -316,7 +320,7 @@ XML
 adb shell am force-stop "$PKG"
 OWNER_A=$(adb shell "stat -c %u:%g /data/data/$PKG" | tr -d '\r\n')
 adb shell "mkdir -p /data/data/$PKG/shared_prefs"
-adb push /tmp/FlutterSharedPreferences_v387.xml "$PREFS_FILE" >/dev/null
+adb push /tmp/FlutterSharedPreferences_v388.xml "$PREFS_FILE" >/dev/null
 adb shell "chown $OWNER_A $PREFS_FILE && chmod 660 $PREFS_FILE && restorecon $PREFS_FILE"
 
 adb logcat -c
@@ -342,7 +346,7 @@ echo "$EXPORT_LOG" | grep -qF '"recent_search_queries":["المحبة","الإي
 
 # Step 2: Confirm Android blocks in-place upgrade from Key A -> Key B
 echo "Verifying Android blocks in-place upgrade across different signing keys..."
-if adb install -r /tmp/v387_keyB.apk >/tmp/cross_sign_err.txt 2>&1; then
+if adb install -r /tmp/v388_keyB.apk >/tmp/cross_sign_err.txt 2>&1; then
   echo "FATAL: Expected INSTALL_FAILED_UPDATE_INCOMPATIBLE across different keys!"
   exit 1
 fi
@@ -354,15 +358,15 @@ echo "Confirmed: Android blocked cross-signature in-place upgrade as expected."
 echo "Uninstalling Key A app and performing clean offline install of Key B app..."
 adb uninstall "$PKG"
 adb logcat -c
-adb install /tmp/v387_keyB.apk
+adb install /tmp/v388_keyB.apk
 adb shell am start -n "$PKG/.MainActivity"
 
 READY_B=0
 SZ=0
 for i in $(seq 1 60); do
   SZ=$(adb shell "stat -c %s $DB_FILE 2>/dev/null || echo 0" | tr -d '\r\n')
-  if [ "$SZ" -ge 365453312 ]; then
-    echo "Key B clean install assembled bible_study_v387.db ($SZ bytes) in $((i*2))s while OFFLINE."
+  if [ "$SZ" -ge 365547520 ]; then
+    echo "Key B clean install assembled bible_study_v388.db ($SZ bytes) in $((i*2))s while OFFLINE."
     READY_B=1
     break
   fi
@@ -407,13 +411,13 @@ echo "$RESTORED_LOG" | grep -qF 'is_dark_mode=true | recent_search_queries=["ا�
 PREFS_B=$(adb shell "cat $PREFS_FILE" | tr -d '\r')
 echo "Key B FlutterSharedPreferences.xml after cold restart:"
 echo "$PREFS_B"
-echo "$PREFS_B" | grep -q 'name="flutter.db_version" value="387"'
+echo "$PREFS_B" | grep -q 'name="flutter.db_version" value="388"'
 echo "$PREFS_B" | grep -q 'name="flutter.is_dark_mode" value="true"'
 echo "$PREFS_B" | grep -qF '[&quot;المحبة&quot;,&quot;الإيمان&quot;]'
 
-adb pull "$DB_FILE" /tmp/keyB_v387.db >/dev/null
-IC_B=$(sqlite3 /tmp/keyB_v387.db "PRAGMA integrity_check;")
-CNT_B=$(sqlite3 /tmp/keyB_v387.db "SELECT COUNT(*) FROM word_mappings;")
+adb pull "$DB_FILE" /tmp/keyB_v388.db >/dev/null
+IC_B=$(sqlite3 /tmp/keyB_v388.db "PRAGMA integrity_check;")
+CNT_B=$(sqlite3 /tmp/keyB_v388.db "SELECT COUNT(*) FROM word_mappings;")
 echo "Key B DB -> integrity=$IC_B | word_mappings=$CNT_B"
 [ "$IC_B" = "ok" ]
 [ "$CNT_B" = "434351" ]

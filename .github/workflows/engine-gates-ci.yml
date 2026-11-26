@@ -31,13 +31,13 @@ jobs:
           fi
           sqlite3 --version
 
-      - name: Assemble v387 Baseline DB from Tracked Chunks
+      - name: Assemble v388 Promoted DB from Tracked Chunks
         run: |
           node scripts/assemble_db.cjs
           DB_SHA=$(sha256sum mobile/assets/bible_study.db | awk '{print $1}')
           echo "Assembled DB SHA-256: $DB_SHA"
-          if [ "$DB_SHA" != "70cebd40fa0e1fc684410cd86efcada2c13deab864ed5327b8b80c087c8e7295" ]; then
-            echo "FATAL: Baseline DB SHA-256 drifted from v387!"
+          if [ "$DB_SHA" != "d3584fe697188f665e0750d8d9f133d3c4e27a7533f377be5f9c6718d908d14c" ]; then
+            echo "FATAL: DB SHA-256 drifted from promoted v388!"
             exit 1
           fi
 

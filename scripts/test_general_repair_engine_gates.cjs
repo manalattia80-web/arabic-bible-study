@@ -474,7 +474,31 @@ assert(
 );
 
 // 30. Positive Gate (v1.7 RULE_G1C_UNIQUE_GREEK_LEMMA_LOCK): Matt 1:25 #4 («وَلَدَتِ», G5088, origSurface=τίκτω uninflected -> unique ἔτεκεν@w7) ACCEPTED!
-const matt125Rows = loadVerseRows(prodDb, 40, 1, 25);
+// Pin raw pre-repair input fields so the gate remains invariant after v1.7.2 promotion to v388.
+const matt125Rows = loadVerseRows(prodDb, 40, 1, 25).map(r =>
+  r.arPos === 4
+    ? {
+        ...r,
+        origWord: 'τίκτω',
+        origSurface: 'τίκτω',
+        origPos: 4,
+        origMorph: null,
+        morphPos: 'verb',
+        morphStem: null,
+        morphTense: null,
+        morphVoice: null,
+        morphMood: null,
+        morphPerson: null,
+        morphNumber: null,
+        morphGender: null,
+        morphCase: null,
+        verifiedLocator: 'TR:B40.C1.V25.w4',
+        verifiedSource: null,
+        morphSource: 'morphgnt_tr',
+        hasCleanPrimaryWms: true
+      }
+    : r
+);
 const matt125Res = evaluateVerse({ book: 40, ch: 1, vs: 25, lang: 'greek', name: 'Matt 1:25' }, matt125Rows, sources, strongsLexicon);
 const m125_4 = matt125Res.proposals.find(p => p.arPos === 4);
 assert(
@@ -561,7 +585,31 @@ assert(
 );
 
 // 37. Positive Gate (v1.7.2 True Movable-Nu): Rom 1:32 #18 («يُسَرُّونَ», TR συνευδοκοῦσι V-PAI-3P <-> SBLGNT συνευδοκοῦσιν V- 3PAI-P--) ACCEPTED!
-const rom132Rows = loadVerseRows(prodDb, 45, 1, 32);
+// Pin raw pre-repair input fields so the gate remains invariant after v1.7.2 promotion to v388.
+const rom132Rows = loadVerseRows(prodDb, 45, 1, 32).map(r =>
+  r.arPos === 18
+    ? {
+        ...r,
+        origWord: 'συνευδοκέω',
+        origSurface: 'συνευδοκοῦσι',
+        origPos: 17,
+        origMorph: null,
+        morphPos: 'verb',
+        morphStem: null,
+        morphTense: null,
+        morphVoice: null,
+        morphMood: null,
+        morphPerson: null,
+        morphNumber: null,
+        morphGender: null,
+        morphCase: null,
+        verifiedLocator: 'TR:B45.C1.V32.w17',
+        verifiedSource: null,
+        morphSource: 'morphgnt_tr',
+        hasCleanPrimaryWms: true
+      }
+    : r
+);
 const rom132Res = evaluateVerse({ book: 45, ch: 1, vs: 32, lang: 'greek', name: 'Rom 1:32' }, rom132Rows, sources, strongsLexicon);
 const rom132_18 = rom132Res.proposals.find(p => p.arPos === 18);
 assert(
