@@ -206,6 +206,91 @@ function canonGreek(s) {
     .trim();
 }
 
+/**
+ * Engine v1.6: Greek Strong's <-> MorphGNT/SBLGNT Citation-Form Equivalence.
+ * Resolves systematic dictionary headword differences between Strong's 1890
+ * (`strongs_entries.original_word`) and MorphGNT/BDAG (`chosen.lemma`)
+ * strictly with POS guards and zero cross-POS conflation (e.g., G3666 verb != ὅμοιος adj).
+ */
+const VERIFIED_GREEK_STRONGS_LEMMA_EQUIV = {
+  // Suppletive / irregular Greek verbs (require morph V-)
+  G1492: { lemmas: ['οιδα', 'οραω'], morphPrefix: 'V-' },      // εἴδω -> οἶδα / ὁράω
+  G1163: { lemmas: ['δεω'], morphPrefix: 'V-' },               // δεῖ -> δέω
+  G2036: { lemmas: ['λεγω'], morphPrefix: 'V-' },              // ἔπω -> λέγω
+  G5315: { lemmas: ['εσθιω'], morphPrefix: 'V-' },             // φάγω -> ἐσθίω
+  G1127: { lemmas: ['γρηγορεω'], morphPrefix: 'V-' },          // γρηγορεύω -> γρηγορέω
+  // Verified strongs_entries data bug (Latin transliteration in original_word)
+  G2920: { lemmas: ['κρισισ'], morphPrefix: 'N-' },            // krisis -> κρίσις
+  // Standard orthographic / adverbial / neuter-to-masculine citation variants
+  G1752: { lemmas: ['ενεκεν', 'ενεκα', 'εινεκεν'] },           // ἕνεκα <-> ἕνεκεν
+  G3440: { lemmas: ['μονοσ'] },                                // μόνον -> μόνος
+  G4412: { lemmas: ['πρωτοσ'] },                               // πρῶτον -> πρῶτος
+  G3062: { lemmas: ['λοιποσ'] },                               // λοιποί -> λοιπός
+  G5305: { lemmas: ['υστεροσ'] },                              // ὕστερον -> ὕστερος
+  G5035: { lemmas: ['ταχυσ'] },                                // ταχύ -> ταχύς
+  G2411: { lemmas: ['ιεροσ'] },                                // ἱερόν -> ἱερός
+  G1199: { lemmas: ['δεσμοσ'] },                               // δεσμόν -> δεσμός
+  G3112: { lemmas: ['μακροσ'] },                               // μακράν -> μακρός
+  G4119: { lemmas: ['πολυσ'] },                                // πλείων -> πολύς
+  G4053: { lemmas: ['περισσοτεροσ'] },                         // περισσός -> περισσότερος
+  // Oblique/plural personal pronoun Strong's IDs lemmatized under ἐγώ / σύ in MorphGNT (require RP)
+  G2249: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G2254: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G2257: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G2248: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G3427: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G3450: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G3165: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G1698: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G1700: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G1691: { lemmas: ['εγω'], morphPrefix: 'RP' },
+  G5210: { lemmas: ['συ'], morphPrefix: 'RP' },
+  G5213: { lemmas: ['συ'], morphPrefix: 'RP' },
+  G5216: { lemmas: ['συ'], morphPrefix: 'RP' },
+  G5209: { lemmas: ['συ'], morphPrefix: 'RP' },
+  G4671: { lemmas: ['συ'], morphPrefix: 'RP' },
+  G4675: { lemmas: ['συ'], morphPrefix: 'RP' },
+  G4571: { lemmas: ['συ'], morphPrefix: 'RP' }
+};
+
+function isGreekStrongsLemmaEquivalent(strongsId, lexWord, morphGntLemma, morphCode) {
+  if (!lexWord || !morphGntLemma) return false;
+  const lexCanon = canonGreek(lexWord);
+  const tokCanon = canonGreek(morphGntLemma);
+  if (!lexCanon || !tokCanon) return false;
+
+  // 1. Exact canonical match (v1.5 baseline)
+  if (lexCanon === tokCanon) return true;
+
+  // 2. MorphGNT optional-letter notation: e.g. οὕτω(ς) -> matches οὕτω or οὕτως
+  if (String(morphGntLemma).includes('(')) {
+    const strippedOpt = canonGreek(String(morphGntLemma).replace(/\([^)]*\)/g, ''));
+    if (strippedOpt && lexCanon === strippedOpt) return true;
+  }
+
+  // 3. Verb citation-form equivalence (strictly gated on morph V-)
+  const isVerb = Boolean(morphCode && String(morphCode).startsWith('V-'));
+  if (isVerb) {
+    // Active -ω <-> Middle/Deponent -ομαι (e.g. φοβέω <-> φοβέομαι, μνηστεύω <-> μνηστεύομαι)
+    if (lexCanon.endsWith('ω') && tokCanon === `${lexCanon.slice(0, -1)}ομαι`) return true;
+    if (tokCanon.endsWith('ω') && lexCanon === `${tokCanon.slice(0, -1)}ομαι`) return true;
+    // Athematic -νύω <-> -νυμι (e.g. δεικνύω <-> δείκνυμι)
+    if (lexCanon.endsWith('νυω') && tokCanon === `${lexCanon.slice(0, -3)}νυμι`) return true;
+    if (tokCanon.endsWith('νυω') && lexCanon === `${tokCanon.slice(0, -3)}νυμι`) return true;
+  }
+
+  // 4. Closed verified Strong's <-> MorphGNT suppletive/inflected citation table
+  const entry = strongsId ? VERIFIED_GREEK_STRONGS_LEMMA_EQUIV[strongsId] : null;
+  if (entry) {
+    if (entry.morphPrefix && !(morphCode && String(morphCode).startsWith(entry.morphPrefix))) {
+      return false;
+    }
+    if (entry.lemmas.includes(tokCanon)) return true;
+  }
+
+  return false;
+}
+
 function canonSemiticConsonants(s) {
   if (!s) return '';
   return String(s)
@@ -599,7 +684,7 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
         const lexWord = strongsLexicon.get(candidateSid);
         if (!lexWord) {
           lexReject = `REJECT_UNKNOWN_STRONGS_ID(${candidateSid})`;
-        } else if (canonGreek(lexWord) !== chosen.lemmaCanon) {
+        } else if (!isGreekStrongsLemmaEquivalent(candidateSid, lexWord, chosen.lemma, chosen.morph)) {
           lexReject = `REJECT_STORED_STRONGS_LEXICON_MISMATCH(${candidateSid}:${lexWord}!=${chosen.lemma})`;
         } else {
           targetStrongs = candidateSid;
@@ -813,7 +898,7 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
         targetOrigWord = chosen.lemma;
         const candidateSid = r.strongsId || chosen.trCrossStrongsId;
         const lexWord = candidateSid && strongsLexicon ? strongsLexicon.get(candidateSid) : null;
-        if (!lexWord || canonGreek(lexWord) !== chosen.lemmaCanon) { groupValid = false; break; }
+        if (!lexWord || !isGreekStrongsLemmaEquivalent(candidateSid, lexWord, chosen.lemma, chosen.morph)) { groupValid = false; break; }
         targetStrongs = candidateSid;
       } else {
         targetStrongs = chosen.strongsId;
@@ -1203,5 +1288,6 @@ module.exports = {
   loadStrongsLexicon,
   buildAtomicWmsSql,
   applyProposalsToIsolatedDb,
-  loadProtectedAdjudicatedVerses
+  loadProtectedAdjudicatedVerses,
+  isGreekStrongsLemmaEquivalent
 };

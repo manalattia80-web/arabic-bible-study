@@ -27,7 +27,8 @@ const {
   evaluateVerse,
   loadVerseRows,
   loadStrongsLexicon,
-  applyProposalsToIsolatedDb
+  applyProposalsToIsolatedDb,
+  isGreekStrongsLemmaEquivalent
 } = require('./whole_verse_general_repair_engine.cjs');
 const {
   loadProtectedAdjudicatedVerses,
@@ -371,6 +372,54 @@ assert(
   Boolean(heb10 && heb10.status === 'PENDING_REVIEW' && heb10.ruleId.includes('REJECT_G4_ARTICLE_EXCLUDED') && heb10.proposed === null),
   'Negative Gate 22 (v1.5): Greek definite article Heb 12:14 #10 («أَحَدٌ» -> G3588 τὸν RA) is strictly REJECTED from RULE_G4',
   JSON.stringify(heb10 && { status: heb10.status, ruleId: heb10.ruleId })
+);
+
+// 23. Positive Gate (v1.6 Greek Optional-Letter Notation): G3779 οὕτω <-> οὕτω(ς) on Matt 1:18 #6 is ACCEPTED!
+const matt118Rows = loadVerseRows(prodDb, 40, 1, 18);
+const matt118Res = evaluateVerse({ book: 40, ch: 1, vs: 18, lang: 'greek', name: 'Matt 1:18' }, matt118Rows, sources, strongsLexicon);
+const m118_6 = matt118Res.proposals.find(p => p.arPos === 6);
+assert(
+  Boolean(isGreekStrongsLemmaEquivalent('G3779', 'οὕτω', 'οὕτω(ς)', 'D-') && m118_6 && !String(m118_6.ruleId).startsWith('REJECT_STORED_STRONGS_LEXICON_MISMATCH')),
+  'Positive Gate 23 (v1.6): MorphGNT optional-sigma notation G3779 (οὕτω <-> οὕτω(ς)) passes lexicon verification',
+  JSON.stringify(m118_6 && { status: m118_6.status, ruleId: m118_6.ruleId })
+);
+
+// 24. Positive Gate (v1.6 Active/Deponent & Athematic Verbs): G5399 φοβέω<->φοβέομαι & G1166 δεικνύω<->δείκνυμι ACCEPTED!
+const matt222Rows = loadVerseRows(prodDb, 40, 2, 22);
+const matt222Res = evaluateVerse({ book: 40, ch: 2, vs: 22, lang: 'greek', name: 'Matt 2:22' }, matt222Rows, sources, strongsLexicon);
+const m222_13 = matt222Res.proposals.find(p => p.arPos === 13);
+assert(
+  Boolean(
+    isGreekStrongsLemmaEquivalent('G5399', 'φοβέω', 'φοβέομαι', 'V-AOI-3S') &&
+    isGreekStrongsLemmaEquivalent('G1166', 'δεικνύω', 'δείκνυμι', 'V-PAI-3S') &&
+    m222_13 && m222_13.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && m222_13.proposed.strongsId === 'G5399'
+  ),
+  'Positive Gate 24 (v1.6): Deponent/athematic verb citation forms (G5399 φοβέω<->φοβέομαι, G1166 δεικνύω<->δείκνυμι) are ACCEPTED',
+  JSON.stringify(m222_13 && { status: m222_13.status, ruleId: m222_13.ruleId })
+);
+
+// 25. Positive Gate (v1.6 Verified Suppletive/Data-Bug Table): G1492 εἴδω<->οἶδα, G2920 krisis<->κρίσις, G2254 ἡμῖν<->ἐγώ
+assert(
+  Boolean(
+    isGreekStrongsLemmaEquivalent('G1492', 'εἴδω', 'οἶδα', 'V-RAI-1S') &&
+    isGreekStrongsLemmaEquivalent('G2920', 'krisis', 'κρίσις', 'N-DSF') &&
+    isGreekStrongsLemmaEquivalent('G2254', 'ἡμῖν', 'ἐγώ', 'RP-1DP') &&
+    isGreekStrongsLemmaEquivalent('G1163', 'δεῖ', 'δέω', 'V-PAI-3S') &&
+    isGreekStrongsLemmaEquivalent('G2036', 'ἔπω', 'λέγω', 'V-2AAI-3S')
+  ),
+  'Positive Gate 25 (v1.6): Verified Greek Strongs-to-MorphGNT suppletive/inflected citation equivalents are ACCEPTED'
+);
+
+// 26. Negative Gate (v1.6 Cross-POS / Unrelated Rejection): G3666 verb != ὅμοιος adj, wrong POS for G1492/G2249, unrelated G1
+assert(
+  Boolean(
+    !isGreekStrongsLemmaEquivalent('G3666', 'ὁμοιόω', 'ὅμοιος', 'A-NSM') &&
+    !isGreekStrongsLemmaEquivalent('G5399', 'φοβέω', 'φοβέομαι', 'N-NSM') &&
+    !isGreekStrongsLemmaEquivalent('G1492', 'εἴδω', 'οἶδα', 'N-NSM') &&
+    !isGreekStrongsLemmaEquivalent('G2249', 'ἡμεῖς', 'ἐγώ', 'N-NPM') &&
+    !isGreekStrongsLemmaEquivalent('G1', 'ἄλφα', 'κρίσις', 'N-DSF')
+  ),
+  'Negative Gate 26 (v1.6): Cross-POS pairs (G3666 verb vs ὅμοιος adj, wrong POS) and unrelated Greek lemmas are strictly REJECTED'
 );
 
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)

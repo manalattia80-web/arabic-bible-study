@@ -1,0 +1,690 @@
+{
+  "baselineDbSha256": "b91b4c188be54ad8746593158ea48a8bef8cf37c8ccec349108111274c00266e",
+  "totalVerses": 31102,
+  "totalRecords": 434351,
+  "elapsedSeconds": 22.6,
+  "statusCounts": {
+    "PRESERVED_GRAMMAR_NOTES": 31001,
+    "ALREADY_CANONICAL": 129331,
+    "PENDING_REVIEW": 272458,
+    "PRESERVED_ADJUDICATED_REGISTRY": 1477,
+    "PRESERVED_SPECIAL_RELATION": 53,
+    "PRESERVED_VERIFIED_TR": 31
+  },
+  "topRuleBreakdown": [
+    [
+      "NO_CHANGE_ALREADY_CANONICAL",
+      129331
+    ],
+    [
+      "CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR",
+      112046
+    ],
+    [
+      "PENDING_NO_UNAMBIGUOUS_MATCH",
+      58791
+    ],
+    [
+      "SKIP_EXPLICIT_GRAMMAR_NOTES",
+      31001
+    ],
+    [
+      "REJECT_DUPLICATE_OCCURRENCE_IN_VERSE",
+      30988
+    ],
+    [
+      "CONFLICT_SHARED_TARGET_TOKEN",
+      29949
+    ],
+    [
+      "REJECT_MULTIPLE_BOTH_MATCHES",
+      13081
+    ],
+    [
+      "CONFLICT_RESERVED_PRIMARY_TOKEN",
+      11972
+    ],
+    [
+      "REJECT_G4_PARTIAL_GROUP_INVALIDATED",
+      4907
+    ],
+    [
+      "REJECT_STORED_LEMMA_CONFLICTS_WITH_LEXICON",
+      2489
+    ],
+    [
+      "REJECT_G4_ANCHOR_INVALIDATED",
+      1806
+    ],
+    [
+      "REJECT_STORED_STRONGS_LEXICON_MISMATCH",
+      1607
+    ],
+    [
+      "SKIP_PROTECTED_ADJUDICATED_VERSE",
+      1477
+    ],
+    [
+      "REJECT_G4_PRONOUN_EXCLUDED",
+      1308
+    ],
+    [
+      "REJECT_G4_GREEK_PREP_EXCLUDED",
+      911
+    ],
+    [
+      "REJECT_ARABIC_COPULA_NON_VERB_SOURCE",
+      895
+    ],
+    [
+      "REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH",
+      491
+    ],
+    [
+      "REJECT_COMPOUND_PREP_MISSING_LEXICAL_HEAD",
+      271
+    ],
+    [
+      "PENDING_VERSIFICATION_MISMATCH",
+      208
+    ],
+    [
+      "REJECT_ARABIC_PREP_SOURCE_MISMATCH",
+      168
+    ],
+    [
+      "PENDING_NO_SOURCE_DATA",
+      162
+    ],
+    [
+      "REJECT_G4_ARTICLE_EXCLUDED",
+      118
+    ],
+    [
+      "REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH",
+      88
+    ],
+    [
+      "REJECT_G2_CROSS_POS_FAMILY_SWITCH",
+      76
+    ],
+    [
+      "REJECT_ARABIC_DEM_SOURCE_MISMATCH",
+      65
+    ],
+    [
+      "REJECT_ARABIC_CONJ_SOURCE_MISMATCH",
+      57
+    ],
+    [
+      "SKIP_COMPOUND_PHRASE",
+      53
+    ],
+    [
+      "SKIP_VERIFIED_TR",
+      31
+    ],
+    [
+      "CONFLICT_RESERVED_SECONDARY_TOKEN",
+      2
+    ],
+    [
+      "CONFLICT_SPLIT_PREFIX_ISOLATION",
+      2
+    ]
+  ],
+  "ruleByLang": {
+    "hebrew": [
+      [
+        "NO_CHANGE_ALREADY_CANONICAL",
+        88616
+      ],
+      [
+        "CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR",
+        87675
+      ],
+      [
+        "PENDING_NO_UNAMBIGUOUS_MATCH",
+        40453
+      ],
+      [
+        "SKIP_EXPLICIT_GRAMMAR_NOTES",
+        26155
+      ],
+      [
+        "REJECT_DUPLICATE_OCCURRENCE_IN_VERSE",
+        24474
+      ],
+      [
+        "CONFLICT_SHARED_TARGET_TOKEN",
+        22191
+      ],
+      [
+        "CONFLICT_RESERVED_PRIMARY_TOKEN",
+        10856
+      ],
+      [
+        "REJECT_MULTIPLE_BOTH_MATCHES",
+        8539
+      ],
+      [
+        "REJECT_G4_PARTIAL_GROUP_INVALIDATED",
+        4159
+      ],
+      [
+        "REJECT_STORED_LEMMA_CONFLICTS_WITH_LEXICON",
+        2442
+      ],
+      [
+        "REJECT_G4_ANCHOR_INVALIDATED",
+        1498
+      ],
+      [
+        "REJECT_G4_PRONOUN_EXCLUDED",
+        1042
+      ],
+      [
+        "REJECT_ARABIC_COPULA_NON_VERB_SOURCE",
+        614
+      ],
+      [
+        "SKIP_PROTECTED_ADJUDICATED_VERSE",
+        595
+      ],
+      [
+        "REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH",
+        371
+      ],
+      [
+        "REJECT_ARABIC_PREP_SOURCE_MISMATCH",
+        159
+      ],
+      [
+        "REJECT_COMPOUND_PREP_MISSING_LEXICAL_HEAD",
+        119
+      ],
+      [
+        "REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH",
+        81
+      ],
+      [
+        "REJECT_G2_CROSS_POS_FAMILY_SWITCH",
+        76
+      ],
+      [
+        "REJECT_ARABIC_DEM_SOURCE_MISMATCH",
+        56
+      ]
+    ],
+    "aramaic": [
+      [
+        "PENDING_NO_UNAMBIGUOUS_MATCH",
+        1344
+      ],
+      [
+        "CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR",
+        1138
+      ],
+      [
+        "NO_CHANGE_ALREADY_CANONICAL",
+        867
+      ],
+      [
+        "SKIP_EXPLICIT_GRAMMAR_NOTES",
+        352
+      ],
+      [
+        "REJECT_DUPLICATE_OCCURRENCE_IN_VERSE",
+        302
+      ],
+      [
+        "SKIP_PROTECTED_ADJUDICATED_VERSE",
+        281
+      ],
+      [
+        "CONFLICT_SHARED_TARGET_TOKEN",
+        254
+      ],
+      [
+        "REJECT_MULTIPLE_BOTH_MATCHES",
+        166
+      ],
+      [
+        "CONFLICT_RESERVED_PRIMARY_TOKEN",
+        115
+      ],
+      [
+        "REJECT_STORED_LEMMA_CONFLICTS_WITH_LEXICON",
+        47
+      ],
+      [
+        "REJECT_G4_PARTIAL_GROUP_INVALIDATED",
+        42
+      ],
+      [
+        "REJECT_G4_PRONOUN_EXCLUDED",
+        28
+      ],
+      [
+        "REJECT_G4_ANCHOR_INVALIDATED",
+        14
+      ],
+      [
+        "REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH",
+        8
+      ],
+      [
+        "REJECT_ARABIC_COPULA_NON_VERB_SOURCE",
+        8
+      ]
+    ],
+    "greek": [
+      [
+        "NO_CHANGE_ALREADY_CANONICAL",
+        39848
+      ],
+      [
+        "CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR",
+        23233
+      ],
+      [
+        "PENDING_NO_UNAMBIGUOUS_MATCH",
+        16994
+      ],
+      [
+        "CONFLICT_SHARED_TARGET_TOKEN",
+        7504
+      ],
+      [
+        "REJECT_DUPLICATE_OCCURRENCE_IN_VERSE",
+        6212
+      ],
+      [
+        "SKIP_EXPLICIT_GRAMMAR_NOTES",
+        4494
+      ],
+      [
+        "REJECT_MULTIPLE_BOTH_MATCHES",
+        4376
+      ],
+      [
+        "REJECT_STORED_STRONGS_LEXICON_MISMATCH",
+        1607
+      ],
+      [
+        "CONFLICT_RESERVED_PRIMARY_TOKEN",
+        1001
+      ],
+      [
+        "REJECT_G4_GREEK_PREP_EXCLUDED",
+        911
+      ],
+      [
+        "REJECT_G4_PARTIAL_GROUP_INVALIDATED",
+        706
+      ],
+      [
+        "SKIP_PROTECTED_ADJUDICATED_VERSE",
+        601
+      ],
+      [
+        "REJECT_G4_ANCHOR_INVALIDATED",
+        294
+      ],
+      [
+        "REJECT_ARABIC_COPULA_NON_VERB_SOURCE",
+        273
+      ],
+      [
+        "REJECT_G4_PRONOUN_EXCLUDED",
+        238
+      ],
+      [
+        "PENDING_VERSIFICATION_MISMATCH",
+        208
+      ],
+      [
+        "PENDING_NO_SOURCE_DATA",
+        162
+      ],
+      [
+        "REJECT_COMPOUND_PREP_MISSING_LEXICAL_HEAD",
+        150
+      ],
+      [
+        "REJECT_G4_ARTICLE_EXCLUDED",
+        118
+      ],
+      [
+        "REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH",
+        112
+      ]
+    ]
+  },
+  "deepDive": {
+    "occupiedByPendingNeighbor": {
+      "total": 112046,
+      "byLang": {
+        "hebrew": 87675,
+        "aramaic": 1138,
+        "greek": 23233
+      },
+      "deltaEq1": 20968,
+      "deltaEqNeg1": 37868,
+      "deltaOther": 53181,
+      "neighborRuleCounts": {
+        "REJECT_DUPLICATE_OCCURRENCE_IN_VERSE": 11310,
+        "CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR": 50433,
+        "REJECT_G4_PRONOUN_EXCLUDED": 575,
+        "REJECT_G4_PARTIAL_GROUP_INVALIDATED": 1421,
+        "CONFLICT_RESERVED_PRIMARY_TOKEN": 5866,
+        "REJECT_STORED_LEMMA_CONFLICTS_WITH_LEXICON": 943,
+        "REJECT_G4_ANCHOR_INVALIDATED": 330,
+        "REJECT_MULTIPLE_BOTH_MATCHES": 3826,
+        "PENDING_NO_UNAMBIGUOUS_MATCH": 24794,
+        "CONFLICT_SHARED_TARGET_TOKEN": 10395,
+        "REJECT_ARABIC_COPULA_NON_VERB_SOURCE": 446,
+        "REJECT_ARABIC_PREP_SOURCE_MISMATCH": 101,
+        "REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH": 374,
+        "REJECT_ARABIC_DEM_SOURCE_MISMATCH": 34,
+        "REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH": 51,
+        "REJECT_COMPOUND_PREP_MISSING_LEXICAL_HEAD": 86,
+        "REJECT_G2_CROSS_POS_FAMILY_SWITCH": 31,
+        "REJECT_ARABIC_CONJ_SOURCE_MISMATCH": 25,
+        "REJECT_STORED_STRONGS_LEXICON_MISMATCH": 642,
+        "REJECT_G4_GREEK_PREP_EXCLUDED": 373,
+        "REJECT_G4_ARTICLE_EXCLUDED": 39,
+        "CONFLICT_RESERVED_SECONDARY_TOKEN": 1
+      },
+      "topNeighborRules": [
+        [
+          "CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR",
+          50433
+        ],
+        [
+          "PENDING_NO_UNAMBIGUOUS_MATCH",
+          24794
+        ],
+        [
+          "REJECT_DUPLICATE_OCCURRENCE_IN_VERSE",
+          11310
+        ],
+        [
+          "CONFLICT_SHARED_TARGET_TOKEN",
+          10395
+        ],
+        [
+          "CONFLICT_RESERVED_PRIMARY_TOKEN",
+          5866
+        ],
+        [
+          "REJECT_MULTIPLE_BOTH_MATCHES",
+          3826
+        ],
+        [
+          "REJECT_G4_PARTIAL_GROUP_INVALIDATED",
+          1421
+        ],
+        [
+          "REJECT_STORED_LEMMA_CONFLICTS_WITH_LEXICON",
+          943
+        ],
+        [
+          "REJECT_STORED_STRONGS_LEXICON_MISMATCH",
+          642
+        ],
+        [
+          "REJECT_G4_PRONOUN_EXCLUDED",
+          575
+        ],
+        [
+          "REJECT_ARABIC_COPULA_NON_VERB_SOURCE",
+          446
+        ],
+        [
+          "REJECT_ARABIC_VOCATIVE_SOURCE_MISMATCH",
+          374
+        ],
+        [
+          "REJECT_G4_GREEK_PREP_EXCLUDED",
+          373
+        ],
+        [
+          "REJECT_G4_ANCHOR_INVALIDATED",
+          330
+        ],
+        [
+          "REJECT_ARABIC_PREP_SOURCE_MISMATCH",
+          101
+        ]
+      ]
+    },
+    "lemmaConflictsWithLexicon": {
+      "total": 2489,
+      "pleneDefectiveVYCount": 587,
+      "lexicalDiffCount": 1902,
+      "top25": [
+        [
+          "[LEXICAL_DIFF] H113 | stored=אֲדֹנָי | lex=אָדוֹן",
+          159
+        ],
+        [
+          "[LEXICAL_DIFF] H1121 | stored=לִבְנִי | lex=בֵּן",
+          85
+        ],
+        [
+          "[LEXICAL_DIFF] H430 | stored=אֵלֶּה | lex=אֱלֹהִים",
+          69
+        ],
+        [
+          "[PLENE/DEFECTIVE_VY] H1419 | stored=גָּדַל | lex=גָּדוֹל",
+          64
+        ],
+        [
+          "[PLENE/DEFECTIVE_VY] H3881 | stored=לֵוִי | lex=לֵוִיִּי",
+          40
+        ],
+        [
+          "[LEXICAL_DIFF] H4713 | stored=מִצְרַיִם | lex=מִצְרִי",
+          35
+        ],
+        [
+          "[LEXICAL_DIFF] H1121 | stored=בָּנִי | lex=בֵּן",
+          35
+        ],
+        [
+          "[PLENE/DEFECTIVE_VY] H2396 | stored=יְחִזְקִיָּה | lex=חִזְקִיָּה",
+          34
+        ],
+        [
+          "[PLENE/DEFECTIVE_VY] H6918 | stored=קֹדֶשׁ | lex=קָדוֹשׁ",
+          26
+        ],
+        [
+          "[PLENE/DEFECTIVE_VY] H7725 | stored=יָשַׁב | lex=שׁוּב",
+          25
+        ],
+        [
+          "[LEXICAL_DIFF] H430 | stored=אֱלָהּ | lex=אֱלֹהִים",
+          25
+        ],
+        [
+          "[LEXICAL_DIFF] H4438 | stored=מַלְכוּ | lex=מַלְכוּת",
+          24
+        ],
+        [
+          "[LEXICAL_DIFF] H7125 | stored=קָרָא | lex=קִרְאָה",
+          23
+        ],
+        [
+          "[PLENE/DEFECTIVE_VY] H6921 | stored=קֶדֶם | lex=קָדִים",
+          22
+        ],
+        [
+          "[LEXICAL_DIFF] H7489 | stored=רַע | lex=רָעַע",
+          21
+        ],
+        [
+          "[LEXICAL_DIFF] H2403 | stored=חָטָא | lex=חַטָּאָה",
+          21
+        ],
+        [
+          "[LEXICAL_DIFF] H430 | stored=אָלָה | lex=אֱלֹהִים",
+          19
+        ],
+        [
+          "[LEXICAL_DIFF] H376 | stored=אֱנָשׁ | lex=אִישׁ",
+          18
+        ],
+        [
+          "[LEXICAL_DIFF] H5656 | stored=עָבַד | lex=עֲבֹדָה",
+          16
+        ],
+        [
+          "[LEXICAL_DIFF] H349 | stored=אֵיכֹה | lex=אֵיךְ",
+          16
+        ],
+        [
+          "[LEXICAL_DIFF] H6666 | stored=צֶדֶק | lex=צְדָקָה",
+          15
+        ],
+        [
+          "[LEXICAL_DIFF] H2425 | stored=חָיָה | lex=חָיַי",
+          14
+        ],
+        [
+          "[LEXICAL_DIFF] H4639 | stored=עָשָׂה | lex=מַעֲשֶׂה",
+          14
+        ],
+        [
+          "[PLENE/DEFECTIVE_VY] H5769 | stored=עָלַם | lex=עוֹלָם",
+          13
+        ],
+        [
+          "[PLENE/DEFECTIVE_VY] H6956 | stored=קְהָת | lex=קֳהָתִי",
+          13
+        ]
+      ]
+    },
+    "greekStrongsLexiconMismatch": {
+      "total": 1607,
+      "top25": [
+        [
+          "G1492 | lex=εἴδω | tok=οἶδα",
+          236
+        ],
+        [
+          "G3779 | lex=οὕτω | tok=οὕτω(ς",
+          87
+        ],
+        [
+          "G5399 | lex=φοβέω | tok=φοβέομαι",
+          82
+        ],
+        [
+          "G1163 | lex=δεῖ | tok=δέω",
+          77
+        ],
+        [
+          "G3440 | lex=μόνον | tok=μόνος",
+          59
+        ],
+        [
+          "G2249 | lex=ἡμεῖς | tok=ἐγώ",
+          58
+        ],
+        [
+          "G2036 | lex=ἔπω | tok=λέγω",
+          56
+        ],
+        [
+          "G4412 | lex=πρῶτον | tok=πρῶτος",
+          53
+        ],
+        [
+          "G2920 | lex=krisis | tok=κρίσις",
+          43
+        ],
+        [
+          "G3062 | lex=λοιποί | tok=λοιπός",
+          42
+        ],
+        [
+          "G1752 | lex=ἕνεκα | tok=ἕνεκεν",
+          23
+        ],
+        [
+          "G1492 | lex=εἴδω | tok=ὁράω",
+          22
+        ],
+        [
+          "G3427 | lex=μοί | tok=ἐγώ",
+          17
+        ],
+        [
+          "G2411 | lex=ἱερόν | tok=ἱερός",
+          16
+        ],
+        [
+          "G2254 | lex=ἡμῖν | tok=ἐγώ",
+          15
+        ],
+        [
+          "G1199 | lex=δεσμόν | tok=δεσμός",
+          14
+        ],
+        [
+          "G3666 | lex=ὁμοιόω | tok=ὅμοιος",
+          12
+        ],
+        [
+          "G3360 | lex=μέχρι | tok=μέχρι(ς",
+          11
+        ],
+        [
+          "G4119 | lex=πλείων | tok=πολύς",
+          10
+        ],
+        [
+          "G4053 | lex=περισσός | tok=περισσότερος",
+          10
+        ],
+        [
+          "G1127 | lex=γρηγορεύω | tok=γρηγορέω",
+          10
+        ],
+        [
+          "G4017 | lex=περιβλέπω | tok=περιβλέπομαι",
+          10
+        ],
+        [
+          "G5315 | lex=φάγω | tok=ἐσθίω",
+          9
+        ],
+        [
+          "G3112 | lex=μακράν | tok=μακρός",
+          8
+        ],
+        [
+          "G2853 | lex=κολλάω | tok=κολλάομαι",
+          8
+        ]
+      ]
+    },
+    "sharedTargetByLang": {
+      "hebrew": 22191,
+      "aramaic": 254,
+      "greek": 7504
+    },
+    "dupOccurrenceByLang": {
+      "hebrew": 24474,
+      "aramaic": 302,
+      "greek": 6212
+    },
+    "multiBothByLang": {
+      "hebrew": 8539,
+      "aramaic": 166,
+      "greek": 4376
+    }
+  }
+}

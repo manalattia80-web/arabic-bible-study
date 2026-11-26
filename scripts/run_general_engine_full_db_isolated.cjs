@@ -37,16 +37,16 @@ const sqlitePath = isWin && fs.existsSync(path.join(repoRoot, 'sqlite_dist/sqlit
   : 'sqlite3';
 
 const prodDb = path.join(repoRoot, 'mobile/assets/bible_study.db');
-const outDb = path.join(repoRoot, 'scratch/isolated_full_66books_engine_v1_5.db');
-const diffPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_5_diff.jsonl');
-const summaryPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_5_summary.json');
-const tmpSqlPath = path.join(repoRoot, 'scratch/tmp_full_66books_engine_v1_5.sql');
+const outDb = path.join(repoRoot, 'scratch/isolated_full_66books_engine_v1_6.db');
+const diffPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_6_diff.jsonl');
+const summaryPath = path.join(repoRoot, 'scratch/full_66books_engine_v1_6_summary.json');
+const tmpSqlPath = path.join(repoRoot, 'scratch/tmp_full_66books_engine_v1_6.sql');
 const trSourceMode = process.env.USE_TR_SLICE ? 'TR_SLICE_CI_MODE (USE_TR_SLICE=1)' : 'FULL_SCRIVENER_TR_JSON (scripts/data/gnt_scrivener.json)';
 
 const sha256File = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 const sqlVal = v => (v === null || v === undefined || v === '') ? 'NULL' : `'${String(v).replace(/'/g, "''")}'`;
 
-console.log('=== FULL 66-BOOK ISOLATED EXPERIMENT: GENERAL REPAIR ENGINE v1.4 ===\n');
+console.log('=== FULL 66-BOOK ISOLATED EXPERIMENT: GENERAL REPAIR ENGINE v1.6 ===\n');
 console.log(`TR Source Mode: ${trSourceMode}`);
 const t0 = Date.now();
 const preDbSha = sha256File(prodDb);
@@ -269,7 +269,7 @@ Promise.all([
   try { fs.unlinkSync(tmpSqlPath); } catch (_) {}
 
   const summary = {
-    engineVersion: 'whole_verse_general_repair_engine_v1.5',
+    engineVersion: 'whole_verse_general_repair_engine_v1.6',
     trSourceMode,
     scope: 'ALL_66_BOOKS_ISOLATED',
     productionDbSha256Untouched: preDbSha,
@@ -291,6 +291,6 @@ Promise.all([
     elapsedSeconds: +((Date.now() - t0) / 1000).toFixed(1)
   };
   fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2) + '\n', 'utf8');
-  console.log('\n=== FULL 66-BOOK ISOLATED APPLY (v1.3) COMPLETE ===');
+  console.log('\n=== FULL 66-BOOK ISOLATED APPLY (v1.6) COMPLETE ===');
   console.log(JSON.stringify(summary, null, 2));
 });

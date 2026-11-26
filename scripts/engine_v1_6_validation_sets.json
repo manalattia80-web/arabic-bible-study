@@ -1,0 +1,53 @@
+{
+  "R4B": {
+    "set": "R4B",
+    "total": 197,
+    "beforeClean": 79,
+    "beforePct": 40.1,
+    "afterClean": 79,
+    "afterPct": 40.1,
+    "delta": 0,
+    "overallTransitions": {
+      "pp": 79,
+      "ap": 0,
+      "pa": 0,
+      "aa": 118
+    },
+    "newlyPassed": [],
+    "regressed": []
+  },
+  "R5": {
+    "set": "R5",
+    "total": 247,
+    "beforeClean": 77,
+    "beforePct": 31.17,
+    "afterClean": 77,
+    "afterPct": 31.17,
+    "delta": 0,
+    "overallTransitions": {
+      "pp": 77,
+      "ap": 0,
+      "pa": 0,
+      "aa": 170
+    },
+    "newlyPassed": [],
+    "regressed": []
+  },
+  "R6": {
+    "set": "R6",
+    "total": 229,
+    "beforeClean": 80,
+    "beforePct": 34.93,
+    "afterClean": 80,
+    "afterPct": 34.93,
+    "delta": 0,
+    "overallTransitions": {
+      "pp": 80,
+      "ap": 0,
+      "pa": 0,
+      "aa": 149
+    },
+    "newlyPassed": [],
+    "regressed": []
+  }
+}
