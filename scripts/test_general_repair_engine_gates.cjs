@@ -398,14 +398,14 @@ assert(
   JSON.stringify(m222_13 && { status: m222_13.status, ruleId: m222_13.ruleId })
 );
 
-// 25. Positive Gate (v1.6 Verified Suppletive/Data-Bug Table): G1492 εἴδω<->οἶδα, G2920 krisis<->κρίσις, G2254 ἡμῖν<->ἐγώ
+// 25. Positive Gate (v1.6 Verified Suppletive/Data-Bug Table): G1492 εἴδω<->οἶδα, G2920 krisis<->κρίσις, G2254 ἡμῖν<->ἐγώ (DP + surface)
 assert(
   Boolean(
-    isGreekStrongsLemmaEquivalent('G1492', 'εἴδω', 'οἶδα', 'V-RAI-1S') &&
-    isGreekStrongsLemmaEquivalent('G2920', 'krisis', 'κρίσις', 'N-DSF') &&
-    isGreekStrongsLemmaEquivalent('G2254', 'ἡμῖν', 'ἐγώ', 'RP-1DP') &&
-    isGreekStrongsLemmaEquivalent('G1163', 'δεῖ', 'δέω', 'V-PAI-3S') &&
-    isGreekStrongsLemmaEquivalent('G2036', 'ἔπω', 'λέγω', 'V-2AAI-3S')
+    isGreekStrongsLemmaEquivalent('G1492', 'εἴδω', 'οἶδα', 'V- 1XAI-S--', 'οἶδα') &&
+    isGreekStrongsLemmaEquivalent('G2920', 'krisis', 'κρίσις', 'N- ----DSF-', 'κρίσει') &&
+    isGreekStrongsLemmaEquivalent('G2254', 'ἡμῖν', 'ἐγώ', 'RP ----DP--', 'ἡμῖν') &&
+    isGreekStrongsLemmaEquivalent('G1163', 'δεῖ', 'δέω', 'V- 3PAI-S--', 'δεῖ') &&
+    isGreekStrongsLemmaEquivalent('G2036', 'ἔπω', 'λέγω', 'V- 3AAI-S--', 'εἶπεν')
   ),
   'Positive Gate 25 (v1.6): Verified Greek Strongs-to-MorphGNT suppletive/inflected citation equivalents are ACCEPTED'
 );
@@ -413,13 +413,43 @@ assert(
 // 26. Negative Gate (v1.6 Cross-POS / Unrelated Rejection): G3666 verb != ὅμοιος adj, wrong POS for G1492/G2249, unrelated G1
 assert(
   Boolean(
-    !isGreekStrongsLemmaEquivalent('G3666', 'ὁμοιόω', 'ὅμοιος', 'A-NSM') &&
-    !isGreekStrongsLemmaEquivalent('G5399', 'φοβέω', 'φοβέομαι', 'N-NSM') &&
-    !isGreekStrongsLemmaEquivalent('G1492', 'εἴδω', 'οἶδα', 'N-NSM') &&
-    !isGreekStrongsLemmaEquivalent('G2249', 'ἡμεῖς', 'ἐγώ', 'N-NPM') &&
-    !isGreekStrongsLemmaEquivalent('G1', 'ἄλφα', 'κρίσις', 'N-DSF')
+    !isGreekStrongsLemmaEquivalent('G3666', 'ὁμοιόω', 'ὅμοιος', 'A- ----NSM-', 'ὅμοιος') &&
+    !isGreekStrongsLemmaEquivalent('G5399', 'φοβέω', 'φοβέομαι', 'N- ----NSM-', 'φοβούμενος') &&
+    !isGreekStrongsLemmaEquivalent('G1492', 'εἴδω', 'οἶδα', 'N- ----NSM-', 'οἶδα') &&
+    !isGreekStrongsLemmaEquivalent('G2249', 'ἡμεῖς', 'ἐγώ', 'N- ----NPM-', 'ἡμεῖς') &&
+    !isGreekStrongsLemmaEquivalent('G1', 'ἄλφα', 'κρίσις', 'N- ----DSF-', 'κρίσει') &&
+    !isGreekStrongsLemmaEquivalent('G1752', 'ἕνεκα', 'ἕνεκεν', 'N- ----NSM-', 'ἕνεκεν')
   ),
   'Negative Gate 26 (v1.6): Cross-POS pairs (G3666 verb vs ὅμοιος adj, wrong POS) and unrelated Greek lemmas are strictly REJECTED'
+);
+
+// 27. Negative Gate (v1.6.1 Pronoun Case/Number/Surface Mismatch): G2254 (ἡμῖν, plural dative) MUST reject μου / RP ----GS-- (singular genitive)!
+const matt2545RowsForPron = loadVerseRows(prodDb, 40, 25, 45);
+const syntheticPronRows = loadVerseRows(prodDb, 40, 2, 15).map(r =>
+  r.strongsId === 'G3450'
+    ? { ...r, strongsId: 'G2254', origWord: 'ἐγώ', origSurface: 'μου', origPos: 99, verifiedLocator: null, hasCleanPrimaryWms: false }
+    : r
+);
+const syntheticPronRes = evaluateVerse({ book: 40, ch: 2, vs: 15, lang: 'greek', name: 'Matt 2:15' }, syntheticPronRows, sources, strongsLexicon);
+const badPronProp = syntheticPronRes.proposals.find(p => p.current.strongsId === 'G2254');
+assert(
+  Boolean(
+    !isGreekStrongsLemmaEquivalent('G2254', 'ἡμῖν', 'ἐγώ', 'RP ----GS--', 'μου') &&
+    !isGreekStrongsLemmaEquivalent('G2254', 'ἡμῖν', 'ἐγώ', 'RP ----DP--', 'μου') &&
+    !isGreekStrongsLemmaEquivalent('G5213', 'ὑμῖν', 'ἐγώ', 'RP ----DP--', 'ἡμῖν') &&
+    (!badPronProp || (badPronProp.status === 'PENDING_REVIEW' && badPronProp.proposed === null))
+  ),
+  'Negative Gate 27 (v1.6.1): Pronoun equivalence strictly rejects G2254 (ἡμῖν, plural dative) against μου / RP ----GS-- (singular genitive)',
+  JSON.stringify(badPronProp && { status: badPronProp.status, ruleId: badPronProp.ruleId })
+);
+
+// 28. Negative Gate (v1.6.1 Arabic Complementizer -> Bare Greek Article): Matt 25:45 #7 («أَنَّكُمْ» -> w14 τῶν RA) MUST stay PENDING_REVIEW!
+const matt2545Res = evaluateVerse({ book: 40, ch: 25, vs: 45, lang: 'greek', name: 'Matt 25:45' }, matt2545RowsForPron, sources, strongsLexicon);
+const m2545_7 = matt2545Res.proposals.find(p => p.arPos === 7);
+assert(
+  Boolean(m2545_7 && m2545_7.status === 'PENDING_REVIEW' && m2545_7.ruleId.includes('REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH') && m2545_7.proposed === null),
+  'Negative Gate 28 (v1.6.1): Matt 25:45 #7 («أَنَّكُمْ» -> w14 τῶν RA article) is strictly REJECTED and kept PENDING_REVIEW',
+  JSON.stringify(m2545_7 && { status: m2545_7.status, ruleId: m2545_7.ruleId })
 );
 
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)

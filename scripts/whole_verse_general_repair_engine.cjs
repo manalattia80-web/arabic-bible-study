@@ -173,16 +173,16 @@ function checkArabicSourceContextualCompatibility(arWord, proposedMorphPos, rule
   if (AR_COPULA_VERBS.has(arClean) && proposedMorphPos !== 'verb') {
     return `REJECT_ARABIC_COPULA_NON_VERB_SOURCE(ar=${arClean},pos=${proposedMorphPos})`;
   }
-  if (AR_COMPLEMENTIZERS.has(arClean) && ['demonstrative', 'noun', 'proper_noun', 'adjective'].includes(proposedMorphPos)) {
+  if (AR_COMPLEMENTIZERS.has(arClean) && ['demonstrative', 'noun', 'proper_noun', 'adjective', 'article'].includes(proposedMorphPos)) {
     return `REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
   }
-  if (AR_PURE_PREPS.has(arClean) && ['verb', 'proper_noun', 'demonstrative'].includes(proposedMorphPos)) {
+  if (AR_PURE_PREPS.has(arClean) && ['verb', 'proper_noun', 'demonstrative', 'article'].includes(proposedMorphPos)) {
     return `REJECT_ARABIC_PREP_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
   }
   if (AR_PURE_DEMONSTRATIVES.has(arClean) && ['verb', 'preposition'].includes(proposedMorphPos)) {
     return `REJECT_ARABIC_DEM_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
   }
-  if (AR_PURE_CONJUNCTIONS.has(arClean) && ['proper_noun', 'noun', 'demonstrative'].includes(proposedMorphPos)) {
+  if (AR_PURE_CONJUNCTIONS.has(arClean) && ['proper_noun', 'noun', 'demonstrative', 'article'].includes(proposedMorphPos)) {
     return `REJECT_ARABIC_CONJ_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
   }
   if (ruleId === 'RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK' && beforeMorphPos && proposedMorphPos) {
@@ -213,47 +213,47 @@ function canonGreek(s) {
  * strictly with POS guards and zero cross-POS conflation (e.g., G3666 verb != ὅμοιος adj).
  */
 const VERIFIED_GREEK_STRONGS_LEMMA_EQUIV = {
-  // Suppletive / irregular Greek verbs (require morph V-)
-  G1492: { lemmas: ['οιδα', 'οραω'], morphPrefix: 'V-' },      // εἴδω -> οἶδα / ὁράω
-  G1163: { lemmas: ['δεω'], morphPrefix: 'V-' },               // δεῖ -> δέω
-  G2036: { lemmas: ['λεγω'], morphPrefix: 'V-' },              // ἔπω -> λέγω
-  G5315: { lemmas: ['εσθιω'], morphPrefix: 'V-' },             // φάγω -> ἐσθίω
-  G1127: { lemmas: ['γρηγορεω'], morphPrefix: 'V-' },          // γρηγορεύω -> γρηγορέω
-  // Verified strongs_entries data bug (Latin transliteration in original_word)
-  G2920: { lemmas: ['κρισισ'], morphPrefix: 'N-' },            // krisis -> κρίσις
-  // Standard orthographic / adverbial / neuter-to-masculine citation variants
-  G1752: { lemmas: ['ενεκεν', 'ενεκα', 'εινεκεν'] },           // ἕνεκα <-> ἕνεκεν
-  G3440: { lemmas: ['μονοσ'] },                                // μόνον -> μόνος
-  G4412: { lemmas: ['πρωτοσ'] },                               // πρῶτον -> πρῶτος
-  G3062: { lemmas: ['λοιποσ'] },                               // λοιποί -> λοιπός
-  G5305: { lemmas: ['υστεροσ'] },                              // ὕστερον -> ὕστερος
-  G5035: { lemmas: ['ταχυσ'] },                                // ταχύ -> ταχύς
-  G2411: { lemmas: ['ιεροσ'] },                                // ἱερόν -> ἱερός
-  G1199: { lemmas: ['δεσμοσ'] },                               // δεσμόν -> δεσμός
-  G3112: { lemmas: ['μακροσ'] },                               // μακράν -> μακρός
-  G4119: { lemmas: ['πολυσ'] },                                // πλείων -> πολύς
-  G4053: { lemmas: ['περισσοτεροσ'] },                         // περισσός -> περισσότερος
-  // Oblique/plural personal pronoun Strong's IDs lemmatized under ἐγώ / σύ in MorphGNT (require RP)
-  G2249: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G2254: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G2257: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G2248: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G3427: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G3450: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G3165: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G1698: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G1700: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G1691: { lemmas: ['εγω'], morphPrefix: 'RP' },
-  G5210: { lemmas: ['συ'], morphPrefix: 'RP' },
-  G5213: { lemmas: ['συ'], morphPrefix: 'RP' },
-  G5216: { lemmas: ['συ'], morphPrefix: 'RP' },
-  G5209: { lemmas: ['συ'], morphPrefix: 'RP' },
-  G4671: { lemmas: ['συ'], morphPrefix: 'RP' },
-  G4675: { lemmas: ['συ'], morphPrefix: 'RP' },
-  G4571: { lemmas: ['συ'], morphPrefix: 'RP' }
+  // Suppletive / irregular Greek verbs (strictly V-)
+  G1492: { lemmas: ['οιδα', 'οραω'], morphPrefixes: ['V-'] },      // εἴδω -> οἶδα / ὁράω
+  G1163: { lemmas: ['δεω'], morphPrefixes: ['V-'] },               // δεῖ -> δέω
+  G2036: { lemmas: ['λεγω'], morphPrefixes: ['V-'] },              // ἔπω -> λέγω
+  G5315: { lemmas: ['εσθιω'], morphPrefixes: ['V-'] },             // φάγω -> ἐσθίω
+  G1127: { lemmas: ['γρηγορεω'], morphPrefixes: ['V-'] },          // γρηγορεύω -> γρηγορέω
+  // Verified strongs_entries data bug (Latin transliteration in original_word, strictly N-)
+  G2920: { lemmas: ['κρισισ'], morphPrefixes: ['N-'] },            // krisis -> κρίσις
+  // Standard orthographic / adverbial / neuter-to-masculine citation variants (ALL with explicit POS)
+  G1752: { lemmas: ['ενεκεν', 'ενεκα', 'εινεκεν'], morphPrefixes: ['P-'] }, // ἕνεκα <-> ἕνεκεν
+  G3440: { lemmas: ['μονοσ'], morphPrefixes: ['A-', 'D-'] },       // μόνον -> μόνος
+  G4412: { lemmas: ['πρωτοσ'], morphPrefixes: ['A-', 'D-'] },      // πρῶτον -> πρῶτος
+  G3062: { lemmas: ['λοιποσ'], morphPrefixes: ['A-'] },            // λοιποί -> λοιπός
+  G5305: { lemmas: ['υστεροσ'], morphPrefixes: ['A-', 'D-'] },     // ὕστερον -> ὕστερος
+  G5035: { lemmas: ['ταχυσ'], morphPrefixes: ['A-', 'D-'] },       // ταχύ -> ταχύς
+  G2411: { lemmas: ['ιεροσ'], morphPrefixes: ['A-', 'N-'] },       // ἱερόν -> ἱερός
+  G1199: { lemmas: ['δεσμοσ'], morphPrefixes: ['N-'] },            // δεσμόν -> δεσμός
+  G3112: { lemmas: ['μακροσ'], morphPrefixes: ['A-', 'D-'] },      // μακράν -> μακρός
+  G4119: { lemmas: ['πολυσ'], morphPrefixes: ['A-'] },             // πλείων -> πολύς
+  G4053: { lemmas: ['περισσοτεροσ'], morphPrefixes: ['A-', 'D-'] },// περισσός -> περισσότερος
+  // Oblique/plural personal pronoun Strong's IDs: STRICTLY gated by person (lemma), case+number (morphRegex), AND surface!
+  G2249: { lemmas: ['εγω'], morphRegex: /^RP\s+----NP--$/, surfaces: ['ημεισ'] },
+  G2257: { lemmas: ['εγω'], morphRegex: /^RP\s+----GP--$/, surfaces: ['ημων'] },
+  G2254: { lemmas: ['εγω'], morphRegex: /^RP\s+----DP--$/, surfaces: ['ημιν'] },
+  G2248: { lemmas: ['εγω'], morphRegex: /^RP\s+----AP--$/, surfaces: ['ημασ'] },
+  G3450: { lemmas: ['εγω'], morphRegex: /^RP\s+----GS--$/, surfaces: ['μου', 'εμου'] },
+  G1700: { lemmas: ['εγω'], morphRegex: /^RP\s+----GS--$/, surfaces: ['εμου', 'μου'] },
+  G3427: { lemmas: ['εγω'], morphRegex: /^RP\s+----DS--$/, surfaces: ['μοι', 'εμοι'] },
+  G1698: { lemmas: ['εγω'], morphRegex: /^RP\s+----DS--$/, surfaces: ['εμοι', 'μοι'] },
+  G3165: { lemmas: ['εγω'], morphRegex: /^RP\s+----AS--$/, surfaces: ['με', 'εμε'] },
+  G1691: { lemmas: ['εγω'], morphRegex: /^RP\s+----AS--$/, surfaces: ['εμε', 'με'] },
+  G5210: { lemmas: ['συ'],  morphRegex: /^RP\s+----NP--$/, surfaces: ['υμεισ'] },
+  G5216: { lemmas: ['συ'],  morphRegex: /^RP\s+----GP--$/, surfaces: ['υμων'] },
+  G5213: { lemmas: ['συ'],  morphRegex: /^RP\s+----DP--$/, surfaces: ['υμιν'] },
+  G5209: { lemmas: ['συ'],  morphRegex: /^RP\s+----AP--$/, surfaces: ['υμασ'] },
+  G4675: { lemmas: ['συ'],  morphRegex: /^RP\s+----GS--$/, surfaces: ['σου'] },
+  G4671: { lemmas: ['συ'],  morphRegex: /^RP\s+----DS--$/, surfaces: ['σοι'] },
+  G4571: { lemmas: ['συ'],  morphRegex: /^RP\s+----AS--$/, surfaces: ['σε'] }
 };
 
-function isGreekStrongsLemmaEquivalent(strongsId, lexWord, morphGntLemma, morphCode) {
+function isGreekStrongsLemmaEquivalent(strongsId, lexWord, morphGntLemma, morphCode, surfaceWord = null) {
   if (!lexWord || !morphGntLemma) return false;
   const lexCanon = canonGreek(lexWord);
   const tokCanon = canonGreek(morphGntLemma);
@@ -269,7 +269,8 @@ function isGreekStrongsLemmaEquivalent(strongsId, lexWord, morphGntLemma, morphC
   }
 
   // 3. Verb citation-form equivalence (strictly gated on morph V-)
-  const isVerb = Boolean(morphCode && String(morphCode).startsWith('V-'));
+  const morphStr = String(morphCode || '').trim();
+  const isVerb = morphStr.startsWith('V-');
   if (isVerb) {
     // Active -ω <-> Middle/Deponent -ομαι (e.g. φοβέω <-> φοβέομαι, μνηστεύω <-> μνηστεύομαι)
     if (lexCanon.endsWith('ω') && tokCanon === `${lexCanon.slice(0, -1)}ομαι`) return true;
@@ -282,10 +283,18 @@ function isGreekStrongsLemmaEquivalent(strongsId, lexWord, morphGntLemma, morphC
   // 4. Closed verified Strong's <-> MorphGNT suppletive/inflected citation table
   const entry = strongsId ? VERIFIED_GREEK_STRONGS_LEMMA_EQUIV[strongsId] : null;
   if (entry) {
-    if (entry.morphPrefix && !(morphCode && String(morphCode).startsWith(entry.morphPrefix))) {
+    if (!entry.lemmas.includes(tokCanon)) return false;
+    if (entry.morphPrefixes && !entry.morphPrefixes.some(p => morphStr.startsWith(p))) {
       return false;
     }
-    if (entry.lemmas.includes(tokCanon)) return true;
+    if (entry.morphRegex && !entry.morphRegex.test(morphStr)) {
+      return false;
+    }
+    if (entry.surfaces) {
+      const surfCanon = canonGreek(surfaceWord);
+      if (!surfCanon || !entry.surfaces.includes(surfCanon)) return false;
+    }
+    return true;
   }
 
   return false;
@@ -684,7 +693,7 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
         const lexWord = strongsLexicon.get(candidateSid);
         if (!lexWord) {
           lexReject = `REJECT_UNKNOWN_STRONGS_ID(${candidateSid})`;
-        } else if (!isGreekStrongsLemmaEquivalent(candidateSid, lexWord, chosen.lemma, chosen.morph)) {
+        } else if (!isGreekStrongsLemmaEquivalent(candidateSid, lexWord, chosen.lemma, chosen.morph, chosen.surface)) {
           lexReject = `REJECT_STORED_STRONGS_LEXICON_MISMATCH(${candidateSid}:${lexWord}!=${chosen.lemma})`;
         } else {
           targetStrongs = candidateSid;
@@ -898,7 +907,7 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
         targetOrigWord = chosen.lemma;
         const candidateSid = r.strongsId || chosen.trCrossStrongsId;
         const lexWord = candidateSid && strongsLexicon ? strongsLexicon.get(candidateSid) : null;
-        if (!lexWord || !isGreekStrongsLemmaEquivalent(candidateSid, lexWord, chosen.lemma, chosen.morph)) { groupValid = false; break; }
+        if (!lexWord || !isGreekStrongsLemmaEquivalent(candidateSid, lexWord, chosen.lemma, chosen.morph, chosen.surface)) { groupValid = false; break; }
         targetStrongs = candidateSid;
       } else {
         targetStrongs = chosen.strongsId;

@@ -1,0 +1,123 @@
+{
+  "engineVersion": "whole_verse_general_repair_engine_v1.6",
+  "baselineDbSha256": "b91b4c188be54ad8746593158ea48a8bef8cf37c8ccec349108111274c00266e",
+  "isolatedDbSha256": "2d0d36774a47be37d02ac579a522b44889231e6fb66667cfc2772f145a54d524",
+  "diffLogSha256": "f3431d9628aef505c03318f1db9d171d6f900a4f678bd74073d6327492143a6a",
+  "modifiedRecords": 1072,
+  "totalRecords": 434351,
+  "totalVerses": 31102,
+  "all4AxesClean": {
+    "before": 177699,
+    "beforePct": 40.91,
+    "after": 178137,
+    "afterPct": 41.01,
+    "netDelta": 438
+  },
+  "fullyCleanVerses": {
+    "before": 1847,
+    "after": 1855,
+    "netDelta": 8
+  },
+  "byAxis": {
+    "lexical": {
+      "passBefore": 190988,
+      "passAfter": 191426,
+      "netPassDelta": 438,
+      "failBefore": 205742,
+      "failAfter": 205718,
+      "netFailDelta": -24
+    },
+    "lemmaSurface": {
+      "passBefore": 184319,
+      "passAfter": 185287,
+      "netPassDelta": 968,
+      "failBefore": 212411,
+      "failAfter": 211857,
+      "netFailDelta": -554
+    },
+    "morphology": {
+      "passBefore": 189258,
+      "passAfter": 190182,
+      "netPassDelta": 924,
+      "failBefore": 213245,
+      "failAfter": 212735,
+      "netFailDelta": -510
+    },
+    "sourceLocator": {
+      "passBefore": 386167,
+      "passAfter": 386455,
+      "netPassDelta": 288,
+      "failBefore": 48184,
+      "failAfter": 47896,
+      "netFailDelta": -288
+    }
+  },
+  "byLanguage": {
+    "hebrew": {
+      "cleanBefore": 127236,
+      "cleanAfter": 127236,
+      "netCleanDelta": 0,
+      "versesBefore": 1388,
+      "versesAfter": 1388,
+      "netVersesDelta": 0
+    },
+    "aramaic": {
+      "cleanBefore": 1513,
+      "cleanAfter": 1513,
+      "netCleanDelta": 0,
+      "versesBefore": 7,
+      "versesAfter": 7,
+      "netVersesDelta": 0
+    },
+    "greek": {
+      "cleanBefore": 48950,
+      "cleanAfter": 49388,
+      "netCleanDelta": 438,
+      "versesBefore": 452,
+      "versesAfter": 460,
+      "netVersesDelta": 8
+    }
+  },
+  "defectTaxonomyDeltas": {
+    "catA_wmsMandatoryFieldsOrSync": {
+      "before": 220369,
+      "after": 219850,
+      "delta": -519
+    },
+    "catA_locatorCanonicalFormatOrVersification": {
+      "before": 18714,
+      "after": 18430,
+      "delta": -284
+    },
+    "catA_syntacticMetadataConsistency": {
+      "before": 2402,
+      "after": 2401,
+      "delta": -1
+    },
+    "catB_lexicalMismatchAtLocator": {
+      "before": 205663,
+      "after": 205640,
+      "delta": -23
+    },
+    "catB_locatorOutOfBoundsOrMissing": {
+      "before": 37621,
+      "after": 37207,
+      "delta": -414
+    },
+    "catB_duplicatePrimaryTokenCollision": {
+      "before": 3535,
+      "after": 3530,
+      "delta": -5
+    },
+    "catB_falseSyntacticMaskingSourceTokens": {
+      "before": 13322,
+      "after": 13321,
+      "delta": -1
+    },
+    "catB_secondaryComponentDisplacedOrInvalid": {
+      "before": 229552,
+      "after": 229529,
+      "delta": -23
+    }
+  }
+}
