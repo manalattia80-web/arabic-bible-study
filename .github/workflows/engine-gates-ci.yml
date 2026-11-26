@@ -1,0 +1,53 @@
+name: Engine Gates CI (Clean Clone)
+
+on:
+  push:
+    branches: [ "feat/**", "release/**", "main" ]
+    paths:
+      - 'scripts/**'
+      - '.github/workflows/engine-gates-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  engine-gates-clean-clone:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Ensure sqlite3 CLI is available
+        run: |
+          if ! command -v sqlite3 >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y sqlite3
+          fi
+          sqlite3 --version
+
+      - name: Assemble v387 Baseline DB from Tracked Chunks
+        run: |
+          node scripts/assemble_db.cjs
+          DB_SHA=$(sha256sum mobile/assets/bible_study.db | awk '{print $1}')
+          echo "Assembled DB SHA-256: $DB_SHA"
+          if [ "$DB_SHA" != "70cebd40fa0e1fc684410cd86efcada2c13deab864ed5327b8b80c087c8e7295" ]; then
+            echo "FATAL: Baseline DB SHA-256 drifted from v387!"
+            exit 1
+          fi
+
+      - name: Run 45 Engine Gates Directly from Clean Clone (Auto Gzip TR Fallback)
+        run: |
+          test ! -f scripts/data/gnt_scrivener.json
+          test -f scripts/data/gnt_scrivener.json.gz
+          node scripts/test_general_repair_engine_gates.cjs
+
+      - name: Verify Scrivener TR Extraction & SHA-256 Helper
+        run: |
+          node scripts/ensure_scrivener_tr.cjs
+          test -f scripts/data/gnt_scrivener.json

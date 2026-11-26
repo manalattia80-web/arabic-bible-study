@@ -339,9 +339,23 @@ function loadAllSources() {
   }
 
   const trFullPath = path.join(__dirname, 'data/gnt_scrivener.json');
+  const trGzPath = path.join(__dirname, 'data/gnt_scrivener.json.gz');
   const trByOsis = new Map();
-  if (!process.env.USE_TR_SLICE && fs.existsSync(trFullPath)) {
-    const trRaw = JSON.parse(fs.readFileSync(trFullPath, 'utf8'));
+  if (!process.env.USE_TR_SLICE && (fs.existsSync(trFullPath) || fs.existsSync(trGzPath))) {
+    let trRawBuf;
+    if (fs.existsSync(trFullPath)) {
+      trRawBuf = fs.readFileSync(trFullPath);
+    } else {
+      const zlib = require('zlib');
+      const crypto = require('crypto');
+      trRawBuf = zlib.gunzipSync(fs.readFileSync(trGzPath));
+      const actualSha = crypto.createHash('sha256').update(trRawBuf).digest('hex');
+      const expectedSha = 'e61655e16e3c2d4078d4d0ae2fe063c3b9f90b109ede894a08d5f825b67f0b0b';
+      if (actualSha !== expectedSha) {
+        throw new Error(`CRITICAL: gnt_scrivener.json.gz decompressed SHA-256 mismatch: ${actualSha}`);
+      }
+    }
+    const trRaw = JSON.parse(trRawBuf.toString('utf8'));
     for (const row of trRaw) {
       const key = `${row.book_name_osis}:${row.chapter}:${row.verse}`;
       const arr = row.words.map((w, i) => ({

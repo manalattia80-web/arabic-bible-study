@@ -208,18 +208,71 @@ function canonGreek(s) {
 }
 
 /**
- * Engine v1.7.1: Strictly documented pure-orthographic Greek surface equivalence
- * (zero 3-char prefix heuristics; zero tense/mood/person/number conflation).
+ * Engine v1.7.2: Strictly documented pure-orthographic Greek surface equivalence
+ * (zero 3-char prefix heuristics; movable-ν strictly limited to -ε/-ι stems per Greek phonology,
+ * NEVER -ω/-ων such as ἔργῳ/ἔργων or νουθετῶ/νουθετῶν).
  */
 function isGreekPureOrthographicVariant(aCanon, bCanon, strongsId) {
   if (!aCanon || !bCanon) return false;
   if (aCanon === bCanon) return true;
-  // 1. Movable-nu (-ν): e.g. συνευδοκοῦσι <-> συνευδοκοῦσιν, εἶπε <-> εἶπεν
-  if (`${aCanon}ν` === bCanon || `${bCanon}ν` === aCanon) return true;
+  // 1. Movable-nu (ν ἐφελκυστικόν) ONLY after -ε or -ι (e.g. συνευδοκοῦσι <-> συνευδοκοῦσιν, ἔτεκε <-> ἔτεκεν)
+  if ((aCanon.endsWith('ε') || aCanon.endsWith('ι')) && `${aCanon}ν` === bCanon) return true;
+  if ((bCanon.endsWith('ε') || bCanon.endsWith('ι')) && `${bCanon}ν` === aCanon) return true;
   // 2. Movable-sigma (-ς -> -σ) ONLY on documented movable-sigma adverbs/prepositions
   if (['G3779', 'G3360', 'G891'].includes(strongsId) && (`${aCanon}σ` === bCanon || `${bCanon}σ` === aCanon)) return true;
   // 3. Byzantine/Alexandrian β <-> υ transliteration ONLY on Δαβίδ <-> Δαυίδ (G1138)
   if (strongsId === 'G1138' && aCanon.replace(/β/g, 'υ') === bCanon.replace(/β/g, 'υ')) return true;
+  return false;
+}
+
+/**
+ * Engine v1.7.2: Verifies that a Scrivener TR Robinson morphology code (e.g. V-PAI-3P, N-GPM)
+ * is morphologically compatible with an SBLGNT MorphGNT code (e.g. V- 3PAI-P--, N- ----DSN-).
+ * Prevents accepting any morphological/textual divergence (case, number, person, tense, or mood).
+ */
+function trGrammarMatchesSblMorph(trGrammar, sblMorph) {
+  if (!trGrammar || !sblMorph) return false;
+  const tr = String(trGrammar).trim().toUpperCase();
+  const sblParts = String(sblMorph).trim().split(/\s+/);
+  if (sblParts.length < 2 || sblParts[1].length < 8) return false;
+  const sblPos = sblParts[0];
+  const code = sblParts[1]; // [person, tense, voice, mood, case, number, gender, degree]
+
+  if (sblPos === 'D-') {
+    return tr === 'ADV' || tr.startsWith('ADV-') || tr.startsWith('D-');
+  }
+  if (sblPos === 'N-' || sblPos === 'A-') {
+    if (!tr.startsWith(sblPos)) return false;
+    const segs = tr.split('-');
+    const cng = segs[1] || '';
+    if (cng === 'PRI' || cng === 'LI' || cng === 'OI') return true; // indeclinable proper/letter/other noun
+    if (cng.length < 2) return false;
+    const trCase = cng[0];
+    const trNum = cng[1];
+    return trCase === code[4] && trNum === code[5];
+  }
+  if (sblPos === 'V-') {
+    if (!tr.startsWith('V-')) return false;
+    const segs = tr.split('-');
+    if (segs.length < 2) return false;
+    const tvm = segs[1].replace(/^2/, ''); // strip '2' from 2nd aorist/future/perfect (e.g. 2AAI -> AAI)
+    if (tvm.length < 3) return false;
+    const trTenseRaw = tvm[0];
+    const trMood = tvm[2];
+    const trTenseMap = { P: 'P', I: 'I', F: 'F', A: 'A', R: 'X', L: 'Y' };
+    const trTense = trTenseMap[trTenseRaw] || trTenseRaw;
+    const sblPerson = code[0], sblTense = code[1], sblMood = code[3], sblCase = code[4], sblNum = code[5];
+    if (trMood !== sblMood || trTense !== sblTense) return false;
+    if (trMood === 'N') return true; // infinitive
+    const pnOrCng = segs[2] || '';
+    if (trMood === 'P') {
+      if (pnOrCng.length < 2) return false;
+      return pnOrCng[0] === sblCase && pnOrCng[1] === sblNum;
+    }
+    // Finite verb (I/S/O/M): require exact person + number
+    if (pnOrCng.length < 2) return false;
+    return pnOrCng[0] === sblPerson && pnOrCng[1] === sblNum;
+  }
   return false;
 }
 
@@ -410,7 +463,7 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
   let edition = '';
   let morphSource = '';
   let locPrefix = '';
-  let trSurfaceCanons = null;
+  let trTokens = null;
 
   if (isGreek) {
     const sbl = sources.sblByBook[book] ? sources.sblByBook[book].get(`${ch}:${vs}`) : null;
@@ -449,11 +502,20 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       isTr: false
     }));
     if (tr && tr.length) {
-      trSurfaceCanons = new Set();
+      trTokens = [];
       const trBySurf = new Map();
       for (const tt of tr) {
         const sc = canonGreek(cleanTrSurface(tt.surface));
-        if (sc) trSurfaceCanons.add(sc);
+        if (sc) {
+          trTokens.push({
+            index: tt.index,
+            surface: tt.surface,
+            surfaceCanon: sc,
+            grammar: tt.grammar || null,
+            strongsId: tt.strongsId || null,
+            lemma: tt.lemma || null
+          });
+        }
         if (!trBySurf.has(sc)) trBySurf.set(sc, []);
         trBySurf.get(sc).push(tt);
       }
@@ -671,16 +733,13 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
         isGreekPureOrthographicVariant(rSurfCanon, t.surfaceCanon, r.strongsId);
       if (!isContentGreek || !surfCompatible) {
         rejectReason = `PENDING_NO_UNAMBIGUOUS_MATCH(both=${bothMatches.length},surf=${surfMatches.length},lex=${lexMatches.length})`;
-      } else if (!trSurfaceCanons || trSurfaceCanons.size === 0) {
+      } else if (!trTokens || trTokens.length === 0) {
         rejectReason = `REJECT_G1C_TR_WITNESS_UNAVAILABLE(w${t.index}:${t.surface})`;
       } else {
-        let trAgreesWithSbl = false;
-        for (const trSc of trSurfaceCanons) {
-          if (isGreekPureOrthographicVariant(trSc, t.surfaceCanon, r.strongsId)) {
-            trAgreesWithSbl = true;
-            break;
-          }
-        }
+        const trAgreesWithSbl = trTokens.some(tt =>
+          isGreekPureOrthographicVariant(tt.surfaceCanon, t.surfaceCanon, r.strongsId) &&
+          trGrammarMatchesSblMorph(tt.grammar, t.morph)
+        );
         if (!trAgreesWithSbl) {
           rejectReason = `REJECT_G1C_TR_SBLGNT_VARIANT(sbl=${t.surface},stored=${r.origSurface || 'NULL'})`;
         } else if (!greekStrongsMatchesLemma(r.strongsId, t.lemma)) {
@@ -1352,5 +1411,7 @@ module.exports = {
   buildAtomicWmsSql,
   applyProposalsToIsolatedDb,
   loadProtectedAdjudicatedVerses,
-  isGreekStrongsLemmaEquivalent
+  isGreekStrongsLemmaEquivalent,
+  isGreekPureOrthographicVariant,
+  trGrammarMatchesSblMorph
 };

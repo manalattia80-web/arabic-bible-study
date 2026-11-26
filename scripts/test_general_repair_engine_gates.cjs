@@ -28,7 +28,9 @@ const {
   loadVerseRows,
   loadStrongsLexicon,
   applyProposalsToIsolatedDb,
-  isGreekStrongsLemmaEquivalent
+  isGreekStrongsLemmaEquivalent,
+  isGreekPureOrthographicVariant,
+  trGrammarMatchesSblMorph
 } = require('./whole_verse_general_repair_engine.cjs');
 const {
   loadProtectedAdjudicatedVerses,
@@ -528,6 +530,52 @@ assert(
   Boolean(r96_12 && r96_12.status === 'PENDING_REVIEW' && String(r96_12.ruleId).includes('REJECT_G1C_TR_SBLGNT_VARIANT') && r96_12.proposed === null),
   'Negative Gate 34 (v1.7.1 TR Guard): Rev 9:6 #12 («فَيَهْرُبُ», TR φεύξεται vs SBLGNT φεύγει) is strictly REJECTED',
   JSON.stringify(r96_12 && { status: r96_12.status, ruleId: r96_12.ruleId })
+);
+
+// 35. Negative Gate (v1.7.2 Movable-Nu & TR Morph Guard): Rom 13:3 #5 («لِلأَعْمَالِ», TR ἔργων N-GPM vs SBLGNT ἔργῳ N- ----DSN-) MUST stay PENDING_REVIEW!
+const rom133Rows = loadVerseRows(prodDb, 45, 13, 3);
+const rom133Res = evaluateVerse({ book: 45, ch: 13, vs: 3, lang: 'greek', name: 'Rom 13:3' }, rom133Rows, sources, strongsLexicon);
+const rom133_5 = rom133Res.proposals.find(p => p.arPos === 5);
+assert(
+  Boolean(
+    !isGreekPureOrthographicVariant('εργω', 'εργων', 'G2041') &&
+    !trGrammarMatchesSblMorph('N-GPM', 'N- ----DSN-') &&
+    rom133_5 && rom133_5.status === 'PENDING_REVIEW' && rom133_5.proposed === null
+  ),
+  'Negative Gate 35 (v1.7.2 Movable-Nu Morph Guard): Rom 13:3 #5 («لِلأَعْمَالِ», TR ἔργων N-GPM vs SBLGNT ἔργῳ N- ----DSN-) is strictly REJECTED',
+  JSON.stringify(rom133_5 && { status: rom133_5.status, ruleId: rom133_5.ruleId })
+);
+
+// 36. Negative Gate (v1.7.2 Movable-Nu & TR Morph Guard): 1Cor 4:14 #9 («أُنْذِرُكُمْ», TR νουθετῶ V-PAI-1S vs SBLGNT νουθετῶν V- -PAPNSM-) MUST stay PENDING_REVIEW!
+const cor1_414_rows = loadVerseRows(prodDb, 46, 4, 14);
+const cor1_414_res = evaluateVerse({ book: 46, ch: 4, vs: 14, lang: 'greek', name: '1Cor 4:14' }, cor1_414_rows, sources, strongsLexicon);
+const c1_414_9 = cor1_414_res.proposals.find(p => p.arPos === 9);
+assert(
+  Boolean(
+    !isGreekPureOrthographicVariant('νουθετω', 'νουθετων', 'G3560') &&
+    !trGrammarMatchesSblMorph('V-PAI-1S', 'V- -PAPNSM-') &&
+    c1_414_9 && c1_414_9.status === 'PENDING_REVIEW' && c1_414_9.proposed === null
+  ),
+  'Negative Gate 36 (v1.7.2 Movable-Nu Morph Guard): 1Cor 4:14 #9 («أُنْذِرُكُمْ», TR νουθετῶ V-PAI-1S vs SBLGNT νουθετῶν V- -PAPNSM-) is strictly REJECTED',
+  JSON.stringify(c1_414_9 && { status: c1_414_9.status, ruleId: c1_414_9.ruleId })
+);
+
+// 37. Positive Gate (v1.7.2 True Movable-Nu): Rom 1:32 #18 («يُسَرُّونَ», TR συνευδοκοῦσι V-PAI-3P <-> SBLGNT συνευδοκοῦσιν V- 3PAI-P--) ACCEPTED!
+const rom132Rows = loadVerseRows(prodDb, 45, 1, 32);
+const rom132Res = evaluateVerse({ book: 45, ch: 1, vs: 32, lang: 'greek', name: 'Rom 1:32' }, rom132Rows, sources, strongsLexicon);
+const rom132_18 = rom132Res.proposals.find(p => p.arPos === 18);
+assert(
+  Boolean(
+    isGreekPureOrthographicVariant('συνευδοκουσι', 'συνευδοκουσιν', 'G4909') &&
+    trGrammarMatchesSblMorph('V-PAI-3P', 'V- 3PAI-P--') &&
+    rom132_18 &&
+    rom132_18.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' &&
+    rom132_18.ruleId === 'RULE_G1C_UNIQUE_GREEK_LEMMA_LOCK' &&
+    rom132_18.proposed &&
+    rom132_18.proposed.origSurface === 'συνευδοκοῦσιν'
+  ),
+  'Positive Gate 37 (v1.7.2 True Movable-Nu): Rom 1:32 #18 («يُسَرُّونَ», TR συνευδοκοῦσι V-PAI-3P <-> SBLGNT συνευδοκοῦσιν V- 3PAI-P--) is ACCEPTED',
+  JSON.stringify(rom132_18 && { status: rom132_18.status, ruleId: rom132_18.ruleId, proposed: rom132_18.proposed && rom132_18.proposed.origSurface })
 );
 
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)
