@@ -1,53 +1,53 @@
 {
   "engineVersion": "whole_verse_general_repair_engine_v1.7",
   "baselineDbSha256": "70cebd40fa0e1fc684410cd86efcada2c13deab864ed5327b8b80c087c8e7295",
-  "isolatedDbSha256": "c143c0303ca823b41da1a71c14609d26e2ee4370449216037c1722c4a7fedb7e",
-  "diffLogSha256": "ac8939cc4986b88788be386d5ab623a518060e08dbd7c0d81923e327644da004",
-  "modifiedRecords": 2824,
+  "isolatedDbSha256": "ea407f7255f608b6867dd0b3c74771e67d3288cc7e1269c53a1e7eb0b8cc83f3",
+  "diffLogSha256": "0df1c529383bcb3c5e20bb64791b28415339bcda77830d3ed4761cd9a4ddbd3f",
+  "modifiedRecords": 1576,
   "totalRecords": 434351,
   "totalVerses": 31102,
   "all4AxesClean": {
     "before": 178134,
     "beforePct": 41.01,
-    "after": 180789,
-    "afterPct": 41.62,
-    "netDelta": 2655
+    "after": 179691,
+    "afterPct": 41.37,
+    "netDelta": 1557
   },
   "fullyCleanVerses": {
     "before": 1855,
-    "after": 2002,
-    "netDelta": 147
+    "after": 1943,
+    "netDelta": 88
   },
   "perRecordTransitionMatrices_All434351": {
     "overall": {
       "pp": 178134,
-      "ap": 2655,
+      "ap": 1557,
       "pa": 0,
-      "aa": 253562
+      "aa": 254660
     },
     "lexical": {
-      "pp": 191421,
-      "ap": 2653,
+      "pp": 192584,
+      "ap": 1385,
       "pa": 0,
-      "aa": 240277
+      "aa": 240382
     },
     "lemmaSurface": {
-      "pp": 185280,
-      "ap": 2814,
+      "pp": 185745,
+      "ap": 1557,
       "pa": 0,
-      "aa": 246257
+      "aa": 247049
     },
     "morphology": {
       "pp": 190175,
-      "ap": 2781,
+      "ap": 1549,
       "pa": 0,
-      "aa": 241395
+      "aa": 242627
     },
     "sourceLocator": {
-      "pp": 386455,
-      "ap": 181,
+      "pp": 386306,
+      "ap": 65,
       "pa": 0,
-      "aa": 47715
+      "aa": 47980
     }
   },
   "regressionsByAxis": {
@@ -76,11 +76,11 @@
     },
     "greek": {
       "cleanBefore": 49385,
-      "cleanAfter": 52040,
-      "netCleanDelta": 2655,
+      "cleanAfter": 50942,
+      "netCleanDelta": 1557,
       "versesBefore": 460,
-      "versesAfter": 607,
-      "netVersesDelta": 147
+      "versesAfter": 548,
+      "netVersesDelta": 88
     }
   }
 }

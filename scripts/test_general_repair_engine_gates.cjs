@@ -500,6 +500,36 @@ assert(
   JSON.stringify(m125_4_bad && { status: m125_4_bad.status, ruleId: m125_4_bad.ruleId })
 );
 
+// 32. Negative Gate (v1.7.1 TR-vs-SBLGNT Edition Guard): 2Cor 13:7 #1 («وَأُصَلِّي», TR εὔχομαι 1sg vs SBLGNT εὐχόμεθα 1pl) MUST stay PENDING_REVIEW!
+const cor2_13_7_rows = loadVerseRows(prodDb, 47, 13, 7);
+const cor2_13_7_res = evaluateVerse({ book: 47, ch: 13, vs: 7, lang: 'greek', name: '2Cor 13:7' }, cor2_13_7_rows, sources, strongsLexicon);
+const c2_13_7_1 = cor2_13_7_res.proposals.find(p => p.arPos === 1);
+assert(
+  Boolean(c2_13_7_1 && c2_13_7_1.status === 'PENDING_REVIEW' && String(c2_13_7_1.ruleId).includes('REJECT_G1C_TR_SBLGNT_VARIANT') && c2_13_7_1.proposed === null),
+  'Negative Gate 32 (v1.7.1 TR Guard): 2Cor 13:7 #1 («وَأُصَلِّي», TR εὔχομαι vs SBLGNT εὐχόμεθα) is strictly REJECTED',
+  JSON.stringify(c2_13_7_1 && { status: c2_13_7_1.status, ruleId: c2_13_7_1.ruleId })
+);
+
+// 33. Negative Gate (v1.7.1 TR-vs-SBLGNT + No 3-Char Prefix): Acts 7:34 #15 («أُرْسِلُكَ», TR ἀποστελῶ fut ind vs SBLGNT ἀποστείλω aor subj) MUST stay PENDING_REVIEW!
+const acts734Rows = loadVerseRows(prodDb, 44, 7, 34);
+const acts734Res = evaluateVerse({ book: 44, ch: 7, vs: 34, lang: 'greek', name: 'Acts 7:34' }, acts734Rows, sources, strongsLexicon);
+const a734_15 = acts734Res.proposals.find(p => p.arPos === 15);
+assert(
+  Boolean(a734_15 && a734_15.status === 'PENDING_REVIEW' && a734_15.proposed === null),
+  'Negative Gate 33 (v1.7.1 TR Guard): Acts 7:34 #15 («أُرْسِلُكَ», TR ἀποστελῶ vs SBLGNT ἀποστείλω) is strictly REJECTED',
+  JSON.stringify(a734_15 && { status: a734_15.status, ruleId: a734_15.ruleId })
+);
+
+// 34. Negative Gate (v1.7.1 TR-vs-SBLGNT Edition Guard): Rev 9:6 #12 («فَيَهْرُبُ», TR φεύξεται fut vs SBLGNT φεύγει pres) MUST stay PENDING_REVIEW!
+const rev96Rows = loadVerseRows(prodDb, 66, 9, 6);
+const rev96Res = evaluateVerse({ book: 66, ch: 9, vs: 6, lang: 'greek', name: 'Rev 9:6' }, rev96Rows, sources, strongsLexicon);
+const r96_12 = rev96Res.proposals.find(p => p.arPos === 12);
+assert(
+  Boolean(r96_12 && r96_12.status === 'PENDING_REVIEW' && String(r96_12.ruleId).includes('REJECT_G1C_TR_SBLGNT_VARIANT') && r96_12.proposed === null),
+  'Negative Gate 34 (v1.7.1 TR Guard): Rev 9:6 #12 («فَيَهْرُبُ», TR φεύξεται vs SBLGNT φεύγει) is strictly REJECTED',
+  JSON.stringify(r96_12 && { status: r96_12.status, ruleId: r96_12.ruleId })
+);
+
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)
 const preProtFp = computeProtectedRegistryFingerprint(prodDb, protectedVerseKeys);
 const testVerses = [];

@@ -30,6 +30,7 @@ const {
   loadAllSources,
   deriveCanonicalMorphFields,
   getBhsChapterVerse,
+  greekStrongsMatchesLemma,
   OT_BOOK_MAP,
   TR_BOOK_OSIS_MAP
 } = require('./full_66_books_audit_helpers.cjs');
@@ -204,6 +205,22 @@ function canonGreek(s) {
     .toLowerCase()
     .replace(/ς/g, 'σ')
     .trim();
+}
+
+/**
+ * Engine v1.7.1: Strictly documented pure-orthographic Greek surface equivalence
+ * (zero 3-char prefix heuristics; zero tense/mood/person/number conflation).
+ */
+function isGreekPureOrthographicVariant(aCanon, bCanon, strongsId) {
+  if (!aCanon || !bCanon) return false;
+  if (aCanon === bCanon) return true;
+  // 1. Movable-nu (-ν): e.g. συνευδοκοῦσι <-> συνευδοκοῦσιν, εἶπε <-> εἶπεν
+  if (`${aCanon}ν` === bCanon || `${bCanon}ν` === aCanon) return true;
+  // 2. Movable-sigma (-ς -> -σ) ONLY on documented movable-sigma adverbs/prepositions
+  if (['G3779', 'G3360', 'G891'].includes(strongsId) && (`${aCanon}σ` === bCanon || `${bCanon}σ` === aCanon)) return true;
+  // 3. Byzantine/Alexandrian β <-> υ transliteration ONLY on Δαβίδ <-> Δαυίδ (G1138)
+  if (strongsId === 'G1138' && aCanon.replace(/β/g, 'υ') === bCanon.replace(/β/g, 'υ')) return true;
+  return false;
 }
 
 /**
@@ -393,6 +410,7 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
   let edition = '';
   let morphSource = '';
   let locPrefix = '';
+  let trSurfaceCanons = null;
 
   if (isGreek) {
     const sbl = sources.sblByBook[book] ? sources.sblByBook[book].get(`${ch}:${vs}`) : null;
@@ -431,9 +449,11 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       isTr: false
     }));
     if (tr && tr.length) {
+      trSurfaceCanons = new Set();
       const trBySurf = new Map();
       for (const tt of tr) {
         const sc = canonGreek(cleanTrSurface(tt.surface));
+        if (sc) trSurfaceCanons.add(sc);
         if (!trBySurf.has(sc)) trBySurf.set(sc, []);
         trBySurf.get(sc).push(tt);
       }
@@ -648,15 +668,29 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       const surfCompatible =
         !rSurfCanon ||
         rSurfCanon === rLexCanon ||
-        rSurfCanon.slice(0, 3) === t.surfaceCanon.slice(0, 3) ||
-        rSurfCanon.replace(/β/g, 'υ') === t.surfaceCanon.replace(/β/g, 'υ');
+        isGreekPureOrthographicVariant(rSurfCanon, t.surfaceCanon, r.strongsId);
       if (!isContentGreek || !surfCompatible) {
         rejectReason = `PENDING_NO_UNAMBIGUOUS_MATCH(both=${bothMatches.length},surf=${surfMatches.length},lex=${lexMatches.length})`;
-      } else if (lCount === 1 && sCount === 1) {
-        chosen = t;
-        ruleId = 'RULE_G1C_UNIQUE_GREEK_LEMMA_LOCK';
+      } else if (!trSurfaceCanons || trSurfaceCanons.size === 0) {
+        rejectReason = `REJECT_G1C_TR_WITNESS_UNAVAILABLE(w${t.index}:${t.surface})`;
       } else {
-        rejectReason = `REJECT_DUPLICATE_OCCURRENCE_IN_VERSE(surfCount=${sCount},lexCount=${lCount})`;
+        let trAgreesWithSbl = false;
+        for (const trSc of trSurfaceCanons) {
+          if (isGreekPureOrthographicVariant(trSc, t.surfaceCanon, r.strongsId)) {
+            trAgreesWithSbl = true;
+            break;
+          }
+        }
+        if (!trAgreesWithSbl) {
+          rejectReason = `REJECT_G1C_TR_SBLGNT_VARIANT(sbl=${t.surface},stored=${r.origSurface || 'NULL'})`;
+        } else if (!greekStrongsMatchesLemma(r.strongsId, t.lemma)) {
+          rejectReason = `REJECT_G1C_LEXICAL_AUDIT_COMPAT(${r.strongsId}!=${t.lemma})`;
+        } else if (lCount === 1 && sCount === 1) {
+          chosen = t;
+          ruleId = 'RULE_G1C_UNIQUE_GREEK_LEMMA_LOCK';
+        } else {
+          rejectReason = `REJECT_DUPLICATE_OCCURRENCE_IN_VERSE(surfCount=${sCount},lexCount=${lCount})`;
+        }
       }
     } else {
       rejectReason = `PENDING_NO_UNAMBIGUOUS_MATCH(both=${bothMatches.length},surf=${surfMatches.length},lex=${lexMatches.length})`;
