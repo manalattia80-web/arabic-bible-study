@@ -640,6 +640,24 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       } else {
         rejectReason = `REJECT_DUPLICATE_OCCURRENCE_IN_VERSE(surfCount=${sCount},lexCount=${lCount})`;
       }
+    } else if (lexMatches.length === 1 && isGreek && r.strongsId && r.strongsId.startsWith('G') && rLexCanon.length >= 3) {
+      const t = lexMatches[0];
+      const lCount = lexFreq.get(t.lemmaCanon) || 0;
+      const sCount = surfFreq.get(t.surfaceCanon) || 0;
+      const isContentGreek = Boolean(t.morph && /^(N-|V-|A-|D-)/.test(t.morph));
+      const surfCompatible =
+        !rSurfCanon ||
+        rSurfCanon === rLexCanon ||
+        rSurfCanon.slice(0, 3) === t.surfaceCanon.slice(0, 3) ||
+        rSurfCanon.replace(/β/g, 'υ') === t.surfaceCanon.replace(/β/g, 'υ');
+      if (!isContentGreek || !surfCompatible) {
+        rejectReason = `PENDING_NO_UNAMBIGUOUS_MATCH(both=${bothMatches.length},surf=${surfMatches.length},lex=${lexMatches.length})`;
+      } else if (lCount === 1 && sCount === 1) {
+        chosen = t;
+        ruleId = 'RULE_G1C_UNIQUE_GREEK_LEMMA_LOCK';
+      } else {
+        rejectReason = `REJECT_DUPLICATE_OCCURRENCE_IN_VERSE(surfCount=${sCount},lexCount=${lCount})`;
+      }
     } else {
       rejectReason = `PENDING_NO_UNAMBIGUOUS_MATCH(both=${bothMatches.length},surf=${surfMatches.length},lex=${lexMatches.length})`;
     }

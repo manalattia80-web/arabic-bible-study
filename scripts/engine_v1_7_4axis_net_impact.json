@@ -1,0 +1,86 @@
+{
+  "engineVersion": "whole_verse_general_repair_engine_v1.7",
+  "baselineDbSha256": "70cebd40fa0e1fc684410cd86efcada2c13deab864ed5327b8b80c087c8e7295",
+  "isolatedDbSha256": "c143c0303ca823b41da1a71c14609d26e2ee4370449216037c1722c4a7fedb7e",
+  "diffLogSha256": "ac8939cc4986b88788be386d5ab623a518060e08dbd7c0d81923e327644da004",
+  "modifiedRecords": 2824,
+  "totalRecords": 434351,
+  "totalVerses": 31102,
+  "all4AxesClean": {
+    "before": 178134,
+    "beforePct": 41.01,
+    "after": 180789,
+    "afterPct": 41.62,
+    "netDelta": 2655
+  },
+  "fullyCleanVerses": {
+    "before": 1855,
+    "after": 2002,
+    "netDelta": 147
+  },
+  "perRecordTransitionMatrices_All434351": {
+    "overall": {
+      "pp": 178134,
+      "ap": 2655,
+      "pa": 0,
+      "aa": 253562
+    },
+    "lexical": {
+      "pp": 191421,
+      "ap": 2653,
+      "pa": 0,
+      "aa": 240277
+    },
+    "lemmaSurface": {
+      "pp": 185280,
+      "ap": 2814,
+      "pa": 0,
+      "aa": 246257
+    },
+    "morphology": {
+      "pp": 190175,
+      "ap": 2781,
+      "pa": 0,
+      "aa": 241395
+    },
+    "sourceLocator": {
+      "pp": 386455,
+      "ap": 181,
+      "pa": 0,
+      "aa": 47715
+    }
+  },
+  "regressionsByAxis": {
+    "overall": [],
+    "lexical": [],
+    "lemmaSurface": [],
+    "morphology": [],
+    "sourceLocator": []
+  },
+  "byLanguage": {
+    "hebrew": {
+      "cleanBefore": 127236,
+      "cleanAfter": 127236,
+      "netCleanDelta": 0,
+      "versesBefore": 1388,
+      "versesAfter": 1388,
+      "netVersesDelta": 0
+    },
+    "aramaic": {
+      "cleanBefore": 1513,
+      "cleanAfter": 1513,
+      "netCleanDelta": 0,
+      "versesBefore": 7,
+      "versesAfter": 7,
+      "netVersesDelta": 0
+    },
+    "greek": {
+      "cleanBefore": 49385,
+      "cleanAfter": 52040,
+      "netCleanDelta": 2655,
+      "versesBefore": 460,
+      "versesAfter": 607,
+      "netVersesDelta": 147
+    }
+  }
+}

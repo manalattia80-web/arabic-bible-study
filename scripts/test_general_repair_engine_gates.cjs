@@ -385,13 +385,15 @@ assert(
 );
 
 // 24. Positive Gate (v1.6 Active/Deponent & Athematic Verbs): G5399 φοβέω<->φοβέομαι & G1166 δεικνύω<->δείκνυμι ACCEPTED!
-const matt222Rows = loadVerseRows(prodDb, 40, 2, 22);
+const matt222Rows = loadVerseRows(prodDb, 40, 2, 22).map(r =>
+  r.arPos === 13 ? { ...r, verifiedLocator: null, hasCleanPrimaryWms: false } : r
+);
 const matt222Res = evaluateVerse({ book: 40, ch: 2, vs: 22, lang: 'greek', name: 'Matt 2:22' }, matt222Rows, sources, strongsLexicon);
 const m222_13 = matt222Res.proposals.find(p => p.arPos === 13);
 assert(
   Boolean(
-    isGreekStrongsLemmaEquivalent('G5399', 'φοβέω', 'φοβέομαι', 'V-AOI-3S') &&
-    isGreekStrongsLemmaEquivalent('G1166', 'δεικνύω', 'δείκνυμι', 'V-PAI-3S') &&
+    isGreekStrongsLemmaEquivalent('G5399', 'φοβέω', 'φοβέομαι', 'V- 3AOI-S--', 'ἐφοβήθη') &&
+    isGreekStrongsLemmaEquivalent('G1166', 'δεικνύω', 'δείκνυμι', 'V- 3PAI-S--', 'δείκνυσιν') &&
     m222_13 && m222_13.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' && m222_13.proposed.strongsId === 'G5399'
   ),
   'Positive Gate 24 (v1.6): Deponent/athematic verb citation forms (G5399 φοβέω<->φοβέομαι, G1166 δεικνύω<->δείκνυμι) are ACCEPTED',
@@ -467,6 +469,35 @@ assert(
   Boolean(j642_9 && j642_9.status === 'PENDING_REVIEW' && String(j642_9.ruleId).includes('CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR') && j642_9.proposed === null),
   'Negative Gate 29 (v1.6.2): John 6:42 #9 (TR:w11 -> SBLGNT:w11) is strictly blocked from colliding with pending neighbor #11',
   JSON.stringify(j642_9 && { status: j642_9.status, ruleId: j642_9.ruleId })
+);
+
+// 30. Positive Gate (v1.7 RULE_G1C_UNIQUE_GREEK_LEMMA_LOCK): Matt 1:25 #4 («وَلَدَتِ», G5088, origSurface=τίκτω uninflected -> unique ἔτεκεν@w7) ACCEPTED!
+const matt125Rows = loadVerseRows(prodDb, 40, 1, 25);
+const matt125Res = evaluateVerse({ book: 40, ch: 1, vs: 25, lang: 'greek', name: 'Matt 1:25' }, matt125Rows, sources, strongsLexicon);
+const m125_4 = matt125Res.proposals.find(p => p.arPos === 4);
+assert(
+  Boolean(
+    m125_4 &&
+    m125_4.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' &&
+    m125_4.ruleId === 'RULE_G1C_UNIQUE_GREEK_LEMMA_LOCK' &&
+    m125_4.proposed.origPos === 7 &&
+    m125_4.proposed.origSurface === 'ἔτεκεν' &&
+    m125_4.proposed.origMorph === 'V- 3AAI-S--'
+  ),
+  'Positive Gate 30 (v1.7 RULE_G1C): Matt 1:25 #4 («وَلَدَتِ», G5088 uninflected τίκτω -> unique ἔτεκεν@w7) is ACCEPTED',
+  JSON.stringify(m125_4 && { status: m125_4.status, ruleId: m125_4.ruleId, proposed: m125_4.proposed && { pos: m125_4.proposed.origPos, surf: m125_4.proposed.origSurface } })
+);
+
+// 31. Negative Gate (v1.7 RULE_G1C Surface-Incompatibility Guard): Corrupt unrelated origSurface on Matt 1:25 #4 MUST NOT fire RULE_G1C!
+const corruptG1CRows = matt125Rows.map(r =>
+  r.arPos === 4 ? { ...r, origSurface: 'ξένος', hasCleanPrimaryWms: false } : r
+);
+const corruptG1CRes = evaluateVerse({ book: 40, ch: 1, vs: 25, lang: 'greek', name: 'Matt 1:25' }, corruptG1CRows, sources, strongsLexicon);
+const m125_4_bad = corruptG1CRes.proposals.find(p => p.arPos === 4);
+assert(
+  Boolean(m125_4_bad && m125_4_bad.status === 'PENDING_REVIEW' && m125_4_bad.proposed === null),
+  'Negative Gate 31 (v1.7 RULE_G1C): Corrupt unrelated origSurface («ξένος») on Matt 1:25 #4 is strictly REJECTED',
+  JSON.stringify(m125_4_bad && { status: m125_4_bad.status, ruleId: m125_4_bad.ruleId })
 );
 
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)
