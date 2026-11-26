@@ -20,7 +20,7 @@ permissions:
   contents: read
 
 jobs:
-  build-and-verify-play-v386:
+  build-and-verify-play-v387:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -82,14 +82,14 @@ jobs:
           fi
           echo "REQUIRE_RELEASE_SIGNING=true" >> "$GITHUB_ENV"
 
-      - name: Verify Untouched v382 DB Chunks (SHA-256 b91b4c18...)
+      - name: Verify Promoted v387 DB Chunks (SHA-256 70cebd40...)
         run: |
           node scripts/assemble_db.cjs
           node scripts/verify_db_chunks_exact.cjs
           DB_SHA=$(sha256sum mobile/assets/bible_study.db | awk '{print $1}')
           echo "Assembled DB SHA-256: $DB_SHA"
-          if [ "$DB_SHA" != "b91b4c188be54ad8746593158ea48a8bef8cf37c8ccec349108111274c00266e" ]; then
-            echo "FATAL: DB SHA-256 drifted from frozen v382!"
+          if [ "$DB_SHA" != "70cebd40fa0e1fc684410cd86efcada2c13deab864ed5327b8b80c087c8e7295" ]; then
+            echo "FATAL: DB SHA-256 drifted from promoted v387!"
             exit 1
           fi
 
@@ -107,64 +107,64 @@ jobs:
           flutter analyze --no-fatal-warnings --no-fatal-infos
           flutter test --dart-define=DISABLE_AUTO_UPDATE=true
 
-      - name: Build Play-Ready AAB & APK (v1.0.386+386, API 36, DISABLE_AUTO_UPDATE=true, Offline Bundled Fonts)
+      - name: Build Play-Ready AAB & APK (v1.0.387+387, API 36, DISABLE_AUTO_UPDATE=true, Offline Bundled Fonts)
         working-directory: ./mobile
         run: |
           flutter build appbundle --release --no-tree-shake-icons \
-            --build-name=1.0.386 --build-number=386 \
-            --dart-define=APP_BUILD_NUMBER=386 \
+            --build-name=1.0.387 --build-number=387 \
+            --dart-define=APP_BUILD_NUMBER=387 \
             --dart-define=DISABLE_AUTO_UPDATE=true
           flutter build apk --release --no-tree-shake-icons \
-            --build-name=1.0.386 --build-number=386 \
-            --dart-define=APP_BUILD_NUMBER=386 \
+            --build-name=1.0.387 --build-number=387 \
+            --dart-define=APP_BUILD_NUMBER=387 \
             --dart-define=DISABLE_AUTO_UPDATE=true
-          cp build/app/outputs/bundle/release/app-release.aab ../play-store-bundle-v386.aab
-          cp build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-v386.apk
-          ls -lh ../play-store-bundle-v386.aab ../arabic-bible-study-v386.apk
-          sha256sum ../play-store-bundle-v386.aab ../arabic-bible-study-v386.apk
+          cp build/app/outputs/bundle/release/app-release.aab ../play-store-bundle-v387.aab
+          cp build/app/outputs/flutter-apk/app-release.apk ../arabic-bible-study-v387.apk
+          ls -lh ../play-store-bundle-v387.aab ../arabic-bible-study-v387.apk
+          sha256sum ../play-store-bundle-v387.aab ../arabic-bible-study-v387.apk
 
-      - name: Verify Compressed APK Chunks Reassemble Bitwise to v382 DB
-        run: node scripts/verify_apk_asset_integrity.cjs arabic-bible-study-v386.apk
+      - name: Verify Compressed APK Chunks Reassemble Bitwise to v387 DB
+        run: node scripts/verify_apk_asset_integrity.cjs arabic-bible-study-v387.apk
 
       - name: Full Play Store Readiness Verification (bundletool 1.18.3, API 36, 16KB ELF & ZIP)
         run: |
           curl -sSL -o bundletool.jar https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar
 
-          echo "=== PLAY PREP v386 REPORT (SIGNING_MODE=$SIGNING_MODE) ==="
-          stat -c "v386_aab_bytes=%s" play-store-bundle-v386.aab
-          stat -c "v386_apk_bytes=%s" arabic-bible-study-v386.apk
+          echo "=== PLAY PREP v387 REPORT (SIGNING_MODE=$SIGNING_MODE) ==="
+          stat -c "v387_aab_bytes=%s" play-store-bundle-v387.aab
+          stat -c "v387_apk_bytes=%s" arabic-bible-study-v387.apk
 
-          java -jar bundletool.jar validate --bundle=play-store-bundle-v386.aab | tail -n 10
+          java -jar bundletool.jar validate --bundle=play-store-bundle-v387.aab | tail -n 10
           java -jar bundletool.jar build-apks \
-            --bundle=play-store-bundle-v386.aab \
-            --output=v386_splits.apks \
+            --bundle=play-store-bundle-v387.aab \
+            --output=v387_splits.apks \
             --ks="$ANDROID_KEYSTORE_PATH" \
             --ks-pass="pass:$ANDROID_KEYSTORE_PASSWORD" \
             --ks-key-alias="$ANDROID_KEY_ALIAS" \
             --key-pass="pass:$ANDROID_KEY_PASSWORD"
-          java -jar bundletool.jar get-size total --apks=v386_splits.apks
-          java -jar bundletool.jar get-size total --apks=v386_splits.apks --dimensions=ABI
+          java -jar bundletool.jar get-size total --apks=v387_splits.apks
+          java -jar bundletool.jar get-size total --apks=v387_splits.apks --dimensions=ABI
 
-          mkdir -p extracted_v386
-          unzip -q v386_splits.apks -d extracted_v386
+          mkdir -p extracted_v387
+          unzip -q v387_splits.apks -d extracted_v387
           BT_DIR="${ANDROID_SDK_ROOT:-$ANDROID_HOME}/build-tools/36.0.0"
 
-          "$BT_DIR/aapt2" dump badging extracted_v386/splits/base-master.apk | head -n 25
-          "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_v386/splits/base-arm64_v8a.apk
-          "$BT_DIR/zipalign" -c -P 16 -v 4 arabic-bible-study-v386.apk
-          "$BT_DIR/apksigner" verify --verbose --print-certs arabic-bible-study-v386.apk | head -n 10
+          "$BT_DIR/aapt2" dump badging extracted_v387/splits/base-master.apk | head -n 25
+          "$BT_DIR/zipalign" -c -P 16 -v 4 extracted_v387/splits/base-arm64_v8a.apk
+          "$BT_DIR/zipalign" -c -P 16 -v 4 arabic-bible-study-v387.apk
+          "$BT_DIR/apksigner" verify --verbose --print-certs arabic-bible-study-v387.apk | head -n 10
           if [ "$SIGNING_MODE" = "PLAY_SECRETS" ]; then
-            if "$BT_DIR/apksigner" verify --print-certs arabic-bible-study-v386.apk | grep -q "CI Ephemeral Verification"; then
+            if "$BT_DIR/apksigner" verify --print-certs arabic-bible-study-v387.apk | grep -q "CI Ephemeral Verification"; then
               echo "FATAL: PLAY_SECRETS build must NEVER be signed with CI Ephemeral Verification!"
               exit 1
             fi
             echo "Confirmed: Signed with private Play Upload Keystore (non-ephemeral)."
           fi
 
-          mkdir -p v386_libs
-          unzip -q play-store-bundle-v386.aab "base/lib/*" -d v386_libs
+          mkdir -p v387_libs
+          unzip -q play-store-bundle-v387.aab "base/lib/*" -d v387_libs
           FAIL_16K=0
-          for so in $(find v386_libs -name "*.so" | sort); do
+          for so in $(find v387_libs -name "*.so" | sort); do
             aligns=$(readelf -lW "$so" | awk '$1=="LOAD" {print $NF}' | sort -u | tr '\n' ' ')
             echo "  $so -> LOAD Align: $aligns"
             if echo "$so" | grep -qE "arm64-v8a|x86_64"; then
@@ -180,16 +180,16 @@ jobs:
           if [ "$FAIL_16K" -ne 0 ]; then exit 1; fi
           echo "ALL 64-bit native libraries verified 16KB ELF aligned!"
 
-      - name: Upload Play-Ready v386 AAB & APK Artifacts
+      - name: Upload Play-Ready v387 AAB & APK Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: play-internal-prep-v1.0.386
+          name: play-internal-prep-v1.0.387
           path: |
-            play-store-bundle-v386.aab
-            arabic-bible-study-v386.apk
+            play-store-bundle-v387.aab
+            arabic-bible-study-v387.apk
 
   emulator-runtime-clean-and-upgrade:
-    needs: build-and-verify-play-v386
+    needs: build-and-verify-play-v387
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -198,7 +198,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: play-internal-prep-v1.0.386
+          name: play-internal-prep-v1.0.387
           path: artifacts
 
       - name: Enable KVM for Android Emulator
@@ -224,6 +224,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-runtime-evidence-v1.0.386
+          name: emulator-runtime-evidence-v1.0.387
           if-no-files-found: warn
           path: emulator_evidence/

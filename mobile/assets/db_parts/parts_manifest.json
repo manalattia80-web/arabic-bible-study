@@ -1,8 +1,8 @@
 {
   "totalParts": 70,
   "chunkSize": 5242880,
-  "totalBytes": 365416448,
-  "generatedAt": "2026-11-23T10:13:46.254Z",
+  "totalBytes": 365453312,
+  "generatedAt": "2026-11-26T08:39:05.841Z",
   "parts": [
     "part_00.dat",
     "part_01.dat",

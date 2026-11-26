@@ -39,7 +39,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    const targetDbVersion = 382; // v1.0.382: Vacuumed 70-part DB (Engine v1.5 +6,427 repairs, +2,927 all-4-axes pass, 0 regressions)
+    const targetDbVersion = 387; // v1.0.387: Vacuumed 70-part DB (Engine v1.6.2 +1,065 NT Greek repairs, +435 all-4-axes pass, +8 complete verses, 0 regressions)
     final dbPath = p.join(databasesPath, 'bible_study_v$targetDbVersion.db');
 
     final prefs = await SharedPreferences.getInstance();
