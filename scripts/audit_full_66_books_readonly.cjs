@@ -252,6 +252,12 @@ function addSample(bucket, item) {
   }
 }
 
+const dumpStatusIdx = process.argv.indexOf('--dump-status');
+const dumpStatusPath = (dumpStatusIdx !== -1 && process.argv[dumpStatusIdx + 1])
+  ? path.resolve(process.cwd(), process.argv[dumpStatusIdx + 1])
+  : null;
+const statusDumpLines = dumpStatusPath ? [] : null;
+
 // Process all 66 books via a single bulk SQLite query written to a temp file
 console.log('Querying all 434,351 word_mappings across all 66 books...');
 const tmpWmFile = path.join(repoRoot, 'scratch/tmp_wm_dump.txt');
@@ -811,6 +817,10 @@ for (let b = 1; b <= 66; b++) {
         }
       }
 
+      if (statusDumpLines) {
+        statusDumpLines.push(`${mId}\t${b}:${ch}:${vs}#${arPos}\t${arWord}\t${unitHasAlert ? 0 : 1}\t${ax.lexical.status === 'pass' ? 1 : 0}\t${ax.lemmaSurface.status === 'pass' ? 1 : 0}\t${ax.morphology.status === 'pass' ? 1 : 0}\t${ax.sourceLocator.status === 'pass' ? 1 : 0}`);
+      }
+
       globalStats.totalRecords++;
       globalStats.byLanguage[lang].total++;
       bkTotal++;
@@ -880,6 +890,9 @@ const outJsonPath = (outArgIdx !== -1 && process.argv[outArgIdx + 1])
   ? path.resolve(process.cwd(), process.argv[outArgIdx + 1])
   : path.join(__dirname, 'full_db_434351_audit_preview_v379.json');
 fs.writeFileSync(outJsonPath, JSON.stringify(globalStats, null, 2) + '\n', 'utf8');
+if (dumpStatusPath && statusDumpLines) {
+  fs.writeFileSync(dumpStatusPath, statusDumpLines.join('\n') + '\n', 'utf8');
+}
 
 console.log('\n================================================================================');
 console.log('  FULL 66-BOOK READ-ONLY AUDIT SUMMARY (31,102 VERSES / 434,351 RECORDS)       ');

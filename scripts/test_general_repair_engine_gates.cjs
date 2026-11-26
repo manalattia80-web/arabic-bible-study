@@ -423,23 +423,30 @@ assert(
   'Negative Gate 26 (v1.6): Cross-POS pairs (G3666 verb vs ὅμοιος adj, wrong POS) and unrelated Greek lemmas are strictly REJECTED'
 );
 
-// 27. Negative Gate (v1.6.1 Pronoun Case/Number/Surface Mismatch): G2254 (ἡμῖν, plural dative) MUST reject μου / RP ----GS-- (singular genitive)!
+// 27. Negative Gate (v1.6.2 Pronoun Case/Number/Surface Mismatch): Explicit Phil 1:21 #2 (unique ἐμοὶ / RP ----DS--) with injected G2254 (ἡμῖν) MUST reach lexicon check & be REJECTED!
 const matt2545RowsForPron = loadVerseRows(prodDb, 40, 25, 45);
-const syntheticPronRows = loadVerseRows(prodDb, 40, 2, 15).map(r =>
-  r.strongsId === 'G3450'
-    ? { ...r, strongsId: 'G2254', origWord: 'ἐγώ', origSurface: 'μου', origPos: 99, verifiedLocator: null, hasCleanPrimaryWms: false }
+const phil121Rows = loadVerseRows(prodDb, 50, 1, 21);
+const targetPronRow = phil121Rows.find(r => r.arPos === 2);
+assert(Boolean(targetPronRow && targetPronRow.strongsId === 'G3427'), 'Gate 27 setup: Phil 1:21 #2 exists with G3427 (unique ἐμοὶ)');
+const syntheticPronRows = phil121Rows.map(r =>
+  r.arPos === 2
+    ? { ...r, strongsId: 'G2254', hasCleanPrimaryWms: false }
     : r
 );
-const syntheticPronRes = evaluateVerse({ book: 40, ch: 2, vs: 15, lang: 'greek', name: 'Matt 2:15' }, syntheticPronRows, sources, strongsLexicon);
-const badPronProp = syntheticPronRes.proposals.find(p => p.current.strongsId === 'G2254');
+const syntheticPronRes = evaluateVerse({ book: 50, ch: 1, vs: 21, lang: 'greek', name: 'Phil 1:21' }, syntheticPronRows, sources, strongsLexicon);
+const badPronProp = syntheticPronRes.proposals.find(p => p.arPos === 2);
 assert(
   Boolean(
     !isGreekStrongsLemmaEquivalent('G2254', 'ἡμῖν', 'ἐγώ', 'RP ----GS--', 'μου') &&
+    !isGreekStrongsLemmaEquivalent('G2254', 'ἡμῖν', 'ἐγώ', 'RP ----DS--', 'ἐμοὶ') &&
     !isGreekStrongsLemmaEquivalent('G2254', 'ἡμῖν', 'ἐγώ', 'RP ----DP--', 'μου') &&
     !isGreekStrongsLemmaEquivalent('G5213', 'ὑμῖν', 'ἐγώ', 'RP ----DP--', 'ἡμῖν') &&
-    (!badPronProp || (badPronProp.status === 'PENDING_REVIEW' && badPronProp.proposed === null))
+    badPronProp &&
+    badPronProp.status === 'PENDING_REVIEW' &&
+    badPronProp.proposed === null &&
+    String(badPronProp.ruleId).includes('REJECT_STORED_STRONGS_LEXICON_MISMATCH')
   ),
-  'Negative Gate 27 (v1.6.1): Pronoun equivalence strictly rejects G2254 (ἡμῖν, plural dative) against μου / RP ----GS-- (singular genitive)',
+  'Negative Gate 27 (v1.6.2): Pronoun equivalence strictly rejects explicit Phil 1:21 #2 G2254 (ἡμῖν) against ἐμοὶ / RP ----DS-- (and μου / RP ----GS--)',
   JSON.stringify(badPronProp && { status: badPronProp.status, ruleId: badPronProp.ruleId })
 );
 
@@ -450,6 +457,16 @@ assert(
   Boolean(m2545_7 && m2545_7.status === 'PENDING_REVIEW' && m2545_7.ruleId.includes('REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH') && m2545_7.proposed === null),
   'Negative Gate 28 (v1.6.1): Matt 25:45 #7 («أَنَّكُمْ» -> w14 τῶν RA article) is strictly REJECTED and kept PENDING_REVIEW',
   JSON.stringify(m2545_7 && { status: m2545_7.status, ruleId: m2545_7.ruleId })
+);
+
+// 29. Negative Gate (v1.6.2 Edition-Switch Anti-Collision): John 6:42 #9 (TR:w11 -> SBLGNT:w11) MUST NOT collide with pending neighbor #11 at w11!
+const john642Rows = loadVerseRows(prodDb, 43, 6, 42);
+const john642Res = evaluateVerse({ book: 43, ch: 6, vs: 42, lang: 'greek', name: 'John 6:42' }, john642Rows, sources, strongsLexicon);
+const j642_9 = john642Res.proposals.find(p => p.arPos === 9);
+assert(
+  Boolean(j642_9 && j642_9.status === 'PENDING_REVIEW' && String(j642_9.ruleId).includes('CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR') && j642_9.proposed === null),
+  'Negative Gate 29 (v1.6.2): John 6:42 #9 (TR:w11 -> SBLGNT:w11) is strictly blocked from colliding with pending neighbor #11',
+  JSON.stringify(j642_9 && { status: j642_9.status, ruleId: j642_9.ruleId })
 );
 
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)

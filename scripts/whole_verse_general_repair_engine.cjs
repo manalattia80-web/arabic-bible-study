@@ -1061,8 +1061,10 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       if (otherClaims.length > 0) {
         const hasReserved = otherClaims.some(c => c.kind.startsWith('PRESERVED_'));
         const hasPendingNeighbor = otherClaims.some(c => c.kind === 'PENDING_NEIGHBOR');
-        // Allow in-place metadata refresh ONLY if row wasn't moving AND isn't colliding with reserved/peer
-        if (wTarget === p.current.origPos && !hasReserved && otherClaims.every(c => c.kind === 'PENDING_NEIGHBOR')) {
+        // Allow in-place metadata refresh ONLY if BOTH origPos AND verifiedLocator identity are unchanged.
+        // Converting TR:wN -> SBLGNT:wN (or NULL -> SBLGNT:wN) changes locator identity and MUST NOT collide with a pending neighbor!
+        const sameLocatorIdentity = wTarget === p.current.origPos && p.current.verifiedLocator === p.proposed.verifiedLocator;
+        if (sameLocatorIdentity && !hasReserved && otherClaims.every(c => c.kind === 'PENDING_NEIGHBOR')) {
           continue;
         }
         const conflictTag = hasReserved
