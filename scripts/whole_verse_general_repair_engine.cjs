@@ -690,15 +690,55 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
     let ruleId = null;
     let rejectReason = null;
 
+    const checkG2BUniqueSurfaceRepeatedLemma = (t) => {
+      if (!isGreek || !r.strongsId || !r.strongsId.startsWith('G')) return null;
+      const isContentGreek = Boolean(t.morph && /^(N-|V-|A-|D-)/.test(t.morph));
+      if (!isContentGreek) return 'REJECT_G2B_NON_CONTENT_POS';
+      // Guard 1: Stored MorphGNT code (if present) must NOT contradict target token morphology
+      const hasStoredMorphGnt = Boolean(r.origMorph && /^(N-|V-|A-|D-)\s+\S{8}/.test(String(r.origMorph).trim()));
+      if (hasStoredMorphGnt && String(r.origMorph).trim() !== String(t.morph).trim()) {
+        return `REJECT_G2B_STORED_MORPH_MISMATCH(stored=${r.origMorph},sbl=${t.morph})`;
+      }
+      // Guard 2: Anti-lemma-copy guard — if stored surface equals dictionary citation form (rSurfCanon === rLexCanon),
+      // require explicit matching MorphGNT code so legacy lemma-copied rows cannot lock onto an accidental nominative/1sg token.
+      if (rSurfCanon === rLexCanon && !hasStoredMorphGnt) {
+        return 'REJECT_G2B_AMBIGUOUS_UNINFLECTED_CITATION_FORM';
+      }
+      // Guard 3: Scrivener TR witness must be present AND uniquely confirm both surface & Robinson morphology
+      if (!trTokens || trTokens.length === 0) {
+        return `REJECT_G2B_TR_WITNESS_UNAVAILABLE(w${t.index}:${t.surface})`;
+      }
+      const trHits = trTokens.filter(tt =>
+        isGreekPureOrthographicVariant(tt.surfaceCanon, t.surfaceCanon, r.strongsId) &&
+        trGrammarMatchesSblMorph(tt.grammar, t.morph)
+      );
+      if (trHits.length !== 1) {
+        return `REJECT_G2B_TR_WITNESS_MISMATCH(trHits=${trHits.length},sbl=${t.surface})`;
+      }
+      // Guard 4: Lexical audit compatibility (matches full 4-axis auditor)
+      if (!greekStrongsMatchesLemma(r.strongsId, t.lemma)) {
+        return `REJECT_G2B_LEXICAL_AUDIT_COMPAT(${r.strongsId}!=${t.lemma})`;
+      }
+      return 'OK';
+    };
+
     if (bothMatches.length === 1) {
       const t = bothMatches[0];
       const sCount = surfFreq.get(t.surfaceCanon) || 0;
       const lCount = lexFreq.get(t.lemmaCanon) || 0;
-      if (sCount > 1 || lCount > 1) {
-        rejectReason = `REJECT_DUPLICATE_OCCURRENCE_IN_VERSE(surfCount=${sCount},lexCount=${lCount})`;
-      } else {
+      if (sCount === 1 && lCount === 1) {
         chosen = t;
         ruleId = (r.origPos === t.index) ? 'RULE_G3_UNIQUE_LOCKED_DERIVED_MORPH' : 'RULE_G1_UNIQUE_BIJECTIVE_RELOC';
+      } else if (sCount === 1 && lCount > 1 && isGreek) {
+        const g2bCheck = checkG2BUniqueSurfaceRepeatedLemma(t);
+        if (g2bCheck === 'OK') {
+          chosen = t;
+          ruleId = 'RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA';
+        } else {
+          rejectReason = g2bCheck || `REJECT_DUPLICATE_OCCURRENCE_IN_VERSE(surfCount=${sCount},lexCount=${lCount})`;
+        }
+      } else {
+        rejectReason = `REJECT_DUPLICATE_OCCURRENCE_IN_VERSE(surfCount=${sCount},lexCount=${lCount})`;
       }
     } else if (bothMatches.length > 1) {
       rejectReason = `REJECT_MULTIPLE_BOTH_MATCHES(count=${bothMatches.length})`;
@@ -709,6 +749,14 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       if (sCount === 1 && lCount === 1) {
         chosen = t;
         ruleId = 'RULE_G2_UNIQUE_INFLECTED_SURFACE_LOCK';
+      } else if (sCount === 1 && lCount > 1 && isGreek) {
+        const g2bCheck = checkG2BUniqueSurfaceRepeatedLemma(t);
+        if (g2bCheck === 'OK') {
+          chosen = t;
+          ruleId = 'RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA';
+        } else {
+          rejectReason = g2bCheck || `REJECT_DUPLICATE_OCCURRENCE_IN_VERSE(surfCount=${sCount},lexCount=${lCount})`;
+        }
       } else {
         rejectReason = `REJECT_DUPLICATE_OCCURRENCE_IN_VERSE(surfCount=${sCount},lexCount=${lCount})`;
       }
@@ -806,6 +854,8 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
           lexReject = `REJECT_UNKNOWN_STRONGS_ID(${candidateSid})`;
         } else if (!isGreekStrongsLemmaEquivalent(candidateSid, lexWord, chosen.lemma, chosen.morph, chosen.surface)) {
           lexReject = `REJECT_STORED_STRONGS_LEXICON_MISMATCH(${candidateSid}:${lexWord}!=${chosen.lemma})`;
+        } else if (r.strongsId && r.origWord && greekStrongsMatchesLemma(r.strongsId, r.origWord) && !greekStrongsMatchesLemma(candidateSid, chosen.lemma)) {
+          lexReject = `REJECT_GREEK_LEXICAL_AUDIT_COMPAT(${candidateSid}!=${chosen.lemma})`;
         } else {
           targetStrongs = candidateSid;
         }

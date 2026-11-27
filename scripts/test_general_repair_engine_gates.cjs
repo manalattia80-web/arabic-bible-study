@@ -464,7 +464,10 @@ assert(
 );
 
 // 29. Negative Gate (v1.6.2 Edition-Switch Anti-Collision): John 6:42 #9 (TR:w11 -> SBLGNT:w11) MUST NOT collide with pending neighbor #11 at w11!
-const john642Rows = loadVerseRows(prodDb, 43, 6, 42);
+// Pin #11 as an unmovable pending neighbor at SBLGNT:w11 so this negative gate remains invariant even as v1.8 resolves other rows in John 6:42.
+const john642Rows = loadVerseRows(prodDb, 43, 6, 42).map(r =>
+  r.arPos === 11 ? { ...r, origWord: null, origSurface: null, origPos: 11, verifiedLocator: 'SBLGNT:B43.C6.V42.w11' } : r
+);
 const john642Res = evaluateVerse({ book: 43, ch: 6, vs: 42, lang: 'greek', name: 'John 6:42' }, john642Rows, sources, strongsLexicon);
 const j642_9 = john642Res.proposals.find(p => p.arPos === 9);
 assert(
@@ -624,6 +627,77 @@ assert(
   ),
   'Positive Gate 37 (v1.7.2 True Movable-Nu): Rom 1:32 #18 («يُسَرُّونَ», TR συνευδοκοῦσι V-PAI-3P <-> SBLGNT συνευδοκοῦσιν V- 3PAI-P--) is ACCEPTED',
   JSON.stringify(rom132_18 && { status: rom132_18.status, ruleId: rom132_18.ruleId, proposed: rom132_18.proposed && rom132_18.proposed.origSurface })
+);
+
+// 38. Positive Gate (v1.8 RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA): 1Cor 16:4 #8 («فَسَيَذْهَبُونَ», unique πορεύσονται@w10 while πορεύομαι recurs at w7) ACCEPTED, while #5 («أَذْهَبَ» -> w7 occupied by pending #7) stays BLOCKED!
+const cor1_16_4_rows = loadVerseRows(prodDb, 46, 16, 4).map(r =>
+  r.arPos === 8
+    ? {
+        ...r,
+        origWord: 'πορεύομαι',
+        origSurface: 'πορεύσονται',
+        origPos: 8,
+        origMorph: 'V- 3FMI-P--',
+        verifiedLocator: 'SBLGNT:B46.C16.V4.w8',
+        verifiedSource: null,
+        morphSource: 'morphgnt_sblgnt',
+        hasCleanPrimaryWms: true
+      }
+    : r
+);
+const cor1_16_4_res = evaluateVerse({ book: 46, ch: 16, vs: 4, lang: 'greek', name: '1Cor 16:4' }, cor1_16_4_rows, sources, strongsLexicon);
+const c1_16_4_8 = cor1_16_4_res.proposals.find(p => p.arPos === 8);
+const c1_16_4_5 = cor1_16_4_res.proposals.find(p => p.arPos === 5);
+assert(
+  Boolean(
+    c1_16_4_8 &&
+    c1_16_4_8.status === 'AUTO_PROPOSED_HIGH_CONFIDENCE' &&
+    c1_16_4_8.ruleId === 'RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA' &&
+    c1_16_4_8.proposed &&
+    c1_16_4_8.proposed.origPos === 10 &&
+    c1_16_4_8.proposed.origSurface === 'πορεύσονται' &&
+    c1_16_4_5 &&
+    c1_16_4_5.status === 'PENDING_REVIEW' &&
+    String(c1_16_4_5.ruleId).includes('CONFLICT_OCCUPIED_BY_PENDING_NEIGHBOR')
+  ),
+  'Positive Gate 38 (v1.8 RULE_G2B): 1Cor 16:4 #8 («فَسَيَذْهَبُونَ», unique πορεύσονται -> w10) is ACCEPTED while #5 -> w7 stays blocked by pending neighbor #7',
+  JSON.stringify({ p8: c1_16_4_8 && { status: c1_16_4_8.status, ruleId: c1_16_4_8.ruleId, pos: c1_16_4_8.proposed && c1_16_4_8.proposed.origPos }, p5: c1_16_4_5 && { status: c1_16_4_5.status, ruleId: c1_16_4_5.ruleId } })
+);
+
+// 39. Negative Gate (v1.8 Anti-Lemma-Copy Guard): Stored surface == citation lemma with origMorph=null MUST be REJECTED when lemma repeats!
+const john1_1_rows = loadVerseRows(prodDb, 43, 1, 1).map(r =>
+  r.arPos === 3
+    ? { ...r, origWord: 'λόγος', origSurface: 'λόγος', origPos: 1, origMorph: null, verifiedLocator: 'TR:B43.C1.V1.w1', verifiedSource: null, hasCleanPrimaryWms: false }
+    : r
+);
+const john1_1_res = evaluateVerse({ book: 43, ch: 1, vs: 1, lang: 'greek', name: 'John 1:1' }, john1_1_rows, sources, strongsLexicon);
+const j1_1_3 = john1_1_res.proposals.find(p => p.arPos === 3);
+assert(
+  Boolean(j1_1_3 && j1_1_3.status === 'PENDING_REVIEW' && j1_1_3.proposed === null),
+  'Negative Gate 39 (v1.8 Anti-Lemma-Copy): Uninflected citation surface (origSurface==origWord, origMorph=null) with repeated lemma is strictly REJECTED',
+  JSON.stringify(j1_1_3 && { status: j1_1_3.status, ruleId: j1_1_3.ruleId })
+);
+
+// 40. Negative Gate (v1.8 Stored Morph Contradiction Guard): 1Cor 16:4 #8 with conflicting stored MorphGNT (V- 3PAI-S-- != V- 3FMI-P--) MUST be REJECTED!
+const badMorph164Rows = cor1_16_4_rows.map(r =>
+  r.arPos === 8 ? { ...r, origMorph: 'V- 3PAI-S--' } : r
+);
+const badMorph164Res = evaluateVerse({ book: 46, ch: 16, vs: 4, lang: 'greek', name: '1Cor 16:4' }, badMorph164Rows, sources, strongsLexicon);
+const badMorph164_8 = badMorph164Res.proposals.find(p => p.arPos === 8);
+assert(
+  Boolean(badMorph164_8 && badMorph164_8.status === 'PENDING_REVIEW' && String(badMorph164_8.ruleId).includes('REJECT_G2B_STORED_MORPH_MISMATCH') && badMorph164_8.proposed === null),
+  'Negative Gate 40 (v1.8 Morph Guard): 1Cor 16:4 #8 with conflicting stored MorphGNT (V- 3PAI-S-- != V- 3FMI-P--) is strictly REJECTED',
+  JSON.stringify(badMorph164_8 && { status: badMorph164_8.status, ruleId: badMorph164_8.ruleId })
+);
+
+// 41. Negative Gate (v1.8 Lexical Audit Compatibility Guard): Luke 24:7 #3 («يَنْبَغِي», G1163 δεῖ -> δέω) MUST be REJECTED to preserve pa=0 on lexical axis!
+const luke24_7_rows = loadVerseRows(prodDb, 42, 24, 7);
+const luke24_7_res = evaluateVerse({ book: 42, ch: 24, vs: 7, lang: 'greek', name: 'Luke 24:7' }, luke24_7_rows, sources, strongsLexicon);
+const l24_7_3 = luke24_7_res.proposals.find(p => p.arPos === 3);
+assert(
+  Boolean(l24_7_3 && l24_7_3.status === 'PENDING_REVIEW' && String(l24_7_3.ruleId).includes('REJECT_GREEK_LEXICAL_AUDIT_COMPAT') && l24_7_3.proposed === null),
+  'Negative Gate 41 (v1.8 Lexical Audit Guard): Luke 24:7 #3 («يَنْبَغِي», G1163 δεῖ -> δέω) is strictly REJECTED (preserves lexical pa=0)',
+  JSON.stringify(l24_7_3 && { status: l24_7_3.status, ruleId: l24_7_3.ruleId })
 );
 
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)
