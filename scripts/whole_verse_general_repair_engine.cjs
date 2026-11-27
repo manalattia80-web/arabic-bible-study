@@ -160,11 +160,38 @@ function checkG4PosEligibility(isGreek, chosen, finalMorphPos) {
   return null;
 }
 
+const GREEK_COPULA_STRONGS = new Set(['G1510', 'G1096', 'G5225', 'G3918', 'G4295']);
+const AR_SUBJ_PRONOUN_AGREEMENT = {
+  'انا': { person: '1', number: 'singular' }, 'وانا': { person: '1', number: 'singular' }, 'فانا': { person: '1', number: 'singular' },
+  'نحن': { person: '1', number: 'plural' }, 'ونحن': { person: '1', number: 'plural' }, 'فنحن': { person: '1', number: 'plural' },
+  'انت': { person: '2', number: 'singular' }, 'وانت': { person: '2', number: 'singular' }, 'فانت': { person: '2', number: 'singular' },
+  'انتم': { person: '2', number: 'plural' }, 'وانتم': { person: '2', number: 'plural' }, 'فانتم': { person: '2', number: 'plural' },
+  'هو': { person: '3', number: 'singular' }, 'وهو': { person: '3', number: 'singular' }, 'فهو': { person: '3', number: 'singular' },
+  'هي': { person: '3', number: 'singular' }, 'وهي': { person: '3', number: 'singular' }, 'فهي': { person: '3', number: 'singular' },
+  'هم': { person: '3', number: 'plural' }, 'وهم': { person: '3', number: 'plural' }, 'فهم': { person: '3', number: 'plural' }
+};
+const AR_STANDALONE_PREPS = new Set([
+  'عن', 'من', 'في', 'الى', 'على', 'مع', 'بين', 'عند', 'قدام', 'امام',
+  'تحت', 'فوق', 'نحو', 'دون', 'وراء', 'خلف', 'حول', 'بغير', 'لاجل',
+  'وعن', 'ومن', 'وفي', 'والى', 'وعلى', 'ومع', 'فعن', 'فمن', 'ففي', 'فالى', 'فعلى'
+]);
+
+function hasPrecedingGreekPrep(tokens, tokIndex) {
+  for (let p = tokIndex - 1; p >= Math.max(1, tokIndex - 3); p--) {
+    const tok = tokens.find(x => x.index === p);
+    if (!tok) break;
+    if (tok.morph && tok.morph.startsWith('P-')) return true;
+    if (tok.morph && (tok.morph.startsWith('RA') || tok.morph.startsWith('C-') || tok.morph.startsWith('A-'))) continue;
+    break;
+  }
+  return false;
+}
+
 /**
  * General Arabic-to-Source contextual compatibility guard (zero verse-specific exceptions).
  * Rejects structurally incompatible Arabic-to-Source pairings even when source fields are internally consistent.
  */
-function checkArabicSourceContextualCompatibility(arWord, proposedMorphPos, ruleId, beforeMorphPos) {
+function checkArabicSourceContextualCompatibility(arWord, proposedMorphPos, ruleId, beforeMorphPos, isGreek = false, targetStrongs = null, targetDerived = null) {
   const arClean = canonArabicWord(arWord);
   if (!arClean) return null;
 
@@ -173,6 +200,16 @@ function checkArabicSourceContextualCompatibility(arWord, proposedMorphPos, rule
   }
   if (AR_COPULA_VERBS.has(arClean) && proposedMorphPos !== 'verb') {
     return `REJECT_ARABIC_COPULA_NON_VERB_SOURCE(ar=${arClean},pos=${proposedMorphPos})`;
+  }
+  if (isGreek && AR_COPULA_VERBS.has(arClean) && targetStrongs && !GREEK_COPULA_STRONGS.has(targetStrongs)) {
+    return `REJECT_ARABIC_COPULA_NON_COPULA_GREEK_VERB(ar=${arClean},strongs=${targetStrongs})`;
+  }
+  if (isGreek && proposedMorphPos === 'verb' && AR_SUBJ_PRONOUN_AGREEMENT[arClean] && targetDerived) {
+    const exp = AR_SUBJ_PRONOUN_AGREEMENT[arClean];
+    if ((targetDerived.morphPerson && targetDerived.morphPerson !== exp.person) ||
+        (targetDerived.morphNumber && targetDerived.morphNumber !== exp.number)) {
+      return `REJECT_ARABIC_PRONOUN_VERB_PERSON_NUMBER_MISMATCH(ar=${arClean},got=${targetDerived.morphPerson || '-'}/${targetDerived.morphNumber || '-'})`;
+    }
   }
   if (AR_COMPLEMENTIZERS.has(arClean) && ['demonstrative', 'noun', 'proper_noun', 'adjective', 'article'].includes(proposedMorphPos)) {
     return `REJECT_ARABIC_COMPLEMENTIZER_SOURCE_MISMATCH(ar=${arClean},pos=${proposedMorphPos})`;
@@ -719,6 +756,23 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       if (!greekStrongsMatchesLemma(r.strongsId, t.lemma)) {
         return `REJECT_G2B_LEXICAL_AUDIT_COMPAT(${r.strongsId}!=${t.lemma})`;
       }
+      // Guard 5 (v1.8.1): Preposition-case context guard for repeated-lemma Greek nominals (N-/A-).
+      // If the Arabic nominal is immediately preceded by a standalone Arabic preposition (e.g. «عَنْ شَرّ»),
+      // and the target Greek token is NOT governed by a Greek preposition while ANOTHER occurrence of the
+      // SAME lemma in the verse IS governed by a Greek preposition (e.g. κακὸν vs ἀντὶ κακοῦ), reject.
+      if (t.morph && /^(N-|A-)/.test(t.morph)) {
+        const prevArRow = dbRows.find(x => x.arPos === r.arPos - 1);
+        const prevArClean = prevArRow ? canonArabicWord(prevArRow.arWord) : '';
+        if (prevArClean && AR_STANDALONE_PREPS.has(prevArClean)) {
+          const targetHasPrep = hasPrecedingGreekPrep(tokens, t.index);
+          const otherSameLemmaHasPrep = tokens.some(
+            ot => ot.index !== t.index && ot.lemmaCanon === t.lemmaCanon && hasPrecedingGreekPrep(tokens, ot.index)
+          );
+          if (!targetHasPrep && otherSameLemmaHasPrep) {
+            return `REJECT_G2B_PREP_CASE_CONTEXT_MISMATCH(arPrev=${prevArClean},w${t.index}:${t.surface})`;
+          }
+        }
+      }
       return 'OK';
     };
 
@@ -900,8 +954,8 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
       finalMorphPos = 'pronoun';
     }
 
-    // General Arabic-to-Source contextual compatibility guard across ALL rules (G1, G1B, G2, G3)
-    const arCtxReject = checkArabicSourceContextualCompatibility(r.arWord, finalMorphPos, ruleId, r.morphPos)
+    // General Arabic-to-Source contextual compatibility guard across ALL rules (G1, G1B, G2, G2B, G3)
+    const arCtxReject = checkArabicSourceContextualCompatibility(r.arWord, finalMorphPos, ruleId, r.morphPos, isGreek, targetStrongs, d)
       || checkCompoundPrepMissingLexicalHead(r.arWord, r.arPos, chosen, isGreek, tokens, dbRows);
     if (arCtxReject) {
       rawProposals.push({

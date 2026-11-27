@@ -664,18 +664,18 @@ assert(
   JSON.stringify({ p8: c1_16_4_8 && { status: c1_16_4_8.status, ruleId: c1_16_4_8.ruleId, pos: c1_16_4_8.proposed && c1_16_4_8.proposed.origPos }, p5: c1_16_4_5 && { status: c1_16_4_5.status, ruleId: c1_16_4_5.ruleId } })
 );
 
-// 39. Negative Gate (v1.8 Anti-Lemma-Copy Guard): Stored surface == citation lemma with origMorph=null MUST be REJECTED when lemma repeats!
-const john1_1_rows = loadVerseRows(prodDb, 43, 1, 1).map(r =>
-  r.arPos === 3
-    ? { ...r, origWord: 'λόγος', origSurface: 'λόγος', origPos: 1, origMorph: null, verifiedLocator: 'TR:B43.C1.V1.w1', verifiedSource: null, hasCleanPrimaryWms: false }
+// 39. Negative Gate (v1.8.1 Anti-Lemma-Copy Guard): 1Cor 1:13 #5 («بُولُسَ», unique Παῦλος@w5 with repeated Παῦλος/Παύλου) with origMorph=null MUST be REJECTED specifically by REJECT_G2B_AMBIGUOUS_UNINFLECTED_CITATION_FORM!
+const cor1_1_13_rows = loadVerseRows(prodDb, 46, 1, 13).map(r =>
+  r.arPos === 5
+    ? { ...r, origWord: 'Παῦλος', origSurface: 'Παῦλος', origPos: 5, origMorph: null, verifiedLocator: 'TR:B46.C1.V13.w5', verifiedSource: null, hasCleanPrimaryWms: false }
     : r
 );
-const john1_1_res = evaluateVerse({ book: 43, ch: 1, vs: 1, lang: 'greek', name: 'John 1:1' }, john1_1_rows, sources, strongsLexicon);
-const j1_1_3 = john1_1_res.proposals.find(p => p.arPos === 3);
+const cor1_1_13_res = evaluateVerse({ book: 46, ch: 1, vs: 13, lang: 'greek', name: '1Cor 1:13' }, cor1_1_13_rows, sources, strongsLexicon);
+const c1_1_13_5 = cor1_1_13_res.proposals.find(p => p.arPos === 5);
 assert(
-  Boolean(j1_1_3 && j1_1_3.status === 'PENDING_REVIEW' && j1_1_3.proposed === null),
-  'Negative Gate 39 (v1.8 Anti-Lemma-Copy): Uninflected citation surface (origSurface==origWord, origMorph=null) with repeated lemma is strictly REJECTED',
-  JSON.stringify(j1_1_3 && { status: j1_1_3.status, ruleId: j1_1_3.ruleId })
+  Boolean(c1_1_13_5 && c1_1_13_5.status === 'PENDING_REVIEW' && String(c1_1_13_5.ruleId).includes('REJECT_G2B_AMBIGUOUS_UNINFLECTED_CITATION_FORM') && c1_1_13_5.proposed === null),
+  'Negative Gate 39 (v1.8.1 Anti-Lemma-Copy): 1Cor 1:13 #5 («بُولُسَ», Παῦλος==Παῦλος, origMorph=null) is strictly REJECTED by REJECT_G2B_AMBIGUOUS_UNINFLECTED_CITATION_FORM',
+  JSON.stringify(c1_1_13_5 && { status: c1_1_13_5.status, ruleId: c1_1_13_5.ruleId })
 );
 
 // 40. Negative Gate (v1.8 Stored Morph Contradiction Guard): 1Cor 16:4 #8 with conflicting stored MorphGNT (V- 3PAI-S-- != V- 3FMI-P--) MUST be REJECTED!
@@ -698,6 +698,36 @@ assert(
   Boolean(l24_7_3 && l24_7_3.status === 'PENDING_REVIEW' && String(l24_7_3.ruleId).includes('REJECT_GREEK_LEXICAL_AUDIT_COMPAT') && l24_7_3.proposed === null),
   'Negative Gate 41 (v1.8 Lexical Audit Guard): Luke 24:7 #3 («يَنْبَغِي», G1163 δεῖ -> δέω) is strictly REJECTED (preserves lexical pa=0)',
   JSON.stringify(l24_7_3 && { status: l24_7_3.status, ruleId: l24_7_3.ruleId })
+);
+
+// 42. Negative Gate (v1.8.1 Greek Copula-Lemma Contextual Guard): 2Cor 8:12 #3 («كَانَ» -> G2192 ἔχω/ἔχῃ @ w8) MUST be REJECTED!
+const cor2_8_12_rows = loadVerseRows(prodDb, 47, 8, 12);
+const cor2_8_12_res = evaluateVerse({ book: 47, ch: 8, vs: 12, lang: 'greek', name: '2Cor 8:12' }, cor2_8_12_rows, sources, strongsLexicon);
+const c2_8_12_3 = cor2_8_12_res.proposals.find(p => p.arPos === 3);
+assert(
+  Boolean(c2_8_12_3 && c2_8_12_3.status === 'PENDING_REVIEW' && String(c2_8_12_3.ruleId).includes('REJECT_ARABIC_COPULA_NON_COPULA_GREEK_VERB') && c2_8_12_3.proposed === null),
+  'Negative Gate 42 (v1.8.1 Greek Copula Guard): 2Cor 8:12 #3 («كَانَ» -> G2192 ἔχω/ἔχῃ @ w8) is strictly REJECTED',
+  JSON.stringify(c2_8_12_3 && { status: c2_8_12_3.status, ruleId: c2_8_12_3.ruleId })
+);
+
+// 43. Negative Gate (v1.8.1 Preposition-Case Context Guard): Rom 12:17 #5 («عَنْ شَرّ» -> bare κακὸν @ w2 while κακοῦ @ w4 follows ἀντὶ) MUST be REJECTED!
+const rom12_17_rows = loadVerseRows(prodDb, 45, 12, 17);
+const rom12_17_res = evaluateVerse({ book: 45, ch: 12, vs: 17, lang: 'greek', name: 'Rom 12:17' }, rom12_17_rows, sources, strongsLexicon);
+const r12_17_5 = rom12_17_res.proposals.find(p => p.arPos === 5);
+assert(
+  Boolean(r12_17_5 && r12_17_5.status === 'PENDING_REVIEW' && String(r12_17_5.ruleId).includes('REJECT_G2B_PREP_CASE_CONTEXT_MISMATCH') && r12_17_5.proposed === null),
+  'Negative Gate 43 (v1.8.1 Prep-Case Context Guard): Rom 12:17 #5 («عَنْ شَرّ» -> bare κακὸν @ w2) is strictly REJECTED',
+  JSON.stringify(r12_17_5 && { status: r12_17_5.status, ruleId: r12_17_5.ruleId })
+);
+
+// 44. Negative Gate (v1.8.1 Arabic Subject Pronoun vs Greek Finite Verb Person/Number Guard): John 13:10 #15 («هُوَ» 3sg -> ἐστε V- 2PAI-P-- 2pl) MUST be REJECTED!
+const john13_10_rows = loadVerseRows(prodDb, 43, 13, 10);
+const john13_10_res = evaluateVerse({ book: 43, ch: 13, vs: 10, lang: 'greek', name: 'John 13:10' }, john13_10_rows, sources, strongsLexicon);
+const j13_10_15 = john13_10_res.proposals.find(p => p.arPos === 15);
+assert(
+  Boolean(j13_10_15 && j13_10_15.status === 'PENDING_REVIEW' && String(j13_10_15.ruleId).includes('REJECT_ARABIC_PRONOUN_VERB_PERSON_NUMBER_MISMATCH') && j13_10_15.proposed === null),
+  'Negative Gate 44 (v1.8.1 Pronoun-Verb Guard): John 13:10 #15 («هُوَ» 3sg -> ἐστε V- 2PAI-P-- 2pl) is strictly REJECTED',
+  JSON.stringify(j13_10_15 && { status: j13_10_15.status, ruleId: j13_10_15.ruleId })
 );
 
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)
