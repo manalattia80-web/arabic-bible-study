@@ -1,8 +1,8 @@
 {
   "engineVersion": "whole_verse_general_repair_engine_v1.8",
   "baselineDbSha256": "d3584fe697188f665e0750d8d9f133d3c4e27a7533f377be5f9c6718d908d14c",
-  "isolatedDbSha256": "4b6742923d647191e80fe0e5f792039fe7b04ae1a8a8a3ae5eba88a1531bddf6",
-  "diffLogSha256": "6cdbe90b10c33686890faeab1c63449126cf69bf51688ac4f0219d5b688e67b6",
+  "isolatedDbSha256": "b6c11ffc57bf0f271af64191ee7d1a569fd5acc6521445cf294677e8283dcf8b",
+  "diffLogSha256": "8f8189af8c10f23f3b062610a63f1f928872658fc039b48aaef7b2bdcc59bbe4",
   "modifiedRecords": 3207,
   "totalRecords": 434351,
   "totalVerses": 31102,

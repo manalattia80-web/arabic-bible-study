@@ -730,6 +730,20 @@ assert(
   JSON.stringify(j13_10_15 && { status: j13_10_15.status, ruleId: j13_10_15.ruleId })
 );
 
+// 45. Negative Gate (v1.8.2 Alif-Maqsura Prep Normalization): Rom 12:17 #5 with preceding «عَلَى», «إِلَى», «وَعَلَى», «وَإِلَى» MUST ALL be REJECTED by REJECT_G2B_PREP_CASE_CONTEXT_MISMATCH!
+const prepVariantsToTest = ['عَلَى', 'إِلَى', 'وَعَلَى', 'وَإِلَى'];
+const prepVariantResults = prepVariantsToTest.map(prepWord => {
+  const modRows = rom12_17_rows.map(r => (r.arPos === 4 ? { ...r, arWord: prepWord } : r));
+  const res = evaluateVerse({ book: 45, ch: 12, vs: 17, lang: 'greek', name: `Rom 12:17 (${prepWord})` }, modRows, sources, strongsLexicon);
+  const p5 = res.proposals.find(p => p.arPos === 5);
+  return { prepWord, ok: Boolean(p5 && p5.status === 'PENDING_REVIEW' && String(p5.ruleId).includes('REJECT_G2B_PREP_CASE_CONTEXT_MISMATCH') && p5.proposed === null), ruleId: p5 && p5.ruleId };
+});
+assert(
+  prepVariantResults.every(x => x.ok),
+  'Negative Gate 45 (v1.8.2 Prep Normalization): Rom 12:17 #5 preceded by «عَلَى», «إِلَى», «وَعَلَى», or «وَإِلَى» is strictly REJECTED by REJECT_G2B_PREP_CASE_CONTEXT_MISMATCH',
+  JSON.stringify(prepVariantResults)
+);
+
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)
 const preProtFp = computeProtectedRegistryFingerprint(prodDb, protectedVerseKeys);
 const testVerses = [];

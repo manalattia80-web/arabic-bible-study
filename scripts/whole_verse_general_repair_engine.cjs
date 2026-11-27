@@ -174,7 +174,7 @@ const AR_STANDALONE_PREPS = new Set([
   'عن', 'من', 'في', 'الى', 'على', 'مع', 'بين', 'عند', 'قدام', 'امام',
   'تحت', 'فوق', 'نحو', 'دون', 'وراء', 'خلف', 'حول', 'بغير', 'لاجل',
   'وعن', 'ومن', 'وفي', 'والى', 'وعلى', 'ومع', 'فعن', 'فمن', 'ففي', 'فالى', 'فعلى'
-]);
+].map(canonArabicWord));
 
 function hasPrecedingGreekPrep(tokens, tokIndex) {
   for (let p = tokIndex - 1; p >= Math.max(1, tokIndex - 3); p--) {
