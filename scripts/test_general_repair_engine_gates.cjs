@@ -774,6 +774,16 @@ assert(
   JSON.stringify(c2_12_18_4 && { status: c2_12_18_4.status, ruleId: c2_12_18_4.ruleId })
 );
 
+// 49. Negative Gate (v1.8.4 Greek C- Conjunction Deferral): Gal 2:10 #9 («أَنْ» in «أَنْ أَفْعَلَهُ» -> ἵνα @ w4 from clause 1) MUST be REJECTED!
+const gal2_10_rows = loadVerseRows(prodDb, 48, 2, 10);
+const gal2_10_res = evaluateVerse({ book: 48, ch: 2, vs: 10, lang: 'greek', name: 'Gal 2:10' }, gal2_10_rows, sources, strongsLexicon);
+const g2_10_9 = gal2_10_res.proposals.find(p => p.arPos === 9);
+assert(
+  Boolean(g2_10_9 && g2_10_9.status === 'PENDING_REVIEW' && g2_10_9.proposed === null && String(g2_10_9.ruleId).includes('REJECT_GREEK_CONJ_DEFERRED_FOR_CONTEXTUAL_REVIEW')),
+  'Negative Gate 49 (v1.8.4 Greek C- Deferral): Gal 2:10 #9 («أَنْ» -> ἵνα @ w4 from clause 1) is strictly REJECTED by REJECT_GREEK_CONJ_DEFERRED_FOR_CONTEXTUAL_REVIEW',
+  JSON.stringify(g2_10_9 && { status: g2_10_9.status, ruleId: g2_10_9.ruleId })
+);
+
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)
 const preProtFp = computeProtectedRegistryFingerprint(prodDb, protectedVerseKeys);
 const testVerses = [];

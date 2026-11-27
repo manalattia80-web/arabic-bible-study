@@ -153,17 +153,21 @@ const AR_PURE_COORD_CONJ_WORDS = new Set([
 ].map(canonArabicWord));
 
 /**
- * General compound-conjunction decomposition guard (v1.8.3):
- * Prevents reducing a compound Arabic word (e.g. «وَأَنْفَقَتْ», «وَأَرْسَلْتُ», «فَقَالَ», «فَهِيَ»)
- * or a non-conjunction word (e.g. «كُلَّ») to a bare Greek coordinating conjunction (καί/δέ/τέ)
- * alone, dropping its lexical head.
+ * General Greek conjunction guard (v1.8.4):
+ *  1. Rejects compound Arabic words (e.g. «وَأَنْفَقَتْ», «وَأَرْسَلْتُ», «فَقَالَ», «فَهِيَ»)
+ *     or non-conjunction words on bare Greek coordinating conjunctions (καί/δέ/τέ) as
+ *     REJECT_COMPOUND_CONJ_MISSING_LEXICAL_HEAD.
+ *  2. Defers all remaining Greek C- conjunction proposals across ALL repair rules (G1/G2/G2B/G3/G1C/G4)
+ *     so this batch remains focused on content words and prevents clause-crossing conjunction links
+ *     (e.g. Gal 2:10 #9 «أَنْ» -> ἵνα@w4 from clause 1).
  */
 function checkCompoundConjMissingLexicalHead(arWord, isGreek, targetStrongs, chosen) {
   if (!isGreek || !chosen || !chosen.morph || !chosen.morph.startsWith('C-')) return null;
-  if (!targetStrongs || !GREEK_BARE_COORD_CONJ_STRONGS.has(targetStrongs)) return null;
   const arClean = canonArabicWord(arWord);
-  if (!arClean || AR_PURE_COORD_CONJ_WORDS.has(arClean)) return null;
-  return `REJECT_COMPOUND_CONJ_MISSING_LEXICAL_HEAD(ar=${arClean},conj=${targetStrongs}:w${chosen.index}:${chosen.lemma})`;
+  if (targetStrongs && GREEK_BARE_COORD_CONJ_STRONGS.has(targetStrongs) && arClean && !AR_PURE_COORD_CONJ_WORDS.has(arClean)) {
+    return `REJECT_COMPOUND_CONJ_MISSING_LEXICAL_HEAD(ar=${arClean},conj=${targetStrongs}:w${chosen.index}:${chosen.lemma})`;
+  }
+  return `REJECT_GREEK_CONJ_DEFERRED_FOR_CONTEXTUAL_REVIEW(w${chosen.index}:${chosen.lemma})`;
 }
 
 function checkG4PosEligibility(isGreek, chosen, finalMorphPos) {
