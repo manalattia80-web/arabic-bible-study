@@ -1,0 +1,137 @@
+{
+  "version": "engine_v1.8.4_independent_holdout_15_verses",
+  "seed": "v1.8.4-independent-holdout-15-verses:commit=9e8c85773dab:diff=9b3cc0b8ae0b",
+  "frozenFingerprints": {
+    "commit": "9e8c85773dab752e0386ee70d6b4d3b01845cc84",
+    "engineScriptSha256": "3da83b225f187e03297d7ad8c9bc30b89780eba9e558eb91bba10d5bc11e856d",
+    "baselineV388DbSha256": "d3584fe697188f665e0750d8d9f133d3c4e27a7533f377be5f9c6718d908d14c",
+    "isolatedV184DbSha256": "f748fb03273fc6edc315fa296f020498dcfa8991982daa2f1dcc2e150878bd11",
+    "diffLogSha256": "9b3cc0b8ae0bae98e46245ae1afdd7102f4399ce4aa670ccefa6e2d4e71416d3"
+  },
+  "exclusionGuarantee": {
+    "excludedProtectedAndSeenVersesCount": 155,
+    "eligibleUnseenModifiedVersesPool": 1182
+  },
+  "verses": [
+    {
+      "index": 1,
+      "verse": "John 8:44",
+      "book": 43,
+      "ch": 8,
+      "vs": 44,
+      "modifiedCountInV184": 4
+    },
+    {
+      "index": 2,
+      "verse": "John 9:19",
+      "book": 43,
+      "ch": 9,
+      "vs": 19,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 3,
+      "verse": "Mark 9:7",
+      "book": 41,
+      "ch": 9,
+      "vs": 7,
+      "modifiedCountInV184": 1
+    },
+    {
+      "index": 4,
+      "verse": "John 3:17",
+      "book": 43,
+      "ch": 3,
+      "vs": 17,
+      "modifiedCountInV184": 1
+    },
+    {
+      "index": 5,
+      "verse": "Matt 5:18",
+      "book": 40,
+      "ch": 5,
+      "vs": 18,
+      "modifiedCountInV184": 1
+    },
+    {
+      "index": 6,
+      "verse": "Acts 7:45",
+      "book": 44,
+      "ch": 7,
+      "vs": 45,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 7,
+      "verse": "Acts 25:22",
+      "book": 44,
+      "ch": 25,
+      "vs": 22,
+      "modifiedCountInV184": 3
+    },
+    {
+      "index": 8,
+      "verse": "Acts 22:13",
+      "book": 44,
+      "ch": 22,
+      "vs": 13,
+      "modifiedCountInV184": 1
+    },
+    {
+      "index": 9,
+      "verse": "1Cor 3:23",
+      "book": 46,
+      "ch": 3,
+      "vs": 23,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 10,
+      "verse": "1Cor 9:19",
+      "book": 46,
+      "ch": 9,
+      "vs": 19,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 11,
+      "verse": "Rom 5:4",
+      "book": 45,
+      "ch": 5,
+      "vs": 4,
+      "modifiedCountInV184": 3
+    },
+    {
+      "index": 12,
+      "verse": "Gal 3:16",
+      "book": 48,
+      "ch": 3,
+      "vs": 16,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 13,
+      "verse": "Heb 2:11",
+      "book": 58,
+      "ch": 2,
+      "vs": 11,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 14,
+      "verse": "Rev 19:9",
+      "book": 66,
+      "ch": 19,
+      "vs": 9,
+      "modifiedCountInV184": 3
+    },
+    {
+      "index": 15,
+      "verse": "Rev 6:1",
+      "book": 66,
+      "ch": 6,
+      "vs": 1,
+      "modifiedCountInV184": 2
+    }
+  ]
+}

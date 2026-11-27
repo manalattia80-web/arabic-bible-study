@@ -1,0 +1,1490 @@
+{
+  "version": "engine_v1.8.4_independent_holdout_15_verses",
+  "seed": "v1.8.4-independent-holdout-15-verses:commit=9e8c85773dab:diff=9b3cc0b8ae0b",
+  "frozenFingerprints": {
+    "commit": "9e8c85773dab752e0386ee70d6b4d3b01845cc84",
+    "engineScriptSha256": "3da83b225f187e03297d7ad8c9bc30b89780eba9e558eb91bba10d5bc11e856d",
+    "baselineV388DbSha256": "d3584fe697188f665e0750d8d9f133d3c4e27a7533f377be5f9c6718d908d14c",
+    "isolatedV184DbSha256": "f748fb03273fc6edc315fa296f020498dcfa8991982daa2f1dcc2e150878bd11",
+    "diffLogSha256": "9b3cc0b8ae0bae98e46245ae1afdd7102f4399ce4aa670ccefa6e2d4e71416d3"
+  },
+  "exclusionGuarantee": {
+    "excludedProtectedAndSeenVersesCount": 155,
+    "eligibleUnseenModifiedVersesPool": 1182
+  },
+  "verses": [
+    {
+      "index": 1,
+      "verse": "John 8:44",
+      "book": 43,
+      "ch": 8,
+      "vs": 44,
+      "modifiedCountInV184": 4
+    },
+    {
+      "index": 2,
+      "verse": "John 9:19",
+      "book": 43,
+      "ch": 9,
+      "vs": 19,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 3,
+      "verse": "Mark 9:7",
+      "book": 41,
+      "ch": 9,
+      "vs": 7,
+      "modifiedCountInV184": 1
+    },
+    {
+      "index": 4,
+      "verse": "John 3:17",
+      "book": 43,
+      "ch": 3,
+      "vs": 17,
+      "modifiedCountInV184": 1
+    },
+    {
+      "index": 5,
+      "verse": "Matt 5:18",
+      "book": 40,
+      "ch": 5,
+      "vs": 18,
+      "modifiedCountInV184": 1
+    },
+    {
+      "index": 6,
+      "verse": "Acts 7:45",
+      "book": 44,
+      "ch": 7,
+      "vs": 45,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 7,
+      "verse": "Acts 25:22",
+      "book": 44,
+      "ch": 25,
+      "vs": 22,
+      "modifiedCountInV184": 3
+    },
+    {
+      "index": 8,
+      "verse": "Acts 22:13",
+      "book": 44,
+      "ch": 22,
+      "vs": 13,
+      "modifiedCountInV184": 1
+    },
+    {
+      "index": 9,
+      "verse": "1Cor 3:23",
+      "book": 46,
+      "ch": 3,
+      "vs": 23,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 10,
+      "verse": "1Cor 9:19",
+      "book": 46,
+      "ch": 9,
+      "vs": 19,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 11,
+      "verse": "Rom 5:4",
+      "book": 45,
+      "ch": 5,
+      "vs": 4,
+      "modifiedCountInV184": 3
+    },
+    {
+      "index": 12,
+      "verse": "Gal 3:16",
+      "book": 48,
+      "ch": 3,
+      "vs": 16,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 13,
+      "verse": "Heb 2:11",
+      "book": 58,
+      "ch": 2,
+      "vs": 11,
+      "modifiedCountInV184": 2
+    },
+    {
+      "index": 14,
+      "verse": "Rev 19:9",
+      "book": 66,
+      "ch": 19,
+      "vs": 9,
+      "modifiedCountInV184": 3
+    },
+    {
+      "index": 15,
+      "verse": "Rev 6:1",
+      "book": 66,
+      "ch": 6,
+      "vs": 1,
+      "modifiedCountInV184": 2
+    }
+  ],
+  "summary": {
+    "verseCount": 15,
+    "totalUnits": 232,
+    "totalModifiedUnits": 31,
+    "versesFullyCleanBefore": 0,
+    "versesFullyCleanAfter": 3,
+    "netVersesFullyCleanDelta": 3,
+    "transitionsByAxis": {
+      "overall": {
+        "pp": 123,
+        "ap": 28,
+        "pa": 0,
+        "aa": 81
+      },
+      "lexical": {
+        "pp": 131,
+        "ap": 25,
+        "pa": 0,
+        "aa": 76
+      },
+      "lemmaSurface": {
+        "pp": 126,
+        "ap": 26,
+        "pa": 0,
+        "aa": 80
+      },
+      "morphology": {
+        "pp": 128,
+        "ap": 25,
+        "pa": 0,
+        "aa": 79
+      },
+      "sourceLocator": {
+        "pp": 227,
+        "ap": 0,
+        "pa": 0,
+        "aa": 5
+      }
+    }
+  },
+  "perVerse": [
+    {
+      "index": 1,
+      "verse": "John 8:44",
+      "key": "43:8:44",
+      "totalUnits": 35,
+      "modifiedUnits": 4,
+      "cleanBefore": 7,
+      "cleanAfter": 11,
+      "netCleanDelta": 4,
+      "transitions": {
+        "overall": {
+          "pp": 7,
+          "ap": 4,
+          "pa": 0,
+          "aa": 24
+        },
+        "lexical": {
+          "pp": 9,
+          "ap": 4,
+          "pa": 0,
+          "aa": 22
+        },
+        "lemmaSurface": {
+          "pp": 7,
+          "ap": 4,
+          "pa": 0,
+          "aa": 24
+        },
+        "morphology": {
+          "pp": 10,
+          "ap": 2,
+          "pa": 0,
+          "aa": 23
+        },
+        "sourceLocator": {
+          "pp": 35,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 18,
+          "arWord": "يَثْبُتْ",
+          "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+          "before": {
+            "strongsId": "G2476",
+            "origWord": "ἵστημι",
+            "origSurface": "ἔστηκεν",
+            "origPos": 18,
+            "origMorph": "V- 3IAI-S--",
+            "verifiedLocator": "SBLGNT:B43.C8.V44.w18"
+          },
+          "after": {
+            "strongsId": "G2476",
+            "origWord": "ἵστημι",
+            "origSurface": "ἔστηκεν",
+            "origPos": 26,
+            "origMorph": "V- 3IAI-S--",
+            "verifiedLocator": "SBLGNT:B43.C8.V44.w26"
+          }
+        },
+        {
+          "arPos": 26,
+          "arWord": "تَكَلَّمَ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G2980",
+            "origWord": "λαλέω",
+            "origSurface": "λαλῇ",
+            "origPos": 26,
+            "origMorph": "V- 3PAS-S--",
+            "verifiedLocator": "SBLGNT:B43.C8.V44.w26"
+          },
+          "after": {
+            "strongsId": "G2980",
+            "origWord": "λαλέω",
+            "origSurface": "λαλῇ",
+            "origPos": 34,
+            "origMorph": "V- 3PAS-S--",
+            "verifiedLocator": "SBLGNT:B43.C8.V44.w34"
+          }
+        },
+        {
+          "arPos": 29,
+          "arWord": "يَتَكَلَّمُ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G2980",
+            "origWord": "λαλέω",
+            "origSurface": "λαλεῖ",
+            "origPos": 29,
+            "origMorph": "V- 3PAI-S--",
+            "verifiedLocator": "SBLGNT:B43.C8.V44.w29"
+          },
+          "after": {
+            "strongsId": "G2980",
+            "origWord": "λαλέω",
+            "origSurface": "λαλεῖ",
+            "origPos": 40,
+            "origMorph": "V- 3PAI-S--",
+            "verifiedLocator": "SBLGNT:B43.C8.V44.w40"
+          }
+        },
+        {
+          "arPos": 34,
+          "arWord": "وَأَبُو",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G3962",
+            "origWord": "πατήρ",
+            "origSurface": "πατὴρ",
+            "origPos": 34,
+            "origMorph": "N- ----NSM-",
+            "verifiedLocator": "SBLGNT:B43.C8.V44.w34"
+          },
+          "after": {
+            "strongsId": "G3962",
+            "origWord": "πατήρ",
+            "origSurface": "πατὴρ",
+            "origPos": 46,
+            "origMorph": "N- ----NSM-",
+            "verifiedLocator": "SBLGNT:B43.C8.V44.w46"
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "verse": "John 9:19",
+      "key": "43:9:19",
+      "totalUnits": 12,
+      "modifiedUnits": 2,
+      "cleanBefore": 11,
+      "cleanAfter": 12,
+      "netCleanDelta": 1,
+      "transitions": {
+        "overall": {
+          "pp": 11,
+          "ap": 1,
+          "pa": 0,
+          "aa": 0
+        },
+        "lexical": {
+          "pp": 11,
+          "ap": 1,
+          "pa": 0,
+          "aa": 0
+        },
+        "lemmaSurface": {
+          "pp": 11,
+          "ap": 1,
+          "pa": 0,
+          "aa": 0
+        },
+        "morphology": {
+          "pp": 11,
+          "ap": 1,
+          "pa": 0,
+          "aa": 0
+        },
+        "sourceLocator": {
+          "pp": 12,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 2,
+          "arWord": "قَائِلِينَ:",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγοντες",
+            "origPos": 4,
+            "origMorph": "V- -PAPNPM-",
+            "verifiedLocator": "SBLGNT:B43.C9.V19.w4"
+          },
+          "after": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγοντες",
+            "origPos": 4,
+            "origMorph": "V- -PAPNPM-",
+            "verifiedLocator": "SBLGNT:B43.C9.V19.w4"
+          }
+        },
+        {
+          "arPos": 6,
+          "arWord": "تَقُولاَنِ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγετε",
+            "origPos": 6,
+            "origMorph": "V- 2PAI-P--",
+            "verifiedLocator": "SBLGNT:B43.C9.V19.w6"
+          },
+          "after": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγετε",
+            "origPos": 12,
+            "origMorph": "V- 2PAI-P--",
+            "verifiedLocator": "SBLGNT:B43.C9.V19.w12"
+          }
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "verse": "Mark 9:7",
+      "key": "41:9:7",
+      "totalUnits": 14,
+      "modifiedUnits": 1,
+      "cleanBefore": 6,
+      "cleanAfter": 7,
+      "netCleanDelta": 1,
+      "transitions": {
+        "overall": {
+          "pp": 6,
+          "ap": 1,
+          "pa": 0,
+          "aa": 7
+        },
+        "lexical": {
+          "pp": 7,
+          "ap": 1,
+          "pa": 0,
+          "aa": 6
+        },
+        "lemmaSurface": {
+          "pp": 6,
+          "ap": 1,
+          "pa": 0,
+          "aa": 7
+        },
+        "morphology": {
+          "pp": 6,
+          "ap": 1,
+          "pa": 0,
+          "aa": 7
+        },
+        "sourceLocator": {
+          "pp": 14,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 7,
+          "arWord": "السَّحَابَةِ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G3507",
+            "origWord": "νεφέλη",
+            "origSurface": "νεφέλης",
+            "origPos": 7,
+            "origMorph": "N- ----GSF-",
+            "verifiedLocator": "SBLGNT:B41.C9.V7.w7"
+          },
+          "after": {
+            "strongsId": "G3507",
+            "origWord": "νεφέλη",
+            "origSurface": "νεφέλης",
+            "origPos": 11,
+            "origMorph": "N- ----GSF-",
+            "verifiedLocator": "SBLGNT:B41.C9.V7.w11"
+          }
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "verse": "John 3:17",
+      "key": "43:3:17",
+      "totalUnits": 13,
+      "modifiedUnits": 1,
+      "cleanBefore": 12,
+      "cleanAfter": 13,
+      "netCleanDelta": 1,
+      "transitions": {
+        "overall": {
+          "pp": 12,
+          "ap": 1,
+          "pa": 0,
+          "aa": 0
+        },
+        "lexical": {
+          "pp": 12,
+          "ap": 1,
+          "pa": 0,
+          "aa": 0
+        },
+        "lemmaSurface": {
+          "pp": 12,
+          "ap": 1,
+          "pa": 0,
+          "aa": 0
+        },
+        "morphology": {
+          "pp": 12,
+          "ap": 1,
+          "pa": 0,
+          "aa": 0
+        },
+        "sourceLocator": {
+          "pp": 13,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 13,
+          "arWord": "الْعَالَمُ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G2889",
+            "origWord": "κόσμος",
+            "origSurface": "κόσμος",
+            "origPos": 13,
+            "origMorph": "N- ----NSM-",
+            "verifiedLocator": "SBLGNT:B43.C3.V17.w13"
+          },
+          "after": {
+            "strongsId": "G2889",
+            "origWord": "κόσμος",
+            "origSurface": "κόσμος",
+            "origPos": 19,
+            "origMorph": "N- ----NSM-",
+            "verifiedLocator": "SBLGNT:B43.C3.V17.w19"
+          }
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "verse": "Matt 5:18",
+      "key": "40:5:18",
+      "totalUnits": 21,
+      "modifiedUnits": 1,
+      "cleanBefore": 16,
+      "cleanAfter": 16,
+      "netCleanDelta": 0,
+      "transitions": {
+        "overall": {
+          "pp": 16,
+          "ap": 0,
+          "pa": 0,
+          "aa": 5
+        },
+        "lexical": {
+          "pp": 16,
+          "ap": 0,
+          "pa": 0,
+          "aa": 5
+        },
+        "lemmaSurface": {
+          "pp": 16,
+          "ap": 0,
+          "pa": 0,
+          "aa": 5
+        },
+        "morphology": {
+          "pp": 16,
+          "ap": 0,
+          "pa": 0,
+          "aa": 5
+        },
+        "sourceLocator": {
+          "pp": 21,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 16,
+          "arWord": "وَاحِدَةٌ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G1520",
+            "origWord": "εἷς",
+            "origSurface": "μία",
+            "origPos": 16,
+            "origMorph": "A- ----NSF-",
+            "verifiedLocator": "SBLGNT:B40.C5.V18.w16"
+          },
+          "after": {
+            "strongsId": "G1520",
+            "origWord": "εἷς",
+            "origSurface": "μία",
+            "origPos": 16,
+            "origMorph": "A- ----NSF-",
+            "verifiedLocator": "SBLGNT:B40.C5.V18.w16"
+          }
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "verse": "Acts 7:45",
+      "key": "44:7:45",
+      "totalUnits": 21,
+      "modifiedUnits": 2,
+      "cleanBefore": 12,
+      "cleanAfter": 14,
+      "netCleanDelta": 2,
+      "transitions": {
+        "overall": {
+          "pp": 12,
+          "ap": 2,
+          "pa": 0,
+          "aa": 7
+        },
+        "lexical": {
+          "pp": 13,
+          "ap": 2,
+          "pa": 0,
+          "aa": 6
+        },
+        "lemmaSurface": {
+          "pp": 12,
+          "ap": 2,
+          "pa": 0,
+          "aa": 7
+        },
+        "morphology": {
+          "pp": 12,
+          "ap": 2,
+          "pa": 0,
+          "aa": 7
+        },
+        "sourceLocator": {
+          "pp": 19,
+          "ap": 0,
+          "pa": 0,
+          "aa": 2
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 15,
+          "arWord": "اللهُ",
+          "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+          "before": {
+            "strongsId": "G2316",
+            "origWord": "θεός",
+            "origSurface": "θεὸς",
+            "origPos": 15,
+            "origMorph": "N- ----NSM-",
+            "verifiedLocator": "SBLGNT:B44.C7.V45.w15"
+          },
+          "after": {
+            "strongsId": "G2316",
+            "origWord": "θεός",
+            "origSurface": "θεὸς",
+            "origPos": 18,
+            "origMorph": "N- ----NSM-",
+            "verifiedLocator": "SBLGNT:B44.C7.V45.w18"
+          }
+        },
+        {
+          "arPos": 18,
+          "arWord": "آبَائِنَا",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G3962",
+            "origWord": "πατήρ",
+            "origSurface": "πατέρων",
+            "origPos": 18,
+            "origMorph": "N- ----GPM-",
+            "verifiedLocator": "SBLGNT:B44.C7.V45.w18"
+          },
+          "after": {
+            "strongsId": "G3962",
+            "origWord": "πατήρ",
+            "origSurface": "πατέρων",
+            "origPos": 22,
+            "origMorph": "N- ----GPM-",
+            "verifiedLocator": "SBLGNT:B44.C7.V45.w22"
+          }
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "verse": "Acts 25:22",
+      "key": "44:25:22",
+      "totalUnits": 13,
+      "modifiedUnits": 3,
+      "cleanBefore": 5,
+      "cleanAfter": 8,
+      "netCleanDelta": 3,
+      "transitions": {
+        "overall": {
+          "pp": 5,
+          "ap": 3,
+          "pa": 0,
+          "aa": 5
+        },
+        "lexical": {
+          "pp": 5,
+          "ap": 3,
+          "pa": 0,
+          "aa": 5
+        },
+        "lemmaSurface": {
+          "pp": 5,
+          "ap": 3,
+          "pa": 0,
+          "aa": 5
+        },
+        "morphology": {
+          "pp": 5,
+          "ap": 3,
+          "pa": 0,
+          "aa": 5
+        },
+        "sourceLocator": {
+          "pp": 12,
+          "ap": 0,
+          "pa": 0,
+          "aa": 1
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 9,
+          "arWord": "أَسْمَعَ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G191",
+            "origWord": "ἀκούω",
+            "origSurface": "ἀκοῦσαι",
+            "origPos": 9,
+            "origMorph": "V- -AAN----",
+            "verifiedLocator": "SBLGNT:B44.C25.V22.w9"
+          },
+          "after": {
+            "strongsId": "G191",
+            "origWord": "ἀκούω",
+            "origSurface": "ἀκοῦσαι",
+            "origPos": 11,
+            "origMorph": "V- -AAN----",
+            "verifiedLocator": "SBLGNT:B44.C25.V22.w11"
+          }
+        },
+        {
+          "arPos": 12,
+          "arWord": "«غَدًا",
+          "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+          "before": {
+            "strongsId": "G839",
+            "origWord": "αὔριον",
+            "origSurface": "Αὔριον",
+            "origPos": 11,
+            "origMorph": "D- --------",
+            "verifiedLocator": "SBLGNT:B44.C25.V22.w11"
+          },
+          "after": {
+            "strongsId": "G839",
+            "origWord": "αὔριον",
+            "origSurface": "Αὔριον",
+            "origPos": 12,
+            "origMorph": "D- --------",
+            "verifiedLocator": "SBLGNT:B44.C25.V22.w12"
+          }
+        },
+        {
+          "arPos": 13,
+          "arWord": "تَسْمَعُهُ».",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G191",
+            "origWord": "ἀκούω",
+            "origSurface": "ἀκούσῃ",
+            "origPos": 12,
+            "origMorph": "V- 2FMI-S--",
+            "verifiedLocator": "SBLGNT:B44.C25.V22.w12"
+          },
+          "after": {
+            "strongsId": "G191",
+            "origWord": "ἀκούω",
+            "origSurface": "ἀκούσῃ",
+            "origPos": 14,
+            "origMorph": "V- 2FMI-S--",
+            "verifiedLocator": "SBLGNT:B44.C25.V22.w14"
+          }
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "verse": "Acts 22:13",
+      "key": "44:22:13",
+      "totalUnits": 14,
+      "modifiedUnits": 1,
+      "cleanBefore": 6,
+      "cleanAfter": 7,
+      "netCleanDelta": 1,
+      "transitions": {
+        "overall": {
+          "pp": 6,
+          "ap": 1,
+          "pa": 0,
+          "aa": 7
+        },
+        "lexical": {
+          "pp": 6,
+          "ap": 1,
+          "pa": 0,
+          "aa": 7
+        },
+        "lemmaSurface": {
+          "pp": 6,
+          "ap": 1,
+          "pa": 0,
+          "aa": 7
+        },
+        "morphology": {
+          "pp": 6,
+          "ap": 1,
+          "pa": 0,
+          "aa": 7
+        },
+        "sourceLocator": {
+          "pp": 14,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 13,
+          "arWord": "نَظَرْتُ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G308",
+            "origWord": "ἀναβλέπω",
+            "origSurface": "ἀνέβλεψα",
+            "origPos": 13,
+            "origMorph": "V- 1AAI-S--",
+            "verifiedLocator": "SBLGNT:B44.C22.V13.w13"
+          },
+          "after": {
+            "strongsId": "G308",
+            "origWord": "ἀναβλέπω",
+            "origSurface": "ἀνέβλεψα",
+            "origPos": 15,
+            "origMorph": "V- 1AAI-S--",
+            "verifiedLocator": "SBLGNT:B44.C22.V13.w15"
+          }
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "verse": "1Cor 3:23",
+      "key": "46:3:23",
+      "totalUnits": 5,
+      "modifiedUnits": 2,
+      "cleanBefore": 1,
+      "cleanAfter": 3,
+      "netCleanDelta": 2,
+      "transitions": {
+        "overall": {
+          "pp": 1,
+          "ap": 2,
+          "pa": 0,
+          "aa": 2
+        },
+        "lexical": {
+          "pp": 3,
+          "ap": 0,
+          "pa": 0,
+          "aa": 2
+        },
+        "lemmaSurface": {
+          "pp": 3,
+          "ap": 0,
+          "pa": 0,
+          "aa": 2
+        },
+        "morphology": {
+          "pp": 1,
+          "ap": 2,
+          "pa": 0,
+          "aa": 2
+        },
+        "sourceLocator": {
+          "pp": 5,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 3,
+          "arWord": "فَلِلْمَسِيحِ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G5547",
+            "origWord": "Χριστός",
+            "origSurface": "Χριστοῦ",
+            "origPos": 3,
+            "origMorph": "N- ----GSM-",
+            "verifiedLocator": "SBLGNT:B46.C3.V23.w3"
+          },
+          "after": {
+            "strongsId": "G5547",
+            "origWord": "Χριστός",
+            "origSurface": "Χριστοῦ",
+            "origPos": 3,
+            "origMorph": "N- ----GSM-",
+            "verifiedLocator": "SBLGNT:B46.C3.V23.w3"
+          }
+        },
+        {
+          "arPos": 4,
+          "arWord": "وَالْمَسِيحُ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G5547",
+            "origWord": "Χριστός",
+            "origSurface": "Χριστὸς",
+            "origPos": 4,
+            "origMorph": "N- ----NSM-",
+            "verifiedLocator": "SBLGNT:B46.C3.V23.w4"
+          },
+          "after": {
+            "strongsId": "G5547",
+            "origWord": "Χριστός",
+            "origSurface": "Χριστὸς",
+            "origPos": 4,
+            "origMorph": "N- ----NSM-",
+            "verifiedLocator": "SBLGNT:B46.C3.V23.w4"
+          }
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "verse": "1Cor 9:19",
+      "key": "46:9:19",
+      "totalUnits": 11,
+      "modifiedUnits": 2,
+      "cleanBefore": 6,
+      "cleanAfter": 8,
+      "netCleanDelta": 2,
+      "transitions": {
+        "overall": {
+          "pp": 6,
+          "ap": 2,
+          "pa": 0,
+          "aa": 3
+        },
+        "lexical": {
+          "pp": 8,
+          "ap": 1,
+          "pa": 0,
+          "aa": 2
+        },
+        "lemmaSurface": {
+          "pp": 7,
+          "ap": 2,
+          "pa": 0,
+          "aa": 2
+        },
+        "morphology": {
+          "pp": 7,
+          "ap": 2,
+          "pa": 0,
+          "aa": 2
+        },
+        "sourceLocator": {
+          "pp": 10,
+          "ap": 0,
+          "pa": 0,
+          "aa": 1
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 6,
+          "arWord": "الْجَمِيعِ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G3956",
+            "origWord": "πᾶς",
+            "origSurface": "πάντων",
+            "origPos": 6,
+            "origMorph": "A- ----GPM-",
+            "verifiedLocator": "SBLGNT:B46.C9.V19.w6"
+          },
+          "after": {
+            "strongsId": "G3956",
+            "origWord": "πᾶς",
+            "origSurface": "πάντων",
+            "origPos": 5,
+            "origMorph": "A- ----GPM-",
+            "verifiedLocator": "SBLGNT:B46.C9.V19.w5"
+          }
+        },
+        {
+          "arPos": 9,
+          "arWord": "لِلْجَمِيعِ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G3956",
+            "origWord": "πᾶς",
+            "origSurface": "πᾶσιν",
+            "origPos": 9,
+            "origMorph": "A- ----DPM-",
+            "verifiedLocator": "SBLGNT:B46.C9.V19.w9"
+          },
+          "after": {
+            "strongsId": "G3956",
+            "origWord": "πᾶς",
+            "origSurface": "πᾶσιν",
+            "origPos": 6,
+            "origMorph": "A- ----DPM-",
+            "verifiedLocator": "SBLGNT:B46.C9.V19.w6"
+          }
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "verse": "Rom 5:4",
+      "key": "45:5:4",
+      "totalUnits": 4,
+      "modifiedUnits": 3,
+      "cleanBefore": 1,
+      "cleanAfter": 4,
+      "netCleanDelta": 3,
+      "transitions": {
+        "overall": {
+          "pp": 1,
+          "ap": 3,
+          "pa": 0,
+          "aa": 0
+        },
+        "lexical": {
+          "pp": 1,
+          "ap": 3,
+          "pa": 0,
+          "aa": 0
+        },
+        "lemmaSurface": {
+          "pp": 1,
+          "ap": 3,
+          "pa": 0,
+          "aa": 0
+        },
+        "morphology": {
+          "pp": 2,
+          "ap": 2,
+          "pa": 0,
+          "aa": 0
+        },
+        "sourceLocator": {
+          "pp": 4,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 1,
+          "arWord": "وَالصَّبْرُ",
+          "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+          "before": {
+            "strongsId": "G5281",
+            "origWord": "ὑπομονή",
+            "origSurface": "ὑπομονὴ",
+            "origPos": 1,
+            "origMorph": "N- ----NSF-",
+            "verifiedLocator": "SBLGNT:B45.C5.V4.w1"
+          },
+          "after": {
+            "strongsId": "G5281",
+            "origWord": "ὑπομονή",
+            "origSurface": "ὑπομονὴ",
+            "origPos": 3,
+            "origMorph": "N- ----NSF-",
+            "verifiedLocator": "SBLGNT:B45.C5.V4.w3"
+          }
+        },
+        {
+          "arPos": 2,
+          "arWord": "تَزْكِيَةً",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G1382",
+            "origWord": "δοκιμή",
+            "origSurface": "δοκιμήν",
+            "origPos": 2,
+            "origMorph": "N- ----ASF-",
+            "verifiedLocator": "SBLGNT:B45.C5.V4.w2"
+          },
+          "after": {
+            "strongsId": "G1382",
+            "origWord": "δοκιμή",
+            "origSurface": "δοκιμήν",
+            "origPos": 4,
+            "origMorph": "N- ----ASF-",
+            "verifiedLocator": "SBLGNT:B45.C5.V4.w4"
+          }
+        },
+        {
+          "arPos": 3,
+          "arWord": "وَالتَّزْكِيَةُ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G1382",
+            "origWord": "δοκιμή",
+            "origSurface": "δοκιμὴ",
+            "origPos": 3,
+            "origMorph": "N- ----NSF-",
+            "verifiedLocator": "SBLGNT:B45.C5.V4.w3"
+          },
+          "after": {
+            "strongsId": "G1382",
+            "origWord": "δοκιμή",
+            "origSurface": "δοκιμὴ",
+            "origPos": 7,
+            "origMorph": "N- ----NSF-",
+            "verifiedLocator": "SBLGNT:B45.C5.V4.w7"
+          }
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "verse": "Gal 3:16",
+      "key": "48:3:16",
+      "totalUnits": 23,
+      "modifiedUnits": 2,
+      "cleanBefore": 14,
+      "cleanAfter": 15,
+      "netCleanDelta": 1,
+      "transitions": {
+        "overall": {
+          "pp": 14,
+          "ap": 1,
+          "pa": 0,
+          "aa": 8
+        },
+        "lexical": {
+          "pp": 14,
+          "ap": 1,
+          "pa": 0,
+          "aa": 8
+        },
+        "lemmaSurface": {
+          "pp": 14,
+          "ap": 1,
+          "pa": 0,
+          "aa": 8
+        },
+        "morphology": {
+          "pp": 14,
+          "ap": 1,
+          "pa": 0,
+          "aa": 8
+        },
+        "sourceLocator": {
+          "pp": 22,
+          "ap": 0,
+          "pa": 0,
+          "aa": 1
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 9,
+          "arWord": "يَقُولُ:",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγει",
+            "origPos": 12,
+            "origMorph": "V- 3PAI-S--",
+            "verifiedLocator": "SBLGNT:B48.C3.V16.w12"
+          },
+          "after": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγει",
+            "origPos": 12,
+            "origMorph": "V- 3PAI-S--",
+            "verifiedLocator": "SBLGNT:B48.C3.V16.w12"
+          }
+        },
+        {
+          "arPos": 11,
+          "arWord": "الأَنْسَالِ»",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G4690",
+            "origWord": "σπέρμα",
+            "origSurface": "σπέρμασιν",
+            "origPos": 11,
+            "origMorph": "N- ----DPN-",
+            "verifiedLocator": "SBLGNT:B48.C3.V16.w11"
+          },
+          "after": {
+            "strongsId": "G4690",
+            "origWord": "σπέρμα",
+            "origSurface": "σπέρμασιν",
+            "origPos": 15,
+            "origMorph": "N- ----DPN-",
+            "verifiedLocator": "SBLGNT:B48.C3.V16.w15"
+          }
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "verse": "Heb 2:11",
+      "key": "58:2:11",
+      "totalUnits": 13,
+      "modifiedUnits": 2,
+      "cleanBefore": 10,
+      "cleanAfter": 12,
+      "netCleanDelta": 2,
+      "transitions": {
+        "overall": {
+          "pp": 10,
+          "ap": 2,
+          "pa": 0,
+          "aa": 1
+        },
+        "lexical": {
+          "pp": 10,
+          "ap": 2,
+          "pa": 0,
+          "aa": 1
+        },
+        "lemmaSurface": {
+          "pp": 10,
+          "ap": 2,
+          "pa": 0,
+          "aa": 1
+        },
+        "morphology": {
+          "pp": 10,
+          "ap": 2,
+          "pa": 0,
+          "aa": 1
+        },
+        "sourceLocator": {
+          "pp": 13,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 2,
+          "arWord": "الْمُقَدِّسَ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G37",
+            "origWord": "ἁγιάζω",
+            "origSurface": "ἁγιάζων",
+            "origPos": 2,
+            "origMorph": "V- -PAPNSM-",
+            "verifiedLocator": "SBLGNT:B58.C2.V11.w2"
+          },
+          "after": {
+            "strongsId": "G37",
+            "origWord": "ἁγιάζω",
+            "origSurface": "ἁγιάζων",
+            "origPos": 4,
+            "origMorph": "V- -PAPNSM-",
+            "verifiedLocator": "SBLGNT:B58.C2.V11.w4"
+          }
+        },
+        {
+          "arPos": 3,
+          "arWord": "وَالْمُقَدَّسِينَ",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G37",
+            "origWord": "ἁγιάζω",
+            "origSurface": "ἁγιαζόμενοι",
+            "origPos": 3,
+            "origMorph": "V- -PPPNPM-",
+            "verifiedLocator": "SBLGNT:B58.C2.V11.w3"
+          },
+          "after": {
+            "strongsId": "G37",
+            "origWord": "ἁγιάζω",
+            "origSurface": "ἁγιαζόμενοι",
+            "origPos": 7,
+            "origMorph": "V- -PPPNPM-",
+            "verifiedLocator": "SBLGNT:B58.C2.V11.w7"
+          }
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "verse": "Rev 19:9",
+      "key": "66:19:9",
+      "totalUnits": 15,
+      "modifiedUnits": 3,
+      "cleanBefore": 11,
+      "cleanAfter": 14,
+      "netCleanDelta": 3,
+      "transitions": {
+        "overall": {
+          "pp": 11,
+          "ap": 3,
+          "pa": 0,
+          "aa": 1
+        },
+        "lexical": {
+          "pp": 11,
+          "ap": 3,
+          "pa": 0,
+          "aa": 1
+        },
+        "lemmaSurface": {
+          "pp": 11,
+          "ap": 3,
+          "pa": 0,
+          "aa": 1
+        },
+        "morphology": {
+          "pp": 11,
+          "ap": 3,
+          "pa": 0,
+          "aa": 1
+        },
+        "sourceLocator": {
+          "pp": 15,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 1,
+          "arWord": "وَقَالَ",
+          "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+          "before": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγει",
+            "origPos": 1,
+            "origMorph": "V- 3PAI-S--",
+            "verifiedLocator": "SBLGNT:B66.C19.V9.w1"
+          },
+          "after": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγει",
+            "origPos": 2,
+            "origMorph": "V- 3PAI-S--",
+            "verifiedLocator": "SBLGNT:B66.C19.V9.w2"
+          }
+        },
+        {
+          "arPos": 2,
+          "arWord": "لِيَ",
+          "ruleId": "RULE_G1C_UNIQUE_GREEK_LEMMA_LOCK",
+          "before": {
+            "strongsId": "G1510",
+            "origWord": "εἰμί",
+            "origSurface": "εἰμί",
+            "origPos": 2,
+            "origMorph": null,
+            "verifiedLocator": "TR:B66.C19.V9.w2"
+          },
+          "after": {
+            "strongsId": "G1510",
+            "origWord": "εἰμί",
+            "origSurface": "εἰσιν",
+            "origPos": 24,
+            "origMorph": "V- 3PAI-P--",
+            "verifiedLocator": "SBLGNT:B66.C19.V9.w24"
+          }
+        },
+        {
+          "arPos": 10,
+          "arWord": "وَقَالَ",
+          "ruleId": "RULE_G4_BRACKETED_DUPLICATE_BIJECTION",
+          "before": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγει",
+            "origPos": 10,
+            "origMorph": "V- 3PAI-S--",
+            "verifiedLocator": "SBLGNT:B66.C19.V9.w10"
+          },
+          "after": {
+            "strongsId": "G3004",
+            "origWord": "λέγω",
+            "origSurface": "λέγει",
+            "origPos": 16,
+            "origMorph": "V- 3PAI-S--",
+            "verifiedLocator": "SBLGNT:B66.C19.V9.w16"
+          }
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "verse": "Rev 6:1",
+      "key": "66:6:1",
+      "totalUnits": 18,
+      "modifiedUnits": 2,
+      "cleanBefore": 5,
+      "cleanAfter": 7,
+      "netCleanDelta": 2,
+      "transitions": {
+        "overall": {
+          "pp": 5,
+          "ap": 2,
+          "pa": 0,
+          "aa": 11
+        },
+        "lexical": {
+          "pp": 5,
+          "ap": 2,
+          "pa": 0,
+          "aa": 11
+        },
+        "lemmaSurface": {
+          "pp": 5,
+          "ap": 2,
+          "pa": 0,
+          "aa": 11
+        },
+        "morphology": {
+          "pp": 5,
+          "ap": 2,
+          "pa": 0,
+          "aa": 11
+        },
+        "sourceLocator": {
+          "pp": 18,
+          "ap": 0,
+          "pa": 0,
+          "aa": 0
+        }
+      },
+      "modifications": [
+        {
+          "arPos": 8,
+          "arWord": "السَّبْعَةِ،",
+          "ruleId": "RULE_G1_UNIQUE_BIJECTIVE_RELOC",
+          "before": {
+            "strongsId": "G2033",
+            "origWord": "ἑπτά",
+            "origSurface": "ἑπτά",
+            "origPos": 8,
+            "origMorph": null,
+            "verifiedLocator": "TR:B66.C6.V1.w8"
+          },
+          "after": {
+            "strongsId": "G2033",
+            "origWord": "ἑπτά",
+            "origSurface": "ἑπτὰ",
+            "origPos": 10,
+            "origMorph": "A- ----GPF-",
+            "verifiedLocator": "SBLGNT:B66.C6.V1.w10"
+          }
+        },
+        {
+          "arPos": 10,
+          "arWord": "وَاحِدًا",
+          "ruleId": "RULE_G2B_UNIQUE_SURFACE_REPEATED_LEMMA",
+          "before": {
+            "strongsId": "G1520",
+            "origWord": "εἷς",
+            "origSurface": "ἑνὸς",
+            "origPos": 10,
+            "origMorph": "A- ----GSN-",
+            "verifiedLocator": "SBLGNT:B66.C6.V1.w10"
+          },
+          "after": {
+            "strongsId": "G1520",
+            "origWord": "εἷς",
+            "origSurface": "ἑνὸς",
+            "origPos": 14,
+            "origMorph": "A- ----GSN-",
+            "verifiedLocator": "SBLGNT:B66.C6.V1.w14"
+          }
+        }
+      ]
+    }
+  ]
+}
