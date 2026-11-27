@@ -744,6 +744,36 @@ assert(
   JSON.stringify(prepVariantResults)
 );
 
+// 46. Negative Gate (v1.8.3 Compound Conjunction / G4 Conjunction Exclusion): Mark 5:26 #7 («وَأَنْفَقَتْ» -> bare G2532 καὶ @ w7 without δαπανήσασα) MUST be REJECTED!
+const mark5_26_rows = loadVerseRows(prodDb, 41, 5, 26);
+const mark5_26_res = evaluateVerse({ book: 41, ch: 5, vs: 26, lang: 'greek', name: 'Mark 5:26' }, mark5_26_rows, sources, strongsLexicon);
+const m5_26_7 = mark5_26_res.proposals.find(p => p.arPos === 7);
+assert(
+  Boolean(m5_26_7 && m5_26_7.status === 'PENDING_REVIEW' && m5_26_7.proposed === null && (String(m5_26_7.ruleId).includes('REJECT_G4_GREEK_CONJ_EXCLUDED') || String(m5_26_7.ruleId).includes('REJECT_COMPOUND_CONJ_MISSING_LEXICAL_HEAD'))),
+  'Negative Gate 46 (v1.8.3 Conjunction Guard): Mark 5:26 #7 («وَأَنْفَقَتْ» -> bare G2532 καὶ without verb) is strictly REJECTED',
+  JSON.stringify(m5_26_7 && { status: m5_26_7.status, ruleId: m5_26_7.ruleId })
+);
+
+// 47. Negative Gate (v1.8.3 G4 Conjunction Exclusion): 1Cor 15:56 #4 («فَهِيَ» -> G1161 δὲ @ w9 from clause 2) MUST be REJECTED!
+const cor1_15_56_rows = loadVerseRows(prodDb, 46, 15, 56);
+const cor1_15_56_res = evaluateVerse({ book: 46, ch: 15, vs: 56, lang: 'greek', name: '1Cor 15:56' }, cor1_15_56_rows, sources, strongsLexicon);
+const c1_15_56_4 = cor1_15_56_res.proposals.find(p => p.arPos === 4);
+assert(
+  Boolean(c1_15_56_4 && c1_15_56_4.status === 'PENDING_REVIEW' && c1_15_56_4.proposed === null && String(c1_15_56_4.ruleId).includes('REJECT_G4_GREEK_CONJ_EXCLUDED')),
+  'Negative Gate 47 (v1.8.3 G4 Conjunction Guard): 1Cor 15:56 #4 («فَهِيَ» -> G1161 δὲ @ w9) is strictly REJECTED by REJECT_G4_GREEK_CONJ_EXCLUDED',
+  JSON.stringify(c1_15_56_4 && { status: c1_15_56_4.status, ruleId: c1_15_56_4.ruleId })
+);
+
+// 48. Negative Gate (v1.8.3 Non-G4 Compound Conjunction Guard): 2Cor 12:18 #4 («وَأَرْسَلْتُ» -> bare G2532 καὶ @ w3 via RULE_G1) MUST be REJECTED!
+const cor2_12_18_rows = loadVerseRows(prodDb, 47, 12, 18);
+const cor2_12_18_res = evaluateVerse({ book: 47, ch: 12, vs: 18, lang: 'greek', name: '2Cor 12:18' }, cor2_12_18_rows, sources, strongsLexicon);
+const c2_12_18_4 = cor2_12_18_res.proposals.find(p => p.arPos === 4);
+assert(
+  Boolean(c2_12_18_4 && c2_12_18_4.status === 'PENDING_REVIEW' && c2_12_18_4.proposed === null && String(c2_12_18_4.ruleId).includes('REJECT_COMPOUND_CONJ_MISSING_LEXICAL_HEAD')),
+  'Negative Gate 48 (v1.8.3 Non-G4 Compound Conj Guard): 2Cor 12:18 #4 («وَأَرْسَلْتُ» -> bare G2532 καὶ @ w3) is strictly REJECTED by REJECT_COMPOUND_CONJ_MISSING_LEXICAL_HEAD',
+  JSON.stringify(c2_12_18_4 && { status: c2_12_18_4.status, ruleId: c2_12_18_4.ruleId })
+);
+
 // 10-14. Applied-Output CI Verification on Isolated DB Copy (B20 + R1 + R2 + R3 + audit-guarded + unseen sample)
 const preProtFp = computeProtectedRegistryFingerprint(prodDb, protectedVerseKeys);
 const testVerses = [];

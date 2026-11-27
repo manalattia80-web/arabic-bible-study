@@ -144,10 +144,34 @@ function checkCompoundPrepMissingLexicalHead(arWord, arPos, chosen, isGreek, tok
 }
 
 const G4_PRONOUN_POS = new Set(['pronoun', 'personal_pronoun', 'demonstrative', 'relative_pronoun', 'interrogative_pronoun']);
+const GREEK_BARE_COORD_CONJ_STRONGS = new Set(['G2532', 'G1161', 'G5037']);
+const AR_PURE_COORD_CONJ_WORDS = new Set([
+  'و', 'ف', 'ايضا', 'وايضا', 'فايضا', 'اما', 'واما', 'فاما',
+  'لكن', 'ولكن', 'فلكن', 'ثم', 'وثم', 'فثم', 'بل', 'وبل',
+  'وقد', 'فقد', 'وكذلك', 'فكذلك', 'ولا', 'فلا', 'ولم', 'فلم', 'ولن', 'فلن',
+  'واذ', 'فاذ', 'واذا', 'فاذا', 'وان', 'فان', 'ولما', 'فلما', 'وحتي', 'فحتي'
+].map(canonArabicWord));
+
+/**
+ * General compound-conjunction decomposition guard (v1.8.3):
+ * Prevents reducing a compound Arabic word (e.g. «وَأَنْفَقَتْ», «وَأَرْسَلْتُ», «فَقَالَ», «فَهِيَ»)
+ * or a non-conjunction word (e.g. «كُلَّ») to a bare Greek coordinating conjunction (καί/δέ/τέ)
+ * alone, dropping its lexical head.
+ */
+function checkCompoundConjMissingLexicalHead(arWord, isGreek, targetStrongs, chosen) {
+  if (!isGreek || !chosen || !chosen.morph || !chosen.morph.startsWith('C-')) return null;
+  if (!targetStrongs || !GREEK_BARE_COORD_CONJ_STRONGS.has(targetStrongs)) return null;
+  const arClean = canonArabicWord(arWord);
+  if (!arClean || AR_PURE_COORD_CONJ_WORDS.has(arClean)) return null;
+  return `REJECT_COMPOUND_CONJ_MISSING_LEXICAL_HEAD(ar=${arClean},conj=${targetStrongs}:w${chosen.index}:${chosen.lemma})`;
+}
 
 function checkG4PosEligibility(isGreek, chosen, finalMorphPos) {
   if (isGreek && chosen.morph && chosen.morph.startsWith('P-')) {
     return `REJECT_G4_GREEK_PREP_EXCLUDED(w${chosen.index}:${chosen.lemma})`;
+  }
+  if (isGreek && chosen.morph && chosen.morph.startsWith('C-')) {
+    return `REJECT_G4_GREEK_CONJ_EXCLUDED(w${chosen.index}:${chosen.lemma})`;
   }
   if ((isGreek && chosen.morph && chosen.morph.startsWith('RA')) || finalMorphPos === 'article') {
     return `REJECT_G4_ARTICLE_EXCLUDED(w${chosen.index}:${chosen.lemma})`;
@@ -956,7 +980,8 @@ function evaluateVerse(verseInfo, dbRows, sources, strongsLexicon = null, option
 
     // General Arabic-to-Source contextual compatibility guard across ALL rules (G1, G1B, G2, G2B, G3)
     const arCtxReject = checkArabicSourceContextualCompatibility(r.arWord, finalMorphPos, ruleId, r.morphPos, isGreek, targetStrongs, d)
-      || checkCompoundPrepMissingLexicalHead(r.arWord, r.arPos, chosen, isGreek, tokens, dbRows);
+      || checkCompoundPrepMissingLexicalHead(r.arWord, r.arPos, chosen, isGreek, tokens, dbRows)
+      || checkCompoundConjMissingLexicalHead(r.arWord, isGreek, targetStrongs, chosen);
     if (arCtxReject) {
       rawProposals.push({
         id: r.id, arPos: r.arPos, arWord: r.arWord,
